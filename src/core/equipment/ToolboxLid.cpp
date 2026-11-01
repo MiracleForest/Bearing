@@ -11,7 +11,7 @@ constexpr float kSpeed = .2f;
 constexpr float kSettle = 1.f / 512.f;
 
 bool isToolboxId(std::string const& id) {
-    return id.starts_with("bearing:") && id.ends_with("_toolbox") && id.size() > 9 + 8;
+    return id.starts_with("bearing:") && id.ends_with("_toolbox") && id.size() > 8 + 8;
 }
 bool isDyeId(std::string const& id) { return id.starts_with("minecraft:") && id.ends_with("_dye"); }
 } // namespace

@@ -60,7 +60,7 @@ bool isSailFrame(std::string_view id) { return id == kSailFrame; }
 bool isSail(std::string_view id) {
     if (isSailFrame(id)) return true;
     if (!id.starts_with("bearing:") || !id.ends_with("_sail")) return false;
-    auto colour = id.substr(9, id.size() - 9 - 5);
+    auto colour = id.substr(8, id.size() - 8 - 5);
     auto const& all = dyeColours();
     return std::find(all.begin(), all.end(), colour) != all.end();
 }

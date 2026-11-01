@@ -54,8 +54,8 @@ namespace ext = ::br::feature::contraption::actors_ext;
 
 std::optional<int> seatColour(std::string_view id) {
     for (int i = 0; i < 16; ++i) {
-        if (id.size() == 9 + kColours[i].size() + 5 && id.starts_with("bearing:") && id.ends_with("_seat")
-            && id.substr(9, kColours[i].size()) == kColours[i]) {
+        if (id.size() == 8 + kColours[i].size() + 5 && id.starts_with("bearing:") && id.ends_with("_seat")
+            && id.substr(8, kColours[i].size()) == kColours[i]) {
             return i;
         }
     }

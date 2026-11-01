@@ -345,7 +345,7 @@ std::vector<Quad> barsQuads(int f, glm::vec4 uv) {
 /// ceiling panels, a side otherwise, as CopycatBarsModel).
 glm::vec4 barsUv(Block const& material, bool vertical) {
     std::string const& id = material.getTypeName();
-    if (id.starts_with("bearing:")) return atlasUv("bearing_" + id.substr(9));
+    if (id.starts_with("bearing:")) return atlasUv("bearing_" + id.substr(8));
     if (auto uv = faceUv(material, vertical ? 1 : 2)) return *uv;
     return atlasUv("iron_bars");
 }
@@ -492,7 +492,7 @@ std::optional<CtSpec> ctSpecOf(Block const& b) {
     std::string const& id = b.getTypeName();
     if (auto const* info = fb::infoOf(b)) {
         switch (info->kind) {
-        case fb::Kind::Casing: return CtSpec{0x3f, "bearing_" + id.substr(9) + "_0", 2.f, false};
+        case fb::Kind::Casing: return CtSpec{0x3f, "bearing_" + id.substr(8) + "_0", 2.f, false};
         case fb::Kind::CtGlass:
             if (info->ct == fb::Ct::Omni) return CtSpec{0x3f, "bearing_framed_glass_0", 1.f, false};
             if (info->ct == fb::Ct::Horizontal) return CtSpec{0x03, "bearing_framed_glass_0", 1.f, false};
@@ -503,12 +503,12 @@ std::optional<CtSpec> ctSpecOf(Block const& b) {
         default: return std::nullopt;
         }
     }
-    if (id.rfind("bearing:layered_", 0) == 0) return CtSpec{0x03, "bearing_" + id.substr(17) + "_cap_0", 1.f, false};
+    if (id.rfind("bearing:layered_", 0) == 0) return CtSpec{0x03, "bearing_" + id.substr(16) + "_cap_0", 1.f, false};
     if (id.rfind("bearing:", 0) == 0 && id.ends_with("_pillar") && game::intState(b, "bearing:c_up")) {
         auto const& nbt = *b.mSerializationId;
         auto face = nbt.contains("states") && nbt["states"].contains("minecraft:block_face") ? std::string(nbt["states"]["minecraft:block_face"].get<StringTag>()) : std::string("up");
         int  mask = (face == "north" || face == "south") ? 0x0c : (face == "east" || face == "west") ? 0x30 : 0x03;
-        return CtSpec{mask, "bearing_" + id.substr(9, id.size() - 9 - 7) + "_cap_0", 1.f, false};
+        return CtSpec{mask, "bearing_" + id.substr(8, id.size() - 8 - 7) + "_cap_0", 1.f, false};
     }
     return std::nullopt;
 }
@@ -746,7 +746,7 @@ LL_STATIC_HOOK(
 ) {
     if (visualReference == ClientBlockPipeline::VisualReference::Block && feature::net::client::connected()) {
         std::string const& id = block.getTypeName();
-        if (id.size() > 9 && id.compare(0, 9, "bearing:") == 0) {
+        if (id.size() > 8 && id.compare(0, 8, "bearing:") == 0) {
             BlockPos const& rel = iterData.relativePos;
             BlockPos        pos{chunkMinPos.x + rel.x, chunkMinPos.y + rel.y, chunkMinPos.z + rel.z};
             auto&           s    = state();

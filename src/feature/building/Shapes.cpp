@@ -39,7 +39,7 @@ Box clip(Box b) {
 
 Info const* infoOfType(BlockType const& type) {
     auto const& n = type.getTypeName();
-    if (n.size() <= 9 || n[0] != 'l' || n.compare(0, 9, "bearing:") != 0) return nullptr;
+    if (n.size() <= 8 || n[0] != 'b' || n.compare(0, 8, "bearing:") != 0) return nullptr;
     return infoOf(std::string_view(n));
 }
 

@@ -109,7 +109,7 @@ Info const* infoOf(std::string_view id) {
 
 Info const* infoOf(Block const& block) {
     auto const& name = block.getTypeName();
-    if (name.size() < 9 || name.compare(0, 9, "bearing:") != 0) return nullptr;
+    if (name.size() < 8 || name.compare(0, 8, "bearing:") != 0) return nullptr;
     return infoOf(std::string_view(name));
 }
 

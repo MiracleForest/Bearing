@@ -128,7 +128,7 @@ Info computeInfo(Block const& block) {
     if (auto const* st = block.getBlockType().getBlockState(HashedString("bearing:part"))) {
         if (auto b = block.setState(*st, 1)) info.hidden = b.as_ptr();
     }
-    info.texture = "bearing_" + id.substr(9);
+    info.texture = "bearing_" + id.substr(8);
     return info;
 }
 

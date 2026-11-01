@@ -186,7 +186,7 @@ Info infoOf(Block const& block) {
 /// The rotor geometry and terrain texture of a handle block.
 std::pair<std::string, std::string> handleModel(Block const& block, Kind kind) {
     std::string id = block.getTypeName();
-    return {kind == Kind::Crank ? "geometry.bearing.hand_crank.rotor" : "geometry.bearing.valve_handle.rotor", "bearing_" + id.substr(9)};
+    return {kind == Kind::Crank ? "geometry.bearing.hand_crank.rotor" : "geometry.bearing.valve_handle.rotor", "bearing_" + id.substr(8)};
 }
 
 // ---- meshes (as the kinetics renderer builds its rotor meshes) -------------------------------------------

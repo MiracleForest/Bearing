@@ -106,7 +106,7 @@ void store(GlobalPos const& pos, ce::ToolboxInv const& inv) {
 std::string colourOf(std::string_view id) {
     std::string s(id);
     if (!s.starts_with("bearing:") || !s.ends_with("_toolbox")) return {};
-    return s.substr(9, s.size() - 9 - 8);
+    return s.substr(8, s.size() - 8 - 8);
 }
 
 // ---- links (Create's ToolboxHandler: hotbar slot -> toolbox compartment) --------------------------

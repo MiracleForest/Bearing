@@ -168,7 +168,7 @@ Lifecycle const gLifecycle;
 bool isNixie(std::string_view id) {
     if (id == kNixieId) return true;
     if (!id.starts_with("bearing:") || !id.ends_with("_nixie_tube")) return false;
-    auto colour = id.substr(9, id.size() - 9 - 11);
+    auto colour = id.substr(8, id.size() - 8 - 11);
     for (int i = 0; i < 16; ++i)
         if (i != kOrange && colour == kDyeNames[static_cast<std::size_t>(i)]) return true;
     return false;

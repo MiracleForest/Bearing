@@ -129,7 +129,7 @@ Info computeInfo(Block const& block) {
     }
     info.open    = lid == 1;
     info.facing  = game::intState(block, "bearing:facing").value_or(0) & 3;
-    info.texture = "bearing_" + id.substr(9);
+    info.texture = "bearing_" + id.substr(8);
     return info;
 }
 
