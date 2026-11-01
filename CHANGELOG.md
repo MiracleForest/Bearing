@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The repository moved to [MiracleForest/Levitate](https://github.com/MiracleForest/Levitate). The lip
+  package path stays `github.com/LiteLDev/Levitate`.
+
 ## [0.1.0] - 2026-11-01
 
 The first release: the behaviour of Create 6.0.10 on Bedrock 1.26.51 (LeviLamina 26.51.x), for
@@ -47,5 +52,5 @@ server and play with forms in place of Create's screens. `docs/SPEC.md` §8 list
   commands (`/create clone`, `debuginfo`, `util`, `killtrain`, `glue` and more).
 - English and Simplified Chinese translations.
 
-[Unreleased]: https://github.com/LiteLDev/Levitate/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/LiteLDev/Levitate/releases/tag/v0.1.0
+[Unreleased]: https://github.com/MiracleForest/Levitate/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/MiracleForest/Levitate/releases/tag/v0.1.0
