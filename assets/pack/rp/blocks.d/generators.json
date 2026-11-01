@@ -1,68 +1,68 @@
 {
-  "levitate:hand_crank": {
+  "bearing:hand_crank": {
     "sound": "wood"
   },
-  "levitate:copper_valve_handle": {
+  "bearing:copper_valve_handle": {
     "sound": "copper"
   },
-  "levitate:white_valve_handle": {
+  "bearing:white_valve_handle": {
     "sound": "copper"
   },
-  "levitate:orange_valve_handle": {
+  "bearing:orange_valve_handle": {
     "sound": "copper"
   },
-  "levitate:magenta_valve_handle": {
+  "bearing:magenta_valve_handle": {
     "sound": "copper"
   },
-  "levitate:light_blue_valve_handle": {
+  "bearing:light_blue_valve_handle": {
     "sound": "copper"
   },
-  "levitate:yellow_valve_handle": {
+  "bearing:yellow_valve_handle": {
     "sound": "copper"
   },
-  "levitate:lime_valve_handle": {
+  "bearing:lime_valve_handle": {
     "sound": "copper"
   },
-  "levitate:pink_valve_handle": {
+  "bearing:pink_valve_handle": {
     "sound": "copper"
   },
-  "levitate:gray_valve_handle": {
+  "bearing:gray_valve_handle": {
     "sound": "copper"
   },
-  "levitate:light_gray_valve_handle": {
+  "bearing:light_gray_valve_handle": {
     "sound": "copper"
   },
-  "levitate:cyan_valve_handle": {
+  "bearing:cyan_valve_handle": {
     "sound": "copper"
   },
-  "levitate:purple_valve_handle": {
+  "bearing:purple_valve_handle": {
     "sound": "copper"
   },
-  "levitate:blue_valve_handle": {
+  "bearing:blue_valve_handle": {
     "sound": "copper"
   },
-  "levitate:brown_valve_handle": {
+  "bearing:brown_valve_handle": {
     "sound": "copper"
   },
-  "levitate:green_valve_handle": {
+  "bearing:green_valve_handle": {
     "sound": "copper"
   },
-  "levitate:red_valve_handle": {
+  "bearing:red_valve_handle": {
     "sound": "copper"
   },
-  "levitate:black_valve_handle": {
+  "bearing:black_valve_handle": {
     "sound": "copper"
   },
-  "levitate:water_wheel": {
+  "bearing:water_wheel": {
     "sound": "wood"
   },
-  "levitate:large_water_wheel": {
+  "bearing:large_water_wheel": {
     "sound": "wood"
   },
-  "levitate:water_wheel_structure": {
+  "bearing:water_wheel_structure": {
     "sound": "wood"
   },
-  "levitate:creative_motor": {
+  "bearing:creative_motor": {
     "sound": "metal"
   }
 }

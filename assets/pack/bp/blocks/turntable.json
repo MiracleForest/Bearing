@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:turntable",
+      "identifier": "bearing:turntable",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -16,15 +16,15 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.turntable",
+        "identifier": "geometry.bearing.turntable",
         "bone_visibility": {
-          "casing": "q.block_state('levitate:rotor') != 2",
-          "rotor": "q.block_state('levitate:rotor') != 1"
+          "casing": "q.block_state('bearing:rotor') != 2",
+          "rotor": "q.block_state('bearing:rotor') != 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_turntable_model",
+          "texture": "bearing_turntable_model",
           "render_method": "opaque"
         }
       },

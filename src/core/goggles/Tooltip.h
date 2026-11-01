@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 
-namespace lv::core::goggles {
+namespace br::core::goggles {
 
 /// Bedrock formatting codes for Create's ChatFormatting colours.
 namespace fmt {
@@ -71,4 +71,4 @@ struct DescriptionText {
 /// Ctrl held). Empty when there is no summary.
 [[nodiscard]] std::vector<std::string> describeItem(DescriptionText const& text, bool shift, bool ctrl);
 
-} // namespace lv::core::goggles
+} // namespace br::core::goggles

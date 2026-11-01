@@ -1,65 +1,65 @@
 {
-  "levitate:white_toolbox": {
+  "bearing:white_toolbox": {
     "sound": "wood"
   },
-  "levitate:orange_toolbox": {
+  "bearing:orange_toolbox": {
     "sound": "wood"
   },
-  "levitate:magenta_toolbox": {
+  "bearing:magenta_toolbox": {
     "sound": "wood"
   },
-  "levitate:light_blue_toolbox": {
+  "bearing:light_blue_toolbox": {
     "sound": "wood"
   },
-  "levitate:yellow_toolbox": {
+  "bearing:yellow_toolbox": {
     "sound": "wood"
   },
-  "levitate:lime_toolbox": {
+  "bearing:lime_toolbox": {
     "sound": "wood"
   },
-  "levitate:pink_toolbox": {
+  "bearing:pink_toolbox": {
     "sound": "wood"
   },
-  "levitate:gray_toolbox": {
+  "bearing:gray_toolbox": {
     "sound": "wood"
   },
-  "levitate:light_gray_toolbox": {
+  "bearing:light_gray_toolbox": {
     "sound": "wood"
   },
-  "levitate:cyan_toolbox": {
+  "bearing:cyan_toolbox": {
     "sound": "wood"
   },
-  "levitate:purple_toolbox": {
+  "bearing:purple_toolbox": {
     "sound": "wood"
   },
-  "levitate:blue_toolbox": {
+  "bearing:blue_toolbox": {
     "sound": "wood"
   },
-  "levitate:brown_toolbox": {
+  "bearing:brown_toolbox": {
     "sound": "wood"
   },
-  "levitate:green_toolbox": {
+  "bearing:green_toolbox": {
     "sound": "wood"
   },
-  "levitate:red_toolbox": {
+  "bearing:red_toolbox": {
     "sound": "wood"
   },
-  "levitate:black_toolbox": {
+  "bearing:black_toolbox": {
     "sound": "wood"
   },
-  "levitate:copper_backtank": {
+  "bearing:copper_backtank": {
     "sound": "copper"
   },
-  "levitate:netherite_backtank": {
+  "bearing:netherite_backtank": {
     "sound": "metal"
   },
-  "levitate:lectern_controller": {
+  "bearing:lectern_controller": {
     "sound": "wood"
   },
-  "levitate:peculiar_bell": {
+  "bearing:peculiar_bell": {
     "sound": "anvil"
   },
-  "levitate:haunted_bell": {
+  "bearing:haunted_bell": {
     "sound": "anvil"
   }
 }

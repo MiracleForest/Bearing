@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:pink_seat"
+      "identifier": "bearing:pink_seat"
     },
     "tags": [
       "crafting_table"
@@ -21,7 +21,7 @@
       }
     ],
     "result": {
-      "item": "levitate:pink_seat"
+      "item": "bearing:pink_seat"
     }
   }
 }

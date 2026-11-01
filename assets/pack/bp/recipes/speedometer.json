@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:speedometer"
+      "identifier": "bearing:speedometer"
     },
     "tags": [
       "crafting_table"
@@ -13,7 +13,7 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "C": {
         "item": "minecraft:compass"
@@ -21,11 +21,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:speedometer",
+      "item": "bearing:speedometer",
       "count": 1
     }
   }

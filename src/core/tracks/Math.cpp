@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 Vec3d bezier(Vec3d const& p1, Vec3d const& p2, Vec3d const& q1, Vec3d const& q2, double t) {
     Vec3d v1     = lerp(t, p1, q1);
@@ -57,4 +57,4 @@ std::optional<LineHit> intersectRanged(Vec3d const& p1, Vec3d const& q1, Vec3d c
     return hit;
 }
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

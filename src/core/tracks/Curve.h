@@ -13,7 +13,7 @@
 
 #include "core/tracks/Math.h"
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 /// The two ends of a curve, in world coordinates. End 0 is the "first" block (where the curve is
 /// stored as primary), end 1 the other one.
@@ -109,4 +109,4 @@ private:
     Box                mBounds;
 };
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

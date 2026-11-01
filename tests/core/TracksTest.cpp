@@ -7,7 +7,7 @@
 #include "core/tracks/Placement.h"
 #include "core/tracks/Tilt.h"
 
-using namespace lv::core::tracks;
+using namespace br::core::tracks;
 
 namespace {
 
@@ -366,7 +366,7 @@ TEST(TrackGraph, EdgePointsSurviveRebuildsAndAreInvalidated) {
     auto   nodes = g->nodes();
     EdgePoint p;
     p.id       = "signal:test";
-    p.type     = "levitate:signal";
+    p.type     = "bearing:signal";
     p.node1    = nodes[0]->location;
     p.node2    = nodes[1]->location;
     p.position = 3;

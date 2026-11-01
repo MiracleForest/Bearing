@@ -19,7 +19,7 @@
 #include "game/Blocks.h"
 #include "mod/I18n.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 namespace {
 namespace items = common::items;
@@ -169,4 +169,4 @@ std::string lecternPage(BlockSource& region, GlobalPos const& pos, int page) {
     return page < static_cast<int>(pages.size()) ? pages[static_cast<std::size_t>(page)] : std::string{};
 }
 
-} // namespace lv::feature::display
+} // namespace br::feature::display

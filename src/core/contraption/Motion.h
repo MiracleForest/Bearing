@@ -9,7 +9,7 @@
 
 #include "core/contraption/Geometry.h"
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 /// The transform at `t` (0 = `a`, 1 = `b`): translation and angle interpolated (the angle along
 /// the shorter way), axis and pivot taken from `b` (a change of axis jumps to `b`).
@@ -43,4 +43,4 @@ private:
     std::deque<Transform> mQueue;
 };
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

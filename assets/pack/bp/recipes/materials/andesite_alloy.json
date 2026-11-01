@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:andesite_alloy"
+      "identifier": "bearing:andesite_alloy"
     },
     "tags": [
       "crafting_table"
@@ -25,7 +25,7 @@
       }
     ],
     "result": {
-      "item": "levitate:andesite_alloy",
+      "item": "bearing:andesite_alloy",
       "count": 1
     }
   }

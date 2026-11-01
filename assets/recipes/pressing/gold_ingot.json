@@ -1,5 +1,5 @@
 {
-  "type": "levitate:pressing",
+  "type": "bearing:pressing",
   "ingredients": [
     {
       "tag": "c:ingots/gold"
@@ -7,7 +7,7 @@
   ],
   "results": [
     {
-      "id": "levitate:golden_sheet"
+      "id": "bearing:golden_sheet"
     }
   ]
 }

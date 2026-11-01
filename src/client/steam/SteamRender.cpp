@@ -3,7 +3,7 @@
 // SteamEngineRenderer). The server sends tank contents ("steam.tanks") and engines
 // ("steam.engines") to companion players (src/feature/steam/SteamModule.cpp).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <bit>
@@ -41,7 +41,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::steam {
+namespace br::client::steam {
 
 namespace {
 
@@ -405,7 +405,7 @@ LL_TYPE_INSTANCE_HOOK(
 ) {
     try {
         std::string const& name = packet.mName;
-        if (name.starts_with("levitate.steam.whistle_") && name != "levitate.steam.whistle_chiff") {
+        if (name.starts_with("bearing.steam.whistle_") && name != "bearing.steam.whistle_chiff") {
             auto const* raw     = reinterpret_cast<unsigned char const*>(&packet.mServerSoundHandle);
             bool        engaged = raw[sizeof(std::uint64_t)] != 0;
             std::uint64_t handle = 0;
@@ -450,8 +450,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::steam
+} // namespace br::client::steam
 
-LV_REGISTER_MODULE(lv::client::steam::SteamRenderModule);
+BR_REGISTER_MODULE(br::client::steam::SteamRenderModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

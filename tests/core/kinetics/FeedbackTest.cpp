@@ -2,8 +2,8 @@
 
 #include "core/kinetics/Feedback.h"
 
-using namespace lv::core::kinetics;
-using namespace lv::core::kinetics::feedback;
+using namespace br::core::kinetics;
+using namespace br::core::kinetics::feedback;
 
 TEST(KineticFeedback, OverstressEffectDecaysAndTints) {
     EXPECT_FLOAT_EQ(overstressEffectAfter(1.f, 0), 1.f);

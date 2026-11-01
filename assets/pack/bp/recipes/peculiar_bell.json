@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:peculiar_bell"
+      "identifier": "bearing:peculiar_bell"
     },
     "tags": [
       "crafting_table"
@@ -13,19 +13,19 @@
     ],
     "key": {
       "I": {
-        "item": "levitate:brass_block"
+        "item": "bearing:brass_block"
       },
       "P": {
-        "item": "levitate:brass_sheet"
+        "item": "bearing:brass_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:brass_sheet"
+        "item": "bearing:brass_sheet"
       }
     ],
     "result": {
-      "item": "levitate:peculiar_bell",
+      "item": "bearing:peculiar_bell",
       "count": 1
     }
   }

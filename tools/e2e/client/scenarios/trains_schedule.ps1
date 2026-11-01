@@ -29,7 +29,7 @@ function Click-Panel($panel, [double]$x, [double]$y) {
 
 Invoke-Chat '/gamemode creative'
 Invoke-Chat '/clear @s'
-Invoke-Chat '/give @s levitate:schedule 1'
+Invoke-Chat '/give @s bearing:schedule 1'
 Press-Key 1
 Invoke-Chat '/tp @s ~ ~ ~ 0 -60'
 Start-Sleep -Milliseconds 800

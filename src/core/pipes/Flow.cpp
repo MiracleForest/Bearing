@@ -5,7 +5,7 @@
 #include <deque>
 #include <utility>
 
-namespace lv::core::pipes {
+namespace br::core::pipes {
 
 float flowSpeed(float pressure) { return 1.f / 32 + std::clamp(pressure / 128.f, 0.f, 1.f) * 31.f / 32; }
 int   transferSpeedFor(float pressure) { return std::max(1, static_cast<int>(pressure / 2.f)); }
@@ -807,4 +807,4 @@ void Network::tick() {
     }
 }
 
-} // namespace lv::core::pipes
+} // namespace br::core::pipes

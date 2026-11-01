@@ -22,9 +22,9 @@
 #include "game/Blocks.h"
 #include "mod/Config.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
+namespace ext = ::br::feature::contraption::actors_ext;
 
 namespace {
 
@@ -189,4 +189,4 @@ Registrar const gRegistrar;
 
 } // namespace
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

@@ -24,16 +24,16 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::display::nixie {
+namespace br::feature::display::nixie {
 
 namespace blockdata = common::blockdata;
 namespace items     = common::items;
 
 namespace {
-constexpr char kDbNixies[] = "lv:display:nixies";
+constexpr char kDbNixies[] = "br:display:nixies";
 constexpr char kDataKey[]  = "nixie";
-constexpr char kFacing[]   = "levitate:facing";
-constexpr char kFace[]     = "levitate:face"; ///< 0 floor, 1 ceiling, 2 wall, 3 wall_reversed
+constexpr char kFacing[]   = "bearing:facing";
+constexpr char kFace[]     = "bearing:face"; ///< 0 floor, 1 ceiling, 2 wall, 3 wall_reversed
 constexpr int  kMaxRow     = 64;
 
 std::set<GlobalPos>& tubes() {
@@ -167,7 +167,7 @@ Lifecycle const gLifecycle;
 
 bool isNixie(std::string_view id) {
     if (id == kNixieId) return true;
-    if (!id.starts_with("levitate:") || !id.ends_with("_nixie_tube")) return false;
+    if (!id.starts_with("bearing:") || !id.ends_with("_nixie_tube")) return false;
     auto colour = id.substr(9, id.size() - 9 - 11);
     for (int i = 0; i < 16; ++i)
         if (i != kOrange && colour == kDyeNames[static_cast<std::size_t>(i)]) return true;
@@ -183,7 +183,7 @@ int colourOf(std::string_view id) {
 
 std::string idFor(int dye) {
     if (dye == kOrange) return kNixieId;
-    return std::string("levitate:") + kDyeNames[static_cast<std::size_t>(std::clamp(dye, 0, 15))] + "_nixie_tube";
+    return std::string("bearing:") + kDyeNames[static_cast<std::size_t>(std::clamp(dye, 0, 15))] + "_nixie_tube";
 }
 
 std::vector<GlobalPos> row(BlockSource& region, GlobalPos const& pos) {
@@ -394,4 +394,4 @@ struct Registration {
 Registration const gRegistration;
 } // namespace
 
-} // namespace lv::feature::display::nixie
+} // namespace br::feature::display::nixie

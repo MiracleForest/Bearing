@@ -30,19 +30,19 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 namespace bd = common::blockdata;
 
 namespace {
 
 constexpr std::array<char const*, 6> kFaceStates{
-    "levitate:down",
-    "levitate:up",
-    "levitate:north",
-    "levitate:south",
-    "levitate:west",
-    "levitate:east"
+    "bearing:down",
+    "bearing:up",
+    "bearing:north",
+    "bearing:south",
+    "bearing:west",
+    "bearing:east"
 };
 
 int stateOf(Block const& b, char const* name, int fallback = 0) { return game::intState(b, name).value_or(fallback); }
@@ -106,7 +106,7 @@ bool shaftFacing(BlockSource& region, BlockPos const& pos, Face face) {
 }
 
 Face faceFromState(int v) { return static_cast<Face>(std::clamp(v, 0, 5)); }
-/// Smart pipe `levitate:facing` 0..3 = north, south, west, east.
+/// Smart pipe `bearing:facing` 0..3 = north, south, west, east.
 Face horizontalFromState(int v) { return static_cast<Face>(std::clamp(v, 0, 3) + 2); }
 int  horizontalToState(Face f) { return std::clamp(static_cast<int>(f) - 2, 0, 3); }
 
@@ -122,7 +122,7 @@ FaceMask readMask(Block const& b) {
 // ---- kinds and states ---------------------------------------------------------------------------
 
 BlockKind kindOf(std::string_view id) {
-    if (!id.starts_with("levitate:")) return BlockKind::None;
+    if (!id.starts_with("bearing:")) return BlockKind::None;
     if (id == kFluidPipe) return BlockKind::Pipe;
     if (id == kGlassPipe) return BlockKind::Glass;
     if (id == kEncasedPipe) return BlockKind::Encased;
@@ -144,16 +144,16 @@ Block const* withConnections(Block const& block, FaceMask open) {
     return out;
 }
 
-Face pumpFront(Block const& block) { return faceFromState(stateOf(block, "levitate:facing", 1)); }
+Face pumpFront(Block const& block) { return faceFromState(stateOf(block, "bearing:facing", 1)); }
 
 cp::ValvePlacement valveState(Block const& block) {
-    return {faceFromState(stateOf(block, "levitate:facing", 1)), stateOf(block, "levitate:along_first") != 0};
+    return {faceFromState(stateOf(block, "bearing:facing", 1)), stateOf(block, "bearing:along_first") != 0};
 }
 
 cp::SmartPipeState smartState(Block const& block) {
     return {
-        static_cast<cp::AttachFace>(std::clamp(stateOf(block, "levitate:face"), 0, 2)),
-        horizontalFromState(stateOf(block, "levitate:facing"))
+        static_cast<cp::AttachFace>(std::clamp(stateOf(block, "bearing:face"), 0, 2)),
+        horizontalFromState(stateOf(block, "bearing:facing"))
     };
 }
 
@@ -163,7 +163,7 @@ FaceMask flowFaces(Block const& block) {
     case BlockKind::Encased:
         return readMask(block);
     case BlockKind::Glass:
-        return cp::axisMask(static_cast<Axis>(std::clamp(stateOf(block, "levitate:axis", 1), 0, 2)));
+        return cp::axisMask(static_cast<Axis>(std::clamp(stateOf(block, "bearing:axis", 1), 0, 2)));
     case BlockKind::Pump:
         return cp::axisMask(cp::axisOf(pumpFront(block)));
     case BlockKind::Valve: {
@@ -182,7 +182,7 @@ std::string flowSignature(Block const& block) {
     if (k == BlockKind::None) return {};
     std::string s = std::to_string(static_cast<int>(k)) + ":" + std::to_string(flowFaces(block));
     if (k == BlockKind::Pump) s += ":" + std::to_string(static_cast<int>(pumpFront(block)));
-    if (k == BlockKind::Valve) s += ":" + std::to_string(stateOf(block, "levitate:enabled"));
+    if (k == BlockKind::Valve) s += ":" + std::to_string(stateOf(block, "bearing:enabled"));
     return s;
 }
 
@@ -235,7 +235,7 @@ void updateRims(BlockSource& region, BlockPos const& pos) {
         if (i < 3) a |= 1 << i;
         else b |= 1 << (i - 3);
     }
-    auto const* next = withStates(block, {{"levitate:rim_a", a}, {"levitate:rim_b", b}});
+    auto const* next = withStates(block, {{"bearing:rim_a", a}, {"bearing:rim_b", b}});
     if (next != &block) game::setBlock(region, pos, *next);
 }
 
@@ -281,19 +281,19 @@ void orientPlaced(BlockSource& region, BlockPos const& pos, PlaceContext const& 
             preferred = side;
         }
         Face front = cp::pumpPlacement(look, ctx.sneaking, preferred, pipes);
-        next       = withStates(block, {{"levitate:facing", static_cast<int>(front)}});
+        next       = withStates(block, {{"bearing:facing", static_cast<int>(front)}});
         break;
     }
     case BlockKind::Valve: {
         std::array<bool, 6> shafts{};
         for (Face f : cp::kFaces) shafts[static_cast<int>(f)] = shaftFacing(region, pos, f);
         auto v = cp::valvePlacement(look, horizontal, ctx.sneaking, shafts, pipes);
-        next   = withStates(block, {{"levitate:facing", static_cast<int>(v.facing)}, {"levitate:along_first", v.alongFirst ? 1 : 0}});
+        next   = withStates(block, {{"bearing:facing", static_cast<int>(v.facing)}, {"bearing:along_first", v.alongFirst ? 1 : 0}});
         break;
     }
     case BlockKind::Smart: {
         auto s = cp::smartPipePlacement(look, horizontal, ctx.lookX, ctx.lookZ, pipes);
-        next   = withStates(block, {{"levitate:face", static_cast<int>(s.face)}, {"levitate:facing", horizontalToState(s.facing)}});
+        next   = withStates(block, {{"bearing:face", static_cast<int>(s.face)}, {"bearing:facing", horizontalToState(s.facing)}});
         break;
     }
     default:
@@ -328,7 +328,7 @@ void setBracket(BlockSource& region, BlockPos const& pos, std::string const& id)
     }
     auto const& block = region.getBlock(pos);
     int         look  = id.empty() ? 0 : id == kWoodBracket ? 1 : 2;
-    auto const* next  = withStates(block, {{"levitate:bracket", look}});
+    auto const* next  = withStates(block, {{"bearing:bracket", look}});
     if (next != &block) game::setBlock(region, pos, *next);
 }
 
@@ -369,13 +369,13 @@ bool wrench(Player* player, BlockSource& region, BlockPos const& pos, Face click
         if (removeBracket(player, region, pos)) return true;
         auto axis = cp::wrenchGlassAxis(readMask(block), clicked, hx - .5, hy - .5, hz - .5);
         if (!axis) return false;
-        next = game::blockWith(kGlassPipe, {{"levitate:axis", static_cast<int>(*axis)}});
+        next = game::blockWith(kGlassPipe, {{"bearing:axis", static_cast<int>(*axis)}});
         what = "made a glass pipe";
         break;
     }
     case BlockKind::Glass: {
         if (removeBracket(player, region, pos)) return true;
-        auto axis = static_cast<Axis>(std::clamp(stateOf(block, "levitate:axis", 1), 0, 2));
+        auto axis = static_cast<Axis>(std::clamp(stateOf(block, "bearing:axis", 1), 0, 2));
         auto m    = cp::regularPipeFromAxis(axis, connectable(region, pos));
         if (auto const* pipe = blockOf(kFluidPipe)) next = withConnections(*pipe, m);
         what = "made a fluid pipe";
@@ -392,19 +392,19 @@ bool wrench(Player* player, BlockSource& region, BlockPos const& pos, Face click
         break;
     }
     case BlockKind::Pump:
-        next = withStates(block, {{"levitate:facing", static_cast<int>(cp::opposite(pumpFront(block)))}});
+        next = withStates(block, {{"bearing:facing", static_cast<int>(cp::opposite(pumpFront(block)))}});
         what = "reversed the pump";
         break;
     case BlockKind::Valve: {
         auto v = cp::valveWrenched(valveState(block), clicked);
-        next   = withStates(block, {{"levitate:facing", static_cast<int>(v.facing)}, {"levitate:along_first", v.alongFirst ? 1 : 0}});
+        next   = withStates(block, {{"bearing:facing", static_cast<int>(v.facing)}, {"bearing:along_first", v.alongFirst ? 1 : 0}});
         what   = "rotated the valve";
         break;
     }
     case BlockKind::Smart: {
         if (cp::axisOf(clicked) != Axis::Y) return false;
         auto s = smartState(block);
-        next   = withStates(block, {{"levitate:facing", horizontalToState(cp::clockwise(s.facing))}});
+        next   = withStates(block, {{"bearing:facing", horizontalToState(cp::clockwise(s.facing))}});
         what   = "rotated the smart pipe";
         break;
     }
@@ -427,7 +427,7 @@ bool encase(BlockSource& region, BlockPos const& pos) {
         open = readMask(block);
         break;
     case BlockKind::Glass:
-        open = cp::axisMask(static_cast<Axis>(std::clamp(stateOf(block, "levitate:axis", 1), 0, 2)));
+        open = cp::axisMask(static_cast<Axis>(std::clamp(stateOf(block, "bearing:axis", 1), 0, 2)));
         break;
     default:
         return false;
@@ -452,4 +452,4 @@ BlockSource* regionOf(int dim) {
 
 BlockPos toBlockPos(GlobalPos const& p) { return BlockPos{p.x, p.y, p.z}; }
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes

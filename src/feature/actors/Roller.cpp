@@ -32,13 +32,13 @@
 #include "mod/Config.h"
 #include "mod/I18n.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
-namespace bd  = ::lv::feature::common::blockdata;
-namespace vb  = ::lv::feature::common::valuebox;
-namespace fs  = ::lv::feature::common::filterslot;
-namespace it  = ::lv::feature::common::items;
+namespace ext = ::br::feature::contraption::actors_ext;
+namespace bd  = ::br::feature::common::blockdata;
+namespace vb  = ::br::feature::common::valuebox;
+namespace fs  = ::br::feature::common::filterslot;
+namespace it  = ::br::feature::common::items;
 
 namespace {
 
@@ -93,7 +93,7 @@ bool rollerCanBreak(BlockSource& region, BlockPos const& pos, Block const& block
     }
     if (!hasCollision(region, pos)) return false;
     std::string id = block.getTypeName();
-    if (id == "levitate:track" || id == "levitate:fake_track") return false;
+    if (id == "bearing:track" || id == "bearing:fake_track") return false;
     return isBreakable(block);
 }
 
@@ -434,4 +434,4 @@ void rollerInstall() {
     );
 }
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

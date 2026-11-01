@@ -14,7 +14,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::assembly::sequenced {
+namespace br::feature::assembly::sequenced {
 
 namespace items   = common::items;
 namespace recipes = common::recipes;
@@ -256,4 +256,4 @@ void reload() {
     c.loaded = false;
 }
 
-} // namespace lv::feature::assembly::sequenced
+} // namespace br::feature::assembly::sequenced

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:item_vault"
+      "identifier": "bearing:item_vault"
     },
     "tags": [
       "crafting_table"
@@ -14,7 +14,7 @@
     ],
     "key": {
       "B": {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       },
       "C": {
         "item": "minecraft:barrel"
@@ -26,7 +26,7 @@
       }
     ],
     "result": {
-      "item": "levitate:item_vault"
+      "item": "bearing:item_vault"
     }
   }
 }

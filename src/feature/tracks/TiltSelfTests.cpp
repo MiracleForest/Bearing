@@ -15,9 +15,9 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::tracks::tilttests {
+namespace br::feature::tracks::tilttests {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 
 namespace {
 
@@ -100,7 +100,7 @@ std::vector<ct::Vec3d> walk(int dim, Ramp const& r) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("tracks.tilt", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.tilt", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(4800, 6);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     int  dim = base.dim;
@@ -170,7 +170,7 @@ LV_REGISTER_SELFTEST("tracks.tilt", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(!tiltAt(dim, r.m), "breaking the ramp clears the tilt");
 });
 
-LV_REGISTER_SELFTEST("tracks.tilt_undo", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.tilt_undo", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(4815, 6);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     int  dim = base.dim;
@@ -204,4 +204,4 @@ LV_REGISTER_SELFTEST("tracks.tilt_undo", [](Context& ctx) -> ll::coro::CoroTask<
     co_await ctx.ticks(2);
 });
 
-} // namespace lv::feature::tracks::tilttests
+} // namespace br::feature::tracks::tilttests

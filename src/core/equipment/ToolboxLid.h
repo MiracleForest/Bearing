@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 /// Create's LerpedFloat chases of the lid (LINEAR) and the drawers (EXP), speed 0.2.
 struct ToolboxLid {
@@ -36,4 +36,4 @@ struct ToolboxLid {
 /// index of the toolbox when the grid holds exactly one toolbox and one dye and nothing else.
 [[nodiscard]] std::optional<int> dyeingToolboxSlot(std::vector<std::string> const& grid);
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

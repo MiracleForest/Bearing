@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:smart_chute",
+      "identifier": "bearing:smart_chute",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ]
@@ -24,38 +24,38 @@
       "minecraft:loot": "loot_tables/blocks/smart_chute.json",
       "minecraft:light_dampening": 0,
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.smart_chute"
+        "identifier": "geometry.bearing.smart_chute"
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_smart_chute_side",
+          "texture": "bearing_smart_chute_side",
           "render_method": "alpha_test"
         },
         "side": {
-          "texture": "levitate_smart_chute_side",
+          "texture": "bearing_smart_chute_side",
           "render_method": "alpha_test"
         },
         "top": {
-          "texture": "levitate_smart_chute_top",
+          "texture": "bearing_smart_chute_top",
           "render_method": "alpha_test"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_smart_chute_side_powered",
+              "texture": "bearing_smart_chute_side_powered",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_smart_chute_side_powered",
+              "texture": "bearing_smart_chute_side_powered",
               "render_method": "alpha_test"
             },
             "top": {
-              "texture": "levitate_smart_chute_top",
+              "texture": "bearing_smart_chute_top",
               "render_method": "alpha_test"
             }
           }

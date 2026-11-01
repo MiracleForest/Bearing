@@ -14,7 +14,7 @@ class BlockPos;
 class BlockSource;
 class ItemStack;
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 /// Faces are Bedrock FacingIDs: 0 down, 1 up, 2 north, 3 south, 4 west, 5 east.
 ///
@@ -45,4 +45,4 @@ struct Observable {
 void registerObservable(std::string const& blockId, Observable observable);
 } // namespace threshold
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

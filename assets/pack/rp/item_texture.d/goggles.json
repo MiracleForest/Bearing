@@ -1,8 +1,8 @@
 {
-  "levitate_wrench": {
+  "bearing_wrench": {
     "textures": "textures/items/wrench"
   },
-  "levitate_goggles": {
+  "bearing_goggles": {
     "textures": "textures/items/goggles"
   }
 }

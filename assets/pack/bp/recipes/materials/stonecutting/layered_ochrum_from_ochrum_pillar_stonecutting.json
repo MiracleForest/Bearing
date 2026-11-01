@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:layered_ochrum_from_ochrum_pillar_stonecutting"
+      "identifier": "bearing:layered_ochrum_from_ochrum_pillar_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:ochrum_pillar"
+        "item": "bearing:ochrum_pillar"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:ochrum_pillar"
+        "item": "bearing:ochrum_pillar"
       }
     ],
     "result": {
-      "item": "levitate:layered_ochrum",
+      "item": "bearing:layered_ochrum",
       "count": 1
     }
   }

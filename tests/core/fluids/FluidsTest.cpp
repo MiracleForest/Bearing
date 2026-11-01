@@ -4,25 +4,25 @@
 
 #include "core/fluids/Fluids.h"
 
-using namespace lv::core::fluids;
+using namespace br::core::fluids;
 
 TEST(FluidsPotions, EncodesAndDecodesPotionFluids) {
     auto id = potionFluid(Bottle::Splash, "minecraft:harming");
-    EXPECT_EQ(id, "levitate:potion/splash/harming");
+    EXPECT_EQ(id, "bearing:potion/splash/harming");
     auto pf = parsePotionFluid(id);
     ASSERT_TRUE(pf);
     EXPECT_EQ(pf->bottle, Bottle::Splash);
     EXPECT_EQ(pf->potion, "harming");
-    EXPECT_FALSE(parsePotionFluid("levitate:potion/regular/nope"));
-    EXPECT_FALSE(parsePotionFluid("levitate:honey"));
-    EXPECT_FALSE(parsePotionFluid("levitate:potion/bogus/harming"));
+    EXPECT_FALSE(parsePotionFluid("bearing:potion/regular/nope"));
+    EXPECT_FALSE(parsePotionFluid("bearing:honey"));
+    EXPECT_FALSE(parsePotionFluid("bearing:potion/bogus/harming"));
 }
 
 TEST(FluidsPotions, ItemsMapToFluidsAndBack) {
     EXPECT_EQ(fluidOfPotionItem("minecraft:potion", 0), "minecraft:water");
-    EXPECT_EQ(fluidOfPotionItem("minecraft:splash_potion", 0), "levitate:potion/splash/water");
-    EXPECT_EQ(fluidOfPotionItem("minecraft:potion", 23), "levitate:potion/regular/harming");
-    EXPECT_EQ(fluidOfPotionItem("minecraft:lingering_potion", 14), "levitate:potion/lingering/swiftness");
+    EXPECT_EQ(fluidOfPotionItem("minecraft:splash_potion", 0), "bearing:potion/splash/water");
+    EXPECT_EQ(fluidOfPotionItem("minecraft:potion", 23), "bearing:potion/regular/harming");
+    EXPECT_EQ(fluidOfPotionItem("minecraft:lingering_potion", 14), "bearing:potion/lingering/swiftness");
     EXPECT_EQ(fluidOfPotionItem("minecraft:apple", 0), "");
     EXPECT_EQ(fluidOfPotionItem("minecraft:potion", 999), "");
 
@@ -30,15 +30,15 @@ TEST(FluidsPotions, ItemsMapToFluidsAndBack) {
     ASSERT_TRUE(water);
     EXPECT_EQ(water->id, "minecraft:potion");
     EXPECT_EQ(water->aux, 0);
-    auto strength = bottleFor("levitate:potion/regular/strength");
+    auto strength = bottleFor("bearing:potion/regular/strength");
     ASSERT_TRUE(strength);
     EXPECT_EQ(strength->id, "minecraft:potion");
     EXPECT_EQ(strength->aux, 31);
-    auto splash = bottleFor("levitate:potion/splash/night_vision");
+    auto splash = bottleFor("bearing:potion/splash/night_vision");
     ASSERT_TRUE(splash);
     EXPECT_EQ(splash->id, "minecraft:splash_potion");
     EXPECT_EQ(splash->aux, 5);
-    EXPECT_FALSE(bottleFor("levitate:honey"));
+    EXPECT_FALSE(bottleFor("bearing:honey"));
     // every potion round-trips
     for (auto const& p : potionTypes()) {
         for (auto b : {Bottle::Regular, Bottle::Splash, Bottle::Lingering}) {
@@ -52,11 +52,11 @@ TEST(FluidsPotions, ItemsMapToFluidsAndBack) {
 }
 
 TEST(FluidsNames, KeysAndColours) {
-    EXPECT_EQ(fluidNameKey("levitate:honey"), "fluid.create.honey");
-    EXPECT_EQ(fluidNameKey("levitate:potion/regular/harming"), "fluid.create.potion");
+    EXPECT_EQ(fluidNameKey("bearing:honey"), "fluid.create.honey");
+    EXPECT_EQ(fluidNameKey("bearing:potion/regular/harming"), "fluid.create.potion");
     EXPECT_EQ(fluidNameKey("minecraft:water"), "fluid_type.minecraft.water");
-    EXPECT_EQ(fluidColor("levitate:honey"), 0xEAAE2Fu);
-    EXPECT_NE(fluidColor("levitate:potion/regular/healing"), fluidColor("levitate:potion/regular/poison"));
+    EXPECT_EQ(fluidColor("bearing:honey"), 0xEAAE2Fu);
+    EXPECT_NE(fluidColor("bearing:potion/regular/healing"), fluidColor("bearing:potion/regular/poison"));
 }
 
 TEST(FluidsNames, PotionFluidsAreNamedAfterTheirItem) {

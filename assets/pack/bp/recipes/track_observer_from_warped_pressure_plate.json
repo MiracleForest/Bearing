@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:track_observer_from_warped_pressure_plate"
+      "identifier": "bearing:track_observer_from_warped_pressure_plate"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:railway_casing"
+        "item": "bearing:railway_casing"
       },
       {
         "item": "minecraft:warped_pressure_plate"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:railway_casing"
+        "item": "bearing:railway_casing"
       }
     ],
     "result": {
-      "item": "levitate:track_observer",
+      "item": "bearing:track_observer",
       "count": 2
     }
   }

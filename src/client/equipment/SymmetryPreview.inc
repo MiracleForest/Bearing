@@ -4,7 +4,7 @@
 // the triple mirror. Drawn as framed planes with the outline lines (our own shape, not Create's
 // model).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <chrono>
 #include <cmath>
@@ -28,12 +28,12 @@
 #include "feature/common/Items.h"
 #include "mod/Module.h"
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 
 namespace {
 
-namespace ce    = lv::core::equipment;
-namespace items = lv::feature::common::items;
+namespace ce    = br::core::equipment;
+namespace items = br::feature::common::items;
 
 std::mutex& mirrorMutex() {
     static std::mutex m;
@@ -52,8 +52,8 @@ void tickMirrors() {
         int   dim = static_cast<int>(lp->getDimensionId());
         for (int s = 0; s < 9; ++s) {
             auto const& st = inv.getItem(s);
-            if (items::isEmpty(st) || items::idOf(st) != "levitate:wand_of_symmetry") continue;
-            auto m = ce::Mirror::fromJson(items::getData(st, "lv:symmetry"));
+            if (items::isEmpty(st) || items::idOf(st) != "bearing:wand_of_symmetry") continue;
+            auto m = ce::Mirror::fromJson(items::getData(st, "br:symmetry"));
             if (m.placed && m.enabled && m.dim() == dim) next.push_back(m);
         }
     }
@@ -141,8 +141,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
-LV_REGISTER_MODULE(lv::client::equipment::SymmetryPreviewModule);
+BR_REGISTER_MODULE(br::client::equipment::SymmetryPreviewModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

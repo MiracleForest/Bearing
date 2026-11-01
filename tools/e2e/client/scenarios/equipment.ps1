@@ -27,12 +27,12 @@ Invoke-Chat '/fill ~2 ~-1 ~-4 ~8 ~-1 ~4 stone'
 Start-Sleep -Milliseconds 400
 
 # the blocks: toolboxes in a few colours, both backtanks, a lectern controller
-Invoke-Chat '/setblock ~3 ~ ~ levitate:brown_toolbox ["levitate:facing"=3]'
-Invoke-Chat '/setblock ~4 ~ ~-2 levitate:red_toolbox ["levitate:facing"=3]'
-Invoke-Chat '/setblock ~4 ~ ~2 levitate:cyan_toolbox ["levitate:facing"=3]'
-Invoke-Chat '/setblock ~6 ~ ~-3 levitate:copper_backtank ["levitate:facing"=3]'
-Invoke-Chat '/setblock ~6 ~ ~3 levitate:netherite_backtank ["levitate:facing"=3]'
-Invoke-Chat '/setblock ~7 ~ ~ levitate:lectern_controller ["levitate:facing"=3]'
+Invoke-Chat '/setblock ~3 ~ ~ bearing:brown_toolbox ["bearing:facing"=3]'
+Invoke-Chat '/setblock ~4 ~ ~-2 bearing:red_toolbox ["bearing:facing"=3]'
+Invoke-Chat '/setblock ~4 ~ ~2 bearing:cyan_toolbox ["bearing:facing"=3]'
+Invoke-Chat '/setblock ~6 ~ ~-3 bearing:copper_backtank ["bearing:facing"=3]'
+Invoke-Chat '/setblock ~6 ~ ~3 bearing:netherite_backtank ["bearing:facing"=3]'
+Invoke-Chat '/setblock ~7 ~ ~ bearing:lectern_controller ["bearing:facing"=3]'
 Start-Sleep -Seconds 1
 Save-Screenshot 'blocks' | Out-Null
 
@@ -60,7 +60,7 @@ Save-Screenshot 'toolbox-closed' | Out-Null
 # the lid and drawers (Create's ToolboxRenderer): held open from the console as if a player had the
 # screen open; the client mod animates them, vanilla clients see the open model. The red toolbox
 # faces the player, the brown one shows its back.
-Invoke-Chat '/setblock ~4 ~ ~-2 levitate:red_toolbox ["levitate:facing"=1]'
+Invoke-Chat '/setblock ~4 ~ ~-2 bearing:red_toolbox ["bearing:facing"=1]'
 Invoke-Chat '/tp @s ~ ~ ~ -110 25'
 $mark = Get-LogMark
 Invoke-Chat '/create toolbox lid ~4 ~ ~-2 600'
@@ -109,7 +109,7 @@ if (-not $vanilla) {
     Click 0.5 0.5 -Relative
     Wait-LogLine 'equipment: toolbox at .* picked up by ' 15 -Since $mark | Out-Null
     Invoke-Chat '/clear @s torch'
-    Invoke-Chat '/clear @s levitate:handheld_worldshaper'
+    Invoke-Chat '/clear @s bearing:handheld_worldshaper'
     Invoke-Chat '/give @s red_dye'
     Invoke-Chat '/setblock ~3 ~ ~ crafting_table'
     Start-Sleep -Milliseconds 600
@@ -126,7 +126,7 @@ if (-not $vanilla) {
     # take the result and put it into the third hotbar slot
     $mark = Get-LogMark
     Click-Slot 0.730 0.365
-    Wait-LogLine 'equipment: .* dyed a toolbox into levitate:red_toolbox in the crafting grid \(contents kept\)' 15 -Since $mark | Out-Null
+    Wait-LogLine 'equipment: .* dyed a toolbox into bearing:red_toolbox in the crafting grid \(contents kept\)' 15 -Since $mark | Out-Null
     Start-Sleep -Milliseconds 400
     Click-Slot 0.574 0.729
     Save-Screenshot 'crafted' | Out-Null
@@ -154,7 +154,7 @@ if (-not $vanilla) {
 
 # worldshaper: sneak + right-click opens its screen
 Invoke-Chat '/clear @s'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 1 levitate:handheld_worldshaper'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 1 bearing:handheld_worldshaper'
 Press-Key '2'                      # slot 0 is linked to the toolbox (torches)
 Start-Sleep -Milliseconds 500
 Hold-Key 0x10 { Click 0.5 0.5 -Relative -Right; Start-Sleep -Milliseconds 900 }
@@ -163,7 +163,7 @@ Close-Native
 
 # wand of symmetry: right-click a block places the mirror, sneak + right-click opens the screen
 Invoke-Chat '/clear @s'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 1 levitate:wand_of_symmetry'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 1 bearing:wand_of_symmetry'
 Press-Key '2'                      # slot 0 is linked to the toolbox (torches)
 Start-Sleep -Milliseconds 500
 $mark = Get-LogMark
@@ -177,7 +177,7 @@ Close-Native
 
 # potato cannon: a shot at the ground
 Invoke-Chat '/clear @s'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 1 levitate:potato_cannon'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 1 bearing:potato_cannon'
 Invoke-Chat '/give @s potato 16'
 Press-Key '2'                      # slot 0 is linked to the toolbox (torches)
 Invoke-Chat '/gamemode survival'
@@ -207,9 +207,9 @@ Invoke-Chat '/gamemode creative'
 
 # worn diving gear, seen from the front
 Invoke-Chat '/clear @s'
-Invoke-Chat '/replaceitem entity @s slot.armor.head 0 levitate:copper_diving_helmet'
-Invoke-Chat '/replaceitem entity @s slot.armor.chest 0 levitate:copper_backtank'
-Invoke-Chat '/replaceitem entity @s slot.armor.feet 0 levitate:copper_diving_boots'
+Invoke-Chat '/replaceitem entity @s slot.armor.head 0 bearing:copper_diving_helmet'
+Invoke-Chat '/replaceitem entity @s slot.armor.chest 0 bearing:copper_backtank'
+Invoke-Chat '/replaceitem entity @s slot.armor.feet 0 bearing:copper_diving_boots'
 Start-Sleep -Milliseconds 600
 Press-Key F5; Press-Key F5
 Start-Sleep -Milliseconds 900

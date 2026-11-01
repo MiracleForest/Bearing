@@ -24,26 +24,26 @@ class BlockSource;
 class ItemStack;
 class Player;
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
-namespace cc = ::lv::core::contraption;
-namespace cb = ::lv::core::bearings;
+namespace cc = ::br::core::contraption;
+namespace cb = ::br::core::bearings;
 using GP     = core::GlobalPos;
 using Json   = nlohmann::json;
 
 // ---- ids --------------------------------------------------------------------------------------
-inline constexpr std::string_view kMechanicalBearing = "levitate:mechanical_bearing";
-inline constexpr std::string_view kWindmillBearing   = "levitate:windmill_bearing";
-inline constexpr std::string_view kClockworkBearing  = "levitate:clockwork_bearing";
-inline constexpr std::string_view kTurntable         = "levitate:turntable";
-inline constexpr std::string_view kCartAssembler     = "levitate:cart_assembler";
-inline constexpr std::string_view kControllerRail    = "levitate:controller_rail";
-inline constexpr std::string_view kSailFrame         = "levitate:sail_frame";
-inline constexpr std::string_view kWhiteSail         = "levitate:white_sail";
-inline constexpr std::string_view kMinecartCoupling  = "levitate:minecart_coupling";
-inline constexpr std::string_view kMinecartContraption      = "levitate:minecart_contraption";
-inline constexpr std::string_view kChestMinecartContraption = "levitate:chest_minecart_contraption";
-inline constexpr std::string_view kWrench            = "levitate:wrench"; // U8's item, by id
+inline constexpr std::string_view kMechanicalBearing = "bearing:mechanical_bearing";
+inline constexpr std::string_view kWindmillBearing   = "bearing:windmill_bearing";
+inline constexpr std::string_view kClockworkBearing  = "bearing:clockwork_bearing";
+inline constexpr std::string_view kTurntable         = "bearing:turntable";
+inline constexpr std::string_view kCartAssembler     = "bearing:cart_assembler";
+inline constexpr std::string_view kControllerRail    = "bearing:controller_rail";
+inline constexpr std::string_view kSailFrame         = "bearing:sail_frame";
+inline constexpr std::string_view kWhiteSail         = "bearing:white_sail";
+inline constexpr std::string_view kMinecartCoupling  = "bearing:minecart_coupling";
+inline constexpr std::string_view kMinecartContraption      = "bearing:minecart_contraption";
+inline constexpr std::string_view kChestMinecartContraption = "bearing:chest_minecart_contraption";
+inline constexpr std::string_view kWrench            = "bearing:wrench"; // U8's item, by id
 
 /// `config/bearings.json` (Create's CKinetics keys).
 struct Config {
@@ -66,7 +66,7 @@ enum class Kind : int { Mechanical, Windmill, Clockwork, Turntable, CartAssemble
 // ---- sails --------------------------------------------------------------------------------------
 /// The 16 dye colours in Create's (vanilla) order; white first.
 [[nodiscard]] std::vector<std::string> const& dyeColours();
-/// "levitate:<colour>_sail".
+/// "bearing:<colour>_sail".
 [[nodiscard]] std::string sailIdOf(std::string_view colour);
 [[nodiscard]] bool isSail(std::string_view id);      ///< sails and the sail frame
 [[nodiscard]] bool isSailFrame(std::string_view id);
@@ -88,7 +88,7 @@ enum class Kind : int { Mechanical, Windmill, Clockwork, Turntable, CartAssemble
 bool setStates(BlockSource& region, GP const& p, std::vector<std::pair<std::string_view, int>> const& states);
 /// Places `id` with states at `p` (neighbour + client updates).
 bool placeBlock(BlockSource& region, GP const& p, std::string_view id, std::vector<std::pair<std::string_view, int>> const& states = {});
-/// `levitate:facing` (0 down .. 5 east) of a block.
+/// `bearing:facing` (0 down .. 5 east) of a block.
 [[nodiscard]] cc::Dir facingOf(Block const& block);
 /// Strongest redstone signal (0..15) reaching `p` from its neighbours (state-based, see SPEC §8).
 [[nodiscard]] int redstoneSignal(BlockSource& region, cc::Pos const& p);
@@ -173,4 +173,4 @@ Actor* spawnCart(BlockSource& region, cc::Vec3d const& at, std::string const& en
 /// How high a cart rides above its rail block (calibrated from carts on vanilla rails).
 [[nodiscard]] double cartRailY();
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings

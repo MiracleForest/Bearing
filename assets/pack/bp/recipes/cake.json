@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cake"
+      "identifier": "bearing:cake"
     },
     "tags": [
       "crafting_table"
@@ -23,12 +23,12 @@
         "item": "minecraft:egg"
       },
       "P": {
-        "item": "levitate:dough"
+        "item": "bearing:dough"
       }
     },
     "unlock": [
       {
-        "item": "levitate:dough"
+        "item": "bearing:dough"
       }
     ],
     "result": {

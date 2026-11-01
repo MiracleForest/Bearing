@@ -28,7 +28,7 @@
 #include "feature/transmission/TransmissionInternal.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 BlockSource* regionOf(int dim) {
     auto level = ll::service::getLevel();
@@ -202,4 +202,4 @@ Face horizontalLooking(Player const& player) {
     return look[2] > 0 ? Face::South : Face::North;
 }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

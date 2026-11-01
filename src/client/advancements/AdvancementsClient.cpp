@@ -1,7 +1,7 @@
 // Client side of the advancements unit (U45): Create's advancement toast (top right, 5 s) and
 // the advancement tree screen (`/create advancements`), drawn natively by the client mod.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <chrono>
@@ -26,14 +26,14 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::advancements {
+namespace br::client::advancements {
 
 namespace {
 
-namespace net   = lv::feature::net;
-namespace items = lv::feature::common::items;
-namespace ca    = lv::core::advancements;
-using namespace lv::client::screen;
+namespace net   = br::feature::net;
+namespace items = br::feature::common::items;
+namespace ca    = br::core::advancements;
+using namespace br::client::screen;
 using Clock = std::chrono::steady_clock;
 
 std::shared_ptr<ItemStack> iconOf(std::string_view id) {
@@ -86,7 +86,7 @@ void drawToasts(MinecraftUIRenderContext& ctx) {
         c.frame({x + 1, y + 1, kToastW - 2, kToastH - 2}, ca::goal(d.type) ? 0xFFC6A23A : 0xFF8B8B8B);
         if (t.icon) c.item(*t.icon, x + 8, y + 8);
         bool        goal = ca::goal(d.type);
-        std::string head = goal ? ctr("lv.advancements.toast.goal", "Goal Reached!") : ctr("lv.advancements.toast.task", "Advancement Made!");
+        std::string head = goal ? ctr("br.advancements.toast.goal", "Goal Reached!") : ctr("br.advancements.toast.task", "Advancement Made!");
         c.text(x + 30, y + 7, head, 0xFFFFFF00);
         c.text(x + 30, y + 18, titleOf(d.id), color::kText);
         y += kToastH;
@@ -208,7 +208,7 @@ public:
     void renderExtra(Canvas& c, float mx, float my) override {
         if (!mTree) return;
         c.text(8, height - 15,
-               std::to_string(mTree->doneCount()) + " / " + std::to_string(ca::all().size()) + "  " + ctr("lv.advancements.screen.hint", "Scroll to move, Shift-scroll to move sideways"),
+               std::to_string(mTree->doneCount()) + " / " + std::to_string(ca::all().size()) + "  " + ctr("br.advancements.screen.hint", "Scroll to move, Shift-scroll to move sideways"),
                color::kTextDark, Align::Left, false);
         if (mTree->hovered < 0) return;
         auto const&              d = ca::all()[static_cast<std::size_t>(mTree->hovered)];
@@ -262,8 +262,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::advancements
+} // namespace br::client::advancements
 
-LV_REGISTER_MODULE(lv::client::advancements::AdvancementsClientModule);
+BR_REGISTER_MODULE(br::client::advancements::AdvancementsClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

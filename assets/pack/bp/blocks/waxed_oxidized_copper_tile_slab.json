@@ -2,16 +2,16 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:waxed_oxidized_copper_tile_slab",
+      "identifier": "bearing:waxed_oxidized_copper_tile_slab",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:top": [
+        "bearing:top": [
           0,
           1
         ],
-        "levitate:double": [
+        "bearing:double": [
           0,
           1
         ]
@@ -28,15 +28,15 @@
       "minecraft:loot": "loot_tables/blocks/waxed_oxidized_copper_tile_slab.json",
       "tag:minecraft:is_pickaxe_item_destructible": {},
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.slab",
+        "identifier": "geometry.bearing.slab",
         "bone_visibility": {
-          "bottom": "q.block_state('levitate:top') == 0 || q.block_state('levitate:double') == 1",
-          "top": "q.block_state('levitate:top') == 1 || q.block_state('levitate:double') == 1"
+          "bottom": "q.block_state('bearing:top') == 0 || q.block_state('bearing:double') == 1",
+          "top": "q.block_state('bearing:top') == 1 || q.block_state('bearing:double') == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_copper_tiles_oxidized",
+          "texture": "bearing_copper_tiles_oxidized",
           "render_method": "opaque"
         }
       },
@@ -67,7 +67,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:top') == 1 && q.block_state('levitate:double') == 0",
+        "condition": "q.block_state('bearing:top') == 1 && q.block_state('bearing:double') == 0",
         "components": {
           "minecraft:collision_box": {
             "origin": [
@@ -96,7 +96,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:double') == 1",
+        "condition": "q.block_state('bearing:double') == 1",
         "components": {
           "minecraft:collision_box": {
             "origin": [

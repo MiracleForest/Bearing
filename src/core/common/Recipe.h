@@ -7,7 +7,7 @@
 //      "results": [{"id": "create:iron_sheet"}], "processing_time": 100,
 //      "heat_requirement": "heated"}
 //
-// Ids in the `create:` namespace are mapped to `levitate:`. Unit-specific fields stay in `raw`.
+// Ids in the `create:` namespace are mapped to `bearing:`. Unit-specific fields stay in `raw`.
 
 #include <functional>
 #include <optional>
@@ -17,7 +17,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::common {
+namespace br::core::common {
 
 /// One ingredient slot: any of `items` or any item in one of `tags` (Create's alternatives).
 struct ItemIngredient {
@@ -58,7 +58,7 @@ enum class HeatLevel : int { None = 0, Smouldering = 1, Fading = 2, Kindled = 3,
 [[nodiscard]] bool heatSatisfies(HeatRequirement required, HeatLevel level);
 
 struct ProcessingRecipe {
-    std::string                  id;   ///< "levitate:pressing/iron_sheet" (namespace + type + file stem)
+    std::string                  id;   ///< "bearing:pressing/iron_sheet" (namespace + type + file stem)
     std::string                  type; ///< "pressing"
     std::vector<ItemIngredient>  ingredients;
     std::vector<FluidIngredient> fluidIngredients;
@@ -69,7 +69,7 @@ struct ProcessingRecipe {
     nlohmann::json               raw;                ///< the whole source document
 };
 
-/// Maps Create's namespace to ours ("create:x" -> "levitate:x"); other ids unchanged.
+/// Maps Create's namespace to ours ("create:x" -> "bearing:x"); other ids unchanged.
 [[nodiscard]] std::string mapId(std::string_view id);
 
 /// Parses one recipe document. `type` is the folder name ("pressing"); `id` the recipe id.
@@ -81,4 +81,4 @@ parseRecipe(nlohmann::json const& doc, std::string const& type, std::string cons
 /// (`random01()` returns uniform floats in [0, 1)). Returns the number of items produced.
 [[nodiscard]] int rollResult(ItemResult const& result, std::function<float()> const& random01);
 
-} // namespace lv::core::common
+} // namespace br::core::common

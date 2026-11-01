@@ -1,4 +1,4 @@
-// `/create display ...` (Levitate debug, op): write text onto a display board / nixie tube row and
+// `/create display ...` (Bearing debug, op): write text onto a display board / nixie tube row and
 // bind a display link without the item, for e2e scenarios and testing from the console.
 
 #include <algorithm>
@@ -16,7 +16,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 // Command parameter types need external linkage.
 struct DisplayTextParams {
@@ -37,7 +37,7 @@ int dimOf(CommandOrigin const& origin) {
 }
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     using Origin = CommandOrigin const;
     cmd.overload<DisplayTextParams>()
         .text("display")
@@ -48,7 +48,7 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
         .required("line")
         .required("text")
         .execute([](Origin& origin, CommandOutput& output, DisplayTextParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             GlobalPos pos{dimOf(origin), p.x, p.y, p.z};
             auto*     region = regionOf(pos.dim);
             if (!region) return output.error("no world");
@@ -79,7 +79,7 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
         .required("tz")
         .required("source")
         .execute([](Origin& origin, CommandOutput& output, DisplayBindParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             GlobalPos pos{dimOf(origin), p.x, p.y, p.z};
             auto*     region = regionOf(pos.dim);
             if (!region || idAt(*region, pos) != kLinkId) return output.error("not a display link");
@@ -95,4 +95,4 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
         });
 });
 
-} // namespace lv::feature::display
+} // namespace br::feature::display

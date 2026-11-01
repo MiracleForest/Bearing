@@ -5,7 +5,7 @@
 #include <limits>
 #include <numbers>
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 namespace {
 
@@ -233,4 +233,4 @@ Vec3d curveStart(BlockPos3 const& pos, Vec3d const& axis) {
     return pos.center() + Vec3d{0, vertical ? 0 : -.5, 0} + axis * .5;
 }
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

@@ -1,71 +1,71 @@
 {
-  "levitate:mechanical_bearing": {
+  "bearing:mechanical_bearing": {
     "sound": "stone"
   },
-  "levitate:windmill_bearing": {
+  "bearing:windmill_bearing": {
     "sound": "wood"
   },
-  "levitate:clockwork_bearing": {
+  "bearing:clockwork_bearing": {
     "sound": "stone"
   },
-  "levitate:turntable": {
+  "bearing:turntable": {
     "sound": "wood"
   },
-  "levitate:sail_frame": {
+  "bearing:sail_frame": {
     "sound": "scaffolding"
   },
-  "levitate:white_sail": {
+  "bearing:white_sail": {
     "sound": "cloth"
   },
-  "levitate:orange_sail": {
+  "bearing:orange_sail": {
     "sound": "cloth"
   },
-  "levitate:magenta_sail": {
+  "bearing:magenta_sail": {
     "sound": "cloth"
   },
-  "levitate:light_blue_sail": {
+  "bearing:light_blue_sail": {
     "sound": "cloth"
   },
-  "levitate:yellow_sail": {
+  "bearing:yellow_sail": {
     "sound": "cloth"
   },
-  "levitate:lime_sail": {
+  "bearing:lime_sail": {
     "sound": "cloth"
   },
-  "levitate:pink_sail": {
+  "bearing:pink_sail": {
     "sound": "cloth"
   },
-  "levitate:gray_sail": {
+  "bearing:gray_sail": {
     "sound": "cloth"
   },
-  "levitate:light_gray_sail": {
+  "bearing:light_gray_sail": {
     "sound": "cloth"
   },
-  "levitate:cyan_sail": {
+  "bearing:cyan_sail": {
     "sound": "cloth"
   },
-  "levitate:purple_sail": {
+  "bearing:purple_sail": {
     "sound": "cloth"
   },
-  "levitate:blue_sail": {
+  "bearing:blue_sail": {
     "sound": "cloth"
   },
-  "levitate:brown_sail": {
+  "bearing:brown_sail": {
     "sound": "cloth"
   },
-  "levitate:green_sail": {
+  "bearing:green_sail": {
     "sound": "cloth"
   },
-  "levitate:red_sail": {
+  "bearing:red_sail": {
     "sound": "cloth"
   },
-  "levitate:black_sail": {
+  "bearing:black_sail": {
     "sound": "cloth"
   },
-  "levitate:cart_assembler": {
+  "bearing:cart_assembler": {
     "sound": "metal"
   },
-  "levitate:controller_rail": {
+  "bearing:controller_rail": {
     "sound": "metal"
   }
 }

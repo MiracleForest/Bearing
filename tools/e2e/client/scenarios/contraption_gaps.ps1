@@ -28,18 +28,18 @@ Invoke-Chat "/tp @s $($x - 4) $y $z -90 0"
 Start-Sleep -Milliseconds 800
 
 # a train to relocate: "Demo Manual" with its carriage at x + 7 (bogey), controls and a whistle
-Invoke-Chat '/fill ~2 ~ ~ ~26 ~ ~ levitate:track ["levitate:shape"=2]'
+Invoke-Chat '/fill ~2 ~ ~ ~26 ~ ~ bearing:track ["bearing:shape"=2]'
 Start-Sleep -Milliseconds 800
 Invoke-Chat '/create trains demo_manual'
 $tl = Wait-LogLine "trains: assembled train #(\d+) '.*' with 1 carriages" 20 -Since $mark
 $train = [regex]::Match($tl, 'assembled train #(\d+)').Groups[1].Value
-Invoke-Chat '/give @s levitate:wrench'
+Invoke-Chat '/give @s bearing:wrench'
 Start-Sleep -Milliseconds 500
 Press-Key 1
 # facing the carriage (controls at x + 7, y + 2) from the south
 Invoke-Chat '/tp @s ~7 ~1 ~3 180 0'
 Start-Sleep -Milliseconds 1000
-Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 levitate:wrench'
+Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 bearing:wrench'
 Start-Sleep -Milliseconds 500
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine "trains: \S+ is relocating train #\d+" 20 -Since $mark | Out-Null

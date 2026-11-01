@@ -43,13 +43,13 @@ namespace {
 /// tests with entities move to z -63 (a row no unit uses) and columns 90..99.
 constexpr int kU59Shift = -313;
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
+using br::core::GlobalPos;
+using br::selftest::Context;
 using SharedTypes::Legacy::ArmorSlot;
-namespace eq    = lv::feature::equipment;
-namespace ce    = lv::core::equipment;
-namespace items = lv::feature::common::items;
-namespace rs    = lv::feature::common::redstone;
+namespace eq    = br::feature::equipment;
+namespace ce    = br::core::equipment;
+namespace items = br::feature::common::items;
+namespace rs    = br::feature::common::redstone;
 
 ItemStack u59Item(Context& ctx, std::string const& id, int count = 1, int aux = 0) {
     auto s = items::make(id, count, aux);
@@ -83,27 +83,27 @@ ll::coro::CoroTask<bool> u59WaitGone(std::int64_t entity, int maxTicks) {
 } // namespace
 
 // Create's BacktankBlock.getAnalogOutputSignal: fractionToRedstoneLevel(air / max air).
-LV_REGISTER_SELFTEST("equipment.u59_backtank_comparator", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.u59_backtank_comparator", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(5900), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, "levitate:copper_backtank"), "a copper backtank");
+    ctx.require(ctx.setBlock(p, "bearing:copper_backtank"), "a copper backtank");
     auto* region = eq::regionOf(p.dim);
     ctx.require(region != nullptr, "region");
     eq::setBlockAir(p, 0);
-    auto empty = rs::analogOutput(*region, lv::game::blockPos(p));
+    auto empty = rs::analogOutput(*region, br::game::blockPos(p));
     ctx.check(empty && *empty == 0, "an empty backtank gives 0, got " + std::to_string(empty.value_or(-1)));
     int max = eq::blockMaxAir(p);
     eq::setBlockAir(p, max / 2);
-    auto half = rs::analogOutput(*region, lv::game::blockPos(p));
+    auto half = rs::analogOutput(*region, br::game::blockPos(p));
     ctx.check(half && *half == rs::fractionToRedstoneLevel(double(max / 2) / max), "half full: " + std::to_string(half.value_or(-1)));
     eq::setBlockAir(p, max);
-    auto full = rs::analogOutput(*region, lv::game::blockPos(p));
+    auto full = rs::analogOutput(*region, br::game::blockPos(p));
     ctx.check(full && *full == 15, "full: 15, got " + std::to_string(full.value_or(-1)));
     ctx.cleanupBlock(p);
 });
 
 // Create's SuspiciousStew hit action: the stew's own effects; the kill message names the cannon.
-LV_REGISTER_SELFTEST("equipment.u59_potato_stew", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.u59_potato_stew", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(5990, kU59Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp  = ctx.player();
@@ -122,13 +122,13 @@ LV_REGISTER_SELFTEST("equipment.u59_potato_stew", [](Context& ctx) -> ll::coro::
     auto* p2 = ll::service::getLevel()->fetchEntity(ActorUniqueID{pigId}, false);
     ctx.require(p2 != nullptr, "the pig is still there");
     ctx.check(p2->getEffect(want) != nullptr, "the pig got the stew's effect " + std::to_string(want));
-    auto msg = lv::feature::common::deathmsg::peek(*p2, "Pig");
+    auto msg = br::feature::common::deathmsg::peek(*p2, "Pig");
     ctx.check(msg.first == "death.attack.create.potato_cannon", "a kill by it reads Create's potato cannon message, got " + msg.first);
     p2->remove();
 });
 
 // AbstractBellBlock (BellBlock#onProjectileHit): a potato hitting the bell's side rings it.
-LV_REGISTER_SELFTEST("equipment.u59_bell_projectile", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.u59_bell_projectile", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(5993, kU59Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp   = ctx.player();
@@ -136,7 +136,7 @@ LV_REGISTER_SELFTEST("equipment.u59_bell_projectile", [](Context& ctx) -> ll::co
     auto  bell = at(base, 3, 0, 0);
     ctx.setBlock(at(bell, 0, -1, 0), "minecraft:stone");
     // a floor bell facing east (attachment 0): rung on its facing axis, here from the west
-    ctx.require(ctx.setBlock(bell, std::string(eq::kPeculiarBell), {{eq::kBellAttachment, 0}, {"levitate:facing", 5}}), "a peculiar bell");
+    ctx.require(ctx.setBlock(bell, std::string(eq::kPeculiarBell), {{eq::kBellAttachment, 0}, {"bearing:facing", 5}}), "a peculiar bell");
     co_await ctx.ticks(1);
     ctx.check(!eq::bellInfo(bell).ringing, "the bell is still");
     auto e = eq::launchProjectile(dim, base.x + .5, bell.y + .45, bell.z + .5, 1.0, 0, 0, "minecraft:potato", 0, 0);
@@ -148,7 +148,7 @@ LV_REGISTER_SELFTEST("equipment.u59_bell_projectile", [](Context& ctx) -> ll::co
 });
 
 // Create's ZapperInteractionHandler.trySelect: leaves are stored persistent; door halves are refused.
-LV_REGISTER_SELFTEST("equipment.u59_worldshaper_pick", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.u59_worldshaper_pick", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(5905), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -161,7 +161,7 @@ LV_REGISTER_SELFTEST("equipment.u59_worldshaper_pick", [](Context& ctx) -> ll::c
     co_await ctx.ticks(3);
     ce::ShaperSettings st;
     st.configured = true;
-    auto shaper   = u59Item(ctx, "levitate:handheld_worldshaper");
+    auto shaper   = u59Item(ctx, "bearing:handheld_worldshaper");
     items::setData(shaper, eq::kShaperData, st.toJson());
     sp.getInventory().setItem(sp.getSelectedItemSlot(), shaper);
     ItemStack held = sp.getSelectedItem();
@@ -169,7 +169,7 @@ LV_REGISTER_SELFTEST("equipment.u59_worldshaper_pick", [](Context& ctx) -> ll::c
     auto picked = ce::ShaperSettings::fromJson(items::getData(sp.getSelectedItem(), eq::kShaperData));
     auto const* m = eq::shaperMaterial(picked);
     ctx.require(m != nullptr, "a material");
-    ctx.check(lv::game::intState(*m, "persistent_bit").value_or(0) == 1, "stored as persistent leaves (they never decay)");
+    ctx.check(br::game::intState(*m, "persistent_bit").value_or(0) == 1, "stored as persistent leaves (they never decay)");
     held = sp.getSelectedItem();
     ctx.check(!eq::shaperPick(sp, held), "the same block again changes nothing");
     // the upper half of a door is refused
@@ -181,7 +181,7 @@ LV_REGISTER_SELFTEST("equipment.u59_worldshaper_pick", [](Context& ctx) -> ll::c
 });
 
 // Create's DynamicBrush (surface): a block covered by a sturdy face is skipped, a torch is not.
-LV_REGISTER_SELFTEST("equipment.u59_surface_brush", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.u59_surface_brush", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(5910), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
@@ -197,7 +197,7 @@ LV_REGISTER_SELFTEST("equipment.u59_surface_brush", [](Context& ctx) -> ll::coro
     st.params     = {3, 1, 1};
     st.tool       = ce::ShaperTool::Replace;
     st.configured = true;
-    st.material   = eq::shaperMaterialOf(*lv::game::blockWith("minecraft:dirt"));
+    st.material   = eq::shaperMaterialOf(*br::game::blockWith("minecraft:dirt"));
     eq::shapeAt(p, st, a, 1);
     ctx.check(eq::idAt(a) == "minecraft:dirt", "under a torch: replaced");
     ctx.check(eq::idAt(b) == "minecraft:stone", "under a bottom slab (a sturdy bottom face): kept");
@@ -207,7 +207,7 @@ LV_REGISTER_SELFTEST("equipment.u59_surface_brush", [](Context& ctx) -> ll::coro
 });
 
 // Create's attacksByExtendoGripHaveMoreKnockback: +2 knockback strength.
-LV_REGISTER_SELFTEST("equipment.u59_grip_knockback", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.u59_grip_knockback", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(5996, kU59Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -217,7 +217,7 @@ LV_REGISTER_SELFTEST("equipment.u59_grip_knockback", [](Context& ctx) -> ll::cor
     sp.teleport(Vec3{base.x + .5f, float(base.y), base.z + .5f}, DimensionType(0));
     Actor* pig = u59SpawnMob(ctx, "minecraft:pig", at(base, 2, 0, 0));
     co_await ctx.ticks(5);
-    sp.getInventory().setItem(sp.getSelectedItemSlot(), u59Item(ctx, "levitate:extendo_grip"));
+    sp.getInventory().setItem(sp.getSelectedItemSlot(), u59Item(ctx, "bearing:extendo_grip"));
     sp.simulateLookAt(*pig, sim::LookDuration::Continuous);
     co_await ctx.ticks(2);
     float x0 = pig->getPosition().x;
@@ -229,8 +229,8 @@ LV_REGISTER_SELFTEST("equipment.u59_grip_knockback", [](Context& ctx) -> ll::cor
 });
 
 // PotatoCannonItem#supportsEnchantment: no Infinity.
-LV_REGISTER_SELFTEST("equipment.u59_cannon_infinity", [](Context& ctx) {
-    auto                cannon = u59Item(ctx, "levitate:potato_cannon");
+BR_REGISTER_SELFTEST("equipment.u59_cannon_infinity", [](Context& ctx) {
+    auto                cannon = u59Item(ctx, "bearing:potato_cannon");
     EnchantmentInstance infinity;
     infinity.mEnchantType = Enchant::Type::Infinity;
     infinity.mLevel       = 1;
@@ -242,10 +242,10 @@ LV_REGISTER_SELFTEST("equipment.u59_cannon_infinity", [](Context& ctx) {
 });
 
 // Create's DivingHelmetItem: Aqua Affinity built in.
-LV_REGISTER_SELFTEST("equipment.u59_helmet_aqua_affinity", [](Context& ctx) {
+BR_REGISTER_SELFTEST("equipment.u59_helmet_aqua_affinity", [](Context& ctx) {
     auto& p = ctx.player();
     clearInventory(p);
-    p.setArmor(ArmorSlot::Head, u59Item(ctx, "levitate:copper_diving_helmet"));
+    p.setArmor(ArmorSlot::Head, u59Item(ctx, "bearing:copper_diving_helmet"));
     ctx.check(eq::hasAquaAffinityHelmet(p), "a copper diving helmet gives Aqua Affinity");
     p.setArmor(ArmorSlot::Head, u59Item(ctx, "minecraft:iron_helmet"));
     ctx.check(!eq::hasAquaAffinityHelmet(p), "an iron helmet does not");

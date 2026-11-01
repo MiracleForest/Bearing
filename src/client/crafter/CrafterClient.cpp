@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client mod: the items of mechanical crafters (Create's MechanicalCrafterRenderer).
 //
@@ -43,7 +43,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::crafter {
+namespace br::client::crafter {
 
 namespace {
 
@@ -121,7 +121,7 @@ void drawItem(BaseActorRenderContext& ctx, ItemStack const& stack, glm::vec3 cen
 }
 
 void renderCrafterItems(BaseActorRenderContext& ctx) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     auto* level    = ci->getLevel();
     auto* player   = ci->getLocalPlayer();
@@ -223,8 +223,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::crafter
+} // namespace br::client::crafter
 
-LV_REGISTER_MODULE(lv::client::crafter::CrafterClientModule);
+BR_REGISTER_MODULE(br::client::crafter::CrafterClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

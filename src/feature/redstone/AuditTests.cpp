@@ -26,11 +26,11 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using Facing = ScriptModuleMinecraft::ScriptFacing;
 namespace wrench = goggles::wrench;
 
@@ -77,7 +77,7 @@ bool clickTop(SimulatedPlayer& sp, GP const& p) {
 
 // ---- M1: the wrench --------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.wrench", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.wrench", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5800);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     // Create's IWrenchable blocks of the unit (the analog lever is not one)
@@ -131,7 +131,7 @@ LV_REGISTER_SELFTEST("redstone.wrench", [](Context& ctx) -> ll::coro::CoroTask<>
 
 // ---- M2: funnels notify smart observers -------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.funnel_observer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.funnel_observer", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5805);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -141,7 +141,7 @@ LV_REGISTER_SELFTEST("redstone.funnel_observer", [](Context& ctx) -> ll::coro::C
     auto funnel = at(p, 0, 1, 0);
     auto obs    = at(p, 1, 1, 0);
     ctx.setBlock(chest, "minecraft:chest");
-    ctx.require(ctx.setBlock(funnel, "levitate:andesite_funnel", {{"levitate:facing", kUp}}), "funnel placed");
+    ctx.require(ctx.setBlock(funnel, "bearing:andesite_funnel", {{"bearing:facing", kUp}}), "funnel placed");
     ctx.setBlock(obs, kSmartObserver, {{sFacing, kWest}, {sTarget, 0}});
     co_await ctx.ticks(3);
     ctx.check(st(ctx, obs, sPowered) == 0, "nothing moved yet: off");
@@ -153,7 +153,7 @@ LV_REGISTER_SELFTEST("redstone.funnel_observer", [](Context& ctx) -> ll::coro::C
 
 // ---- M7: contacts in an elevator column ------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.contact_elevator", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.contact_elevator", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5810);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -182,13 +182,13 @@ LV_REGISTER_SELFTEST("redstone.contact_elevator", [](Context& ctx) -> ll::coro::
 
 // ---- M8: what smart observers see --------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.observer_belt", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.observer_belt", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5815);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
     // a depot (TransportedItemStackHandlerBehaviour): the item at its centre is seen
     auto depot = at(p, 1, 0, 0);
-    ctx.require(ctx.setBlock(depot, "levitate:depot"), "depot placed");
+    ctx.require(ctx.setBlock(depot, "bearing:depot"), "depot placed");
     ctx.setBlock(p, kSmartObserver, {{sFacing, kEast}, {sTarget, 0}});
     co_await ctx.ticks(3);
     ctx.check(st(ctx, p, sPowered) == 0, "an empty depot: off");
@@ -200,12 +200,12 @@ LV_REGISTER_SELFTEST("redstone.observer_belt", [](Context& ctx) -> ll::coro::Cor
 
 // ---- M9: the rope pulley as an observable --------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.threshold_pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.threshold_pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5820);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
     auto  pulley = at(p, 1, 2, 0);
-    ctx.require(ctx.setBlock(pulley, "levitate:rope_pulley", {{"levitate:axis", 0}}), "rope pulley placed");
+    ctx.require(ctx.setBlock(pulley, "bearing:rope_pulley", {{"bearing:axis", 0}}), "rope pulley placed");
     ctx.setBlock(at(p, 0, 2, 0), kThresholdSwitch, {{sFacing, kEast}, {sTarget, 0}});
     co_await ctx.ticks(3);
     updateThresholdLevel(region, at(p, 0, 2, 0), blockAt(ctx, at(p, 0, 2, 0)));
@@ -219,7 +219,7 @@ LV_REGISTER_SELFTEST("redstone.threshold_pulley", [](Context& ctx) -> ll::coro::
 
 // ---- M10: the clipboard copies link frequencies and diode inversion --------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.clipboard", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.clipboard", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5825);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -249,4 +249,4 @@ LV_REGISTER_SELFTEST("redstone.clipboard", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(st(ctx, e, sInverted) == 1, "the extender is inverted now");
 });
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

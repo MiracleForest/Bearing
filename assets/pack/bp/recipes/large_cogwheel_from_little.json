@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:large_cogwheel_from_little"
+      "identifier": "bearing:large_cogwheel_from_little"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       },
       {
         "tag": "minecraft:planks"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       }
     ],
     "result": {
-      "item": "levitate:large_cogwheel",
+      "item": "bearing:large_cogwheel",
       "count": 1
     }
   }

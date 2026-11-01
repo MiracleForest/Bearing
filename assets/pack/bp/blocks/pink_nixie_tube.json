@@ -2,18 +2,18 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:pink_nixie_tube",
+      "identifier": "bearing:pink_nixie_tube",
       "menu_category": {
         "category": "none"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
           3
         ],
-        "levitate:face": [
+        "bearing:face": [
           0,
           1,
           2,
@@ -22,22 +22,22 @@
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.nixie_tube",
+      "minecraft:geometry": "geometry.bearing.nixie_tube",
       "minecraft:material_instances": {
         "glass": {
-          "texture": "levitate_nixie_tube_glass",
+          "texture": "bearing_nixie_tube_glass",
           "render_method": "blend"
         },
         "base": {
-          "texture": "levitate_nixie_tube",
+          "texture": "bearing_nixie_tube",
           "render_method": "blend"
         },
         "filament": {
-          "texture": "levitate_nixie_tube_filament_pink",
+          "texture": "bearing_nixie_tube_filament_pink",
           "render_method": "blend"
         },
         "*": {
-          "texture": "levitate_nixie_tube",
+          "texture": "bearing_nixie_tube",
           "render_method": "blend"
         }
       },
@@ -63,7 +63,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 1"
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 1"
       },
       {
         "components": {
@@ -75,7 +75,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 3"
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 3"
       },
       {
         "components": {
@@ -87,7 +87,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 0"
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 0"
       },
       {
         "components": {
@@ -99,7 +99,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 1"
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 1"
       },
       {
         "components": {
@@ -111,7 +111,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 2"
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 2"
       },
       {
         "components": {
@@ -123,7 +123,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 3"
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 3"
       },
       {
         "components": {
@@ -135,7 +135,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 0"
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 0"
       },
       {
         "components": {
@@ -147,7 +147,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 1"
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 1"
       },
       {
         "components": {
@@ -159,7 +159,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 2"
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 2"
       },
       {
         "components": {
@@ -171,7 +171,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 3"
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 3"
       },
       {
         "components": {
@@ -183,7 +183,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 3 && q.block_state('levitate:facing') == 0"
+        "condition": "q.block_state('bearing:face') == 3 && q.block_state('bearing:facing') == 0"
       },
       {
         "components": {
@@ -195,7 +195,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 3 && q.block_state('levitate:facing') == 1"
+        "condition": "q.block_state('bearing:face') == 3 && q.block_state('bearing:facing') == 1"
       },
       {
         "components": {
@@ -207,7 +207,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 3 && q.block_state('levitate:facing') == 2"
+        "condition": "q.block_state('bearing:face') == 3 && q.block_state('bearing:facing') == 2"
       },
       {
         "components": {
@@ -219,7 +219,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:face') == 3 && q.block_state('levitate:facing') == 3"
+        "condition": "q.block_state('bearing:face') == 3 && q.block_state('bearing:facing') == 3"
       }
     ]
   }

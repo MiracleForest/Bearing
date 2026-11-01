@@ -29,11 +29,11 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 
 GP at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -74,11 +74,11 @@ void hold(Context& ctx, SimulatedPlayer& sp, ItemStack const& stack) { ctx.give(
 
 // ---- signals in and out --------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.output", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.output", [](Context& ctx) -> ll::coro::CoroTask<> {
     // our blocks drive vanilla dust through their redstone_producer permutations
     auto p = ctx.testPos(2300);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(game::blockWith(kLever) != nullptr, "levitate:analog_lever is registered");
+    ctx.require(game::blockWith(kLever) != nullptr, "bearing:analog_lever is registered");
     ctx.require(place(ctx, p, kLever, {{sFace, 0}, {sFacing, kNorth}, {sLeverState, 9}, {sPower, 9}}), "lever placed");
     place(ctx, at(p, 1, 0, 0), "minecraft:redstone_wire");
     co_await ctx.ticks(6);
@@ -97,7 +97,7 @@ LV_REGISTER_SELFTEST("redstone.output", [](Context& ctx) -> ll::coro::CoroTask<>
     ctx.check(wire(ctx, at(q, 0, 0, 1)) == 0, "but not the dust beside it, got " + std::to_string(wire(ctx, at(q, 0, 0, 1))));
 });
 
-LV_REGISTER_SELFTEST("redstone.input", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.input", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2305);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -131,7 +131,7 @@ LV_REGISTER_SELFTEST("redstone.input", [](Context& ctx) -> ll::coro::CoroTask<> 
 
 // ---- links -------------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.link", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.link", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2310);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto tx = p, rx = at(p, 6, 0, 0), other = at(p, 6, 0, 3);
@@ -168,9 +168,9 @@ LV_REGISTER_SELFTEST("redstone.link", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(common::items::idOf(a) == "minecraft:diamond" && common::items::idOf(b) == "minecraft:gold_ingot", "frequencies kept");
 });
 
-LV_REGISTER_SELFTEST("redstone.link_api", [](Context& ctx) {
+BR_REGISTER_SELFTEST("redstone.link_api", [](Context& ctx) {
     // the contract for other units: a transmitter node powers a receiver block
-    using namespace lv::feature::redstone;
+    using namespace br::feature::redstone;
     auto key = link::keyOf(item("minecraft:apple"), item("minecraft:stick"));
     ctx.check(key.first == "minecraft:apple" && key.last == "minecraft:stick", "frequency keys are item ids");
     int  got = -1;
@@ -194,7 +194,7 @@ LV_REGISTER_SELFTEST("redstone.link_api", [](Context& ctx) {
     link::remove(rx);
 });
 
-LV_REGISTER_SELFTEST("redstone.link_click", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.link_click", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2320);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -220,7 +220,7 @@ LV_REGISTER_SELFTEST("redstone.link_click", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(st(ctx, p, sReceiver) == 1, "sneak-click switches to receiver");
 });
 
-LV_REGISTER_SELFTEST("redstone.link_survival", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.link_survival", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2325);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     place(ctx, p, "minecraft:stone");
@@ -234,7 +234,7 @@ LV_REGISTER_SELFTEST("redstone.link_survival", [](Context& ctx) -> ll::coro::Cor
 
 // ---- analog lever ------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.analog_lever", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.analog_lever", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2330);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -288,7 +288,7 @@ int countOn(std::vector<bool> const& v) {
 }
 } // namespace
 
-LV_REGISTER_SELFTEST("redstone.pulse_repeater", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.pulse_repeater", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2335);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     std::vector<bool> out;
@@ -302,7 +302,7 @@ LV_REGISTER_SELFTEST("redstone.pulse_repeater", [](Context& ctx) -> ll::coro::Co
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("redstone.pulse_extender", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.pulse_extender", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2340);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     std::vector<bool> in(2, true);
@@ -314,7 +314,7 @@ LV_REGISTER_SELFTEST("redstone.pulse_extender", [](Context& ctx) -> ll::coro::Co
     ctx.check(!out.back(), "and ends");
 });
 
-LV_REGISTER_SELFTEST("redstone.pulse_timer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.pulse_timer", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2345);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     std::vector<bool> out;
@@ -331,7 +331,7 @@ LV_REGISTER_SELFTEST("redstone.pulse_timer", [](Context& ctx) -> ll::coro::CoroT
     common::blockdata::erase(at(p, 0, 0, 6));
 });
 
-LV_REGISTER_SELFTEST("redstone.diode_controls", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.diode_controls", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2350);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -355,7 +355,7 @@ LV_REGISTER_SELFTEST("redstone.diode_controls", [](Context& ctx) -> ll::coro::Co
 
 // ---- latches -----------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.powered_latch", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.powered_latch", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2355);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     place(ctx, p, kPoweredLatch, {{sFacing, kWest}});
@@ -374,7 +374,7 @@ LV_REGISTER_SELFTEST("redstone.powered_latch", [](Context& ctx) -> ll::coro::Cor
     ctx.check(st(ctx, p, sPowering) == 0, "still reset");
 });
 
-LV_REGISTER_SELFTEST("redstone.toggle_latch", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.toggle_latch", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2360);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -395,7 +395,7 @@ LV_REGISTER_SELFTEST("redstone.toggle_latch", [](Context& ctx) -> ll::coro::Coro
 
 // ---- detectors ---------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.smart_observer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.smart_observer", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2365);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -432,7 +432,7 @@ LV_REGISTER_SELFTEST("redstone.smart_observer", [](Context& ctx) -> ll::coro::Co
     ctx.check(st(ctx, f, sPowered) == 0, "for 4 ticks");
 });
 
-LV_REGISTER_SELFTEST("redstone.threshold_switch", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.threshold_switch", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2370);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -465,7 +465,7 @@ LV_REGISTER_SELFTEST("redstone.threshold_switch", [](Context& ctx) -> ll::coro::
     ctx.check(dataOf(p)->value("current", -1) == 0, "a dirt filter counts no cobblestone");
 });
 
-LV_REGISTER_SELFTEST("redstone.threshold_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.threshold_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2375);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& player = ctx.player();
@@ -496,7 +496,7 @@ LV_REGISTER_SELFTEST("redstone.threshold_screen", [](Context& ctx) -> ll::coro::
 
 // ---- contacts ----------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.contact", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.contact", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2380);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     place(ctx, p, kContact, {{sFacing, kEast}});
@@ -517,7 +517,7 @@ LV_REGISTER_SELFTEST("redstone.contact", [](Context& ctx) -> ll::coro::CoroTask<
 
 // ---- placement by a player ---------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("redstone.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(2385);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -542,7 +542,7 @@ LV_REGISTER_SELFTEST("redstone.placement", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(st(ctx, s, sFacing) == kUp, "facing the clicked face, got " + std::string(dirName(st(ctx, s, sFacing))));
 });
 
-LV_REGISTER_SELFTEST("redstone.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
     // tracked blocks and their settings are kept in the world (BlockData + the tracked list)
     auto p = ctx.testPos(2390);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -557,4 +557,4 @@ LV_REGISTER_SELFTEST("redstone.persistence", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(dataOf(p) == nullptr, "its data is gone with it");
 });
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

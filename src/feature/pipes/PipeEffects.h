@@ -12,7 +12,7 @@
 
 class Player;
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 /// One tick after the flow model's: particles near players, glass pipe flows to companions.
 void tickPipeEffects(core::pipes::Model& model);
@@ -29,4 +29,4 @@ struct EffectCounts {
 /// The flows companions were last told about for a glass pipe ([face, slot, inbound, progress, speed]).
 [[nodiscard]] std::optional<nlohmann::json> glassState(core::GlobalPos const& p);
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes

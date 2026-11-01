@@ -2,7 +2,7 @@
 
 #include "core/common/Utf8.h"
 
-using lv::core::utf8Prefix;
+using br::core::utf8Prefix;
 
 TEST(Utf8, PrefixCountsCharactersNotBytes) {
     EXPECT_EQ(utf8Prefix("Mill", 2), "Mi");

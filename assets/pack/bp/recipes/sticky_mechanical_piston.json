@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:sticky_mechanical_piston"
+      "identifier": "bearing:sticky_mechanical_piston"
     },
     "tags": [
       "crafting_table"
@@ -16,16 +16,16 @@
         "item": "minecraft:slime_ball"
       },
       "P": {
-        "item": "levitate:mechanical_piston"
+        "item": "bearing:mechanical_piston"
       }
     },
     "unlock": [
       {
-        "item": "levitate:mechanical_piston"
+        "item": "bearing:mechanical_piston"
       }
     ],
     "result": {
-      "item": "levitate:sticky_mechanical_piston",
+      "item": "bearing:sticky_mechanical_piston",
       "count": 1
     }
   }

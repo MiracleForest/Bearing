@@ -17,7 +17,7 @@
 #include "feature/kinetics/KineticsConfig.h"
 #include "mod/Config.h"
 
-namespace lv::feature::assembly {
+namespace br::feature::assembly {
 
 namespace {
 
@@ -55,7 +55,7 @@ bool deployerInfo(goggles::InfoContext const& ctx, goggles::Tooltip& t) {
 
 } // namespace
 
-LV_REGISTER_GOGGLE_INFO(kDeployerId, {.goggle = deployerInfo, .hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
-LV_REGISTER_GOGGLE_INFO(kArmId, {.goggle = goggles::kineticGoggleTooltip, .hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kDeployerId, {.goggle = deployerInfo, .hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kArmId, {.goggle = goggles::kineticGoggleTooltip, .hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
 
-} // namespace lv::feature::assembly
+} // namespace br::feature::assembly

@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 Transform lerp(Transform const& a, Transform const& b, double t) {
     if (a.axis != b.axis || t >= 1) return b;
@@ -35,4 +35,4 @@ void MotionBuffer::step() {
     mQueue.clear();
 }
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

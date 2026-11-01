@@ -32,29 +32,29 @@ class ItemStack;
 class Player;
 class Vec3;
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 using Json = nlohmann::json;
 using GP   = core::GlobalPos;
 namespace cr = core::redstone;
 
 // ---- ids ---------------------------------------------------------------------------------------
-inline constexpr char kLink[]            = "levitate:redstone_link";
-inline constexpr char kLever[]           = "levitate:analog_lever";
-inline constexpr char kPulseRepeater[]   = "levitate:pulse_repeater";
-inline constexpr char kPulseExtender[]   = "levitate:pulse_extender";
-inline constexpr char kPulseTimer[]      = "levitate:pulse_timer";
-inline constexpr char kPoweredLatch[]    = "levitate:powered_latch";
-inline constexpr char kToggleLatch[]     = "levitate:powered_toggle_latch";
-inline constexpr char kSmartObserver[]   = "levitate:content_observer"; ///< Create registers the smart observer as content_observer
-inline constexpr char kThresholdSwitch[] = "levitate:stockpile_switch"; ///< and the threshold switch as stockpile_switch
-inline constexpr char kContact[]         = "levitate:redstone_contact";
-inline constexpr char kElevatorContact[] = "levitate:elevator_contact"; ///< U20 (pairs with contacts)
-inline constexpr char kWrench[]          = "levitate:wrench";
-inline constexpr char kLinkedController[] = "levitate:linked_controller";
-inline constexpr char kGoggles[]         = "levitate:goggles";
-inline constexpr char kDeskBell[]        = "levitate:desk_bell";        ///< U49
-inline constexpr char kRoseQuartzLamp[]  = "levitate:rose_quartz_lamp"; ///< U49
+inline constexpr char kLink[]            = "bearing:redstone_link";
+inline constexpr char kLever[]           = "bearing:analog_lever";
+inline constexpr char kPulseRepeater[]   = "bearing:pulse_repeater";
+inline constexpr char kPulseExtender[]   = "bearing:pulse_extender";
+inline constexpr char kPulseTimer[]      = "bearing:pulse_timer";
+inline constexpr char kPoweredLatch[]    = "bearing:powered_latch";
+inline constexpr char kToggleLatch[]     = "bearing:powered_toggle_latch";
+inline constexpr char kSmartObserver[]   = "bearing:content_observer"; ///< Create registers the smart observer as content_observer
+inline constexpr char kThresholdSwitch[] = "bearing:stockpile_switch"; ///< and the threshold switch as stockpile_switch
+inline constexpr char kContact[]         = "bearing:redstone_contact";
+inline constexpr char kElevatorContact[] = "bearing:elevator_contact"; ///< U20 (pairs with contacts)
+inline constexpr char kWrench[]          = "bearing:wrench";
+inline constexpr char kLinkedController[] = "bearing:linked_controller";
+inline constexpr char kGoggles[]         = "bearing:goggles";
+inline constexpr char kDeskBell[]        = "bearing:desk_bell";        ///< U49
+inline constexpr char kRoseQuartzLamp[]  = "bearing:rose_quartz_lamp"; ///< U49
 
 enum class Kind : std::uint8_t {
     Link,
@@ -80,19 +80,19 @@ inline constexpr Kind kLastKind = Kind::RoseQuartzLamp;
 [[nodiscard]] cr::DiodeKind       diodeKind(Kind k);
 
 // ---- states (all integer block states) ---------------------------------------------------------
-inline constexpr char sFacing[]      = "levitate:facing";       ///< FacingID 0..5
-inline constexpr char sReceiver[]    = "levitate:receiver";     ///< link
-inline constexpr char sPowered[]     = "levitate:powered";      ///< input (diodes) / output (others)
-inline constexpr char sPower[]       = "levitate:power";        ///< analog output 0..15
-inline constexpr char sFace[]        = "levitate:face";         ///< lever: 0 floor, 1 wall, 2 ceiling
-inline constexpr char sLeverState[]  = "levitate:state";        ///< lever handle 0..15
-inline constexpr char sPowering[]    = "levitate:powering";     ///< diode / latch output
-inline constexpr char sInverted[]    = "levitate:inverted";     ///< brass diodes
-inline constexpr char sPoweredSide[] = "levitate:powered_side"; ///< powered latch
-inline constexpr char sTarget[]      = "levitate:target";       ///< observer / switch: 0 wall, 1 floor, 2 ceiling
-inline constexpr char sLevel[]       = "levitate:level";        ///< threshold switch 0..5
-inline constexpr char sActivate[]    = "levitate:activate";     ///< rose quartz lamp (ACTIVATE)
-inline constexpr char sRotor[]       = "levitate:rotor";        ///< desk bell: 1 = without bell and plunger (client mod)
+inline constexpr char sFacing[]      = "bearing:facing";       ///< FacingID 0..5
+inline constexpr char sReceiver[]    = "bearing:receiver";     ///< link
+inline constexpr char sPowered[]     = "bearing:powered";      ///< input (diodes) / output (others)
+inline constexpr char sPower[]       = "bearing:power";        ///< analog output 0..15
+inline constexpr char sFace[]        = "bearing:face";         ///< lever: 0 floor, 1 wall, 2 ceiling
+inline constexpr char sLeverState[]  = "bearing:state";        ///< lever handle 0..15
+inline constexpr char sPowering[]    = "bearing:powering";     ///< diode / latch output
+inline constexpr char sInverted[]    = "bearing:inverted";     ///< brass diodes
+inline constexpr char sPoweredSide[] = "bearing:powered_side"; ///< powered latch
+inline constexpr char sTarget[]      = "bearing:target";       ///< observer / switch: 0 wall, 1 floor, 2 ceiling
+inline constexpr char sLevel[]       = "bearing:level";        ///< threshold switch 0..5
+inline constexpr char sActivate[]    = "bearing:activate";     ///< rose quartz lamp (ACTIVATE)
+inline constexpr char sRotor[]       = "bearing:rotor";        ///< desk bell: 1 = without bell and plunger (client mod)
 
 // ---- directions (Bedrock FacingID) -------------------------------------------------------------
 enum Dir : int { kDown = 0, kUp = 1, kNorth = 2, kSouth = 3, kWest = 4, kEast = 5 };
@@ -309,4 +309,4 @@ void registerBellAndLamp();
 // ---- hover text (client mod overlay, vanilla action bar) ---------------------------------------
 [[nodiscard]] Json hoverLines(Player& player, GP const& pos, int face, core::common::Vec const& hit);
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

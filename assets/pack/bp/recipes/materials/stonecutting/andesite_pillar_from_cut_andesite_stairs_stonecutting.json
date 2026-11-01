@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:andesite_pillar_from_cut_andesite_stairs_stonecutting"
+      "identifier": "bearing:andesite_pillar_from_cut_andesite_stairs_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:cut_andesite_stairs"
+        "item": "bearing:cut_andesite_stairs"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:cut_andesite_stairs"
+        "item": "bearing:cut_andesite_stairs"
       }
     ],
     "result": {
-      "item": "levitate:andesite_pillar",
+      "item": "bearing:andesite_pillar",
       "count": 1
     }
   }

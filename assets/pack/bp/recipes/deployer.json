@@ -2,7 +2,7 @@
   "format_version": "1.21.60",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:deployer"
+      "identifier": "bearing:deployer"
     },
     "tags": [
       "crafting_table"
@@ -14,22 +14,22 @@
     ],
     "key": {
       "B": {
-        "item": "levitate:electron_tube"
+        "item": "bearing:electron_tube"
       },
       "S": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "I": {
-        "item": "levitate:brass_hand"
+        "item": "bearing:brass_hand"
       }
     },
     "unlock": [
       {
-        "item": "levitate:electron_tube"
+        "item": "bearing:electron_tube"
       }
     ],
     "result": {
-      "item": "levitate:deployer",
+      "item": "bearing:deployer",
       "count": 1
     }
   }

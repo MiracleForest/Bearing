@@ -4,7 +4,7 @@
 
 #include "core/kinetics/RotorModel.h"
 
-using namespace lv::core::kinetics;
+using namespace br::core::kinetics;
 
 TEST(RotorModel, ParsesCubesAndUvs) {
     auto j = nlohmann::json::parse(R"({

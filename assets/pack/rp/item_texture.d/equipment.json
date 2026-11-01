@@ -1,107 +1,107 @@
 {
-  "levitate_white_toolbox_item": {
+  "bearing_white_toolbox_item": {
     "textures": "textures/items/white_toolbox"
   },
-  "levitate_orange_toolbox_item": {
+  "bearing_orange_toolbox_item": {
     "textures": "textures/items/orange_toolbox"
   },
-  "levitate_magenta_toolbox_item": {
+  "bearing_magenta_toolbox_item": {
     "textures": "textures/items/magenta_toolbox"
   },
-  "levitate_light_blue_toolbox_item": {
+  "bearing_light_blue_toolbox_item": {
     "textures": "textures/items/light_blue_toolbox"
   },
-  "levitate_yellow_toolbox_item": {
+  "bearing_yellow_toolbox_item": {
     "textures": "textures/items/yellow_toolbox"
   },
-  "levitate_lime_toolbox_item": {
+  "bearing_lime_toolbox_item": {
     "textures": "textures/items/lime_toolbox"
   },
-  "levitate_pink_toolbox_item": {
+  "bearing_pink_toolbox_item": {
     "textures": "textures/items/pink_toolbox"
   },
-  "levitate_gray_toolbox_item": {
+  "bearing_gray_toolbox_item": {
     "textures": "textures/items/gray_toolbox"
   },
-  "levitate_light_gray_toolbox_item": {
+  "bearing_light_gray_toolbox_item": {
     "textures": "textures/items/light_gray_toolbox"
   },
-  "levitate_cyan_toolbox_item": {
+  "bearing_cyan_toolbox_item": {
     "textures": "textures/items/cyan_toolbox"
   },
-  "levitate_purple_toolbox_item": {
+  "bearing_purple_toolbox_item": {
     "textures": "textures/items/purple_toolbox"
   },
-  "levitate_blue_toolbox_item": {
+  "bearing_blue_toolbox_item": {
     "textures": "textures/items/blue_toolbox"
   },
-  "levitate_brown_toolbox_item": {
+  "bearing_brown_toolbox_item": {
     "textures": "textures/items/brown_toolbox"
   },
-  "levitate_green_toolbox_item": {
+  "bearing_green_toolbox_item": {
     "textures": "textures/items/green_toolbox"
   },
-  "levitate_red_toolbox_item": {
+  "bearing_red_toolbox_item": {
     "textures": "textures/items/red_toolbox"
   },
-  "levitate_black_toolbox_item": {
+  "bearing_black_toolbox_item": {
     "textures": "textures/items/black_toolbox"
   },
-  "levitate_copper_backtank_item": {
+  "bearing_copper_backtank_item": {
     "textures": "textures/items/copper_backtank"
   },
-  "levitate_netherite_backtank_item": {
+  "bearing_netherite_backtank_item": {
     "textures": "textures/items/netherite_backtank"
   },
-  "levitate_copper_diving_helmet": {
+  "bearing_copper_diving_helmet": {
     "textures": "textures/items/copper_diving_helmet"
   },
-  "levitate_copper_diving_boots": {
+  "bearing_copper_diving_boots": {
     "textures": "textures/items/copper_diving_boots"
   },
-  "levitate_netherite_diving_helmet": {
+  "bearing_netherite_diving_helmet": {
     "textures": "textures/items/netherite_diving_helmet"
   },
-  "levitate_netherite_diving_boots": {
+  "bearing_netherite_diving_boots": {
     "textures": "textures/items/netherite_diving_boots"
   },
-  "levitate_extendo_grip": {
+  "bearing_extendo_grip": {
     "textures": "textures/items/extendo_grip"
   },
-  "levitate_potato_cannon": {
+  "bearing_potato_cannon": {
     "textures": "textures/items/potato_cannon"
   },
-  "levitate_wand_of_symmetry": {
+  "bearing_wand_of_symmetry": {
     "textures": "textures/items/wand_of_symmetry"
   },
-  "levitate_handheld_worldshaper": {
+  "bearing_handheld_worldshaper": {
     "textures": "textures/items/handheld_worldshaper"
   },
-  "levitate_linked_controller": {
+  "bearing_linked_controller": {
     "textures": "textures/items/linked_controller"
   },
-  "levitate_sand_paper": {
+  "bearing_sand_paper": {
     "textures": "textures/items/sand_paper"
   },
-  "levitate_red_sand_paper": {
+  "bearing_red_sand_paper": {
     "textures": "textures/items/red_sand_paper"
   },
-  "levitate_tree_fertilizer": {
+  "bearing_tree_fertilizer": {
     "textures": "textures/items/tree_fertilizer"
   },
-  "levitate_cardboard_helmet": {
+  "bearing_cardboard_helmet": {
     "textures": "textures/items/cardboard_helmet"
   },
-  "levitate_cardboard_chestplate": {
+  "bearing_cardboard_chestplate": {
     "textures": "textures/items/cardboard_chestplate"
   },
-  "levitate_cardboard_leggings": {
+  "bearing_cardboard_leggings": {
     "textures": "textures/items/cardboard_leggings"
   },
-  "levitate_cardboard_boots": {
+  "bearing_cardboard_boots": {
     "textures": "textures/items/cardboard_boots"
   },
-  "levitate_cardboard_sword": {
+  "bearing_cardboard_sword": {
     "textures": "textures/items/cardboard_sword"
   }
 }

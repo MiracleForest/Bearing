@@ -31,14 +31,14 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace fu       = lv::feature::funnels;
-namespace fd       = lv::feature::funnels::detail;
-namespace cf       = lv::core::funnels;
-namespace common   = lv::feature::common;
-namespace items    = lv::feature::common::items;
-namespace beltlink = lv::feature::common::beltlink;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace fu       = br::feature::funnels;
+namespace fd       = br::feature::funnels::detail;
+namespace cf       = br::core::funnels;
+namespace common   = br::feature::common;
+namespace items    = br::feature::common::items;
+namespace beltlink = br::feature::common::beltlink;
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 BlockPos  bp(GlobalPos const& p) { return BlockPos{p.x, p.y, p.z}; }
@@ -110,11 +110,11 @@ struct FakeBelt {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("funnels.blocks", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.blocks", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx.testPos(1200), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     for (char const* id : {fu::kAndesiteFunnel, fu::kBrassFunnel, fu::kAndesiteTunnel, fu::kBrassTunnel, fu::kChute, fu::kSmartChute, fu::kItemVault, fu::kCreativeCrate}) {
-        ctx.require(lv::game::blockWith(id) != nullptr, std::string(id) + " is registered");
+        ctx.require(br::game::blockWith(id) != nullptr, std::string(id) + " is registered");
         ctx.check(items::make(id).has_value(), std::string(id) + " has an item");
     }
     ctx.require(ctx.setBlock(pos, fu::kBrassFunnel, {{fu::kFacing, 3}, {fu::kExtracting, 1}}), "place a brass funnel");
@@ -126,7 +126,7 @@ LV_REGISTER_SELFTEST("funnels.blocks", [](Context& ctx) -> ll::coro::CoroTask<> 
     ctx.check(common::valuebox::boxesOf(fu::kBrassTunnel) != nullptr, "brass tunnel has the distribution box");
 });
 
-LV_REGISTER_SELFTEST("funnels.andesite_extracts", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.andesite_extracts", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1205), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
@@ -150,7 +150,7 @@ LV_REGISTER_SELFTEST("funnels.andesite_extracts", [](Context& ctx) -> ll::coro::
     clearEntities(r, base);
 });
 
-LV_REGISTER_SELFTEST("funnels.brass_filter_amount", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.brass_filter_amount", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1215), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
@@ -181,7 +181,7 @@ LV_REGISTER_SELFTEST("funnels.brass_filter_amount", [](Context& ctx) -> ll::coro
     clearEntities(r, base);
 });
 
-LV_REGISTER_SELFTEST("funnels.redstone_pauses", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.redstone_pauses", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1225), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
@@ -204,7 +204,7 @@ LV_REGISTER_SELFTEST("funnels.redstone_pauses", [](Context& ctx) -> ll::coro::Co
     clearEntities(r, base);
 });
 
-LV_REGISTER_SELFTEST("funnels.collect_and_insert", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.collect_and_insert", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1235), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
@@ -230,7 +230,7 @@ LV_REGISTER_SELFTEST("funnels.collect_and_insert", [](Context& ctx) -> ll::coro:
     clearEntities(r, base);
 });
 
-LV_REGISTER_SELFTEST("funnels.player_place_and_use", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.player_place_and_use", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1245), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -248,7 +248,7 @@ LV_REGISTER_SELFTEST("funnels.player_place_and_use", [](Context& ctx) -> ll::cor
     ctx.cleanupBlock(funnel);
     sp.simulateUseItemInSlotOnBlock(0, bp(chest), ScriptModuleMinecraft::ScriptFacing::East, Vec3{1.f, .5f, .5f});
     co_await ctx.ticks(3);
-    ctx.require(lv::game::blockIdAt(r, bp(funnel)) == fu::kAndesiteFunnel, "the funnel is placed on the chest");
+    ctx.require(br::game::blockIdAt(r, bp(funnel)) == fu::kAndesiteFunnel, "the funnel is placed on the chest");
     ctx.check(stateAt(r, funnel, fu::kFacing) == cf::kEast, "it faces away from the chest (towards the player)");
     ctx.check(stateAt(r, funnel, fu::kExtracting) == 1, "placed normally it extracts");
     // switch to inserting and hand-insert the held stack through the front
@@ -264,7 +264,7 @@ LV_REGISTER_SELFTEST("funnels.player_place_and_use", [](Context& ctx) -> ll::cor
     clearEntities(r, base);
 });
 
-LV_REGISTER_SELFTEST("funnels.chute_down", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.chute_down", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1255), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r      = region(ctx);
@@ -295,7 +295,7 @@ LV_REGISTER_SELFTEST("funnels.chute_down", [](Context& ctx) -> ll::coro::CoroTas
     clearEntities(r, base, 4.f);
 });
 
-LV_REGISTER_SELFTEST("funnels.smart_chute", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.smart_chute", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1265), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r      = region(ctx);
@@ -319,25 +319,25 @@ LV_REGISTER_SELFTEST("funnels.smart_chute", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(countIn(r, bottom, "minecraft:cobblestone") == 10, "a powered smart chute stops");
 });
 
-LV_REGISTER_SELFTEST("funnels.chute_fans", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.chute_fans", [](Context& ctx) -> ll::coro::CoroTask<> {
     // (U55) a real encased fan (registered by U13 through airflow::registerFan), driven by the
     // kinetics test source below it
     auto base = at(ctx.testPos(5510), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r      = region(ctx);
     auto  source = base, fan = at(base, 0, 1, 0), chute = at(base, 0, 2, 0), top = at(base, 0, 3, 0);
-    ctx.require(ctx.setBlock(source, "levitate:kinetics_test_source", {{"levitate:axis", 1}}), "kinetic source");
-    ctx.require(ctx.setBlock(fan, "levitate:encased_fan", {{"levitate:facing", cf::kUp}}), "encased fan facing up");
+    ctx.require(ctx.setBlock(source, "bearing:kinetics_test_source", {{"bearing:axis", 1}}), "kinetic source");
+    ctx.require(ctx.setBlock(fan, "bearing:encased_fan", {{"bearing:facing", cf::kUp}}), "encased fan facing up");
     ctx.require(ctx.setBlock(chute, fu::kChute), "chute");
     ctx.require(ctx.setBlock(top, "minecraft:chest"), "chest above");
     co_await ctx.ticks(2);
-    lv::kinetics::setGeneratedSpeed(source, 64);
+    br::kinetics::setGeneratedSpeed(source, 64);
     co_await ctx.ticks(3);
     auto f = common::airflow::fanAt(r, bp(fan));
     ctx.require(f && f->facing == cf::kUp && std::abs(f->speed) == 64.f, "the encased fan is registered (facing up, 64 RPM)");
     if (f->speed < 0) {
         // the chute takes the fan's signed speed: make it blow upwards
-        lv::kinetics::setGeneratedSpeed(source, -64);
+        br::kinetics::setGeneratedSpeed(source, -64);
         co_await ctx.ticks(3);
         f = common::airflow::fanAt(r, bp(fan));
     }
@@ -346,11 +346,11 @@ LV_REGISTER_SELFTEST("funnels.chute_fans", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(items::isEmpty(rest), "chute takes the stack");
     co_await ctx.ticks(40);
     ctx.check(countIn(r, top, "minecraft:cobblestone") == 9, "a fan below pushes items up into the inventory above");
-    lv::kinetics::setGeneratedSpeed(source, 0);
+    br::kinetics::setGeneratedSpeed(source, 0);
     for (auto p : {top, chute, fan, source}) ctx.setBlock(p, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("funnels.vault", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.vault", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1275), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
@@ -387,7 +387,7 @@ LV_REGISTER_SELFTEST("funnels.vault", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearEntities(r, base, 4.f);
 });
 
-LV_REGISTER_SELFTEST("funnels.vault_comparator", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.vault_comparator", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1285), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
@@ -406,24 +406,24 @@ LV_REGISTER_SELFTEST("funnels.vault_comparator", [](Context& ctx) -> ll::coro::C
     auto cb = Block::tryGetFromRegistry(nbt);
     ctx.require(bool(cb), "comparator reading westwards");
     ctx.cleanupBlock(comp);
-    lv::game::setBlock(r, bp(comp), *cb);
+    br::game::setBlock(r, bp(comp), *cb);
     ctx.require(ctx.setBlock(wire, "minecraft:redstone_wire"), "wire");
     co_await ctx.ticks(10);
     auto const* w      = fd::loadedBlock(r, bp(wire));
-    int         signal = w ? lv::game::intState(*w, "redstone_signal").value_or(-1) : -1;
+    int         signal = w ? br::game::intState(*w, "redstone_signal").value_or(-1) : -1;
     ctx.check(signal == 8, "the comparator outputs the vault's fill level (8), got " + std::to_string(signal));
     // more items: a stronger signal
     for (int i = 0; i < 10; ++i) (void)items::insert(r, bp(base), -1, item(ctx, "minecraft:cobblestone", 64), false);
     co_await ctx.ticks(10);
     w      = fd::loadedBlock(r, bp(wire));
-    signal = w ? lv::game::intState(*w, "redstone_signal").value_or(-1) : -1;
+    signal = w ? br::game::intState(*w, "redstone_signal").value_or(-1) : -1;
     ctx.check(signal == 15, "a full vault gives 15, got " + std::to_string(signal));
     for (auto const& p : {comp, wire}) ctx.setBlock(p, "minecraft:air");
     (void)common::blockdata::take(base); // no drops of the test contents
     ctx.setBlock(base, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("funnels.creative_crate", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.creative_crate", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx.testPos(1290), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     auto& r = region(ctx);
@@ -439,7 +439,7 @@ LV_REGISTER_SELFTEST("funnels.creative_crate", [](Context& ctx) -> ll::coro::Cor
     ctx.check(items::isEmpty(rest), "inserted items are voided");
 });
 
-LV_REGISTER_SELFTEST("funnels.tunnels", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.tunnels", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(1293), 0, 1, 4);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
@@ -487,7 +487,7 @@ LV_REGISTER_SELFTEST("funnels.tunnels", [](Context& ctx) -> ll::coro::CoroTask<>
     for (auto const& p : {belt, north, south, east}) common::blockdata::erase(p);
 });
 
-LV_REGISTER_SELFTEST("funnels.hold_filter_for_amount", [](Context& ctx) {
+BR_REGISTER_SELFTEST("funnels.hold_filter_for_amount", [](Context& ctx) {
     // Create: holding the filter slot of a brass funnel / smart chute edits its count (U41, R60)
     for (char const* id : {fu::kBrassFunnel, fu::kSmartChute}) {
         auto const* slots = common::filterslot::slotsOf(id);

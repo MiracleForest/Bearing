@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:contraption_controls_from_oak_button"
+      "identifier": "bearing:contraption_controls_from_oak_button"
     },
     "tags": [
       "crafting_table"
@@ -17,19 +17,19 @@
         "item": "minecraft:wooden_button"
       },
       "C": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "I": {
-        "item": "levitate:electron_tube"
+        "item": "bearing:electron_tube"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:contraption_controls"
+      "item": "bearing:contraption_controls"
     }
   }
 }

@@ -11,7 +11,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 namespace {
 namespace rs = common::redstone;
@@ -33,6 +33,6 @@ public:
     }
 };
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam
 
-LV_REGISTER_MODULE(lv::feature::steam::SteamComparatorModule);
+BR_REGISTER_MODULE(br::feature::steam::SteamComparatorModule);

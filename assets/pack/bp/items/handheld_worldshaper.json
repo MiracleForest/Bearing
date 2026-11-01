@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:handheld_worldshaper",
+      "identifier": "bearing:handheld_worldshaper",
       "menu_category": {
         "category": "equipment"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_handheld_worldshaper",
+      "minecraft:icon": "bearing_handheld_worldshaper",
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.levitate:handheld_worldshaper.name"
+        "value": "item.bearing:handheld_worldshaper.name"
       },
       "minecraft:hand_equipped": true
     }

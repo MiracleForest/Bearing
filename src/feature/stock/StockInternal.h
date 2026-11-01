@@ -20,19 +20,19 @@ class Block;
 class Player;
 class Vec3;
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace cs = core::stock;
 
 // ---- ids, states -----------------------------------------------------------------------------------
 
-inline constexpr char kStateFace[]    = "levitate:face";    ///< 0 floor, 1 wall, 2 ceiling
-inline constexpr char kStateFacing[]  = "levitate:facing";  ///< Java 2D facing 0 S, 1 W, 2 N, 3 E
-inline constexpr char kStatePowered[] = "levitate:powered"; ///< 0 / 1
-inline constexpr char kStateAxis[]    = "levitate:axis";    ///< requester: 0 x, 1 z
-inline constexpr char kStatePanels[]  = "levitate:panels";  ///< gauge: bitmask of active panels
-inline constexpr char kBlazeBurner[]  = "levitate:blaze_burner";
-inline constexpr char kWrench[]       = "levitate:wrench";
+inline constexpr char kStateFace[]    = "bearing:face";    ///< 0 floor, 1 wall, 2 ceiling
+inline constexpr char kStateFacing[]  = "bearing:facing";  ///< Java 2D facing 0 S, 1 W, 2 N, 3 E
+inline constexpr char kStatePowered[] = "bearing:powered"; ///< 0 / 1
+inline constexpr char kStateAxis[]    = "bearing:axis";    ///< requester: 0 x, 1 z
+inline constexpr char kStatePanels[]  = "bearing:panels";  ///< gauge: bitmask of active panels
+inline constexpr char kBlazeBurner[]  = "bearing:blaze_burner";
+inline constexpr char kWrench[]       = "bearing:wrench";
 inline constexpr char kDataKey[]      = "stock";            ///< BlockData top-level key
 inline constexpr char kFreqData[]     = "stock_freq";       ///< item user data: the tuned network
 inline constexpr char kRequestData[]  = "stock_request";    ///< item user data: an encoded order
@@ -216,13 +216,13 @@ void               writeGaugePanel(GlobalPos const& p, int slot, Json const& pan
 [[nodiscard]] int gaugePanelFace(GlobalPos const& p);
 /// Sets the request timer of a panel (Create's `timer = 1` after a redstone change).
 void setGaugeTimer(GlobalPos const& p, int slot, int ticks);
-/// Recomputes the `levitate:panels` mask of a gauge block.
+/// Recomputes the `bearing:panels` mask of a gauge block.
 void updateGaugePanelsState(GlobalPos const& p);
 
 // ---- gauge connections to links, pending clicks, relocation (GaugeLinks.cpp, U56) ---------------
 
-inline constexpr char kRedstoneLinkId[] = "levitate:redstone_link";
-inline constexpr char kDisplayLinkId[]  = "levitate:display_link";
+inline constexpr char kRedstoneLinkId[] = "bearing:redstone_link";
+inline constexpr char kDisplayLinkId[]  = "bearing:display_link";
 
 /// Create's FactoryPanelConnectionHandler.startRelocating ("Move this gauge").
 void startRelocation(Player& player, GlobalPos const& p, int slot);
@@ -281,4 +281,4 @@ bool                useClothItems(Player& player, GlobalPos const& p);
 void                restoreClothItemDisplays();
 void                registerShopValueBoxes();
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

@@ -1,6 +1,6 @@
 #include "core/common/FilterLogic.h"
 
-namespace lv::core::common {
+namespace br::core::common {
 
 std::string_view attributeModeName(AttributeMode mode) {
     switch (mode) {
@@ -41,4 +41,4 @@ bool combineListFilter(std::size_t entries, std::function<bool(std::size_t)> con
     return blacklist;
 }
 
-} // namespace lv::core::common
+} // namespace br::core::common

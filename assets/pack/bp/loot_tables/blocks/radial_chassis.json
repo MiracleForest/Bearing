@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:radial_chassis",
+          "name": "bearing:radial_chassis",
           "weight": 1
         }
       ]

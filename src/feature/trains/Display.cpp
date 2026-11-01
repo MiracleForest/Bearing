@@ -12,9 +12,9 @@
 #include "mod/I18n.h"
 #include "mod/Module.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
-namespace dsp = lv::feature::display;
+namespace dsp = br::feature::display;
 
 namespace {
 
@@ -174,6 +174,6 @@ public:
     void uninstall() {}
 };
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains
 
-LV_REGISTER_MODULE(lv::feature::trains::TrainsDisplayModule);
+BR_REGISTER_MODULE(br::feature::trains::TrainsDisplayModule);

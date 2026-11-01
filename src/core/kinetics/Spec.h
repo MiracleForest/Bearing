@@ -16,7 +16,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::kinetics {
+namespace br::core::kinetics {
 
 enum class CogType : std::uint8_t { None, Small, Large };
 
@@ -59,7 +59,7 @@ struct RenderView {
 
 struct KineticSpec {
     // ---- state snapshot ------------------------------------------------------------------------
-    /// Block states the hooks read (e.g. "levitate:axis", "levitate:powered"). Only these are
+    /// Block states the hooks read (e.g. "bearing:axis", "bearing:powered"). Only these are
     /// snapshot; a change of any of them is a kinetic state change (detach + re-attach, as
     /// Create's `switchToBlockState` for states that are not kinetically equivalent).
     std::vector<std::string> states;
@@ -75,7 +75,7 @@ struct KineticSpec {
     std::function<bool(BlockState const&)> propagatesDiagonally;
 
     // ---- stress (config `kinetics.json` overrides these defaults by `stressKey`) ----------------
-    /// Key into the stress table (default: the id's path, "levitate:mechanical_press" -> "mechanical_press").
+    /// Key into the stress table (default: the id's path, "bearing:mechanical_press" -> "mechanical_press").
     std::string stressKey;
     double      impact   = 0; ///< SU per RPM used when the config has no entry
     double      capacity = 0; ///< SU per RPM provided at the generated speed (generators)
@@ -107,7 +107,7 @@ struct KineticSpec {
     /// holds and vanilla clients see), 1 = the parts that do not rotate (what the client mod puts
     /// in the chunk mesh; may be empty). Empty: the client mod draws nothing special.
     std::string rotorState;
-    /// Geometry identifier ("geometry.levitate.shaft", RP `models/blocks/*.geo.json`) whose bones
+    /// Geometry identifier ("geometry.bearing.shaft", RP `models/blocks/*.geo.json`) whose bones
     /// are the rotating parts, and the terrain texture name they use.
     std::string rotorModel;
     std::string rotorTexture;
@@ -144,12 +144,12 @@ namespace specs {
 
 /// Sets the client model of the rotating parts (`rotorModel`, `rotorTexture`).
 [[nodiscard]] KineticSpec withModel(KineticSpec spec, std::string model, std::string texture);
-/// A shaft along `axisState` (shaft ends on both faces of the axis). Rotor state "levitate:rotor".
-[[nodiscard]] KineticSpec shaft(std::string axisState = "levitate:axis");
+/// A shaft along `axisState` (shaft ends on both faces of the axis). Rotor state "bearing:rotor".
+[[nodiscard]] KineticSpec shaft(std::string axisState = "bearing:axis");
 /// A cogwheel (small or large) along `axisState`, with shaft ends on both faces of its axis.
-[[nodiscard]] KineticSpec cogwheel(bool large, std::string axisState = "levitate:axis");
+[[nodiscard]] KineticSpec cogwheel(bool large, std::string axisState = "bearing:axis");
 /// A generator with a shaft along `axisState`, providing `capacity` SU per RPM.
-[[nodiscard]] KineticSpec generatorShaft(double capacity, std::string axisState = "levitate:axis");
+[[nodiscard]] KineticSpec generatorShaft(double capacity, std::string axisState = "bearing:axis");
 
 /// Create's gearbox halves: the face opposite the source turns the other way; a perpendicular face
 /// turns the same way when its direction sign (Up/South/East positive) differs from the source
@@ -160,4 +160,4 @@ namespace specs {
 
 } // namespace specs
 
-} // namespace lv::core::kinetics
+} // namespace br::core::kinetics

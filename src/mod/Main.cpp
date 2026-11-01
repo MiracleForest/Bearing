@@ -8,9 +8,9 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("mod", lv::ModConfig);
+BR_REGISTER_CONFIG("mod", br::ModConfig);
 
-namespace lv {
+namespace br {
 
 ll::io::Logger& log() { return Mod::getInstance().getSelf().getLogger(); }
 
@@ -32,7 +32,7 @@ bool Mod::load() {
 bool Mod::enable() {
     installModules();
     mEnabled = true;
-    log().info("Levitate enabled");
+    log().info("Bearing enabled");
     return true;
 }
 
@@ -42,6 +42,6 @@ bool Mod::disable() {
     return true;
 }
 
-} // namespace lv
+} // namespace br
 
-LL_REGISTER_MOD(lv::Mod, lv::Mod::getInstance());
+LL_REGISTER_MOD(br::Mod, br::Mod::getInstance());

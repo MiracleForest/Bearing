@@ -15,7 +15,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace {
 
@@ -65,7 +65,7 @@ StairView stairAt(GlobalPos const& p) {
     if (!b) return {};
     auto const* i = infoOf(*b);
     if (!i || i->kind != Kind::CopperStairs) return {};
-    return {true, hfacingOf(*b), stateOf(*b, "levitate:upside")};
+    return {true, hfacingOf(*b), stateOf(*b, "bearing:upside")};
 }
 
 /// Java StairBlock.getStairsShape (0 straight, 1 inner_left, 2 inner_right, 3 outer_left, 4 outer_right).
@@ -97,9 +97,9 @@ bool beamFrom(GlobalPos const& p, int dir) {
     auto const* i = infoOf(*n);
     if (!i) return false;
     int axis = axisOf(dir); // 0 x, 2 z
-    if (i->kind == Kind::Girder) return stateOf(*n, axis == 0 ? "levitate:x" : "levitate:z") == 1;
-    if (i->kind == Kind::GirderShaft) return stateOf(*n, "levitate:axis") != axis; // the beam runs across the shaft
-    if (i->kind == Kind::Placard) return stateOf(*n, "levitate:facing") == dir;
+    if (i->kind == Kind::Girder) return stateOf(*n, axis == 0 ? "bearing:x" : "bearing:z") == 1;
+    if (i->kind == Kind::GirderShaft) return stateOf(*n, "bearing:axis") != axis; // the beam runs across the shaft
+    if (i->kind == Kind::Placard) return stateOf(*n, "bearing:facing") == dir;
     return false;
 }
 
@@ -120,7 +120,7 @@ bool verticalAttach(GlobalPos const& p, int dir) {
     if (isWall(*n)) return true;
     if (id == "minecraft:chain" || id.ends_with("_chain")) return stateOf(*n, "pillar_axis", 0) == 0; // (string state: kept if present)
     if (id == "minecraft:lantern" || id == "minecraft:soul_lantern") return (dir == Down) == (stateOf(*n, "hanging") == 1);
-    if (id == kPlacardId) return stateOf(*n, "levitate:facing") == dir;
+    if (id == kPlacardId) return stateOf(*n, "bearing:facing") == dir;
     return false;
 }
 
@@ -164,7 +164,7 @@ bool updateConnections(GlobalPos const& p) {
         std::vector<std::pair<std::string, int>> s;
         for (int d = 0; d < 6; ++d) {
             if (!ctUses(info->ct, d)) continue;
-            s.emplace_back(std::string("levitate:c_") + kDirNames[d], idAt(offset(p, d)) == info->id ? 1 : 0);
+            s.emplace_back(std::string("bearing:c_") + kDirNames[d], idAt(offset(p, d)) == info->id ? 1 : 0);
         }
         next = withStates(*block, s);
         break;
@@ -172,19 +172,19 @@ bool updateConnections(GlobalPos const& p) {
     case Kind::Pane:
     case Kind::Bars: {
         std::vector<std::pair<std::string, int>> s{
-            {"levitate:north", paneAttaches(p, North)}, {"levitate:south", paneAttaches(p, South)}, {"levitate:west", paneAttaches(p, West)}, {"levitate:east", paneAttaches(p, East)}};
+            {"bearing:north", paneAttaches(p, North)}, {"bearing:south", paneAttaches(p, South)}, {"bearing:west", paneAttaches(p, West)}, {"bearing:east", paneAttaches(p, East)}};
         // connected textures of panes: the same pane on each side (Create's GlassPaneCTBehaviour, no
         // "blocked" check)
         for (int d = 0; d < 6; ++d) {
             if (!ctUses(info->ct, d)) continue;
-            s.emplace_back(std::string("levitate:c_") + kDirNames[d], idAt(offset(p, d)) == info->id ? 1 : 0);
+            s.emplace_back(std::string("bearing:c_") + kDirNames[d], idAt(offset(p, d)) == info->id ? 1 : 0);
         }
         next = withStates(*block, s);
         break;
     }
     case Kind::CopperStairs: {
-        int facing = hfacingOf(*block), upside = stateOf(*block, "levitate:upside");
-        next       = withStates(*block, {{"levitate:shape", stairShape(p, facing, upside)}});
+        int facing = hfacingOf(*block), upside = stateOf(*block, "bearing:upside");
+        next       = withStates(*block, {{"bearing:shape", stairShape(p, facing, upside)}});
         break;
     }
     case Kind::Scaffold: {
@@ -193,23 +193,23 @@ bool updateConnections(GlobalPos const& p) {
         auto below  = offset(p, Down);
         bool onSame = idAt(below) == info->id;
         bool firm   = sturdy(below, Up);
-        next        = withStates(*block, {{"levitate:bottom", (!onSame && !firm) ? 1 : 0}, {"levitate:distance", firm ? 0 : 7}});
+        next        = withStates(*block, {{"bearing:bottom", (!onSame && !firm) ? 1 : 0}, {"bearing:distance", firm ? 0 : 7}});
         break;
     }
     case Kind::Girder: {
-        int  axis = stateOf(*block, "levitate:axis", 1);
+        int  axis = stateOf(*block, "bearing:axis", 1);
         auto beam = [&](int ax, char const* state, int a, int b) {
             if (axis == ax) return 1;
             if (beamFrom(p, a) || beamFrom(p, b)) return 1;
             // an existing beam stays while something holds one of its ends
             return stateOf(*block, state) == 1 && (beamHeld(p, a) || beamHeld(p, b)) ? 1 : 0;
         };
-        int x = beam(0, "levitate:x", West, East), z = beam(2, "levitate:z", North, South);
+        int x = beam(0, "bearing:x", West, East), z = beam(2, "bearing:z", North, South);
         auto vert = [&](char const* state, int dir) {
             if (axis == 1 || verticalAttach(p, dir)) return 1;
             return stateOf(*block, state) == 1 && solidAt(offset(p, dir)) ? 1 : 0;
         };
-        next = withStates(*block, {{"levitate:x", x}, {"levitate:z", z}, {"levitate:top", vert("levitate:top", Up)}, {"levitate:bottom", vert("levitate:bottom", Down)}});
+        next = withStates(*block, {{"bearing:x", x}, {"bearing:z", z}, {"bearing:top", vert("bearing:top", Up)}, {"bearing:bottom", vert("bearing:bottom", Down)}});
         break;
     }
     case Kind::GirderShaft: {
@@ -217,7 +217,7 @@ bool updateConnections(GlobalPos const& p) {
             if (verticalAttach(p, dir)) return 1;
             return stateOf(*block, state) == 1 && solidAt(offset(p, dir)) ? 1 : 0;
         };
-        next = withStates(*block, {{"levitate:top", vert("levitate:top", Up)}, {"levitate:bottom", vert("levitate:bottom", Down)}});
+        next = withStates(*block, {{"bearing:top", vert("bearing:top", Up)}, {"bearing:bottom", vert("bearing:bottom", Down)}});
         break;
     }
     case Kind::Ladder: {
@@ -231,10 +231,10 @@ bool updateConnections(GlobalPos const& p) {
         return false;
     }
     case Kind::Placard: {
-        int  facing  = stateOf(*block, "levitate:facing", Up);
+        int  facing  = stateOf(*block, "bearing:facing", Up);
         auto support = offset(p, opposite(facing));
         if (blockAt(support) && !canHang(support)) scheduleBreak(p, info->id, true);
-        if (stateOf(*block, "levitate:powered")) ensurePlacardPulse(p);
+        if (stateOf(*block, "bearing:powered")) ensurePlacardPulse(p);
         return false;
     }
     default: return false;
@@ -253,4 +253,4 @@ void processDirty() {
 }
 } // namespace detail
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

@@ -15,7 +15,7 @@
 #include "feature/common/ValueBox.h"
 #include "feature/kinetics/Kinetics.h"
 
-namespace lv::feature::generators {
+namespace br::feature::generators {
 
 namespace k  = core::kinetics;
 namespace vb = common::valuebox;
@@ -39,7 +39,7 @@ KineticSpec handleSpec(std::string texture) {
     s.generator       = true;
     s.capacity        = 8;
     s.rotorState      = kRotor;
-    s.rotorModel      = "geometry.levitate.hand_crank.rotor";
+    s.rotorModel      = "geometry.bearing.hand_crank.rotor";
     s.rotorTexture    = std::move(texture);
     s.parts           = [](k::RenderView const& v, std::vector<k::RotorPart>& out) {
         Face f = faceState(*v.state);
@@ -58,8 +58,8 @@ KineticSpec waterWheelSpec() {
     s.generator       = true;
     s.capacity        = 32;
     s.rotorState      = kRotor;
-    s.rotorModel      = "geometry.levitate.water_wheel.rotor";
-    s.rotorTexture    = "levitate_water_wheel_rotor";
+    s.rotorModel      = "geometry.bearing.water_wheel.rotor";
+    s.rotorTexture    = "bearing_water_wheel_rotor";
     s.parts           = [](k::RenderView const& v, std::vector<k::RotorPart>& out) {
         int wood = std::clamp(v.state->get(kWood, cg::kDefaultWood), 0, static_cast<int>(cg::kWoods.size()) - 1);
         out.push_back(k::RotorPart{"wheel_" + std::to_string(wood), k::axisOf(faceState(*v.state)), 1.f, 0.f, false});
@@ -78,8 +78,8 @@ KineticSpec largeWheelSpec() {
     s.generator    = true;
     s.capacity     = 128;
     s.rotorState   = kRotor;
-    s.rotorModel   = "geometry.levitate.large_water_wheel.rotor";
-    s.rotorTexture = "levitate_water_wheel_rotor";
+    s.rotorModel   = "geometry.bearing.large_water_wheel.rotor";
+    s.rotorTexture = "bearing_water_wheel_rotor";
     s.parts        = [](k::RenderView const& v, std::vector<k::RotorPart>& out) {
         int wood = std::clamp(v.state->get(kWood, cg::kDefaultWood), 0, static_cast<int>(cg::kWoods.size()) - 1);
         auto axis = static_cast<Axis>(std::clamp(v.state->get(kAxisState, 1), 0, 2));
@@ -100,8 +100,8 @@ KineticSpec motorSpec() {
         return cg::convertToDirection(static_cast<float>(cg::kMotorDefaultSpeed), faceState(st));
     };
     s.rotorState   = kRotor;
-    s.rotorModel   = "geometry.levitate.creative_motor.rotor";
-    s.rotorTexture = "levitate_creative_motor";
+    s.rotorModel   = "geometry.bearing.creative_motor.rotor";
+    s.rotorTexture = "bearing_creative_motor";
     s.parts        = [](k::RenderView const& v, std::vector<k::RotorPart>& out) {
         Face f = faceState(*v.state);
         out.push_back(k::RotorPart{k::isPositive(f) ? "shaft_pos" : "shaft_neg", k::axisOf(f), 1.f, 0.f, false});
@@ -111,10 +111,10 @@ KineticSpec motorSpec() {
 
 struct Registrar {
     Registrar() {
-        kinetics::registerBlock(kHandCrank, handleSpec("levitate_hand_crank"));
-        kinetics::registerBlock(kCopperValve, handleSpec("levitate_copper_valve_handle"));
+        kinetics::registerBlock(kHandCrank, handleSpec("bearing_hand_crank"));
+        kinetics::registerBlock(kCopperValve, handleSpec("bearing_copper_valve_handle"));
         for (int c = 0; c < 16; ++c) {
-            auto spec      = handleSpec("levitate_" + std::string(cg::kDyeColours[static_cast<std::size_t>(c)]) + "_valve_handle");
+            auto spec      = handleSpec("bearing_" + std::string(cg::kDyeColours[static_cast<std::size_t>(c)]) + "_valve_handle");
             spec.stressKey = "copper_valve_handle"; // HandCrankBlockEntity.getStressConfigKey: every valve handle uses the copper entry
             kinetics::registerBlock(valveId(c), std::move(spec));
         }
@@ -194,4 +194,4 @@ void registerValueBoxes() {
 
 } // namespace detail
 
-} // namespace lv::feature::generators
+} // namespace br::feature::generators

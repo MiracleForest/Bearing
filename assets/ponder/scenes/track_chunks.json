@@ -3,12 +3,12 @@
   "size": [9, 5],
   "scale": 0.9,
   "blocks": [
-    {"area": [[0, 1, 2], [8, 1, 2]], "id": "levitate:track", "states": {"levitate:shape": 2}},
-    {"at": [1, 2, 2], "id": "levitate:small_bogey", "states": {"levitate:axis": 0}},
-    {"at": [3, 2, 2], "id": "levitate:small_bogey", "states": {"levitate:axis": 0}},
-    {"area": [[0, 3, 2], [3, 3, 2]], "id": "levitate:railway_casing"},
-    {"at": [4, 3, 2], "id": "levitate:mechanical_drill", "states": {"levitate:facing": 5}},
-    {"at": [6, 1, 1], "id": "levitate:track_station", "states": {"levitate:facing": 5}},
+    {"area": [[0, 1, 2], [8, 1, 2]], "id": "bearing:track", "states": {"bearing:shape": 2}},
+    {"at": [1, 2, 2], "id": "bearing:small_bogey", "states": {"bearing:axis": 0}},
+    {"at": [3, 2, 2], "id": "bearing:small_bogey", "states": {"bearing:axis": 0}},
+    {"area": [[0, 3, 2], [3, 3, 2]], "id": "bearing:railway_casing"},
+    {"at": [4, 3, 2], "id": "bearing:mechanical_drill", "states": {"bearing:facing": 5}},
+    {"at": [6, 1, 1], "id": "bearing:track_station", "states": {"bearing:facing": 5}},
     {"area": [[7, 2, 2], [7, 3, 2]], "id": "minecraft:stone"}
   ],
   "timeline": [

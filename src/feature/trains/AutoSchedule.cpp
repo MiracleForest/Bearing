@@ -27,7 +27,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace items = common::items;
 
@@ -162,4 +162,4 @@ void installAutoSchedule() {
     });
 }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains

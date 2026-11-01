@@ -36,7 +36,7 @@
 #include "mod/Module.h"
 #include "game/WorldDb.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -156,7 +156,7 @@ bool addPoint(Station const& s) {
     }
     tk::EdgePoint p;
     p.id          = s.pointId();
-    p.type        = "levitate:station";
+    p.type        = "bearing:station";
     p.node1       = n1->location;
     p.node2       = n2->location;
     p.position    = loc->position;
@@ -415,7 +415,7 @@ std::optional<std::uint64_t> assemble(Station& s, Player* by) {
                              int(c) + 1});
             }
             if (id != kControls) continue;
-            int  f   = intStateAt(gp, "levitate:facing").value_or(2);
+            int  f   = intStateAt(gp, "bearing:facing").value_or(2);
             auto off = cc::offset(cc::Dir(std::clamp(f, 0, 5)));
             int  rel = off.x == dx && off.z == dz ? 1 : (off.x == -dx && off.z == -dz ? -1 : 0);
             facings.push_back(rel);
@@ -714,7 +714,7 @@ void renameStationForm(Player& player, GlobalPos pos) {
     auto* s = stationAt(pos);
     if (!s) return;
     ll::form::CustomForm form(s->name);
-    form.appendInput("name", trFor(player, "lv.trains.station_name", "Station Name"), "", s->name);
+    form.appendInput("name", trFor(player, "br.trains.station_name", "Station Name"), "", s->name);
     form.appendDropdown("door", trFor(player, "create.contraption.door_control", "Onboard Door Control"), doorNames(player), size_t(s->door));
     form.sendTo(player, [pos](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
         if (!result) return;
@@ -732,7 +732,7 @@ void renameTrainForm(Player& player, GlobalPos pos) {
     auto* t = s ? trainAt(*s) : nullptr;
     if (!t) return;
     ll::form::CustomForm form(t->name);
-    form.appendInput("name", trFor(player, "lv.trains.train_name", "Train Name"), "", t->name);
+    form.appendInput("name", trFor(player, "br.trains.train_name", "Train Name"), "", t->name);
     form.sendTo(player, [pos](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
         if (!result) return;
         Json ctx{{"pos", posJson(pos)}};
@@ -766,7 +766,7 @@ void stationForm(Player& p, Json const& ctx) {
         buttons.push_back({trFor(p, "create.station.cancel", "Cancel Assembly"), {{"op", "cancel"}}});
     } else if (d.contains("train")) {
         content = d["train"]["name"].get<std::string>();
-        buttons.push_back({trFor(p, "lv.trains.rename_train", "Rename Train"), {{"op", "train_name"}}});
+        buttons.push_back({trFor(p, "br.trains.rename_train", "Rename Train"), {{"op", "train_name"}}});
         if (d["train"]["canDisassemble"].get<bool>())
             buttons.push_back({trFor(p, "create.station.disassemble_train", "Disassemble Train"), {{"op", "disassemble"}}});
         else
@@ -788,7 +788,7 @@ void stationForm(Player& p, Json const& ctx) {
                              d["diagonal"].get<bool>() ? "on diagonal tracks" : "on curved tracks");
     }
     for (auto const& a : d["arrivals"]) content += "\n" + a["name"].get<std::string>() + "  " + a["eta"].get<std::string>();
-    buttons.push_back({trFor(p, "lv.trains.station_settings", "Name & Door Control"), {{"op", "rename"}}});
+    buttons.push_back({trFor(p, "br.trains.station_settings", "Name & Door Control"), {{"op", "rename"}}});
     ll::form::SimpleForm form(s->name, content);
     for (auto const& [text, act] : buttons) {
         Json a = act;
@@ -917,6 +917,6 @@ std::optional<bool> stationFlagRaised(GlobalPos const& pos) {
     return it->second;
 }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains
 
-LV_REGISTER_MODULE(lv::feature::trains::StationFlagsModule);
+BR_REGISTER_MODULE(br::feature::trains::StationFlagsModule);

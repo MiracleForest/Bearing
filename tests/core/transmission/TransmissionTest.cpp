@@ -4,8 +4,8 @@
 
 #include "core/transmission/Transmission.h"
 
-using namespace lv::core::transmission;
-using lv::core::kinetics::Face;
+using namespace br::core::transmission;
+using br::core::kinetics::Face;
 
 TEST(TransmissionChain, PlacedNextToAChainStartsAConnection) {
     // two chain drives along y side by side on x: the new one (west) sees the old one east
@@ -131,7 +131,7 @@ TEST(TransmissionController, ConveyedSpeed) {
 TEST(TransmissionPlacement, OrderedByDistance) {
     auto all = orderedByDistance(.4, .1, 0, [](Face) { return true; });
     EXPECT_EQ(all.front(), Face::East);
-    auto noX = orderedByDistance(.4, .1, -.05, [](Face f) { return lv::core::kinetics::axisOf(f) != Axis::X; });
+    auto noX = orderedByDistance(.4, .1, -.05, [](Face f) { return br::core::kinetics::axisOf(f) != Axis::X; });
     EXPECT_EQ(noX.front(), Face::Up);
     EXPECT_EQ(noX.size(), 4u);
 }

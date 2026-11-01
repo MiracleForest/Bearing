@@ -7,8 +7,8 @@
 // (`facing` -> `facing_direction` / `minecraft:cardinal_direction`, stairs -> `weirdo_direction`,
 // `half` -> `upside_down_bit`, ...). Several plausible states may be emitted: the game side keeps
 // those the block really has (and tries `alternatives` when the name doesn't exist). `create:<path>`
-// becomes `levitate:<path>` with Levitate's state conventions (`levitate:facing` 0..5,
-// `levitate:axis` 0..2, booleans as `levitate:<name>`).
+// becomes `bearing:<path>` with Bearing's state conventions (`bearing:facing` 0..5,
+// `bearing:axis` 0..2, booleans as `bearing:<name>`).
 
 #include <optional>
 #include <string>
@@ -17,7 +17,7 @@
 
 #include "core/schematics/Schematic.h"
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 struct JavaState {
     std::string                                      name; ///< "minecraft:oak_stairs"
@@ -32,4 +32,4 @@ struct JavaState {
 /// Parses "minecraft:oak_stairs[facing=east,half=top]".
 [[nodiscard]] JavaState parseJavaState(std::string_view text);
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

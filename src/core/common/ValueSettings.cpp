@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::common {
+namespace br::core::common {
 
 ValueSettings clampSettings(BoardSpec const& board, ValueSettings s) {
     int rows = std::max<int>(1, static_cast<int>(board.rows.size()));
@@ -75,4 +75,4 @@ bool testBoxHit(Vec const& localHit, Vec const& boxCentre, double scale) {
     return std::sqrt(dx * dx + dy * dy + dz * dz) < scale / 2.0;
 }
 
-} // namespace lv::core::common
+} // namespace br::core::common

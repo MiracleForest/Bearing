@@ -14,19 +14,19 @@ Invoke-Chat '/time set noon'
 Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.6 ~'
 Start-Sleep -Milliseconds 500
 # a row of blocks 4..6 blocks ahead (east), from left (north) to right (south)
-Invoke-Chat '/setblock ~5 ~ ~-3 levitate:analog_lever ["levitate:face"=0,"levitate:facing"=2,"levitate:state"=12]'
-Invoke-Chat '/setblock ~5 ~ ~-2 levitate:redstone_link ["levitate:facing"=1]'
-Invoke-Chat '/setblock ~6 ~ ~-2 levitate:redstone_link ["levitate:facing"=1,"levitate:receiver"=1]'
+Invoke-Chat '/setblock ~5 ~ ~-3 bearing:analog_lever ["bearing:face"=0,"bearing:facing"=2,"bearing:state"=12]'
+Invoke-Chat '/setblock ~5 ~ ~-2 bearing:redstone_link ["bearing:facing"=1]'
+Invoke-Chat '/setblock ~6 ~ ~-2 bearing:redstone_link ["bearing:facing"=1,"bearing:receiver"=1]'
 Invoke-Chat '/setblock ~7 ~ ~-2 redstone_lamp'
-Invoke-Chat '/setblock ~5 ~ ~-1 levitate:pulse_extender ["levitate:facing"=4,"levitate:inverted"=1]'
-Invoke-Chat '/setblock ~5 ~ ~1 levitate:powered_latch ["levitate:facing"=4,"levitate:powering"=1]'
-Invoke-Chat '/setblock ~5 ~ ~2 levitate:pulse_timer ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~5 ~ ~3 levitate:powered_toggle_latch ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~6 ~1 ~2 levitate:redstone_contact ["levitate:facing"=3]'
-Invoke-Chat '/setblock ~6 ~1 ~3 levitate:redstone_contact ["levitate:facing"=2]'
-Invoke-Chat '/setblock ~6 ~1 ~-1 levitate:content_observer ["levitate:facing"=5]'
+Invoke-Chat '/setblock ~5 ~ ~-1 bearing:pulse_extender ["bearing:facing"=4,"bearing:inverted"=1]'
+Invoke-Chat '/setblock ~5 ~ ~1 bearing:powered_latch ["bearing:facing"=4,"bearing:powering"=1]'
+Invoke-Chat '/setblock ~5 ~ ~2 bearing:pulse_timer ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~5 ~ ~3 bearing:powered_toggle_latch ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~6 ~1 ~2 bearing:redstone_contact ["bearing:facing"=3]'
+Invoke-Chat '/setblock ~6 ~1 ~3 bearing:redstone_contact ["bearing:facing"=2]'
+Invoke-Chat '/setblock ~6 ~1 ~-1 bearing:content_observer ["bearing:facing"=5]'
 Invoke-Chat '/setblock ~4 ~1 ~ chest'
-Invoke-Chat '/setblock ~3 ~1 ~ levitate:stockpile_switch ["levitate:facing"=5]'
+Invoke-Chat '/setblock ~3 ~1 ~ bearing:stockpile_switch ["bearing:facing"=5]'
 Start-Sleep -Seconds 3
 $mark = Get-LogMark
 Save-Screenshot 'blocks' | Out-Null
@@ -55,7 +55,7 @@ if ($vanilla) {
 
 # a receiver link where the switch was (hanging on the chest, under the crosshair): the hover
 # panel shows its mode and frequencies (client mod)
-Invoke-Chat '/setblock ~3 ~1 ~ levitate:redstone_link ["levitate:facing"=4,"levitate:receiver"=1]'
+Invoke-Chat '/setblock ~3 ~1 ~ bearing:redstone_link ["bearing:facing"=4,"bearing:receiver"=1]'
 if (-not $vanilla) { Wait-LogLine 'redstone client: hover panel shown' 15 -Since $mark | Out-Null }
 Start-Sleep -Seconds 1
 Save-Screenshot 'link-hover' | Out-Null

@@ -34,18 +34,18 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 /// `config/display.json` (Create's CLogistics display link keys).
 struct DisplayConfig {
     int version = 1;
     /// Maximum distance between a display link and its target (Create's displayLinkRange).
     int displayLinkRange = 64;
 };
-} // namespace lv::feature::display
+} // namespace br::feature::display
 
-LV_REGISTER_CONFIG("display", lv::feature::display::DisplayConfig);
+BR_REGISTER_CONFIG("display", br::feature::display::DisplayConfig);
 
-namespace lv::feature::display::link {
+namespace br::feature::display::link {
 
 namespace blockdata = common::blockdata;
 namespace items     = common::items;
@@ -54,11 +54,11 @@ namespace screens   = common::screens;
 namespace {
 
 using core::utf8Prefix;
-constexpr char kDbLinks[]  = "lv:display:links";
+constexpr char kDbLinks[]  = "br:display:links";
 constexpr char kDataKey[]  = "display_link";
 constexpr char kItemKey[]  = "display_link";
 constexpr char kScreen[]   = "display.link";
-constexpr char kPowered[]  = "levitate:powered";
+constexpr char kPowered[]  = "bearing:powered";
 constexpr char kFaceState[] = "minecraft:block_face";
 
 std::set<GlobalPos>&                links() {
@@ -308,7 +308,7 @@ void itemsPassed(GlobalPos const& source, int count) {
         auto data = read(l);
         if (!data || (data->sourceId != "item_throughput" && data->sourceId != "accumulate_items")) continue;
         if (data->sourceId == "accumulate_items") {
-            data->config["lv:pending"] = data->config.value("lv:pending", 0) + count;
+            data->config["br:pending"] = data->config.value("br:pending", 0) + count;
         } else {
             // Create's ItemThroughputDisplaySource.itemReceived: the rate of each batch (items per
             // tick since the previous one) in a pool of 10, averaged
@@ -555,7 +555,7 @@ void applyAction(Player& player, GlobalPos const& link, Json const& action) {
         auto d = read(link);
         if (!d) return;
         auto key = action.value("key", std::string{});
-        if (key.empty() || key.starts_with("lv:")) return;
+        if (key.empty() || key.starts_with("br:")) return;
         auto value = action.value("value", Json());
         if (value.is_string()) value = utf8Prefix(value.get<std::string>(), 100); // the native text box's limit
         d->config[key] = std::move(value);
@@ -695,4 +695,4 @@ void openScreen(Player& player, GlobalPos const& link) {
     screens::open(player, kScreen, {{"pos", posJson(link)}});
 }
 
-} // namespace lv::feature::display::link
+} // namespace br::feature::display::link

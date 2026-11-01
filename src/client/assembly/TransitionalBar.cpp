@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client mod: the progress bar of a transitional (incomplete) item of a sequenced assembly
 // (Create's SequencedAssemblyItem: always visible, width round(progress * 13), colour mixed from
@@ -29,7 +29,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::assembly {
+namespace br::client::assembly {
 
 namespace {
 
@@ -139,8 +139,8 @@ public:
     }
 };
 
-} // namespace lv::client::assembly
+} // namespace br::client::assembly
 
-LV_REGISTER_MODULE(lv::client::assembly::TransitionalBarModule);
+BR_REGISTER_MODULE(br::client::assembly::TransitionalBarModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

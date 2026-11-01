@@ -14,7 +14,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::common::screens {
+namespace br::feature::common::screens {
 
 namespace {
 
@@ -33,8 +33,8 @@ struct TextTestRegistrar {
                 if (action.value("op", std::string{}) == "submit") submitted(p, action.value("text", std::string{}));
             },
             .form = [](Player& p, Json const&) {
-                ll::form::CustomForm form(trFor(p, "lv.common.screentest.title", "Text Field Test"));
-                form.appendInput("text", trFor(p, "lv.common.screentest.label", "Text"), "", "");
+                ll::form::CustomForm form(trFor(p, "br.common.screentest.title", "Text Field Test"));
+                form.appendInput("text", trFor(p, "br.common.screentest.label", "Text"), "", "");
                 form.sendTo(p, [](Player& pl, ll::form::CustomFormResult const& r, ll::form::FormCancelReason) {
                     if (!r) return;
                     if (auto it = r->find("text"); it != r->end())
@@ -48,7 +48,7 @@ TextTestRegistrar const gTextTest;
 
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload().text("screentest").execute([](CommandOrigin const& origin, CommandOutput& output) {
         auto* player = commands::playerOf(origin);
         if (!player) return output.error("Only players can open screens.");
@@ -58,4 +58,4 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     });
 });
 
-} // namespace lv::feature::common::screens
+} // namespace br::feature::common::screens

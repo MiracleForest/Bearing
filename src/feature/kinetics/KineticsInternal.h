@@ -14,7 +14,7 @@ class Block;
 class BlockSource;
 class Player;
 
-namespace lv::feature::kinetics::detail {
+namespace br::feature::kinetics::detail {
 
 /// The kinetic spec of a block state (cached per block type; thread safe).
 [[nodiscard]] KineticSpec const* specOfBlock(Block const& block);
@@ -52,4 +52,4 @@ void syncReset();
 /// Text lines of `/create kinetics <pos>` (selftests and the command).
 [[nodiscard]] std::vector<std::string> describe(GlobalPos const& pos, Player const* viewer);
 
-} // namespace lv::feature::kinetics::detail
+} // namespace br::feature::kinetics::detail

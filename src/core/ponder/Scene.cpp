@@ -5,7 +5,7 @@
 #include <set>
 #include <string_view>
 
-namespace lv::core::ponder {
+namespace br::core::ponder {
 
 bool Box::contains(Vec3i const& p) const {
     return p.x >= lo.x && p.x <= hi.x && p.y >= lo.y && p.y <= hi.y && p.z >= lo.z && p.z <= hi.z;
@@ -125,7 +125,7 @@ struct Parser {
     bool blockId(std::string const& id) {
         auto colon = id.find(':');
         if (colon == std::string::npos || colon == 0 || colon + 1 >= id.size()) {
-            err("block / item id '" + id + "' needs a namespace (levitate: or minecraft:)");
+            err("block / item id '" + id + "' needs a namespace (bearing: or minecraft:)");
             return false;
         }
         for (char c : id) {
@@ -940,7 +940,7 @@ std::vector<std::string> Library::components() const {
 
 std::string normaliseId(std::string const& id) {
     if (id.empty() || id.find(':') != std::string::npos) return id;
-    return "levitate:" + id;
+    return "bearing:" + id;
 }
 
 float holdProgressStep(float progress, bool held) {
@@ -957,4 +957,4 @@ std::vector<std::size_t> utf8Boundaries(std::string const& s) {
     return out;
 }
 
-} // namespace lv::core::ponder
+} // namespace br::core::ponder

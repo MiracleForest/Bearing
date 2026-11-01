@@ -4,7 +4,7 @@
 // sends its edit packet in `removed()`). The server opens it as "pistons.elevator_contact"
 // (src/feature/pistons/Elevator.cpp); vanilla players get the form.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <memory>
@@ -14,11 +14,11 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::pistons {
+namespace br::client::pistons {
 
 namespace {
 
-using namespace lv::client::screen;
+using namespace br::client::screen;
 
 class ElevatorContactScreen : public Screen {
 public:
@@ -112,8 +112,8 @@ public:
     void uninstall() {}
 };
 
-} // namespace lv::client::pistons
+} // namespace br::client::pistons
 
-LV_REGISTER_MODULE(lv::client::pistons::ElevatorScreenModule);
+BR_REGISTER_MODULE(br::client::pistons::ElevatorScreenModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

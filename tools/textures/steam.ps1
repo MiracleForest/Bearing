@@ -2,7 +2,7 @@
 # powered shaft. Original pixel art.
 #   pwsh tools/textures/steam.ps1
 #
-# Tank sides come in four vertical pieces (single / top / middle / bottom, Levitate's connected
+# Tank sides come in four vertical pieces (single / top / middle / bottom, Bearing's connected
 # textures) with and without a window; the window glass is transparent so the client mod's fluid
 # shows through.
 . "$PSScriptRoot/lib.ps1"

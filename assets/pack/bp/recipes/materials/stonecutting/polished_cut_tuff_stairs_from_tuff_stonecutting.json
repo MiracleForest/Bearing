@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:polished_cut_tuff_stairs_from_tuff_stonecutting"
+      "identifier": "bearing:polished_cut_tuff_stairs_from_tuff_stonecutting"
     },
     "tags": [
       "stonecutter"
@@ -18,7 +18,7 @@
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_tuff_stairs",
+      "item": "bearing:polished_cut_tuff_stairs",
       "count": 1
     }
   }

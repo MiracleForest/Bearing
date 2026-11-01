@@ -1,5 +1,5 @@
 {
-  "type": "levitate:compacting",
+  "type": "bearing:compacting",
   "ingredients": [
     {
       "item": "minecraft:flint"

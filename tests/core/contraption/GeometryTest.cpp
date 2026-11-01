@@ -9,7 +9,7 @@
 #include "core/contraption/Motion.h"
 #include "core/contraption/StateRotation.h"
 
-using namespace lv::core::contraption;
+using namespace br::core::contraption;
 
 namespace {
 void expectNear(Vec3d const& a, Vec3d const& b, double eps = 1e-9) {
@@ -185,30 +185,30 @@ TEST(ContraptionStates, RotatesKnownStates) {
 
 TEST(ContraptionStates, RotatesChassisStickySides) {
     States linear{
-        {"levitate:axis",         std::int64_t{1}},
-        {"levitate:sticky_top",   std::int64_t{1}},
-        {"levitate:sticky_bottom", std::int64_t{0}},
+        {"bearing:axis",         std::int64_t{1}},
+        {"bearing:sticky_top",   std::int64_t{1}},
+        {"bearing:sticky_bottom", std::int64_t{0}},
     };
     rotateStates(linear, Axis::X, 1); // up -> south: still the positive end, axis z
-    EXPECT_EQ(std::get<std::int64_t>(linear["levitate:axis"]), 2);
-    EXPECT_EQ(std::get<std::int64_t>(linear["levitate:sticky_top"]), 1);
+    EXPECT_EQ(std::get<std::int64_t>(linear["bearing:axis"]), 2);
+    EXPECT_EQ(std::get<std::int64_t>(linear["bearing:sticky_top"]), 1);
     rotateStates(linear, Axis::Y, 1); // south -> east: positive, axis x
-    EXPECT_EQ(std::get<std::int64_t>(linear["levitate:axis"]), 0);
-    EXPECT_EQ(std::get<std::int64_t>(linear["levitate:sticky_top"]), 1);
+    EXPECT_EQ(std::get<std::int64_t>(linear["bearing:axis"]), 0);
+    EXPECT_EQ(std::get<std::int64_t>(linear["bearing:sticky_top"]), 1);
     rotateStates(linear, Axis::Y, 1); // east -> north: negative end now
-    EXPECT_EQ(std::get<std::int64_t>(linear["levitate:sticky_top"]), 0);
-    EXPECT_EQ(std::get<std::int64_t>(linear["levitate:sticky_bottom"]), 1);
+    EXPECT_EQ(std::get<std::int64_t>(linear["bearing:sticky_top"]), 0);
+    EXPECT_EQ(std::get<std::int64_t>(linear["bearing:sticky_bottom"]), 1);
 
     States radial{
-        {"levitate:axis",         std::int64_t{1}},
-        {"levitate:sticky_north", std::int64_t{1}},
-        {"levitate:sticky_south", std::int64_t{0}},
-        {"levitate:sticky_east",  std::int64_t{0}},
-        {"levitate:sticky_west",  std::int64_t{0}},
+        {"bearing:axis",         std::int64_t{1}},
+        {"bearing:sticky_north", std::int64_t{1}},
+        {"bearing:sticky_south", std::int64_t{0}},
+        {"bearing:sticky_east",  std::int64_t{0}},
+        {"bearing:sticky_west",  std::int64_t{0}},
     };
     rotateStates(radial, Axis::Y, 1); // north side -> west side
-    EXPECT_EQ(std::get<std::int64_t>(radial["levitate:sticky_west"]), 1);
-    EXPECT_EQ(std::get<std::int64_t>(radial["levitate:sticky_north"]), 0);
+    EXPECT_EQ(std::get<std::int64_t>(radial["bearing:sticky_west"]), 1);
+    EXPECT_EQ(std::get<std::int64_t>(radial["bearing:sticky_north"]), 0);
 }
 
 TEST(ContraptionStates, RotatesLeversStairsAndLegacyOrders) {

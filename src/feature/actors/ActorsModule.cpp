@@ -41,11 +41,11 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
-namespace fs  = ::lv::feature::common::filterslot;
-namespace ia  = ::lv::feature::common::interactions;
+namespace ext = ::br::feature::contraption::actors_ext;
+namespace fs  = ::br::feature::common::filterslot;
+namespace ia  = ::br::feature::common::interactions;
 
 namespace {
 
@@ -376,6 +376,6 @@ private:
 
 } // namespace
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors
 
-LV_REGISTER_MODULE(lv::feature::actors::ActorsModule);
+BR_REGISTER_MODULE(br::feature::actors::ActorsModule);

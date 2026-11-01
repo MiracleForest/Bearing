@@ -9,7 +9,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 enum class MirrorType : int { Plane = 0, Cross = 1, Triple = 2 };
 
@@ -67,4 +67,4 @@ struct MirroredPos {
 [[nodiscard]] std::string mirrorTypeKey(MirrorType t);
 [[nodiscard]] std::string orientationKey(MirrorType t, int orientation);
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

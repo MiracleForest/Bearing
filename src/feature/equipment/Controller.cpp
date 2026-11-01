@@ -31,7 +31,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -139,7 +139,7 @@ std::string freqName(Freq const& f) {
 std::string keyName(Player const& p, int b) {
     static char const* keys[]      = {"key.forward", "key.back", "key.left", "key.right", "key.jump", "key.sneak"};
     static char const* fallbacks[] = {"W", "S", "A", "D", "Space", "Shift"};
-    return trFor(p, std::string("lv.equipment.controller.") + keys[b], fallbacks[b]);
+    return trFor(p, std::string("br.equipment.controller.") + keys[b], fallbacks[b]);
 }
 
 ItemStack const* heldController(Player& p) {
@@ -188,11 +188,11 @@ void openForm(Player& player, int slot) {
     }
     std::vector<std::string> names;
     for (auto const& id : ids) {
-        if (id.empty()) names.push_back(trFor(player, "lv.common.filter.empty", "(empty)"));
+        if (id.empty()) names.push_back(trFor(player, "br.common.filter.empty", "(empty)"));
         else if (auto it = items::make(id, 1)) names.push_back(items::displayName(*it));
         else names.push_back(id);
     }
-    ll::form::CustomForm form(trFor(player, "item.levitate:linked_controller.name", "Linked Controller"));
+    ll::form::CustomForm form(trFor(player, "item.bearing:linked_controller.name", "Linked Controller"));
     for (int b = 0; b < 6; ++b)
         for (int k = 0; k < 2; ++k) {
             auto        cur = items::idOf(k == 0 ? freqs[static_cast<std::size_t>(b)].first : freqs[static_cast<std::size_t>(b)].second);
@@ -239,7 +239,7 @@ void registerScreen() {
                 row.push_back(slotJson(freqs[static_cast<std::size_t>(b)].second));
                 rows.push_back({{"key", keyName(p, b)}, {"items", row}});
             }
-            return Json{{"title", trFor(p, "item.levitate:linked_controller.name", "Linked Controller")}, {"rows", rows}};
+            return Json{{"title", trFor(p, "item.bearing:linked_controller.name", "Linked Controller")}, {"rows", rows}};
         },
         .action =
             [](Player& p, Json const& ctx, Json const& action) {
@@ -499,4 +499,4 @@ void installControllers() {
 
 void uninstallControllers() {}
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

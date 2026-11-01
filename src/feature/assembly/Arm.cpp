@@ -49,7 +49,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::assembly::arm {
+namespace br::feature::assembly::arm {
 
 namespace bd    = common::blockdata;
 namespace items = common::items;
@@ -58,13 +58,13 @@ using ca::ArmSelectionMode;
 
 namespace {
 
-constexpr char kDbIndex[] = "lv:assembly:arms";
+constexpr char kDbIndex[] = "br:assembly:arms";
 constexpr char kDataKey[] = "arm";
 constexpr char kCarrier[] = "assembly:arm";
 
 // ---- interaction point types (Create's ArmInteractionPointType registry) ------------------------
 
-/// Create's BeltFunnelBlock.Shape.PUSHING in a funnel's `levitate:shape` (U12's kBeltPushing in
+/// Create's BeltFunnelBlock.Shape.PUSHING in a funnel's `bearing:shape` (U12's kBeltPushing in
 /// feature/funnels/FunnelsInternal.h, a header internal to that unit).
 constexpr int kBeltFunnelPushing = 3;
 
@@ -92,23 +92,23 @@ std::optional<PointType> typeOf(BlockSource& region, BlockPos const& pos) {
     auto const&        block = region.getBlock(pos);
     std::string const& id    = block.getTypeName();
     static std::map<std::string, PointType, std::less<>> const ids{
-        {"levitate:basin",                     PointType::Basin         },
-        {"levitate:belt",                      PointType::Belt          },
-        {"levitate:blaze_burner",              PointType::BlazeBurner   },
-        {"levitate:chute",                     PointType::Chute         },
-        {"levitate:smart_chute",               PointType::Chute         },
-        {"levitate:mechanical_crafter",        PointType::Crafter       },
-        {"levitate:crushing_wheel_controller", PointType::CrushingWheels},
+        {"bearing:basin",                     PointType::Basin         },
+        {"bearing:belt",                      PointType::Belt          },
+        {"bearing:blaze_burner",              PointType::BlazeBurner   },
+        {"bearing:chute",                     PointType::Chute         },
+        {"bearing:smart_chute",               PointType::Chute         },
+        {"bearing:mechanical_crafter",        PointType::Crafter       },
+        {"bearing:crushing_wheel_controller", PointType::CrushingWheels},
         {kDeployerId,                          PointType::Deployer      },
-        {"levitate:depot",                     PointType::Depot         },
-        {"levitate:weighted_ejector",          PointType::Depot         },
-        {"levitate:track_station",             PointType::Depot         },
-        {"levitate:andesite_funnel",           PointType::Funnel        },
-        {"levitate:brass_funnel",              PointType::Funnel        },
-        {"levitate:millstone",                 PointType::Millstone     },
-        {"levitate:packager",                  PointType::Packager      },
-        {"levitate:repackager",                PointType::Packager      },
-        {"levitate:mechanical_saw",            PointType::Saw           },
+        {"bearing:depot",                     PointType::Depot         },
+        {"bearing:weighted_ejector",          PointType::Depot         },
+        {"bearing:track_station",             PointType::Depot         },
+        {"bearing:andesite_funnel",           PointType::Funnel        },
+        {"bearing:brass_funnel",              PointType::Funnel        },
+        {"bearing:millstone",                 PointType::Millstone     },
+        {"bearing:packager",                  PointType::Packager      },
+        {"bearing:repackager",                PointType::Packager      },
+        {"bearing:mechanical_saw",            PointType::Saw           },
         {"minecraft:campfire",                 PointType::Campfire      },
         {"minecraft:soul_campfire",            PointType::Campfire      },
         {"minecraft:composter",                PointType::Composter     },
@@ -119,13 +119,13 @@ std::optional<PointType> typeOf(BlockSource& region, BlockPos const& pos) {
     if (it == ids.end()) return std::nullopt;
     // Create's SawType: only saws facing up that turn
     if (it->second == PointType::Saw) {
-        if (detail::intState(block, "levitate:facing").value_or(1) != 1) return std::nullopt;
+        if (detail::intState(block, "bearing:facing").value_or(1) != 1) return std::nullopt;
         if (kinetics::speedAt(game::globalPos(region, pos)) == 0) return std::nullopt;
     }
     // Create's FunnelType: not an extracting funnel, not a belt funnel pushing onto its belt
     if (it->second == PointType::Funnel) {
-        if (detail::intState(block, "levitate:extracting").value_or(0) != 0) return std::nullopt;
-        if (detail::intState(block, "levitate:shape").value_or(0) == kBeltFunnelPushing) return std::nullopt;
+        if (detail::intState(block, "bearing:extracting").value_or(0) != 0) return std::nullopt;
+        if (detail::intState(block, "bearing:shape").value_or(0) == kBeltFunnelPushing) return std::nullopt;
     }
     return it->second;
 }
@@ -312,7 +312,7 @@ std::vector<Point> listOf(Runtime const& r, bool take) {
 }
 
 bool ceilingOf(BlockSource& region, GlobalPos const& pos) {
-    return detail::intState(region.getBlock(game::blockPos(pos)), "levitate:ceiling").value_or(0) != 0;
+    return detail::intState(region.getBlock(game::blockPos(pos)), "bearing:ceiling").value_or(0) != 0;
 }
 
 /// Vanilla clients: the held item as a client-only item entity under the claw of the block model
@@ -568,7 +568,7 @@ void registerValueBox() {
     box.board         = [](Block const&) { return core::common::optionBoard(3, ""); };
     box.centre        = [](Block const& block, int face) -> std::optional<core::common::Vec> {
         if (face < 2 || face > 5) return std::nullopt;
-        bool ceiling = detail::intState(block, "levitate:ceiling").value_or(0) != 0;
+        bool ceiling = detail::intState(block, "bearing:ceiling").value_or(0) != 0;
         return core::common::faceLocalPoint(face, 8, ceiling ? 13 : 3, 0.5);
     };
     box.get = [](GlobalPos const& pos) { return core::common::ValueSettings{0, static_cast<int>(rt(pos).mode)}; };
@@ -660,7 +660,7 @@ bool onDeselect(Player& player, BlockPos const& pos) {
 void onPlaced(BlockSource& region, BlockPos const& pos, Player* placer, Face clickedFace) {
     if (game::blockIdAt(region, pos) != kArmId) return;
     bool ceiling = clickedFace == Face::Down;
-    if (auto const* b = detail::withStates(region.getBlock(pos), {{"levitate:ceiling", ceiling ? 1 : 0}})) game::setBlock(region, pos, *b);
+    if (auto const* b = detail::withStates(region.getBlock(pos), {{"bearing:ceiling", ceiling ? 1 : 0}})) game::setBlock(region, pos, *b);
     auto gp = game::globalPos(region, pos);
     st().runtimes.erase(gp);
     auto& r = rt(gp);
@@ -776,15 +776,15 @@ void onWorldClosed() {
 
 void install() {
     kinetics::KineticSpec spec;
-    spec.states          = {"levitate:ceiling"};
+    spec.states          = {"bearing:ceiling"};
     spec.rotationAxis    = [](core::kinetics::BlockState const&) -> std::optional<core::kinetics::Axis> { return core::kinetics::Axis::Y; };
-    spec.hasShaftTowards = [](core::kinetics::BlockState const& s, Face f) { return f == (s.get("levitate:ceiling") ? Face::Up : Face::Down); };
+    spec.hasShaftTowards = [](core::kinetics::BlockState const& s, Face f) { return f == (s.get("bearing:ceiling") ? Face::Up : Face::Down); };
     // Create's ArmBlock is an ICogWheel: the cog on its base meshes with cogwheels beside it (U50)
     spec.cog             = [](core::kinetics::BlockState const&) { return core::kinetics::CogType::Small; };
     spec.impact          = 2;
-    spec.rotorState      = "levitate:rotor";
-    spec.rotorModel      = "geometry.levitate.mechanical_arm_cog";
-    spec.rotorTexture    = "levitate_mechanical_arm";
+    spec.rotorState      = "bearing:rotor";
+    spec.rotorModel      = "geometry.bearing.mechanical_arm_cog";
+    spec.rotorTexture    = "bearing_mechanical_arm";
     kinetics::registerBlock(kArmId, std::move(spec));
     registerValueBox();
     registerCarrier();
@@ -808,13 +808,13 @@ void uninstall() {
     st().speedListener = -1;
 }
 
-} // namespace lv::feature::assembly::arm
+} // namespace br::feature::assembly::arm
 
 // Create's ArmBlockEntity#addToTooltip (U59): an arm without interaction points hints at selecting
 // some ("create.hint.mechanical_arm_no_targets").
 #include "feature/goggles/GoggleInfo.h"
-namespace lv::feature::assembly::arm {
-LV_REGISTER_GOGGLE_INFO(kArmId, {.hover = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
+namespace br::feature::assembly::arm {
+BR_REGISTER_GOGGLE_INFO(kArmId, {.hover = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
     if (c.sneaking) return false;
     auto [inputs, outputs] = pointCounts(c.pos);
     if (inputs != 0 || outputs != 0) return false;
@@ -823,4 +823,4 @@ LV_REGISTER_GOGGLE_INFO(kArmId, {.hover = [](goggles::InfoContext const& c, gogg
                              "It appears this _Mechanical_ _Arm_ has not been assigned any _targets._ Select belts, depots, funnels and other blocks by _right-clicking_ them while _holding_ the _Mechanical_ _Arm_ in your _hand_."));
     return true;
 }});
-} // namespace lv::feature::assembly::arm
+} // namespace br::feature::assembly::arm

@@ -1,4 +1,4 @@
-// Test-only kinetic blocks (levitate:kinetics_test_*, BP blocks of this unit) and the selftests of
+// Test-only kinetic blocks (bearing:kinetics_test_*, BP blocks of this unit) and the selftests of
 // the kinetic network on a real world. The real shafts / cogs / generators belong to U6 / U7.
 // Selftest positions: testPos dx 200..299 (U2).
 
@@ -11,7 +11,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 namespace {
 
@@ -29,36 +29,36 @@ KineticSpec testConsumer() {
 
 } // namespace
 
-LV_REGISTER_KINETIC_BLOCK(
-    "levitate:kinetics_test_shaft",
-    specs::withModel(specs::shaft(), "geometry.levitate.kinetics_test_shaft", "levitate_kinetics_test_shaft")
+BR_REGISTER_KINETIC_BLOCK(
+    "bearing:kinetics_test_shaft",
+    specs::withModel(specs::shaft(), "geometry.bearing.kinetics_test_shaft", "bearing_kinetics_test_shaft")
 );
-LV_REGISTER_KINETIC_BLOCK(
-    "levitate:kinetics_test_cog",
-    specs::withModel(specs::cogwheel(false), "geometry.levitate.kinetics_test_cog", "levitate_kinetics_test_cog")
+BR_REGISTER_KINETIC_BLOCK(
+    "bearing:kinetics_test_cog",
+    specs::withModel(specs::cogwheel(false), "geometry.bearing.kinetics_test_cog", "bearing_kinetics_test_cog")
 );
-LV_REGISTER_KINETIC_BLOCK(
-    "levitate:kinetics_test_large_cog",
-    specs::withModel(specs::cogwheel(true), "geometry.levitate.kinetics_test_large_cog", "levitate_kinetics_test_cog")
+BR_REGISTER_KINETIC_BLOCK(
+    "bearing:kinetics_test_large_cog",
+    specs::withModel(specs::cogwheel(true), "geometry.bearing.kinetics_test_large_cog", "bearing_kinetics_test_cog")
 );
-LV_REGISTER_KINETIC_BLOCK(
-    "levitate:kinetics_test_source",
-    specs::withModel(testSource(), "geometry.levitate.kinetics_test_source", "levitate_kinetics_test_source")
+BR_REGISTER_KINETIC_BLOCK(
+    "bearing:kinetics_test_source",
+    specs::withModel(testSource(), "geometry.bearing.kinetics_test_source", "bearing_kinetics_test_source")
 );
-LV_REGISTER_KINETIC_BLOCK(
-    "levitate:kinetics_test_consumer",
-    specs::withModel(testConsumer(), "geometry.levitate.kinetics_test_consumer", "levitate_kinetics_test_consumer")
+BR_REGISTER_KINETIC_BLOCK(
+    "bearing:kinetics_test_consumer",
+    specs::withModel(testConsumer(), "geometry.bearing.kinetics_test_consumer", "bearing_kinetics_test_consumer")
 );
 
 namespace {
 
 using selftest::Context;
 
-constexpr char const* kShaft    = "levitate:kinetics_test_shaft";
-constexpr char const* kCog      = "levitate:kinetics_test_cog";
-constexpr char const* kLargeCog = "levitate:kinetics_test_large_cog";
-constexpr char const* kSource   = "levitate:kinetics_test_source";
-constexpr char const* kConsumer = "levitate:kinetics_test_consumer";
+constexpr char const* kShaft    = "bearing:kinetics_test_shaft";
+constexpr char const* kCog      = "bearing:kinetics_test_cog";
+constexpr char const* kLargeCog = "bearing:kinetics_test_large_cog";
+constexpr char const* kSource   = "bearing:kinetics_test_source";
+constexpr char const* kConsumer = "bearing:kinetics_test_consumer";
 constexpr int         X = 0, Y = 1, Z = 2;
 
 /// Positions of one test: `base` is the test's dx (200..299); x along dx, y and z offsets.
@@ -70,26 +70,26 @@ struct Area {
         p.y += dy;
         return p;
     }
-    bool place(GlobalPos const& p, char const* id, int axis) { return ctx.setBlock(p, id, {{"levitate:axis", axis}}); }
+    bool place(GlobalPos const& p, char const* id, int axis) { return ctx.setBlock(p, id, {{"bearing:axis", axis}}); }
 };
 
 std::string speedText(GlobalPos const& p) { return std::to_string(speedAt(p)); }
 
 } // namespace
 
-LV_REGISTER_SELFTEST("kinetics.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("kinetics.registry", [](Context& ctx) {
     for (auto const* id : {kShaft, kCog, kLargeCog, kSource, kConsumer}) {
         ctx.check(specOf(id) != nullptr, std::string(id) + " is registered");
     }
     ctx.check(specOf("minecraft:stone") == nullptr, "vanilla blocks are not kinetic");
-    ctx.check(stressCapacityOf("levitate:creative_motor") == 16384, "stress table: creative motor capacity");
-    ctx.check(stressImpactOf("levitate:mechanical_press") == 8, "stress table: press impact");
+    ctx.check(stressCapacityOf("bearing:creative_motor") == 16384, "stress table: creative motor capacity");
+    ctx.check(stressImpactOf("bearing:mechanical_press") == 8, "stress table: press impact");
     ctx.check(stressImpactOf(kConsumer) == 4, "spec default impact without a table entry");
     ctx.check(speedLevelOf(16) == SpeedLevel::Slow && speedLevelOf(-64) == SpeedLevel::Medium, "speed levels");
-    ctx.require(game::blockWith(kShaft, {{"levitate:axis", 0}}) != nullptr, "test blocks are in the behavior pack");
+    ctx.require(game::blockWith(kShaft, {{"bearing:axis", 0}}) != nullptr, "test blocks are in the behavior pack");
 });
 
-LV_REGISTER_SELFTEST("kinetics.shaft_line", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.shaft_line", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 200};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(a.place(a.at(0), kSource, X), "place the source");
@@ -104,7 +104,7 @@ LV_REGISTER_SELFTEST("kinetics.shaft_line", [](Context& ctx) -> ll::coro::CoroTa
     ctx.info("network of " + std::to_string(net ? net->members : 0) + " blocks at 16 RPM");
 });
 
-LV_REGISTER_SELFTEST("kinetics.cogs_mesh", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.cogs_mesh", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 210};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.place(a.at(0), kSource, Y);
@@ -119,7 +119,7 @@ LV_REGISTER_SELFTEST("kinetics.cogs_mesh", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(speedAt(a.at(1, 2, 1)) == -32, "small cog at a large cog: -32, got " + speedText(a.at(1, 2, 1)));
 });
 
-LV_REGISTER_SELFTEST("kinetics.break_stops", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.break_stops", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 220};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.place(a.at(0), kSource, X);
@@ -138,7 +138,7 @@ LV_REGISTER_SELFTEST("kinetics.break_stops", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(speedAt(a.at(4)) == 16, "closing the gap turns it again");
 });
 
-LV_REGISTER_SELFTEST("kinetics.conflict_breaks", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.conflict_breaks", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 230};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.place(a.at(0), kSource, X);
@@ -161,7 +161,7 @@ LV_REGISTER_SELFTEST("kinetics.conflict_breaks", [](Context& ctx) -> ll::coro::C
     ctx.check(speedAt(a.at(2)) == 16 && speedAt(a.at(4)) == -16, "both sides keep turning");
 });
 
-LV_REGISTER_SELFTEST("kinetics.overstress", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.overstress", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 240};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.place(a.at(0), kSource, X); // 8 * 16 = 128 SU
@@ -180,7 +180,7 @@ LV_REGISTER_SELFTEST("kinetics.overstress", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(!isOverstressed(a.at(1)) && speedAt(a.at(2)) == 16, "removing a consumer recovers");
 });
 
-LV_REGISTER_SELFTEST("kinetics.state_change", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.state_change", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 250};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.place(a.at(0), kSource, X);
@@ -195,7 +195,7 @@ LV_REGISTER_SELFTEST("kinetics.state_change", [](Context& ctx) -> ll::coro::Coro
     ctx.check(speedAt(a.at(2)) == 16, "turned back it connects again");
 });
 
-LV_REGISTER_SELFTEST("kinetics.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 260};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.place(a.at(0), kSource, X);
@@ -215,7 +215,7 @@ LV_REGISTER_SELFTEST("kinetics.persistence", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(net && net->stress == 2.0 * 24, "network stress is recomputed");
 });
 
-LV_REGISTER_SELFTEST("kinetics.listener", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.listener", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area                 a{ctx, 270};
     std::vector<float>   seen;
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -232,7 +232,7 @@ LV_REGISTER_SELFTEST("kinetics.listener", [](Context& ctx) -> ll::coro::CoroTask
     ctx.check(!seen.empty() && seen.back() == -48, "and its new speed");
 });
 
-LV_REGISTER_SELFTEST("kinetics.describe_and_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("kinetics.describe_and_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 280};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.place(a.at(0), kSource, X);
@@ -251,4 +251,4 @@ LV_REGISTER_SELFTEST("kinetics.describe_and_sync", [](Context& ctx) -> ll::coro:
     ctx.check(found, "the full sync carries the shaft's speed");
 });
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics

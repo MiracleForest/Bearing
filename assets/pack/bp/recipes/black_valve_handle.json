@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:black_valve_handle"
+      "identifier": "bearing:black_valve_handle"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:copper_valve_handle"
+        "item": "bearing:copper_valve_handle"
       },
       {
         "item": "minecraft:black_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:copper_valve_handle"
+        "item": "bearing:copper_valve_handle"
       }
     ],
     "result": {
-      "item": "levitate:black_valve_handle",
+      "item": "bearing:black_valve_handle",
       "count": 1
     }
   }

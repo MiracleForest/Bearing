@@ -5,7 +5,7 @@
 
 #include "core/advancements/Advancements.h"
 
-using namespace lv::core::advancements;
+using namespace br::core::advancements;
 
 TEST(Advancements, TableMatchesCreate) {
     auto defs = all();
@@ -20,7 +20,7 @@ TEST(Advancements, TableMatchesCreate) {
         if (d.id != "root") EXPECT_LT(indexOf(d.parent), indexOf(d.id)) << d.id;
     }
     EXPECT_EQ(find("hand_crank_000")->type, Type::Secret);
-    EXPECT_EQ(find("wrench_goggles")->collect[1], "levitate:goggles");
+    EXPECT_EQ(find("wrench_goggles")->collect[1], "bearing:goggles");
     EXPECT_EQ(find("copper")->type, Type::Silent);
     EXPECT_EQ(find("nope"), nullptr);
 }

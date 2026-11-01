@@ -1,4 +1,4 @@
 {
-  "levitate_track": { "textures": "textures/blocks/track" },
-  "levitate_fake_track": { "textures": "textures/blocks/fake_track" }
+  "bearing_track": { "textures": "textures/blocks/track" },
+  "bearing_fake_track": { "textures": "textures/blocks/fake_track" }
 }

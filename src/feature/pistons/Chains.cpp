@@ -5,7 +5,7 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace {
 
@@ -118,4 +118,4 @@ void ropeBroken(GlobalPos const& p, bool pulleyRemoved) {
     if (destroyed) log().info("rope at {} {} {} broke: {} rope block(s) removed", p.x, p.y, p.z, destroyed);
 }
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

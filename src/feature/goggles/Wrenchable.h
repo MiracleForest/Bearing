@@ -1,10 +1,10 @@
 #pragma once
 
-// Wrench contract (U8, docs/SPEC.md §3.6.8): Create's IWrenchable for Levitate blocks.
+// Wrench contract (U8, docs/SPEC.md §3.6.8): Create's IWrenchable for Bearing blocks.
 //
 // Right-click with the wrench calls the block's `onWrenched` (default: Create's rotation of
-// `levitate:facing` / `levitate:axis` / `levitate:horizontal_facing` / `levitate:horizontal_axis` /
-// `levitate:axis_along_first` about the clicked face, core/goggles/Rotation.h), sneak + right-click
+// `bearing:facing` / `bearing:axis` / `bearing:horizontal_facing` / `bearing:horizontal_axis` /
+// `bearing:axis_along_first` about the clicked face, core/goggles/Rotation.h), sneak + right-click
 // calls `onSneakWrenched` (default: the block is picked up: its loot-table drops go to the player's
 // inventory in survival, the block is removed with Create's "component breaks" sound).
 //
@@ -12,9 +12,9 @@
 // Create IRotate block is. Other blocks opt in:
 //
 //     #include "feature/goggles/Wrenchable.h"
-//     namespace wrench = lv::feature::goggles::wrench;
-//     LV_REGISTER_WRENCHABLE("levitate:sticker");                         // defaults
-//     LV_REGISTER_WRENCHABLE("levitate:mechanical_bearing", {             // Create's BearingBlock
+//     namespace wrench = br::feature::goggles::wrench;
+//     BR_REGISTER_WRENCHABLE("bearing:sticker");                         // defaults
+//     BR_REGISTER_WRENCHABLE("bearing:mechanical_bearing", {             // Create's BearingBlock
 //         .onWrenched = [](wrench::Context& c) {
 //             auto r = wrench::defaultOnWrenched(c);
 //             if (r == wrench::Result::Success) disassembleBearing(c.pos);
@@ -40,9 +40,9 @@ class BlockSource;
 class ItemStack;
 class Player;
 
-namespace lv::feature::goggles::wrench {
+namespace br::feature::goggles::wrench {
 
-inline constexpr char const* kWrenchId = "levitate:wrench";
+inline constexpr char const* kWrenchId = "bearing:wrench";
 
 /// A wrench click on a block (Create's UseOnContext).
 struct Context {
@@ -72,7 +72,7 @@ void registerBlock(std::string blockId, Handler handler = {});
 [[nodiscard]] Handler const* handlerOf(std::string_view blockId);
 [[nodiscard]] bool           isWrenchable(std::string_view blockId);
 
-/// Create's IWrenchable.getRotatedBlockState on Levitate's state conventions (the same block
+/// Create's IWrenchable.getRotatedBlockState on Bearing's state conventions (the same block
 /// when nothing changes).
 [[nodiscard]] Block const& rotatedBlock(Block const& block, int face);
 /// Create's default onWrenched: rotates (with the block's `rotate`), sets the block (the kinetic
@@ -90,7 +90,7 @@ Result defaultOnSneakWrenched(Context& ctx);
 /// Create's metal bars and industrial / weathered iron blocks.
 [[nodiscard]] bool canWrenchPickup(std::string_view blockId);
 
-/// Plays Create's wrench sounds at a block ("levitate.wrench_rotate" / "levitate.wrench_remove").
+/// Plays Create's wrench sounds at a block ("bearing.wrench_rotate" / "bearing.wrench_remove").
 void playRotateSound(core::GlobalPos const& pos);
 void playRemoveSound(core::GlobalPos const& pos);
 
@@ -105,8 +105,8 @@ struct Registrar {
 };
 } // namespace detail
 
-} // namespace lv::feature::goggles::wrench
+} // namespace br::feature::goggles::wrench
 
-/// Registers a wrenchable block at static init: `LV_REGISTER_WRENCHABLE("levitate:x"[, handler]);`
-#define LV_REGISTER_WRENCHABLE(...)                                                                                    \
-    static ::lv::feature::goggles::wrench::detail::Registrar LV_UNIQUE(lv_wrenchable_)(__VA_ARGS__)
+/// Registers a wrenchable block at static init: `BR_REGISTER_WRENCHABLE("bearing:x"[, handler]);`
+#define BR_REGISTER_WRENCHABLE(...)                                                                                    \
+    static ::br::feature::goggles::wrench::detail::Registrar BR_UNIQUE(br_wrenchable_)(__VA_ARGS__)

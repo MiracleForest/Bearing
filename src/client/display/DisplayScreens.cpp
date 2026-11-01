@@ -3,7 +3,7 @@
 // server through "screen.action"; text (clipboard entries, text options of display sources) is
 // typed into native text fields and sent when Enter is pressed or the field is left.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <memory>
@@ -15,10 +15,10 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::display {
+namespace br::client::display {
 
 namespace {
-using namespace lv::client::screen;
+using namespace br::client::screen;
 
 /// Screens that rebuild their widgets on new data wait while the player types in one of them
 /// (the rebuild would drop the focused field and what was typed).
@@ -68,7 +68,7 @@ private:
         auto        selected = mData.value("selected", std::string{});
         int         current  = 0;
         Json const* active   = nullptr;
-        std::vector<std::string> names{ctr("lv.display.link.none", "(none)")};
+        std::vector<std::string> names{ctr("br.display.link.none", "(none)")};
         for (std::size_t i = 0; i < sources.size(); ++i) {
             names.push_back(sources[i].value("name", std::string{}));
             if (sources[i].value("id", std::string{}) == selected) {
@@ -141,7 +141,7 @@ private:
 class ClipboardScreen : public Screen {
 public:
     ClipboardScreen(Json const& data, SendFn send)
-    : Screen(ctr("lv.display.clipboard.title", "Clipboard"), 200, 236),
+    : Screen(ctr("br.display.clipboard.title", "Clipboard"), 200, 236),
       mSend(std::move(send)),
       mData(data) {
         mPage = data.value("page", 0);
@@ -238,7 +238,7 @@ private:
             } else {
                 auto& field     = add<TextField>(Rect{textX, y - 1, 192 - textX, 12}, text, [this](std::string const&) { submitPage(); });
                 field.maxLength = 512;
-                if (!has) field.placeholder = ctr("lv.display.clipboard.new_entry", "New entry...");
+                if (!has) field.placeholder = ctr("br.display.clipboard.new_entry", "New entry...");
                 mFields.push_back(&field);
             }
             y += rowHeight;
@@ -288,8 +288,8 @@ public:
 
 } // namespace
 
-} // namespace lv::client::display
+} // namespace br::client::display
 
-LV_REGISTER_MODULE(lv::client::display::DisplayScreensModule);
+BR_REGISTER_MODULE(br::client::display::DisplayScreensModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

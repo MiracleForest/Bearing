@@ -10,7 +10,7 @@
 #include <string>
 #include <string_view>
 
-namespace lv::core::common {
+namespace br::core::common {
 
 /// Attribute filter modes, in Create's order (`create.gui.attribute_filter.allow_list_disjunctive` ...).
 enum class AttributeMode : int {
@@ -38,4 +38,4 @@ struct AttributeTest {
 /// Slots of a list filter (2 rows of 9, as Create's filter menu).
 inline constexpr int kListFilterSlots = 18;
 
-} // namespace lv::core::common
+} // namespace br::core::common

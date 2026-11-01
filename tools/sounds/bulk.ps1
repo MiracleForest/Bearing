@@ -6,7 +6,7 @@
 #               start): Create's air current sound for a player caught in a fan's current
 #               (AirCurrent.enableClientPlayerSound). Played again every 10 ticks, louder with the
 #               fan's speed, higher with the player's speed.
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

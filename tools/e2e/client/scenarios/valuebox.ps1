@@ -16,7 +16,7 @@ Invoke-Chat '/gamemode creative'
 Invoke-Chat '/clear @s'
 Invoke-Chat '/fill 1 -60 -2 9 -57 6 air'
 # a copper valve handle on the ground, its value box on top
-Invoke-Chat '/setblock 2 -60 0 levitate:copper_valve_handle ["levitate:facing"=1]'
+Invoke-Chat '/setblock 2 -60 0 bearing:copper_valve_handle ["bearing:facing"=1]'
 Invoke-Chat '/tp @s 2.5 -60 -0.6 0 50.6'   # looking down at the box
 Start-Sleep -Milliseconds 800
 
@@ -24,7 +24,7 @@ if ($vanilla) {
     $mark = Get-LogMark
     Click 0.5 0.5 -Relative -Right
     Wait-LogLine 'valve handle at .* turned' 20 -Since $mark | Out-Null
-    Invoke-Chat '/give @s levitate:wrench'
+    Invoke-Chat '/give @s bearing:wrench'
     Start-Sleep -Milliseconds 600
     # U55: a vanilla client repeats the held button; the repeat makes it a hold (the form opens)
     $mark = Get-LogMark
@@ -89,10 +89,10 @@ Save-Screenshot 'gauges' | Out-Null
 
 # an overstressed network: the test source (128 su) against three test consumers (192 su), a
 # speedometer in it, seen with goggles: the speed text is struck through
-Invoke-Chat '/replaceitem entity @s slot.armor.head 0 levitate:goggles'
-Invoke-Chat '/setblock 3 -60 5 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock 4 -60 5 levitate:speedometer ["levitate:facing"=2,"levitate:along_first"=1]'
-Invoke-Chat '/fill 5 -60 5 7 -60 5 levitate:kinetics_test_consumer ["levitate:axis"=0]'
+Invoke-Chat '/replaceitem entity @s slot.armor.head 0 bearing:goggles'
+Invoke-Chat '/setblock 3 -60 5 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock 4 -60 5 bearing:speedometer ["bearing:facing"=2,"bearing:along_first"=1]'
+Invoke-Chat '/fill 5 -60 5 7 -60 5 bearing:kinetics_test_consumer ["bearing:axis"=0]'
 Invoke-Chat '/tp @s 4.5 -60 3.6 0 38'
 Start-Sleep -Milliseconds 2500
 Save-Screenshot 'overstressed' | Out-Null
@@ -101,7 +101,7 @@ Invoke-Chat '/replaceitem entity @s slot.armor.head 0 air'
 
 # a large water wheel without room: Create's red outline of the 3x3 it needs
 Invoke-Chat '/clear @s'
-Invoke-Chat '/give @s levitate:large_water_wheel'
+Invoke-Chat '/give @s bearing:large_water_wheel'
 Press-Key '1'
 # the wheel would go in front of the wall (8 -60 -1), but stone fills its plane around it
 Invoke-Chat '/fill 7 -60 0 9 -59 0 stone'

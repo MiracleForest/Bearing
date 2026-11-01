@@ -10,7 +10,7 @@
 #include "feature/common/Recipes.h"
 #include "mod/Log.h"
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace cf    = core::fluids;
 namespace ft    = common::fluidtypes;
@@ -21,22 +21,22 @@ namespace {
 
 constexpr char kBucket[]      = "minecraft:bucket";
 constexpr char kGlassBottle[] = "minecraft:glass_bottle";
-constexpr char kBuildersTea[] = "levitate:builders_tea";
+constexpr char kBuildersTea[] = "bearing:builders_tea";
 
 /// Create's fluids (AllFluids) in the common registry; their buckets / bottles reach the U3 fluid
 /// capability through it, so every unit (tanks, basins, pipes) knows them.
 struct FluidRegistrar {
     FluidRegistrar() {
         ft::registerFluid({.id = std::string(cf::kHoney), .nameKey = cf::fluidNameKey(cf::kHoney), .nameFallback = "Honey",
-                           .sourceBlock = "levitate:honey", .color = ft::colorOf(cf::kHoney), .renderSlot = 3,
-                           .lavaInteraction = "levitate:limestone", .bucketItem = "levitate:honey_bucket",
+                           .sourceBlock = "bearing:honey", .color = ft::colorOf(cf::kHoney), .renderSlot = 3,
+                           .lavaInteraction = "bearing:limestone", .bucketItem = "bearing:honey_bucket",
                            .bottleItem = "minecraft:honey_bottle"});
         ft::registerFluid({.id = std::string(cf::kChocolate), .nameKey = cf::fluidNameKey(cf::kChocolate), .nameFallback = "Chocolate",
-                           .sourceBlock = "levitate:chocolate", .color = ft::colorOf(cf::kChocolate), .renderSlot = 4,
-                           .lavaInteraction = "levitate:scoria", .bucketItem = "levitate:chocolate_bucket"});
+                           .sourceBlock = "bearing:chocolate", .color = ft::colorOf(cf::kChocolate), .renderSlot = 4,
+                           .lavaInteraction = "bearing:scoria", .bucketItem = "bearing:chocolate_bucket"});
         ft::registerFluid({.id = std::string(cf::kTea), .nameKey = cf::fluidNameKey(cf::kTea), .nameFallback = "Builder's Tea",
                            .color = ft::colorOf(cf::kTea), .renderSlot = 7, .bottleItem = kBuildersTea});
-        // every potion id ("potion:<name>", "levitate:potion/<bottle>/<name>") resolves to this
+        // every potion id ("potion:<name>", "bearing:potion/<bottle>/<name>") resolves to this
         // entry; a potion's own tint is cf::fluidColor(id)
         ft::registerFluid({.id = "potion:", .nameKey = "fluid.create.potion", .nameFallback = "Potion", .color = 0xFF7E3FB0,
                            .renderSlot = 6});
@@ -50,7 +50,7 @@ ItemStack make(std::string_view id, int aux = 0) {
 }
 
 bool isRecipeType(std::string const& type, std::string_view want) {
-    // "create:filling" / "levitate:filling" / "filling"
+    // "create:filling" / "bearing:filling" / "filling"
     auto colon = type.find(':');
     return (colon == std::string::npos ? type : type.substr(colon + 1)) == want;
 }
@@ -58,7 +58,7 @@ bool isRecipeType(std::string const& type, std::string_view want) {
 // ---- sequenced assembly (Create's SequencedAssemblyRecipe, filling steps) ----------------------
 //
 // A transitional item carries {"recipe": "<sequenced assembly recipe id>", "step": n} in its
-// Levitate data under "sequenced_assembly" (SPEC §3.6.19); the step after the last one rolls the
+// Bearing data under "sequenced_assembly" (SPEC §3.6.19); the step after the last one rolls the
 // recipe's results by their weights.
 
 struct SequencedStep {
@@ -220,4 +220,4 @@ ItemStack fillItem(ItemStack const& stack, FluidStack const& available, bool byS
     return items::empty();
 }
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

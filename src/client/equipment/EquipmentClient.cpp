@@ -2,7 +2,7 @@
 // Left Alt, Create's "Access Nearby Toolboxes" key), the wand of symmetry, worldshaper and linked
 // controller screens, the linked controller's key capture and the backtank air / toolbox HUD.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -34,14 +34,14 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 
 namespace {
 
-namespace net   = lv::feature::net;
-namespace items = lv::feature::common::items;
-namespace ce    = lv::core::equipment;
-using namespace lv::client::screen;
+namespace net   = br::feature::net;
+namespace items = br::feature::common::items;
+namespace ce    = br::core::equipment;
+using namespace br::client::screen;
 
 constexpr int kKeyAlt = 18; ///< Create's default toolbox key: Left Alt
 
@@ -146,7 +146,7 @@ public:
             c.bevel({x, y, 22, 22}, on ? color::kButtonOn : color::kSlot, color::kSlotDark, color::kSlotLight, true);
             if (mSelectBox) {
                 if (i < static_cast<int>(boxes.size())) {
-                    if (auto item = items::make("levitate:" + boxes[static_cast<std::size_t>(i)].value("colour", std::string("brown")) + "_toolbox", 1))
+                    if (auto item = items::make("bearing:" + boxes[static_cast<std::size_t>(i)].value("colour", std::string("brown")) + "_toolbox", 1))
                         c.item(*item, x + 3, y + 3);
                 }
             } else if (mBox >= 0 && mBox < static_cast<int>(boxes.size())) {
@@ -468,7 +468,7 @@ void drawHud(MinecraftUIRenderContext& ctx) {
         float x = sw / 2 - 91 + 3 + 20.0f * static_cast<float>(slot);
         c.fill({x + 6, sh - 26, 4, 2}, inRange ? 0xFF7FD45E : 0xFF808080);
     }
-    if (controller().active) c.text(sw / 2, sh - 60, ctr("lv.equipment.controller.active", "Linked controller active (Esc or right-click to stop)"), color::kTextGold, Align::Centre);
+    if (controller().active) c.text(sw / 2, sh - 60, ctr("br.equipment.controller.active", "Linked controller active (Esc or right-click to stop)"), color::kTextGold, Align::Centre);
 }
 
 // ---- diving boots ---------------------------------------------------------------------------------------------------
@@ -487,7 +487,7 @@ void divingBoots() {
     auto* lp = currentPlayer();
     if (!lp || !net::client::connected()) return;
     auto feet = items::idOf(lp->getArmor(SharedTypes::Legacy::ArmorSlot::Feet));
-    if (feet != "levitate:copper_diving_boots" && feet != "levitate:netherite_diving_boots") {
+    if (feet != "bearing:copper_diving_boots" && feet != "bearing:netherite_diving_boots") {
         gLavaGrounded = false;
         return;
     }
@@ -497,7 +497,7 @@ void divingBoots() {
     // Create's LavaSwimmingMixin: netherite boots multiply the lava travel motion
     // (DivingBootsItem#getMovementMultiplier)
     bool eyeInLava = lp->isUnderLiquid(SharedTypes::v1_26_20::MaterialType::Lava);
-    if (feet == "levitate:netherite_diving_boots" && !lp->isFlying() && (eyeInLava || lavaAt(*lp, lp->getFeetPos()))) {
+    if (feet == "bearing:netherite_diving_boots" && !lp->isFlying() && (eyeInLava || lavaAt(*lp, lp->getFeetPos()))) {
         Vec3 v = lp->getPosDelta();
         auto m = ce::lavaBootsMultiplier(v.y, lp->isOnGround(), lp->isJumping(), lp->isSprinting(), eyeInLava, gLavaGrounded);
         v.x = float(v.x * m.x), v.y = float(v.y * m.y), v.z = float(v.z * m.z);
@@ -519,19 +519,19 @@ void divingBoots() {
 
 bool wearsDivingBoots(Player const& p) {
     auto feet = items::idOf(p.getArmor(SharedTypes::Legacy::ArmorSlot::Feet));
-    return feet == "levitate:copper_diving_boots" || feet == "levitate:netherite_diving_boots";
+    return feet == "bearing:copper_diving_boots" || feet == "bearing:netherite_diving_boots";
 }
 
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
 // Create's HeavyBootsOnPlayerMixin (isUnderWater is false for a wearer): our own player doesn't
 // start swimming while it wears diving boots
 LL_TYPE_INSTANCE_HOOK(EquipmentNoSwimHook, ll::memory::HookPriority::Normal, Player, &Player::$startSwimming, void) {
-    if (isClientSide() && lv::client::equipment::wearsDivingBoots(*this) && lv::feature::net::client::connected()) return;
+    if (isClientSide() && br::client::equipment::wearsDivingBoots(*this) && br::feature::net::client::connected()) return;
     origin();
 }
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 
 class EquipmentClientModule {
 public:
@@ -641,11 +641,11 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
-LV_REGISTER_MODULE(lv::client::equipment::EquipmentClientModule);
+BR_REGISTER_MODULE(br::client::equipment::EquipmentClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT
 
 // Create's potato cannon tooltip (U59)
 #include "client/equipment/PotatoTooltip.inc"

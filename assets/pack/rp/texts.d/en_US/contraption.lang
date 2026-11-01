@@ -1,5 +1,5 @@
-tile.levitate:linear_chassis.name=Linear Chassis
-tile.levitate:secondary_linear_chassis.name=Secondary Linear Chassis
-tile.levitate:radial_chassis.name=Radial Chassis
-tile.levitate:sticker.name=Sticker
-item.levitate:super_glue.name=Super Glue
+tile.bearing:linear_chassis.name=Linear Chassis
+tile.bearing:secondary_linear_chassis.name=Secondary Linear Chassis
+tile.bearing:radial_chassis.name=Radial Chassis
+tile.bearing:sticker.name=Sticker
+item.bearing:super_glue.name=Super Glue

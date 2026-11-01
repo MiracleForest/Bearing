@@ -1,6 +1,6 @@
 #include "core/Glob.h"
 
-namespace lv::core {
+namespace br::core {
 
 bool globMatch(std::string_view pattern, std::string_view text) {
     std::size_t p = 0, t = 0, star = std::string_view::npos, mark = 0;
@@ -21,4 +21,4 @@ bool globMatch(std::string_view pattern, std::string_view text) {
     return p == pattern.size();
 }
 
-} // namespace lv::core
+} // namespace br::core

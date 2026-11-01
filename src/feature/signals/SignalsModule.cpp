@@ -1,11 +1,11 @@
 // Signals unit (U28): train signals, signal sections and track observers.
 //
 // Create's SignalBlock / SignalBlockEntity / SignalBoundary / TrackObserver over the U5 track
-// graph: blocks are bound to edge points (types "levitate:signal" / "levitate:observer"), the
+// graph: blocks are bound to edge points (types "bearing:signal" / "bearing:observer"), the
 // pure section logic lives in core/signals, trains use feature/tracks/SignalsExt.h.
 //
 // Persistence: the blocks (position, target, bound point, side, cached type / power) in
-// "lv:signals:blocks"; the edge points are stored with the track graph by U5; observer filters
+// "br:signals:blocks"; the edge points are stored with the track graph by U5; observer filters
 // in BlockData (U3 filter slot "filter").
 
 #include <algorithm>
@@ -49,10 +49,10 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::signals {
+namespace br::feature::signals {
 
 namespace {
-constexpr char const* kIndexKey = "lv:signals:blocks";
+constexpr char const* kIndexKey = "br:signals:blocks";
 constexpr int         kObserverHold = 8; ///< Create's TrackObserver.keepAlive
 } // namespace
 
@@ -835,15 +835,15 @@ struct WorldHooks {
 } const gWorldHooks;
 } // namespace
 
-} // namespace lv::feature::signals
+} // namespace br::feature::signals
 
-LV_REGISTER_MODULE(lv::feature::signals::SignalsModule);
+BR_REGISTER_MODULE(br::feature::signals::SignalsModule);
 
 // ---- contract (feature/tracks/SignalsExt.h) -----------------------------------------------------
 
-namespace lv::feature::tracks::signals {
+namespace br::feature::tracks::signals {
 
-namespace sg = lv::feature::signals;
+namespace sg = br::feature::signals;
 
 void setTrainSpans(std::string const& trainId, std::vector<Span> const& spans) {
     sg::refresh();
@@ -963,4 +963,4 @@ std::string observedTrain(core::GlobalPos const& pos) {
     return o == s.observers.end() || o->second.activated <= 0 ? std::string() : o->second.train;
 }
 
-} // namespace lv::feature::tracks::signals
+} // namespace br::feature::tracks::signals

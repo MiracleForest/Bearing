@@ -16,7 +16,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::game::db {
+namespace br::game::db {
 
 namespace {
 constexpr int kAutosaveTicks = 20 * 30;
@@ -113,7 +113,7 @@ public:
 private:
     static void ready() {
         fire(readyListeners(), "ready");
-        log().info("Levitate world ready");
+        log().info("Bearing world ready");
     }
     static void close() {
         fire(saveListeners(), "save");
@@ -124,6 +124,6 @@ private:
     int                                 mTicks = 0;
 };
 
-} // namespace lv::game::db
+} // namespace br::game::db
 
-LV_REGISTER_MODULE_ORDERED(lv::game::db::WorldDbModule, lv::ModuleOrder::Storage);
+BR_REGISTER_MODULE_ORDERED(br::game::db::WorldDbModule, br::ModuleOrder::Storage);

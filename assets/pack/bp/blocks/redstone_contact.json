@@ -2,12 +2,12 @@
   "format_version": "1.26.0",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:redstone_contact",
+      "identifier": "bearing:redstone_contact",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,7 +15,7 @@
           4,
           5
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ]
@@ -40,242 +40,242 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_redstone_contact_side",
+          "texture": "bearing_redstone_contact_side",
           "render_method": "opaque"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:facing') == 0 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_contact_front",
+              "texture": "bearing_redstone_contact_front",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 0 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 0 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_contact_front_powered",
+              "texture": "bearing_redstone_contact_front_powered",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:facing') == 1 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_contact_front",
+              "texture": "bearing_redstone_contact_front",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 1 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_contact_front_powered",
+              "texture": "bearing_redstone_contact_front_powered",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:facing') == 2 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_redstone_contact_front",
+              "texture": "bearing_redstone_contact_front",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 2 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_redstone_contact_front_powered",
+              "texture": "bearing_redstone_contact_front_powered",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:facing') == 3 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_redstone_contact_front",
+              "texture": "bearing_redstone_contact_front",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 3 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_redstone_contact_front_powered",
+              "texture": "bearing_redstone_contact_front_powered",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:facing') == 4 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_redstone_contact_front",
+              "texture": "bearing_redstone_contact_front",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 4 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_redstone_contact_front_powered",
+              "texture": "bearing_redstone_contact_front_powered",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:facing') == 5 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_redstone_contact_front",
+              "texture": "bearing_redstone_contact_front",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 5 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_contact_side",
+              "texture": "bearing_redstone_contact_side",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_redstone_contact_front_powered",
+              "texture": "bearing_redstone_contact_front_powered",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_redstone_contact_back",
+              "texture": "bearing_redstone_contact_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 0 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 0 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -290,7 +290,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 1 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -305,7 +305,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 2 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -320,7 +320,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 3 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -335,7 +335,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 4 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -350,7 +350,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:facing') == 5 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,

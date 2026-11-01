@@ -10,7 +10,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::advancements {
+namespace br::feature::advancements {
 
 namespace {
 
@@ -52,6 +52,6 @@ private:
 
 } // namespace
 
-} // namespace lv::feature::advancements
+} // namespace br::feature::advancements
 
-LV_REGISTER_MODULE(lv::feature::advancements::AdvancementsModule);
+BR_REGISTER_MODULE(br::feature::advancements::AdvancementsModule);

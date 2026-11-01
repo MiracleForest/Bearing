@@ -7,7 +7,7 @@
 #include <map>
 #include <set>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 nlohmann::json ShaperSettings::toJson() const {
     return {
@@ -297,4 +297,4 @@ std::vector<Edge> clusterEdges(std::vector<IPos> const& blocks) {
     }
     return out;
 }
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

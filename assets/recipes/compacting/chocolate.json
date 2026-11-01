@@ -1,14 +1,14 @@
 {
-  "type": "levitate:compacting",
+  "type": "bearing:compacting",
   "ingredients": [
     {
-      "fluid": "levitate:chocolate",
+      "fluid": "bearing:chocolate",
       "amount": 250
     }
   ],
   "results": [
     {
-      "id": "levitate:bar_of_chocolate"
+      "id": "bearing:bar_of_chocolate"
     }
   ]
 }

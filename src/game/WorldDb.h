@@ -2,7 +2,7 @@
 
 // Per-world JSON storage in the world's own LevelDB (server thread only).
 //
-// Keys are "lv:<unit>:<...>" strings. Values are JSON documents. Data travels with the world
+// Keys are "br:<unit>:<...>" strings. Values are JSON documents. Data travels with the world
 // folder (BDS worlds/, client local worlds). The world lifecycle hooks let modules reset their
 // caches: on the client every local world load starts a new world in the same process.
 
@@ -13,7 +13,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::game::db {
+namespace br::game::db {
 
 /// A level (and its DB) is loaded.
 [[nodiscard]] bool available();
@@ -32,4 +32,4 @@ void onWorldReady(std::function<void()> fn);
 void onWorldSave(std::function<void()> fn);
 void onWorldClosed(std::function<void()> fn);
 
-} // namespace lv::game::db
+} // namespace br::game::db

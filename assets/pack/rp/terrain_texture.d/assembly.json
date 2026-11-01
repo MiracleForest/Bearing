@@ -1,8 +1,8 @@
 {
-  "levitate_deployer": {
+  "bearing_deployer": {
     "textures": "textures/blocks/deployer"
   },
-  "levitate_mechanical_arm": {
+  "bearing_mechanical_arm": {
     "textures": "textures/blocks/mechanical_arm"
   }
 }

@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.kinetics_test_consumer",
+        "identifier": "geometry.bearing.kinetics_test_consumer",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 3,

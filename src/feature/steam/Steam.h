@@ -17,7 +17,7 @@
 
 class Player;
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 /// A fluid tank structure as seen from one of its blocks.
 struct TankView {
@@ -41,4 +41,4 @@ struct TankView {
 /// The pitch (semitones of extension, 0..25) of the whistle at `pos`.
 [[nodiscard]] int whistlePitch(core::GlobalPos const& pos);
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam

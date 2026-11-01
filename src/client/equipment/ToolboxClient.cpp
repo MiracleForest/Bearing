@@ -1,10 +1,10 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the toolbox lid and drawers (U31 / U45; Create's ToolboxRenderer), client mod only.
 //
-// The server sets the block state `levitate:toolbox_lid` to 1 while anyone has the toolbox's screen open
+// The server sets the block state `bearing:toolbox_lid` to 1 while anyone has the toolbox's screen open
 // (vanilla clients show the open model, tools/models/equipment.ps1). The client mod meshes every
-// toolbox with `levitate:toolbox_lid` = 2 (the body only) and draws the lid and the two drawers itself each
+// toolbox with `bearing:toolbox_lid` = 2 (the body only) and draws the lid and the two drawers itself each
 // frame, chasing the state like Create's ToolboxBlockEntity (lid linear, drawers exponential, 0.2
 // per tick; core/equipment/ToolboxLid.h): the lid turns up to 135° about its back edge, the lower
 // drawer slides 0.35 blocks out, the upper one half of that. The block state is the sync: it
@@ -73,14 +73,14 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 
 namespace {
 
 namespace k  = core::kinetics;
 namespace ce = core::equipment;
 
-constexpr char kModel[] = "geometry.levitate.toolbox_parts";
+constexpr char kModel[] = "geometry.bearing.toolbox_parts";
 
 struct PosHash {
     std::size_t operator()(BlockPos const& p) const noexcept { return k::GlobalPosHash{}(core::GlobalPos{0, p.x, p.y, p.z}); }
@@ -91,8 +91,8 @@ struct PosEq {
 
 /// A toolbox block state as the client mod draws it (computed once per Block).
 struct Info {
-    Block const* hidden = nullptr; ///< the `levitate:toolbox_lid` = 2 variant (body only); nullptr: not ours
-    bool         open   = false;   ///< `levitate:toolbox_lid` = 1
+    Block const* hidden = nullptr; ///< the `bearing:toolbox_lid` = 2 variant (body only); nullptr: not ours
+    bool         open   = false;   ///< `bearing:toolbox_lid` = 1
     int          facing = 0;
     std::string  texture;          ///< terrain texture of the colour
 };
@@ -121,15 +121,15 @@ State& state() {
 Info computeInfo(Block const& block) {
     Info        info;
     std::string id = block.getTypeName();
-    if (!id.starts_with("levitate:") || !id.ends_with("_toolbox")) return info;
-    int lid = game::intState(block, "levitate:toolbox_lid").value_or(-1);
+    if (!id.starts_with("bearing:") || !id.ends_with("_toolbox")) return info;
+    int lid = game::intState(block, "bearing:toolbox_lid").value_or(-1);
     if (lid != 0 && lid != 1) return info;
-    if (auto const* st = block.getBlockType().getBlockState(HashedString("levitate:toolbox_lid"))) {
+    if (auto const* st = block.getBlockType().getBlockState(HashedString("bearing:toolbox_lid"))) {
         if (auto b = block.setState(*st, 2)) info.hidden = b.as_ptr();
     }
     info.open    = lid == 1;
-    info.facing  = game::intState(block, "levitate:facing").value_or(0) & 3;
-    info.texture = "levitate_" + id.substr(9);
+    info.facing  = game::intState(block, "bearing:facing").value_or(0) & 3;
+    info.texture = "bearing_" + id.substr(9);
     return info;
 }
 
@@ -150,7 +150,7 @@ Info infoOf(Block const& block) {
 std::map<std::string, k::RotorModel> const& models() {
     static std::map<std::string, k::RotorModel> out = [] {
         std::map<std::string, k::RotorModel> m;
-        auto          dir = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto          dir = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         std::ifstream in(dir / "toolbox.geo.json");
         auto          j = nlohmann::json::parse(in, nullptr, false, true);
         if (!j.is_discarded())
@@ -185,7 +185,7 @@ mce::Mesh* partMesh(Tessellator& tess, std::string const& bone, std::string cons
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_toolbox", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_toolbox", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -222,11 +222,11 @@ Anim& animate(BlockPos const& pos, bool open, std::uint64_t tick) {
     return a;
 }
 
-/// Turn of the model for `levitate:facing` (the block's minecraft:transformation, tools/models/equipment.ps1).
+/// Turn of the model for `bearing:facing` (the block's minecraft:transformation, tools/models/equipment.ps1).
 constexpr float kFacingDegrees[4] = {0.f, -90.f, 180.f, 90.f};
 
 void renderToolboxes(BaseActorRenderContext& ctx) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     auto* level  = ci->getLevel();
     auto* player = ci->getLocalPlayer();
@@ -380,8 +380,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
-LV_REGISTER_MODULE(lv::client::equipment::ToolboxClientModule);
+BR_REGISTER_MODULE(br::client::equipment::ToolboxClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

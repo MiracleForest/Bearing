@@ -1,7 +1,7 @@
 # Bogey wheel animation steps (U38, Create's BogeyRenderer: the wheels turn with the distance the
 # carriage travels). Writes bones spokes0..spokes3 into the bogey models: a brass cross on the
 # outer face of every wheel, turned a further 22.5 degrees about the axle per step. The client mod
-# shows a carried bogey with `levitate:anim` 0..3 while it draws it (src/client/trains/
+# shows a carried bogey with `bearing:anim` 0..3 while it draws it (src/client/trains/
 # BogeyRenderer.cpp); the cross is 4-fold symmetric, so four steps make a full turn. Block geometry
 # allows cube rotations of -45..45 degrees and must stay within 30 px, so the rims stay still
 # (square discs) and only the crosses turn; the fourth step uses -22.5 (= 67.5 for a cross).

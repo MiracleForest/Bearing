@@ -2,17 +2,17 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:fake_track",
+      "identifier": "bearing:fake_track",
       "menu_category": {
         "category": "none",
         "is_hidden_in_commands": true
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.fake_track",
+      "minecraft:geometry": "geometry.bearing.fake_track",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_fake_track",
+          "texture": "bearing_fake_track",
           "render_method": "alpha_test",
           "ambient_occlusion": false,
           "face_dimming": true

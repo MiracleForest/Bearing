@@ -2,7 +2,7 @@
 
 #include "core/equipment/ToolboxLid.h"
 
-using namespace lv::core::equipment;
+using namespace br::core::equipment;
 
 TEST(ToolboxLid, LidLinearDrawersExponential) {
     ToolboxLid a;
@@ -36,12 +36,12 @@ TEST(ToolboxLid, RendererValues) {
 }
 
 TEST(ToolboxLid, DyeingMatchesOneToolboxAndOneDye) {
-    EXPECT_EQ(dyeingToolboxSlot({"", "levitate:brown_toolbox", "", "minecraft:red_dye"}), 1);
-    EXPECT_EQ(dyeingToolboxSlot({"minecraft:lime_dye", "", "", "", "levitate:light_blue_toolbox"}), 4);
-    EXPECT_FALSE(dyeingToolboxSlot({"levitate:brown_toolbox"}));                                   // no dye
+    EXPECT_EQ(dyeingToolboxSlot({"", "bearing:brown_toolbox", "", "minecraft:red_dye"}), 1);
+    EXPECT_EQ(dyeingToolboxSlot({"minecraft:lime_dye", "", "", "", "bearing:light_blue_toolbox"}), 4);
+    EXPECT_FALSE(dyeingToolboxSlot({"bearing:brown_toolbox"}));                                   // no dye
     EXPECT_FALSE(dyeingToolboxSlot({"minecraft:red_dye"}));                                         // no toolbox
-    EXPECT_FALSE(dyeingToolboxSlot({"levitate:brown_toolbox", "minecraft:red_dye", "minecraft:red_dye"})); // two dyes
-    EXPECT_FALSE(dyeingToolboxSlot({"levitate:brown_toolbox", "levitate:red_toolbox", "minecraft:red_dye"}));
-    EXPECT_FALSE(dyeingToolboxSlot({"levitate:brown_toolbox", "minecraft:red_dye", "minecraft:stick"})); // anything else
-    EXPECT_FALSE(dyeingToolboxSlot({"levitate:_toolbox", "minecraft:red_dye"}));
+    EXPECT_FALSE(dyeingToolboxSlot({"bearing:brown_toolbox", "minecraft:red_dye", "minecraft:red_dye"})); // two dyes
+    EXPECT_FALSE(dyeingToolboxSlot({"bearing:brown_toolbox", "bearing:red_toolbox", "minecraft:red_dye"}));
+    EXPECT_FALSE(dyeingToolboxSlot({"bearing:brown_toolbox", "minecraft:red_dye", "minecraft:stick"})); // anything else
+    EXPECT_FALSE(dyeingToolboxSlot({"bearing:_toolbox", "minecraft:red_dye"}));
 }

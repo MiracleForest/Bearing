@@ -12,11 +12,11 @@
 #include "feature/contraption/Internal.h"
 #include "feature/contraption/Registries.h"
 
-namespace lv::feature::contraption::actors_ext {
+namespace br::feature::contraption::actors_ext {
 
 namespace {
 
-namespace bd = ::lv::feature::common::blockdata;
+namespace bd = ::br::feature::common::blockdata;
 
 std::unordered_set<std::string>& carriedIds() {
     static std::unordered_set<std::string> s;
@@ -70,4 +70,4 @@ void       defer(std::function<void()> fn) { detail::defer(std::move(fn)); }
 cc::States statesOf(Block const& block) { return detail::statesOf(block); }
 Block const* withStates(Block const& block, cc::States const& states) { return detail::withStates(block, states); }
 
-} // namespace lv::feature::contraption::actors_ext
+} // namespace br::feature::contraption::actors_ext

@@ -42,7 +42,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 // ---- ids ---------------------------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ std::optional<Kind> kindOf(std::string_view id) {
         {kDeskBell,        Kind::DeskBell       },
         {kRoseQuartzLamp,  Kind::RoseQuartzLamp },
     };
-    if (!id.starts_with("levitate:")) return std::nullopt;
+    if (!id.starts_with("bearing:")) return std::nullopt;
     auto it = map.find(id);
     if (it == map.end()) return std::nullopt;
     return it->second;
@@ -476,4 +476,4 @@ void giveOrDrop(Player& player, ItemStack const& stack) {
     player.sendInventory(false);
 }
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

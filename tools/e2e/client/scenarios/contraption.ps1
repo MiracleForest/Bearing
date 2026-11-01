@@ -55,8 +55,8 @@ Save-Screenshot 'placed' | Out-Null
 # Screenshots: glue-selecting.png, glue-region.png
 $glueMark = Get-LogMark
 Invoke-Chat '/fill ~-3 ~ ~-1 ~-3 ~ ~1 stone'
-Invoke-Chat '/clear @s levitate:super_glue'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 0 levitate:super_glue'
+Invoke-Chat '/clear @s bearing:super_glue'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 0 bearing:super_glue'
 Press-Key '1'
 Invoke-Chat '/tp @s ~ ~ ~ 90 30'
 Start-Sleep -Milliseconds 800
@@ -74,7 +74,7 @@ Start-Sleep -Milliseconds 1500
 Save-Screenshot 'glue-region' | Out-Null
 Invoke-Chat '/create glue clear 8'
 Invoke-Chat '/fill ~-3 ~ ~-1 ~-3 ~ ~1 air'
-Invoke-Chat '/clear @s levitate:super_glue'
+Invoke-Chat '/clear @s bearing:super_glue'
 # the selftests on this world's server too (integrated or BDS host)
 $r = Invoke-SelfTest 'contraption.*'
 if ($r.Pass -lt 16) { throw "expected at least 16 contraption selftests to pass, got $($r.Pass)" }

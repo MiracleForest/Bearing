@@ -174,32 +174,32 @@ function HandleRotor($id, $shaft, $handle) {
     )
 }
 Write-Json (GeoFile @(
-        (Geometry 'geometry.levitate.hand_crank' @((Bone 'shaft' (Cubes $crankShaft)), (Bone 'handle' (Cubes $crankHandle)))),
-        (HandleRotor 'geometry.levitate.hand_crank.rotor' $crankShaft $crankHandle)
+        (Geometry 'geometry.bearing.hand_crank' @((Bone 'shaft' (Cubes $crankShaft)), (Bone 'handle' (Cubes $crankHandle)))),
+        (HandleRotor 'geometry.bearing.hand_crank.rotor' $crankShaft $crankHandle)
     )) "$models/hand_crank.geo.json" -Compress
 Write-Json (GeoFile @(
-        (Geometry 'geometry.levitate.valve_handle' @((Bone 'shaft' (Cubes $valveShaft)), (Bone 'handle' (Cubes $valveHandle)))),
-        (HandleRotor 'geometry.levitate.valve_handle.rotor' $valveShaft $valveHandle)
+        (Geometry 'geometry.bearing.valve_handle' @((Bone 'shaft' (Cubes $valveShaft)), (Bone 'handle' (Cubes $valveHandle)))),
+        (HandleRotor 'geometry.bearing.valve_handle.rotor' $valveShaft $valveHandle)
     )) "$models/valve_handle.geo.json" -Compress
 Write-Json (GeoFile @(
-        (Geometry 'geometry.levitate.creative_motor' @((Bone 'body' (Cubes $motorBody)), (Bone 'shaft' (Cubes $motorShaft)))),
-        (Geometry 'geometry.levitate.creative_motor.rotor' @((Bone 'shaft_pos' (Cubes $motorShaft)), (Bone 'shaft_neg' (Cubes ($motorShaft | ForEach-Object { Flip $_ })))))
+        (Geometry 'geometry.bearing.creative_motor' @((Bone 'body' (Cubes $motorBody)), (Bone 'shaft' (Cubes $motorShaft)))),
+        (Geometry 'geometry.bearing.creative_motor.rotor' @((Bone 'shaft_pos' (Cubes $motorShaft)), (Bone 'shaft_neg' (Cubes ($motorShaft | ForEach-Object { Flip $_ })))))
     )) "$models/creative_motor.geo.json" -Compress
 $sheetHeight = 32 * $woods.Count
 Write-Json (GeoFile @(
-        (Geometry 'geometry.levitate.water_wheel' @((Bone 'wheel' (Cubes $small)))),
-        (Geometry 'geometry.levitate.water_wheel.rotor' @(0..($woods.Count - 1) | ForEach-Object { Bone "wheel_$_" (Cubes $small 'y' (32 * $_)) }) $sheetHeight)
+        (Geometry 'geometry.bearing.water_wheel' @((Bone 'wheel' (Cubes $small)))),
+        (Geometry 'geometry.bearing.water_wheel.rotor' @(0..($woods.Count - 1) | ForEach-Object { Bone "wheel_$_" (Cubes $small 'y' (32 * $_)) }) $sheetHeight)
     )) "$models/water_wheel.geo.json" -Compress
 $largeGeos = @()
 foreach ($axis in 'x', 'y', 'z') {
     foreach ($a in -1..1) {
         foreach ($b in -1..1) {
             $cubes = @($large | ForEach-Object { Cube $_ $axis $a $b $true 0 })
-            $largeGeos += Geometry "geometry.levitate.large_water_wheel.$axis$($a + 1)$($b + 1)" @((Bone 'cell' $cubes))
+            $largeGeos += Geometry "geometry.bearing.large_water_wheel.$axis$($a + 1)$($b + 1)" @((Bone 'cell' $cubes))
         }
     }
 }
-$largeGeos += Geometry 'geometry.levitate.large_water_wheel.rotor' @(0..($woods.Count - 1) | ForEach-Object { Bone "wheel_$_" (Cubes $large 'y' (32 * $_)) }) $sheetHeight
+$largeGeos += Geometry 'geometry.bearing.large_water_wheel.rotor' @(0..($woods.Count - 1) | ForEach-Object { Bone "wheel_$_" (Cubes $large 'y' (32 * $_)) }) $sheetHeight
 Write-Json (GeoFile $largeGeos) "$models/large_water_wheel.geo.json" -Compress
 
 # ---- behavior pack blocks ---------------------------------------------------------------------------------------------
@@ -209,12 +209,12 @@ function Box($o, $s) { [ordered]@{ origin = $o; size = $s } }
 $facingRotation = @{ 0 = @(180, 0, 0); 1 = @(0, 0, 0); 2 = @(-90, 0, 0); 3 = @(90, 0, 0); 4 = @(0, 0, 90); 5 = @(0, 0, -90) }
 function FacingPermutations() {
     foreach ($f in 0..5) {
-        [ordered]@{ condition = "q.block_state('levitate:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = $facingRotation[$f] } } }
+        [ordered]@{ condition = "q.block_state('bearing:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = $facingRotation[$f] } } }
     }
 }
 function Material($texture) { [ordered]@{ '*' = [ordered]@{ texture = $texture; render_method = 'alpha_test' } } }
 function BlockFile($id, $category, $states, $components, $permutations, $format = '1.21.40') {
-    $desc = [ordered]@{ identifier = "levitate:$id"; menu_category = [ordered]@{ category = $category } }
+    $desc = [ordered]@{ identifier = "bearing:$id"; menu_category = [ordered]@{ category = $category } }
     $desc.states = $states
     $block = [ordered]@{ description = $desc; components = $components }
     if ($permutations) { $block.permutations = @($permutations) }
@@ -237,69 +237,69 @@ function Common($id, $seconds, $resistance, $collision, $selection, $mapColor) {
 }
 function HandleBlock($id, $geometry, $texture, $collision, $selection, $mapColor, $seconds) {
     $c = [ordered]@{
-        'minecraft:geometry'           = [ordered]@{ identifier = $geometry; bone_visibility = [ordered]@{ shaft = "q.block_state('levitate:rotor') == 0"; handle = "q.block_state('levitate:rotor') == 0" } }
+        'minecraft:geometry'           = [ordered]@{ identifier = $geometry; bone_visibility = [ordered]@{ shaft = "q.block_state('bearing:rotor') == 0"; handle = "q.block_state('bearing:rotor') == 0" } }
         'minecraft:material_instances' = Material $texture
     }
     foreach ($e in (Common $id $seconds 3 $collision $selection $mapColor).GetEnumerator()) { $c[$e.Key] = $e.Value }
     # Create's ProperWaterloggedBlock: placed in water, the water stays (and keeps flowing out)
     $c['minecraft:liquid_detection'] = [ordered]@{ detection_rules = @([ordered]@{ liquid_type = 'water'; can_contain_liquid = $true; on_liquid_touches = 'no_reaction' }) }
-    BlockFile $id 'construction' ([ordered]@{ 'levitate:facing' = Range 6; 'levitate:rotor' = Range 2 }) $c (FacingPermutations) '1.21.70'
-    Loot $id "levitate:$id"
+    BlockFile $id 'construction' ([ordered]@{ 'bearing:facing' = Range 6; 'bearing:rotor' = Range 2 }) $c (FacingPermutations) '1.21.70'
+    Loot $id "bearing:$id"
 }
 
-HandleBlock 'hand_crank' 'geometry.levitate.hand_crank' 'levitate_hand_crank' (Box @(-5, 0, -5) @(10, 9, 10)) (Box @(-5, 0, -5) @(10, 12, 10)) '#8f6f45' 1.0
-HandleBlock 'copper_valve_handle' 'geometry.levitate.valve_handle' 'levitate_copper_valve_handle' (Box @(-7, 0, -7) @(14, 4, 14)) (Box @(-7, 0, -7) @(14, 4, 14)) '#c46f4a' 1.5
+HandleBlock 'hand_crank' 'geometry.bearing.hand_crank' 'bearing_hand_crank' (Box @(-5, 0, -5) @(10, 9, 10)) (Box @(-5, 0, -5) @(10, 12, 10)) '#8f6f45' 1.0
+HandleBlock 'copper_valve_handle' 'geometry.bearing.valve_handle' 'bearing_copper_valve_handle' (Box @(-7, 0, -7) @(14, 4, 14)) (Box @(-7, 0, -7) @(14, 4, 14)) '#c46f4a' 1.5
 foreach ($colour in $colours) {
-    HandleBlock "$($colour)_valve_handle" 'geometry.levitate.valve_handle' "levitate_$($colour)_valve_handle" (Box @(-7, 0, -7) @(14, 4, 14)) (Box @(-7, 0, -7) @(14, 4, 14)) '#c46f4a' 1.5
+    HandleBlock "$($colour)_valve_handle" 'geometry.bearing.valve_handle' "bearing_$($colour)_valve_handle" (Box @(-7, 0, -7) @(14, 4, 14)) (Box @(-7, 0, -7) @(14, 4, 14)) '#c46f4a' 1.5
 }
 
 # creative motor
 $c = [ordered]@{
-    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.levitate.creative_motor'; bone_visibility = [ordered]@{ body = "q.block_state('levitate:rotor') != 2"; shaft = "q.block_state('levitate:rotor') == 0" } }
-    'minecraft:material_instances' = Material 'levitate_creative_motor'
+    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.bearing.creative_motor'; bone_visibility = [ordered]@{ body = "q.block_state('bearing:rotor') != 2"; shaft = "q.block_state('bearing:rotor') == 0" } }
+    'minecraft:material_instances' = Material 'bearing_creative_motor'
 }
 foreach ($e in (Common 'creative_motor' 1.5 6 (Box @(-8, 0, -8) @(16, 16, 16)) (Box @(-8, 0, -8) @(16, 16, 16)) '#8a5fb8').GetEnumerator()) { $c[$e.Key] = $e.Value }
-BlockFile 'creative_motor' 'construction' ([ordered]@{ 'levitate:facing' = Range 6; 'levitate:rotor' = Range 2 }) $c (FacingPermutations)
-Loot 'creative_motor' 'levitate:creative_motor'
+BlockFile 'creative_motor' 'construction' ([ordered]@{ 'bearing:facing' = Range 6; 'bearing:rotor' = Range 2 }) $c (FacingPermutations)
+Loot 'creative_motor' 'bearing:creative_motor'
 
 function WoodPermutations() {
     foreach ($w in 0..($woods.Count - 1)) {
-        [ordered]@{ condition = "q.block_state('levitate:wood') == $w"; components = [ordered]@{ 'minecraft:material_instances' = Material "levitate_water_wheel_$($woods[$w])" } }
+        [ordered]@{ condition = "q.block_state('bearing:wood') == $w"; components = [ordered]@{ 'minecraft:material_instances' = Material "bearing_water_wheel_$($woods[$w])" } }
     }
 }
 $full = Box @(-8, 0, -8) @(16, 16, 16)
 
 # water wheel: the Y model turned onto the facing's axis
 $c = [ordered]@{
-    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.levitate.water_wheel'; bone_visibility = [ordered]@{ wheel = "q.block_state('levitate:rotor') == 0" } }
-    'minecraft:material_instances' = Material "levitate_water_wheel_$($woods[$defaultWood])"
+    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.bearing.water_wheel'; bone_visibility = [ordered]@{ wheel = "q.block_state('bearing:rotor') == 0" } }
+    'minecraft:material_instances' = Material "bearing_water_wheel_$($woods[$defaultWood])"
 }
 foreach ($e in (Common 'water_wheel' 2.0 3 $full $full '#6e4f2f').GetEnumerator()) { $c[$e.Key] = $e.Value }
 $perms = @(WoodPermutations)
-$perms += [ordered]@{ condition = "q.block_state('levitate:facing') >= 4"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, 0, 90) } } }
-$perms += [ordered]@{ condition = "q.block_state('levitate:facing') == 2 || q.block_state('levitate:facing') == 3"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(90, 0, 0) } } }
-BlockFile 'water_wheel' 'construction' ([ordered]@{ 'levitate:facing' = Range 6; 'levitate:wood' = Range $woods.Count; 'levitate:rotor' = Range 2 }) $c $perms
-Loot 'water_wheel' 'levitate:water_wheel'
+$perms += [ordered]@{ condition = "q.block_state('bearing:facing') >= 4"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, 0, 90) } } }
+$perms += [ordered]@{ condition = "q.block_state('bearing:facing') == 2 || q.block_state('bearing:facing') == 3"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(90, 0, 0) } } }
+BlockFile 'water_wheel' 'construction' ([ordered]@{ 'bearing:facing' = Range 6; 'bearing:wood' = Range $woods.Count; 'bearing:rotor' = Range 2 }) $c $perms
+Loot 'water_wheel' 'bearing:water_wheel'
 
 # large water wheel: the centre cell of its axis
 $axisNames = @('x', 'y', 'z')
 $c = [ordered]@{
-    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.levitate.large_water_wheel.y11'; bone_visibility = [ordered]@{ cell = "q.block_state('levitate:rotor') == 0" } }
-    'minecraft:material_instances' = Material "levitate_water_wheel_$($woods[$defaultWood])"
+    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.bearing.large_water_wheel.y11'; bone_visibility = [ordered]@{ cell = "q.block_state('bearing:rotor') == 0" } }
+    'minecraft:material_instances' = Material "bearing_water_wheel_$($woods[$defaultWood])"
 }
 foreach ($e in (Common 'large_water_wheel' 2.0 3 $full $full '#6e4f2f').GetEnumerator()) { $c[$e.Key] = $e.Value }
 $perms = @(WoodPermutations)
 foreach ($ax in 0..2) {
-    $perms += [ordered]@{ condition = "q.block_state('levitate:axis') == $ax"; components = [ordered]@{ 'minecraft:geometry' = [ordered]@{ identifier = "geometry.levitate.large_water_wheel.$($axisNames[$ax])11"; bone_visibility = [ordered]@{ cell = "q.block_state('levitate:rotor') == 0" } } } }
+    $perms += [ordered]@{ condition = "q.block_state('bearing:axis') == $ax"; components = [ordered]@{ 'minecraft:geometry' = [ordered]@{ identifier = "geometry.bearing.large_water_wheel.$($axisNames[$ax])11"; bone_visibility = [ordered]@{ cell = "q.block_state('bearing:rotor') == 0" } } } }
 }
-BlockFile 'large_water_wheel' 'construction' ([ordered]@{ 'levitate:axis' = Range 3; 'levitate:extension' = Range 2; 'levitate:wood' = Range $woods.Count; 'levitate:rotor' = Range 2 }) $c $perms
-Loot 'large_water_wheel' 'levitate:large_water_wheel'
+BlockFile 'large_water_wheel' 'construction' ([ordered]@{ 'bearing:axis' = Range 3; 'bearing:extension' = Range 2; 'bearing:wood' = Range $woods.Count; 'bearing:rotor' = Range 2 }) $c $perms
+Loot 'large_water_wheel' 'bearing:large_water_wheel'
 
 # structure blocks: one cell of the wheel each (segment -> cell as core::generators::segmentCell)
 $segmentCells = @(@(-1, -1), @(0, -1), @(1, -1), @(1, 0), @(1, 1), @(0, 1), @(-1, 1), @(-1, 0))
 $c = [ordered]@{
-    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.levitate.large_water_wheel.y00'; bone_visibility = [ordered]@{ cell = "q.block_state('levitate:rotor') == 0" } }
-    'minecraft:material_instances' = Material "levitate_water_wheel_$($woods[$defaultWood])"
+    'minecraft:geometry'           = [ordered]@{ identifier = 'geometry.bearing.large_water_wheel.y00'; bone_visibility = [ordered]@{ cell = "q.block_state('bearing:rotor') == 0" } }
+    'minecraft:material_instances' = Material "bearing_water_wheel_$($woods[$defaultWood])"
 }
 foreach ($e in (Common 'water_wheel_structure' 2.0 3 $full $full '#6e4f2f').GetEnumerator()) { $c[$e.Key] = $e.Value }
 $perms = @(WoodPermutations)
@@ -307,28 +307,28 @@ foreach ($ax in 0..2) {
     foreach ($s in 0..7) {
         $cell = $segmentCells[$s]
         $perms += [ordered]@{
-            condition  = "q.block_state('levitate:axis') == $ax && q.block_state('levitate:segment') == $s"
-            components = [ordered]@{ 'minecraft:geometry' = [ordered]@{ identifier = "geometry.levitate.large_water_wheel.$($axisNames[$ax])$($cell[0] + 1)$($cell[1] + 1)"; bone_visibility = [ordered]@{ cell = "q.block_state('levitate:rotor') == 0" } } }
+            condition  = "q.block_state('bearing:axis') == $ax && q.block_state('bearing:segment') == $s"
+            components = [ordered]@{ 'minecraft:geometry' = [ordered]@{ identifier = "geometry.bearing.large_water_wheel.$($axisNames[$ax])$($cell[0] + 1)$($cell[1] + 1)"; bone_visibility = [ordered]@{ cell = "q.block_state('bearing:rotor') == 0" } } }
         }
     }
 }
-BlockFile 'water_wheel_structure' 'none' ([ordered]@{ 'levitate:segment' = Range 8; 'levitate:axis' = Range 3; 'levitate:wood' = Range $woods.Count; 'levitate:rotor' = Range 2 }) $c $perms
+BlockFile 'water_wheel_structure' 'none' ([ordered]@{ 'bearing:segment' = Range 8; 'bearing:axis' = Range 3; 'bearing:wood' = Range $woods.Count; 'bearing:rotor' = Range 2 }) $c $perms
 Loot 'water_wheel_structure' $null
 
 # ---- recipes ------------------------------------------------------------------------------------------------------------
 function Shaped($dir, $id, $pattern, $key, $unlock) {
     Write-Json ([ordered]@{ format_version = '1.20.10'; 'minecraft:recipe_shaped' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$id" }; tags = @('crafting_table'); pattern = $pattern; key = $key
-                unlock = @([ordered]@{ item = $unlock }); result = [ordered]@{ item = "levitate:$id" }
+                description = [ordered]@{ identifier = "bearing:$id" }; tags = @('crafting_table'); pattern = $pattern; key = $key
+                unlock = @([ordered]@{ item = $unlock }); result = [ordered]@{ item = "bearing:$id" }
             }
         }) "$dir/$id.json"
 }
-Shaped "$bp/recipes" 'large_water_wheel' @('PPP', 'PWP', 'PPP') ([ordered]@{ P = [ordered]@{ tag = 'minecraft:planks' }; W = [ordered]@{ item = 'levitate:water_wheel' } }) 'levitate:water_wheel'
+Shaped "$bp/recipes" 'large_water_wheel' @('PPP', 'PWP', 'PPP') ([ordered]@{ P = [ordered]@{ tag = 'minecraft:planks' }; W = [ordered]@{ item = 'bearing:water_wheel' } }) 'bearing:water_wheel'
 foreach ($colour in $colours) {
     Write-Json ([ordered]@{ format_version = '1.20.10'; 'minecraft:recipe_shapeless' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$($colour)_valve_handle" }; tags = @('crafting_table')
-                ingredients = @([ordered]@{ item = 'levitate:copper_valve_handle' }, [ordered]@{ item = "minecraft:$($colour)_dye" })
-                unlock = @([ordered]@{ item = 'levitate:copper_valve_handle' }); result = [ordered]@{ item = "levitate:$($colour)_valve_handle"; count = 1 }
+                description = [ordered]@{ identifier = "bearing:$($colour)_valve_handle" }; tags = @('crafting_table')
+                ingredients = @([ordered]@{ item = 'bearing:copper_valve_handle' }, [ordered]@{ item = "minecraft:$($colour)_dye" })
+                unlock = @([ordered]@{ item = 'bearing:copper_valve_handle' }); result = [ordered]@{ item = "bearing:$($colour)_valve_handle"; count = 1 }
             }
         }) "$bp/recipes/$($colour)_valve_handle.json"
     # Create's `#create:valve_handles` + dye: a dyed handle is re-dyed too (one recipe per source
@@ -336,33 +336,33 @@ foreach ($colour in $colours) {
     foreach ($from in $colours) {
         if ($from -eq $colour) { continue }
         Write-Json ([ordered]@{ format_version = '1.20.10'; 'minecraft:recipe_shapeless' = [ordered]@{
-                    description = [ordered]@{ identifier = "levitate:$($colour)_valve_handle_from_$($from)" }; tags = @('crafting_table')
-                    ingredients = @([ordered]@{ item = "levitate:$($from)_valve_handle" }, [ordered]@{ item = "minecraft:$($colour)_dye" })
-                    unlock = @([ordered]@{ item = "levitate:$($from)_valve_handle" }); result = [ordered]@{ item = "levitate:$($colour)_valve_handle"; count = 1 }
+                    description = [ordered]@{ identifier = "bearing:$($colour)_valve_handle_from_$($from)" }; tags = @('crafting_table')
+                    ingredients = @([ordered]@{ item = "bearing:$($from)_valve_handle" }, [ordered]@{ item = "minecraft:$($colour)_dye" })
+                    unlock = @([ordered]@{ item = "bearing:$($from)_valve_handle" }); result = [ordered]@{ item = "bearing:$($colour)_valve_handle"; count = 1 }
                 }
             }) "$bp/recipes/$($colour)_valve_handle_from_$($from).json"
     }
 }
 # ingredients of other units (U9 andesite alloy / copper sheet, U6 shaft): moved into the BP when those land
-Shaped $pending 'hand_crank' @('PPP', '  A') ([ordered]@{ P = [ordered]@{ tag = 'minecraft:planks' }; A = [ordered]@{ item = 'levitate:andesite_alloy' } }) 'levitate:andesite_alloy'
-Shaped $pending 'copper_valve_handle' @('CCC', ' A ') ([ordered]@{ C = [ordered]@{ item = 'levitate:copper_sheet' }; A = [ordered]@{ item = 'levitate:andesite_alloy' } }) 'levitate:copper_sheet'
-Shaped $pending 'water_wheel' @('SSS', 'SAS', 'SSS') ([ordered]@{ S = [ordered]@{ tag = 'minecraft:wooden_slabs' }; A = [ordered]@{ item = 'levitate:shaft' } }) 'levitate:shaft'
+Shaped $pending 'hand_crank' @('PPP', '  A') ([ordered]@{ P = [ordered]@{ tag = 'minecraft:planks' }; A = [ordered]@{ item = 'bearing:andesite_alloy' } }) 'bearing:andesite_alloy'
+Shaped $pending 'copper_valve_handle' @('CCC', ' A ') ([ordered]@{ C = [ordered]@{ item = 'bearing:copper_sheet' }; A = [ordered]@{ item = 'bearing:andesite_alloy' } }) 'bearing:copper_sheet'
+Shaped $pending 'water_wheel' @('SSS', 'SAS', 'SSS') ([ordered]@{ S = [ordered]@{ tag = 'minecraft:wooden_slabs' }; A = [ordered]@{ item = 'bearing:shaft' } }) 'bearing:shaft'
 
 # ---- resource pack fragments ------------------------------------------------------------------------------------------------
-$terrain = [ordered]@{ levitate_hand_crank = [ordered]@{ textures = 'textures/blocks/hand_crank' } }
-$terrain['levitate_copper_valve_handle'] = [ordered]@{ textures = 'textures/blocks/copper_valve_handle' }
-foreach ($colour in $colours) { $terrain["levitate_$($colour)_valve_handle"] = [ordered]@{ textures = "textures/blocks/$($colour)_valve_handle" } }
-foreach ($wood in $woods) { $terrain["levitate_water_wheel_$wood"] = [ordered]@{ textures = "textures/blocks/water_wheel_$wood" } }
-$terrain['levitate_water_wheel_rotor'] = [ordered]@{ textures = 'textures/blocks/water_wheel_rotor' }
-$terrain['levitate_creative_motor'] = [ordered]@{ textures = 'textures/blocks/creative_motor' }
+$terrain = [ordered]@{ bearing_hand_crank = [ordered]@{ textures = 'textures/blocks/hand_crank' } }
+$terrain['bearing_copper_valve_handle'] = [ordered]@{ textures = 'textures/blocks/copper_valve_handle' }
+foreach ($colour in $colours) { $terrain["bearing_$($colour)_valve_handle"] = [ordered]@{ textures = "textures/blocks/$($colour)_valve_handle" } }
+foreach ($wood in $woods) { $terrain["bearing_water_wheel_$wood"] = [ordered]@{ textures = "textures/blocks/water_wheel_$wood" } }
+$terrain['bearing_water_wheel_rotor'] = [ordered]@{ textures = 'textures/blocks/water_wheel_rotor' }
+$terrain['bearing_creative_motor'] = [ordered]@{ textures = 'textures/blocks/creative_motor' }
 Write-Json $terrain "$rp/terrain_texture.d/generators.json"
 
-$sounds = [ordered]@{ 'levitate:hand_crank' = [ordered]@{ sound = 'wood' }; 'levitate:copper_valve_handle' = [ordered]@{ sound = 'copper' } }
-foreach ($colour in $colours) { $sounds["levitate:$($colour)_valve_handle"] = [ordered]@{ sound = 'copper' } }
-$sounds['levitate:water_wheel'] = [ordered]@{ sound = 'wood' }
-$sounds['levitate:large_water_wheel'] = [ordered]@{ sound = 'wood' }
-$sounds['levitate:water_wheel_structure'] = [ordered]@{ sound = 'wood' }
-$sounds['levitate:creative_motor'] = [ordered]@{ sound = 'metal' }
+$sounds = [ordered]@{ 'bearing:hand_crank' = [ordered]@{ sound = 'wood' }; 'bearing:copper_valve_handle' = [ordered]@{ sound = 'copper' } }
+foreach ($colour in $colours) { $sounds["bearing:$($colour)_valve_handle"] = [ordered]@{ sound = 'copper' } }
+$sounds['bearing:water_wheel'] = [ordered]@{ sound = 'wood' }
+$sounds['bearing:large_water_wheel'] = [ordered]@{ sound = 'wood' }
+$sounds['bearing:water_wheel_structure'] = [ordered]@{ sound = 'wood' }
+$sounds['bearing:creative_motor'] = [ordered]@{ sound = 'metal' }
 Write-Json $sounds "$rp/blocks.d/generators.json"
 
 $en = [ordered]@{ hand_crank = 'Hand Crank'; copper_valve_handle = 'Copper Valve Handle' }
@@ -375,7 +375,7 @@ $en.large_water_wheel = 'Large Water Wheel'; $zh.large_water_wheel = '大型水�
 $en.water_wheel_structure = 'Large Water Wheel'; $zh.water_wheel_structure = '大型水车'
 $en.creative_motor = 'Creative Motor'; $zh.creative_motor = '创造马达'
 foreach ($pair in @(@('en_US', $en), @('zh_CN', $zh))) {
-    $lines = foreach ($e in $pair[1].GetEnumerator()) { "tile.levitate:$($e.Key).name=$($e.Value)" }
+    $lines = foreach ($e in $pair[1].GetEnumerator()) { "tile.bearing:$($e.Key).name=$($e.Value)" }
     $path = "$rp/texts.d/$($pair[0])/generators.lang"
     New-Item -ItemType Directory -Force (Split-Path -Parent $path) | Out-Null
     [IO.File]::WriteAllText($path, (($lines -join "`n") + "`n"), [Text.UTF8Encoding]::new($false))

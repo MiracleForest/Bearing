@@ -8,7 +8,7 @@
 
 #include "core/contraption/Geometry.h"
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 /// An inclusive box of block positions.
 struct GlueBox {
@@ -36,4 +36,4 @@ checkSelection(Pos const& first, Pos const& second, int maxRange, std::function<
 /// A box rotated by quarter turns and moved: the image of `box` under `place` (grid placement).
 [[nodiscard]] GlueBox transformBox(GlueBox const& box, std::function<Pos(Pos const&)> const& place);
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

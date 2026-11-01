@@ -9,9 +9,9 @@
 
 #include "core/contraption/Geometry.h"
 
-namespace lv::core::bearings {
+namespace br::core::bearings {
 
-namespace cc = ::lv::core::contraption;
+namespace cc = ::br::core::contraption;
 
 // ---- bearings ---------------------------------------------------------------------------------
 
@@ -90,4 +90,4 @@ enum class CartMovementMode : int { Rotate = 0, RotatePaused = 1, RotationLocked
 /// to `hit` (block-local, 0..1).
 [[nodiscard]] std::vector<cc::Dir> orderedByDistanceExceptAxis(cc::Vec3d const& hit, cc::Axis axis);
 
-} // namespace lv::core::bearings
+} // namespace br::core::bearings

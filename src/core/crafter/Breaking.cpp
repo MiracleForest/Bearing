@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::crafter {
+namespace br::core::crafter {
 
 float stationaryBreakSpeed(float rpm) { return std::abs(rpm / 100.0f); }
 
@@ -71,4 +71,4 @@ kinetics::Offset sawItemMovement(bool alongFirst, float rpm) {
     return {alongX ? offset : 0, 0, alongX ? 0 : -offset};
 }
 
-} // namespace lv::core::crafter
+} // namespace br::core::crafter

@@ -3,8 +3,8 @@
   "size": [5, 5],
   "blocks": [
     {"at": [2, 4, 2], "id": "minecraft:chest"},
-    {"at": [2, 3, 2], "id": "levitate:smart_chute", "states": {"levitate:powered": 0}},
-    {"at": [2, 2, 2], "id": "levitate:chute", "states": {"levitate:facing": 0, "levitate:shape": 2}},
+    {"at": [2, 3, 2], "id": "bearing:smart_chute", "states": {"bearing:powered": 0}},
+    {"at": [2, 2, 2], "id": "bearing:chute", "states": {"bearing:facing": 0, "bearing:shape": 2}},
     {"at": [2, 1, 2], "id": "minecraft:chest"}
   ],
   "timeline": [
@@ -41,7 +41,7 @@
     {"text": 3, "at": [2.5, 3.5, 3.0], "ticks": 70, "keyframe": true},
     {"idle": 80},
     {"set": [3, 3, 2], "id": "minecraft:redstone_block"},
-    {"modify": [2, 3, 2], "states": {"levitate:powered": 1}},
+    {"modify": [2, 3, 2], "states": {"bearing:powered": 1}},
     {"redstone": [2, 3, 2], "ticks": 40},
     {"idle": 10},
     {"text": 4, "at": [2.5, 3.5, 3.0], "ticks": 70, "color": "red", "keyframe": true},

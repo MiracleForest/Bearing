@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:brass_ingot_from_compacting"
+      "identifier": "bearing:brass_ingot_from_compacting"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:brass_nugget"
+        "item": "bearing:brass_nugget"
       }
     },
     "unlock": [
       {
-        "item": "levitate:brass_nugget"
+        "item": "bearing:brass_nugget"
       }
     ],
     "result": {
-      "item": "levitate:brass_ingot",
+      "item": "bearing:brass_ingot",
       "count": 1
     }
   }

@@ -24,7 +24,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace items = common::items;
 
@@ -221,7 +221,7 @@ bool useShop(Player& player, GlobalPos const& p, double lx, double ly, double lz
     inHand = player.getSelectedItem();
     if (!items::isEmpty(inHand) && !addOnto) {
         statusKey(player, "create.stock_keeper.shopping_list_empty_hand", "Empty hand required to start a shopping list");
-        playSound(p, "levitate.stock.deny", 0.5f, 1.0f);
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
         player.sendInventory(false);
         return true;
     }
@@ -233,7 +233,7 @@ bool useShop(Player& player, GlobalPos const& p, double lx, double ly, double lz
     };
     if (items::isEmpty(priceItem(shop))) {
         statusKey(player, "create.stock_keeper.no_price_set", "Shop owner must set a price first");
-        playSound(p, "levitate.stock.deny", 0.5f, 1.0f);
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
         giveBack(prevList);
         return true;
     }
@@ -244,13 +244,13 @@ bool useShop(Player& player, GlobalPos const& p, double lx, double ly, double lz
     int  stockLevel = stockLevelForTrade(p, prev.is_object() ? &prev : nullptr);
     if (network.empty()) {
         statusKey(player, "create.stock_keeper.keeper_missing", "Stock keeper missing", "§c");
-        playSound(p, "levitate.stock.deny", 0.5f, 1.0f);
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
         giveBack(prevList);
         return true;
     }
     if (stockLevel == 0) {
         statusKey(player, "create.stock_keeper.out_of_stock", "Out of Stock", "§c");
-        playSound(p, "levitate.stock.deny", 0.5f, 1.0f);
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
         giveBack(prevList);
         return true;
     }
@@ -263,7 +263,7 @@ bool useShop(Player& player, GlobalPos const& p, double lx, double ly, double lz
         setPurchases(list, p, std::min(stockLevel, purchasesAt(list, p)));
         statusKey(player, "create.stock_keeper.limited_stock", "Stock limit reached", "§c");
     } else {
-        playSound(p, "levitate.stock.confirm", 0.5f, 1.0f);
+        playSound(p, "bearing.stock.confirm", 0.5f, 1.0f);
         setPurchases(list, p, purchasesAt(list, p) + 1);
         if (!addOnto) statusKey(player, "create.stock_keeper.use_list_to_add_purchases", "Use this list to add more to your purchase", "§f");
     }
@@ -282,7 +282,7 @@ void checkout(Player& player, GlobalPos const& ticker, ItemStack const& listItem
     if (!list.is_object()) return;
     auto network = networkAt(ticker);
     if (network != list.value("network", std::string{})) {
-        playSound(ticker, "levitate.stock.deny", 1.0f, 1.0f);
+        playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
         statusKey(player, "create.stock_keeper.wrong_network", "This list is for another shop", "§c");
         return;
     }
@@ -291,7 +291,7 @@ void checkout(Player& player, GlobalPos const& ticker, ItemStack const& listItem
     auto const& recent = summaryOf(network, false);
     for (auto const& e : baked.order.byCount()) {
         if (recent.countOf(e.stack) >= e.count) continue;
-        playSound(ticker, "levitate.stock.deny", 1.0f, 1.0f);
+        playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
         statusKey(player, "create.stock_keeper.stock_level_too_low", "Purchase cancelled: Stock levels lower than expected", "§c");
         log().info("stock: checkout by {} refused: stock too low", player.getRealName());
         return;
@@ -299,7 +299,7 @@ void checkout(Player& player, GlobalPos const& ticker, ItemStack const& listItem
     int occupied = 0;
     for (auto const& e : baked.payment.byCount()) occupied += (e.count + std::max<int>(1, e.stack.getMaxStackSize()) - 1) / std::max<int>(1, e.stack.getMaxStackSize());
     if (occupied > freePaymentSlots(ticker)) {
-        playSound(ticker, "levitate.stock.deny", 1.0f, 1.0f);
+        playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
         statusKey(player, "create.stock_keeper.cash_register_full", "Purchase cancelled: Not enough space in Cash Register", "§c");
         return;
     }
@@ -325,7 +325,7 @@ void checkout(Player& player, GlobalPos const& ticker, ItemStack const& listItem
             for (auto const& e : tally.entries())
                 if (e.count > 0) broke = true;
             if (broke) {
-                playSound(ticker, "levitate.stock.deny", 1.0f, 1.0f);
+                playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
                 statusKey(player, "create.stock_keeper.too_broke", "You cannot afford this purchase", "§c");
                 return;
             }
@@ -334,7 +334,7 @@ void checkout(Player& player, GlobalPos const& ticker, ItemStack const& listItem
     requestOrder(network, RequestType::Player, baked.order.byCount(), list.value("address", std::string{}));
     player.setSelectedItem(items::empty());
     player.sendInventory(false);
-    if (!baked.order.summary.empty()) playSound(ticker, "levitate.stock.trade", 1.0f, 1.0f);
+    if (!baked.order.summary.empty()) playSound(ticker, "bearing.stock.trade", 1.0f, 1.0f);
     log().info("stock: {} checked out a shopping list at the stock ticker at {} {} {}", player.getRealName(), ticker.x, ticker.y, ticker.z);
 }
 
@@ -456,7 +456,7 @@ void registerShopValueBoxes() {
     static bool providers = false;
     if (!std::exchange(providers, true)) itemrender::registerProvider([](std::string_view id) { return isTableCloth(id); }, clothDisplay);
     for (auto const* colour : kClothColours) {
-        std::string id = std::string("levitate:") + colour + "_table_cloth";
+        std::string id = std::string("bearing:") + colour + "_table_cloth";
         common::valuebox::registerBox(
             id,
             {
@@ -488,4 +488,4 @@ void registerShopValueBoxes() {
     }
 }
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

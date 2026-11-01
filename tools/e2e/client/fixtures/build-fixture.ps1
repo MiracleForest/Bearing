@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-  (Re)build the LV-Test client world fixture (fixtures\LV-Test) from any Bedrock world.
+  (Re)build the BR-Test client world fixture (fixtures\BR-Test) from any Bedrock world.
 
 .DESCRIPTION
   Only level.dat is taken from the source world (it carries the version/format fields the game
   expects); the terrain (db\) is dropped, so the game generates a fresh flat world on first
-  load. The level.dat is patched to: name LV-Test, flat (classic layers), fixed seed,
+  load. The level.dat is patched to: name BR-Test, flat (classic layers), fixed seed,
   survival, peaceful, cheats on, always day, no weather, no mob spawning, coordinates shown.
 
   The committed fixture was built from BEI's fixture world:
@@ -20,7 +20,7 @@ $ErrorActionPreference = 'Stop'
 $tmp = $null
 if (Test-Path $Source -PathType Leaf) {
     # .mcworld is a zip; Expand-Archive only accepts the .zip extension.
-    $tmp = Join-Path ([IO.Path]::GetTempPath()) "lv-fixture-$PID"
+    $tmp = Join-Path ([IO.Path]::GetTempPath()) "br-fixture-$PID"
     New-Item -ItemType Directory -Force $tmp | Out-Null
     $zip = Join-Path $tmp 'world.zip'
     Copy-Item -LiteralPath $Source $zip
@@ -34,7 +34,7 @@ try {
     $ld = Read-LevelDat $levelDat.FullName
     $r = $ld.Root
     $flat = '{"biome_id":1,"block_layers":[{"block_name":"minecraft:bedrock","count":1},{"block_name":"minecraft:dirt","count":2},{"block_name":"minecraft:grass_block","count":1}],"encoding_version":6,"preset_id":"ClassicFlat","world_version":"version.post_1_18"}'
-    Set-NbtValue $r 'LevelName' 8 'LV-Test'
+    Set-NbtValue $r 'LevelName' 8 'BR-Test'
     Set-NbtValue $r 'Generator' 3 2            # 2 = flat
     Set-NbtValue $r 'FlatWorldLayers' 8 $flat
     Set-NbtValue $r 'RandomSeed' 4 ([long]20260521)
@@ -58,11 +58,11 @@ try {
     Set-NbtValue $r 'LastPlayed' 4 ([long]0)   # set to "now" by Restore-TestWorld
     Set-NbtValue $r 'texturePacksRequired' 1 0
 
-    $out = Join-Path $PSScriptRoot 'LV-Test'
+    $out = Join-Path $PSScriptRoot 'BR-Test'
     if (Test-Path $out) { Remove-Item -Recurse -Force $out }
     New-Item -ItemType Directory $out | Out-Null
     Write-LevelDat $ld (Join-Path $out 'level.dat')
-    Set-Content -Path (Join-Path $out 'levelname.txt') -Value 'LV-Test' -NoNewline -Encoding ascii
+    Set-Content -Path (Join-Path $out 'levelname.txt') -Value 'BR-Test' -NoNewline -Encoding ascii
     Set-Content -Path (Join-Path $out 'world_behavior_packs.json') -Value '[]' -NoNewline -Encoding ascii
     Set-Content -Path (Join-Path $out 'world_resource_packs.json') -Value '[]' -NoNewline -Encoding ascii
     Write-Host "fixture written to $out"

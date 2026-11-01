@@ -1,8 +1,8 @@
 // Cuckoo clocks (U49): Create's CuckooClockBlockEntity on the server. While the clock turns its
-// hands follow the time of day (block states `levitate:hour` / `levitate:minute`, the static hands
+// hands follow the time of day (block states `bearing:hour` / `bearing:minute`, the static hands
 // of vanilla clients; the client mod chases the exact angles itself), it ticks (note block hat),
 // and in the overworld the pig comes out at noon and the creeper at dusk (sounds, the doors and
-// figure as `levitate:cuckoo` for vanilla clients, `transmission.cuckoo` messages for the client
+// figure as `bearing:cuckoo` for vanilla clients, `transmission.cuckoo` messages for the client
 // mod's animation). The mysterious cuckoo clock turns either into the surprise: smoke, the fuse,
 // and at progress 50 it removes itself and explodes (power 3, no fire, blocks break) with Create's
 // death message. Elsewhere (not the overworld) the hands spin 24 times faster and it ticks every
@@ -34,7 +34,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
@@ -202,34 +202,34 @@ void clearClocks() {
     dayTimeOverride().reset();
 }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission
 
 // CreateDamageSources.cuckooSurprise: deaths by the surprise's explosion get Create's message
 // ("death.attack.create.cuckoo_surprise", translated by the resource pack).
-using LvCuckooDeathMessage = std::pair<std::string, std::vector<std::string>>;
+using BrCuckooDeathMessage = std::pair<std::string, std::vector<std::string>>;
 LL_TYPE_INSTANCE_HOOK(
     CuckooSurpriseDeathMessageHook,
     ll::memory::HookPriority::Normal,
     ActorDamageSource,
     &ActorDamageSource::getDeathMessage,
-    LvCuckooDeathMessage,
+    BrCuckooDeathMessage,
     std::string const& deadName,
     Actor*             dead
 ) {
-    using lv::feature::transmission::gSurpriseTick;
+    using br::feature::transmission::gSurpriseTick;
     if (gSurpriseTick != 0) {
         SharedTypes::Legacy::ActorDamageCause cause = mCause;
         if (cause == SharedTypes::Legacy::ActorDamageCause::BlockExplosion || cause == SharedTypes::Legacy::ActorDamageCause::EntityExplosion) {
-            auto now = lv::feature::transmission::serverTick();
+            auto now = br::feature::transmission::serverTick();
             if (now + 1 >= gSurpriseTick && now <= gSurpriseTick) {
-                return {lv::feature::transmission::kDeathMessage, {deadName}};
+                return {br::feature::transmission::kDeathMessage, {deadName}};
             }
         }
     }
     return origin(deadName, dead);
 }
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 void installClockHooks() { CuckooSurpriseDeathMessageHook::hook(); }
 void uninstallClockHooks() { CuckooSurpriseDeathMessageHook::unhook(); }
@@ -243,4 +243,4 @@ std::string surpriseDeathMessage(std::string const& name) {
 /// Marks a surprise explosion now (selftests of the death message).
 void markSurpriseForTest() { gSurpriseTick = serverTick() + 1; }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

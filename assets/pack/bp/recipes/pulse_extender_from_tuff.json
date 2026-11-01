@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:pulse_extender_from_tuff"
+      "identifier": "bearing:pulse_extender_from_tuff"
     },
     "tags": [
       "crafting_table"
@@ -20,7 +20,7 @@
         "item": "minecraft:redstone"
       },
       "C": {
-        "item": "levitate:brass_sheet"
+        "item": "bearing:brass_sheet"
       },
       "S": {
         "item": "minecraft:tuff"
@@ -32,7 +32,7 @@
       }
     ],
     "result": {
-      "item": "levitate:pulse_extender",
+      "item": "bearing:pulse_extender",
       "count": 1
     }
   }

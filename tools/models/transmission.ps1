@@ -8,14 +8,14 @@
 # Cuckoo clock: built facing north (dial towards -z) in block pixels (0..16, a model x is world
 # -x); other facings turn it about +Y (`minecraft:transformation`, the gauge's convention). Bones
 # the client mod draws itself (client/transmission/CuckooClockRenderer.cpp) are hidden with
-# `levitate:rotor` = 1: the hands (`hour_0` / `minute_0` point at 12 and are turned about the dial
+# `bearing:rotor` = 1: the hands (`hour_0` / `minute_0` point at 12 and are turned about the dial
 # centre (8, 6, 2.5)), the doors (hinges at x 10 and 6) and the figures (drawn at their "out"
 # place, slid back by half a block while the doors close). Vanilla clients see the bones the
-# server's states pick: `levitate:hour` / `levitate:minute` (12 hand positions each, drawn as
-# pixel steps since block models only turn cubes by 22.5 degrees) and `levitate:cuckoo`.
+# server's states pick: `bearing:hour` / `bearing:minute` (12 hand positions each, drawn as
+# pixel steps since block models only turn cubes by 22.5 degrees) and `bearing:cuckoo`.
 #
 # Flywheel: a brass wheel 28 px across around +Y (a 16-gon rim of 22.5-degree segments), turned
-# onto `levitate:axis`; the kinetics renderer spins bones `wheel` and `shaft` of the same geometry.
+# onto `bearing:axis`; the kinetics renderer spins bones `wheel` and `shaft` of the same geometry.
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path "$PSScriptRoot/../..").Path
 $rp = Join-Path $root 'assets/pack/rp'
@@ -134,7 +134,7 @@ $clockBones += Bone 'door_left_open' $doorLOpen
 $clockBones += Bone 'door_right_open' $doorROpen
 $clockBones += Bone 'pig' $pig
 $clockBones += Bone 'creeper' $creeper
-Write-Json (GeoFile @(Geometry 'geometry.levitate.cuckoo_clock' $clockBones)) "$models/cuckoo_clock.geo.json" -Compress
+Write-Json (GeoFile @(Geometry 'geometry.bearing.cuckoo_clock' $clockBones)) "$models/cuckoo_clock.geo.json" -Compress
 
 # ---- flywheel (parts in wheel coordinates: p, q in the plane, r along the axis; generators.ps1 style) ------
 $regions = @{ main = @(0, 0); second = @(16, 0); third = @(0, 16); shaft = @(16, 16) }
@@ -181,36 +181,36 @@ foreach ($k in 0..15) { $wheel += Spin $rimSeg (22.5 * $k) }
 $spoke = Part 3 11 -1 1 -1.5 1.5 second
 foreach ($k in 0..3) { $wheel += Turn $spoke $k; $wheel += Spin (Part 3 11 -.75 .75 -1 1 second) (45 + 90 * $k) }
 $flyShaft = @(Part -2 2 -2 2 -8 8 shaft)
-Write-Json (GeoFile @(Geometry 'geometry.levitate.flywheel' @((Bone 'wheel' @($wheel | ForEach-Object { YCube $_ })), (Bone 'shaft' @($flyShaft | ForEach-Object { YCube $_ }))))) "$models/flywheel.geo.json" -Compress
+Write-Json (GeoFile @(Geometry 'geometry.bearing.flywheel' @((Bone 'wheel' @($wheel | ForEach-Object { YCube $_ })), (Bone 'shaft' @($flyShaft | ForEach-Object { YCube $_ }))))) "$models/flywheel.geo.json" -Compress
 
 # ---- behavior pack -------------------------------------------------------------------------------------------
 function BlockFile($id, $category, $states, $components, $permutations, $format = '1.21.70') {
-    $desc = [ordered]@{ identifier = "levitate:$id"; menu_category = [ordered]@{ category = $category } }
+    $desc = [ordered]@{ identifier = "bearing:$id"; menu_category = [ordered]@{ category = $category } }
     $desc.states = $states
     $block = [ordered]@{ description = $desc; components = $components }
     if ($permutations) { $block.permutations = @($permutations) }
     Write-Json ([ordered]@{ format_version = $format; 'minecraft:block' = $block }) "$bp/blocks/$id.json"
 }
-function Loot($id) { Write-Json ([ordered]@{ pools = @([ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = "levitate:$id"; weight = 1 }) }) }) "$bp/loot_tables/blocks/$id.json" }
+function Loot($id) { Write-Json ([ordered]@{ pools = @([ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = "bearing:$id"; weight = 1 }) }) }) "$bp/loot_tables/blocks/$id.json" }
 function Box($o, $s) { [ordered]@{ origin = $o; size = $s } }
 
-# cuckoo clocks: levitate:horizontal_facing 0 south, 1 west, 2 north, 3 east (Java 2D value)
-$vis = [ordered]@{ shaft = "q.block_state('levitate:rotor') != 1" }
-foreach ($k in 0..11) { $vis["hour_$k"] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:hour') == $k" }
-foreach ($k in 0..11) { $vis["minute_$k"] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:minute') == $k" }
-$vis['door_left'] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:cuckoo') == 0"
-$vis['door_right'] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:cuckoo') == 0"
-$vis['door_left_open'] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:cuckoo') != 0"
-$vis['door_right_open'] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:cuckoo') != 0"
-$vis['pig'] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:cuckoo') == 1"
-$vis['creeper'] = "q.block_state('levitate:rotor') != 1 && q.block_state('levitate:cuckoo') == 2"
+# cuckoo clocks: bearing:horizontal_facing 0 south, 1 west, 2 north, 3 east (Java 2D value)
+$vis = [ordered]@{ shaft = "q.block_state('bearing:rotor') != 1" }
+foreach ($k in 0..11) { $vis["hour_$k"] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:hour') == $k" }
+foreach ($k in 0..11) { $vis["minute_$k"] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:minute') == $k" }
+$vis['door_left'] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:cuckoo') == 0"
+$vis['door_right'] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:cuckoo') == 0"
+$vis['door_left_open'] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:cuckoo') != 0"
+$vis['door_right_open'] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:cuckoo') != 0"
+$vis['pig'] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:cuckoo') == 1"
+$vis['creeper'] = "q.block_state('bearing:rotor') != 1 && q.block_state('bearing:cuckoo') == 2"
 $yaw = @{ 0 = 180; 1 = 90; 2 = 0; 3 = 270 }
 foreach ($id in 'cuckoo_clock', 'mysterious_cuckoo_clock') {
     $c = [ordered]@{
-        'minecraft:geometry'                  = [ordered]@{ identifier = 'geometry.levitate.cuckoo_clock'; bone_visibility = $vis }
+        'minecraft:geometry'                  = [ordered]@{ identifier = 'geometry.bearing.cuckoo_clock'; bone_visibility = $vis }
         'minecraft:material_instances'        = [ordered]@{
-            '*'   = [ordered]@{ texture = 'levitate_cuckoo_clock'; render_method = 'alpha_test' }
-            shaft = [ordered]@{ texture = 'levitate_transmission_rotor'; render_method = 'alpha_test' }
+            '*'   = [ordered]@{ texture = 'bearing_cuckoo_clock'; render_method = 'alpha_test' }
+            shaft = [ordered]@{ texture = 'bearing_transmission_rotor'; render_method = 'alpha_test' }
         }
         'minecraft:collision_box'             = Box @(-7, 0, -7) @(14, 16, 14)
         'minecraft:selection_box'             = Box @(-7, 0, -7) @(14, 16, 14)
@@ -221,17 +221,17 @@ foreach ($id in 'cuckoo_clock', 'mysterious_cuckoo_clock') {
         'minecraft:loot'                      = "loot_tables/blocks/$id.json"
     }
     $perms = foreach ($f in 0..3) {
-        [ordered]@{ condition = "q.block_state('levitate:horizontal_facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $yaw[$f], 0) } } }
+        [ordered]@{ condition = "q.block_state('bearing:horizontal_facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $yaw[$f], 0) } } }
     }
-    $states = [ordered]@{ 'levitate:horizontal_facing' = Range 4; 'levitate:hour' = Range 12; 'levitate:minute' = Range 12; 'levitate:cuckoo' = Range 3; 'levitate:rotor' = Range 2 }
+    $states = [ordered]@{ 'bearing:horizontal_facing' = Range 4; 'bearing:hour' = Range 12; 'bearing:minute' = Range 12; 'bearing:cuckoo' = Range 3; 'bearing:rotor' = Range 2 }
     BlockFile $id 'construction' $states $c $perms
     Loot $id
 }
 
-# flywheel: the Y model turned onto levitate:axis (0 x, 1 y, 2 z)
+# flywheel: the Y model turned onto bearing:axis (0 x, 1 y, 2 z)
 $c = [ordered]@{
-    'minecraft:geometry'                  = [ordered]@{ identifier = 'geometry.levitate.flywheel'; bone_visibility = [ordered]@{ wheel = "q.block_state('levitate:rotor') != 1"; shaft = "q.block_state('levitate:rotor') != 1" } }
-    'minecraft:material_instances'        = [ordered]@{ '*' = [ordered]@{ texture = 'levitate_flywheel'; render_method = 'alpha_test' } }
+    'minecraft:geometry'                  = [ordered]@{ identifier = 'geometry.bearing.flywheel'; bone_visibility = [ordered]@{ wheel = "q.block_state('bearing:rotor') != 1"; shaft = "q.block_state('bearing:rotor') != 1" } }
+    'minecraft:material_instances'        = [ordered]@{ '*' = [ordered]@{ texture = 'bearing_flywheel'; render_method = 'alpha_test' } }
     'minecraft:collision_box'             = Box @(-8, 0, -8) @(16, 16, 16)
     'minecraft:selection_box'             = Box @(-8, 0, -8) @(16, 16, 16)
     'minecraft:destructible_by_mining'    = [ordered]@{ seconds_to_destroy = 2.0 }
@@ -241,10 +241,10 @@ $c = [ordered]@{
     'minecraft:loot'                      = 'loot_tables/blocks/flywheel.json'
 }
 $perms = @(
-    [ordered]@{ condition = "q.block_state('levitate:axis') == 0"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, 0, 90) } } },
-    [ordered]@{ condition = "q.block_state('levitate:axis') == 2"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(90, 0, 0) } } }
+    [ordered]@{ condition = "q.block_state('bearing:axis') == 0"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, 0, 90) } } },
+    [ordered]@{ condition = "q.block_state('bearing:axis') == 2"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(90, 0, 0) } } }
 )
-BlockFile 'flywheel' 'construction' ([ordered]@{ 'levitate:axis' = Range 3; 'levitate:rotor' = Range 2 }) $c $perms
+BlockFile 'flywheel' 'construction' ([ordered]@{ 'bearing:axis' = Range 3; 'bearing:rotor' = Range 2 }) $c $perms
 Loot 'flywheel'
 
 # ---- recipes (Create 6.0.10 crafting/kinetics) ---------------------------------------------------------------
@@ -252,11 +252,11 @@ function Shaped($id, $pattern, $key, $unlock) {
     $k = [ordered]@{}
     foreach ($e in $key.GetEnumerator() | Sort-Object Key) { $k[$e.Key] = $e.Value }
     Write-Json ([ordered]@{ format_version = '1.20.10'; 'minecraft:recipe_shaped' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$id" }; tags = @('crafting_table'); pattern = @($pattern); key = $k
-                unlock = @([ordered]@{ item = $unlock }); result = [ordered]@{ item = "levitate:$id"; count = 1 }
+                description = [ordered]@{ identifier = "bearing:$id" }; tags = @('crafting_table'); pattern = @($pattern); key = $k
+                unlock = @([ordered]@{ item = $unlock }); result = [ordered]@{ item = "bearing:$id"; count = 1 }
             } }) "$bp/recipes/$id.json"
 }
-Shaped 'cuckoo_clock' @('S', 'C', 'A') @{ S = [ordered]@{ tag = 'minecraft:planks' }; C = [ordered]@{ item = 'levitate:andesite_casing' }; A = [ordered]@{ item = 'minecraft:clock' } } 'levitate:andesite_casing'
-Shaped 'mysterious_cuckoo_clock' @(' C ', 'CBC', ' C ') @{ B = [ordered]@{ item = 'levitate:cuckoo_clock' }; C = [ordered]@{ item = 'minecraft:gunpowder' } } 'levitate:cuckoo_clock'
-Shaped 'flywheel' @('CCC', 'CAC', 'CCC') @{ A = [ordered]@{ item = 'levitate:shaft' }; C = [ordered]@{ item = 'levitate:brass_ingot' } } 'levitate:brass_ingot'
+Shaped 'cuckoo_clock' @('S', 'C', 'A') @{ S = [ordered]@{ tag = 'minecraft:planks' }; C = [ordered]@{ item = 'bearing:andesite_casing' }; A = [ordered]@{ item = 'minecraft:clock' } } 'bearing:andesite_casing'
+Shaped 'mysterious_cuckoo_clock' @(' C ', 'CBC', ' C ') @{ B = [ordered]@{ item = 'bearing:cuckoo_clock' }; C = [ordered]@{ item = 'minecraft:gunpowder' } } 'bearing:cuckoo_clock'
+Shaped 'flywheel' @('CCC', 'CAC', 'CCC') @{ A = [ordered]@{ item = 'bearing:shaft' }; C = [ordered]@{ item = 'bearing:brass_ingot' } } 'bearing:brass_ingot'
 Write-Host "transmission models and blocks written"

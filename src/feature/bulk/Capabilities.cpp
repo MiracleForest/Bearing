@@ -10,7 +10,7 @@
 #include "feature/common/Items.h"
 #include "feature/kinetics/Kinetics.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace k = core::kinetics;
 using kinetics::KineticSpec;
@@ -24,42 +24,42 @@ KineticSpec millstoneSpec() {
     s.hasShaftTowards = [](k::BlockState const&, k::Face f) { return f == k::Face::Down; };
     s.cog             = [](k::BlockState const&) { return k::CogType::Small; };
     s.impact          = 4;
-    s.rotorState      = "levitate:rotor";
-    return kinetics::specs::withModel(std::move(s), "geometry.levitate.millstone", "levitate_millstone");
+    s.rotorState      = "bearing:rotor";
+    return kinetics::specs::withModel(std::move(s), "geometry.bearing.millstone", "bearing_millstone");
 }
 
 /// Create's CrushingWheelBlock: a pillar with shaft ends on both faces of its axis.
 KineticSpec wheelSpec() {
-    auto s   = kinetics::specs::shaft("levitate:axis");
+    auto s   = kinetics::specs::shaft("bearing:axis");
     s.impact = 8;
-    return kinetics::specs::withModel(std::move(s), "geometry.levitate.crushing_wheel", "levitate_crushing_wheel");
+    return kinetics::specs::withModel(std::move(s), "geometry.bearing.crushing_wheel", "bearing_crushing_wheel");
 }
 
 /// Create's EncasedFanBlock: the shaft enters at the back; the shaft half turns with the network,
 /// the propeller five times faster (EncasedFanRenderer).
 KineticSpec fanSpec() {
     KineticSpec s;
-    s.states          = {"levitate:facing"};
-    s.rotationAxis    = kinetics::specs::axisFromFacing("levitate:facing");
+    s.states          = {"bearing:facing"};
+    s.rotationAxis    = kinetics::specs::axisFromFacing("bearing:facing");
     s.hasShaftTowards = [](k::BlockState const& st, k::Face f) {
-        return f == k::opposite(static_cast<k::Face>(std::clamp(st.get("levitate:facing"), 0, 5)));
+        return f == k::opposite(static_cast<k::Face>(std::clamp(st.get("bearing:facing"), 0, 5)));
     };
     s.impact     = 2;
-    s.rotorState = "levitate:rotor";
+    s.rotorState = "bearing:rotor";
     s.parts      = [](k::RenderView const& v, std::vector<k::RotorPart>& out) {
-        auto f   = static_cast<k::Face>(std::clamp(v.state->get("levitate:facing"), 0, 5));
+        auto f   = static_cast<k::Face>(std::clamp(v.state->get("bearing:facing"), 0, 5));
         bool pos = k::isPositive(f);
         out.push_back(k::RotorPart{pos ? "shaft_up" : "shaft_down", k::axisOf(f), 1.f, 0.f, false});
         out.push_back(k::RotorPart{pos ? "blades_up" : "blades_down", k::axisOf(f), 5.f, 0.f, false});
     };
-    return kinetics::specs::withModel(std::move(s), "geometry.levitate.encased_fan", "levitate_encased_fan");
+    return kinetics::specs::withModel(std::move(s), "geometry.bearing.encased_fan", "bearing_encased_fan");
 }
 
 } // namespace
 
-LV_REGISTER_KINETIC_BLOCK("levitate:millstone", millstoneSpec());
-LV_REGISTER_KINETIC_BLOCK("levitate:crushing_wheel", wheelSpec());
-LV_REGISTER_KINETIC_BLOCK("levitate:encased_fan", fanSpec());
+BR_REGISTER_KINETIC_BLOCK("bearing:millstone", millstoneSpec());
+BR_REGISTER_KINETIC_BLOCK("bearing:crushing_wheel", wheelSpec());
+BR_REGISTER_KINETIC_BLOCK("bearing:encased_fan", fanSpec());
 
 void registerCapabilities() {
     namespace ci = common::items;
@@ -93,7 +93,7 @@ void registerCapabilities() {
             if (!region || idAt(*region, toBlockPos(pos)) != kFan) return std::nullopt;
             af::Source s;
             s.pos    = pos;
-            s.facing = stateOf(region->getBlock(toBlockPos(pos)), "levitate:facing");
+            s.facing = stateOf(region->getBlock(toBlockPos(pos)), "bearing:facing");
             s.speed  = kinetics::speedAt(pos);
             if (s.speed != 0) s.pushing = cb::fanPushing(faceOf(s.facing), s.speed);
             if (auto f = fanAt(pos)) s.maxDistance = f->current.maxDistance;
@@ -106,4 +106,4 @@ void registerCapabilities() {
     });
 }
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:spruce_window_pane"
+      "identifier": "bearing:spruce_window_pane"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:spruce_window"
+        "item": "bearing:spruce_window"
       }
     },
     "unlock": [
       {
-        "item": "levitate:spruce_window"
+        "item": "bearing:spruce_window"
       }
     ],
     "result": {
-      "item": "levitate:spruce_window_pane",
+      "item": "bearing:spruce_window_pane",
       "count": 16
     }
   }

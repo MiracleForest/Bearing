@@ -2,7 +2,7 @@
 
 #include "core/Glob.h"
 
-using lv::core::globMatch;
+using br::core::globMatch;
 
 TEST(Glob, Literal) {
     EXPECT_TRUE(globMatch("foundation.i18n", "foundation.i18n"));

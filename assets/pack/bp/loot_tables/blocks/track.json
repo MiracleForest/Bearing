@@ -6,7 +6,7 @@
         { "condition": "survives_explosion" }
       ],
       "entries": [
-        { "type": "item", "name": "levitate:track" }
+        { "type": "item", "name": "bearing:track" }
       ]
     }
   ]

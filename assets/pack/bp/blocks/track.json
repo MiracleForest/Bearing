@@ -2,22 +2,22 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:track",
+      "identifier": "bearing:track",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:shape": {
+        "bearing:shape": {
           "values": {
             "min": 0,
             "max": 15
           }
         },
-        "levitate:shape_hi": [
+        "bearing:shape_hi": [
           0,
           1
         ],
-        "levitate:turn": [
+        "bearing:turn": [
           0,
           1
         ]
@@ -25,7 +25,7 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.track",
+        "identifier": "geometry.bearing.track",
         "bone_visibility": {
           "oz": true,
           "ox": false,
@@ -36,7 +36,7 @@
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_track",
+          "texture": "bearing_track",
           "render_method": "alpha_test",
           "ambient_occlusion": false,
           "face_dimming": true
@@ -78,10 +78,10 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 0",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 0",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": true,
               "ox": false,
@@ -93,10 +93,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 1",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 1",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": true,
               "ox": false,
@@ -108,10 +108,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 2",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 2",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": true,
@@ -123,10 +123,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 3",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": false,
@@ -138,10 +138,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 4",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 4",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": false,
@@ -153,10 +153,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 5",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 5",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": false,
@@ -188,10 +188,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 6",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 6",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": false,
@@ -216,10 +216,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 7",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 7",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": false,
@@ -251,10 +251,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 8",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 8",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": false,
@@ -286,10 +286,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 9",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 9",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": true,
               "ox": false,
@@ -301,10 +301,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 10",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 10",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": true,
               "ox": false,
@@ -316,10 +316,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 11",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 11",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": true,
@@ -331,10 +331,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 12",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 12",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": true,
@@ -346,10 +346,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 13",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 13",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": true,
               "ox": true,
@@ -361,10 +361,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 14",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 14",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": false,
@@ -376,10 +376,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 0 && q.block_state('levitate:shape') == 15",
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 15",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": true,
@@ -391,10 +391,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 1 && q.block_state('levitate:shape') == 0",
+        "condition": "q.block_state('bearing:shape_hi') == 1 && q.block_state('bearing:shape') == 0",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": true,
               "ox": false,
@@ -406,10 +406,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 1 && q.block_state('levitate:shape') == 1",
+        "condition": "q.block_state('bearing:shape_hi') == 1 && q.block_state('bearing:shape') == 1",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": false,
               "ox": true,
@@ -421,10 +421,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:shape_hi') == 1 && q.block_state('levitate:shape') == 2",
+        "condition": "q.block_state('bearing:shape_hi') == 1 && q.block_state('bearing:shape') == 2",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.track",
+            "identifier": "geometry.bearing.track",
             "bone_visibility": {
               "oz": true,
               "ox": false,

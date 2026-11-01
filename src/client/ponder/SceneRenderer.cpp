@@ -1,8 +1,8 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Draws a Ponder scene state into a screen.
 //
-// Levitate blocks are built from the pack's own block files and geometry (core/ponder/BlockModel.h:
+// Bearing blocks are built from the pack's own block files and geometry (core/ponder/BlockModel.h:
 // permutations, bone visibility, material instances, transformations); other blocks are tessellated
 // by a block tessellator of our own (`appendTessellatedBlock`). Both are drawn with the block atlas
 // through the UI pass, with the scene camera (core::ponder::View) as the world matrix.
@@ -71,7 +71,7 @@
 #include "mod/Log.h"
 #include "mod/Main.h"
 
-namespace lv::client::ponder {
+namespace br::client::ponder {
 
 namespace k  = core::kinetics;
 namespace fk = feature::kinetics;
@@ -137,7 +137,7 @@ BlockInfo const& infoOf(cp::BlockDef const& def) {
     return info;
 }
 
-// ---- Levitate block models (the pack's own block files and geometry) ----------------------------
+// ---- Bearing block models (the pack's own block files and geometry) ----------------------------
 
 struct Models {
     std::map<std::string, cp::BlockFile> blocks;     ///< by block id
@@ -147,16 +147,16 @@ struct Models {
 Models const& models() {
     static Models m = [] {
         Models out;
-        auto   mod = lv::Mod::getInstance().getSelf().getModDir();
+        auto   mod = br::Mod::getInstance().getSelf().getModDir();
         auto   read = [](std::filesystem::path const& p) {
             std::ifstream in(p);
             return nlohmann::json::parse(in, nullptr, false, true);
         };
         std::error_code ec;
-        for (auto const& e : std::filesystem::directory_iterator(mod / "behavior_packs" / "Levitate_BP" / "blocks", ec)) {
+        for (auto const& e : std::filesystem::directory_iterator(mod / "behavior_packs" / "Bearing_BP" / "blocks", ec)) {
             if (auto f = cp::parseBlockFile(read(e.path()))) out.blocks[f->id] = std::move(*f);
         }
-        for (auto const& e : std::filesystem::recursive_directory_iterator(mod / "resource_packs" / "Levitate_RP" / "models" / "blocks", ec)) {
+        for (auto const& e : std::filesystem::recursive_directory_iterator(mod / "resource_packs" / "Bearing_RP" / "models" / "blocks", ec)) {
             if (e.path().extension() != ".json") continue;
             out.geometries.merge(cp::parseGeometries(read(e.path())));
         }
@@ -166,7 +166,7 @@ Models const& models() {
     return m;
 }
 
-/// The quads of a Levitate block from its block file and geometry (custom geometry, bone
+/// The quads of a Bearing block from its block file and geometry (custom geometry, bone
 /// visibility, material instances and transformations as the game resolves them); nullopt for
 /// other blocks.
 std::optional<std::vector<cp::Quad>> modelQuads(cp::BlockDef const& def, std::vector<std::string> const& hideBones = {}) {
@@ -197,7 +197,7 @@ void emitQuads(Tessellator& tess, std::vector<cp::Quad> const& quads, float alph
     }
 }
 
-/// A Levitate block drawn from its block file and geometry; nullptr for other blocks.
+/// A Bearing block drawn from its block file and geometry; nullptr for other blocks.
 mce::Mesh* modelMesh(Tessellator& tess, cp::BlockDef const& def, int step = 16) {
     auto  key = keyOf(def) + "#" + std::to_string(step);
     auto& c   = cache().modelMeshes;
@@ -207,7 +207,7 @@ mce::Mesh* modelMesh(Tessellator& tess, cp::BlockDef const& def, int step = 16) 
     auto& slot = c[key];
     tess.begin(Tessellator::DebugContextCallback{}, mce::PrimitiveMode::QuadList, 0, false);
     emitQuads(tess, *quads, stepAlpha(step));
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_ponder_model", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_ponder_model", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -260,7 +260,7 @@ mce::Mesh* fluidMesh(Tessellator& tess, std::string const& id, int step, FluidCo
         Vec3 a = top[static_cast<std::size_t>(i)], bb = top[static_cast<std::size_t>((i + 1) & 3)];
         quad({Vec3{a.x, 0, a.z}, Vec3{bb.x, 0, bb.z}, bb, a}, {uv(0, 1), uv(1, 1), uv(1, 1 - bb.y), uv(0, 1 - a.y)}, (i & 1) ? 0.6f : 0.8f);
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_ponder_fluid", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_ponder_fluid", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -269,7 +269,7 @@ mce::Mesh* fluidMesh(Tessellator& tess, std::string const& id, int step, FluidCo
 std::map<std::string, k::RotorModel> const& rotorModels() {
     static std::map<std::string, k::RotorModel> models = [] {
         std::map<std::string, k::RotorModel> out;
-        auto dir = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto dir = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         std::error_code ec;
         for (auto const& entry : std::filesystem::recursive_directory_iterator(dir, ec)) {
             if (entry.path().extension() != ".json") continue;
@@ -303,7 +303,7 @@ mce::Mesh* rotorMesh(Tessellator& tess, fk::KineticSpec const& spec, std::string
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_ponder_rotor", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_ponder_rotor", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -316,7 +316,7 @@ mce::Mesh* blockMesh(Tessellator& tess, BlockTessellator& bt, Block const& block
     tess.begin(Tessellator::DebugContextCallback{}, mce::PrimitiveMode::QuadList, 0, false);
     tess.color(1.f, 1.f, 1.f, 1.f);
     bt.appendTessellatedBlock(tess, block);
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_ponder_block", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_ponder_block", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -413,12 +413,12 @@ mce::Mesh* modelPartMesh(Tessellator& tess, cp::BlockDef const& def, std::vector
     auto& slot = c[key];
     tess.begin(Tessellator::DebugContextCallback{}, mce::PrimitiveMode::QuadList, 0, false);
     emitQuads(tess, *quads, 1.f);
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_model_part", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_model_part", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
 bool appendBlock(Tessellator& tess, cp::BlockDef const& def, Block const& block, float x, float y, float z) {
-    // Levitate blocks: the pack's own geometry
+    // Bearing blocks: the pack's own geometry
     if (models().blocks.contains(def.id)) {
         auto& cached = cache().modelQuads;
         auto  it     = cached.find(keyOf(def));
@@ -809,6 +809,6 @@ void drawTexts(Canvas& c, cp::Scene const& scene, cp::SceneState const& st, cp::
         for (std::size_t i = 0; i < lines.size(); ++i) c.text(bx + kPad, by + kPad + static_cast<float>(i) * kLine, lines[i], withAlpha(0xFFFFFFFF, a));
     }
 }
-} // namespace lv::client::ponder
+} // namespace br::client::ponder
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

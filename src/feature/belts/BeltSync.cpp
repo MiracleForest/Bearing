@@ -17,7 +17,7 @@
 #include "feature/net/Net.h"
 #include "mod/Module.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace {
 
@@ -88,6 +88,6 @@ private:
     ll::event::ListenerPtr mTick;
 };
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts
 
-LV_REGISTER_MODULE(lv::feature::belts::BeltSyncModule);
+BR_REGISTER_MODULE(br::feature::belts::BeltSyncModule);

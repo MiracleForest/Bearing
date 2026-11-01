@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <vector>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 namespace {
 nlohmann::json stackJson(TStack const& s) {
@@ -166,4 +166,4 @@ bool inToolboxRange(double px, double py, double pz, int bx, int by, int bz, dou
     return dx * dx + dy * dy + dz * dz < range * range;
 }
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

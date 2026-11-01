@@ -25,7 +25,7 @@ class Block;
 class BlockSource;
 class Player;
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace cp = core::packages;
 
@@ -49,18 +49,18 @@ enum class Kind { None, Packager, Repackager, Frogport, Postbox, ChainConveyor }
 [[nodiscard]] char const* kindName(Kind k);
 
 /// Block states.
-inline constexpr char const* kFacing    = "levitate:facing";    // packagers: 0..5 (Bedrock face ids)
-inline constexpr char const* kPowered   = "levitate:powered";   // packagers
-inline constexpr char const* kLinked    = "levitate:linked";    // packager
-inline constexpr char const* kDirection = "levitate:direction"; // postbox: Java 2D facing 0 S, 1 W, 2 N, 3 E
-inline constexpr char const* kOpen      = "levitate:open";      // postbox
-inline constexpr char const* kFlag      = "levitate:flag";      // postbox: holds packages
-inline constexpr char const* kGoggles   = "levitate:goggles";   // frogport
-inline constexpr char const* kYaw       = "levitate:yaw";       // frogport: 0..15, 22.5 degree steps (U56)
-inline constexpr char const* kRotor     = "levitate:rotor";     // chain conveyor (kinetics rotor model)
+inline constexpr char const* kFacing    = "bearing:facing";    // packagers: 0..5 (Bedrock face ids)
+inline constexpr char const* kPowered   = "bearing:powered";   // packagers
+inline constexpr char const* kLinked    = "bearing:linked";    // packager
+inline constexpr char const* kDirection = "bearing:direction"; // postbox: Java 2D facing 0 S, 1 W, 2 N, 3 E
+inline constexpr char const* kOpen      = "bearing:open";      // postbox
+inline constexpr char const* kFlag      = "bearing:flag";      // postbox: holds packages
+inline constexpr char const* kGoggles   = "bearing:goggles";   // frogport
+inline constexpr char const* kYaw       = "bearing:yaw";       // frogport: 0..15, 22.5 degree steps (U56)
+inline constexpr char const* kRotor     = "bearing:rotor";     // chain conveyor (kinetics rotor model)
 
-inline constexpr char const* kWrenchId = "levitate:wrench";
-inline constexpr char const* kGogglesId = "levitate:goggles";
+inline constexpr char const* kWrenchId = "bearing:wrench";
+inline constexpr char const* kGogglesId = "bearing:goggles";
 
 // ---- world helpers (World.cpp) -------------------------------------------------------------------------
 [[nodiscard]] BlockSource* regionOf(int dim);
@@ -178,7 +178,7 @@ void       tickPort(GlobalPos const& pos, Kind kind, bool lazy);
 /// Create's FrogportBlockEntity.startAnimation (`deposit`: send `box` to the target).
 void startFrogAnimation(GlobalPos const& pos, ItemStack const& box, bool deposit);
 void anticipate(GlobalPos const& pos);
-/// (U56) Turns the frogport block towards its target (Create's getYaw, `levitate:yaw`).
+/// (U56) Turns the frogport block towards its target (Create's getYaw, `bearing:yaw`).
 void updateFrogYaw(GlobalPos const& pos);
 /// Opens the port screen (native for companions, a form otherwise).
 void openPortScreen(Player& player, GlobalPos const& pos);
@@ -284,7 +284,7 @@ void installItemScreens();
 bool spawnFromEgg(BlockSource& region, ItemStack const& egg, Actor* spawner, cp::V3 const& at);
 
 // ---- package entities (PackageEntity.cpp, U46) -----------------------------------------------------------------
-inline constexpr char const* kPackageEntityId = "levitate:package";
+inline constexpr char const* kPackageEntityId = "bearing:package";
 /// The style of a package item (index into packageIds(): 4 cardboard sizes, then the rare ones), -1 if none.
 [[nodiscard]] int packageStyle(std::string_view itemId);
 /// Create's PackageStyle size in pixels (width = depth, height).
@@ -330,4 +330,4 @@ void forgetPackager(GlobalPos const& pos);
 void forgetPort(GlobalPos const& pos);
 void forgetConveyor(GlobalPos const& pos);
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

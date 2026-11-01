@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Ponder screens (SPEC §3.6.30 / §4):
 //  - PonderUI: the scene player. Header (subject item, "Pondering about...", scene title), the
@@ -26,7 +26,7 @@
 #include "feature/common/Items.h"
 #include "mod/Log.h"
 
-namespace lv::client::ponder {
+namespace br::client::ponder {
 
 using screen::Align;
 using screen::Button;
@@ -171,7 +171,7 @@ public:
         c.fill({0, 0, width, height}, 0xF0101018);
         auto const* s = scene();
         if (!s) {
-            c.text(width / 2, height / 2, ctr("lv.ponder.unknown", "There is nothing to ponder about {0}.", mComponent), 0xFFFFFFFF, Align::Centre);
+            c.text(width / 2, height / 2, ctr("br.ponder.unknown", "There is nothing to ponder about {0}.", mComponent), 0xFFFFFFFF, Align::Centre);
             return;
         }
         // item icons first: the block pass leaves the item renderer's lighting dark
@@ -206,7 +206,7 @@ public:
             if (!res.hoveredBlock.empty()) {
                 auto name = itemName(res.hoveredBlock);
                 tip       = {name.empty() ? res.hoveredBlock : name};
-                if (name.empty()) tip.push_back(ctr("lv.ponder.missing_block", "Not available yet: {0}", res.hoveredBlock));
+                if (name.empty()) tip.push_back(ctr("br.ponder.missing_block", "Not available yet: {0}", res.hoveredBlock));
             }
         }
         // the scene is over: Create shows what comes next above the "next" button
@@ -383,7 +383,7 @@ private:
 
 // ---- entry grids -------------------------------------------------------------------------------
 
-/// An entry of a grid: the item's icon (Levitate blocks drawn from their model), greyed out when
+/// An entry of a grid: the item's icon (Bearing blocks drawn from their model), greyed out when
 /// it has no scenes.
 class EntrySlot : public screen::Widget {
 public:
@@ -413,7 +413,7 @@ void addEntryGrid(screen::Screen& s, float x, float y, int columns, std::vector<
     for (int i = 0; i < static_cast<int>(ids.size()); ++i) {
         auto const& id   = ids[static_cast<std::size_t>(i)];
         bool        has  = library().has(id);
-        auto& slot = s.add<EntrySlot>(lv::core::common::gridCell(x, y, columns, kCell, i), id, has, [id, onClick] { onClick(id); });
+        auto& slot = s.add<EntrySlot>(br::core::common::gridCell(x, y, columns, kCell, i), id, has, [id, onClick] { onClick(id); });
         auto  name = itemName(id);
         slot.tooltip = {name.empty() ? id : name};
         if (!has) slot.tooltip.push_back("-");
@@ -484,7 +484,7 @@ public:
         float gx = (width - cols * 26) / 2;
         for (int i = 0; i < static_cast<int>(tags.size()); ++i) {
             auto id   = tags[static_cast<std::size_t>(i)]->id;
-            auto r    = lv::core::common::gridCell(gx, 32, cols, 26, i);
+            auto r    = br::core::common::gridCell(gx, 32, cols, 26, i);
             auto& slot = add<EntrySlot>(Rect{r.x + 2, r.y + 2, 22, 22}, tags[static_cast<std::size_t>(i)]->icon, true, [id] {
                 pushHistory([] { openIndex(); });
                 openTag(id);
@@ -507,7 +507,7 @@ public:
                 mKey->toggled = false;
             });
         });
-        key.tooltip = {ctr("lv.ponder.key", "Ponder Key"), ctr("lv.ponder.key.rebind", "Click, then press the new key (Esc cancels)")};
+        key.tooltip = {ctr("br.ponder.key", "Ponder Key"), ctr("br.ponder.key.rebind", "Click, then press the new key (Esc cancels)")};
         mKey        = &key;
         log().info("ponder: index of {} categories opened", tags.size());
     }
@@ -558,6 +558,6 @@ bool openTag(std::string const& tag) {
     return true;
 }
 
-} // namespace lv::client::ponder
+} // namespace br::client::ponder
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

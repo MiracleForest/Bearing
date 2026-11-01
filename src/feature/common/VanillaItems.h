@@ -25,7 +25,7 @@
 
 #include "core/GlobalPos.h"
 
-namespace lv::feature::common::vanillaitems {
+namespace br::feature::common::vanillaitems {
 
 struct Shown {
     core::GlobalPos owner;    ///< the block showing the item
@@ -43,4 +43,4 @@ void registerSource(Source source);
 /// Number of item entities currently sent to vanilla players (selftests).
 [[nodiscard]] std::size_t sentCount();
 
-} // namespace lv::feature::common::vanillaitems
+} // namespace br::feature::common::vanillaitems

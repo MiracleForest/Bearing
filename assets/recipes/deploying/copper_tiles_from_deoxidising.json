@@ -1,8 +1,8 @@
 {
-  "type": "levitate:deploying",
+  "type": "bearing:deploying",
   "ingredients": [
     {
-      "item": "levitate:exposed_copper_tiles"
+      "item": "bearing:exposed_copper_tiles"
     },
     {
       "tag": "minecraft:axes"
@@ -10,7 +10,7 @@
   ],
   "results": [
     {
-      "item": "levitate:copper_tiles"
+      "item": "bearing:copper_tiles"
     }
   ],
   "keep_held_item": true

@@ -5,7 +5,7 @@
 #include <deque>
 #include <numeric>
 
-namespace lv::core::signals {
+namespace br::core::signals {
 
 namespace {
 
@@ -666,4 +666,4 @@ std::vector<std::string> SignalSystem::trainsOver(std::string const& observerId)
     return out;
 }
 
-} // namespace lv::core::signals
+} // namespace br::core::signals

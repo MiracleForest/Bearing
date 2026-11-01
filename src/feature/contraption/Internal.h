@@ -19,7 +19,7 @@ class Player;
 class Vec3;
 class AABB;
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 /// `config/contraption.json` (Create's CKinetics keys where they exist).
 struct Config {
@@ -49,11 +49,11 @@ struct Config {
     };
 };
 
-inline constexpr std::string_view kSuperGlue      = "levitate:super_glue";
-inline constexpr std::string_view kLinearChassis  = "levitate:linear_chassis";
-inline constexpr std::string_view kSecondaryChassis = "levitate:secondary_linear_chassis";
-inline constexpr std::string_view kRadialChassis  = "levitate:radial_chassis";
-inline constexpr std::string_view kSticker        = "levitate:sticker";
+inline constexpr std::string_view kSuperGlue      = "bearing:super_glue";
+inline constexpr std::string_view kLinearChassis  = "bearing:linear_chassis";
+inline constexpr std::string_view kSecondaryChassis = "bearing:secondary_linear_chassis";
+inline constexpr std::string_view kRadialChassis  = "bearing:radial_chassis";
+inline constexpr std::string_view kSticker        = "bearing:sticker";
 
 /// Display entities (falling blocks, which never rotate in vanilla) carry the contraption's
 /// rotation in their own rotation: pitch = 20 * (axis + 1) marks them (and gives the axis),
@@ -72,7 +72,7 @@ struct DisplayRotation {
     int step = static_cast<int>(pitch / kDisplayPitchStep + (pitch >= 0 ? 0.5f : -0.5f));
     return step >= 1 && step <= 3 ? step - 1 : -1;
 }
-inline constexpr char kDisplayTag[] = "lv_contraption";
+inline constexpr char kDisplayTag[] = "br_contraption";
 
 namespace detail {
 
@@ -147,4 +147,4 @@ void forEachCollision(int dim, AABB const& query, std::function<void(AABB const&
 void forceVanillaViewers(bool on);
 
 } // namespace detail
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

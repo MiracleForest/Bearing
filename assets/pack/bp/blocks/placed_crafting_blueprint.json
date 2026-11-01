@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:placed_crafting_blueprint",
+      "identifier": "bearing:placed_crafting_blueprint",
       "menu_category": {
         "category": "none"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -19,23 +19,23 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.placed_crafting_blueprint",
+        "identifier": "geometry.bearing.placed_crafting_blueprint",
         "bone_visibility": {
-          "f0": "q.block_state('levitate:facing') == 0",
-          "f1": "q.block_state('levitate:facing') == 1",
-          "f2": "q.block_state('levitate:facing') == 2",
-          "f3": "q.block_state('levitate:facing') == 3",
-          "f4": "q.block_state('levitate:facing') == 4",
-          "f5": "q.block_state('levitate:facing') == 5"
+          "f0": "q.block_state('bearing:facing') == 0",
+          "f1": "q.block_state('bearing:facing') == 1",
+          "f2": "q.block_state('bearing:facing') == 2",
+          "f3": "q.block_state('bearing:facing') == 3",
+          "f4": "q.block_state('bearing:facing') == 4",
+          "f5": "q.block_state('bearing:facing') == 5"
         }
       },
       "minecraft:material_instances": {
         "paper": {
-          "texture": "levitate_crafting_blueprint_block",
+          "texture": "bearing_crafting_blueprint_block",
           "render_method": "alpha_test"
         },
         "*": {
-          "texture": "levitate_crafting_blueprint_block",
+          "texture": "bearing_crafting_blueprint_block",
           "render_method": "alpha_test"
         }
       },
@@ -64,7 +64,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:selection_box": {
             "size": [
@@ -81,7 +81,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:selection_box": {
             "size": [
@@ -98,7 +98,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:selection_box": {
             "size": [
@@ -115,7 +115,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:selection_box": {
             "size": [
@@ -132,7 +132,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:selection_box": {
             "size": [
@@ -149,7 +149,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:selection_box": {
             "size": [

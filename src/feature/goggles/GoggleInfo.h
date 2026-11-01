@@ -6,14 +6,14 @@
 // IHaveCustomOverlayIcon and IProxyHoveringInformation, plus the speed/stress text helpers of
 // Create's IRotate for gauges.
 //
-// Defaults (Levitate blocks, unless a provider sets `replaceDefaults`): kinetic blocks show
+// Defaults (Bearing blocks, unless a provider sets `replaceDefaults`): kinetic blocks show
 // Create's kinetic / generator stats and the overstressed / not-fast-enough hints; blocks with
 // a fluid capability show their tanks (Create's containedFluidTooltip), with an item capability
 // their stored items, with a heat provider their heat level.
 //
 //     #include "feature/goggles/GoggleInfo.h"
-//     namespace goggles = lv::feature::goggles;
-//     LV_REGISTER_GOGGLE_INFO("levitate:stressometer", {
+//     namespace goggles = br::feature::goggles;
+//     BR_REGISTER_GOGGLE_INFO("bearing:stressometer", {
 //         .goggle = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
 //             t.push_back(goggles::line(c.tr("create.gui.gauge.info_header", "Gauge Information:")));
 //             ...
@@ -40,7 +40,7 @@ class Block;
 class BlockSource;
 class Player;
 
-namespace lv::feature::goggles {
+namespace br::feature::goggles {
 
 using Tooltip = std::vector<std::string>;
 
@@ -65,11 +65,11 @@ struct InfoProvider {
     std::function<bool(InfoContext const&, Tooltip&)> goggle;
     /// Create's addToTooltip (IHaveHoveringInformation): asked with or without goggles.
     std::function<bool(InfoContext const&, Tooltip&)> hover;
-    /// Item id drawn on the panel (Create's IHaveCustomOverlayIcon; default "levitate:goggles").
+    /// Item id drawn on the panel (Create's IHaveCustomOverlayIcon; default "bearing:goggles").
     std::function<std::string(InfoContext const&)> icon;
     /// Create's IProxyHoveringInformation: show the information of another position.
     std::function<std::optional<core::GlobalPos>(InfoContext const&)> proxy;
-    /// Don't add Levitate's default lines (kinetic stats, fluids, items, heat) for this block.
+    /// Don't add Bearing's default lines (kinetic stats, fluids, items, heat) for this block.
     bool replaceDefaults = false;
 };
 
@@ -123,7 +123,7 @@ bool fluidTooltip(InfoContext const& ctx, Tooltip& tooltip);
 /// shows). Empty lines: nothing to show.
 struct Overlay {
     Tooltip     lines;
-    std::string icon = "levitate:goggles";
+    std::string icon = "bearing:goggles";
 };
 [[nodiscard]] Overlay overlayFor(Player& player, core::GlobalPos const& pos);
 
@@ -133,8 +133,8 @@ struct InfoRegistrar {
 };
 } // namespace detail
 
-} // namespace lv::feature::goggles
+} // namespace br::feature::goggles
 
-/// Registers a goggle info provider at static init: `LV_REGISTER_GOGGLE_INFO("levitate:x", {...});`
-#define LV_REGISTER_GOGGLE_INFO(id, ...)                                                                               \
-    static ::lv::feature::goggles::detail::InfoRegistrar LV_UNIQUE(lv_goggle_info_)(id, __VA_ARGS__)
+/// Registers a goggle info provider at static init: `BR_REGISTER_GOGGLE_INFO("bearing:x", {...});`
+#define BR_REGISTER_GOGGLE_INFO(id, ...)                                                                               \
+    static ::br::feature::goggles::detail::InfoRegistrar BR_UNIQUE(br_goggle_info_)(id, __VA_ARGS__)

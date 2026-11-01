@@ -12,7 +12,7 @@
 #include "feature/common/VanillaItems.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace {
 
@@ -49,4 +49,4 @@ struct Registration {
 
 } // namespace
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin

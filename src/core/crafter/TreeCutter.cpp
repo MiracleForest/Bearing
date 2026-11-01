@@ -6,7 +6,7 @@
 #include <map>
 #include <set>
 
-namespace lv::core::crafter {
+namespace br::core::crafter {
 
 namespace {
 
@@ -204,4 +204,4 @@ Tree findTree(TreeReader const& read, TreePos pos, TreeBlock broken, int maxBloc
     return tree;
 }
 
-} // namespace lv::core::crafter
+} // namespace br::core::crafter

@@ -2,17 +2,17 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:crushing_wheel",
+      "identifier": "bearing:crushing_wheel",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1,
           2
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -21,15 +21,15 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.crushing_wheel",
+        "identifier": "geometry.bearing.crushing_wheel",
         "bone_visibility": {
-          "casing": "q.block_state('levitate:rotor') != 2",
-          "rotor": "q.block_state('levitate:rotor') != 1"
+          "casing": "q.block_state('bearing:rotor') != 2",
+          "rotor": "q.block_state('bearing:rotor') != 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_crushing_wheel",
+          "texture": "bearing_crushing_wheel",
           "render_method": "alpha_test"
         }
       },
@@ -69,7 +69,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:axis') == 0",
+        "condition": "q.block_state('bearing:axis') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -81,7 +81,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2",
+        "condition": "q.block_state('bearing:axis') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [

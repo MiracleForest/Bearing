@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:sticker_from_cobbled_deepslate"
+      "identifier": "bearing:sticker_from_cobbled_deepslate"
     },
     "tags": [
       "crafting_table"
@@ -13,7 +13,7 @@
     ],
     "key": {
       "I": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "S": {
         "item": "minecraft:slime_ball"
@@ -27,11 +27,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:sticker",
+      "item": "bearing:sticker",
       "count": 1
     }
   }

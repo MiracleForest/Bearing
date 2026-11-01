@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:limestone",
+      "identifier": "bearing:limestone",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_limestone",
+          "texture": "bearing_limestone",
           "render_method": "opaque"
         }
       }

@@ -3,7 +3,7 @@
     {
       "entries": [
         {
-          "name": "levitate:nixie_tube",
+          "name": "bearing:nixie_tube",
           "type": "item",
           "weight": 1
         }

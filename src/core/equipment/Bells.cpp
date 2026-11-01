@@ -3,7 +3,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 int oppositeFace(int face) { return face ^ 1; }
 
@@ -180,4 +180,4 @@ bool heldBellPulses(int heldTicks, long long gameTime) {
     return gameTime % kHeldPulseRecharge != 0;
 }
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

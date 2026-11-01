@@ -1,5 +1,5 @@
 {
-  "type": "levitate:pressing",
+  "type": "bearing:pressing",
   "ingredients": [
     {
       "item": "minecraft:sugar_cane"

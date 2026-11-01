@@ -8,12 +8,12 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::contraption::ext {
+namespace br::feature::contraption::ext {
 
 namespace {
 // the engine's persistence keys (Engine.cpp)
-constexpr char kDbPrefix[] = "lv:contraption:c:";
-constexpr char kDbNextId[] = "lv:contraption:next_id";
+constexpr char kDbPrefix[] = "br:contraption:c:";
+constexpr char kDbNextId[] = "br:contraption:next_id";
 
 nlohmann::json vec(cc::Vec3d const& v) { return nlohmann::json::array({v.x, v.y, v.z}); }
 } // namespace
@@ -62,4 +62,4 @@ std::optional<Id> restore(nlohmann::json record, core::GlobalPos const& anchor, 
     return next;
 }
 
-} // namespace lv::feature::contraption::ext
+} // namespace br::feature::contraption::ext

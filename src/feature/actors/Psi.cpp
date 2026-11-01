@@ -33,10 +33,10 @@
 #include "game/Blocks.h"
 #include "mod/Config.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext  = ::lv::feature::contraption::actors_ext;
-namespace caps = ::lv::feature::common;
+namespace ext  = ::br::feature::contraption::actors_ext;
+namespace caps = ::br::feature::common;
 
 namespace {
 
@@ -233,7 +233,7 @@ void tickStationary(std::uint64_t tick) {
         if (!expired && s.timer > 0) --s.timer;
         if (s.timer == 0 || s.powered) stopTransferring(pos, s);
         if (canTransfer(s) && tick % 8 == 0) hoppers(pos, s);
-        setIntState(*region, bp, "levitate:extended", canTransfer(s) ? 1 : 0);
+        setIntState(*region, bp, "bearing:extended", canTransfer(s) ? 1 : 0);
         if (!s.connected && s.timer == 0 && s.keepAlive == 0) {
             it = states().erase(it);
             continue;
@@ -354,4 +354,4 @@ void psiInstall() {
 
 void psiClear() { states().clear(); }
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

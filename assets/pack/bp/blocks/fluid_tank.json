@@ -2,20 +2,20 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:fluid_tank",
+      "identifier": "bearing:fluid_tank",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:above": [
+        "bearing:above": [
           0,
           1
         ],
-        "levitate:below": [
+        "bearing:below": [
           0,
           1
         ],
-        "levitate:shape": [
+        "bearing:shape": [
           0,
           1,
           2,
@@ -23,7 +23,7 @@
           4,
           5
         ],
-        "levitate:light": [
+        "bearing:light": [
           0,
           1,
           2,
@@ -47,15 +47,15 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_fluid_tank_window_single",
+          "texture": "bearing_fluid_tank_window_single",
           "render_method": "alpha_test"
         },
         "up": {
-          "texture": "levitate_fluid_tank_top",
+          "texture": "bearing_fluid_tank_top",
           "render_method": "alpha_test"
         },
         "down": {
-          "texture": "levitate_fluid_tank_bottom",
+          "texture": "bearing_fluid_tank_bottom",
           "render_method": "alpha_test"
         }
       },
@@ -70,931 +70,931 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 0",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 1",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 2",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 2",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 3",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 3",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 4",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 4",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 5",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 5",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_single",
+              "texture": "bearing_fluid_tank_window_single",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 0",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 1",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 2",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 2",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 3",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 3",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 4",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 4",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 0 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 5",
+        "condition": "q.block_state('bearing:above') == 0 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 5",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_top",
+              "texture": "bearing_fluid_tank_window_top",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_top",
+              "texture": "bearing_fluid_tank_side_top",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 0",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 1",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 2",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 2",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 3",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 3",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 4",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 4",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 0 && q.block_state('levitate:shape') == 5",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 0 && q.block_state('bearing:shape') == 5",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_bottom",
+              "texture": "bearing_fluid_tank_window_bottom",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_bottom",
+              "texture": "bearing_fluid_tank_side_bottom",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 0",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 1",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 2",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 2",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 3",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 3",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 4",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 4",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:above') == 1 && q.block_state('levitate:below') == 1 && q.block_state('levitate:shape') == 5",
+        "condition": "q.block_state('bearing:above') == 1 && q.block_state('bearing:below') == 1 && q.block_state('bearing:shape') == 5",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_fluid_tank_window_middle",
+              "texture": "bearing_fluid_tank_window_middle",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_fluid_tank_side_middle",
+              "texture": "bearing_fluid_tank_side_middle",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_fluid_tank_top",
+              "texture": "bearing_fluid_tank_top",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_fluid_tank_bottom",
+              "texture": "bearing_fluid_tank_bottom",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_fluid_tank_side_single",
+              "texture": "bearing_fluid_tank_side_single",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 1",
+        "condition": "q.block_state('bearing:light') == 1",
         "components": {
           "minecraft:light_emission": 1
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 2",
+        "condition": "q.block_state('bearing:light') == 2",
         "components": {
           "minecraft:light_emission": 2
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 3",
+        "condition": "q.block_state('bearing:light') == 3",
         "components": {
           "minecraft:light_emission": 3
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 4",
+        "condition": "q.block_state('bearing:light') == 4",
         "components": {
           "minecraft:light_emission": 4
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 5",
+        "condition": "q.block_state('bearing:light') == 5",
         "components": {
           "minecraft:light_emission": 5
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 6",
+        "condition": "q.block_state('bearing:light') == 6",
         "components": {
           "minecraft:light_emission": 6
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 7",
+        "condition": "q.block_state('bearing:light') == 7",
         "components": {
           "minecraft:light_emission": 7
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 8",
+        "condition": "q.block_state('bearing:light') == 8",
         "components": {
           "minecraft:light_emission": 8
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 9",
+        "condition": "q.block_state('bearing:light') == 9",
         "components": {
           "minecraft:light_emission": 9
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 10",
+        "condition": "q.block_state('bearing:light') == 10",
         "components": {
           "minecraft:light_emission": 10
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 11",
+        "condition": "q.block_state('bearing:light') == 11",
         "components": {
           "minecraft:light_emission": 11
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 12",
+        "condition": "q.block_state('bearing:light') == 12",
         "components": {
           "minecraft:light_emission": 12
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 13",
+        "condition": "q.block_state('bearing:light') == 13",
         "components": {
           "minecraft:light_emission": 13
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 14",
+        "condition": "q.block_state('bearing:light') == 14",
         "components": {
           "minecraft:light_emission": 14
         }
       },
       {
-        "condition": "q.block_state('levitate:light') == 15",
+        "condition": "q.block_state('bearing:light') == 15",
         "components": {
           "minecraft:light_emission": 15
         }

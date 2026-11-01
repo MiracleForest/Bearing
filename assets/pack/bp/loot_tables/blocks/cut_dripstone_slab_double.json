@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:cut_dripstone_slab",
+          "name": "bearing:cut_dripstone_slab",
           "weight": 1,
           "functions": [
             {

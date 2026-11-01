@@ -15,13 +15,13 @@
 #include "selftest/SelfTest.h"
 
 namespace {
-using lv::selftest::Context;
-using lv::core::GlobalPos;
+using br::selftest::Context;
+using br::core::GlobalPos;
 using JsonT        = nlohmann::json;
-namespace items    = lv::feature::common::items;
-namespace net      = lv::feature::net;
-namespace packages = lv::feature::packages;
-namespace stock    = lv::feature::stock;
+namespace items    = br::feature::common::items;
+namespace net      = br::feature::net;
+namespace packages = br::feature::packages;
+namespace stock    = br::feature::stock;
 
 /// Sends a screen action as the client mod's text field does; returns the screen data the server
 /// answers with (null if it sent none).
@@ -36,7 +36,7 @@ JsonT act(Player& p, std::string const& type, JsonT const& context, JsonT const&
 
 } // namespace
 
-LV_REGISTER_SELFTEST("gaps.textfield_package_filter", [](Context& ctx) {
+BR_REGISTER_SELFTEST("gaps.textfield_package_filter", [](Context& ctx) {
     auto& p      = ctx.player();
     auto  filter = items::make(packages::kPackageFilterId);
     ctx.require(filter.has_value(), "package filter item");
@@ -64,11 +64,11 @@ LV_REGISTER_SELFTEST("gaps.textfield_package_filter", [](Context& ctx) {
     p.setSelectedItem(ItemStack::EMPTY_ITEM());
 });
 
-LV_REGISTER_SELFTEST("gaps.textfield_stock", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.textfield_stock", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto tickerPos = ctx.testPos(3750);
     tickerPos.y += 1;
     ctx.require(co_await ctx.ensureLoaded(tickerPos), "test area loaded");
-    ctx.require(ctx.setBlock(tickerPos, stock::kStockTicker, {{"levitate:facing", 0}}), "place a stock ticker");
+    ctx.require(ctx.setBlock(tickerPos, stock::kStockTicker, {{"bearing:facing", 0}}), "place a stock ticker");
     auto tickerItem = items::make(stock::kStockTicker);
     ctx.require(tickerItem.has_value(), "stock ticker item");
     stock::tuneItem(*tickerItem, stock::newNetworkId());

@@ -11,7 +11,7 @@
 // `linkRange` (config `redstone.linkRange`, default 256 blocks) of the changed node, and every
 // listener within range of it receives that power through its `onReceive` callback.
 //
-//     using namespace lv::feature::redstone;
+//     using namespace br::feature::redstone;
 //     auto key = link::keyOf(firstItem, secondItem);            // the frequency pair
 //     auto id  = link::add({.pos = pos, .key = key, .transmit = 15});   // a transmitter
 //     link::setTransmit(id, 0);                                  // released
@@ -30,7 +30,7 @@
 
 class ItemStack;
 
-namespace lv::feature::redstone::link {
+namespace br::feature::redstone::link {
 
 using core::redstone::LinkKey;
 using core::redstone::LinkId;
@@ -81,4 +81,4 @@ void move(LinkId id, core::GlobalPos const& pos, bool update = true);
 /// panel is not loaded: Create suppresses the update). One source (the stock unit).
 void setBlockTransmitSource(std::function<int(core::GlobalPos const&)> fn);
 
-} // namespace lv::feature::redstone::link
+} // namespace br::feature::redstone::link

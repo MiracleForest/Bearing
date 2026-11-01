@@ -28,7 +28,7 @@ function Shaped([string]$name, [string[]]$pattern, $key, [string]$result, [int]$
     Write-Json "assets/pack/bp/recipes/$name.json" ([ordered]@{
             format_version          = '1.20.10'
             'minecraft:recipe_shaped' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$name" }
+                description = [ordered]@{ identifier = "bearing:$name" }
                 tags        = @('crafting_table')
                 pattern     = $pattern
                 key         = $key
@@ -41,7 +41,7 @@ function Shapeless([string]$name, $ingredients, [string]$result, [int]$count = 1
     Write-Json "assets/pack/bp/recipes/$name.json" ([ordered]@{
             format_version               = '1.20.10'
             'minecraft:recipe_shapeless' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$name" }
+                description = [ordered]@{ identifier = "bearing:$name" }
                 tags        = @('crafting_table')
                 ingredients = @($ingredients)
                 unlock      = @($ingredients | Select-Object -First 1)
@@ -124,29 +124,29 @@ $StoneSuffix = [ordered]@{ stone = ''; andesite = '_from_andesite'; diorite = '_
 foreach ($stone in $StoneSuffix.Keys) {
     $S = Item "minecraft:$stone"
     $sfx = $StoneSuffix[$stone]
-    Shaped "windmill_bearing$sfx" @('B', 'C', 'I') ([ordered]@{ B = [ordered]@{ tag = 'minecraft:wooden_slabs' }; C = $S; I = Item 'levitate:shaft' }) 'levitate:windmill_bearing' 1 'levitate:shaft'
-    Shaped "pulse_extender$sfx" @('  T', 'RCT', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:redstone'; C = Item 'levitate:brass_sheet'; S = $S }) 'levitate:pulse_extender' 1 'minecraft:redstone_torch'
-    Shaped "pulse_repeater$sfx" @('RCT', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:redstone'; C = Item 'levitate:brass_sheet'; S = $S }) 'levitate:pulse_repeater' 1 'minecraft:redstone_torch'
-    Shaped "pulse_timer$sfx" @('RCT', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:amethyst_shard'; C = Item 'levitate:brass_sheet'; S = $S }) 'levitate:pulse_timer' 1 'minecraft:redstone_torch'
-    Shaped "powered_latch$sfx" @(' T ', 'RCR', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:redstone'; C = Item 'minecraft:lever'; S = $S }) 'levitate:powered_latch' 1 'minecraft:redstone_torch'
-    Shaped "powered_toggle_latch$sfx" @(' T ', ' C ', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; C = Item 'minecraft:lever'; S = $S }) 'levitate:powered_toggle_latch' 1 'minecraft:redstone_torch'
+    Shaped "windmill_bearing$sfx" @('B', 'C', 'I') ([ordered]@{ B = [ordered]@{ tag = 'minecraft:wooden_slabs' }; C = $S; I = Item 'bearing:shaft' }) 'bearing:windmill_bearing' 1 'bearing:shaft'
+    Shaped "pulse_extender$sfx" @('  T', 'RCT', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:redstone'; C = Item 'bearing:brass_sheet'; S = $S }) 'bearing:pulse_extender' 1 'minecraft:redstone_torch'
+    Shaped "pulse_repeater$sfx" @('RCT', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:redstone'; C = Item 'bearing:brass_sheet'; S = $S }) 'bearing:pulse_repeater' 1 'minecraft:redstone_torch'
+    Shaped "pulse_timer$sfx" @('RCT', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:amethyst_shard'; C = Item 'bearing:brass_sheet'; S = $S }) 'bearing:pulse_timer' 1 'minecraft:redstone_torch'
+    Shaped "powered_latch$sfx" @(' T ', 'RCR', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; R = Item 'minecraft:redstone'; C = Item 'minecraft:lever'; S = $S }) 'bearing:powered_latch' 1 'minecraft:redstone_torch'
+    Shaped "powered_toggle_latch$sfx" @(' T ', ' C ', 'SSS') ([ordered]@{ T = Item 'minecraft:redstone_torch'; C = Item 'minecraft:lever'; S = $S }) 'bearing:powered_toggle_latch' 1 'minecraft:redstone_torch'
 }
 
 # ---- crafting: Create's 1 -> 1 recipes (a crafted item carries no user data, so "clear" wipes it) ----------
-foreach ($id in @('filter', 'attribute_filter', 'schedule')) { Shapeless "${id}_clear" @(Item "levitate:$id") "levitate:$id" }
-foreach ($c in $Colours + @('andesite', 'brass', 'copper')) { Shapeless "${c}_table_cloth_clear" @(Item "levitate:${c}_table_cloth") "levitate:${c}_table_cloth" }
-foreach ($c in $Colours) { Shapeless "copper_valve_handle_from_$c" @(Item "levitate:${c}_valve_handle") 'levitate:copper_valve_handle' }
-Shapeless 'white_sail_from_conversion' @(Item 'levitate:sail_frame') 'levitate:white_sail'
-Shapeless 'sail_frame_from_conversion' @(Item 'levitate:white_sail') 'levitate:sail_frame'
+foreach ($id in @('filter', 'attribute_filter', 'schedule')) { Shapeless "${id}_clear" @(Item "bearing:$id") "bearing:$id" }
+foreach ($c in $Colours + @('andesite', 'brass', 'copper')) { Shapeless "${c}_table_cloth_clear" @(Item "bearing:${c}_table_cloth") "bearing:${c}_table_cloth" }
+foreach ($c in $Colours) { Shapeless "copper_valve_handle_from_$c" @(Item "bearing:${c}_valve_handle") 'bearing:copper_valve_handle' }
+Shapeless 'white_sail_from_conversion' @(Item 'bearing:sail_frame') 'bearing:white_sail'
+Shapeless 'sail_frame_from_conversion' @(Item 'bearing:white_sail') 'bearing:sail_frame'
 
 # ---- crafting: Create's other shaped recipes --------------------------------------------------------------
-Shaped 'mechanical_arm' @('LLA', 'L  ', 'IC ') ([ordered]@{ L = Item 'levitate:brass_sheet'; A = Item 'levitate:andesite_alloy'; I = Item 'levitate:precision_mechanism'; C = Item 'levitate:brass_casing' }) 'levitate:mechanical_arm' 1 'levitate:brass_casing'
-Shaped 'mechanical_bearing' @('B', 'C', 'I') ([ordered]@{ B = [ordered]@{ tag = 'minecraft:wooden_slabs' }; C = Item 'levitate:andesite_casing'; I = Item 'levitate:shaft' }) 'levitate:mechanical_bearing' 1 'levitate:andesite_casing'
-Shaped 'clockwork_bearing' @('B', 'C', 'S') ([ordered]@{ B = [ordered]@{ tag = 'minecraft:wooden_slabs' }; C = Item 'levitate:brass_casing'; S = Item 'levitate:electron_tube' }) 'levitate:clockwork_bearing' 1 'levitate:brass_casing'
-Shaped 'white_sail' @('WS', 'SA') ([ordered]@{ W = [ordered]@{ tag = 'minecraft:wool' }; S = Item 'minecraft:stick'; A = Item 'levitate:andesite_alloy' }) 'levitate:white_sail' 2 'levitate:andesite_alloy'
-Shaped 'fluid_pipe_vertical' @('S', 'C', 'S') ([ordered]@{ S = Item 'levitate:copper_sheet'; C = Item 'minecraft:copper_ingot' }) 'levitate:fluid_pipe' 4 'minecraft:copper_ingot'
-Shaped 'cake' @(' M ', 'SES', ' P ') ([ordered]@{ M = Item 'minecraft:milk_bucket'; S = Item 'minecraft:sugar'; E = Item 'minecraft:egg'; P = Item 'levitate:dough' }) 'minecraft:cake' 1 'levitate:dough'
-Shaped 'chain_from_zinc' @('S', 'C', 'S') ([ordered]@{ S = Item 'levitate:zinc_nugget'; C = Item 'levitate:zinc_ingot' }) 'minecraft:iron_chain' 1 'levitate:zinc_ingot'
+Shaped 'mechanical_arm' @('LLA', 'L  ', 'IC ') ([ordered]@{ L = Item 'bearing:brass_sheet'; A = Item 'bearing:andesite_alloy'; I = Item 'bearing:precision_mechanism'; C = Item 'bearing:brass_casing' }) 'bearing:mechanical_arm' 1 'bearing:brass_casing'
+Shaped 'mechanical_bearing' @('B', 'C', 'I') ([ordered]@{ B = [ordered]@{ tag = 'minecraft:wooden_slabs' }; C = Item 'bearing:andesite_casing'; I = Item 'bearing:shaft' }) 'bearing:mechanical_bearing' 1 'bearing:andesite_casing'
+Shaped 'clockwork_bearing' @('B', 'C', 'S') ([ordered]@{ B = [ordered]@{ tag = 'minecraft:wooden_slabs' }; C = Item 'bearing:brass_casing'; S = Item 'bearing:electron_tube' }) 'bearing:clockwork_bearing' 1 'bearing:brass_casing'
+Shaped 'white_sail' @('WS', 'SA') ([ordered]@{ W = [ordered]@{ tag = 'minecraft:wool' }; S = Item 'minecraft:stick'; A = Item 'bearing:andesite_alloy' }) 'bearing:white_sail' 2 'bearing:andesite_alloy'
+Shaped 'fluid_pipe_vertical' @('S', 'C', 'S') ([ordered]@{ S = Item 'bearing:copper_sheet'; C = Item 'minecraft:copper_ingot' }) 'bearing:fluid_pipe' 4 'minecraft:copper_ingot'
+Shaped 'cake' @(' M ', 'SES', ' P ') ([ordered]@{ M = Item 'minecraft:milk_bucket'; S = Item 'minecraft:sugar'; E = Item 'minecraft:egg'; P = Item 'bearing:dough' }) 'minecraft:cake' 1 'bearing:dough'
+Shaped 'chain_from_zinc' @('S', 'C', 'S') ([ordered]@{ S = Item 'bearing:zinc_nugget'; C = Item 'bearing:zinc_ingot' }) 'minecraft:iron_chain' 1 'bearing:zinc_ingot'
 
 # ---- list of generated files (lets the next run remove files that are no longer generated) --------
 $listPath = Join-Path $PSScriptRoot 'processing.generated.txt'

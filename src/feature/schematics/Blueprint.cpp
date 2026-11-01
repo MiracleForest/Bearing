@@ -1,6 +1,6 @@
 // Crafting blueprint (Create's BlueprintEntity / BlueprintItem / BlueprintMenu). Create's
 // blueprint is a hanging entity of 1x1, 2x2 or 3x3 sections; here each section is a thin block
-// (`levitate:placed_crafting_blueprint`, SPEC §8) and the group is placed and removed together.
+// (`bearing:placed_crafting_blueprint`, SPEC §8) and the group is placed and removed together.
 // Each section holds a 3x3 recipe (ghost items, filters allowed) plus a display item (inferred
 // from the recipe or set by hand) and a secondary display item. Right-click on a configured
 // section crafts the recipe from the player's inventory (sneaking: up to a stack); right-click
@@ -33,7 +33,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -254,10 +254,10 @@ void blueprintForm(Player& player, Json const& ctx) {
         if (items::isEmpty(st)) continue;
         if (std::none_of(inv.begin(), inv.end(), [&](ItemStack const& o) { return items::sameItemSameData(o, st); })) inv.push_back(items::withCount(st, 1));
     }
-    auto keep = trFor(player, "lv.common.form.keep", "(keep)");
-    auto none = trFor(player, "lv.common.form.empty", "(empty)");
+    auto keep = trFor(player, "br.common.form.keep", "(keep)");
+    auto none = trFor(player, "br.common.form.empty", "(empty)");
     ll::form::CustomForm form(trFor(player, "item.create.crafting_blueprint", "Crafting Blueprint"));
-    form.appendLabel(trFor(player, "lv.schematics.blueprint.form.hint", "Pick an ingredient for each slot of the 3x3 grid (row by row). Items in your inventory are listed."));
+    form.appendLabel(trFor(player, "br.schematics.blueprint.form.hint", "Pick an ingredient for each slot of the 3x3 grid (row by row). Items in your inventory are listed."));
     for (int i = 0; i < 11; ++i) {
         auto const&              cur = s->items[static_cast<std::size_t>(i)];
         std::vector<std::string> options{keep + " " + (items::isEmpty(cur) ? none : items::displayName(cur)), none};
@@ -470,4 +470,4 @@ void registerBlueprint() {
 
 } // namespace detail
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

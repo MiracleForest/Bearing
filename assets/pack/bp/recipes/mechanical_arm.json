@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:mechanical_arm"
+      "identifier": "bearing:mechanical_arm"
     },
     "tags": [
       "crafting_table"
@@ -14,25 +14,25 @@
     ],
     "key": {
       "L": {
-        "item": "levitate:brass_sheet"
+        "item": "bearing:brass_sheet"
       },
       "A": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "I": {
-        "item": "levitate:precision_mechanism"
+        "item": "bearing:precision_mechanism"
       },
       "C": {
-        "item": "levitate:brass_casing"
+        "item": "bearing:brass_casing"
       }
     },
     "unlock": [
       {
-        "item": "levitate:brass_casing"
+        "item": "bearing:brass_casing"
       }
     ],
     "result": {
-      "item": "levitate:mechanical_arm",
+      "item": "bearing:mechanical_arm",
       "count": 1
     }
   }

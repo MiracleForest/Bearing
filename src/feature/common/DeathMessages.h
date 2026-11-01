@@ -15,7 +15,7 @@
 
 class Actor;
 
-namespace lv::feature::common::deathmsg {
+namespace br::feature::common::deathmsg {
 
 /// The next death message of `victim` (this tick and the next) is `key` with the dead entity's
 /// name followed by `params`.
@@ -23,4 +23,4 @@ void mark(Actor const& victim, std::string key, std::vector<std::string> params 
 /// The marked message of `victim` (key, params including the name), "" when none (selftests).
 [[nodiscard]] std::pair<std::string, std::vector<std::string>> peek(Actor const& victim, std::string const& deadName);
 
-} // namespace lv::feature::common::deathmsg
+} // namespace br::feature::common::deathmsg

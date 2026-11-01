@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:builders_tea",
+      "identifier": "bearing:builders_tea",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_builders_tea",
+      "minecraft:icon": "bearing_builders_tea",
       "minecraft:display_name": {
-        "value": "item.levitate:builders_tea.name"
+        "value": "item.bearing:builders_tea.name"
       },
       "minecraft:max_stack_size": 16,
       "minecraft:food": {

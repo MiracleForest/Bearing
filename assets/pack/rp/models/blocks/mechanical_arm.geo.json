@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.mechanical_arm",
+        "identifier": "geometry.bearing.mechanical_arm",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 4,

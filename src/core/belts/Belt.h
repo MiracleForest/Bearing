@@ -8,7 +8,7 @@
 //
 // Conventions:
 // - A horizontal facing is the Java 2D data value (0 south, 1 west, 2 north, 3 east), the order of
-//   `game::playerFacing` and of the `levitate:facing` block state.
+//   `game::playerFacing` and of the `bearing:facing` block state.
 // - A face / side is a Bedrock FacingID (0 down, 1 up, 2 north, 3 south, 4 west, 5 east), as the
 //   capabilities' `face` (Create's `Direction side`).
 // - Belt positions (`beltPosition`) run from 0 at the outer edge of the START segment to `length`
@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-namespace lv::core::belts {
+namespace br::core::belts {
 
 // ---- geometry ---------------------------------------------------------------------------------------
 
@@ -280,4 +280,4 @@ struct Launch {
 /// `ejector` (nullopt: off to a side, straight above / below, or further than `maxDistance`).
 [[nodiscard]] std::optional<int> ejectorTargetFacing(Vec3i const& ejector, Vec3i const& target, int maxDistance);
 
-} // namespace lv::core::belts
+} // namespace br::core::belts

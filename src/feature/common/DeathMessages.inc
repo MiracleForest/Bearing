@@ -14,7 +14,7 @@
 
 #include "mod/Module.h"
 
-namespace lv::feature::common::deathmsg {
+namespace br::feature::common::deathmsg {
 
 namespace {
 
@@ -60,32 +60,32 @@ std::pair<std::string, std::vector<std::string>> peek(Actor const& victim, std::
     return {m->key, std::move(p)};
 }
 
-} // namespace lv::feature::common::deathmsg
+} // namespace br::feature::common::deathmsg
 
-using LvDeathMessage = std::pair<std::string, std::vector<std::string>>;
+using BrDeathMessage = std::pair<std::string, std::vector<std::string>>;
 LL_TYPE_INSTANCE_HOOK(
     CommonDeathMessageHook,
     ll::memory::HookPriority::Normal,
     ActorDamageSource,
     &ActorDamageSource::getDeathMessage,
-    LvDeathMessage,
+    BrDeathMessage,
     std::string const& deadName,
     Actor*             dead
 ) {
     if (dead) {
-        auto marked = lv::feature::common::deathmsg::peek(*dead, deadName);
+        auto marked = br::feature::common::deathmsg::peek(*dead, deadName);
         if (!marked.first.empty()) return marked;
     }
     return origin(deadName, dead);
 }
 
-namespace lv::feature::common::deathmsg {
+namespace br::feature::common::deathmsg {
 namespace {
 struct DeathMessageModule {
     void install() { CommonDeathMessageHook::hook(); }
     void uninstall() { CommonDeathMessageHook::unhook(); }
 };
 } // namespace
-} // namespace lv::feature::common::deathmsg
+} // namespace br::feature::common::deathmsg
 
-LV_REGISTER_MODULE(lv::feature::common::deathmsg::DeathMessageModule);
+BR_REGISTER_MODULE(br::feature::common::deathmsg::DeathMessageModule);

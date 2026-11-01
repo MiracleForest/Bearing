@@ -1,5 +1,5 @@
 {
-  "levitate.stock.link": {
+  "bearing.stock.link": {
     "category": "block",
     "sounds": [
       {
@@ -9,7 +9,7 @@
       }
     ]
   },
-  "levitate.stock.request": {
+  "bearing.stock.request": {
     "category": "block",
     "sounds": [
       {
@@ -19,7 +19,7 @@
       }
     ]
   },
-  "levitate.stock.trade": {
+  "bearing.stock.trade": {
     "category": "block",
     "sounds": [
       {
@@ -29,7 +29,7 @@
       }
     ]
   },
-  "levitate.stock.confirm": {
+  "bearing.stock.confirm": {
     "category": "block",
     "sounds": [
       {
@@ -39,7 +39,7 @@
       }
     ]
   },
-  "levitate.stock.deny": {
+  "bearing.stock.deny": {
     "category": "block",
     "sounds": [
       {
@@ -49,7 +49,7 @@
       }
     ]
   },
-  "levitate.stock.connect": {
+  "bearing.stock.connect": {
     "category": "block",
     "sounds": [
       {
@@ -59,7 +59,7 @@
       }
     ]
   },
-  "levitate.stock.clear": {
+  "bearing.stock.clear": {
     "category": "player",
     "sounds": [
       {

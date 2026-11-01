@@ -32,7 +32,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::display::clipboard {
+namespace br::feature::display::clipboard {
 
 namespace blockdata = common::blockdata;
 namespace items     = common::items;
@@ -44,9 +44,9 @@ namespace {
 constexpr char kItemKey[]  = "clipboard";
 constexpr char kDataKey[]  = "clipboard";
 constexpr char kScreen[]   = "display.clipboard";
-constexpr char kFace[]     = "levitate:face"; ///< 0 floor, 1 wall, 2 ceiling
-constexpr char kFacing[]   = "levitate:facing";
-constexpr char kWritten[]  = "levitate:written";
+constexpr char kFace[]     = "bearing:face"; ///< 0 floor, 1 wall, 2 ceiling
+constexpr char kFacing[]   = "bearing:facing";
+constexpr char kWritten[]  = "bearing:written";
 constexpr int  kMaxPage    = 50; ///< Create clamps the page index to 0..50
 constexpr int  kPageEntries = 15; ///< a page holds ~15 single-line entries (Create: 185 px / 12 px) ⚠
 constexpr int  kMergePage  = 12; ///< clipboard-to-clipboard copies fill pages up to 12 entries
@@ -270,7 +270,7 @@ void openForm(Player& player, Target const& t) {
     for (int i = 0; i <= std::min(kMaxPage, static_cast<int>(c.pages.size())); ++i) {
         pageNames.push_back(trFor(player, "create.display_target.page", "Page {}", i + 1));
     }
-    form.appendDropdown("page", trFor(player, "lv.display.clipboard.page", "Page"), pageNames, static_cast<std::size_t>(page));
+    form.appendDropdown("page", trFor(player, "br.display.clipboard.page", "Page"), pageNames, static_cast<std::size_t>(page));
     std::vector<Entry> entries = page < static_cast<int>(c.pages.size()) ? c.pages[static_cast<std::size_t>(page)] : std::vector<Entry>{};
     bool readOnly = c.readOnly;
     int  shown    = readOnly ? static_cast<int>(entries.size()) : std::min(kPageEntries, static_cast<int>(entries.size()) + 3);
@@ -283,7 +283,7 @@ void openForm(Player& player, Target const& t) {
             form.appendToggle("c" + std::to_string(i), text, e->checked);
             continue;
         }
-        form.appendInput("t" + std::to_string(i), trFor(player, "lv.display.clipboard.entry", "Entry {}", i + 1), "", e ? e->text : std::string{});
+        form.appendInput("t" + std::to_string(i), trFor(player, "br.display.clipboard.entry", "Entry {}", i + 1), "", e ? e->text : std::string{});
         form.appendToggle("c" + std::to_string(i), "✔", e && e->checked);
     }
     if (!readOnly) form.appendToggle("erase", trFor(player, "create.gui.clipboard.erase_checked", "Erase checked items"), false);
@@ -663,4 +663,4 @@ void placed(Player& player, BlockSource& region, GlobalPos const& pos, int click
 
 void noteBreak(Player& player, GlobalPos const& pos) { creativeBreaks()[pos] = player.isCreative(); }
 
-} // namespace lv::feature::display::clipboard
+} // namespace br::feature::display::clipboard

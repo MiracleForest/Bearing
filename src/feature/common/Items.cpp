@@ -9,10 +9,10 @@
 #include "mc/world/item/SaveContext.h"
 #include "mc/world/item/SaveContextFactory.h"
 
-namespace lv::feature::common::items {
+namespace br::feature::common::items {
 
 namespace {
-constexpr char const* kDataPrefix = "lv:";
+constexpr char const* kDataPrefix = "br:";
 }
 
 std::optional<ItemStack> make(std::string_view id, int count, int aux) {
@@ -116,7 +116,7 @@ std::string displayName(ItemStack const& stack) {
     return stack.getName();
 }
 
-} // namespace lv::feature::common::items
+} // namespace br::feature::common::items
 
 // Death messages naming a second party (U59, common/DeathMessages.h; an .inc so the build adds no
 // object file: the prelink command line is near the Windows limit)

@@ -21,13 +21,13 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace tn = lv::feature::trains;
-namespace tr = lv::feature::tracks;
-namespace cn = lv::feature::contraption;
-namespace kt = lv::core::tracks;
-namespace ct = lv::core::trains;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace tn = br::feature::trains;
+namespace tr = br::feature::tracks;
+namespace cn = br::feature::contraption;
+namespace kt = br::core::tracks;
+namespace ct = br::core::trains;
 
 GlobalPos at(GlobalPos b, int dx, int dy = 0, int dz = 0) { return {b.dim, b.x + dx, b.y + dy, b.z + dz}; }
 kt::BlockPos3 cp(GlobalPos const& p) { return {p.x, p.y, p.z}; }
@@ -39,7 +39,7 @@ std::vector<std::pair<std::string, int>> shapeStates(kt::Shape shape) {
 
 void clearBox(GlobalPos a, GlobalPos b) {
     auto* region    = tn::regionOf(a.dim);
-    auto const* air = lv::game::blockWith("minecraft:air");
+    auto const* air = br::game::blockWith("minecraft:air");
     if (!region || !air) return;
     for (int x = std::min(a.x, b.x); x <= std::max(a.x, b.x); ++x)
         for (int y = std::min(a.y, b.y); y <= std::max(a.y, b.y); ++y)
@@ -47,13 +47,13 @@ void clearBox(GlobalPos a, GlobalPos b) {
                 BlockPos bp{x, y, z};
                 if (region->getBlock(bp).isAir()) continue;
                 tr::state().noDrops.insert({a.dim, {x, y, z}});
-                lv::game::setBlock(*region, bp, *air);
+                br::game::setBlock(*region, bp, *air);
             }
 }
 
 } // namespace
 
-LV_REGISTER_SELFTEST("trains.tilted_ramp", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.tilted_ramp", [](Context& ctx) -> ll::coro::CoroTask<> {
     GlobalPos b = at(ctx.testPos(4830, 12), 0, 2);
     ctx.require(co_await ctx.ensureLoaded(b), "test area loaded");
     ctx.require(co_await ctx.ensureLoaded(at(b, 30)), "test area loaded (middle)");
@@ -118,7 +118,7 @@ LV_REGISTER_SELFTEST("trains.tilted_ramp", [](Context& ctx) -> ll::coro::CoroTas
     auto track0 = at(trackA, -1);
     auto msg    = tn::useCasingOnTrack(nullptr, track0, true);
     ctx.check(msg.starts_with("+"), "train casing creates a bogey (" + msg + ")");
-    ctx.setBlock(at(track0, 0, 2), std::string(tn::kControls), {{"levitate:facing", 4}}); // on the bogey
+    ctx.setBlock(at(track0, 0, 2), std::string(tn::kControls), {{"bearing:facing", 4}}); // on the bogey
     auto id = tn::assemble(*s, nullptr);
     if (!id) ctx.info("assembly error: " + s->lastError.dump());
     ctx.require(id.has_value(), "the train assembles");

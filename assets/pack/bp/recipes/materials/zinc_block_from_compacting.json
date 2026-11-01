@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:zinc_block_from_compacting"
+      "identifier": "bearing:zinc_block_from_compacting"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:zinc_ingot"
+        "item": "bearing:zinc_ingot"
       }
     },
     "unlock": [
       {
-        "item": "levitate:zinc_ingot"
+        "item": "bearing:zinc_ingot"
       }
     ],
     "result": {
-      "item": "levitate:zinc_block",
+      "item": "bearing:zinc_block",
       "count": 1
     }
   }

@@ -6,7 +6,7 @@
 
 #include "core/ponder/Scene.h"
 
-using namespace lv::core::ponder;
+using namespace br::core::ponder;
 namespace fs = std::filesystem;
 
 namespace {
@@ -16,8 +16,8 @@ Json minimal() {
         "id": "test_scene",
         "size": [5, 5],
         "blocks": [
-            {"area": [[0, 1, 2], [4, 1, 2]], "id": "levitate:shaft", "states": {"levitate:axis": 0}},
-            {"at": [2, 2, 2], "id": "levitate:cogwheel"}
+            {"area": [[0, 1, 2], [4, 1, 2]], "id": "bearing:shaft", "states": {"bearing:axis": 0}},
+            {"at": [2, 2, 2], "id": "bearing:cogwheel"}
         ],
         "timeline": [
             {"show": "base", "from": "up"},
@@ -26,7 +26,7 @@ Json minimal() {
             {"idle": 20},
             {"rotate": [[0, 1, 2], [4, 1, 2]], "rpm": 16},
             {"text": 1, "at": [2.5, 1.5, 2.5], "ticks": 40, "keyframe": true, "color": "green"},
-            {"input": [2.5, 2, 2.5], "action": "right", "item": "levitate:wrench", "ticks": 30},
+            {"input": [2.5, 2, 2.5], "action": "right", "item": "bearing:wrench", "ticks": 30},
             {"idle": 50},
             {"move": "row", "by": [0, 1, 0], "ticks": 20},
             {"set": [2, 2, 2], "id": "minecraft:stone"},
@@ -74,11 +74,11 @@ TEST(Ponder, ParsesAMinimalScene) {
     EXPECT_EQ(s.textKey(2), "create.ponder.test_scene.text_2");
     EXPECT_EQ(s.headerKey(), "create.ponder.test_scene.header");
     auto ids = s.blockIds();
-    EXPECT_EQ(ids, std::vector<std::string>({"levitate:cogwheel", "levitate:shaft", "minecraft:stone"}));
+    EXPECT_EQ(ids, std::vector<std::string>({"bearing:cogwheel", "bearing:shaft", "minecraft:stone"}));
     // the input keeps its held item
     bool found = false;
     for (auto const& in : s.timeline)
-        if (in.op == Op::Input) found = in.item == "levitate:wrench";
+        if (in.op == Op::Input) found = in.item == "bearing:wrench";
     EXPECT_TRUE(found);
 }
 
@@ -95,7 +95,7 @@ TEST(Ponder, RejectsBadScenes) {
     EXPECT_FALSE(bad([](Json& j) { j["timeline"].push_back({{"text", 3}, {"colour", "red"}}); }).scene); // unknown key
     EXPECT_FALSE(bad([](Json& j) { j["unknown"] = 1; }).scene);
     EXPECT_FALSE(bad([](Json& j) { j["timeline"] = Json::array({Json{{"show", "base"}}}); }).scene); // no length
-    EXPECT_FALSE(bad([](Json& j) { j["blocks"][0]["states"] = {{"levitate:axis", 1.5}}; }).scene);
+    EXPECT_FALSE(bad([](Json& j) { j["blocks"][0]["states"] = {{"bearing:axis", 1.5}}; }).scene);
 }
 
 TEST(Ponder, EntitiesAndParticles) {
@@ -146,14 +146,14 @@ TEST(Ponder, EvaluatesShowFadeAndRotation) {
     std::size_t base = 0, shafts = 0;
     for (auto const& b : at10.blocks) {
         if (b.base) ++base;
-        if (b.block.id == "levitate:shaft") ++shafts;
+        if (b.block.id == "bearing:shaft") ++shafts;
     }
     EXPECT_EQ(base, 25u - 0u); // the floor below the shafts is still floor (y = 0)
     EXPECT_EQ(shafts, 0u);     // shown at 10, alpha 0
     auto at40 = evaluate(s, 40);
     float angle = 0;
     for (auto const& b : at40.blocks) {
-        if (b.block.id == "levitate:shaft") {
+        if (b.block.id == "bearing:shaft") {
             EXPECT_FLOAT_EQ(b.alpha, 1.f);
             EXPECT_FLOAT_EQ(b.rpm, 16.f);
             angle = b.angle;
@@ -164,9 +164,9 @@ TEST(Ponder, EvaluatesShowFadeAndRotation) {
     EXPECT_EQ(at40.texts[0].text, 1);
     EXPECT_EQ(at40.texts[0].color, Palette::Green);
     EXPECT_EQ(at40.inputs.size(), 1u);
-    EXPECT_EQ(at40.inputs[0].item, "levitate:wrench");
+    EXPECT_EQ(at40.inputs[0].item, "bearing:wrench");
     // the cogwheel was never shown
-    for (auto const& b : at40.blocks) EXPECT_NE(b.block.id, "levitate:cogwheel");
+    for (auto const& b : at40.blocks) EXPECT_NE(b.block.id, "bearing:cogwheel");
 }
 
 TEST(Ponder, EvaluatesSectionsAndSet) {
@@ -174,13 +174,13 @@ TEST(Ponder, EvaluatesSectionsAndSet) {
     auto end = evaluate(s, 109);
     bool stone = false;
     for (auto const& b : end.blocks) {
-        if (b.block.id == "levitate:shaft") EXPECT_NEAR(b.offset.y, 1.f, 1e-4);
+        if (b.block.id == "bearing:shaft") EXPECT_NEAR(b.offset.y, 1.f, 1e-4);
         if (b.block.id == "minecraft:stone") stone = true;
     }
     EXPECT_TRUE(stone);
     auto mid = evaluate(s, 90);
     for (auto const& b : mid.blocks)
-        if (b.block.id == "levitate:shaft") EXPECT_NEAR(b.offset.y, 0.5f, 1e-4);
+        if (b.block.id == "bearing:shaft") EXPECT_NEAR(b.offset.y, 0.5f, 1e-4);
     ASSERT_EQ(end.texts.size(), 1u);
     EXPECT_FALSE(end.texts[0].hasPoint);
 }
@@ -188,15 +188,15 @@ TEST(Ponder, EvaluatesSectionsAndSet) {
 TEST(Ponder, ShowHideSetEdgeCases) {
     auto j = Json::parse(R"({
         "id": "edge", "size": [5, 5],
-        "blocks": [{"area": [[0, 1, 0], [4, 1, 0]], "id": "levitate:shaft"},
-                   {"at": [2, 2, 2], "id": "levitate:steam_engine", "states": {"minecraft:block_face": "north"}}],
+        "blocks": [{"area": [[0, 1, 0], [4, 1, 0]], "id": "bearing:shaft"},
+                   {"at": [2, 2, 2], "id": "bearing:steam_engine", "states": {"minecraft:block_face": "north"}}],
         "timeline": [
             {"show": [[0, 1, 0], [4, 1, 0]]}, {"idle": 20},
             {"rotate": [[0, 1, 0], [4, 1, 0]], "rpm": 32},
             {"show": {"union": [[[0, 1, 0], [4, 1, 0]], [2, 2, 2]]}}, {"idle": 5},
             {"hide": [[0, 1, 0], [1, 1, 0]]}, {"idle": 20},
             {"hide": [[0, 1, 0], [4, 1, 0]]}, {"idle": 5},
-            {"set": [4, 1, 0], "id": "levitate:cogwheel"}, {"idle": 5}
+            {"set": [4, 1, 0], "id": "bearing:cogwheel"}, {"idle": 5}
         ]})");
     auto r = parseScene(j);
     ASSERT_TRUE(r.scene) << (r.errors.empty() ? "" : r.errors[0]);
@@ -210,7 +210,7 @@ TEST(Ponder, ShowHideSetEdgeCases) {
     // a placed block starts still
     bool cog = false;
     for (auto const& b : evaluate(s, 54).blocks) {
-        if (b.block.id == "levitate:cogwheel") {
+        if (b.block.id == "bearing:cogwheel") {
             cog = true;
             EXPECT_FLOAT_EQ(b.rpm, 0.f);
         }
@@ -251,7 +251,7 @@ TEST(Ponder, WrapsText) {
 }
 
 TEST(Ponder, NormalisesIds) {
-    EXPECT_EQ(normaliseId("shaft"), "levitate:shaft");
+    EXPECT_EQ(normaliseId("shaft"), "bearing:shaft");
     EXPECT_EQ(normaliseId("minecraft:chest"), "minecraft:chest");
 }
 
@@ -317,13 +317,13 @@ TEST(PonderAssets, IndexCoversCreatesPonderLessons) {
         ASSERT_NE(c, nullptr) << comp;
         EXPECT_EQ(c->scenes, scenes) << comp;
     };
-    expectScenes("levitate:cogwheel", {"cogwheel", "cog_speedup", "cogwheel_casing"});
-    expectScenes("levitate:large_cogwheel", {"cog_speedup", "large_cogwheel", "cogwheel_casing"});
-    expectScenes("levitate:basin", {"basin", "mechanical_mixer", "mechanical_press_compacting"});
-    expectScenes("levitate:brass_funnel", {"brass_funnel", "funnel_intro", "funnel_direction", "funnel_compat", "funnel_redstone", "funnel_transfer"});
-    expectScenes("levitate:deployer", {"deployer", "deployer_modes", "deployer_processing", "deployer_redstone", "deployer_contraption"});
-    expectScenes("levitate:track_station", {"train_assembly", "auto_schedule"});
-    expectScenes("levitate:creative_fluid_tank", {"creative_fluid_tank", "fluid_tank_sizes"});
+    expectScenes("bearing:cogwheel", {"cogwheel", "cog_speedup", "cogwheel_casing"});
+    expectScenes("bearing:large_cogwheel", {"cog_speedup", "large_cogwheel", "cogwheel_casing"});
+    expectScenes("bearing:basin", {"basin", "mechanical_mixer", "mechanical_press_compacting"});
+    expectScenes("bearing:brass_funnel", {"brass_funnel", "funnel_intro", "funnel_direction", "funnel_compat", "funnel_redstone", "funnel_transfer"});
+    expectScenes("bearing:deployer", {"deployer", "deployer_modes", "deployer_processing", "deployer_redstone", "deployer_contraption"});
+    expectScenes("bearing:track_station", {"train_assembly", "auto_schedule"});
+    expectScenes("bearing:creative_fluid_tank", {"creative_fluid_tank", "fluid_tank_sizes"});
     EXPECT_GE(lib.allComponents().size(), 150u);
     std::set<std::string> tagIds;
     for (auto const& t : lib.tags()) tagIds.insert(t.id);

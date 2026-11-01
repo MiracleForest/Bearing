@@ -2,10 +2,10 @@
   "format_version": "1.10.0",
   "particle_effect": {
     "description": {
-      "identifier": "levitate:soul",
+      "identifier": "bearing:soul",
       "basic_render_parameters": {
         "material": "particles_alpha",
-        "texture": "textures/particle/levitate_soul"
+        "texture": "textures/particle/bearing_soul"
       }
     },
     "components": {

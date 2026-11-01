@@ -20,7 +20,7 @@
 #include <string_view>
 #include <utility>
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 enum class Axis : std::uint8_t { X = 0, Y = 1, Z = 2 };
 enum class Dir : std::uint8_t { Down = 0, Up = 1, North = 2, South = 3, West = 4, East = 5 };
@@ -140,4 +140,4 @@ struct Box {
     static Box          unit(Pos const& p) { return {Vec3d::of(p), Vec3d::of(p) + Vec3d{1, 1, 1}}; }
 };
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

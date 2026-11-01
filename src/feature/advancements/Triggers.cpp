@@ -38,7 +38,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::advancements {
+namespace br::feature::advancements {
 
 namespace ca    = core::advancements;
 namespace ia    = common::interactions;
@@ -88,14 +88,14 @@ std::vector<PendingClick>& pending() {
 
 Player* byUuid(std::string const& uuid);
 
-bool isCogwheel(std::string const& id) { return id == "levitate:cogwheel" || id == "levitate:large_cogwheel"; }
+bool isCogwheel(std::string const& id) { return id == "bearing:cogwheel" || id == "bearing:large_cogwheel"; }
 
 /// Create's CogWheelBlock#setPlacedBy: a small and a large cogwheel meshing diagonally.
 void checkCogs(Player& player, GlobalPos const& pos, std::string const& id) {
     auto* r = regionOf(pos.dim);
     if (!r) return;
-    int  axis    = game::intState(r->getBlock(game::blockPos(pos)), "levitate:axis").value_or(1);
-    bool isLarge = id == "levitate:large_cogwheel";
+    int  axis    = game::intState(r->getBlock(game::blockPos(pos)), "bearing:axis").value_or(1);
+    bool isLarge = id == "bearing:large_cogwheel";
     for (int a1 = 0; a1 < 3; ++a1) {
         if (a1 == axis) continue;
         for (int a2 = 0; a2 < 3; ++a2) {
@@ -109,8 +109,8 @@ void checkCogs(Player& player, GlobalPos const& pos, std::string const& id) {
                     auto const& other = r->getBlock(at);
                     std::string oid   = game::blockId(other);
                     if (!isCogwheel(oid)) continue;
-                    if (game::intState(other, "levitate:axis").value_or(1) != axis) continue;
-                    if ((oid == "levitate:large_cogwheel") == isLarge) continue;
+                    if (game::intState(other, "bearing:axis").value_or(1) != axis) continue;
+                    if ((oid == "bearing:large_cogwheel") == isLarge) continue;
                     award(player, "shifting_gears");
                     return;
                 }
@@ -133,17 +133,17 @@ void resolveClick(PendingClick const& c) {
             evaluateBlock(at[i], now);
         }
         if (isCogwheel(now)) checkCogs(*player, at[i], now);
-        if (i == 1 && now == "levitate:track_signal" && c.itemId == "levitate:track_signal") award(*player, "track_signal");
+        if (i == 1 && now == "bearing:track_signal" && c.itemId == "bearing:track_signal") award(*player, "track_signal");
         if (i == 0) {
             // Create's ManualApplicationRecipe: an item applied to a block in the world
-            if (now == "levitate:andesite_casing") award(*player, "andesite_casing");
-            else if (now == "levitate:copper_casing") award(*player, "copper_casing");
-            else if (now == "levitate:brass_casing") award(*player, "brass_casing");
-            else if (now == "levitate:railway_casing") award(*player, "train_casing_00");
+            if (now == "bearing:andesite_casing") award(*player, "andesite_casing");
+            else if (now == "bearing:copper_casing") award(*player, "copper_casing");
+            else if (now == "bearing:brass_casing") award(*player, "brass_casing");
+            else if (now == "bearing:railway_casing") award(*player, "train_casing_00");
             // Create's BeltConnectorItem: the second shaft connected
-            if (now == "levitate:belt" && c.itemId == "levitate:belt_connector") award(*player, "belt");
+            if (now == "bearing:belt" && c.itemId == "bearing:belt_connector") award(*player, "belt");
             // Create's FluidPipeBlock#onWrenched: a pipe with flow turned into a glass pipe
-            if (now == "levitate:glass_fluid_pipe" && c.before[0] == "levitate:fluid_pipe" && c.itemId == ia::kWrenchId
+            if (now == "bearing:glass_fluid_pipe" && c.before[0] == "bearing:fluid_pipe" && c.itemId == ia::kWrenchId
                 && !pipes::fluidIn(at[0]).empty())
                 award(*player, "glass_pipe");
         }
@@ -155,7 +155,7 @@ void installClicks() {
     handlers().push_back(ia::onUseOn({}, [](ia::UseOnContext const& c) {
         // (repeats while the button is held are checked again: awards and owners are idempotent)
         // Create's HandCrankBlock#use: turning a crank while starving
-        if (c.blockId == "levitate:hand_crank") {
+        if (c.blockId == "bearing:hand_crank") {
             auto ref = c.player.getAttribute(Player::HUNGER());
             if (auto const* inst = static_cast<AttributeInstance const*>(ref.mPtr); inst && inst->mCurrentValue <= 0.f) award(c.player, "hand_crank_000");
         }
@@ -190,31 +190,31 @@ bool lavaAround(GlobalPos const& pos, int radius) {
 void onSpeed(GlobalPos const& pos, std::string const& id, float prev, float speed, std::optional<GlobalPos> const& source) {
     if (ownerOf(pos).empty()) return;
     float a = std::abs(speed);
-    if (id == "levitate:encased_fan") {
+    if (id == "bearing:encased_fan") {
         if (speed != 0) awardOwner(pos, "encased_fan");
-    } else if (id == "levitate:mechanical_pump") {
+    } else if (id == "bearing:mechanical_pump") {
         if (std::abs(prev) != a && speed != 0) awardOwner(pos, "mechanical_pump_0");
-    } else if (id == "levitate:mechanical_crafter") {
+    } else if (id == "bearing:mechanical_crafter") {
         if (speed != 0) {
             awardOwner(pos, "mechanical_crafter");
             if (a < 5) awardOwner(pos, "crafter_lazy_000");
         }
-    } else if (id == "levitate:rotation_speed_controller") {
+    } else if (id == "bearing:rotation_speed_controller") {
         auto above = blockIdAt({pos.dim, pos.x, pos.y + 1, pos.z});
         if (speed != 0 && above.find("large_cogwheel") != std::string::npos) awardOwner(pos, "speed_controller");
-    } else if (id == "levitate:water_wheel" || id == "levitate:large_water_wheel") {
-        if (speed != 0 && source && *source == pos) awardOwner(pos, lavaAround(pos, id == "levitate:water_wheel" ? 1 : 2) ? "lava_wheel_00000" : "water_wheel");
-    } else if (id == "levitate:crushing_wheel") {
+    } else if (id == "bearing:water_wheel" || id == "bearing:large_water_wheel") {
+        if (speed != 0 && source && *source == pos) awardOwner(pos, lavaAround(pos, id == "bearing:water_wheel" ? 1 : 2) ? "lava_wheel_00000" : "water_wheel");
+    } else if (id == "bearing:crushing_wheel") {
         if (speed == 0) return;
         for (int f = 0; f < 6; ++f) {
-            if (blockIdAt(offset(pos, f)) != "levitate:crushing_wheel_controller") continue;
+            if (blockIdAt(offset(pos, f)) != "bearing:crushing_wheel_controller") continue;
             awardOwner(pos, "crushing_wheel");
             if (a > 256 - 1) awardOwner(pos, "crusher_maxed_0000");
             break;
         }
-    } else if (id == "levitate:deployer") {
+    } else if (id == "bearing:deployer") {
         if (speed != 0) awardOwner(pos, "deployer");
-    } else if (id == "levitate:copper_backtank" || id == "levitate:netherite_backtank") {
+    } else if (id == "bearing:copper_backtank" || id == "bearing:netherite_backtank") {
         if (speed != 0) awardOwner(pos, "backtank");
     }
 }
@@ -224,15 +224,15 @@ void evaluateBlock(GlobalPos const& pos, std::string const& id) {
         float s = kinetics::speedAt(pos);
         // a placed generator is its own source
         std::optional<GlobalPos> source;
-        if (id == "levitate:water_wheel" || id == "levitate:large_water_wheel") source = pos;
+        if (id == "bearing:water_wheel" || id == "bearing:large_water_wheel") source = pos;
         onSpeed(pos, id, 0, s, source);
     }
 }
 
 void installSpeeds() {
-    for (char const* id : {"levitate:encased_fan", "levitate:mechanical_pump", "levitate:mechanical_crafter", "levitate:rotation_speed_controller",
-                           "levitate:water_wheel", "levitate:large_water_wheel", "levitate:crushing_wheel", "levitate:deployer",
-                           "levitate:copper_backtank", "levitate:netherite_backtank"}) {
+    for (char const* id : {"bearing:encased_fan", "bearing:mechanical_pump", "bearing:mechanical_crafter", "bearing:rotation_speed_controller",
+                           "bearing:water_wheel", "bearing:large_water_wheel", "bearing:crushing_wheel", "bearing:deployer",
+                           "bearing:copper_backtank", "bearing:netherite_backtank"}) {
         listeners().push_back(kinetics::onSpeedChanged(id, [](kinetics::SpeedChange const& c) {
             if (c.removed) return;
             onSpeed(c.pos, c.blockId, c.prevSpeed, c.speed, c.source);
@@ -265,30 +265,30 @@ void checkOwnedBlocks() {
         if (!owner) continue;
         auto id = blockIdAt(pos);
         if (id.empty()) continue;
-        if (id == "levitate:steam_whistle") {
+        if (id == "bearing:steam_whistle") {
             // Create's WhistleBlockEntity#tick: powered
             if (auto* r = regionOf(pos.dim); r && common::redstone::power(*r, game::blockPos(pos)) > 0) awardOwner(pos, "steam_whistle");
-        } else if (id == "levitate:stressometer") {
+        } else if (id == "bearing:stressometer") {
             // Create's StressGaugeBlockEntity#onObserved: the owner looks at it through goggles
-            if (items::idOf(owner->getArmor(ArmorSlot::Head)) != "levitate:goggles") continue;
+            if (items::idOf(owner->getArmor(ArmorSlot::Head)) != "bearing:goggles") continue;
             auto at = lookedAt(*owner, 5.0);
             if (!at || *at != pos) continue;
             awardOwner(pos, "stressometer");
             if (auto net = kinetics::networkAt(pos); net && net->capacity > 0 && std::abs(net->stress / net->capacity - 1.0) < 1e-5)
                 awardOwner(pos, "stressometer_maxed");
-        } else if (id == "levitate:windmill_bearing" || id == "levitate:clockwork_bearing") {
+        } else if (id == "bearing:windmill_bearing" || id == "bearing:clockwork_bearing") {
             auto st = bearings::bearingState(pos);
             if (!st.value("running", false)) continue;
-            if (id == "levitate:clockwork_bearing") awardOwner(pos, "clockwork_bearing");
+            if (id == "bearing:clockwork_bearing") awardOwner(pos, "clockwork_bearing");
             else {
                 awardOwner(pos, "windmill");
                 if (st.value("sails", 0) >= 16 * 8) awardOwner(pos, "windmill_maxed");
             }
-        } else if (id == "levitate:steam_engine") {
+        } else if (id == "bearing:steam_engine") {
             // Create's SteamEngineBlockEntity: the engine turns its shaft (efficiency > 0)
             for (int f = 0; f < 6; ++f) {
                 auto s = offset(pos, f);
-                if (blockIdAt(s) == "levitate:powered_shaft" && kinetics::speedAt(s) != 0) {
+                if (blockIdAt(s) == "bearing:powered_shaft" && kinetics::speedAt(s) != 0) {
                     awardOwner(pos, "steam_engine");
                     break;
                 }
@@ -300,8 +300,8 @@ void checkOwnedBlocks() {
 /// Create's Contraption#containsBlockBreakers (drills, saws, ploughs, rollers, harvesters).
 bool hasBreakers(contraption::Contraption const& c) {
     return std::ranges::any_of(c.blocks(), [](contraption::CarriedBlock const& b) {
-        return b.id == "levitate:mechanical_drill" || b.id == "levitate:mechanical_saw" || b.id == "levitate:mechanical_plough"
-            || b.id == "levitate:mechanical_roller" || b.id == "levitate:mechanical_harvester";
+        return b.id == "bearing:mechanical_drill" || b.id == "bearing:mechanical_saw" || b.id == "bearing:mechanical_plough"
+            || b.id == "bearing:mechanical_roller" || b.id == "bearing:mechanical_harvester";
     });
 }
 
@@ -346,7 +346,7 @@ void checkGlue() {
             double      bestD = 24 * 24;
             level->forEachPlayer([&](Player& p) {
                 if (p.isClientSide() || static_cast<int>(p.getDimensionId()) != dim) return true;
-                if (items::idOf(p.getSelectedItem()) != "levitate:super_glue" && items::idOf(p.getOffhandSlot()) != "levitate:super_glue") return true;
+                if (items::idOf(p.getSelectedItem()) != "bearing:super_glue" && items::idOf(p.getOffhandSlot()) != "bearing:super_glue") return true;
                 auto   at = p.getPosition();
                 double dx = at.x - (b.min.x + b.max.x) / 2.0, dy = at.y - (b.min.y + b.max.y) / 2.0, dz = at.z - (b.min.z + b.max.z) / 2.0;
                 double d  = dx * dx + dy * dy + dz * dz;
@@ -383,8 +383,8 @@ void checkPlayers() {
             if (all) award(p, d.id);
         }
         // Create's ExtendoGripItem#holdingExtendoGripIncreasesRange
-        bool main = items::idOf(p.getSelectedItem()) == "levitate:extendo_grip";
-        bool off  = items::idOf(p.getOffhandSlot()) == "levitate:extendo_grip";
+        bool main = items::idOf(p.getSelectedItem()) == "bearing:extendo_grip";
+        bool off  = items::idOf(p.getOffhandSlot()) == "bearing:extendo_grip";
         if (main || off) award(p, "extendo_grip");
         if (main && off) award(p, "extendo_grip_dual");
         return true;
@@ -440,4 +440,4 @@ void resetTriggers() {
     gTick = 0;
 }
 
-} // namespace lv::feature::advancements
+} // namespace br::feature::advancements

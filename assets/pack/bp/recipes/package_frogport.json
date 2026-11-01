@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:package_frogport"
+      "identifier": "bearing:package_frogport"
     },
     "tags": [
       "crafting_table"
@@ -14,22 +14,22 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:item_vault"
+        "item": "bearing:item_vault"
       },
       "B": {
         "item": "minecraft:slime_ball"
       },
       "C": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     },
     "result": {
-      "item": "levitate:package_frogport",
+      "item": "bearing:package_frogport",
       "count": 1
     },
     "unlock": [
       {
-        "item": "levitate:item_vault"
+        "item": "bearing:item_vault"
       }
     ]
   }

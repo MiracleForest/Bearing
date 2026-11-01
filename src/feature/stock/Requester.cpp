@@ -17,7 +17,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -87,7 +87,7 @@ void form(Player& player, Json const& ctx) {
     auto                 data  = screenData(*p);
     auto                 order = orderFromJson(data["order"]);
     ll::form::CustomForm f(items::displayName(*items::make(kRedstoneRequester, 1)));
-    if (order.empty()) f.appendLabel(trFor(player, "lv.stock.requester.empty", "No order programmed. Program the requester at a stock ticker."));
+    if (order.empty()) f.appendLabel(trFor(player, "br.stock.requester.empty", "No order programmed. Program the requester at a stock ticker."));
     for (std::size_t i = 0; i < order.size(); ++i) {
         f.appendSlider("n" + std::to_string(i), items::displayName(order[i].stack), 1, 256, 1, order[i].count);
     }
@@ -99,7 +99,7 @@ void form(Player& player, Json const& ctx) {
     );
     f.appendDropdown(
         "partial",
-        trFor(player, "lv.stock.requester.partial", "Partial orders"),
+        trFor(player, "br.stock.requester.partial", "Partial orders"),
         {trFor(player, "create.gui.redstone_requester.dont_allow_partial", "Must send all items"), trFor(player, "create.gui.redstone_requester.allow_partial", "Allow partial orders")},
         data.value("partial", false) ? 1 : 0
     );
@@ -174,17 +174,17 @@ bool triggerRequest(GlobalPos const& p) {
             continue;
         }
         if (!partial) {
-            playSound(p, "levitate.stock.deny", 0.5f, 1.0f);
+            playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
             log().info("stock: redstone requester at {} {} {} refused: not in stock", p.x, p.y, p.z);
             return false;
         }
     }
     requestOrder(network, RequestType::Redstone, order, address);
     if (anySucceeded) {
-        playSound(p, "levitate.stock.confirm", 0.5f, 1.5f);
+        playSound(p, "bearing.stock.confirm", 0.5f, 1.5f);
         linkEffect(p);
     } else {
-        playSound(p, "levitate.stock.deny", 0.5f, 1.0f);
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
     }
     editData(p)["success"] = true;
     log().info("stock: redstone requester at {} {} {} sent its order to '{}'", p.x, p.y, p.z, address);
@@ -206,4 +206,4 @@ void registerRequesterScreens() {
     });
 }
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

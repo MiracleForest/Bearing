@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:small_andesite_brick_slab"
+      "identifier": "bearing:small_andesite_brick_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:small_andesite_bricks"
+        "item": "bearing:small_andesite_bricks"
       }
     },
     "unlock": [
       {
-        "item": "levitate:small_andesite_bricks"
+        "item": "bearing:small_andesite_bricks"
       }
     ],
     "result": {
-      "item": "levitate:small_andesite_brick_slab",
+      "item": "bearing:small_andesite_brick_slab",
       "count": 6
     }
   }

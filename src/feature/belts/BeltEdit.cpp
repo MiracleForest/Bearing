@@ -29,7 +29,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace citems = common::items;
 
@@ -435,7 +435,7 @@ std::mt19937& previewRng() {
 void sendDust(Player& player, int dim, double x, double y, double z, bool valid) {
     SpawnParticleEffectPacket pkt(SpawnParticleEffectPacketPayload(
         Vec3{float(x), float(y), float(z)},
-        valid ? "levitate:belt_connector_valid" : "levitate:belt_connector_invalid",
+        valid ? "bearing:belt_connector_valid" : "bearing:belt_connector_invalid",
         static_cast<uchar>(dim),
         std::nullopt
     ));
@@ -669,4 +669,4 @@ void processRemovals() {
     }
 }
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

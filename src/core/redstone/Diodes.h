@@ -10,7 +10,7 @@
 #include <string>
 #include <utility>
 
-namespace lv::core::redstone {
+namespace br::core::redstone {
 
 // ---- brass diodes ------------------------------------------------------------------------------
 
@@ -141,4 +141,4 @@ inline constexpr int kAnalogLeverDelay = 15;
 /// Pitch of the click sound (Create: .25 + (state + 5) / 15 * .5).
 [[nodiscard]] constexpr float analogLeverPitch(int state) { return .25f + ((state + 5) / 15.f) * .5f; }
 
-} // namespace lv::core::redstone
+} // namespace br::core::redstone

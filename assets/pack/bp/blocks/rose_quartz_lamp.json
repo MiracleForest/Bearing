@@ -2,20 +2,20 @@
   "format_version": "1.26.0",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:rose_quartz_lamp",
+      "identifier": "bearing:rose_quartz_lamp",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ],
-        "levitate:powering": [
+        "bearing:powering": [
           0,
           1
         ],
-        "levitate:activate": [
+        "bearing:activate": [
           0,
           1
         ]
@@ -25,7 +25,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_rose_quartz_lamp",
+          "texture": "bearing_rose_quartz_lamp",
           "render_method": "opaque"
         }
       },
@@ -47,11 +47,11 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:powering') == 1",
+        "condition": "q.block_state('bearing:powering') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_rose_quartz_lamp_powered",
+              "texture": "bearing_rose_quartz_lamp_powered",
               "render_method": "opaque"
             }
           },

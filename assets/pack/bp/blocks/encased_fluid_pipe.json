@@ -2,32 +2,32 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:encased_fluid_pipe",
+      "identifier": "bearing:encased_fluid_pipe",
       "menu_category": {
         "category": "none"
       },
       "states": {
-        "levitate:down": [
+        "bearing:down": [
           0,
           1
         ],
-        "levitate:up": [
+        "bearing:up": [
           0,
           1
         ],
-        "levitate:north": [
+        "bearing:north": [
           0,
           1
         ],
-        "levitate:south": [
+        "bearing:south": [
           0,
           1
         ],
-        "levitate:west": [
+        "bearing:west": [
           0,
           1
         ],
-        "levitate:east": [
+        "bearing:east": [
           0,
           1
         ]
@@ -35,23 +35,23 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.encased_fluid_pipe",
+        "identifier": "geometry.bearing.encased_fluid_pipe",
         "bone_visibility": {
-          "port_down": "q.block_state('levitate:down') == 1",
-          "port_up": "q.block_state('levitate:up') == 1",
-          "port_north": "q.block_state('levitate:north') == 1",
-          "port_south": "q.block_state('levitate:south') == 1",
-          "port_west": "q.block_state('levitate:west') == 1",
-          "port_east": "q.block_state('levitate:east') == 1"
+          "port_down": "q.block_state('bearing:down') == 1",
+          "port_up": "q.block_state('bearing:up') == 1",
+          "port_north": "q.block_state('bearing:north') == 1",
+          "port_south": "q.block_state('bearing:south') == 1",
+          "port_west": "q.block_state('bearing:west') == 1",
+          "port_east": "q.block_state('bearing:east') == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_encased_fluid_pipe",
+          "texture": "bearing_encased_fluid_pipe",
           "render_method": "opaque"
         },
         "port": {
-          "texture": "levitate_fluid_pipe",
+          "texture": "bearing_fluid_pipe",
           "render_method": "opaque"
         }
       },

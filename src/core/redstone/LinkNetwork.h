@@ -19,7 +19,7 @@
 #include <utility>
 #include <vector>
 
-namespace lv::core::redstone {
+namespace br::core::redstone {
 
 /// The frequency pair: Create's Couple<Frequency>. A key is the item identity of a frequency
 /// slot ("minecraft:diamond", "" when empty, plus the dye colour for dyed items).
@@ -90,4 +90,4 @@ private:
     std::map<NetKey, std::vector<LinkId>>   mNetworks; ///< insertion order (Create: LinkedHashSet)
 };
 
-} // namespace lv::core::redstone
+} // namespace br::core::redstone

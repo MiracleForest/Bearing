@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:jungle_window_pane"
+      "identifier": "bearing:jungle_window_pane"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:jungle_window"
+        "item": "bearing:jungle_window"
       }
     },
     "unlock": [
       {
-        "item": "levitate:jungle_window"
+        "item": "bearing:jungle_window"
       }
     ],
     "result": {
-      "item": "levitate:jungle_window_pane",
+      "item": "bearing:jungle_window_pane",
       "count": 16
     }
   }

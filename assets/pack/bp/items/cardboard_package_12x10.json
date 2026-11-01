@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:cardboard_package_12x10",
+      "identifier": "bearing:cardboard_package_12x10",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_cardboard_package_12x10",
+      "minecraft:icon": "bearing_cardboard_package_12x10",
       "minecraft:display_name": {
-        "value": "item.levitate:cardboard_package_12x10.name"
+        "value": "item.bearing:cardboard_package_12x10.name"
       },
       "minecraft:max_stack_size": 1,
       "minecraft:use_modifiers": {
@@ -20,7 +20,7 @@
       "minecraft:use_animation": "bow",
       "minecraft:tags": {
         "tags": [
-          "levitate:packages"
+          "bearing:packages"
         ]
       }
     }

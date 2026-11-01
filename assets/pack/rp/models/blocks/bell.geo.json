@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.bell_floor",
+        "identifier": "geometry.bearing.bell_floor",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -151,7 +151,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_floor_frame",
+        "identifier": "geometry.bearing.bell_floor_frame",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -225,7 +225,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_ceiling",
+        "identifier": "geometry.bearing.bell_ceiling",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -373,7 +373,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_ceiling_frame",
+        "identifier": "geometry.bearing.bell_ceiling_frame",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -447,7 +447,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_single_wall",
+        "identifier": "geometry.bearing.bell_single_wall",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -579,7 +579,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_single_wall_frame",
+        "identifier": "geometry.bearing.bell_single_wall_frame",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -637,7 +637,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_double_wall",
+        "identifier": "geometry.bearing.bell_double_wall",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -785,7 +785,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_double_wall_frame",
+        "identifier": "geometry.bearing.bell_double_wall_frame",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -859,7 +859,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.bell_parts",
+        "identifier": "geometry.bearing.bell_parts",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,

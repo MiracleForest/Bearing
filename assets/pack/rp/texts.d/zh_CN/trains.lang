@@ -1,9 +1,9 @@
-tile.levitate:track_station.name=列车站点
-item.levitate:track_station=列车站点
-tile.levitate:small_bogey.name=小转向架
-tile.levitate:large_bogey.name=大转向架
-tile.levitate:controls.name=列车驾驶台
-item.levitate:controls=列车驾驶台
-item.levitate:schedule.name=列车时刻表
-entity.levitate:carriage_contraption.name=车厢结构
+tile.bearing:track_station.name=列车站点
+item.bearing:track_station=列车站点
+tile.bearing:small_bogey.name=小转向架
+tile.bearing:large_bogey.name=大转向架
+tile.bearing:controls.name=列车驾驶台
+item.bearing:controls=列车驾驶台
+item.bearing:schedule.name=列车时刻表
+entity.bearing:carriage_contraption.name=车厢结构
 death.attack.create.run_over=%1$s被%2$s创飞了

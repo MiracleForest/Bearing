@@ -21,12 +21,12 @@
 // storage) construct themselves empty (as in feature/kinetics/Feedback.cpp).
 inline MolangVariableMap::MolangVariableMap() {}
 
-namespace lv::feature::pipes::fx {
+namespace br::feature::pipes::fx {
 
 namespace {
 
-constexpr char kFluidParticle[] = "levitate:fluid_particle";
-constexpr char kDripParticle[]  = "levitate:fluid_drip";
+constexpr char kFluidParticle[] = "bearing:fluid_particle";
+constexpr char kDripParticle[]  = "bearing:fluid_drip";
 
 std::mt19937& rng() {
     static std::mt19937 r{std::random_device{}()};
@@ -135,4 +135,4 @@ void pouringLiquid(core::GlobalPos const& pos, core::pipes::Face side, int amoun
     }
 }
 
-} // namespace lv::feature::pipes::fx
+} // namespace br::feature::pipes::fx

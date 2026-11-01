@@ -9,7 +9,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace {
 namespace rs = common::redstone;
@@ -26,6 +26,6 @@ public:
     void uninstall() { rs::unregisterAnalog(kRedstoneRequester); }
 };
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock
 
-LV_REGISTER_MODULE(lv::feature::stock::RequesterComparatorModule);
+BR_REGISTER_MODULE(br::feature::stock::RequesterComparatorModule);

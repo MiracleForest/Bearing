@@ -2,18 +2,18 @@
   "id": "fluid_tank_storage",
   "size": [5, 5],
   "blocks": [
-    {"at": [2, 1, 2], "id": "levitate:fluid_tank", "states": {"levitate:above": 1, "levitate:below": 0, "levitate:shape": 0}},
-    {"at": [2, 2, 2], "id": "levitate:fluid_tank", "states": {"levitate:above": 1, "levitate:below": 1, "levitate:shape": 0}},
-    {"at": [2, 3, 2], "id": "levitate:fluid_tank", "states": {"levitate:above": 0, "levitate:below": 1, "levitate:shape": 0}},
-    {"at": [0, 1, 2], "id": "levitate:fluid_pipe", "states": {"levitate:down": 0, "levitate:up": 0, "levitate:north": 0, "levitate:south": 0, "levitate:west": 1, "levitate:east": 1, "levitate:rim_a": 0, "levitate:rim_b": 2}},
-    {"at": [1, 1, 2], "id": "levitate:fluid_pipe", "states": {"levitate:down": 0, "levitate:up": 0, "levitate:north": 0, "levitate:south": 0, "levitate:west": 1, "levitate:east": 1, "levitate:rim_a": 0, "levitate:rim_b": 4}},
-    {"at": [2, 4, 2], "id": "levitate:fluid_pipe", "states": {"levitate:down": 1, "levitate:up": 1, "levitate:north": 0, "levitate:south": 0, "levitate:west": 0, "levitate:east": 0, "levitate:rim_a": 3, "levitate:rim_b": 0}},
+    {"at": [2, 1, 2], "id": "bearing:fluid_tank", "states": {"bearing:above": 1, "bearing:below": 0, "bearing:shape": 0}},
+    {"at": [2, 2, 2], "id": "bearing:fluid_tank", "states": {"bearing:above": 1, "bearing:below": 1, "bearing:shape": 0}},
+    {"at": [2, 3, 2], "id": "bearing:fluid_tank", "states": {"bearing:above": 0, "bearing:below": 1, "bearing:shape": 0}},
+    {"at": [0, 1, 2], "id": "bearing:fluid_pipe", "states": {"bearing:down": 0, "bearing:up": 0, "bearing:north": 0, "bearing:south": 0, "bearing:west": 1, "bearing:east": 1, "bearing:rim_a": 0, "bearing:rim_b": 2}},
+    {"at": [1, 1, 2], "id": "bearing:fluid_pipe", "states": {"bearing:down": 0, "bearing:up": 0, "bearing:north": 0, "bearing:south": 0, "bearing:west": 1, "bearing:east": 1, "bearing:rim_a": 0, "bearing:rim_b": 4}},
+    {"at": [2, 4, 2], "id": "bearing:fluid_pipe", "states": {"bearing:down": 1, "bearing:up": 1, "bearing:north": 0, "bearing:south": 0, "bearing:west": 0, "bearing:east": 0, "bearing:rim_a": 3, "bearing:rim_b": 0}},
     {"at": [3, 1, 2], "id": "minecraft:unpowered_comparator"},
     {"at": [4, 1, 2], "id": "minecraft:redstone_lamp"},
-    {"at": [1, 1, 4], "id": "levitate:basin", "states": {"levitate:facing": 0}},
-    {"at": [2, 1, 4], "id": "levitate:item_drain"},
-    {"at": [3, 2, 4], "id": "levitate:spout"},
-    {"at": [3, 1, 4], "id": "levitate:depot"}
+    {"at": [1, 1, 4], "id": "bearing:basin", "states": {"bearing:facing": 0}},
+    {"at": [2, 1, 4], "id": "bearing:item_drain"},
+    {"at": [3, 2, 4], "id": "bearing:spout"},
+    {"at": [3, 1, 4], "id": "bearing:depot"}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

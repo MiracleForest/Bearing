@@ -1,10 +1,10 @@
 {
   "format_version": 3,
   "format_uuid": "289f771f-2c9a-4d73-9f3f-8492495a924d",
-  "tooth": "github.com/MiracleForest/Levitate",
+  "tooth": "github.com/MiracleForest/Bearing",
   "version": "0.1.0",
   "info": {
-    "name": "Levitate",
+    "name": "Bearing",
     "description": "Create for Minecraft Bedrock Edition: rotational power, machines and moving contraptions",
     "tags": ["platform:levilamina", "type:mod", "server", "client", "category:technology", "category:game-mechanics", "automation"]
   },
@@ -17,13 +17,13 @@
       "assets": [
         {
           "type": "zip",
-          "urls": ["https://{{tooth}}/releases/download/v{{version}}/levitate-server-windows-x64.zip"],
+          "urls": ["https://{{tooth}}/releases/download/v{{version}}/bearing-server-windows-x64.zip"],
           "placements": [
-            { "type": "dir", "src": "Levitate/", "dest": "plugins/Levitate/" }
+            { "type": "dir", "src": "Bearing/", "dest": "plugins/Bearing/" }
           ]
         }
       ],
-      "preserve_files": ["plugins/Levitate/config/*"]
+      "preserve_files": ["plugins/Bearing/config/*"]
     },
     {
       "label": "client",
@@ -34,13 +34,13 @@
       "assets": [
         {
           "type": "zip",
-          "urls": ["https://{{tooth}}/releases/download/v{{version}}/levitate-client-windows-x64.zip"],
+          "urls": ["https://{{tooth}}/releases/download/v{{version}}/bearing-client-windows-x64.zip"],
           "placements": [
-            { "type": "dir", "src": "Levitate/", "dest": "mods/Levitate/" }
+            { "type": "dir", "src": "Bearing/", "dest": "mods/Bearing/" }
           ]
         }
       ],
-      "preserve_files": ["mods/Levitate/config/*"]
+      "preserve_files": ["mods/Bearing/config/*"]
     }
   ]
 }

@@ -1,6 +1,6 @@
 // `/create kinetics <pos>` (op / console): dumps the kinetic block at a position and its network
 // (speed, source, stress, capacity, overstress, sources).
-// `/create kinetics <pos> speed <rpm>` (op / console, Levitate debug): sets a generator's speed.
+// `/create kinetics <pos> speed <rpm>` (op / console, Bearing debug): sets a generator's speed.
 
 #include <climits>
 #include <cmath>
@@ -22,7 +22,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 // Command parameter types need external linkage.
 struct KineticsCommandParams {
@@ -62,30 +62,30 @@ std::vector<std::string> describe(GlobalPos const& pos, Player const* viewer) {
     std::vector<std::string> out;
     auto                     n = solver().node(pos);
     if (!n) {
-        out.push_back(text(viewer, "lv.kinetics.cmd.none", "No kinetic block at {0}.", at(pos)));
+        out.push_back(text(viewer, "br.kinetics.cmd.none", "No kinetic block at {0}.", at(pos)));
         return out;
     }
     auto rpm = text(viewer, "create.generic.unit.rpm", "RPM");
     auto su  = text(viewer, "create.generic.unit.stress", "su");
-    out.push_back(text(viewer, "lv.kinetics.cmd.block", "{0} at {1}", n->state.id, at(pos)));
+    out.push_back(text(viewer, "br.kinetics.cmd.block", "{0} at {1}", n->state.id, at(pos)));
     out.push_back(text(
         viewer,
-        "lv.kinetics.cmd.speed",
+        "br.kinetics.cmd.speed",
         "Speed: {0} {1} (theoretical {2} {1})",
         num(n->speed),
         rpm,
         num(n->theoreticalSpeed)
     ));
     if (n->generator) {
-        out.push_back(text(viewer, "lv.kinetics.cmd.generated", "Generating: {0} {1}", num(n->generatedSpeed), rpm));
+        out.push_back(text(viewer, "br.kinetics.cmd.generated", "Generating: {0} {1}", num(n->generatedSpeed), rpm));
     }
     out.push_back(
-        n->source ? text(viewer, "lv.kinetics.cmd.source", "Source: {0}", at(*n->source))
-                  : text(viewer, "lv.kinetics.cmd.no_source", "Source: none")
+        n->source ? text(viewer, "br.kinetics.cmd.source", "Source: {0}", at(*n->source))
+                  : text(viewer, "br.kinetics.cmd.no_source", "Source: none")
     );
     out.push_back(text(
         viewer,
-        "lv.kinetics.cmd.stress",
+        "br.kinetics.cmd.stress",
         "Stress impact: {0} {1}/{2}, capacity: {3} {1}/{2}",
         num(n->impact),
         su,
@@ -94,18 +94,18 @@ std::vector<std::string> describe(GlobalPos const& pos, Player const* viewer) {
     ));
     auto net = solver().networkAt(pos);
     if (!net) {
-        out.push_back(text(viewer, "lv.kinetics.cmd.no_network", "Not part of a network."));
+        out.push_back(text(viewer, "br.kinetics.cmd.no_network", "Not part of a network."));
         return out;
     }
     out.push_back(text(
         viewer,
-        "lv.kinetics.cmd.network",
+        "br.kinetics.cmd.network",
         "Network {0}: {1} blocks, {2} sources",
         at(net->id),
         net->members,
         net->sources
     ));
-    auto usage = text(viewer, "lv.kinetics.cmd.usage", "Stress: {0} / {1} {2}", num(net->stress), num(net->capacity), su);
+    auto usage = text(viewer, "br.kinetics.cmd.usage", "Stress: {0} / {1} {2}", num(net->stress), num(net->capacity), su);
     if (net->overstressed) usage += " - " + text(viewer, "create.gui.stressometer.overstressed", "Overstressed");
     out.push_back(usage);
     return out;
@@ -135,16 +135,16 @@ void runSpeed(CommandOrigin const& origin, CommandOutput& output, KineticsSpeedP
     auto  pos = game::globalPos(dim ? static_cast<int>(dim->getDimensionId()) : 0, game::blockPosOf(v));
     auto  n   = nodeAt(pos);
     if (!n || !n->generator) {
-        return output.error(tr("lv.kinetics.cmd.not_generator", "No generator at {0}.", at(pos)));
+        return output.error(tr("br.kinetics.cmd.not_generator", "No generator at {0}.", at(pos)));
     }
     setGeneratedSpeed(pos, params.rpm);
-    auto line = tr("lv.kinetics.cmd.speed_set", "Generator at {0} now turns at {1} {2}.", at(pos), num(params.rpm), tr("create.generic.unit.rpm", "RPM"));
+    auto line = tr("br.kinetics.cmd.speed_set", "Generator at {0} now turns at {1} {2}.", at(pos), num(params.rpm), tr("create.generic.unit.rpm", "RPM"));
     log().info("kinetics: {}", line);
     output.success(line);
 }
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload<KineticsCommandParams>().text("kinetics").required("pos").execute(
         [](CommandOrigin const& origin, CommandOutput& output, KineticsCommandParams const& params) {
             runCommand(origin, output, params);
@@ -157,4 +157,4 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     );
 });
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics

@@ -32,9 +32,9 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("tracks", lv::feature::tracks::TracksConfig);
+BR_REGISTER_CONFIG("tracks", br::feature::tracks::TracksConfig);
 
-namespace lv::feature::tracks {
+namespace br::feature::tracks {
 
 namespace {
 std::vector<std::function<void()>>& graphListeners() {
@@ -48,7 +48,7 @@ State& state() {
     return s;
 }
 
-TracksConfig const& config() { return lv::config::get<TracksConfig>(); }
+TracksConfig const& config() { return br::config::get<TracksConfig>(); }
 
 ct::BlockPos3 toCore(BlockPos const& p) { return {p.x, p.y, p.z}; }
 BlockPos      toGame(ct::BlockPos3 const& p) { return BlockPos{p.x, p.y, p.z}; }
@@ -127,9 +127,9 @@ void fireGraphChanged() {
 // ---- persistence --------------------------------------------------------------------------------
 
 namespace {
-constexpr char const* kCurvePrefix  = "lv:tracks:curves:";
-constexpr char const* kGraphPrefix  = "lv:tracks:graph:";
-constexpr char const* kPortalsKey   = "lv:tracks:portals";
+constexpr char const* kCurvePrefix  = "br:tracks:curves:";
+constexpr char const* kGraphPrefix  = "br:tracks:graph:";
+constexpr char const* kPortalsKey   = "br:tracks:portals";
 
 std::string curveKey(int dim, int cx, int cz) {
     return kCurvePrefix + std::to_string(dim) + ":" + std::to_string(cx) + ":" + std::to_string(cz);
@@ -144,7 +144,7 @@ void resolveTypes() {
     s.trackType  = typeOf(kTrackId);
     s.fakeType   = typeOf(kFakeTrackId);
     s.portalType = typeOf("minecraft:portal");
-    if (!s.trackType || !s.fakeType) log().warn("tracks: levitate:track is not registered (behavior pack missing?)");
+    if (!s.trackType || !s.fakeType) log().warn("tracks: bearing:track is not registered (behavior pack missing?)");
 }
 } // namespace
 
@@ -476,6 +476,6 @@ struct WorldHooks {
 } const gWorldHooks;
 } // namespace
 
-} // namespace lv::feature::tracks
+} // namespace br::feature::tracks
 
-LV_REGISTER_MODULE(lv::feature::tracks::TracksModule);
+BR_REGISTER_MODULE(br::feature::tracks::TracksModule);

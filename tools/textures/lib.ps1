@@ -1,4 +1,4 @@
-# Pixel-art helpers for Levitate textures (PowerShell 7 + System.Drawing, no Python).
+# Pixel-art helpers for Bearing textures (PowerShell 7 + System.Drawing, no Python).
 #
 # Dot-source it:  . "$PSScriptRoot/lib.ps1"
 #

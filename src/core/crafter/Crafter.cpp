@@ -6,7 +6,7 @@
 #include <string>
 #include <string_view>
 
-namespace lv::core::crafter {
+namespace br::core::crafter {
 
 int xRotation(Pointing p) {
     switch (p) {
@@ -280,4 +280,4 @@ Phase phaseFromName(std::string_view name) {
     return Phase::Idle;
 }
 
-} // namespace lv::core::crafter
+} // namespace br::core::crafter

@@ -1,11 +1,11 @@
 {
-  "levitate:schematic_table": {
+  "bearing:schematic_table": {
     "sound": "wood"
   },
-  "levitate:schematicannon": {
+  "bearing:schematicannon": {
     "sound": "metal"
   },
-  "levitate:placed_crafting_blueprint": {
+  "bearing:placed_crafting_blueprint": {
     "sound": "wood"
   }
 }

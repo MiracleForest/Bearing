@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:gray_seat_from_white_seat"
+      "identifier": "bearing:gray_seat_from_white_seat"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:white_seat"
+        "item": "bearing:white_seat"
       },
       {
         "item": "minecraft:gray_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:white_seat"
+        "item": "bearing:white_seat"
       }
     ],
     "result": {
-      "item": "levitate:gray_seat"
+      "item": "bearing:gray_seat"
     }
   }
 }

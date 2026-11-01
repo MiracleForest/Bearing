@@ -35,13 +35,13 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace items     = common::items;
 namespace blockdata = common::blockdata;
 
 namespace {
-constexpr char kDbNetworks[] = "lv:stock:networks";
+constexpr char kDbNetworks[] = "br:stock:networks";
 
 std::uint64_t& tickCounter() {
     static std::uint64_t t = 0;
@@ -247,7 +247,7 @@ void defer(std::function<void()> fn) { deferred().push_back(std::move(fn)); }
 
 // ---- items ---------------------------------------------------------------------------------------
 
-bool isTableCloth(std::string_view id) { return id.starts_with("levitate:") && id.ends_with("_table_cloth"); }
+bool isTableCloth(std::string_view id) { return id.starts_with("bearing:") && id.ends_with("_table_cloth"); }
 
 bool isLinkedItem(std::string_view id) {
     return id == kStockLink || id == kStockTicker || id == kFactoryGauge || id == kRedstoneRequester;
@@ -646,7 +646,7 @@ bool requestOrder(
 }
 
 void linkEffect(GlobalPos const& link) {
-    playSound(link, "levitate.stock.link", 0.75f, 1.25f);
+    playSound(link, "bearing.stock.link", 0.75f, 1.25f);
     auto level = ll::service::getLevel();
     if (!level) return;
     auto dimension = level->getDimension(DimensionType(link.dim)).lock();
@@ -706,4 +706,4 @@ void tickNetworks() {
     if (tickCounter() % 200 == 0) markNetworksDirty(); // promise ages are saved now and then
 }
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

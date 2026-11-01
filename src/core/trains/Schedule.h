@@ -8,7 +8,7 @@
 // moves the train on. The runtime is a state machine (pre transit -> in transit -> post transit)
 // driven every tick by the game through `Driver`.
 //
-// Ids are "levitate:<path>" with Create's paths ("create:<path>" is accepted when loading).
+// Ids are "bearing:<path>" with Create's paths ("create:<path>" is accepted when loading).
 
 #include <cstdint>
 #include <string>
@@ -17,35 +17,35 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 using Json = nlohmann::json;
 
 namespace ids {
-inline constexpr std::string_view kDestination     = "levitate:destination";
-inline constexpr std::string_view kPackageDelivery = "levitate:package_delivery";
-inline constexpr std::string_view kPackageRetrieval = "levitate:package_retrieval";
-inline constexpr std::string_view kRename          = "levitate:rename";
-inline constexpr std::string_view kThrottle        = "levitate:throttle";
+inline constexpr std::string_view kDestination     = "bearing:destination";
+inline constexpr std::string_view kPackageDelivery = "bearing:package_delivery";
+inline constexpr std::string_view kPackageRetrieval = "bearing:package_retrieval";
+inline constexpr std::string_view kRename          = "bearing:rename";
+inline constexpr std::string_view kThrottle        = "bearing:throttle";
 
-inline constexpr std::string_view kDelay          = "levitate:delay";
-inline constexpr std::string_view kTimeOfDay      = "levitate:time_of_day";
-inline constexpr std::string_view kFluidThreshold = "levitate:fluid_threshold";
-inline constexpr std::string_view kItemThreshold  = "levitate:item_threshold";
-inline constexpr std::string_view kRedstoneLink   = "levitate:redstone_link";
-inline constexpr std::string_view kPlayerCount    = "levitate:player_count";
-inline constexpr std::string_view kIdle           = "levitate:idle";
-inline constexpr std::string_view kUnloaded       = "levitate:unloaded";
-inline constexpr std::string_view kPowered        = "levitate:powered";
+inline constexpr std::string_view kDelay          = "bearing:delay";
+inline constexpr std::string_view kTimeOfDay      = "bearing:time_of_day";
+inline constexpr std::string_view kFluidThreshold = "bearing:fluid_threshold";
+inline constexpr std::string_view kItemThreshold  = "bearing:item_threshold";
+inline constexpr std::string_view kRedstoneLink   = "bearing:redstone_link";
+inline constexpr std::string_view kPlayerCount    = "bearing:player_count";
+inline constexpr std::string_view kIdle           = "bearing:idle";
+inline constexpr std::string_view kUnloaded       = "bearing:unloaded";
+inline constexpr std::string_view kPowered        = "bearing:powered";
 } // namespace ids
 
 /// Instruction ids in Create's menu order.
 [[nodiscard]] std::vector<std::string_view> const& instructionIds();
 /// Condition ids in Create's menu order.
 [[nodiscard]] std::vector<std::string_view> const& conditionIds();
-/// "levitate:delay" -> "delay" (also strips "create:").
+/// "bearing:delay" -> "delay" (also strips "create:").
 [[nodiscard]] std::string pathOf(std::string_view id);
-/// "create:delay" / "delay" -> "levitate:delay".
+/// "create:delay" / "delay" -> "bearing:delay".
 [[nodiscard]] std::string normaliseId(std::string_view id);
 
 /// An instruction or a condition: its id and Create's data fields (`Text`, `Value`, ...).
@@ -221,4 +221,4 @@ struct EtaText {
 };
 [[nodiscard]] EtaText etaOf(int ticks);
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

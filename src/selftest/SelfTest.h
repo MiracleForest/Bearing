@@ -17,7 +17,7 @@ class Player;
 class SimulatedPlayer;
 class BlockPos;
 
-namespace lv::selftest {
+namespace br::selftest {
 
 /// Thrown by `require()` / `fail()` to abort the current test.
 struct Abort : std::runtime_error {
@@ -105,7 +105,7 @@ struct TestRegistrar {
         if constexpr (std::is_invocable_r_v<ll::coro::CoroTask<>, F, Context&>) {
             TestRegistry::add({std::move(name), AsyncTest(std::move(fn))});
         } else {
-            static_assert(std::is_invocable_v<F, Context&>, "selftest must take (lv::selftest::Context&)");
+            static_assert(std::is_invocable_v<F, Context&>, "selftest must take (br::selftest::Context&)");
             TestRegistry::add({std::move(name), [fn = std::move(fn)](Context& ctx) -> ll::coro::CoroTask<> {
                 fn(ctx);
                 co_return;
@@ -115,10 +115,10 @@ struct TestRegistrar {
 };
 } // namespace detail
 
-} // namespace lv::selftest
+} // namespace br::selftest
 
-/// Registers a selftest. `fn` is `void(lv::selftest::Context&)` or
-/// `ll::coro::CoroTask<>(lv::selftest::Context&)` (to `co_await ctx.ticks(n)`).
-///     LV_REGISTER_SELFTEST("unit.case", [](lv::selftest::Context& ctx) { ... });
-#define LV_REGISTER_SELFTEST(name, ...)                                                                                \
-    static ::lv::selftest::detail::TestRegistrar LV_UNIQUE(lv_selftest_registrar_)(name, __VA_ARGS__)
+/// Registers a selftest. `fn` is `void(br::selftest::Context&)` or
+/// `ll::coro::CoroTask<>(br::selftest::Context&)` (to `co_await ctx.ticks(n)`).
+///     BR_REGISTER_SELFTEST("unit.case", [](br::selftest::Context& ctx) { ... });
+#define BR_REGISTER_SELFTEST(name, ...)                                                                                \
+    static ::br::selftest::detail::TestRegistrar BR_UNIQUE(br_selftest_registrar_)(name, __VA_ARGS__)

@@ -14,7 +14,7 @@ $logDir = Join-Path (Get-GameDataDir) 'logs'
 $contentLog = Get-ChildItem $logDir -Filter 'ContentLog*' -ErrorAction SilentlyContinue |
     Where-Object { $_.LastWriteTime -ge $script:TransmissionContentLogStart } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 if ($contentLog) {
-    $pattern = 'transmission|levitate:(shaft|cogwheel|large_cogwheel|gearbox|vertical_gearbox|clutch|gearshift|encased_chain_drive|adjustable_chain_gearshift|andesite_encased|brass_encased|sequenced_gearshift|rotation_speed_controller|speedometer|stressometer)'
+    $pattern = 'transmission|bearing:(shaft|cogwheel|large_cogwheel|gearbox|vertical_gearbox|clutch|gearshift|encased_chain_drive|adjustable_chain_gearshift|andesite_encased|brass_encased|sequenced_gearshift|rotation_speed_controller|speedometer|stressometer)'
     $errors = Select-String -Path $contentLog.FullName -Pattern $pattern | ForEach-Object { $_.Line }
     if ($errors) {
         $errors | Set-Content (Join-Path (Join-Path $script:OutRoot $script:Unit) 'content-errors.txt')
@@ -35,32 +35,32 @@ Invoke-Chat '/tp @s ~ ~ ~ -90 10'
 Start-Sleep -Milliseconds 500
 
 # row 1 (y+1): shafts and cogs along x, driven by a source behind them
-Invoke-Chat '/setblock ~7 ~1 ~-6 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~-6 levitate:shaft ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~7 ~1 ~-4 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~-4 levitate:cogwheel ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~2 ~-4 levitate:cogwheel ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~7 ~1 ~-2 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~-2 levitate:large_cogwheel ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~7 ~1 ~1 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~1 levitate:gearbox ["levitate:axis"=1]'
-Invoke-Chat '/setblock ~5 ~1 ~1 levitate:shaft ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~2 levitate:shaft ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~7 ~1 ~4 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~4 levitate:gearshift ["levitate:axis"=0,"levitate:powered"=1]'
-Invoke-Chat '/setblock ~5 ~1 ~4 levitate:shaft ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~7 ~1 ~6 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~6 levitate:clutch ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~-6 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~-6 bearing:shaft ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~-4 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~-4 bearing:cogwheel ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~2 ~-4 bearing:cogwheel ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~-2 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~-2 bearing:large_cogwheel ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~1 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~1 bearing:gearbox ["bearing:axis"=1]'
+Invoke-Chat '/setblock ~5 ~1 ~1 bearing:shaft ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~2 bearing:shaft ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~7 ~1 ~4 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~4 bearing:gearshift ["bearing:axis"=0,"bearing:powered"=1]'
+Invoke-Chat '/setblock ~5 ~1 ~4 bearing:shaft ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~6 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~6 bearing:clutch ["bearing:axis"=0]'
 # row 2 (y+3): encased blocks, chain drives, sequenced gearshift, controller
-Invoke-Chat '/setblock ~6 ~3 ~-6 levitate:andesite_encased_shaft ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~3 ~-5 levitate:brass_encased_shaft ["levitate:axis"=1]'
-Invoke-Chat '/setblock ~6 ~3 ~-3 levitate:andesite_encased_cogwheel ["levitate:axis"=0,"levitate:top_shaft"=1]'
-Invoke-Chat '/setblock ~6 ~3 ~-1 levitate:brass_encased_large_cogwheel ["levitate:axis"=0,"levitate:bottom_shaft"=1]'
-Invoke-Chat '/setblock ~6 ~3 ~1 levitate:encased_chain_drive ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~3 ~2 levitate:adjustable_chain_gearshift ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~3 ~4 levitate:sequenced_gearshift ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~3 ~6 levitate:rotation_speed_controller ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~6 ~4 ~6 levitate:large_cogwheel ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~6 ~3 ~-6 bearing:andesite_encased_shaft ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~3 ~-5 bearing:brass_encased_shaft ["bearing:axis"=1]'
+Invoke-Chat '/setblock ~6 ~3 ~-3 bearing:andesite_encased_cogwheel ["bearing:axis"=0,"bearing:top_shaft"=1]'
+Invoke-Chat '/setblock ~6 ~3 ~-1 bearing:brass_encased_large_cogwheel ["bearing:axis"=0,"bearing:bottom_shaft"=1]'
+Invoke-Chat '/setblock ~6 ~3 ~1 bearing:encased_chain_drive ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~3 ~2 bearing:adjustable_chain_gearshift ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~3 ~4 bearing:sequenced_gearshift ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~3 ~6 bearing:rotation_speed_controller ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~6 ~4 ~6 bearing:large_cogwheel ["bearing:axis"=0]'
 Start-Sleep -Seconds 2
 if ($withMod) {
     Invoke-Chat '/create kinetics ~7 ~1 ~-6 speed 32'
@@ -72,13 +72,13 @@ Start-Sleep -Milliseconds 400
 Save-Screenshot 'wall-b' | Out-Null
 
 # at eye level: a driven line with both gauges facing the player (west), 3 blocks ahead
-Invoke-Chat '/setblock ~3 ~1 ~-3 levitate:kinetics_test_source ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~3 ~1 ~-2 levitate:speedometer ["levitate:facing"=4,"levitate:along_first"=0]'
-Invoke-Chat '/setblock ~3 ~1 ~-1 levitate:shaft ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~3 ~1 ~0 levitate:stressometer ["levitate:facing"=4,"levitate:along_first"=0]'
-Invoke-Chat '/setblock ~3 ~1 ~1 levitate:kinetics_test_consumer ["levitate:axis"=2]'
+Invoke-Chat '/setblock ~3 ~1 ~-3 bearing:kinetics_test_source ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~3 ~1 ~-2 bearing:speedometer ["bearing:facing"=4,"bearing:along_first"=0]'
+Invoke-Chat '/setblock ~3 ~1 ~-1 bearing:shaft ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~3 ~1 ~0 bearing:stressometer ["bearing:facing"=4,"bearing:along_first"=0]'
+Invoke-Chat '/setblock ~3 ~1 ~1 bearing:kinetics_test_consumer ["bearing:axis"=2]'
 # a sequenced gearshift on the ground 2 blocks ahead
-Invoke-Chat '/setblock ~2 ~ ~ levitate:sequenced_gearshift ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~2 ~ ~ bearing:sequenced_gearshift ["bearing:axis"=0]'
 Invoke-Chat '/tp @s ~ ~ ~ -90 10'
 if ($withMod) { Wait-LogLine 'transmission client: drawing \d+ gauge needles' 30 | Out-Null }
 Start-Sleep -Seconds 2
@@ -107,20 +107,20 @@ if ($withMod) {
 # goes to the mixer's north-west diagonal, axis y (Create's DiagonalCogHelper), and meshes with it.
 # The mixer at eye level 3 blocks east, driven by a cogwheel south of it on a source.
 Invoke-Chat '/fill ~1 ~ ~-4 ~6 ~3 ~4 air'
-Invoke-Chat '/setblock ~3 ~1 ~ levitate:mechanical_mixer'
-Invoke-Chat '/setblock ~3 ~ ~1 levitate:kinetics_test_source ["levitate:axis"=1]'
-Invoke-Chat '/setblock ~3 ~1 ~1 levitate:cogwheel ["levitate:axis"=1]'
+Invoke-Chat '/setblock ~3 ~1 ~ bearing:mechanical_mixer'
+Invoke-Chat '/setblock ~3 ~ ~1 bearing:kinetics_test_source ["bearing:axis"=1]'
+Invoke-Chat '/setblock ~3 ~1 ~1 bearing:cogwheel ["bearing:axis"=1]'
 # the south-west diagonal is taken: a hit on the face's middle line (north / south tie) can only go north-west
 Invoke-Chat '/setblock ~2 ~1 ~1 stone'
-Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 levitate:large_cogwheel'
+Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 bearing:large_cogwheel'
 Invoke-Chat '/tp @s ~ ~ ~ -90 0'
 Start-Sleep -Milliseconds 800
 $mark3 = Get-LogMark
 Click 0.5 0.5 -Relative -Right
-Wait-LogLine 'transmission: .* placed levitate:large_cogwheel at .* by placement assist' 20 -Since $mark3 | Out-Null
+Wait-LogLine 'transmission: .* placed bearing:large_cogwheel at .* by placement assist' 20 -Since $mark3 | Out-Null
 Start-Sleep -Milliseconds 600
 # the source only speeds up (a logged line) when the large cog stands at the diagonal with axis y
-Invoke-ChatConfirmed '/execute if block ~2 ~1 ~-1 levitate:large_cogwheel ["levitate:axis"=1] run create kinetics ~3 ~ ~1 speed 24' 'Generator at -?\d+ -?\d+ -?\d+ now turns at 24 ' -Attempts 2 | Out-Null
+Invoke-ChatConfirmed '/execute if block ~2 ~1 ~-1 bearing:large_cogwheel ["bearing:axis"=1] run create kinetics ~3 ~ ~1 speed 24' 'Generator at -?\d+ -?\d+ -?\d+ now turns at 24 ' -Attempts 2 | Out-Null
 Invoke-Chat '/tp @s ~ ~ ~ -90 20'
 Start-Sleep -Seconds 2
 Save-Screenshot 'integrated-cog' | Out-Null

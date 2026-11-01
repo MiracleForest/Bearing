@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:rotation_speed_controller",
+          "name": "bearing:rotation_speed_controller",
           "weight": 1
         }
       ]

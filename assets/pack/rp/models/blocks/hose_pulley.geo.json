@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.hose_pulley",
+        "identifier": "geometry.bearing.hose_pulley",
         "texture_width": 48,
         "texture_height": 32,
         "visible_bounds_width": 3,

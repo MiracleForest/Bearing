@@ -2,32 +2,32 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:encased_chain_drive_from_zinc"
+      "identifier": "bearing:encased_chain_drive_from_zinc"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       {
-        "item": "levitate:zinc_nugget"
+        "item": "bearing:zinc_nugget"
       },
       {
-        "item": "levitate:zinc_nugget"
+        "item": "bearing:zinc_nugget"
       },
       {
-        "item": "levitate:zinc_nugget"
+        "item": "bearing:zinc_nugget"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:encased_chain_drive",
+      "item": "bearing:encased_chain_drive",
       "count": 1
     }
   }

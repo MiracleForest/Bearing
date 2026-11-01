@@ -2,22 +2,22 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:lime_postbox",
+      "identifier": "bearing:lime_postbox",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:direction": [
+        "bearing:direction": [
           0,
           1,
           2,
           3
         ],
-        "levitate:open": [
+        "bearing:open": [
           0,
           1
         ],
-        "levitate:flag": [
+        "bearing:flag": [
           0,
           1
         ]
@@ -25,17 +25,17 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.postbox",
+        "identifier": "geometry.bearing.postbox",
         "bone_visibility": {
-          "flag_up": "q.block_state('levitate:flag') == 1",
-          "flag_down": "q.block_state('levitate:flag') == 0",
-          "lid_open": "q.block_state('levitate:open') == 1",
-          "lid": "q.block_state('levitate:open') == 0"
+          "flag_up": "q.block_state('bearing:flag') == 1",
+          "flag_down": "q.block_state('bearing:flag') == 0",
+          "lid_open": "q.block_state('bearing:open') == 1",
+          "lid": "q.block_state('bearing:open') == 0"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_lime_postbox",
+          "texture": "bearing_lime_postbox",
           "render_method": "alpha_test"
         }
       },
@@ -75,7 +75,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:direction') == 1",
+        "condition": "q.block_state('bearing:direction') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -87,7 +87,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:direction') == 2",
+        "condition": "q.block_state('bearing:direction') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -99,7 +99,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:direction') == 3",
+        "condition": "q.block_state('bearing:direction') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [

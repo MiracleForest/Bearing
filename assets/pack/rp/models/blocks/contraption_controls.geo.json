@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.contraption_controls",
+        "identifier": "geometry.bearing.contraption_controls",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 3,

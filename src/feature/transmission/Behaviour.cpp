@@ -24,11 +24,11 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
-constexpr char kDbTracked[] = "lv:transmission:tracked";
+constexpr char kDbTracked[] = "br:transmission:tracked";
 
 struct Tracked {
     std::set<GlobalPos> positions;
@@ -170,4 +170,4 @@ void onBlockChanged(BlockSource& region, GlobalPos const& pos, std::string const
     (void)region;
 }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

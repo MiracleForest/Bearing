@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.transmission_gauge_side_x",
+        "identifier": "geometry.bearing.transmission_gauge_side_x",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 3,
@@ -747,7 +747,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.transmission_gauge_side_y",
+        "identifier": "geometry.bearing.transmission_gauge_side_y",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 3,
@@ -1491,7 +1491,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.transmission_gauge_vert",
+        "identifier": "geometry.bearing.transmission_gauge_vert",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 3,

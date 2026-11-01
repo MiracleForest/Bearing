@@ -58,7 +58,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace items = common::items;
 namespace ia    = common::interactions;
@@ -66,10 +66,10 @@ using SharedTypes::Legacy::ArmorSlot;
 
 namespace {
 
-constexpr char kBonk[] = "levitate.cardboard_sword.bonk";
+constexpr char kBonk[] = "bearing.cardboard_sword.bonk";
 
-constexpr char kDisguise[]    = "levitate:cardboard_disguise";
-constexpr char kDisguiseTag[] = "lv_cardboard_disguise";
+constexpr char kDisguise[]    = "bearing:cardboard_disguise";
+constexpr char kDisguiseTag[] = "br_cardboard_disguise";
 
 struct State {
     std::set<std::int64_t>                 hiding;    ///< players hiding as a box (uids)
@@ -138,7 +138,7 @@ void placeDisguise(Player& p) {
         auto level = ll::service::getLevel();
         int  style = std::min(3, static_cast<int>(random01() * 4));
         auto owner = level->getActorFactory().createSpawnedActor(
-            ActorDefinitionIdentifier("levitate", "cardboard_disguise", "levitate:style_" + std::to_string(style)), nullptr, feet, rot
+            ActorDefinitionIdentifier("bearing", "cardboard_disguise", "bearing:style_" + std::to_string(style)), nullptr, feet, rot
         );
         if (!owner) return;
         box = level->addEntity(p.getDimensionBlockSource(), std::move(owner));
@@ -293,9 +293,9 @@ void installInteractions() {
 
 } // namespace
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-namespace eq = lv::feature::equipment;
+namespace eq = br::feature::equipment;
 
 // Create's CardboardArmorHandler#playersStealthWhenWearingCardboard (visibility 0): a mob can't choose a
 // hiding player as its target, unless the player just hurt it (vanilla's HurtByTargetGoal ignores
@@ -372,18 +372,18 @@ LL_TYPE_INSTANCE_HOOK(
         if (!player.isClientSide()) {
             for (auto const& r : results) {
                 if (r.isNull() || !eq::isCardboardArmor(r.getTypeName()) || !r.mUserData || !r.mUserData->contains("Trim")) continue;
-                if (lv::feature::advancements::award(player, "cardboard_armor_trim"))
-                    lv::log().info("equipment: {} trimmed {}", player.getRealName(), r.getTypeName());
+                if (br::feature::advancements::award(player, "cardboard_armor_trim"))
+                    br::log().info("equipment: {} trimmed {}", player.getRealName(), r.getTypeName());
                 break;
             }
         }
     } catch (std::exception const& e) {
-        lv::log().error("equipment: cardboard trim check failed: {}", e.what());
+        br::log().error("equipment: cardboard trim check failed: {}", e.what());
     }
     return origin(results, numCrafts);
 }
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 namespace {
 
 class CardboardModule {
@@ -423,6 +423,6 @@ private:
 };
 
 } // namespace
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-LV_REGISTER_MODULE(lv::feature::equipment::CardboardModule);
+BR_REGISTER_MODULE(br::feature::equipment::CardboardModule);

@@ -28,14 +28,14 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace {
 
 using selftest::Context;
 namespace citems = common::items;
 
-constexpr char const* kSource = "levitate:kinetics_test_source";
+constexpr char const* kSource = "bearing:kinetics_test_source";
 constexpr int         AZ      = 2;
 
 struct Area {
@@ -115,7 +115,7 @@ int itemEntities(BlockSource& region, GlobalPos const& p, double r, std::string 
 void runServerCommand(std::string const& command) {
     auto level = ll::service::getLevel();
     if (!level) return;
-    ServerCommandOrigin origin("levitate-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
+    ServerCommandOrigin origin("bearing-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
     ll::command::CommandRegistrar::getServerInstance().executeCommand(command, origin);
 }
 
@@ -123,39 +123,39 @@ GlobalPos off(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.
 
 } // namespace
 
-LV_REGISTER_SELFTEST("belts.tunnel_needs_belt", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.tunnel_needs_belt", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's BeltTunnelBlock.canSurvive: a horizontal, encased belt below; BeltTunnelItem cases it
     GlobalPos base = ctx.testPos(5550, 2);
     base.y += 1;
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = *regionOf(base.dim);
     ctx.setBlock(off(base, 0, -1, 0), "minecraft:stone");
-    ctx.setBlock(base, "levitate:andesite_tunnel");
+    ctx.setBlock(base, "bearing:andesite_tunnel");
     co_await ctx.ticks(4);
     ctx.check(idAt(base) == "minecraft:air", "a tunnel without a belt below breaks");
-    ctx.check(itemEntities(r, base, 2.0, "levitate:andesite_tunnel", true) == 1, "and drops itself");
+    ctx.check(itemEntities(r, base, 2.0, "bearing:andesite_tunnel", true) == 1, "and drops itself");
     // on a real belt it stays and encases the segment
     auto s = off(base, -1, -1, 0), e = off(base, 1, -1, 0);
-    ctx.setBlock(s, "levitate:kinetics_test_shaft", {{"levitate:axis", 2}});
-    ctx.setBlock(e, "levitate:kinetics_test_shaft", {{"levitate:axis", 2}});
+    ctx.setBlock(s, "bearing:kinetics_test_shaft", {{"bearing:axis", 2}});
+    ctx.setBlock(e, "bearing:kinetics_test_shaft", {{"bearing:axis", 2}});
     ctx.setBlock(off(base, 0, -1, 0), "minecraft:air");
     co_await ctx.ticks(2);
     ctx.require(createBelt(s, e), "belt built");
     co_await ctx.ticks(2);
-    ctx.setBlock(base, "levitate:brass_tunnel");
+    ctx.setBlock(base, "bearing:brass_tunnel");
     co_await ctx.ticks(4);
-    ctx.check(idAt(base) == "levitate:brass_tunnel", "a tunnel on a belt stays");
+    ctx.check(idAt(base) == "bearing:brass_tunnel", "a tunnel on a belt stays");
     auto info = beltAt(off(base, 0, -1, 0));
     ctx.check(info && info->casing == 2, "the segment took the brass casing");
     ctx.setBlock(base, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("belts.split_takes_connector", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.split_takes_connector", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's BeltSlicer: a survival split takes the shafts and one belt connector
     Area a{ctx, 5520};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await makeBelt(a, 6, -32), "belt built");
-    auto& p = ctx.spawnPlayer("lv_u55_split");
+    auto& p = ctx.spawnPlayer("br_u55_split");
     p.setPlayerGameType(GameType::Survival);
     co_await ctx.ticks(1);
     clearInventory(p);
@@ -172,7 +172,7 @@ LV_REGISTER_SELFTEST("belts.split_takes_connector", [](Context& ctx) -> ll::coro
     ctx.check(inventoryCount(p, kBeltConnectorId) == 0 && inventoryCount(p, kTestShaftId) == 0, "the split took 2 shafts and a connector");
 });
 
-LV_REGISTER_SELFTEST("belts.connector_keeps_selection", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.connector_keeps_selection", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's BeltConnectorItem.useOn: a failed connection keeps the first shaft selected
     Area a{ctx, 5527};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -190,7 +190,7 @@ LV_REGISTER_SELFTEST("belts.connector_keeps_selection", [](Context& ctx) -> ll::
     p.setSelectedItem(ItemStack());
 });
 
-LV_REGISTER_SELFTEST("belts.depot_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.depot_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5530};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     GlobalPos d = a.at(0, 0, 1), e = a.at(2, 0, 1);
@@ -221,7 +221,7 @@ LV_REGISTER_SELFTEST("belts.depot_rules", [](Context& ctx) -> ll::coro::CoroTask
     clearDepotState(d);
 });
 
-LV_REGISTER_SELFTEST("belts.ejector_outputs", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.ejector_outputs", [](Context& ctx) -> ll::coro::CoroTask<> {
     // EjectorBlockEntity.launchItems: the output slots fly too and count for the trigger
     Area a{ctx, 5535};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -249,7 +249,7 @@ LV_REGISTER_SELFTEST("belts.ejector_outputs", [](Context& ctx) -> ll::coro::Coro
     clearDepotState(target);
 });
 
-LV_REGISTER_SELFTEST("belts.ejector_hits_walls", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.ejector_hits_walls", [](Context& ctx) -> ll::coro::CoroTask<> {
     // EjectorBlockEntity.scanTrajectoryForObstacles: a wall in the arc ends the flight early
     Area a{ctx, 5540};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -275,7 +275,7 @@ LV_REGISTER_SELFTEST("belts.ejector_hits_walls", [](Context& ctx) -> ll::coro::C
     clearDepotState(e);
 });
 
-LV_REGISTER_SELFTEST("belts.end_needs_full_face", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.end_needs_full_face", [](Context& ctx) -> ll::coro::CoroTask<> {
     // BeltInventory.resolveEnding: only a full face stops the items; they fall off past a slab
     Area a{ctx, 5545};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -299,7 +299,7 @@ LV_REGISTER_SELFTEST("belts.end_needs_full_face", [](Context& ctx) -> ll::coro::
     ctx.setBlock(after, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("belts.setblock_destroy_drops", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.setblock_destroy_drops", [](Context& ctx) -> ll::coro::CoroTask<> {
     // `/setblock ... destroy` breaks a belt segment like Create's destroyBlock(pos, true): its loot drops
     Area a{ctx, 5548};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -312,4 +312,4 @@ LV_REGISTER_SELFTEST("belts.setblock_destroy_drops", [](Context& ctx) -> ll::cor
     ctx.check(itemEntities(region, mid, 2.0, kBeltConnectorId, true) == 1, "the belt connector dropped");
 });
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

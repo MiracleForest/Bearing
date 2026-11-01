@@ -65,13 +65,13 @@
   "create.ponder.tag.train_related.description": "用于建造或管理列车结构的组件",
   "create.ponder.tag.windmill_sails": "用于风车轴承的帆",
   "create.ponder.tag.windmill_sails.description": "在进行风车组装时会被算入风车强度的方块，这些方块的效能都是一样的",
-  "lv.ponder.no_client": "思索需要安装 Levitate 客户端模组。",
-  "lv.ponder.unknown": "没有关于 {0} 的思索情景。",
-  "lv.ponder.opening": "打开思索：{0}",
-  "lv.ponder.scene_of": "第 {0} 个情景，共 {1} 个",
-  "lv.ponder.missing_block": "尚未可用：{0}",
-  "lv.ponder.drag_hint": "拖动以旋转视角",
-  "lv.ponder.players_only": "只有玩家才能思索。",
-  "lv.ponder.key": "思索按键",
-  "lv.ponder.key.rebind": "点击后按下新的按键（Esc 取消）"
+  "br.ponder.no_client": "思索需要安装 Bearing 客户端模组。",
+  "br.ponder.unknown": "没有关于 {0} 的思索情景。",
+  "br.ponder.opening": "打开思索：{0}",
+  "br.ponder.scene_of": "第 {0} 个情景，共 {1} 个",
+  "br.ponder.missing_block": "尚未可用：{0}",
+  "br.ponder.drag_hint": "拖动以旋转视角",
+  "br.ponder.players_only": "只有玩家才能思索。",
+  "br.ponder.key": "思索按键",
+  "br.ponder.key.rebind": "点击后按下新的按键（Esc 取消）"
 }

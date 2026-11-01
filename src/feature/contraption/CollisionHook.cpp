@@ -28,13 +28,13 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 #include "client/contraption/Display.h"
 #endif
 
 class GetCollisionShapeInterface;
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
@@ -45,7 +45,7 @@ void forEachShape(BlockSource const& region, AABB const& query, std::function<vo
         detail::forEachCollision(dim, query, fn);
         return;
     }
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
     thread_local std::vector<std::pair<cc::Box, std::string>> boxes;
     boxes.clear();
     cc::Box q{{query.min.x, query.min.y, query.min.z}, {query.max.x, query.max.y, query.max.z}};
@@ -115,6 +115,6 @@ public:
     }
 };
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption
 
-LV_REGISTER_MODULE(lv::feature::contraption::CollisionModule);
+BR_REGISTER_MODULE(br::feature::contraption::CollisionModule);

@@ -4,7 +4,7 @@
 // the server answers with fresh data. Search, addresses and category names are typed into native
 // text fields (vanilla players get the server's forms).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -33,12 +33,12 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::stock {
+namespace br::client::stock {
 
 namespace {
-using namespace lv::client::screen;
-namespace items = lv::feature::common::items;
-namespace net   = lv::feature::net;
+using namespace br::client::screen;
+namespace items = br::feature::common::items;
+namespace net   = br::feature::net;
 
 
 /// Puts server text into a field unless the player is typing in it.
@@ -110,7 +110,7 @@ public:
         mSearch->maxLength    = 50;
         mSendBtn      = &add<IconButton>(Rect{126, 170, 48, 18}, ">", [this] { sendOrder(); });
         auto& clear   = add<IconButton>(Rect{104, 170, 18, 18}, "x", [this] { mOrderList.clear(); refreshOrder(); });
-        clear.tooltip = {ctr("lv.stock.screen.clear_order", "Clear order")};
+        clear.tooltip = {ctr("br.stock.screen.clear_order", "Clear order")};
         mLock         = &add<IconButton>(Rect{156, 12, 18, 16}, "L", [this] { mSend({{"op", "lock"}}); });
         mSuggest = &add<packages::AddressSuggestions>(*mAddress, packages::suggestionsOf(mData)); // drawn over the rest
         onData(mData);
@@ -230,7 +230,7 @@ private:
             if (idx < mEntries.size() && mEntries[idx].stack) {
                 slot.stack   = mEntries[idx].stack;
                 slot.count   = mEntries[idx].count;
-                slot.tooltip = {slot.stack->getName() + " x" + countText(slot.count), ctr("lv.stock.screen.click_add", "Click: +1, Shift: +stack, right-click: -1")};
+                slot.tooltip = {slot.stack->getName() + " x" + countText(slot.count), ctr("br.stock.screen.click_add", "Click: +1, Shift: +stack, right-click: -1")};
             } else {
                 slot.stack = nullptr;
                 slot.count = 0;
@@ -392,7 +392,7 @@ public:
             mRows.push_back(r);
         }
         auto& addBtn  = add<IconButton>(Rect{10, 130, 18, 16}, "+", [this] { mSend({{"op", "add"}, {"slot", -1}}); });
-        addBtn.tooltip = {ctr("create.gui.stock_ticker.new_category", "New Category"), ctr("lv.stock.screen.add_filter", "Shift-click a filter in your inventory to add a category")};
+        addBtn.tooltip = {ctr("create.gui.stock_ticker.new_category", "New Category"), ctr("br.stock.screen.add_filter", "Shift-click a filter in your inventory to add a category")};
         onData(mData);
     }
 
@@ -436,7 +436,7 @@ private:
 class RequesterScreen : public Screen {
 public:
     RequesterScreen(Json const& data, SendFn send)
-    : Screen(ctr("lv.stock.screen.requester", "Redstone Requester"), 186, 96),
+    : Screen(ctr("br.stock.screen.requester", "Redstone Requester"), 186, 96),
       mSend(std::move(send)),
       mData(data) {}
 
@@ -617,7 +617,7 @@ public:
 
     void renderExtra(Canvas& c, float, float) override {
         c.text(34, 24, mData.value("label", std::string{}), color::kTextDark, Align::Left, false);
-        c.text(34, 33, ctr("lv.stock.screen.in_storage", "In storage: {}", countText(mData.value("inStorage", 0))) + "  " + ctr("lv.stock.screen.promised", "Promised: {}", mData.value("promised", 0)), color::kTextDark, Align::Left, false);
+        c.text(34, 33, ctr("br.stock.screen.in_storage", "In storage: {}", countText(mData.value("inStorage", 0))) + "  " + ctr("br.stock.screen.promised", "Promised: {}", mData.value("promised", 0)), color::kTextDark, Align::Left, false);
         if (!mData.value("restocker", false) && mData.value("inputs", Json::array()).empty())
             c.text(12, 54, ctr("create.gui.factory_panel.unconfigured_input_tip", "Ingredients can be added by"), color::kTextGray);
     }
@@ -698,7 +698,7 @@ void pollHover() {
     }
     auto&       region = player->getDimensionBlockSource();
     auto const& id     = region.getBlock(hit.mBlock).getTypeName();
-    if (id != "levitate:factory_gauge" && id != "levitate:stock_ticker") {
+    if (id != "bearing:factory_gauge" && id != "bearing:stock_ticker") {
         h.has = false;
         return;
     }
@@ -763,8 +763,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::stock
+} // namespace br::client::stock
 
-LV_REGISTER_MODULE(lv::client::stock::StockScreensModule);
+BR_REGISTER_MODULE(br::client::stock::StockScreensModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

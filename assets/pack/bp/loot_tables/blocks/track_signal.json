@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:track_signal",
+          "name": "bearing:track_signal",
           "weight": 1
         }
       ]

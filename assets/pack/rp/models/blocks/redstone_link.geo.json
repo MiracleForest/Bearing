@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.redstone_link_down",
+        "identifier": "geometry.bearing.redstone_link_down",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -587,7 +587,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.redstone_link_up",
+        "identifier": "geometry.bearing.redstone_link_up",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -1171,7 +1171,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.redstone_link_north",
+        "identifier": "geometry.bearing.redstone_link_north",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -1755,7 +1755,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.redstone_link_south",
+        "identifier": "geometry.bearing.redstone_link_south",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -2339,7 +2339,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.redstone_link_west",
+        "identifier": "geometry.bearing.redstone_link_west",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -2923,7 +2923,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.redstone_link_east",
+        "identifier": "geometry.bearing.redstone_link_east",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,

@@ -19,7 +19,7 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace blockdata = feature::common::blockdata;
 namespace valuebox  = feature::common::valuebox;
@@ -83,4 +83,4 @@ void registerSpeedControllerBox() {
     });
 }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

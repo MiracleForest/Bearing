@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:red_seat"
+      "identifier": "bearing:red_seat"
     },
     "tags": [
       "crafting_table"
@@ -21,7 +21,7 @@
       }
     ],
     "result": {
-      "item": "levitate:red_seat"
+      "item": "bearing:red_seat"
     }
   }
 }

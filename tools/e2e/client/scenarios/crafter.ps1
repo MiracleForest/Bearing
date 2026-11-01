@@ -17,16 +17,16 @@ Invoke-Chat '/time set noon'
 Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.6 ~'
 Start-Sleep -Milliseconds 500
 # crafters facing west (towards the player): A below, B above pointing down into A
-Invoke-Chat '/setblock ~5 ~1 ~ levitate:mechanical_crafter ["levitate:facing"=4,"levitate:pointing"=2,"levitate:covered"=0]'
-Invoke-Chat '/setblock ~5 ~2 ~ levitate:mechanical_crafter ["levitate:facing"=4,"levitate:pointing"=2,"levitate:covered"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~ levitate:kinetics_test_source ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~5 ~1 ~ bearing:mechanical_crafter ["bearing:facing"=4,"bearing:pointing"=2,"bearing:covered"=0]'
+Invoke-Chat '/setblock ~5 ~2 ~ bearing:mechanical_crafter ["bearing:facing"=4,"bearing:pointing"=2,"bearing:covered"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~ bearing:kinetics_test_source ["bearing:axis"=0]'
 # a saw facing up (blade along z) and a drill facing the player, each with a source
-Invoke-Chat '/setblock ~4 ~ ~-2 levitate:mechanical_saw ["levitate:facing"=1,"levitate:axis_along_first"=0]'
-Invoke-Chat '/setblock ~4 ~ ~-3 levitate:kinetics_test_source ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~5 ~1 ~3 levitate:mechanical_drill ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~6 ~1 ~3 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~5 ~2 ~-2 levitate:mechanical_saw ["levitate:facing"=4,"levitate:axis_along_first"=1]'
-Invoke-Chat '/setblock ~5 ~1 ~-2 levitate:kinetics_test_source ["levitate:axis"=1]'
+Invoke-Chat '/setblock ~4 ~ ~-2 bearing:mechanical_saw ["bearing:facing"=1,"bearing:axis_along_first"=0]'
+Invoke-Chat '/setblock ~4 ~ ~-3 bearing:kinetics_test_source ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~5 ~1 ~3 bearing:mechanical_drill ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~6 ~1 ~3 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~5 ~2 ~-2 bearing:mechanical_saw ["bearing:facing"=4,"bearing:axis_along_first"=1]'
+Invoke-Chat '/setblock ~5 ~1 ~-2 bearing:kinetics_test_source ["bearing:axis"=1]'
 Start-Sleep -Seconds 2
 Save-Screenshot 'built' | Out-Null
 

@@ -27,7 +27,7 @@
 #include "mod/Module.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 namespace {
 
@@ -117,7 +117,7 @@ bool setEntry(Player& player, std::string const& section, std::string const& pat
     auto const* e = entryOf(section);
     if (!e || !e->values || !e->write) return false;
     if (!mayEdit(player)) {
-        player.sendMessage("§c" + trFor(player, "lv.common.config.need_op", "Only operators can change the configuration."));
+        player.sendMessage("§c" + trFor(player, "br.common.config.need_op", "Only operators can change the configuration."));
         return false;
     }
     auto        current = e->values();
@@ -131,7 +131,7 @@ bool setEntry(Player& player, std::string const& section, std::string const& pat
         value = coerce(*old, input);
     }
     if (!value) {
-        player.sendMessage("§c" + trFor(player, "lv.common.config.invalid", "Invalid value for {}", path));
+        player.sendMessage("§c" + trFor(player, "br.common.config.invalid", "Invalid value for {}", path));
         return false;
     }
     if (*value == *old) return true;
@@ -169,8 +169,8 @@ void sectionForm(Player& player, std::string const& section);
 
 void rootForm(Player& player) {
     ll::form::SimpleForm form;
-    form.setTitle(trFor(player, "lv.common.config.title", "Levitate Configuration"));
-    form.setContent(trFor(player, "lv.common.config.pick", "Choose a section"));
+    form.setTitle(trFor(player, "br.common.config.title", "Bearing Configuration"));
+    form.setContent(trFor(player, "br.common.config.pick", "Choose a section"));
     for (auto const& e : config::ConfigRegistry::entries()) {
         auto section = e.section;
         form.appendButton(section, [section](Player& p) { sectionForm(p, section); });
@@ -184,7 +184,7 @@ void sectionForm(Player& player, std::string const& section) {
     std::vector<std::pair<std::string, OJson>> cur;
     flatten(e->values(), "", cur);
     ll::form::CustomForm form(section);
-    if (!mayEdit(player)) form.appendLabel("§c" + trFor(player, "lv.common.config.need_op", "Only operators can change the configuration."));
+    if (!mayEdit(player)) form.appendLabel("§c" + trFor(player, "br.common.config.need_op", "Only operators can change the configuration."));
     for (std::size_t i = 0; i < cur.size(); ++i) {
         auto const& [path, v] = cur[i];
         auto name = "e" + std::to_string(i);
@@ -241,14 +241,14 @@ struct ConfigParams {
     std::string section;
 };
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     auto run = [](CommandOrigin const& origin, CommandOutput& output, std::string const& section) {
         auto* player = commands::playerOf(origin);
-        if (!player) return output.error(tr("lv.common.config.need_player", "Run this as a player."));
-        if (!section.empty() && !entryOf(section)) return output.error(tr("lv.common.config.unknown", "Unknown config section {}", section));
+        if (!player) return output.error(tr("br.common.config.need_player", "Run this as a player."));
+        if (!section.empty() && !entryOf(section)) return output.error(tr("br.common.config.unknown", "Unknown config section {}", section));
         Json ctx = Json::object();
         if (!section.empty()) ctx["section"] = section;
-        if (!screens::open(*player, kType, ctx)) return output.error(tr("lv.common.config.unknown", "Unknown config section {}", section));
+        if (!screens::open(*player, kType, ctx)) return output.error(tr("br.common.config.unknown", "Unknown config section {}", section));
         log().info("config screen {} opened for {}", section.empty() ? "(sections)" : section, player->getRealName());
     };
     cmd.overload().text("config").execute([run](CommandOrigin const& origin, CommandOutput& output) { run(origin, output, ""); });
@@ -257,7 +257,7 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     );
 });
 
-LV_REGISTER_SELFTEST("common.config_screen", [](selftest::Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("common.config_screen", [](selftest::Context& ctx) -> ll::coro::CoroTask<> {
     auto& p   = ctx.player();
     auto  was = p.getCommandPermissionLevel();
     net::setTestCompanion(p, true);
@@ -294,6 +294,6 @@ LV_REGISTER_SELFTEST("common.config_screen", [](selftest::Context& ctx) -> ll::c
     co_return;
 });
 
-} // namespace lv::feature::common
+} // namespace br::feature::common
 
-LV_REGISTER_MODULE(lv::feature::common::ConfigScreenModule);
+BR_REGISTER_MODULE(br::feature::common::ConfigScreenModule);

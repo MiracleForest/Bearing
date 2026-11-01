@@ -16,7 +16,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace {
 namespace rs = common::redstone;
@@ -63,6 +63,6 @@ public:
     }
 };
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin
 
-LV_REGISTER_MODULE(lv::feature::basin::BasinComparatorModule);
+BR_REGISTER_MODULE(br::feature::basin::BasinComparatorModule);

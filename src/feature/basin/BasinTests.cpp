@@ -36,17 +36,17 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace {
 
 using selftest::Context;
 namespace items  = common::items;
 namespace fluids = common::fluids;
-namespace k      = lv::kinetics;
+namespace k      = br::kinetics;
 
-constexpr char const* kSource = "levitate:kinetics_test_source";
-constexpr char const* kCog    = "levitate:kinetics_test_cog";
+constexpr char const* kSource = "bearing:kinetics_test_source";
+constexpr char const* kCog    = "bearing:kinetics_test_cog";
 
 struct Area {
     Context& ctx;
@@ -132,20 +132,20 @@ void stand(SimulatedPlayer& sp, GlobalPos const& p) { sp.teleport(Vec3{p.x + .5f
 void driveMixer(Context& ctx, GlobalPos const& mixer, float rpm) {
     GlobalPos cog{mixer.dim, mixer.x + 1, mixer.y, mixer.z};
     GlobalPos src{mixer.dim, mixer.x + 1, mixer.y - 1, mixer.z};
-    ctx.setBlock(src, kSource, {{"levitate:axis", 1}});
-    ctx.setBlock(cog, kCog, {{"levitate:axis", 1}});
+    ctx.setBlock(src, kSource, {{"bearing:axis", 1}});
+    ctx.setBlock(cog, kCog, {{"bearing:axis", 1}});
     k::setGeneratedSpeed(src, rpm);
 }
 
 void drivePress(Context& ctx, GlobalPos const& press, float rpm) {
     GlobalPos src{press.dim, press.x + 1, press.y, press.z};
-    ctx.setBlock(src, kSource, {{"levitate:axis", 0}});
+    ctx.setBlock(src, kSource, {{"bearing:axis", 0}});
     k::setGeneratedSpeed(src, rpm);
 }
 
 } // namespace
 
-LV_REGISTER_SELFTEST("basin.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("basin.registry", [](Context& ctx) {
     for (auto const* id : {kBasin, kPress, kMixer, kBurner, kEmptyBurner, kLitBurner}) {
         ctx.check(game::blockWith(id) != nullptr, std::string(id) + " is in the behavior pack");
     }
@@ -163,7 +163,7 @@ LV_REGISTER_SELFTEST("basin.registry", [](Context& ctx) {
     ctx.info("press: " + std::to_string(press.size()) + " recipes, mixer: " + std::to_string(mixer.size()));
 });
 
-LV_REGISTER_SELFTEST("basin.inventory", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.inventory", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1400};
     auto p = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -195,7 +195,7 @@ LV_REGISTER_SELFTEST("basin.inventory", [](Context& ctx) -> ll::coro::CoroTask<>
     basinops::save(p, again);
 });
 
-LV_REGISTER_SELFTEST("basin.player_use", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.player_use", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1405};
     auto p = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -232,7 +232,7 @@ LV_REGISTER_SELFTEST("basin.player_use", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(dirt == 5, "the player got the 5 dirt, got " + std::to_string(dirt));
 });
 
-LV_REGISTER_SELFTEST("basin.item_intake", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.item_intake", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1410};
     auto p = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -263,7 +263,7 @@ LV_REGISTER_SELFTEST("basin.item_intake", [](Context& ctx) -> ll::coro::CoroTask
     clearItems(p);
 });
 
-LV_REGISTER_SELFTEST("basin.burner_fuel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.burner_fuel", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1415};
     auto p = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -290,7 +290,7 @@ LV_REGISTER_SELFTEST("basin.burner_fuel", [](Context& ctx) -> ll::coro::CoroTask
         ctx.check(ok && common::heat::level(r, bp) == cb::HeatLevel::Seething, "a blaze cake makes it seethe");
         ctx.check(!burners::tryInsert(r, p, stack("minecraft:coal"), false, true, true).first, "normal fuel can't replace special fuel");
     } else {
-        ctx.info("levitate:blaze_cake is not registered yet (U9): cake checks skipped");
+        ctx.info("bearing:blaze_cake is not registered yet (U9): cake checks skipped");
     }
     // running out: fading below 125 ticks, then smouldering
     d->state = {cb::Fuel::Normal, 130, false};
@@ -319,11 +319,11 @@ LV_REGISTER_SELFTEST("basin.burner_fuel", [](Context& ctx) -> ll::coro::CoroTask
         ctx.check(seen[0] == cb::HeatLevel::Kindled && seen[1] == cb::HeatLevel::Seething && seen[2] == cb::HeatLevel::Smouldering,
                   "creative cake cycles kindled, seething, smouldering");
     } else {
-        ctx.info("levitate:creative_blaze_cake is not registered yet (U9): creative checks skipped");
+        ctx.info("bearing:creative_blaze_cake is not registered yet (U9): creative checks skipped");
     }
 });
 
-LV_REGISTER_SELFTEST("basin.lit_burner", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.lit_burner", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1420};
     auto p = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -350,7 +350,7 @@ LV_REGISTER_SELFTEST("basin.lit_burner", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(game::blockIdAt(r, bp) == kEmptyBurner, "a shovel puts it out");
 });
 
-LV_REGISTER_SELFTEST("basin.capture", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.capture", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1425};
     auto p = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -375,7 +375,7 @@ LV_REGISTER_SELFTEST("basin.capture", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(game::blockIdAt(r, bp) == "minecraft:mob_spawner", "the spawner stays");
 });
 
-LV_REGISTER_SELFTEST("basin.mixing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.mixing", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1430};
     auto basin = a.at(0);
     auto mixer = a.at(0, 2);
@@ -416,7 +416,7 @@ LV_REGISTER_SELFTEST("basin.mixing", [](Context& ctx) -> ll::coro::CoroTask<> {
     basinops::save(basin, b);
 });
 
-LV_REGISTER_SELFTEST("basin.heat", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.heat", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1440};
     auto burner = a.at(0);
     auto basin  = a.at(0, 1);
@@ -445,7 +445,7 @@ LV_REGISTER_SELFTEST("basin.heat", [](Context& ctx) -> ll::coro::CoroTask<> {
     basinops::save(basin, b);
 });
 
-LV_REGISTER_SELFTEST("basin.compacting", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.compacting", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1450};
     auto basin = a.at(0);
     auto press = a.at(0, 2);
@@ -472,7 +472,7 @@ LV_REGISTER_SELFTEST("basin.compacting", [](Context& ctx) -> ll::coro::CoroTask<
     basinops::save(basin, b);
 });
 
-LV_REGISTER_SELFTEST("basin.filter", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.filter", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1460};
     auto basin = a.at(0);
     auto press = a.at(0, 2);
@@ -496,7 +496,7 @@ LV_REGISTER_SELFTEST("basin.filter", [](Context& ctx) -> ll::coro::CoroTask<> {
     basinops::save(basin, b);
 });
 
-LV_REGISTER_SELFTEST("basin.press_world", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.press_world", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1470};
     auto floor = a.at(0);
     auto press = a.at(0, 2);
@@ -529,7 +529,7 @@ LV_REGISTER_SELFTEST("basin.press_world", [](Context& ctx) -> ll::coro::CoroTask
     clearItems(a.at(0, 1));
 });
 
-LV_REGISTER_SELFTEST("basin.spout", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.spout", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1480};
     auto upper = a.at(0, 1);
     auto lower = a.at(1, 0);
@@ -549,7 +549,7 @@ LV_REGISTER_SELFTEST("basin.spout", [](Context& ctx) -> ll::coro::CoroTask<> {
     basinops::save(lower, low);
 });
 
-LV_REGISTER_SELFTEST("basin.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1490};
     auto ground = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(ground), "test area loaded");
@@ -579,7 +579,7 @@ LV_REGISTER_SELFTEST("basin.placement", [](Context& ctx) -> ll::coro::CoroTask<>
     clearItems(a.at(0, 2));
 });
 
-LV_REGISTER_SELFTEST("basin.sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1495};
     auto p = a.at(0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -643,14 +643,14 @@ ll::coro::CoroTask<bool> emptyDepot(GlobalPos const& depot) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("basin.press_sequenced", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.press_sequenced", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R74 / R75: the press is the belts unit's processor; on a depot it runs the track's last
     // (pressing) step of its sequenced assembly before plain pressing recipes
     Area a{ctx, 3900};
     auto depot = a.at(0);
     auto press = a.at(0, 2);
     ctx.require(co_await ctx.ensureLoaded(depot), "test area loaded");
-    ctx.require(ctx.setBlock(depot, "levitate:depot"), "place a depot");
+    ctx.require(ctx.setBlock(depot, "bearing:depot"), "place a depot");
     ctx.require(ctx.setBlock(press, kPress, {{kAxisState, 0}}), "place a press");
     drivePress(ctx, press, 256);
     co_await ctx.ticks(3);
@@ -658,39 +658,39 @@ LV_REGISTER_SELFTEST("basin.press_sequenced", [](Context& ctx) -> ll::coro::Coro
     ctx.check(recipes::canPress(track), "the press accepts the track's pressing step");
     auto rest = common::items::insert(region0(), game::blockPos(depot), kUp, track, false);
     ctx.require(items::isEmpty(rest), "the depot takes the incomplete track");
-    for (int i = 0; i < 60 && !depotHas(depot, "levitate:track"); ++i) co_await ctx.ticks(5);
-    ctx.check(depotHas(depot, "levitate:track"), "the press finished the track on the depot: " + depotContents(depot));
+    for (int i = 0; i < 60 && !depotHas(depot, "bearing:track"); ++i) co_await ctx.ticks(5);
+    ctx.check(depotHas(depot, "bearing:track"), "the press finished the track on the depot: " + depotContents(depot));
     ctx.require(co_await emptyDepot(depot), "the track can be taken off the depot");
     // plain pressing recipes still run: iron ingot -> iron sheet
     (void)common::items::insert(region0(), game::blockPos(depot), kUp, stack("minecraft:iron_ingot"), false);
-    for (int i = 0; i < 60 && !depotHas(depot, "levitate:iron_sheet"); ++i) co_await ctx.ticks(5);
-    ctx.check(depotHas(depot, "levitate:iron_sheet"), "iron ingot pressed into a sheet on the depot: " + depotContents(depot));
+    for (int i = 0; i < 60 && !depotHas(depot, "bearing:iron_sheet"); ++i) co_await ctx.ticks(5);
+    ctx.check(depotHas(depot, "bearing:iron_sheet"), "iron ingot pressed into a sheet on the depot: " + depotContents(depot));
     co_await emptyDepot(depot);
 });
 
-LV_REGISTER_SELFTEST("basin.press_sturdy_sheet", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.press_sturdy_sheet", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R75: a full sequence across machines: spout filling (lava), then two pressing steps
     namespace sa = assembly::sequenced;
     Area a{ctx, 3905};
     auto depot = a.at(0);
     auto press = a.at(0, 2);
     ctx.require(co_await ctx.ensureLoaded(depot), "test area loaded");
-    ctx.require(ctx.setBlock(depot, "levitate:depot"), "place a depot");
+    ctx.require(ctx.setBlock(depot, "bearing:depot"), "place a depot");
     ctx.require(ctx.setBlock(press, kPress, {{kAxisState, 0}}), "place a press");
     drivePress(ctx, press, 256);
     co_await ctx.ticks(3);
-    auto dust   = stack("levitate:powdered_obsidian");
+    auto dust   = stack("bearing:powdered_obsidian");
     auto filled = feature::fluids::fillItem(dust, {"minecraft:lava", 1000}, true);
-    ctx.require(items::idOf(filled) == "levitate:unprocessed_obsidian_sheet", "the spout's filling step: " + items::idOf(filled));
+    ctx.require(items::idOf(filled) == "bearing:unprocessed_obsidian_sheet", "the spout's filling step: " + items::idOf(filled));
     auto step = sa::findStep(sa::kPressing, filled);
     ctx.require(step.has_value(), "the next step is pressing");
     (void)common::items::insert(region0(), game::blockPos(depot), kUp, filled, false);
-    for (int i = 0; i < 100 && !depotHas(depot, "levitate:sturdy_sheet"); ++i) co_await ctx.ticks(5);
-    ctx.check(depotHas(depot, "levitate:sturdy_sheet"), "two presses later a sturdy sheet: " + depotContents(depot));
+    for (int i = 0; i < 100 && !depotHas(depot, "bearing:sturdy_sheet"); ++i) co_await ctx.ticks(5);
+    ctx.check(depotHas(depot, "bearing:sturdy_sheet"), "two presses later a sturdy sheet: " + depotContents(depot));
     co_await emptyDepot(depot);
 });
 
-LV_REGISTER_SELFTEST("basin.brewing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.brewing", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R75: Create's PotionMixingRecipes: reagent + 1000 mB potion -> 1000 mB potion, heated
     Area a{ctx, 3910};
     auto burner = a.at(0);
@@ -709,14 +709,14 @@ LV_REGISTER_SELFTEST("basin.brewing", [](Context& ctx) -> ll::coro::CoroTask<> {
     (void)fluids::fill(r, game::blockPos(basin), kUp, {"minecraft:water", 1000}, false);
     basinops::insertInput(b, stack("minecraft:nether_wart"), false);
     basinops::notifyChangeOfContents(b);
-    std::string awkward = "levitate:potion/regular/awkward";
+    std::string awkward = "bearing:potion/regular/awkward";
     for (int i = 0; i < 60 && fluidIn(b.tankOut, awkward) < 1000; ++i) co_await ctx.ticks(5);
     ctx.check(fluidIn(b.tankOut, awkward) == 1000, "water + nether wart brewed 1000 mB of awkward potion, got " + std::to_string(fluidIn(b.tankOut, awkward)));
     ctx.check(fluidIn(b.tankIn, "minecraft:water") == 0, "the water was used");
     // a container mix: gunpowder turns the potion into a splash potion
     basinops::insertInput(b, stack("minecraft:gunpowder"), false);
     basinops::notifyChangeOfContents(b);
-    std::string splash = "levitate:potion/splash/awkward";
+    std::string splash = "bearing:potion/splash/awkward";
     for (int i = 0; i < 60 && fluidIn(b.tankOut, splash) < 1000; ++i) co_await ctx.ticks(5);
     ctx.check(fluidIn(b.tankOut, splash) == 1000, "awkward + gunpowder -> splash awkward potion, got " + std::to_string(fluidIn(b.tankOut, splash)));
     for (auto& t : b.tankOut) t = {};
@@ -725,7 +725,7 @@ LV_REGISTER_SELFTEST("basin.brewing", [](Context& ctx) -> ll::coro::CoroTask<> {
     basinops::save(basin, b);
 });
 
-LV_REGISTER_SELFTEST("basin.hollow", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.hollow", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R73: Create's BASIN_BLOCK_SHAPE (foot + walls); items get BASIN_COLLISION_SHAPE
     Area a{ctx, 3915};
     auto p = a.at(0);
@@ -765,7 +765,7 @@ LV_REGISTER_SELFTEST("basin.hollow", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearItems(p);
 });
 
-LV_REGISTER_SELFTEST("basin.spout_funnel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.spout_funnel", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R76: a funnel whose opening faces away from the basin doesn't take its outputs
     Area a{ctx, 3920};
     auto upper  = a.at(0, 1);
@@ -775,12 +775,12 @@ LV_REGISTER_SELFTEST("basin.spout_funnel", [](Context& ctx) -> ll::coro::CoroTas
     ctx.require(ctx.setBlock(lower, kBasin), "the lower basin");
     ctx.require(ctx.setBlock(a.at(0), "minecraft:stone"), "support");
     ctx.require(ctx.setBlock(upper, kBasin), "the upper basin");
-    ctx.require(ctx.setBlock(funnel, "levitate:andesite_funnel", {{kFacingState, kEast}}), "a funnel east of the basin, facing away");
+    ctx.require(ctx.setBlock(funnel, "bearing:andesite_funnel", {{kFacingState, kEast}}), "a funnel east of the basin, facing away");
     ctx.check(!basinops::canOutputTo(region0(), game::blockPos(upper), kEast), "a funnel facing away blocks the spout");
-    ctx.require(ctx.setBlock(funnel, "levitate:andesite_funnel", {{kFacingState, kWest}}), "the funnel facing the basin");
+    ctx.require(ctx.setBlock(funnel, "bearing:andesite_funnel", {{kFacingState, kWest}}), "the funnel facing the basin");
     ctx.check(basinops::canOutputTo(region0(), game::blockPos(upper), kEast), "a funnel facing the basin takes its outputs");
     ctx.cleanupBlock(funnel);
     co_return;
 });
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin

@@ -7,8 +7,8 @@
 #include "core/crafter/Crafter.h"
 #include "core/crafter/TreeCutter.h"
 
-using namespace lv::core::crafter;
-using lv::core::kinetics::Offset;
+using namespace br::core::crafter;
+using br::core::kinetics::Offset;
 
 TEST(Crafter, TargetDirectionFollowsTheArrow) {
     // facing south: the viewer looks north at the front, their right is east
@@ -24,10 +24,10 @@ TEST(Crafter, TargetDirectionFollowsTheArrow) {
 
 TEST(Crafter, PlacedCraftersPointAtTheClickedBlock) {
     for (Face facing : {Face::North, Face::South, Face::West, Face::East}) {
-        for (Face clicked : lv::core::kinetics::kFaces) {
-            if (lv::core::kinetics::axisOf(clicked) == lv::core::kinetics::axisOf(facing)) continue;
+        for (Face clicked : br::core::kinetics::kFaces) {
+            if (br::core::kinetics::axisOf(clicked) == br::core::kinetics::axisOf(facing)) continue;
             auto p = pointingFromFacing(clicked, facing);
-            EXPECT_EQ(targetDirection(facing, p), lv::core::kinetics::opposite(clicked))
+            EXPECT_EQ(targetDirection(facing, p), br::core::kinetics::opposite(clicked))
                 << "facing " << int(facing) << " clicked " << int(clicked);
         }
     }

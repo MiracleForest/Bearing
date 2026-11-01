@@ -6,7 +6,7 @@
 // kinetic speed, settings, filters, ...) lives here: one JSON object per (dimension, position),
 // owned by the block's unit. Server thread only.
 //
-// - Persistence: grouped per chunk in the world DB (key "lv:common:bd:<dim>:<cx>:<cz>"), loaded
+// - Persistence: grouped per chunk in the world DB (key "br:common:bd:<dim>:<cx>:<cz>"), loaded
 //   lazily on first access, written on `onWorldSave` (autosave / stop) when dirty.
 // - Lifetime: an entry is erased automatically when the block at its position changes to a
 //   different block type (broken, replaced, exploded, moved by a vanilla piston); block *state*
@@ -30,7 +30,7 @@
 
 #include "core/GlobalPos.h"
 
-namespace lv::feature::common::blockdata {
+namespace br::feature::common::blockdata {
 
 using Json = nlohmann::json;
 using core::GlobalPos;
@@ -91,4 +91,4 @@ void ownCarrier(std::string key);
 /// Keys declared with `ownCarrier`.
 [[nodiscard]] std::vector<std::string> ownCarriedKeys();
 
-} // namespace lv::feature::common::blockdata
+} // namespace br::feature::common::blockdata

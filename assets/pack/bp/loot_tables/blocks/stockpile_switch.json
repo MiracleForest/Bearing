@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:stockpile_switch",
+          "name": "bearing:stockpile_switch",
           "weight": 1
         }
       ]

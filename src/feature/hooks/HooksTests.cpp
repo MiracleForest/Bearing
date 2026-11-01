@@ -23,7 +23,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::hooks {
+namespace br::feature::hooks {
 
 namespace {
 
@@ -33,12 +33,12 @@ namespace ia     = common::interactions;
 namespace rs     = common::redstone;
 namespace citems = common::items;
 
-constexpr char kSource[]  = "levitate:kinetics_test_source";
-constexpr char kShaft[]   = "levitate:shaft";
-constexpr char kTank[]    = "levitate:fluid_tank";
-constexpr char kVault[]   = "levitate:item_vault";
-constexpr char kDepot[]   = "levitate:depot";
-constexpr char kAxis[]    = "levitate:axis";
+constexpr char kSource[]  = "bearing:kinetics_test_source";
+constexpr char kShaft[]   = "bearing:shaft";
+constexpr char kTank[]    = "bearing:fluid_tank";
+constexpr char kVault[]   = "bearing:item_vault";
+constexpr char kDepot[]   = "bearing:depot";
+constexpr char kAxis[]    = "bearing:axis";
 
 GP at(GP p, int dx, int dy = 0, int dz = 0) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -100,7 +100,7 @@ void floorUnder(Context& ctx, GP p, int len) {
 
 // ---- dispatch order ------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("hooks.wrench_order", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("hooks.wrench_order", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3600), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& player = ctx.player();
@@ -156,7 +156,7 @@ LV_REGISTER_SELFTEST("hooks.wrench_order", [](Context& ctx) -> ll::coro::CoroTas
     player.setSelectedItem(ItemStack());
 });
 
-LV_REGISTER_SELFTEST("hooks.place_and_next_tick", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("hooks.place_and_next_tick", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto& player = ctx.player();
     auto  p      = at(ctx.testPos(3620), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -180,7 +180,7 @@ LV_REGISTER_SELFTEST("hooks.place_and_next_tick", [](Context& ctx) -> ll::coro::
 
 // ---- comparator output ---------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("hooks.comparator_tank", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("hooks.comparator_tank", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3640), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = regionOf(ctx);
@@ -203,7 +203,7 @@ LV_REGISTER_SELFTEST("hooks.comparator_tank", [](Context& ctx) -> ll::coro::Coro
     for (auto const& p : {rig.comparator, rig.wire, base}) ctx.setBlock(p, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("hooks.comparator_vault", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("hooks.comparator_vault", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3660), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = regionOf(ctx);
@@ -222,7 +222,7 @@ LV_REGISTER_SELFTEST("hooks.comparator_vault", [](Context& ctx) -> ll::coro::Cor
     for (auto const& p : {rig.comparator, rig.wire}) ctx.setBlock(p, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("hooks.comparator_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("hooks.comparator_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3680), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = regionOf(ctx);
@@ -243,4 +243,4 @@ LV_REGISTER_SELFTEST("hooks.comparator_depot", [](Context& ctx) -> ll::coro::Cor
     for (auto const& p : {rig.comparator, rig.wire, at(base, 1), base}) ctx.setBlock(p, "minecraft:air");
 });
 
-} // namespace lv::feature::hooks
+} // namespace br::feature::hooks

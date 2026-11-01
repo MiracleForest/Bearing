@@ -1,6 +1,6 @@
 // `/create contraption ...` (the test anchor: assemble, move, rotate, stop, disassemble without a
 // bearing or piston), `/create glue <from> <to>` (Create's GlueCommand: adds a super glue region)
-// and `/create glue clear [radius]` (Levitate only: removes the regions near the caller). Op only.
+// and `/create glue clear [radius]` (Bearing only: removes the regions near the caller). Op only.
 
 #include <cmath>
 
@@ -21,7 +21,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 // Command parameter types need external linkage.
 struct ContraptionPosParams {
@@ -65,9 +65,9 @@ int dimOf(CommandOrigin const& origin) {
 }
 
 void assembleAt(CommandOrigin const& origin, CommandOutput& output, int x, int y, int z, std::string const& axisName) {
-    if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+    if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
     auto axis = cc::axisFromName(axisName.empty() ? "y" : axisName);
-    if (!axis) return output.error(tr("lv.contraption.bad_axis", "The axis must be x, y or z"));
+    if (!axis) return output.error(tr("br.contraption.bad_axis", "The axis must be x, y or z"));
     AssembleOptions o;
     o.anchor        = {dimOf(origin), x, y, z};
     o.includeAnchor = true;
@@ -76,12 +76,12 @@ void assembleAt(CommandOrigin const& origin, CommandOutput& output, int x, int y
     auto r          = assemble(o);
     if (!r.ok()) return output.error(tr("create.gui.assembly.exception", "This Contraption was unable to assemble:") + " " + r.errorText);
     auto* c = find(*r.id);
-    output.success(tr("lv.contraption.assembled", "Contraption #{} assembled ({} blocks)", *r.id, c ? c->blocks().size() : 0));
+    output.success(tr("br.contraption.assembled", "Contraption #{} assembled ({} blocks)", *r.id, c ? c->blocks().size() : 0));
 }
 
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     using Origin = CommandOrigin const;
     cmd.overload<ContraptionPosParams>()
         .text("contraption")
@@ -111,15 +111,15 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
         .required("dz")
         .optional("ticks")
         .execute([](Origin& origin, CommandOutput& output, ContraptionMoveParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             auto* c = find(static_cast<Id>(p.id));
-            if (!c) return output.error(tr("lv.contraption.unknown", "No contraption #{}", p.id));
+            if (!c) return output.error(tr("br.contraption.unknown", "No contraption #{}", p.id));
             int    ticks = std::max(1, p.ticks);
             Motion m;
             m.velocity = cc::Vec3d{p.dx, p.dy, p.dz} * (1.0 / ticks);
             m.ticks    = ticks;
             c->setMotion(m);
-            output.success(tr("lv.contraption.moving", "Contraption #{} moving", p.id));
+            output.success(tr("br.contraption.moving", "Contraption #{} moving", p.id));
         });
     cmd.overload<ContraptionRotateParams>()
         .text("contraption")
@@ -129,13 +129,13 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
         .required("degrees")
         .optional("ticks")
         .execute([](Origin& origin, CommandOutput& output, ContraptionRotateParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             auto* c = find(static_cast<Id>(p.id));
-            if (!c) return output.error(tr("lv.contraption.unknown", "No contraption #{}", p.id));
+            if (!c) return output.error(tr("br.contraption.unknown", "No contraption #{}", p.id));
             auto axis = cc::axisFromName(p.axis);
-            if (!axis) return output.error(tr("lv.contraption.bad_axis", "The axis must be x, y or z"));
+            if (!axis) return output.error(tr("br.contraption.bad_axis", "The axis must be x, y or z"));
             if (*axis != c->transform().axis) {
-                if (std::abs(c->transform().angle) > 1e-6) return output.error(tr("lv.contraption.other_axis", "The contraption already turns about another axis"));
+                if (std::abs(c->transform().angle) > 1e-6) return output.error(tr("br.contraption.other_axis", "The contraption already turns about another axis"));
                 auto t = c->transform();
                 t.axis = *axis;
                 c->setTransform(t);
@@ -145,29 +145,29 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
             m.angularVelocity = p.degrees / ticks;
             m.ticks           = ticks;
             c->setMotion(m);
-            output.success(tr("lv.contraption.moving", "Contraption #{} moving", p.id));
+            output.success(tr("br.contraption.moving", "Contraption #{} moving", p.id));
         });
     cmd.overload<ContraptionIdParams>().text("contraption").text("stop").required("id").execute(
         [](Origin& origin, CommandOutput& output, ContraptionIdParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             auto* c = find(static_cast<Id>(p.id));
-            if (!c) return output.error(tr("lv.contraption.unknown", "No contraption #{}", p.id));
+            if (!c) return output.error(tr("br.contraption.unknown", "No contraption #{}", p.id));
             c->stop();
-            output.success(tr("lv.contraption.stopped", "Contraption #{} stopped", p.id));
+            output.success(tr("br.contraption.stopped", "Contraption #{} stopped", p.id));
         }
     );
     cmd.overload<ContraptionIdParams>().text("contraption").text("disassemble").required("id").execute(
         [](Origin& origin, CommandOutput& output, ContraptionIdParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
-            if (!disassemble(static_cast<Id>(p.id))) return output.error(tr("lv.contraption.unknown", "No contraption #{}", p.id));
-            output.success(tr("lv.contraption.disassembled", "Contraption #{} disassembled", p.id));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
+            if (!disassemble(static_cast<Id>(p.id))) return output.error(tr("br.contraption.unknown", "No contraption #{}", p.id));
+            output.success(tr("br.contraption.disassembled", "Contraption #{} disassembled", p.id));
         }
     );
     // A small glued structure built 4 blocks in front of the player and assembled (e2e / demos).
     cmd.overload().text("contraption").text("demo").execute([](Origin& origin, CommandOutput& output) {
-        if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+        if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
         auto* player = commands::playerOf(origin);
-        if (!player) return output.error(tr("lv.contraption.players_only", "Only players can build the demo."));
+        if (!player) return output.error(tr("br.contraption.players_only", "Only players can build the demo."));
         auto& region = player->getDimensionBlockSource();
         int   dim    = static_cast<int>(player->getDimensionId());
         auto  feet   = game::blockPosOf(player->getFeetPos());
@@ -196,12 +196,12 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
         o.kind          = "test";
         auto r          = assemble(o);
         if (!r.ok()) return output.error(r.errorText);
-        output.success(tr("lv.contraption.assembled", "Contraption #{} assembled ({} blocks)", *r.id, find(*r.id)->blocks().size()));
+        output.success(tr("br.contraption.assembled", "Contraption #{} assembled ({} blocks)", *r.id, find(*r.id)->blocks().size()));
     });
     cmd.overload().text("contraption").text("list").execute([](Origin& origin, CommandOutput& output) {
-        if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+        if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
         auto ids = all();
-        std::string text = tr("lv.contraption.list", "{} contraption(s)", ids.size());
+        std::string text = tr("br.contraption.list", "{} contraption(s)", ids.size());
         for (auto id : ids) {
             auto* c = find(id);
             if (!c) continue;
@@ -221,13 +221,13 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
         .required("z")
         .required("range")
         .execute([](Origin& origin, CommandOutput& output, ContraptionChassisParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             setChassisRange({dimOf(origin), p.x, p.y, p.z}, p.range);
             output.success(tr("create.contraptions.chassis.range", "Range of Sticky Sides") + ": " + std::to_string(chassisRange({dimOf(origin), p.x, p.y, p.z})));
         });
     cmd.overload<GlueAddParams>().text("glue").required("from").required("to").execute(
         [](Origin& origin, CommandOutput& output, GlueAddParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             constexpr int kLatest = 0x7FFFFFFF; // newest rules for relative positions
             auto from = game::blockPosOf(p.from.getPosition(kLatest, origin, Vec3{0, 0, 0}));
             auto to   = game::blockPosOf(p.to.getPosition(kLatest, origin, Vec3{0, 0, 0}));
@@ -236,18 +236,18 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
             addGlue(dim, box);
             detail::playSound(dim, cc::Vec3d::center(box.min), "mob.slime.big", 0.5f, 0.9f);
             log().info("super glue added by command: {} {} {} .. {} {} {}", box.min.x, box.min.y, box.min.z, box.max.x, box.max.y, box.max.z);
-            output.success(tr("lv.contraption.glue_added", "Glued {} {} {} .. {} {} {}", box.min.x, box.min.y, box.min.z, box.max.x, box.max.y, box.max.z));
+            output.success(tr("br.contraption.glue_added", "Glued {} {} {} .. {} {} {}", box.min.x, box.min.y, box.min.z, box.max.x, box.max.y, box.max.z));
         }
     );
     cmd.overload<GlueClearParams>().text("glue").text("clear").optional("radius").execute(
         [](Origin& origin, CommandOutput& output, GlueClearParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             auto* e = origin.getEntity();
             BlockPos center = e ? game::blockPosOf(e->getPosition()) : BlockPos{0, 0, 0};
             int      n      = clearGlue(dimOf(origin), {center.x, center.y, center.z}, std::max(0, p.radius));
-            output.success(tr("lv.contraption.glue_cleared", "Removed {} glue region(s)", n));
+            output.success(tr("br.contraption.glue_cleared", "Removed {} glue region(s)", n));
         }
     );
 });
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

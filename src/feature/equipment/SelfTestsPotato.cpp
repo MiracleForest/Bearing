@@ -45,13 +45,13 @@ namespace {
 /// U45's tests move 240 blocks north, to rows no unit uses (z -62..-58), so entities there tick.
 constexpr int kU45Shift = -240;
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
+using br::core::GlobalPos;
+using br::selftest::Context;
 using SharedTypes::Legacy::ArmorSlot;
-namespace eq    = lv::feature::equipment;
-namespace ce    = lv::core::equipment;
-namespace items = lv::feature::common::items;
-namespace adv   = lv::feature::advancements;
+namespace eq    = br::feature::equipment;
+namespace ce    = br::core::equipment;
+namespace items = br::feature::common::items;
+namespace adv   = br::feature::advancements;
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -127,7 +127,7 @@ void addEffect(Actor& a, unsigned id, int ticks) {
 
 // The cannon fires a real projectile entity: tagged, of the ammo's variant, never saved, moved every
 // tick to the simulated position, removed when it pops on a wall (no recovery without the enchantment).
-LV_REGISTER_SELFTEST("equipment.potato_entity", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_entity", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4550, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -139,7 +139,7 @@ LV_REGISTER_SELFTEST("equipment.potato_entity", [](Context& ctx) -> ll::coro::Co
     co_await ctx.ticks(2);
     sp.simulateLookAt(Vec3{target.x + .5f, sp.getEyePos().y, target.z + .5f}, sim::LookDuration::Continuous);
     co_await ctx.ticks(3);
-    ctx.give(sp, item(ctx, "levitate:potato_cannon"), 0);
+    ctx.give(sp, item(ctx, "bearing:potato_cannon"), 0);
     ctx.give(sp, item(ctx, "minecraft:potato", 2), 5);
     ctx.require(eq::firePotatoCannon(sp), "the cannon fires");
     auto list = eq::projectiles();
@@ -147,7 +147,7 @@ LV_REGISTER_SELFTEST("equipment.potato_entity", [](Context& ctx) -> ll::coro::Co
     auto  id = list[0].entity;
     auto* e  = actorById(id);
     ctx.require(e != nullptr, "the projectile is an entity");
-    ctx.check(e->getTypeName() == eq::kPotatoProjectile, "of type levitate:potato_projectile, got " + e->getTypeName());
+    ctx.check(e->getTypeName() == eq::kPotatoProjectile, "of type bearing:potato_projectile, got " + e->getTypeName());
     ctx.check(e->hasTag(eq::kPotatoProjectileTag), "tagged");
     ctx.check(e->getVariant() == ce::potatoAmmoIndex("minecraft:potato"), "variant 0 (the potato texture), got " + std::to_string(e->getVariant()));
     CompoundTag tag;
@@ -171,12 +171,12 @@ LV_REGISTER_SELFTEST("equipment.potato_entity", [](Context& ctx) -> ll::coro::Co
 });
 
 // Every ammo item picks its texture (the entity variant) and Create's render mode in the resource pack.
-LV_REGISTER_SELFTEST("equipment.potato_variants", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_variants", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4553, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = ctx.player();
     int   dim = static_cast<int>(sp.getDimensionId());
-    for (auto id : {"minecraft:carrot", "minecraft:cake", "minecraft:tropical_fish", "minecraft:melon_block", "levitate:blaze_cake"}) {
+    for (auto id : {"minecraft:carrot", "minecraft:cake", "minecraft:tropical_fish", "minecraft:melon_block", "bearing:blaze_cake"}) {
         // straight down into the ground next to the test position
         auto e = eq::launchProjectile(dim, base.x + .5, base.y + 1.5, base.z + .5, 0, -1, 0, id, 0, 0);
         ctx.require(e != 0, std::string("a projectile of ") + id);
@@ -190,7 +190,7 @@ LV_REGISTER_SELFTEST("equipment.potato_variants", [](Context& ctx) -> ll::coro::
 });
 
 // Create's sticky types stick to the entity they hit, slide down it and pop below its feet.
-LV_REGISTER_SELFTEST("equipment.potato_sticky", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_sticky", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4556, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp    = ctx.player();
@@ -229,7 +229,7 @@ LV_REGISTER_SELFTEST("equipment.potato_sticky", [](Context& ctx) -> ll::coro::Co
 });
 
 // Projectiles of different types pop each other; both owners get "potato_cannon_collide".
-LV_REGISTER_SELFTEST("equipment.potato_collide", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_collide", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4559, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp  = ctx.player();
@@ -256,7 +256,7 @@ LV_REGISTER_SELFTEST("equipment.potato_collide", [](Context& ctx) -> ll::coro::C
 
 // Create's recovery rule: the recovery roll (else the type's drop: a bowl for suspicious stew), and the
 // cannon's Potato Recovery level sets the chance (0 without it).
-LV_REGISTER_SELFTEST("equipment.potato_recovery", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_recovery", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4562, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp  = static_cast<SimulatedPlayer&>(ctx.player());
@@ -280,7 +280,7 @@ LV_REGISTER_SELFTEST("equipment.potato_recovery", [](Context& ctx) -> ll::coro::
     clearItems(sp, w, 5);
     // the enchanted cannon
     clearInventory(sp);
-    auto cannon = item(ctx, "levitate:potato_cannon");
+    auto cannon = item(ctx, "bearing:potato_cannon");
     eq::setEnchantLevel(cannon, eq::kPotatoRecovery, 2, &sp);
     ctx.check(eq::enchantLevel(cannon, eq::kPotatoRecovery) == 2, "the cannon has Potato Recovery II");
     auto lore = cannon.getCustomLore();
@@ -301,7 +301,7 @@ LV_REGISTER_SELFTEST("equipment.potato_recovery", [](Context& ctx) -> ll::coro::
 });
 
 // Create's CureZombieVillager: a golden apple cures a weakened zombie villager.
-LV_REGISTER_SELFTEST("equipment.potato_golden_apple", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_golden_apple", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4565, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp    = ctx.player();
@@ -339,12 +339,12 @@ LV_REGISTER_SELFTEST("equipment.potato_golden_apple", [](Context& ctx) -> ll::co
 });
 
 // Capacity: + enchantedBacktankCapacity (300) air per level, in the item and in the placed block.
-LV_REGISTER_SELFTEST("equipment.potato_capacity", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_capacity", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4566, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     clearInventory(sp);
-    auto tank = item(ctx, "levitate:copper_backtank");
+    auto tank = item(ctx, "bearing:copper_backtank");
     ctx.check(eq::maxAir(tank) == 900, "900 air without Capacity");
     eq::setEnchantLevel(tank, eq::kCapacity, 2, &sp);
     ctx.check(eq::maxAir(tank) == 1500, "Capacity II: 1500 air, got " + std::to_string(eq::maxAir(tank)));
@@ -377,15 +377,15 @@ LV_REGISTER_SELFTEST("equipment.potato_capacity", [](Context& ctx) -> ll::coro::
 
 // The enchanting table offers Create's enchantment as Java does (deterministic per seed and option)
 // and the option applied to the item adds it.
-LV_REGISTER_SELFTEST("equipment.potato_enchant_table", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_enchant_table", [](Context& ctx) -> ll::coro::CoroTask<> {
     // the roll alone: deterministic, only for the items it applies to, Create's levels
-    auto r1 = eq::rollTableEnchant("levitate:potato_cannon", 1, 30, 1234, 2);
-    auto r2 = eq::rollTableEnchant("levitate:potato_cannon", 1, 30, 1234, 2);
+    auto r1 = eq::rollTableEnchant("bearing:potato_cannon", 1, 30, 1234, 2);
+    auto r2 = eq::rollTableEnchant("bearing:potato_cannon", 1, 30, 1234, 2);
     ctx.check(r1 == r2, "the roll is deterministic per seed and option");
     ctx.check(r1.first == eq::kPotatoRecovery && r1.second >= 1 && r1.second <= 2, "alone in the pool it is always picked at cost 30");
     ctx.check(eq::rollTableEnchant("minecraft:stone", 1, 30, 1, 0).second == 0, "nothing for other items");
-    ctx.check(eq::rollTableEnchant("levitate:copper_backtank", 9, 30, 1, 0).first == eq::kCapacity, "Capacity for backtanks");
-    ctx.check(eq::rollTableEnchant("levitate:potato_cannon", 1, 3, 1, 0).second == 0, "nothing at a low cost");
+    ctx.check(eq::rollTableEnchant("bearing:copper_backtank", 9, 30, 1, 0).first == eq::kCapacity, "Capacity for backtanks");
+    ctx.check(eq::rollTableEnchant("bearing:potato_cannon", 1, 3, 1, 0).second == 0, "nothing at a low cost");
 
     // a real table with 16 bookshelves
     auto base = at(ctx.testPos(4568, kU45Shift), 0, 1, 0);
@@ -411,7 +411,7 @@ LV_REGISTER_SELFTEST("equipment.potato_enchant_table", [](Context& ctx) -> ll::c
     }
     ctx.require(model && model->getContainerType() == SharedTypes::Legacy::ContainerType::Enchantment, "an enchanting container");
     auto& table = static_cast<EnchantingContainerManagerModel&>(*model);
-    auto  cannon = item(ctx, "levitate:potato_cannon");
+    auto  cannon = item(ctx, "bearing:potato_cannon");
     int   found  = -1;
     for (int seed = 1; seed <= 60 && found < 0; ++seed) {
         sp.mEnchantmentSeed = seed * 7919;
@@ -441,9 +441,9 @@ LV_REGISTER_SELFTEST("equipment.potato_enchant_table", [](Context& ctx) -> ll::c
 });
 
 // Anvils merge Create's enchantments as Java's anvil does; grindstones remove them.
-LV_REGISTER_SELFTEST("equipment.potato_anvil_grindstone", [](Context& ctx) {
-    auto a = item(ctx, "levitate:potato_cannon");
-    auto b = item(ctx, "levitate:potato_cannon");
+BR_REGISTER_SELFTEST("equipment.potato_anvil_grindstone", [](Context& ctx) {
+    auto a = item(ctx, "bearing:potato_cannon");
+    auto b = item(ctx, "bearing:potato_cannon");
     EnchantmentInstance unbreaking;
     unbreaking.mEnchantType = Enchant::Type::Unbreaking;
     unbreaking.mLevel       = 1;
@@ -461,7 +461,7 @@ LV_REGISTER_SELFTEST("equipment.potato_anvil_grindstone", [](Context& ctx) {
 
 // A show of projectiles for the client harness' screenshots (does nothing without a real player):
 // slow arcs of every render mode in front of the first real player, and cakes stuck to a cow.
-LV_REGISTER_SELFTEST("equipment.potato_showcase", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_showcase", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto level = ll::service::getLevel();
     ctx.require(level != nullptr, "level");
     Player* viewer = nullptr;
@@ -485,7 +485,7 @@ LV_REGISTER_SELFTEST("equipment.potato_showcase", [](Context& ctx) -> ll::coro::
     auto   cowId = cow ? eq::uidOf(*cow) : 0;
     static constexpr char const* kAmmo[] = {
         "minecraft:potato", "minecraft:carrot", "minecraft:apple", "minecraft:golden_carrot", "minecraft:melon_block", "minecraft:cod",
-        "minecraft:enchanted_golden_apple", "minecraft:pumpkin", "minecraft:beetroot", "levitate:chocolate_glazed_berries",
+        "minecraft:enchanted_golden_apple", "minecraft:pumpkin", "minecraft:beetroot", "bearing:chocolate_glazed_berries",
     };
     for (int i = 0; i < 40; ++i) {
         if (i % 4 == 0) {

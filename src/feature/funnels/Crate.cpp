@@ -14,7 +14,7 @@
 #include "feature/funnels/FunnelsInternal.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::funnels::detail {
+namespace br::feature::funnels::detail {
 
 namespace items = common::items;
 
@@ -71,4 +71,4 @@ void installCrate() {
     );
 }
 
-} // namespace lv::feature::funnels::detail
+} // namespace br::feature::funnels::detail

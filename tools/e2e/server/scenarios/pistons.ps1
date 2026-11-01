@@ -10,19 +10,19 @@ Wait-LogLine 'gantry carriage at -?\d+ -?\d+ -?\d+ assembled' 10 -Since $mark | 
 Wait-LogLine 'elevator column at -?\d+ -?\d+ called to contact y' 10 -Since $mark | Out-Null
 
 # A piston pushing a block, from the console: two poles behind, a test generator beside it.
-Send-Console 'tickingarea add 0 -64 0 15 -40 15 lv_pistons_e2e true'
+Send-Console 'tickingarea add 0 -64 0 15 -40 15 br_pistons_e2e true'
 Wait-Seconds 3
-Send-Console 'setblock 4 -60 2 levitate:piston_extension_pole ["levitate:facing"=3]'
-Send-Console 'setblock 4 -60 1 levitate:piston_extension_pole ["levitate:facing"=3]'
+Send-Console 'setblock 4 -60 2 bearing:piston_extension_pole ["bearing:facing"=3]'
+Send-Console 'setblock 4 -60 1 bearing:piston_extension_pole ["bearing:facing"=3]'
 Send-Console 'setblock 4 -60 6 gold_block'
 Send-Console 'setblock 4 -60 4 stone'
-Send-Console 'setblock 4 -60 3 levitate:mechanical_piston ["levitate:facing"=3,"levitate:axis_first"=1]'
+Send-Console 'setblock 4 -60 3 bearing:mechanical_piston ["bearing:facing"=3,"bearing:axis_first"=1]'
 $mark = Get-LogMark
-Send-Console 'setblock 5 -60 3 levitate:kinetics_test_source ["levitate:axis"=0]'
+Send-Console 'setblock 5 -60 3 bearing:kinetics_test_source ["bearing:axis"=0]'
 Wait-LogLine 'piston at 4 -60 3 assembled: 4 blocks, offset 0' 20 -Since $mark | Out-Null
 Wait-LogLine 'piston at 4 -60 3 disassembled at offset 1' 60 -Since $mark | Out-Null
 Send-Console 'create kinetics 5 -60 3 speed -64'
 Wait-LogLine 'piston at 4 -60 3 disassembled at offset 0' 60 -Since $mark | Out-Null
 foreach ($z in 1..6) { Send-Console "setblock 4 -60 $z air" }
 Send-Console 'setblock 5 -60 3 air'
-Send-Console 'tickingarea remove lv_pistons_e2e'
+Send-Console 'tickingarea remove br_pistons_e2e'

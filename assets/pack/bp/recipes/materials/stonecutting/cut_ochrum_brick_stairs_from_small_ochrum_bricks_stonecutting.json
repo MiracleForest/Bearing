@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cut_ochrum_brick_stairs_from_small_ochrum_bricks_stonecutting"
+      "identifier": "bearing:cut_ochrum_brick_stairs_from_small_ochrum_bricks_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:small_ochrum_bricks"
+        "item": "bearing:small_ochrum_bricks"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:small_ochrum_bricks"
+        "item": "bearing:small_ochrum_bricks"
       }
     ],
     "result": {
-      "item": "levitate:cut_ochrum_brick_stairs",
+      "item": "bearing:cut_ochrum_brick_stairs",
       "count": 1
     }
   }

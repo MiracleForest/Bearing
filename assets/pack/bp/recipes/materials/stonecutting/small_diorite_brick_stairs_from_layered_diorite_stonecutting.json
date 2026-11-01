@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_diorite_brick_stairs_from_layered_diorite_stonecutting"
+      "identifier": "bearing:small_diorite_brick_stairs_from_layered_diorite_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:layered_diorite"
+        "item": "bearing:layered_diorite"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:layered_diorite"
+        "item": "bearing:layered_diorite"
       }
     ],
     "result": {
-      "item": "levitate:small_diorite_brick_stairs",
+      "item": "bearing:small_diorite_brick_stairs",
       "count": 1
     }
   }

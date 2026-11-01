@@ -3,9 +3,9 @@
   "size": [5, 5],
   "height": 6,
   "blocks": [
-    {"area": [[2, 1, 0], [2, 2, 0]], "id": "levitate:andesite_casing"},
-    {"at": [2, 3, 0], "id": "levitate:creative_motor", "states": {"levitate:facing": 3}},
-    {"at": [2, 3, 1], "id": "levitate:clockwork_bearing", "states": {"levitate:facing": 3}},
+    {"area": [[2, 1, 0], [2, 2, 0]], "id": "bearing:andesite_casing"},
+    {"at": [2, 3, 0], "id": "bearing:creative_motor", "states": {"bearing:facing": 3}},
+    {"at": [2, 3, 1], "id": "bearing:clockwork_bearing", "states": {"bearing:facing": 3}},
     {"area": [[2, 3, 2], [2, 4, 2]], "id": "minecraft:oak_planks"},
     {"at": [2, 3, 3], "id": "minecraft:oak_planks"},
     {"area": [[2, 4, 3], [2, 5, 3]], "id": "minecraft:oak_fence"}

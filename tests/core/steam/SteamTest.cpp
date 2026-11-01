@@ -7,8 +7,8 @@
 #include "core/steam/Tank.h"
 #include "core/steam/Whistle.h"
 
-using namespace lv::core::steam;
-using lv::core::common::HeatLevel;
+using namespace br::core::steam;
+using br::core::common::HeatLevel;
 
 namespace {
 

@@ -3,13 +3,13 @@
 // A 5x7 pixel font for text drawn in the world (display boards, nixie tubes). Column-major: five
 // bytes per glyph, bit 0 = top row. Printable ASCII plus the progress bar blocks.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cstdint>
 #include <string_view>
 
-namespace lv::client::display {
+namespace br::client::display {
 
 using Glyph = std::array<std::uint8_t, 5>;
 
@@ -56,6 +56,6 @@ inline constexpr Glyph kUnknown{0x7F, 0x41, 0x41, 0x41, 0x7F};
     return kUnknown;
 }
 
-} // namespace lv::client::display
+} // namespace br::client::display
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

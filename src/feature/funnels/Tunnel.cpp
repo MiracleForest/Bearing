@@ -28,7 +28,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::funnels::detail {
+namespace br::feature::funnels::detail {
 
 namespace items    = common::items;
 namespace beltlink = common::beltlink;
@@ -173,11 +173,11 @@ bool flapFilterEmpty(BlockSource& region, GlobalPos const& pos, int side) {
 }
 
 /// Something that takes items from the side like Create's DirectBeltInputBehaviour: a belt, or
-/// one of our own blocks / another Levitate machine with an item capability.
+/// one of our own blocks / another Bearing machine with an item capability.
 bool directInput(BlockSource& region, BlockPos const& p, int fromSide) {
     if (beltlink::segmentAt(region, p)) return true;
     auto id = idAt(region, p);
-    return id.starts_with("levitate:") && common::items::has(region, p, cf::oppositeFace(fromSide));
+    return id.starts_with("bearing:") && common::items::has(region, p, cf::oppositeFace(fromSide));
 }
 
 /// Create's DirectBeltInputBehaviour.handleInsertion at `out` for an item travelling `side`: belts,
@@ -510,7 +510,7 @@ void updateTunnelShape(BlockSource& region, GlobalPos const& pos) {
         BlockPos o = offset(below, side);
         if (auto seg = beltlink::segmentAt(region, o)) return cf::isHorizontal(seg->movementFacing) && cf::axisOf(seg->movementFacing) == cf::axisOf(side);
         auto id = idAt(region, o);
-        return id.starts_with("levitate:") && common::items::has(region, o, cf::oppositeFace(side));
+        return id.starts_with("bearing:") && common::items::has(region, o, cf::oppositeFace(side));
     };
     int  left       = cf::tunnelLeft(axis);
     int  fw         = cf::positiveFace(axis);
@@ -617,4 +617,4 @@ void installTunnels() {
     common::valuebox::registerBox(kBrassTunnel, std::move(mode));
 }
 
-} // namespace lv::feature::funnels::detail
+} // namespace br::feature::funnels::detail

@@ -38,7 +38,7 @@
 #include "feature/contraption/Registries.h"
 #include "mod/Config.h"
 
-namespace lv::feature::contraption::detail {
+namespace br::feature::contraption::detail {
 
 namespace {
 
@@ -290,22 +290,22 @@ cc::BlockInfo describe(BlockSource& region, int /*dim*/, cc::Pos const& p) {
     // our own blocks
     if (auto kind = chassisKind(info.id); kind != cc::ChassisKind::None) {
         info.chassis     = kind;
-        info.chassisAxis = static_cast<cc::Axis>(std::clamp<std::int64_t>(intState(states, "levitate:axis").value_or(1), 0, 2));
+        info.chassisAxis = static_cast<cc::Axis>(std::clamp<std::int64_t>(intState(states, "bearing:axis").value_or(1), 0, 2));
         if (kind == cc::ChassisKind::Radial) {
             auto sides = cc::radialSides(info.chassisAxis);
-            char const* keys[4]{"levitate:sticky_north", "levitate:sticky_south", "levitate:sticky_east", "levitate:sticky_west"};
+            char const* keys[4]{"bearing:sticky_north", "bearing:sticky_south", "bearing:sticky_east", "bearing:sticky_west"};
             for (int i = 0; i < 4; ++i)
                 if (intState(states, keys[i]).value_or(0)) info.stickyFaces |= cc::bit(sides[i]);
         } else {
-            if (intState(states, "levitate:sticky_top").value_or(0)) info.stickyFaces |= cc::bit(cc::dirOf(info.chassisAxis, true));
-            if (intState(states, "levitate:sticky_bottom").value_or(0))
+            if (intState(states, "bearing:sticky_top").value_or(0)) info.stickyFaces |= cc::bit(cc::dirOf(info.chassisAxis, true));
+            if (intState(states, "bearing:sticky_bottom").value_or(0))
                 info.stickyFaces |= cc::bit(cc::dirOf(info.chassisAxis, false));
         }
         info.chassisRange = storedChassisRange(static_cast<int>(region.getDimensionId()), p);
     }
     if (info.id == kSticker) {
-        auto facing = static_cast<cc::Dir>(std::clamp<std::int64_t>(intState(states, "levitate:facing").value_or(1), 0, 5));
-        if (intState(states, "levitate:extended").value_or(0)) {
+        auto facing = static_cast<cc::Dir>(std::clamp<std::int64_t>(intState(states, "bearing:facing").value_or(1), 0, 5));
+        if (intState(states, "bearing:extended").value_or(0)) {
             info.stickerFacing = facing;
             info.attachedTowards |= cc::bit(facing);
         } else {
@@ -324,7 +324,7 @@ cc::BlockInfo describe(BlockSource& region, int /*dim*/, cc::Pos const& p) {
         if (rules->pulls) info.pulls |= rules->pulls(states);
     }
     // Create's moveBlock: "Cart assemblers attach themselves" to the block they carry
-    if (p.y - 1 >= region.getMinHeight() && region.getBlock(toBlockPos(p + cc::offset(cc::Dir::Down))).getTypeName() == "levitate:cart_assembler") {
+    if (p.y - 1 >= region.getMinHeight() && region.getBlock(toBlockPos(p + cc::offset(cc::Dir::Down))).getTypeName() == "bearing:cart_assembler") {
         info.pulls |= cc::bit(cc::Dir::Down);
     }
 
@@ -345,7 +345,7 @@ cc::BlockInfo describe(BlockSource& region, int /*dim*/, cc::Pos const& p) {
         }
         if (movementSetting(info.id) == MovementSetting::Unmovable) info.movable = false;
         // Create: ITrackBlock and StationBlock never move
-        if (info.id == "levitate:track" || info.id == "levitate:fake_track" || info.id == "levitate:track_station") info.movable = false;
+        if (info.id == "bearing:track" || info.id == "bearing:fake_track" || info.id == "bearing:track_station") info.movable = false;
         if (auto const* rules = movementRules(info.id); rules && rules->movable && !rules->movable(states)) info.movable = false;
         if (auto const* at = movableAt(info.id); info.movable && at && !(*at)(region, {static_cast<int>(region.getDimensionId()), p.x, p.y, p.z}, states)) {
             info.movable = false;
@@ -397,9 +397,9 @@ void dropItemAt(BlockSource& region, cc::Vec3d const& pos, Block const& block, s
     level->getSpawner().spawnItem(region, item, nullptr, Vec3{float(pos.x), float(pos.y), float(pos.z)}, 10);
 }
 
-} // namespace lv::feature::contraption::detail
+} // namespace br::feature::contraption::detail
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 MovementSetting movementSetting(std::string_view blockId) {
     auto const& cfg = config::get<Config>();
@@ -412,4 +412,4 @@ MovementSetting movementSetting(std::string_view blockId) {
     return MovementSetting::Movable;
 }
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

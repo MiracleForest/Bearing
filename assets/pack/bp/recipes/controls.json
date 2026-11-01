@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:controls"
+      "identifier": "bearing:controls"
     },
     "tags": [
       "crafting_table"
@@ -17,19 +17,19 @@
         "item": "minecraft:lever"
       },
       "C": {
-        "item": "levitate:railway_casing"
+        "item": "bearing:railway_casing"
       },
       "I": {
-        "item": "levitate:precision_mechanism"
+        "item": "bearing:precision_mechanism"
       }
     },
     "unlock": [
       {
-        "item": "levitate:railway_casing"
+        "item": "bearing:railway_casing"
       }
     ],
     "result": {
-      "item": "levitate:controls"
+      "item": "bearing:controls"
     }
   }
 }

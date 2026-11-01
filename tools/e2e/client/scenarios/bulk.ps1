@@ -16,20 +16,20 @@ Invoke-Chat '/time set noon'
 Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1 ~'
 Start-Sleep -Milliseconds 500
 # millstone on a generator (left)
-Invoke-Chat '/setblock ~5 ~ ~-3 levitate:kinetics_test_source ["levitate:axis"=1]'
-Invoke-Chat '/setblock ~5 ~1 ~-3 levitate:millstone'
+Invoke-Chat '/setblock ~5 ~ ~-3 bearing:kinetics_test_source ["bearing:axis"=1]'
+Invoke-Chat '/setblock ~5 ~1 ~-3 bearing:millstone'
 # crushing wheels (centre), driven from behind
-Invoke-Chat '/setblock ~7 ~1 ~-1 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~7 ~1 ~1 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~-1 levitate:crushing_wheel ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~1 levitate:crushing_wheel ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~-1 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~1 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~-1 bearing:crushing_wheel ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~1 bearing:crushing_wheel ["bearing:axis"=0]'
 # a fan blowing towards the camera (right)
-Invoke-Chat '/setblock ~7 ~1 ~3 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~6 ~1 ~3 levitate:encased_fan ["levitate:facing"=4]'
+Invoke-Chat '/setblock ~7 ~1 ~3 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~3 bearing:encased_fan ["bearing:facing"=4]'
 # a fan with a nozzle (far right)
-Invoke-Chat '/setblock ~5 ~ ~5 levitate:kinetics_test_source ["levitate:axis"=1]'
-Invoke-Chat '/setblock ~5 ~1 ~5 levitate:encased_fan ["levitate:facing"=1]'
-Invoke-Chat '/setblock ~5 ~2 ~5 levitate:nozzle ["levitate:facing"=1]'
+Invoke-Chat '/setblock ~5 ~ ~5 bearing:kinetics_test_source ["bearing:axis"=1]'
+Invoke-Chat '/setblock ~5 ~1 ~5 bearing:encased_fan ["bearing:facing"=1]'
+Invoke-Chat '/setblock ~5 ~2 ~5 bearing:nozzle ["bearing:facing"=1]'
 Start-Sleep -Seconds 2
 $mark = Get-LogMark
 Invoke-Chat '/create kinetics ~5 ~ ~-3 speed 64'

@@ -2,7 +2,7 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "levitate:potato_projectile",
+      "identifier": "bearing:potato_projectile",
       "materials": {
         "default": "entity_alphatest",
         "glint": "xp_bottle"
@@ -39,13 +39,13 @@
         "glint": "textures/misc/enchanted_item_glint"
       },
       "geometry": {
-        "default": "geometry.levitate.potato_projectile"
+        "default": "geometry.bearing.potato_projectile"
       },
       "animations": {
-        "billboard": "animation.levitate.potato_projectile.billboard",
-        "tumble": "animation.levitate.potato_projectile.tumble",
-        "toward_motion": "animation.levitate.potato_projectile.toward_motion",
-        "stuck": "animation.levitate.potato_projectile.stuck"
+        "billboard": "animation.bearing.potato_projectile.billboard",
+        "tumble": "animation.bearing.potato_projectile.tumble",
+        "toward_motion": "animation.bearing.potato_projectile.toward_motion",
+        "stuck": "animation.bearing.potato_projectile.stuck"
       },
       "scripts": {
         "initialize": [
@@ -72,7 +72,7 @@
         ]
       },
       "render_controllers": [
-        "controller.render.levitate.potato_projectile"
+        "controller.render.bearing.potato_projectile"
       ]
     }
   }

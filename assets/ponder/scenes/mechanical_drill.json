@@ -2,8 +2,8 @@
   "id": "mechanical_drill",
   "size": [5, 5],
   "blocks": [
-    {"at": [3, 1, 2], "id": "levitate:mechanical_drill", "states": {"levitate:facing": 4}},
-    {"at": [4, 1, 2], "id": "levitate:creative_motor", "states": {"levitate:facing": 4}},
+    {"at": [3, 1, 2], "id": "bearing:mechanical_drill", "states": {"bearing:facing": 4}},
+    {"at": [4, 1, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 4}},
     {"at": [2, 1, 2], "id": "minecraft:stone"}
   ],
   "timeline": [

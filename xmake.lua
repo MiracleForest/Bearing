@@ -4,7 +4,7 @@ add_repositories("levimc-repo https://github.com/LiteLDev/xmake-repo.git")
 
 set_policy("package.requires_lock", true)
 
--- Levitate runs on both the dedicated server (BDS) and the client (local worlds).
+-- Bearing runs on both the dedicated server (BDS) and the client (local worlds).
 -- The levilamina package and the levibuildscript rules read this option.
 option("target_type")
     set_default("server")
@@ -15,7 +15,7 @@ option_end()
 option("tests")
     set_default(true)
     set_showmenu(true)
-    set_description("Build the host-side unit test binary (lv-tests)")
+    set_description("Build the host-side unit test binary (br-tests)")
 option_end()
 
 add_requires("levilamina 26.51.7", {configs = {target_type = get_config("target_type")}})
@@ -29,7 +29,7 @@ if not has_config("vs_runtime") then
     set_runtimes("MD")
 end
 
-local function lv_common_flags()
+local function br_common_flags()
     set_languages("c++20")
     set_toolchains("clang-cl")
     add_defines("NOMINMAX", "UNICODE", "_HAS_CXX23=1")
@@ -49,9 +49,9 @@ local function lv_common_flags()
 end
 
 -- Pure, game-independent logic (src/core). No mc/ll headers allowed here.
-target("lv-core")
+target("br-core")
     set_kind("static")
-    lv_common_flags()
+    br_common_flags()
     set_exceptions("none")
     add_cxflags("/EHa")
     add_packages("nlohmann_json", {public = true})
@@ -60,8 +60,8 @@ target("lv-core")
     add_files("src/core/**.cpp")
 
 -- The mod itself. Every translation unit is linked directly into the DLL (not through a static
--- library) so that static self-registration objects (LV_REGISTER_*) are never stripped.
-target("Levitate")
+-- library) so that static self-registration objects (BR_REGISTER_*) are never stripped.
+target("Bearing")
     add_rules("@levibuildscript/linkrule")
     add_rules("@levibuildscript/modpacker")
     set_kind("shared")
@@ -69,22 +69,22 @@ target("Levitate")
     -- file), which must stay under Windows' 32767 characters: keep the object paths short.
     set_objectdir("$(builddir)/o")
     set_policy("build.intermediate_directory", false)
-    lv_common_flags()
+    br_common_flags()
     set_exceptions("none") -- To avoid conflicts with /EHa.
     add_cxflags("/EHa", "/w44265", "/w44289", "/w44296", "/w45263", "/w44738", "/w45204")
     add_cxflags("/EHs", {tools = {"clang_cl"}})
     set_symbols("debug")
-    add_deps("lv-core")
+    add_deps("br-core")
     add_packages("levilamina", "nlohmann_json")
     add_includedirs("src")
     add_headerfiles("src/**.h")
     add_files("src/**.cpp|core/**.cpp")
     if is_config("target_type", "client") then
-        add_defines("LV_CLIENT=1")
+        add_defines("BR_CLIENT=1")
     else
-        add_defines("LV_SERVER=1")
+        add_defines("BR_SERVER=1")
     end
-    -- Assemble bin/<target_type>/Levitate/{dll,pdb,manifest.json,lang/,packs/}.
+    -- Assemble bin/<target_type>/Bearing/{dll,pdb,manifest.json,lang/,packs/}.
     after_build(function (target)
         import("core.project.config")
         import("assemble", {rootdir = path.join(os.projectdir(), "tools", "xmake")})
@@ -92,12 +92,12 @@ target("Levitate")
     end)
 
 if has_config("tests") then
-    target("lv-tests")
+    target("br-tests")
         set_kind("binary")
         set_default(false)
-        lv_common_flags()
+        br_common_flags()
         set_exceptions("cxx")
-        add_deps("lv-core")
+        add_deps("br-core")
         add_packages("gtest", "nlohmann_json")
         add_files("tests/**.cpp")
         add_tests("default")

@@ -24,11 +24,11 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace {
 
-constexpr char kDbCopper[] = "lv:building:copper";
+constexpr char kDbCopper[] = "br:building:copper";
 constexpr float kWeatherChance = 0.05688889f; // Java ChangeOverTimeBlock: 64 / 1125
 
 std::set<GlobalPos>& tracked() {
@@ -205,4 +205,4 @@ void clearCopper() { tracked().clear(); }
 std::size_t trackedCopperCount() { return tracked().size(); }
 } // namespace detail
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

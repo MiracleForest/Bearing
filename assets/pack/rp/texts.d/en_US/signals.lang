@@ -1,2 +1,2 @@
-tile.levitate:track_signal.name=Train Signal
-tile.levitate:track_observer.name=Train Observer
+tile.bearing:track_signal.name=Train Signal
+tile.bearing:track_observer.name=Train Observer

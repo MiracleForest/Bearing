@@ -3,7 +3,7 @@
 #include "core/goggles/Rotation.h"
 #include "core/goggles/Tooltip.h"
 
-using namespace lv::core::goggles;
+using namespace br::core::goggles;
 
 namespace {
 constexpr int kDown = 0, kUp = 1, kNorth = 2, kSouth = 3, kWest = 4, kEast = 5;
@@ -46,8 +46,8 @@ TEST(GogglesRotation, FacingTurnsAboutTheClickedAxis) {
     EXPECT_EQ(rotatedStates({{kFacing, kUp}}, kEast).at(kFacing), kNorth);
     EXPECT_EQ(rotatedStates({{kVanillaFacing, kDown}}, kSouth).at(kVanillaFacing), kWest);
     // other states are kept
-    auto r = rotatedStates({{kFacing, kNorth}, {"levitate:powered", 1}}, kUp);
-    EXPECT_EQ(r.at("levitate:powered"), 1);
+    auto r = rotatedStates({{kFacing, kNorth}, {"bearing:powered", 1}}, kUp);
+    EXPECT_EQ(r.at("bearing:powered"), 1);
 }
 
 TEST(GogglesRotation, AxisAlongFirstCoordinate) {
@@ -66,7 +66,7 @@ TEST(GogglesRotation, AxisAlongFirstCoordinate) {
 }
 
 TEST(GogglesRotation, GaugeAlongFirstAlias) {
-    // gauges / the fluid valve store the flag as levitate:along_first
+    // gauges / the fluid valve store the flag as bearing:along_first
     auto a = rotatedStates({{kFacing, kNorth}, {kAlongFirst, 0}}, kSouth);
     EXPECT_EQ(a.at(kFacing), kNorth);
     EXPECT_EQ(a.at(kAlongFirst), 1);
@@ -92,7 +92,7 @@ TEST(GogglesRotation, HorizontalStatesOnlyTurnOnTopAndBottom) {
 }
 
 TEST(GogglesRotation, NothingToRotate) {
-    States s{{"levitate:powered", 0}};
+    States s{{"bearing:powered", 0}};
     EXPECT_EQ(rotatedStates(s, kUp), s);
     EXPECT_EQ(rotatedStates({{kAxis, kX}}, 9).at(kAxis), kX);
 }

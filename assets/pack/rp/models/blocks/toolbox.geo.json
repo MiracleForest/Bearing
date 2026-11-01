@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.toolbox",
+        "identifier": "geometry.bearing.toolbox",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -237,7 +237,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.toolbox_open",
+        "identifier": "geometry.bearing.toolbox_open",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -521,7 +521,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.toolbox_body",
+        "identifier": "geometry.bearing.toolbox_body",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,
@@ -611,7 +611,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.toolbox_parts",
+        "identifier": "geometry.bearing.toolbox_parts",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 2,

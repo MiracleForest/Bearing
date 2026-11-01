@@ -38,7 +38,7 @@
 #include "feature/packages/PackagesInternal.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items = common::items;
 
@@ -276,4 +276,4 @@ bool takeItems(Player& player, std::vector<std::string> const& itemIds, int coun
     return found >= count;
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

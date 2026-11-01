@@ -11,7 +11,7 @@ if (-not $vanilla) {
 
 Invoke-Chat '/clear @s'
 Invoke-Chat '/give @s stone 4'
-Invoke-Chat '/give @s levitate:filter 1'
+Invoke-Chat '/give @s bearing:filter 1'
 Invoke-Chat '/tp @s ~ ~ ~ 0 -90'   # look at the sky: a right-click uses the item
 Press-Key '2'                      # hotbar slot 2: the filter (stone went to slot 1)
 Start-Sleep -Milliseconds 600
@@ -62,7 +62,7 @@ Start-Sleep -Milliseconds 1000
 
 # The attribute filter: shift-click the stone as reference, then left-click it onto the cursor and
 # into the reference slot, then add the first attribute it offers.
-Invoke-Chat '/give @s levitate:attribute_filter 1'
+Invoke-Chat '/give @s bearing:attribute_filter 1'
 Press-Key '3'                      # hotbar slot 3: the attribute filter
 Start-Sleep -Milliseconds 600
 $mark = Get-LogMark
@@ -111,11 +111,11 @@ Move-Mouse $fieldX $fieldY -Relative
 Start-Sleep -Milliseconds 300
 Click $fieldX $fieldY -Relative
 Start-Sleep -Milliseconds 400
-Type-Text 'Levitate 123'
+Type-Text 'Bearing 123'
 Start-Sleep -Milliseconds 400
 Save-Screenshot 'text-field' | Out-Null
 Press-Key ENTER
-Wait-LogLine "screen test: .* submitted 'Levitate 123'" 20 -Since $mark | Out-Null
+Wait-LogLine "screen test: .* submitted 'Bearing 123'" 20 -Since $mark | Out-Null
 Close-Screen
 Wait-LogLine 'screen common\.text_test closed by' 20 -Since $mark | Out-Null
 # no crash while clicking items into the screens (the game asserts on ItemStack copies off its thread)
@@ -128,7 +128,7 @@ if (-not (Get-GameProcess)) { throw 'the game is gone after using the filter scr
 # server sends "§7(empty)"; the label shows it grey, without the colour code (out/common/filter-hover.png)
 $mark = Get-LogMark
 Invoke-Chat '/fill 1 -59 -1 4 -58 1 air'
-Invoke-Chat '/setblock 3 -59 0 levitate:smart_chute ["levitate:powered"=0]'
+Invoke-Chat '/setblock 3 -59 0 bearing:smart_chute ["bearing:powered"=0]'
 Invoke-Chat '/tp @s 0.5 -60 0.5 -90 -1.5'   # east, level: the crosshair is on the west face's filter slot
 Wait-LogLine 'valuebox client: hover label .*\(empty\)' 20 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 800

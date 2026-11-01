@@ -1,6 +1,6 @@
 #include "core/goggles/Rotation.h"
 
-namespace lv::core::goggles {
+namespace br::core::goggles {
 
 namespace {
 constexpr int kDown = 0, kUp = 1, kNorth = 2, kSouth = 3, kWest = 4, kEast = 5;
@@ -132,4 +132,4 @@ States rotatedStates(States const& in, int face) {
     return out;
 }
 
-} // namespace lv::core::goggles
+} // namespace br::core::goggles

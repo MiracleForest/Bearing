@@ -2,23 +2,23 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:stock_link",
+      "identifier": "bearing:stock_link",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:face": [
+        "bearing:face": [
           0,
           1,
           2
         ],
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
           3
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ]
@@ -33,18 +33,18 @@
       },
       "minecraft:map_color": "#c8a24a",
       "minecraft:loot": "loot_tables/blocks/stock_link.json",
-      "minecraft:geometry": "geometry.levitate.stock_link",
+      "minecraft:geometry": "geometry.bearing.stock_link",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_stock_link",
+          "texture": "bearing_stock_link",
           "render_method": "opaque"
         },
         "body": {
-          "texture": "levitate_stock_link_side",
+          "texture": "bearing_stock_link_side",
           "render_method": "opaque"
         },
         "bulb": {
-          "texture": "levitate_stock_link_bulb",
+          "texture": "bearing_stock_link_bulb",
           "render_method": "opaque"
         }
       },
@@ -76,7 +76,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -88,7 +88,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -100,7 +100,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -112,7 +112,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -124,7 +124,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -136,7 +136,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -148,7 +148,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -160,7 +160,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -172,7 +172,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -184,7 +184,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -196,7 +196,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -208,7 +208,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -220,19 +220,19 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_stock_link",
+              "texture": "bearing_stock_link",
               "render_method": "opaque"
             },
             "body": {
-              "texture": "levitate_stock_link_side",
+              "texture": "bearing_stock_link_side",
               "render_method": "opaque"
             },
             "bulb": {
-              "texture": "levitate_stock_link_bulb_off",
+              "texture": "bearing_stock_link_bulb_off",
               "render_method": "opaque"
             }
           }

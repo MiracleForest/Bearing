@@ -9,7 +9,7 @@
 
 #include "core/common/Recipe.h"
 
-namespace lv::core::basin {
+namespace br::core::basin {
 
 using common::HeatLevel;
 
@@ -108,4 +108,4 @@ Fluid drainTanks(std::vector<Fluid>& tanks, std::string const& id, int amount, b
 /// `counts[i] / maxStack[i]` summed over the slots, 0 when empty, else 1 + floor(fill * 14).
 [[nodiscard]] int redstoneFromInventory(std::vector<int> const& counts, std::vector<int> const& maxStacks);
 
-} // namespace lv::core::basin
+} // namespace br::core::basin

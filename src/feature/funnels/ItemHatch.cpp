@@ -31,17 +31,17 @@
 #include "mod/Module.h"
 
 // U15's deployer player (Create's FakePlayer), which Create's hatch ignores.
-namespace lv::feature::assembly::fakeplayer {
+namespace br::feature::assembly::fakeplayer {
 bool isFake(Player const& player);
 }
 
-namespace lv::feature::funnels {
+namespace br::feature::funnels {
 
 namespace items = common::items;
 namespace ia    = common::interactions;
 
-inline constexpr char kItemHatch[] = "levitate:item_hatch";
-inline constexpr char kOpen[]      = "levitate:open";
+inline constexpr char kItemHatch[] = "bearing:item_hatch";
+inline constexpr char kOpen[]      = "bearing:open";
 
 namespace {
 
@@ -140,7 +140,7 @@ void placed(ia::PlaceContext const& c) {
         return;
     }
     setStates(region, toBlockPos(c.pos), {{kFacing, c.face ^ 1}, {kOpen, 0}});
-    log().info("funnels: levitate:item_hatch placed at {} by {}", c.pos.key(), c.player.getRealName());
+    log().info("funnels: bearing:item_hatch placed at {} by {}", c.pos.key(), c.player.getRealName());
 }
 
 /// Closes the hatches whose close is due (`all`: every pending one; the schedule is not saved, so a
@@ -214,6 +214,6 @@ private:
 
 } // namespace
 
-} // namespace lv::feature::funnels
+} // namespace br::feature::funnels
 
-LV_REGISTER_MODULE(lv::feature::funnels::ItemHatchModule);
+BR_REGISTER_MODULE(br::feature::funnels::ItemHatchModule);

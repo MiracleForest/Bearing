@@ -2,8 +2,8 @@
 
 #include "core/pistons/Linear.h"
 
-using namespace lv::core::pistons;
-using lv::core::contraption::Vec3d;
+using namespace br::core::pistons;
+using br::core::contraption::Vec3d;
 
 TEST(Pistons, LinearSpeed) {
     EXPECT_FLOAT_EQ(convertToLinear(256), 0.5f);
@@ -71,7 +71,7 @@ TEST(Pistons, DirectionalAxis) {
     EXPECT_FALSE(alongFirstFor(Dir::North, Axis::Z).has_value());
     // facing north, shaft along x; a quarter turn about y: facing west/east, shaft along z
     bool af = rotateAlongFirst(Dir::North, true, Axis::Y, 1);
-    EXPECT_EQ(directionalAxis(lv::core::contraption::rotate(Dir::North, Axis::Y, 1), af), Axis::Z);
+    EXPECT_EQ(directionalAxis(br::core::contraption::rotate(Dir::North, Axis::Y, 1), af), Axis::Z);
     // about the facing axis: the shaft turns too
     af = rotateAlongFirst(Dir::Up, true, Axis::Y, 1);
     EXPECT_EQ(directionalAxis(Dir::Up, af), Axis::Z);

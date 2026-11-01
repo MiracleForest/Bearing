@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:powered_toggle_latch",
+          "name": "bearing:powered_toggle_latch",
           "weight": 1
         }
       ]

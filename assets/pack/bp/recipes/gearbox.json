@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:gearbox"
+      "identifier": "bearing:gearbox"
     },
     "tags": [
       "crafting_table"
@@ -14,19 +14,19 @@
     ],
     "key": {
       "B": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "C": {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       }
     ],
     "result": {
-      "item": "levitate:gearbox",
+      "item": "bearing:gearbox",
       "count": 1
     }
   }

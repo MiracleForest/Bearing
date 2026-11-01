@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:belt_connector"
+      "identifier": "bearing:belt_connector"
     },
     "tags": [
       "crafting_table"
@@ -22,7 +22,7 @@
       }
     ],
     "result": {
-      "item": "levitate:belt_connector"
+      "item": "bearing:belt_connector"
     }
   }
 }

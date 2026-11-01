@@ -12,7 +12,7 @@
 
 #include "core/contraption/Geometry.h"
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 struct CollisionResult {
     bool  hit   = false; ///< the entity overlapped the structure
@@ -39,4 +39,4 @@ collide(Transform const& transform, std::vector<Box> const& localBoxes, Box cons
     return after.toWorld(before.toLocal(world));
 }
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

@@ -9,7 +9,7 @@
 
 #include "core/GlobalPos.h"
 
-namespace lv::feature::advancements {
+namespace br::feature::advancements {
 
 /// Create's registerAwardables of the block entity of `blockId` (empty: no owner kept).
 [[nodiscard]] std::vector<std::string_view> const& blockAdvancements(std::string_view blockId);
@@ -27,4 +27,4 @@ void resetState();
 /// Writes dirty progress / owners to the world DB.
 void flush();
 
-} // namespace lv::feature::advancements
+} // namespace br::feature::advancements

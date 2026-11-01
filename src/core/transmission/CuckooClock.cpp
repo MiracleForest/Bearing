@@ -3,7 +3,7 @@
 #include <cmath>
 #include <string_view>
 
-namespace lv::core::transmission {
+namespace br::core::transmission {
 
 bool operator==(ClockSound const& a, ClockSound const& b) {
     return std::string_view(a.name) == std::string_view(b.name) && a.volume == b.volume && a.pitch == b.pitch;
@@ -101,4 +101,4 @@ std::vector<ClockSound> cuckooAnimationSounds(CuckooAnimation type, int value) {
 
 bool cuckooSmokes(CuckooAnimation type, int value) { return type == CuckooAnimation::Surprise && value > 30; }
 
-} // namespace lv::core::transmission
+} // namespace br::core::transmission

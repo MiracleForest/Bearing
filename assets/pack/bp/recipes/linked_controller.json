@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:linked_controller"
+      "identifier": "bearing:linked_controller"
     },
     "tags": [
       "crafting_table"
@@ -17,7 +17,7 @@
         "item": "minecraft:wooden_button"
       },
       "P": {
-        "item": "levitate:redstone_link"
+        "item": "bearing:redstone_link"
       }
     },
     "unlock": [
@@ -26,7 +26,7 @@
       }
     ],
     "result": {
-      "item": "levitate:linked_controller",
+      "item": "bearing:linked_controller",
       "count": 1
     }
   }

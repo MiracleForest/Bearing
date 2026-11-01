@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-  Run an Levitate scenario in the real game client (LeviLauncher instance).
+  Run an Bearing scenario in the real game client (LeviLauncher instance).
 
 .DESCRIPTION
-  1. (-Build) builds bin/client/Levitate via tools/build.ps1 -Target client (before
+  1. (-Build) builds bin/client/Bearing via tools/build.ps1 -Target client (before
      taking the lock, so the game is not held while compiling).
   2. Takes a game lock: slot 1 (the LeviLauncher instance) uses
      %APPDATA%\levilauncher.exe\bei-e2e.lock, shared with BEI's and BeetrootSkin's harnesses;
@@ -17,18 +17,18 @@
   game stays in the background and never takes the real mouse, keyboard or foreground, so the PC
   stays usable during a run. -Foreground uses real SendInput as before (slot 1 only).
   3. Closes a running game, restores mods a killed run left aside, deploys the mod to
-     mods\Levitate, moves every other mod (e.g. BEI) aside, installs the LV-Test world.
+     mods\Bearing, moves every other mod (e.g. BEI) aside, installs the BR-Test world.
   4. Runs optional scenarios/<name>.prelaunch.ps1, launches the game, waits for
-     "Levitate enabled", enters the world, dot-sources scenarios/<name>.ps1.
+     "Bearing enabled", enters the world, dot-sources scenarios/<name>.ps1.
   5. Fails on: scenario exception, failing/empty/unfinished selftests, ERR/FTL lines from
-     Levitate/LeviLamina/CrashLogger.
-  6. Always: closes the game, removes the LV-Test world and our mod, restores the other mods,
+     Bearing/LeviLamina/CrashLogger.
+  6. Always: closes the game, removes the BR-Test world and our mod, restores the other mods,
      runs scenarios/<name>.restore.ps1, releases the lock.
   Output: tools/e2e/client/out/<scenario>/ (screenshots, client.log, selftest.json). Look at the
   screenshots.
 
   Modes (-Mode):
-    local           (default) the LV-Test local world: the integrated server runs the mod too.
+    local           (default) the BR-Test local world: the integrated server runs the mod too.
     remote-mod      starts a BDS slot with the server build (tools/e2e/server, scenario
                     client-host), joins it through the Servers tab; the client runs the mod.
     remote-vanilla  same BDS, but our client mod is moved aside: a vanilla client (plus
@@ -47,7 +47,7 @@ param(
     [switch]$Build,
     [switch]$KeepOpen,          # leave the game running; the harness waits until you close it, then cleans up
     [switch]$KeepOtherMods,     # do not move other mods (BEI, ...) aside
-    [string]$ModDir,            # default: <repo>/bin/client/Levitate
+    [string]$ModDir,            # default: <repo>/bin/client/Bearing
     [ValidateSet('local', 'remote-mod', 'remote-vanilla')][string]$Mode = 'local',
     [int]$LockTimeoutMinutes = 120,  # give up (exit 2, "NOT RUN") if the game lock is not free by then; 0 = wait forever
     [int]$SlotWaitMinutes = 3,       # remote modes: no server slot by then -> release the game lock and queue again
@@ -106,8 +106,8 @@ $script:HostDir = $null
 function Start-RemoteHost {
     $script:HostDir = Join-Path $outDir 'host'
     New-Item -ItemType Directory -Force $script:HostDir | Out-Null
-    $env:LV_E2E_HOST_DIR = $script:HostDir
-    $env:LV_E2E_HOST_OWNER_PID = "$PID"
+    $env:BR_E2E_HOST_DIR = $script:HostDir
+    $env:BR_E2E_HOST_OWNER_PID = "$PID"
     $serverRun = Join-Path $PSScriptRoot '../server/run.ps1'
     $harnessLog = Join-Path $outDir 'host-harness.log'
     # Own server output folder per client run (out/client-host-<unit>), so parallel remote runs don't collide.
@@ -190,7 +190,7 @@ try {
             if ($script:Headless) { Set-WorldSinglePlayer (Join-Path (Get-WorldsDir) $script:WorldName) }
         }
         Reset-CameraPerspective
-        Clear-CachedLevitatePacks   # never a stale pack cached by another build
+        Clear-CachedBearingPacks   # never a stale pack cached by another build
         $prelaunch = Join-Path $PSScriptRoot "scenarios/$Scenario.prelaunch.ps1"
         if (Test-Path $prelaunch) { . $prelaunch }
         try {
@@ -267,7 +267,7 @@ try {
             if (-not $hp.WaitForExit(120000)) { $hp.Kill($true); $failures.Add('BDS host did not stop') }
             elseif ($hp.ExitCode -ne 0) { $failures.Add("BDS host failed (exit $($hp.ExitCode), see tools/e2e/server/out/$script:HostOutName/)") }
         }
-        Remove-Item Env:LV_E2E_HOST_DIR, Env:LV_E2E_HOST_OWNER_PID -ErrorAction SilentlyContinue
+        Remove-Item Env:BR_E2E_HOST_DIR, Env:BR_E2E_HOST_OWNER_PID -ErrorAction SilentlyContinue
     }
 }
 

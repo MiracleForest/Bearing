@@ -4,7 +4,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::kinetics {
+namespace br::core::kinetics {
 
 namespace {
 
@@ -119,4 +119,4 @@ std::optional<std::map<std::string, RotorModel>> parseGeometry(nlohmann::json co
     return out;
 }
 
-} // namespace lv::core::kinetics
+} // namespace br::core::kinetics

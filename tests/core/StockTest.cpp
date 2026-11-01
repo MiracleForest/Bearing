@@ -4,7 +4,7 @@
 
 #include "core/stock/Logistics.h"
 
-namespace cs = lv::core::stock;
+namespace cs = br::core::stock;
 
 TEST(StockSummary, AddsMergesAndKeepsOrder) {
     cs::Summary s;

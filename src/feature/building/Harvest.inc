@@ -38,7 +38,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace {
 namespace ia = common::interactions;
@@ -79,7 +79,7 @@ HarvestNeed harvestNeedOf(Info const& i) {
     case Kind::CopperStairs:
     case Kind::CopperSlab: return HarvestNeed::StonePickaxe;
     case Kind::TableCloth: {
-        bool metal = i.id == "levitate:andesite_table_cloth" || i.id == "levitate:brass_table_cloth" || i.id == "levitate:copper_table_cloth";
+        bool metal = i.id == "bearing:andesite_table_cloth" || i.id == "bearing:brass_table_cloth" || i.id == "bearing:copper_table_cloth";
         return metal ? HarvestNeed::Pickaxe : HarvestNeed::None;
     }
     default: return HarvestNeed::None;
@@ -109,9 +109,9 @@ bool canHarvest(Info const& info, Block const* copycatMaterial, ItemStack const&
     return toolHarvests(harvestNeedOf(info), tool);
 }
 
-} // namespace lv::feature::building
+} // namespace br::feature::building
 
-namespace bld = lv::feature::building;
+namespace bld = br::feature::building;
 
 LL_TYPE_INSTANCE_HOOK(
     BuildingHarvestHook,
@@ -128,7 +128,7 @@ LL_TYPE_INSTANCE_HOOK(
 ) {
     auto const* info = bld::infoOf(block);
     if (!info || ctx.mCause != ResourceDropsCause::PlayerMining) return origin(region, pos, block, random, ctx, actor);
-    auto        at       = lv::game::globalPos(region, pos);
+    auto        at       = br::game::globalPos(region, pos);
     Block const* material = nullptr;
     if (auto it = bld::breakingMaterials().find(at); it != bld::breakingMaterials().end()) material = it->second;
     if (!bld::canHarvest(*info, material, ctx.mUsedItem)) return; // Create: requiresCorrectToolForDrops
@@ -157,8 +157,8 @@ Block const* copycatMaterialMined(PlayerDestroy::DestroyProgressContext const& c
         if (!lookup || &player.getDimensionBlockSource().getBlock(p) != &block) return nullptr;
         return lookup(p);
     }
-    if (!lv::feature::net::isCompanion(player)) return nullptr;
-    auto at = lv::game::globalPos(static_cast<int>(player.getDimensionId()), p);
+    if (!br::feature::net::isCompanion(player)) return nullptr;
+    auto at = br::game::globalPos(static_cast<int>(player.getDimensionId()), p);
     auto const* here = bld::blockAt(at);
     if (here != &block) return nullptr;
     return bld::copycatMaterialBlock(at);
@@ -186,7 +186,7 @@ LL_STATIC_HOOK(BuildingCopycatProgressHook, ll::memory::HookPriority::Normal, &P
     return origin(ctx);
 }
 
-namespace lv::feature::building {
+namespace br::feature::building {
 namespace {
 
 class HarvestModule {
@@ -195,7 +195,7 @@ public:
         BuildingHarvestHook::hook();
         BuildingCopycatSpeedHook::hook();
         BuildingCopycatProgressHook::hook();
-        for (auto const* id : {"levitate:copycat_panel", "levitate:copycat_step"}) {
+        for (auto const* id : {"bearing:copycat_panel", "bearing:copycat_step"}) {
             mIds.push_back(ia::onDestroy({std::string(id)}, [](ia::DestroyContext const& c) {
                 breakingMaterials()[c.pos] = copycatMaterialBlock(c.pos);
                 if (breakingMaterials().size() > 64) breakingMaterials().clear();
@@ -217,6 +217,6 @@ private:
 };
 
 } // namespace
-} // namespace lv::feature::building
+} // namespace br::feature::building
 
-LV_REGISTER_MODULE(lv::feature::building::HarvestModule);
+BR_REGISTER_MODULE(br::feature::building::HarvestModule);

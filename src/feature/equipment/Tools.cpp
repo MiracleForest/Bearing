@@ -36,7 +36,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -192,4 +192,4 @@ bool sandBlock(Player& player, ItemStack& held, GlobalPos const& pos) {
     return true;
 }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

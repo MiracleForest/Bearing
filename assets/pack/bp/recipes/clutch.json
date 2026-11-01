@@ -2,17 +2,17 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:clutch"
+      "identifier": "bearing:clutch"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       },
       {
         "item": "minecraft:redstone"
@@ -20,11 +20,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:clutch",
+      "item": "bearing:clutch",
       "count": 1
     }
   }

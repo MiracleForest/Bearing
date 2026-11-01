@@ -1,6 +1,6 @@
 #include "core/Format.h"
 
-namespace lv::core {
+namespace br::core {
 
 std::string formatMessage(std::string_view fmt, std::span<std::string const> args) {
     std::string out;
@@ -62,4 +62,4 @@ std::string compactCount(long long n) {
     return fmt1(n, 1000000000, 'G');
 }
 
-} // namespace lv::core
+} // namespace br::core

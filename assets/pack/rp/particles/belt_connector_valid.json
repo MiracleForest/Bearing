@@ -2,10 +2,10 @@
   "format_version": "1.10.0",
   "particle_effect": {
     "description": {
-      "identifier": "levitate:belt_connector_valid",
+      "identifier": "bearing:belt_connector_valid",
       "basic_render_parameters": {
         "material": "particles_alpha",
-        "texture": "textures/particle/levitate_belt_connector_dust"
+        "texture": "textures/particle/bearing_belt_connector_dust"
       }
     },
     "components": {

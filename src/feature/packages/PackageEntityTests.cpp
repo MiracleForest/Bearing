@@ -34,11 +34,11 @@
 
 namespace {
 
-using lv::selftest::Context;
-namespace pk    = lv::feature::packages;
-namespace items = lv::feature::common::items;
-namespace ia    = lv::feature::common::interactions;
-using lv::core::GlobalPos;
+using br::selftest::Context;
+namespace pk    = br::feature::packages;
+namespace items = br::feature::common::items;
+namespace ia    = br::feature::common::interactions;
+using br::core::GlobalPos;
 
 constexpr int kRowDz = -230;
 
@@ -96,7 +96,7 @@ void clearInventory(Player& player) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("packages.entity_put_down", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_put_down", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4600);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos);
@@ -127,7 +127,7 @@ LV_REGISTER_SELFTEST("packages.entity_put_down", [](Context& ctx) -> ll::coro::C
     clearInventory(sp);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_throw", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_throw", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4610);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos, 12);
@@ -156,7 +156,7 @@ LV_REGISTER_SELFTEST("packages.entity_throw", [](Context& ctx) -> ll::coro::Coro
     clearInventory(sp);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_pick_up", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_pick_up", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4620);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos);
@@ -189,7 +189,7 @@ LV_REGISTER_SELFTEST("packages.entity_pick_up", [](Context& ctx) -> ll::coro::Co
     clearInventory(sp);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_break", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_break", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4630);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos);
@@ -211,12 +211,12 @@ LV_REGISTER_SELFTEST("packages.entity_break", [](Context& ctx) -> ll::coro::Coro
     clearAround(pos);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_from_dropped_item", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_from_dropped_item", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4640);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos);
     auto box = pk::containing({stack("minecraft:apple", 2)});
-    pk::dropItem(pos.dim, {pos.x + .5, pos.y + .5, pos.z + .5}, box, lv::core::packages::V3{0.1, 0.2, 0});
+    pk::dropItem(pos.dim, {pos.x + .5, pos.y + .5, pos.z + .5}, box, br::core::packages::V3{0.1, 0.2, 0});
     co_await ctx.ticks(3);
     ctx.check(droppedItems(pos, items::idOf(box).c_str()) == 0, "no package item entity stays");
     auto found = packageEntities(pos);
@@ -238,7 +238,7 @@ LV_REGISTER_SELFTEST("packages.entity_from_dropped_item", [](Context& ctx) -> ll
     clearAround(pos);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_water", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_water", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4650);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos);
@@ -252,11 +252,11 @@ LV_REGISTER_SELFTEST("packages.entity_water", [](Context& ctx) -> ll::coro::Coro
     clearAround(pos);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4660);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos);
-    ctx.require(ctx.setBlock(pos, lv::feature::belts::kDepotId), "depot placed");
+    ctx.require(ctx.setBlock(pos, br::feature::belts::kDepotId), "depot placed");
     co_await ctx.ticks(2);
     auto box = pk::containing({stack("minecraft:iron_ingot", 1)});
     auto id  = pk::spawnPackageEntity(pos.dim, {pos.x + .4, pos.y + 1.2, pos.z + .6}, box);
@@ -265,14 +265,14 @@ LV_REGISTER_SELFTEST("packages.entity_depot", [](Context& ctx) -> ll::coro::Coro
     for (int i = 0; i < 60 && !in; ++i) {
         co_await ctx.ticks(1);
         auto* region = pk::regionOf(pos.dim);
-        in           = region && pk::isPackage(lv::feature::common::items::extract(*region, lv::game::blockPos(pos), 1, lv::feature::common::items::any(), 1, true));
+        in           = region && pk::isPackage(br::feature::common::items::extract(*region, br::game::blockPos(pos), 1, br::feature::common::items::any(), 1, true));
     }
     ctx.check(in, "a package landing on a depot is put on it");
     ctx.check(packageEntities(pos).empty(), "the entity is gone");
     clearAround(pos);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_kill", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_kill", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4670);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     clearAround(pos);

@@ -2,24 +2,24 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:schedule_copying_3"
+      "identifier": "bearing:schedule_copying_3"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:schedule",
+        "item": "bearing:schedule",
         "count": 3
       }
     ],
     "unlock": [
       {
-        "item": "levitate:schedule"
+        "item": "bearing:schedule"
       }
     ],
     "result": {
-      "item": "levitate:schedule",
+      "item": "bearing:schedule",
       "count": 3
     }
   }

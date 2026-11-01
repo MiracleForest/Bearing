@@ -37,7 +37,7 @@ Invoke-Chat '/setblock 4 -60 4 oak_planks'
 Invoke-Chat '/setblock 2 -59 4 glass'
 
 # ---- schematic and quill ----
-Invoke-Chat '/give @s levitate:schematic_and_quill'
+Invoke-Chat '/give @s bearing:schematic_and_quill'
 Press-Key '1'
 Invoke-Teleport '/tp @s 0.5 -60 0.5 -36.87 17.95'
 $mark = Get-LogMark
@@ -67,10 +67,10 @@ if ($vanilla) {
 }
 
 # ---- schematic table ----
-Invoke-Chat '/setblock -2 -60 0 levitate:schematic_table ["levitate:facing"=3]'
+Invoke-Chat '/setblock -2 -60 0 bearing:schematic_table ["bearing:facing"=3]'
 Start-Sleep -Milliseconds 500
-Invoke-Chat '/setblock -2 -60 0 levitate:schematic_table ["levitate:facing"=3]'
-Invoke-Chat '/give @s levitate:empty_schematic'
+Invoke-Chat '/setblock -2 -60 0 bearing:schematic_table ["bearing:facing"=3]'
+Invoke-Chat '/give @s bearing:empty_schematic'
 Invoke-Teleport '/tp @s 0.5 -60 0.5 90 29'
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
@@ -97,7 +97,7 @@ if ($vanilla) {
 
 if ($vanilla) {
     # vanilla: the cannon form and the particle outlines are enough
-    Invoke-Chat '/setblock 0 -60 -3 levitate:schematicannon'
+    Invoke-Chat '/setblock 0 -60 -3 bearing:schematicannon'
     Invoke-Teleport '/tp @s 0.5 -60 0.5 180 20'
     $mark = Get-LogMark
     Click 0.5 0.5 -Relative -Right
@@ -123,7 +123,7 @@ Start-Sleep -Seconds 1
 Save-Screenshot 'ghost-deployed' | Out-Null
 
 # ---- schematicannon ----
-Invoke-Chat '/setblock 3 -60 -3 levitate:schematicannon'
+Invoke-Chat '/setblock 3 -60 -3 bearing:schematicannon'
 Invoke-Chat '/setblock 4 -60 -3 chest'
 Invoke-Chat '/replaceitem block 4 -60 -3 slot.container 0 stone 64'
 Invoke-Chat '/replaceitem block 4 -60 -3 slot.container 1 oak_planks 64'
@@ -149,7 +149,7 @@ Save-Screenshot 'cannon-finished' | Out-Null
 
 # ---- crafting blueprint ----
 Invoke-Chat '/fill -6 -60 3 -6 -58 5 stone'
-Invoke-Chat '/give @s levitate:crafting_blueprint'
+Invoke-Chat '/give @s bearing:crafting_blueprint'
 Press-Key '2'   # the written schematic went into the cannon: the blueprint takes its slot
 Invoke-Teleport '/tp @s -3.5 -59 4.5 90 0'
 $mark = Get-LogMark

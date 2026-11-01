@@ -3,9 +3,9 @@
   "size": [7, 5],
   "blocks": [
     {"at": [2, 1, 2], "id": "minecraft:chest"},
-    {"at": [3, 1, 2], "id": "levitate:packager", "states": {"levitate:facing": 5}},
+    {"at": [3, 1, 2], "id": "bearing:packager", "states": {"bearing:facing": 5}},
     {"at": [3, 1, 1], "id": "minecraft:lever"},
-    {"at": [4, 1, 2], "id": "levitate:depot"}
+    {"at": [4, 1, 2], "id": "bearing:depot"}
   ],
   "timeline": [
     {"show": "base", "from": "up"},
@@ -25,16 +25,16 @@
     {"idle": 5},
     {"modify": [3, 1, 1], "states": {"open_bit": true}},
     {"redstone": [3, 1, 2], "ticks": 30},
-    {"item": "levitate:cardboard_package_12x12", "at": [3.5, 1.5, 2.5], "to": [4.5, 1.1, 2.5], "ticks": 20},
+    {"item": "bearing:cardboard_package_12x12", "at": [3.5, 1.5, 2.5], "to": [4.5, 1.1, 2.5], "ticks": 20},
     {"idle": 5},
     {"text": 2, "at": [3.5, 1.5, 2.5], "ticks": 70, "keyframe": true},
     {"idle": 80},
     {"modify": [3, 1, 1], "states": {"open_bit": false}},
-    {"item": "levitate:cardboard_package_12x12", "at": [4.5, 1.1, 2.5], "to": [5.5, 2.5, 3.5], "ticks": 30},
+    {"item": "bearing:cardboard_package_12x12", "at": [4.5, 1.1, 2.5], "to": [5.5, 2.5, 3.5], "ticks": 30},
     {"idle": 5},
     {"text": 3, "at": [5.5, 2.5, 3.5], "ticks": 70, "keyframe": true},
     {"idle": 80},
-    {"item": "levitate:cardboard_package_12x12", "at": [5.5, 2.5, 3.5], "to": [3.5, 1.5, 2.5], "ticks": 25},
+    {"item": "bearing:cardboard_package_12x12", "at": [5.5, 2.5, 3.5], "to": [3.5, 1.5, 2.5], "ticks": 25},
     {"idle": 5},
     {"item": "minecraft:iron_ingot", "at": [3.5, 1.5, 2.5], "to": [2.5, 1.5, 2.5], "ticks": 20},
     {"idle": 5},
@@ -43,9 +43,9 @@
     {"outline": [2, 1, 2], "color": "red", "ticks": 140},
     {"text": 5, "at": [2.5, 1.8, 2.5], "ticks": 140, "color": "red"},
     {"idle": 20},
-    {"item": "levitate:cardboard_package_12x12", "at": [5.0, 2.5, 3.5], "to": [3.8, 1.6, 2.5], "ticks": 20},
+    {"item": "bearing:cardboard_package_12x12", "at": [5.0, 2.5, 3.5], "to": [3.8, 1.6, 2.5], "ticks": 20},
     {"idle": 5},
-    {"item": "levitate:cardboard_package_12x12", "at": [3.8, 1.6, 2.5], "to": [5.0, 2.0, 3.5], "ticks": 20},
+    {"item": "bearing:cardboard_package_12x12", "at": [3.8, 1.6, 2.5], "to": [5.0, 2.0, 3.5], "ticks": 20},
     {"idle": 5},
     {"text": 6, "at": [3.5, 1.5, 2.5], "ticks": 70, "color": "red", "keyframe": true},
     {"idle": 80}

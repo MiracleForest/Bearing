@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:orange_postbox_from_white_postbox"
+      "identifier": "bearing:orange_postbox_from_white_postbox"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
         "item": "minecraft:orange_dye"
       },
       {
-        "item": "levitate:white_postbox"
+        "item": "bearing:white_postbox"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:white_postbox"
+        "item": "bearing:white_postbox"
       }
     ],
     "result": {
-      "item": "levitate:orange_postbox",
+      "item": "bearing:orange_postbox",
       "count": 1
     }
   }

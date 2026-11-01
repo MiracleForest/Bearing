@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:schematic_table"
+      "identifier": "bearing:schematic_table"
     },
     "tags": [
       "crafting_table"
@@ -27,7 +27,7 @@
     ],
     "result": {
       "count": 1,
-      "item": "levitate:schematic_table"
+      "item": "bearing:schematic_table"
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "type": "levitate:mixing",
+  "type": "bearing:mixing",
   "heat_requirement": "heated",
   "ingredients": [
     {
@@ -16,7 +16,7 @@
   ],
   "results": [
     {
-      "id": "levitate:tea",
+      "id": "bearing:tea",
       "amount": 500
     }
   ]

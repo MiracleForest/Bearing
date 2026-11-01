@@ -19,9 +19,9 @@
           2
         ]
       ],
-      "id": "levitate:track",
+      "id": "bearing:track",
       "states": {
-        "levitate:shape": 2
+        "bearing:shape": 2
       }
     },
     {
@@ -30,7 +30,7 @@
         1,
         1
       ],
-      "id": "levitate:track_signal"
+      "id": "bearing:track_signal"
     },
     {
       "at": [
@@ -38,7 +38,7 @@
         1,
         1
       ],
-      "id": "levitate:track_signal"
+      "id": "bearing:track_signal"
     },
     {
       "at": [
@@ -46,9 +46,9 @@
         2,
         2
       ],
-      "id": "levitate:small_bogey",
+      "id": "bearing:small_bogey",
       "states": {
-        "levitate:axis": 0
+        "bearing:axis": 0
       }
     },
     {
@@ -57,9 +57,9 @@
         2,
         2
       ],
-      "id": "levitate:small_bogey",
+      "id": "bearing:small_bogey",
       "states": {
-        "levitate:axis": 0
+        "bearing:axis": 0
       }
     },
     {
@@ -75,7 +75,7 @@
           2
         ]
       ],
-      "id": "levitate:railway_casing"
+      "id": "bearing:railway_casing"
     },
     {
       "at": [
@@ -83,9 +83,9 @@
         2,
         2
       ],
-      "id": "levitate:small_bogey",
+      "id": "bearing:small_bogey",
       "states": {
-        "levitate:axis": 0
+        "bearing:axis": 0
       }
     },
     {
@@ -94,9 +94,9 @@
         2,
         2
       ],
-      "id": "levitate:small_bogey",
+      "id": "bearing:small_bogey",
       "states": {
-        "levitate:axis": 0
+        "bearing:axis": 0
       }
     },
     {
@@ -112,7 +112,7 @@
           2
         ]
       ],
-      "id": "levitate:railway_casing"
+      "id": "bearing:railway_casing"
     }
   ],
   "timeline": [
@@ -351,7 +351,7 @@
         1.5
       ],
       "action": "right",
-      "item": "levitate:wrench",
+      "item": "bearing:wrench",
       "ticks": 40
     },
     {

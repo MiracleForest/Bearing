@@ -31,11 +31,11 @@
 #include "feature/common/BlockData.h"
 #include "feature/common/Items.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP = core::GlobalPos;
 
 GP at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
@@ -120,7 +120,7 @@ struct Guard {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("contraption.assemble_glue", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.assemble_glue", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(400);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -147,7 +147,7 @@ LV_REGISTER_SELFTEST("contraption.assemble_glue", [](Context& ctx) -> ll::coro::
     clearGlue(p.dim, ccp(p), 3);
 });
 
-LV_REGISTER_SELFTEST("contraption.translate", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.translate", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(406);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -180,7 +180,7 @@ LV_REGISTER_SELFTEST("contraption.translate", [](Context& ctx) -> ll::coro::Coro
     clearGlue(p.dim, ccp(p), 5);
 });
 
-LV_REGISTER_SELFTEST("contraption.rotate", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.rotate", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(412);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -205,7 +205,7 @@ LV_REGISTER_SELFTEST("contraption.rotate", [](Context& ctx) -> ll::coro::CoroTas
     clearGlue(p.dim, ccp(p), 3);
 });
 
-LV_REGISTER_SELFTEST("contraption.rotate_rounding", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.rotate_rounding", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(418);
     p.y += 2;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -224,7 +224,7 @@ LV_REGISTER_SELFTEST("contraption.rotate_rounding", [](Context& ctx) -> ll::coro
     clearGlue(p.dim, ccp(p), 3);
 });
 
-LV_REGISTER_SELFTEST("contraption.unmovable", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.unmovable", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(424);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -255,16 +255,16 @@ LV_REGISTER_SELFTEST("contraption.unmovable", [](Context& ctx) -> ll::coro::Coro
     clearGlue(p.dim, ccp(p), 4);
 });
 
-LV_REGISTER_SELFTEST("contraption.chassis_linear", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.chassis_linear", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(430);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.require(
-        place(ctx, p, std::string(kLinearChassis), {{"levitate:axis", std::int64_t{1}}, {"levitate:sticky_top", std::int64_t{1}}, {"levitate:sticky_bottom", std::int64_t{0}}}),
+        place(ctx, p, std::string(kLinearChassis), {{"bearing:axis", std::int64_t{1}}, {"bearing:sticky_top", std::int64_t{1}}, {"bearing:sticky_bottom", std::int64_t{0}}}),
         "chassis placed (behavior pack loaded)"
     );
     for (int y = 1; y <= 3; ++y) place(ctx, at(p, 0, y, 0), "minecraft:stone");
-    place(ctx, at(p, 1, 0, 0), std::string(kSecondaryChassis), {{"levitate:axis", std::int64_t{1}}}); // other kind: not connected
+    place(ctx, at(p, 1, 0, 0), std::string(kSecondaryChassis), {{"bearing:axis", std::int64_t{1}}}); // other kind: not connected
     setChassisRange(p, 2);
     ctx.check(chassisRange(p) == 2, "range set");
     Guard g;
@@ -280,15 +280,15 @@ LV_REGISTER_SELFTEST("contraption.chassis_linear", [](Context& ctx) -> ll::coro:
     for (int y = 1; y <= 3; ++y) ctx.cleanupBlock(at(p, 0, y, 0));
     ctx.require(disassemble(*r.id), "disassembled");
     ctx.check(idAt(ctx, at(p, 0, 1, 0)) == std::string(kLinearChassis), "chassis moved up");
-    ctx.check(stateStr(ctx, at(p, 0, 1, 0), "levitate:sticky_top") == "1", "sticky face kept");
+    ctx.check(stateStr(ctx, at(p, 0, 1, 0), "bearing:sticky_top") == "1", "sticky face kept");
     ctx.check(chassisRange(at(p, 0, 1, 0)) == 2, "range carried: " + std::to_string(chassisRange(at(p, 0, 1, 0))));
 });
 
-LV_REGISTER_SELFTEST("contraption.chassis_radial", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.chassis_radial", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(436);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(place(ctx, p, std::string(kRadialChassis), {{"levitate:axis", std::int64_t{1}}, {"levitate:sticky_east", std::int64_t{1}}}), "radial chassis placed");
+    ctx.require(place(ctx, p, std::string(kRadialChassis), {{"bearing:axis", std::int64_t{1}}, {"bearing:sticky_east", std::int64_t{1}}}), "radial chassis placed");
     place(ctx, at(p, 1, 0, 0), "minecraft:stone");
     place(ctx, at(p, 1, 0, -1), "minecraft:stone");
     place(ctx, at(p, 2, 0, 0), "minecraft:stone");
@@ -302,17 +302,17 @@ LV_REGISTER_SELFTEST("contraption.chassis_radial", [](Context& ctx) -> ll::coro:
     ctx.require(disassemble(*r.id), "disassembled");
 });
 
-LV_REGISTER_SELFTEST("contraption.sticker", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.sticker", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(442);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = regionOf(ctx);
-    ctx.require(place(ctx, p, std::string(kSticker), {{"levitate:facing", std::int64_t{5}}, {"levitate:extended", std::int64_t{0}}}), "sticker placed");
+    ctx.require(place(ctx, p, std::string(kSticker), {{"bearing:facing", std::int64_t{5}}, {"bearing:extended", std::int64_t{0}}}), "sticker placed");
     place(ctx, at(p, 1, 0, 0), "minecraft:stone");
     // power extends it
     place(ctx, at(p, -1, 0, 0), "minecraft:redstone_block");
     detail::updateSticker(region, p.dim, ccp(p));
-    ctx.check(stateStr(ctx, p, "levitate:extended") == "1", "powered sticker extends");
+    ctx.check(stateStr(ctx, p, "bearing:extended") == "1", "powered sticker extends");
     Guard g;
     auto  r = assembleAt(p);
     ctx.require(r.ok(), "assembled: " + r.errorText);
@@ -321,13 +321,13 @@ LV_REGISTER_SELFTEST("contraption.sticker", [](Context& ctx) -> ll::coro::CoroTa
     ctx.require(disassemble(*r.id), "disassembled");
     place(ctx, at(p, -1, 0, 0), "minecraft:air");
     detail::updateSticker(region, p.dim, ccp(p));
-    ctx.check(stateStr(ctx, p, "levitate:extended") == "0", "unpowered sticker retracts");
+    ctx.check(stateStr(ctx, p, "bearing:extended") == "0", "unpowered sticker retracts");
     auto r2 = assembleAt(p);
     ctx.check(r2.ok() && find(*r2.id)->blocks().size() == 1, "a retracted sticker holds nothing");
     if (r2.ok()) disassemble(*r2.id);
 });
 
-LV_REGISTER_SELFTEST("contraption.storage", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.storage", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(448);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -366,7 +366,7 @@ LV_REGISTER_SELFTEST("contraption.storage", [](Context& ctx) -> ll::coro::CoroTa
     placed->removeAllItems();
 });
 
-LV_REGISTER_SELFTEST("contraption.carry_player", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.carry_player", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(454);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -392,7 +392,7 @@ LV_REGISTER_SELFTEST("contraption.carry_player", [](Context& ctx) -> ll::coro::C
     clearGlue(p.dim, ccp(p), 4);
 });
 
-LV_REGISTER_SELFTEST("contraption.collision", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.collision", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(460);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     place(ctx, p, "minecraft:stone");
@@ -419,7 +419,7 @@ LV_REGISTER_SELFTEST("contraption.collision", [](Context& ctx) -> ll::coro::Coro
     clearGlue(p.dim, ccp(p), 5);
 });
 
-LV_REGISTER_SELFTEST("contraption.drop_blocked", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.drop_blocked", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's addBlocksToWorld: an occupied place is cleared (the world block drops) and the
     // carried block is placed; only an unbreakable block keeps its place (the carried one drops)
     auto p = ctx.testPos(466);
@@ -466,7 +466,7 @@ struct ActorCounters {
 ActorCounters gActor;
 } // namespace
 
-LV_REGISTER_SELFTEST("contraption.actor", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.actor", [](Context& ctx) -> ll::coro::CoroTask<> {
     static bool registered = false;
     if (!registered) {
         registered = true;
@@ -510,7 +510,7 @@ std::map<core::GlobalPos, nlohmann::json> gCarried;
 std::vector<core::GlobalPos>              gRestored;
 } // namespace
 
-LV_REGISTER_SELFTEST("contraption.data_carrier", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.data_carrier", [](Context& ctx) -> ll::coro::CoroTask<> {
     registerDataCarrier({
         "contraption_test",
         [](BlockSource&, core::GlobalPos const& p) -> std::optional<nlohmann::json> {
@@ -547,7 +547,7 @@ LV_REGISTER_SELFTEST("contraption.data_carrier", [](Context& ctx) -> ll::coro::C
     registerDataCarrier({"contraption_test", nullptr, nullptr, nullptr});
 });
 
-LV_REGISTER_SELFTEST("contraption.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(484);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -573,7 +573,7 @@ LV_REGISTER_SELFTEST("contraption.persistence", [](Context& ctx) -> ll::coro::Co
     clearGlue(p.dim, ccp(p), 4);
 });
 
-LV_REGISTER_SELFTEST("contraption.super_glue", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.super_glue", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(490);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -606,40 +606,40 @@ LV_REGISTER_SELFTEST("contraption.super_glue", [](Context& ctx) -> ll::coro::Cor
     ctx.check(!detail::glued(p.dim, ccp(p), cc::Dir::East), "region gone");
 });
 
-LV_REGISTER_SELFTEST("contraption.chassis_use", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.chassis_use", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(496);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(place(ctx, p, std::string(kLinearChassis), {{"levitate:axis", std::int64_t{1}}}), "chassis placed");
+    ctx.require(place(ctx, p, std::string(kLinearChassis), {{"bearing:axis", std::int64_t{1}}}), "chassis placed");
     auto& player = ctx.player();
     ctx.check(detail::chassisUse(player, p.dim, ccp(p), cc::Dir::Up, "minecraft:slime_ball", false), "slime makes the face sticky");
-    ctx.check(stateStr(ctx, p, "levitate:sticky_top") == "1", "top sticky");
+    ctx.check(stateStr(ctx, p, "bearing:sticky_top") == "1", "top sticky");
     ctx.check(!detail::chassisUse(player, p.dim, ccp(p), cc::Dir::North, "minecraft:slime_ball", false), "side faces aren't glueable");
     ctx.check(detail::chassisUse(player, p.dim, ccp(p), cc::Dir::Up, "minecraft:slime_ball", false), "slime on a sticky face");
-    ctx.check(stateStr(ctx, p, "levitate:sticky_bottom") == "1", "makes every face sticky");
+    ctx.check(stateStr(ctx, p, "bearing:sticky_bottom") == "1", "makes every face sticky");
     ctx.check(!detail::chassisUse(player, p.dim, ccp(p), cc::Dir::Down, "", false), "empty hand needs sneaking");
     ctx.check(detail::chassisUse(player, p.dim, ccp(p), cc::Dir::Down, "", true), "sneaking empty hand clears");
-    ctx.check(stateStr(ctx, p, "levitate:sticky_bottom") == "0", "bottom cleared");
+    ctx.check(stateStr(ctx, p, "bearing:sticky_bottom") == "0", "bottom cleared");
     // placement orientation: axis from the clicked face
     detail::orientPlaced(regionOf(ctx), ccp(p), cc::Dir::East, player);
-    ctx.check(stateStr(ctx, p, "levitate:axis") == "0", "clicked east face: axis x");
+    ctx.check(stateStr(ctx, p, "bearing:axis") == "0", "clicked east face: axis x");
 });
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption
 
 // Selftests of U53 (the contraption audit fixes; testPos dx 5300..5399): movement settings, sticky
 // neighbours, Create's brittle / empty-collider blocks, running bearings and tracks, actors that
 // aren't brittle, chassis glue towards a connected chassis, single-block and off-hand super glue,
 // lever rotation and stabilized sub-contraptions.
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 namespace u53_tests {
 
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP     = core::GlobalPos;
-namespace bd = ::lv::feature::common::blockdata;
+namespace bd = ::br::feature::common::blockdata;
 
 GP      at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 cc::Pos ccp(GP const& p) { return {p.x, p.y, p.z}; }
@@ -685,7 +685,7 @@ struct Guard {
 } // namespace
 
 // C3 / M52 / M53: Create's ContraptionMovementSetting defaults and config keys
-LV_REGISTER_SELFTEST("contraption.u53_movement_settings", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_movement_settings", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 0);
     ctx.check(movementSetting("minecraft:obsidian") == MovementSetting::Unmovable, "obsidian unmovable by default");
     ctx.check(movementSetting("minecraft:crying_obsidian") == MovementSetting::Unmovable, "crying obsidian unmovable");
@@ -708,7 +708,7 @@ LV_REGISTER_SELFTEST("contraption.u53_movement_settings", [](Context& ctx) -> ll
 });
 
 // C11: a slime block next to a moved block is pulled (either block sticky)
-LV_REGISTER_SELFTEST("contraption.u53_slime_neighbour", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_slime_neighbour", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 3);
     place(ctx, p, "minecraft:stone");
     place(ctx, at(p, 1, 0, 0), "minecraft:slime");
@@ -724,7 +724,7 @@ LV_REGISTER_SELFTEST("contraption.u53_slime_neighbour", [](Context& ctx) -> ll::
 });
 
 // C12: Create's #create:movable_empty_collider / #create:brittle blocks travel on contraptions
-LV_REGISTER_SELFTEST("contraption.u53_empty_colliders", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_empty_colliders", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 6);
     place(ctx, p, "minecraft:stone");
     place(ctx, at(p, 1, 0, 0), "minecraft:web");
@@ -741,9 +741,9 @@ LV_REGISTER_SELFTEST("contraption.u53_empty_colliders", [](Context& ctx) -> ll::
 });
 
 // C4: a running bearing and tracks are unmovable (isMovementAllowedFallback)
-LV_REGISTER_SELFTEST("contraption.u53_running_bearing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_running_bearing", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 9);
-    ctx.require(place(ctx, p, "levitate:mechanical_bearing", {{"levitate:facing", std::int64_t{1}}}), "bearing placed");
+    ctx.require(place(ctx, p, "bearing:mechanical_bearing", {{"bearing:facing", std::int64_t{1}}}), "bearing placed");
     bd::edit(p)["bearings"] = {{"running", true}};
     auto info = detail::describe(regionOf(ctx), p.dim, ccp(p));
     ctx.check(!info.movable, "a running bearing is unmovable");
@@ -752,32 +752,32 @@ LV_REGISTER_SELFTEST("contraption.u53_running_bearing", [](Context& ctx) -> ll::
     bd::edit(p)["bearings"] = {{"running", false}};
     ctx.check(detail::describe(regionOf(ctx), p.dim, ccp(p)).movable, "a stopped bearing moves");
     bd::erase(p);
-    place(ctx, at(p, 1, 0, 0), "levitate:track");
-    if (idAt(ctx, at(p, 1, 0, 0)) == "levitate:track") {
+    place(ctx, at(p, 1, 0, 0), "bearing:track");
+    if (idAt(ctx, at(p, 1, 0, 0)) == "bearing:track") {
         ctx.check(!detail::describe(regionOf(ctx), p.dim, ccp(at(p, 1, 0, 0))).movable, "tracks never move");
     }
     co_return;
 });
 
 // C13: harvesters, ploughs and rollers aren't brittle; harvesters carry nothing on their front
-LV_REGISTER_SELFTEST("contraption.u53_actor_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_actor_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 12);
-    for (auto const* id : {"levitate:mechanical_harvester", "levitate:mechanical_plough", "levitate:mechanical_roller"}) {
-        ctx.require(place(ctx, p, id, {{"levitate:facing", std::int64_t{2}}}), std::string(id) + " placed");
+    for (auto const* id : {"bearing:mechanical_harvester", "bearing:mechanical_plough", "bearing:mechanical_roller"}) {
+        ctx.require(place(ctx, p, id, {{"bearing:facing", std::int64_t{2}}}), std::string(id) + " placed");
         auto info = detail::describe(regionOf(ctx), p.dim, ccp(p));
         ctx.check(!info.brittle, std::string(id) + " isn't brittle");
         ctx.check(info.necessary, std::string(id) + " is moved");
-        bool roller = std::string_view(id) == "levitate:mechanical_roller";
+        bool roller = std::string_view(id) == "bearing:mechanical_roller";
         ctx.check(roller ? info.notSupportive == 0 : info.notSupportive == cc::bit(cc::Dir::North), std::string(id) + " supportive sides");
     }
     co_return;
 });
 
 // C15: a linear chassis face towards a connected chassis of the same kind and axis can't be glued
-LV_REGISTER_SELFTEST("contraption.u53_chassis_glue_side", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_chassis_glue_side", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 15);
-    ctx.require(place(ctx, p, std::string(kLinearChassis), {{"levitate:axis", std::int64_t{1}}}), "chassis placed");
-    ctx.require(place(ctx, at(p, 0, 1, 0), std::string(kLinearChassis), {{"levitate:axis", std::int64_t{1}}}), "chassis above");
+    ctx.require(place(ctx, p, std::string(kLinearChassis), {{"bearing:axis", std::int64_t{1}}}), "chassis placed");
+    ctx.require(place(ctx, at(p, 0, 1, 0), std::string(kLinearChassis), {{"bearing:axis", std::int64_t{1}}}), "chassis above");
     auto& player = ctx.player();
     ctx.check(!detail::chassisUse(player, p.dim, ccp(p), cc::Dir::Up, "minecraft:slime_ball", false), "no glue towards the connected chassis");
     ctx.check(detail::chassisUse(player, p.dim, ccp(p), cc::Dir::Down, "minecraft:slime_ball", false), "the free end takes glue");
@@ -785,7 +785,7 @@ LV_REGISTER_SELFTEST("contraption.u53_chassis_glue_side", [](Context& ctx) -> ll
 });
 
 // C14: one block alone is no glue group; super glue in the off hand glues a placed block
-LV_REGISTER_SELFTEST("contraption.u53_super_glue", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_super_glue", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 18);
     place(ctx, p, "minecraft:stone");
     place(ctx, at(p, 0, 1, 0), "minecraft:stone");
@@ -810,7 +810,7 @@ LV_REGISTER_SELFTEST("contraption.u53_super_glue", [](Context& ctx) -> ll::coro:
 });
 
 // C10: a lever on a structure turned about a horizontal axis lands on a wall
-LV_REGISTER_SELFTEST("contraption.u53_lever_rotation", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_lever_rotation", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 21);
     p.y += 2;
     ctx.require(co_await ctx.ensureLoaded(p), "area loaded");
@@ -841,11 +841,11 @@ LV_REGISTER_SELFTEST("contraption.u53_lever_rotation", [](Context& ctx) -> ll::c
 });
 
 // C9: a mechanical bearing on a bearing's structure (same axis) carries a stabilized sub-contraption
-LV_REGISTER_SELFTEST("contraption.u53_stabilized", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.u53_stabilized", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 24);
     place(ctx, p, "minecraft:stone"); // stands for the parent's bearing (the anchor stays)
     place(ctx, at(p, 0, 1, 0), "minecraft:stone");
-    ctx.require(place(ctx, at(p, 1, 1, 0), "levitate:mechanical_bearing", {{"levitate:facing", std::int64_t{1}}}), "sub bearing");
+    ctx.require(place(ctx, at(p, 1, 1, 0), "bearing:mechanical_bearing", {{"bearing:facing", std::int64_t{1}}}), "sub bearing");
     place(ctx, at(p, 1, 2, 0), "minecraft:oak_planks");
     addGlue(p.dim, cc::GlueBox::of(ccp(at(p, 0, 1, 0)), ccp(at(p, 1, 1, 0))));
     Guard g;
@@ -878,10 +878,10 @@ LV_REGISTER_SELFTEST("contraption.u53_stabilized", [](Context& ctx) -> ll::coro:
     ctx.cleanupBlock(bearingAt);
     ctx.cleanupBlock(plank);
     ctx.cleanupBlock(at(p, 0, 1, 0));
-    ctx.check(idAt(ctx, bearingAt) == "levitate:mechanical_bearing", "the sub bearing is placed: " + idAt(ctx, bearingAt));
+    ctx.check(idAt(ctx, bearingAt) == "bearing:mechanical_bearing", "the sub bearing is placed: " + idAt(ctx, bearingAt));
     ctx.check(idAt(ctx, plank) == "minecraft:oak_planks", "the plank is on its bearing: " + idAt(ctx, plank));
     clearGlue(p.dim, ccp(p), 4);
 });
 
 } // namespace u53_tests
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

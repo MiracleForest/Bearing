@@ -49,7 +49,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::goggles::wrench {
+namespace br::feature::goggles::wrench {
 
 namespace {
 
@@ -123,18 +123,18 @@ Handler trackHandler() {
     Handler h;
     h.onWrenched      = [](Context&) { return Result::Success; };
     h.onSneakWrenched = [](Context& c) {
-        if (!c.player.isCreative() && game::intState(c.block, "levitate:turn").value_or(0) != 0) tracks::dismantleCurves(c.player, c.pos);
+        if (!c.player.isCreative() && game::intState(c.block, "bearing:turn").value_or(0) != 0) tracks::dismantleCurves(c.player, c.pos);
         return defaultOnSneakWrenched(c);
     };
     return h;
 }
 
 // Create's IWrenchable blocks of the wave-1 units (referenced by id).
-LV_REGISTER_WRENCHABLE("levitate:linear_chassis");
-LV_REGISTER_WRENCHABLE("levitate:secondary_linear_chassis");
-LV_REGISTER_WRENCHABLE("levitate:radial_chassis");
-LV_REGISTER_WRENCHABLE("levitate:sticker");
-LV_REGISTER_WRENCHABLE("levitate:track", trackHandler());
+BR_REGISTER_WRENCHABLE("bearing:linear_chassis");
+BR_REGISTER_WRENCHABLE("bearing:secondary_linear_chassis");
+BR_REGISTER_WRENCHABLE("bearing:radial_chassis");
+BR_REGISTER_WRENCHABLE("bearing:sticker");
+BR_REGISTER_WRENCHABLE("bearing:track", trackHandler());
 
 } // namespace
 
@@ -179,11 +179,11 @@ bool canWrenchPickup(std::string_view id) {
         "minecraft:redstone_lamp",
         "minecraft:lit_redstone_lamp",
         // Create's own: metal bars (MetalBarsGen) and the palette iron blocks (palettesIronBlock)
-        "levitate:andesite_bars",
-        "levitate:brass_bars",
-        "levitate:copper_bars",
-        "levitate:industrial_iron_block",
-        "levitate:weathered_iron_block",
+        "bearing:andesite_bars",
+        "bearing:brass_bars",
+        "bearing:copper_bars",
+        "bearing:industrial_iron_block",
+        "bearing:weathered_iron_block",
     };
     if (exact.contains(id)) return true;
     // #minecraft:buttons, #minecraft:pressure_plates
@@ -210,12 +210,12 @@ Block const& rotatedBlock(Block const& block, int face) {
     return *out;
 }
 
-void playRotateSound(core::GlobalPos const& pos) { playSound(pos, "levitate.wrench_rotate", 1.f, randomFloat() + .5f); }
+void playRotateSound(core::GlobalPos const& pos) { playSound(pos, "bearing.wrench_rotate", 1.f, randomFloat() + .5f); }
 
 void playRemoveSound(core::GlobalPos const& pos) {
     float pitch = randomFloat() * .5f + .5f;
-    playSound(pos, "levitate.wrench_remove", 1.f, pitch);
-    playSound(pos, "levitate.wrench_remove_hit", 1.f, pitch);
+    playSound(pos, "bearing.wrench_remove", 1.f, pitch);
+    playSound(pos, "bearing.wrench_remove_hit", 1.f, pitch);
 }
 
 Result defaultOnWrenched(Context& ctx) {
@@ -340,6 +340,6 @@ private:
     std::vector<ia::HandlerId> mIds;
 };
 
-} // namespace lv::feature::goggles::wrench
+} // namespace br::feature::goggles::wrench
 
-LV_REGISTER_MODULE(lv::feature::goggles::wrench::WrenchModule);
+BR_REGISTER_MODULE(br::feature::goggles::wrench::WrenchModule);

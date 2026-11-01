@@ -1,5 +1,5 @@
 {
-  "type": "levitate:mixing",
+  "type": "bearing:mixing",
   "ingredients": [
     {
       "tag": "c:flours/wheat"
@@ -11,7 +11,7 @@
   ],
   "results": [
     {
-      "id": "levitate:dough"
+      "id": "bearing:dough"
     }
   ]
 }

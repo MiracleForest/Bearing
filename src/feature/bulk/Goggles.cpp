@@ -6,11 +6,11 @@
 #include "feature/bulk/Bulk.h"
 #include "feature/goggles/GoggleInfo.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace goggles = feature::goggles;
 
-LV_REGISTER_GOGGLE_INFO(std::string(kMillstone), {.goggle = goggles::kineticGoggleTooltip, .hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
-LV_REGISTER_GOGGLE_INFO(std::string(kController), {.replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(std::string(kMillstone), {.goggle = goggles::kineticGoggleTooltip, .hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(std::string(kController), {.replaceDefaults = true});
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

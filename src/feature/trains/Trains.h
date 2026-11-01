@@ -27,7 +27,7 @@ class BlockSource;
 class BlockPos;
 class ItemStack;
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace ct = core::trains;
 namespace cc = core::contraption;
@@ -35,20 +35,20 @@ using core::GlobalPos;
 using Json = nlohmann::json;
 
 // ---- ids ----------------------------------------------------------------------------------------
-inline constexpr std::string_view kStation    = "levitate:track_station";
-inline constexpr std::string_view kSmallBogey = "levitate:small_bogey";
-inline constexpr std::string_view kLargeBogey = "levitate:large_bogey";
-inline constexpr std::string_view kControls   = "levitate:controls";
-inline constexpr std::string_view kSchedule   = "levitate:schedule";
+inline constexpr std::string_view kStation    = "bearing:track_station";
+inline constexpr std::string_view kSmallBogey = "bearing:small_bogey";
+inline constexpr std::string_view kLargeBogey = "bearing:large_bogey";
+inline constexpr std::string_view kControls   = "bearing:controls";
+inline constexpr std::string_view kSchedule   = "bearing:schedule";
 /// Owned by other units: referenced by id only.
-inline constexpr std::string_view kRailwayCasing = "levitate:railway_casing"; ///< U10
-inline constexpr std::string_view kWrench        = "levitate:wrench";         ///< U8
-inline constexpr std::string_view kBlazeBurner   = "levitate:blaze_burner";   ///< U14
-inline constexpr std::string_view kTrainDoor     = "levitate:train_door";     ///< U10
+inline constexpr std::string_view kRailwayCasing = "bearing:railway_casing"; ///< U10
+inline constexpr std::string_view kWrench        = "bearing:wrench";         ///< U8
+inline constexpr std::string_view kBlazeBurner   = "bearing:blaze_burner";   ///< U14
+inline constexpr std::string_view kTrainDoor     = "bearing:train_door";     ///< U10
 
 // ---- block states -------------------------------------------------------------------------------
-inline constexpr char kAssemblingState[] = "levitate:assembling";        ///< station 0/1
-inline constexpr char kBogeyAxisState[]  = "levitate:bogey_axis";        ///< 0 x, 1 z
+inline constexpr char kAssemblingState[] = "bearing:assembling";        ///< station 0/1
+inline constexpr char kBogeyAxisState[]  = "bearing:bogey_axis";        ///< 0 x, 1 z
 
 /// `config/trains.json`: Create's CTrains keys (the track ones are in config/tracks.json).
 struct Config {
@@ -375,4 +375,4 @@ void resetControls();
 void tickTrainEffects();
 void resetTrainEffects();
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains

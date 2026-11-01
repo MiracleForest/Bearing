@@ -3,16 +3,16 @@
   "size": [5, 5],
   "height": 5,
   "blocks": [
-    {"at": [2, 1, 1], "id": "levitate:andesite_casing"},
-    {"at": [2, 2, 1], "id": "levitate:windmill_bearing", "states": {"levitate:facing": 3}},
+    {"at": [2, 1, 1], "id": "bearing:andesite_casing"},
+    {"at": [2, 2, 1], "id": "bearing:windmill_bearing", "states": {"bearing:facing": 3}},
     {"at": [2, 2, 2], "id": "minecraft:oak_planks"},
-    {"at": [2, 3, 2], "id": "levitate:sail_frame", "states": {"levitate:facing": 3}},
-    {"at": [2, 4, 2], "id": "levitate:sail_frame", "states": {"levitate:facing": 3}},
-    {"at": [3, 2, 2], "id": "levitate:sail_frame", "states": {"levitate:facing": 3}},
-    {"at": [4, 2, 2], "id": "levitate:sail_frame", "states": {"levitate:facing": 3}},
-    {"at": [1, 2, 2], "id": "levitate:sail_frame", "states": {"levitate:facing": 3}},
-    {"at": [0, 2, 2], "id": "levitate:sail_frame", "states": {"levitate:facing": 3}},
-    {"at": [2, 1, 2], "id": "levitate:sail_frame", "states": {"levitate:facing": 3}}
+    {"at": [2, 3, 2], "id": "bearing:sail_frame", "states": {"bearing:facing": 3}},
+    {"at": [2, 4, 2], "id": "bearing:sail_frame", "states": {"bearing:facing": 3}},
+    {"at": [3, 2, 2], "id": "bearing:sail_frame", "states": {"bearing:facing": 3}},
+    {"at": [4, 2, 2], "id": "bearing:sail_frame", "states": {"bearing:facing": 3}},
+    {"at": [1, 2, 2], "id": "bearing:sail_frame", "states": {"bearing:facing": 3}},
+    {"at": [0, 2, 2], "id": "bearing:sail_frame", "states": {"bearing:facing": 3}},
+    {"at": [2, 1, 2], "id": "bearing:sail_frame", "states": {"bearing:facing": 3}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

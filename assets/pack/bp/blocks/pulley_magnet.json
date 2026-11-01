@@ -2,26 +2,26 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:pulley_magnet",
+      "identifier": "bearing:pulley_magnet",
       "menu_category": {
         "category": "none"
       }
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.pulley_magnet"
+        "identifier": "geometry.bearing.pulley_magnet"
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_pulley_magnet",
+          "texture": "bearing_pulley_magnet",
           "render_method": "alpha_test"
         },
         "rope": {
-          "texture": "levitate_rope",
+          "texture": "bearing_rope",
           "render_method": "alpha_test"
         },
         "magnet": {
-          "texture": "levitate_pulley_magnet",
+          "texture": "bearing_pulley_magnet",
           "render_method": "alpha_test"
         }
       },

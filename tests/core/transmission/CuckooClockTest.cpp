@@ -2,7 +2,7 @@
 
 #include "core/transmission/CuckooClock.h"
 
-using namespace lv::core::transmission;
+using namespace br::core::transmission;
 
 TEST(CuckooClock, TimeOfDay) {
     auto t = clockTime(0, true);

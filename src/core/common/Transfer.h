@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-namespace lv::core::common {
+namespace br::core::common {
 
 /// What a slot holds, as seen by an insertion of one particular item.
 struct SlotView {
@@ -28,7 +28,7 @@ inline constexpr int kBucketMb = 1000;
 
 /// Chunk coordinate of a block coordinate (floor division by 16).
 [[nodiscard]] constexpr int chunkOf(int block) { return block >= 0 ? block / 16 : -((-block + 15) / 16); }
-/// World DB key of a block data chunk: "lv:common:bd:<dim>:<cx>:<cz>".
+/// World DB key of a block data chunk: "br:common:bd:<dim>:<cx>:<cz>".
 [[nodiscard]] std::string blockDataChunkKey(int dim, int cx, int cz);
 /// Parses a key suffix "<dim>:<cx>:<cz>" (as `forEachKey` returns it).
 [[nodiscard]] bool parseChunkSuffix(std::string_view suffix, int& dim, int& cx, int& cz);
@@ -36,4 +36,4 @@ inline constexpr int kBucketMb = 1000;
 [[nodiscard]] std::string posKey(int x, int y, int z);
 [[nodiscard]] bool        parsePosKey(std::string_view key, int& x, int& y, int& z);
 
-} // namespace lv::core::common
+} // namespace br::core::common

@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the kinetic network: rotating parts drawn spinning at their network speed.
 //
@@ -86,7 +86,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::kinetics {
+namespace br::client::kinetics {
 
 namespace k  = core::kinetics;
 namespace ks = core::kinetics::sync;
@@ -175,7 +175,7 @@ RotorInfo const& rotorInfo(Block const& block) {
 std::map<std::string, k::RotorModel> const& rotorModels() {
     static std::map<std::string, k::RotorModel> models = [] {
         std::map<std::string, k::RotorModel> out;
-        auto dir = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto dir = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         std::error_code ec;
         for (auto const& entry : std::filesystem::directory_iterator(dir, ec)) {
             if (entry.path().extension() != ".json") continue;
@@ -220,7 +220,7 @@ mce::Mesh* rotorMesh(Tessellator& tess, KineticSpec const& spec, std::string con
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
     slot = std::make_unique<mce::Mesh>(
-        tess.end(Tessellator::UploadMode::Buffered, "levitate_rotor", SupplementaryFieldAutoGenerationMode::None)
+        tess.end(Tessellator::UploadMode::Buffered, "bearing_rotor", SupplementaryFieldAutoGenerationMode::None)
     );
     return slot.get();
 }
@@ -262,7 +262,7 @@ void frameUpdate(ClientInstance& ci) {
 
 /// The client level's tick (0 outside a level).
 std::uint64_t clientTick() {
-    auto* ci    = lv::client::currentClient();
+    auto* ci    = br::client::currentClient();
     auto* level = ci ? ci->getLevel() : nullptr;
     return level ? level->getCurrentTick().tickID : 0;
 }
@@ -349,7 +349,7 @@ struct DrawItem {
 };
 
 void renderRotors(BaseActorRenderContext& ctx) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     frameUpdate(*ci);
     auto* level  = ci->getLevel();
@@ -550,8 +550,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::kinetics
+} // namespace br::client::kinetics
 
-LV_REGISTER_MODULE(lv::client::kinetics::KineticsClientModule);
+BR_REGISTER_MODULE(br::client::kinetics::KineticsClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

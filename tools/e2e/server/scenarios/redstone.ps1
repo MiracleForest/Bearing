@@ -7,11 +7,11 @@ $r = Invoke-SelfTest 'redstone.*'
 if ($r.Pass -lt 26) { throw "expected at least 26 redstone selftests to pass, got $($r.Pass)" }
 
 # A transmitter powered by a redstone block and a receiver lighting a lamp, from the console.
-Send-Console 'tickingarea add 0 -64 0 15 -40 15 lv_redstone_e2e true'
+Send-Console 'tickingarea add 0 -64 0 15 -40 15 br_redstone_e2e true'
 Wait-Seconds 3
 $mark = Get-LogMark
-Send-Console 'setblock 4 -60 4 levitate:redstone_link ["levitate:facing"=1]'
-Send-Console 'setblock 10 -60 4 levitate:redstone_link ["levitate:facing"=1,"levitate:receiver"=1]'
+Send-Console 'setblock 4 -60 4 bearing:redstone_link ["bearing:facing"=1]'
+Send-Console 'setblock 10 -60 4 bearing:redstone_link ["bearing:facing"=1,"bearing:receiver"=1]'
 Send-Console 'setblock 11 -60 4 redstone_lamp'
 Wait-Seconds 1
 Send-Console 'setblock 3 -60 4 redstone_block'
@@ -24,15 +24,15 @@ Send-Console 'setblock 10 -60 4 air'
 Send-Console 'setblock 11 -60 4 air'
 # U49: two rose quartz lamps; a redstone block lights the second and the first stays dark
 $mark = Get-LogMark
-Send-Console 'setblock 4 -60 8 levitate:rose_quartz_lamp'
-Send-Console 'setblock 5 -60 8 levitate:rose_quartz_lamp'
+Send-Console 'setblock 4 -60 8 bearing:rose_quartz_lamp'
+Send-Console 'setblock 5 -60 8 bearing:rose_quartz_lamp'
 Wait-Seconds 1
 Send-Console 'setblock 6 -60 8 redstone_block'
 Wait-LogLine 'rose quartz lamp at 5 -60 8 activated \(1 lamps in its cluster\)' 10 -Since $mark | Out-Null
 Wait-Seconds 1
-Send-Console 'testforblock 5 -60 8 levitate:rose_quartz_lamp ["levitate:powering"=1,"levitate:powered"=1,"levitate:activate"=0]'
+Send-Console 'testforblock 5 -60 8 bearing:rose_quartz_lamp ["bearing:powering"=1,"bearing:powered"=1,"bearing:activate"=0]'
 Wait-LogLine 'Successfully found the block' 10 -Since $mark | Out-Null
 Send-Console 'setblock 4 -60 8 air'
 Send-Console 'setblock 5 -60 8 air'
 Send-Console 'setblock 6 -60 8 air'
-Send-Console 'tickingarea remove lv_redstone_e2e'
+Send-Console 'tickingarea remove br_redstone_e2e'

@@ -12,7 +12,7 @@
 #include "mod/I18n.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 namespace {
 using Applies = std::function<bool(BlockSource&, GlobalPos const&, Block const&)>;
@@ -96,4 +96,4 @@ std::string progressBar(double level, int width) {
     return s;
 }
 
-} // namespace lv::feature::display
+} // namespace br::feature::display

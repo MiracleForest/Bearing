@@ -8,7 +8,7 @@
 //                      tessellator, outlines, indicators, text bubbles).
 // - PonderScreens.cpp: the scene player (PonderUI), the tag screen and the index.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <functional>
 #include <string>
@@ -29,11 +29,11 @@ class MaterialPtr;
 class Mesh;
 } // namespace mce
 
-namespace lv::client::screen {
+namespace br::client::screen {
 class Canvas;
 }
 
-namespace lv::client::ponder {
+namespace br::client::ponder {
 
 namespace cp = core::ponder;
 
@@ -102,7 +102,7 @@ DrawResult drawScene(
 /// Draws the text bubbles of `state` (on top of everything).
 void drawTexts(screen::Canvas& c, cp::Scene const& scene, cp::SceneState const& state, cp::View const& view, float screenW, bool slow);
 
-/// Draws the icon of an item / block id in a size square at (x, y) (Levitate blocks from their model,
+/// Draws the icon of an item / block id in a size square at (x, y) (Bearing blocks from their model,
 /// others with the game's item renderer). Returns false when the id does not exist.
 bool drawIcon(screen::Canvas& c, std::string const& id, float x, float y, float size = 16);
 
@@ -131,14 +131,14 @@ void releaseScenePuppets();
 void forgetScenePuppets();
 
 /// Appends the model of `block` (`def`: its id and states) to a begun tessellator at (x, y, z),
-/// as Ponder draws it: Levitate blocks from the pack's geometry, other blocks with the game's block
+/// as Ponder draws it: Bearing blocks from the pack's geometry, other blocks with the game's block
 /// tessellator (U29's schematic ghost uses it). Returns false when it can't be drawn.
 bool appendBlock(Tessellator& tess, cp::BlockDef const& def, Block const& block, float x, float y, float z);
-/// A cached mesh (block units, 0..1) of a Levitate block's model without the bones `hideBones`
+/// A cached mesh (block units, 0..1) of a Bearing block's model without the bones `hideBones`
 /// (U29's schematicannon draws its connector and barrel with it); nullptr for other blocks.
 /// Dropped with the level.
 mce::Mesh* modelPartMesh(Tessellator& tess, cp::BlockDef const& def, std::vector<std::string> const& hideBones);
 
-} // namespace lv::client::ponder
+} // namespace br::client::ponder
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cardboard_chestplate"
+      "identifier": "bearing:cardboard_chestplate"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "P": {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     ],
     "result": {
-      "item": "levitate:cardboard_chestplate",
+      "item": "bearing:cardboard_chestplate",
       "count": 1
     }
   }

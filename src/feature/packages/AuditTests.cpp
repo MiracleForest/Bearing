@@ -26,11 +26,11 @@
 
 namespace {
 
-using lv::selftest::Context;
-namespace pk    = lv::feature::packages;
-namespace items = lv::feature::common::items;
-namespace net   = lv::feature::net;
-using lv::core::GlobalPos;
+using br::selftest::Context;
+namespace pk    = br::feature::packages;
+namespace items = br::feature::common::items;
+namespace net   = br::feature::net;
+using br::core::GlobalPos;
 using JsonT = nlohmann::json;
 
 constexpr int kU56Dz = -295;
@@ -59,7 +59,7 @@ void removeAround(GlobalPos const& p) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("packages.frogport_yaw_hint", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.frogport_yaw_hint", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto frog = at(ctx, 5685);
     ctx.require(co_await ctx.ensureLoaded(frog), "test area loaded");
     ctx.require(ctx.setBlock(frog, pk::kFrogportId), "frogport placed");
@@ -75,17 +75,17 @@ LV_REGISTER_SELFTEST("packages.frogport_yaw_hint", [](Context& ctx) -> ll::coro:
     auto& p = ctx.player();
     pk::port(frog).failedLastExport = true;
     bool hint = false;
-    for (auto const& l : lv::feature::goggles::overlayFor(p, frog).lines) hint = hint || l.find("Contains Packages") != std::string::npos;
+    for (auto const& l : br::feature::goggles::overlayFor(p, frog).lines) hint = hint || l.find("Contains Packages") != std::string::npos;
     ctx.check(hint, "the blocked frogport shows Create's hint");
     pk::port(frog).failedLastExport = false;
     co_await ctx.ticks(1);
 });
 
-LV_REGISTER_SELFTEST("packages.addresses", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.addresses", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's AddressEditBox: 25 characters; AddressEditBoxHelper: "#address" clipboard entries
     auto box = at(ctx, 5687);
     ctx.require(co_await ctx.ensureLoaded(box), "test area loaded");
-    ctx.require(ctx.setBlock(box, "levitate:green_postbox"), "postbox placed");
+    ctx.require(ctx.setBlock(box, "bearing:green_postbox"), "postbox placed");
     pk::track(box, pk::Kind::Postbox);
     auto& p = ctx.player();
     net::setTestCompanion(p, true);
@@ -94,7 +94,7 @@ LV_REGISTER_SELFTEST("packages.addresses", [](Context& ctx) -> ll::coro::CoroTas
     net::setTestCompanion(p, false);
     (void)net::takeTestMessages(p);
     ctx.check(pk::port(box).address.size() == 25, "a port address is cut to 25 characters, got " + std::to_string(pk::port(box).address.size()));
-    namespace cb = lv::feature::display::clipboard;
+    namespace cb = br::feature::display::clipboard;
     auto clip    = cb::makeWritten({{cb::Entry{"#Storage", false, nullptr, 0}, cb::Entry{"#Done", true, nullptr, 0}, cb::Entry{"note", false, nullptr, 0}}}, "Addresses");
     ctx.require(clip.has_value(), "a clipboard");
     p.setSelectedItem(*clip);
@@ -103,7 +103,7 @@ LV_REGISTER_SELFTEST("packages.addresses", [](Context& ctx) -> ll::coro::CoroTas
     p.setSelectedItem(items::empty());
 });
 
-LV_REGISTER_SELFTEST("packages.postbox_offline", [](Context& ctx) {
+BR_REGISTER_SELFTEST("packages.postbox_offline", [](Context& ctx) {
     // Create's GlobalPackagePort: a station keeps serving a postbox whose chunk is unloaded
     auto station = ctx.testPos(5689, 8000); // far away: not loaded
     auto box     = GlobalPos{station.dim, station.x + 1, station.y, station.z};
@@ -119,7 +119,7 @@ LV_REGISTER_SELFTEST("packages.postbox_offline", [](Context& ctx) {
     ctx.check(pk::addressOf(out) == "Far", "a train can take it back out");
 });
 
-LV_REGISTER_SELFTEST("packages.tray_and_vanilla_items", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.tray_and_vanilla_items", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's getRenderedBox: the box stays on the tray while held; vanilla clients get it as a
     // client-only item
     auto packager = at(ctx, 5691);
@@ -139,7 +139,7 @@ LV_REGISTER_SELFTEST("packages.tray_and_vanilla_items", [](Context& ctx) -> ll::
     ctx.check(pk::vanillaItemCount("test:") == 0, "hidden by prefix");
 });
 
-LV_REGISTER_SELFTEST("packages.entity_pile", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_pile", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's PackageEntity.canCollideWith: a package lands on the package below it
     auto pos = at(ctx, 5693, 0);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
@@ -161,7 +161,7 @@ LV_REGISTER_SELFTEST("packages.entity_pile", [](Context& ctx) -> ll::coro::CoroT
     removeAround(pos);
 });
 
-LV_REGISTER_SELFTEST("packages.entity_suffocate", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.entity_suffocate", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's PackageEntity.hurt(inWall): a package inside a solid block breaks open
     auto pos = at(ctx, 5696, 0);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");

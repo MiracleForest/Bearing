@@ -54,7 +54,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::assembly::deployer {
+namespace br::feature::assembly::deployer {
 
 namespace bd      = common::blockdata;
 namespace items   = common::items;
@@ -65,14 +65,14 @@ using ca::DeployerState;
 
 namespace {
 
-constexpr char kDbIndex[]    = "lv:assembly:deployers";
+constexpr char kDbIndex[]    = "br:assembly:deployers";
 constexpr char kDataKey[]    = "deployer";
 constexpr char kCarrier[]    = "assembly:deployer";
 
 /// Blocks that carry items for the deployer to process from above (Create's
 /// TransportedItemStackHandlerBehaviour: belts, depots, ejectors).
 bool isTransportBlock(std::string const& id) {
-    return id == "levitate:depot" || id == "levitate:belt" || id == "levitate:weighted_ejector";
+    return id == "bearing:depot" || id == "bearing:belt" || id == "bearing:weighted_ejector";
 }
 
 struct Runtime {
@@ -112,7 +112,7 @@ struct VanillaView {
                 if (!region || !region->hasChunksAt(bp, 0, false)) continue;
                 auto const& block = region->getBlock(bp);
                 if (block.getTypeName() != kDeployerId) continue;
-                auto f = static_cast<Face>(std::clamp(detail::intState(block, "levitate:facing").value_or(1), 0, 5));
+                auto f = static_cast<Face>(std::clamp(detail::intState(block, "bearing:facing").value_or(1), 0, 5));
                 auto d = detail::offsetPos(BlockPos{0, 0, 0}, f);
                 out.push_back({pos, 0, items::withCount(r.held, 1), Vec3{pos.x + .5f + d.x * .65f, pos.y + .375f + d.y * .65f, pos.z + .5f + d.z * .65f}});
             }
@@ -173,7 +173,7 @@ Runtime& rt(GlobalPos const& pos) {
 
 void save(GlobalPos const& pos, Runtime const& r) { bd::edit(pos)[kDataKey] = toJson(r); }
 
-Face facingOf(Block const& block) { return static_cast<Face>(std::clamp(detail::intState(block, "levitate:facing").value_or(1), 0, 5)); }
+Face facingOf(Block const& block) { return static_cast<Face>(std::clamp(detail::intState(block, "bearing:facing").value_or(1), 0, 5)); }
 
 void syncState(GlobalPos const& pos, Runtime const& r, Face facing) {
     float speed = kinetics::speedAt(pos);
@@ -223,7 +223,7 @@ std::optional<std::vector<ItemStack>> deployOnItem(ItemStack const& item, ItemSt
     auto one = items::withCount(item, 1);
     // sand paper polishes (Create's SandPaperPolishingRecipe through the deployer)
     auto heldId = items::idOf(held);
-    if (heldId == "levitate:sand_paper" || heldId == "levitate:red_sand_paper") {
+    if (heldId == "bearing:sand_paper" || heldId == "bearing:red_sand_paper") {
         if (auto const* r = recipes::findFirst("sandpaper_polishing", one)) {
             if (simulate) return std::vector<ItemStack>{};
             auto out = recipes::rollResults(*r);
@@ -755,7 +755,7 @@ Json& actorDoc(contraption::MovementContext& ctx) {
 }
 
 Face actorFacing(contraption::MovementContext& ctx) {
-    auto it = ctx.states.find("levitate:facing");
+    auto it = ctx.states.find("bearing:facing");
     int  f  = 1;
     if (it != ctx.states.end())
         if (auto const* v = std::get_if<std::int64_t>(&it->second)) f = static_cast<int>(*v);
@@ -869,7 +869,7 @@ void registerInteraction() {
                                                                   : Json::object();
         auto rtv  = fromJson(doc.value(kDataKey, Json::object()));
         auto held = player.getSelectedItem();
-        if (items::idOf(held) == "levitate:wrench") {
+        if (items::idOf(held) == "bearing:wrench") {
             rtv.mode = rtv.mode == DeployerMode::Punch ? DeployerMode::Use : DeployerMode::Punch;
         } else {
             auto previous = rtv.held;
@@ -881,7 +881,7 @@ void registerInteraction() {
         (*carriedData)[kCarrier] = doc;
         if (actorData && actorData->contains("deployer")) (*actorData)["deployer"] = doc;
         log().info("deployer on contraption #{} at {} {} {}: {} by {}", c.id(), local.x, local.y, local.z,
-                   items::idOf(held) == "levitate:wrench" ? "mode switched" : "items swapped", player.getRealName());
+                   items::idOf(held) == "bearing:wrench" ? "mode switched" : "items swapped", player.getRealName());
         return true;
     });
 }
@@ -910,12 +910,12 @@ void registerCarrier() {
             auto const* v = std::get_if<std::int64_t>(&it->second);
             return v ? static_cast<int>(*v) : def;
         };
-        auto newFacing  = static_cast<Face>(std::clamp(get("levitate:facing", 1), 0, 5));
+        auto newFacing  = static_cast<Face>(std::clamp(get("bearing:facing", 1), 0, 5));
         auto oldFacing  = contraption::cc::rotate(static_cast<contraption::cc::Dir>(newFacing), axis, -quarter);
-        bool alongFirst = get("levitate:axis_along_first", 0) != 0;
+        bool alongFirst = get("bearing:axis_along_first", 0) != 0;
         auto oldShaft   = ca::deployerShaftAxis(static_cast<Face>(oldFacing), alongFirst);
         auto newShaft   = contraption::cc::rotate(static_cast<contraption::cc::Axis>(oldShaft), axis, quarter);
-        s["levitate:axis_along_first"] = std::int64_t{ca::deployerAlongFirstFor(newFacing, static_cast<core::kinetics::Axis>(newShaft)) ? 1 : 0};
+        s["bearing:axis_along_first"] = std::int64_t{ca::deployerAlongFirstFor(newFacing, static_cast<core::kinetics::Axis>(newShaft)) ? 1 : 0};
     });
 }
 
@@ -928,7 +928,7 @@ void registerFilterSlot() {
     slot.centre = [](Block const& block, int face) -> std::optional<core::common::Vec> {
         if (face < 0 || face > 5) return std::nullopt;
         Face facing = facingOf(block);
-        bool along  = detail::intState(block, "levitate:axis_along_first").value_or(0) != 0;
+        bool along  = detail::intState(block, "bearing:axis_along_first").value_or(0) != 0;
         auto f      = static_cast<Face>(face);
         if (core::kinetics::axisOf(f) == core::kinetics::axisOf(facing)) return std::nullopt;
         if (core::kinetics::axisOf(f) == ca::deployerShaftAxis(facing, along)) return std::nullopt;
@@ -988,7 +988,7 @@ void onPlaced(BlockSource& region, BlockPos const& pos, Player* placer, Face cli
     for (Face f : core::kinetics::kFaces)
         n.shaftTowards[static_cast<int>(f)] = detail::shaftTowards(region, detail::offsetPos(pos, f), core::kinetics::opposite(f));
     bool along = ca::deployerPlacementAlongFirst(facing, lookX, n);
-    if (auto const* b = detail::withStates(region.getBlock(pos), {{"levitate:facing", static_cast<int>(facing)}, {"levitate:axis_along_first", along ? 1 : 0}}))
+    if (auto const* b = detail::withStates(region.getBlock(pos), {{"bearing:facing", static_cast<int>(facing)}, {"bearing:axis_along_first", along ? 1 : 0}}))
         game::setBlock(region, pos, *b);
     auto gp = game::globalPos(region, pos);
     st().runtimes.erase(gp);
@@ -1063,17 +1063,17 @@ void onWorldClosed() {
 
 void install() {
     kinetics::KineticSpec spec;
-    spec.states       = {"levitate:facing", "levitate:axis_along_first"};
+    spec.states       = {"bearing:facing", "bearing:axis_along_first"};
     spec.rotationAxis = [](core::kinetics::BlockState const& s) -> std::optional<core::kinetics::Axis> {
-        return ca::deployerShaftAxis(static_cast<Face>(std::clamp(s.get("levitate:facing", 1), 0, 5)), s.get("levitate:axis_along_first") != 0);
+        return ca::deployerShaftAxis(static_cast<Face>(std::clamp(s.get("bearing:facing", 1), 0, 5)), s.get("bearing:axis_along_first") != 0);
     };
     spec.hasShaftTowards = [](core::kinetics::BlockState const& s, Face f) {
-        return core::kinetics::axisOf(f) == ca::deployerShaftAxis(static_cast<Face>(std::clamp(s.get("levitate:facing", 1), 0, 5)), s.get("levitate:axis_along_first") != 0);
+        return core::kinetics::axisOf(f) == ca::deployerShaftAxis(static_cast<Face>(std::clamp(s.get("bearing:facing", 1), 0, 5)), s.get("bearing:axis_along_first") != 0);
     };
     spec.impact       = 4;
-    spec.rotorState   = "levitate:rotor";
-    spec.rotorModel   = "geometry.levitate.deployer_shaft";
-    spec.rotorTexture = "levitate_deployer";
+    spec.rotorState   = "bearing:rotor";
+    spec.rotorModel   = "geometry.bearing.deployer_shaft";
+    spec.rotorTexture = "bearing_deployer";
     kinetics::registerBlock(kDeployerId, std::move(spec));
 
     common::items::registerBlock(kDeployerId, capability());
@@ -1104,17 +1104,17 @@ void uninstall() {
     st().speedListener = -1;
 }
 
-} // namespace lv::feature::assembly::deployer
+} // namespace br::feature::assembly::deployer
 
 // Create's DeployerBlockEntity#addToTooltip (U59): a turning deployer holding overflow items hints
 // at extracting them ("create.hint.full_deployer").
 #include "feature/goggles/GoggleInfo.h"
-namespace lv::feature::assembly::deployer {
-LV_REGISTER_GOGGLE_INFO(kDeployerId, {.hover = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
+namespace br::feature::assembly::deployer {
+BR_REGISTER_GOGGLE_INFO(kDeployerId, {.hover = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
     if (kinetics::speedAt(c.pos) == 0 || overflow(c.pos).empty()) return false;
     t.push_back(goggles::line(std::string(core::goggles::fmt::kGold) + c.tr("create.hint.full_deployer.title", "Deployer cannot activate")));
     goggles::addHint(t, c.tr("create.hint.full_deployer",
                              "It appears this _Deployer_ contains _excess_ _items_ that need to be _extracted._ Use a _hopper,_ _funnel_ or other means to free it from its overflow."));
     return true;
 }});
-} // namespace lv::feature::assembly::deployer
+} // namespace br::feature::assembly::deployer

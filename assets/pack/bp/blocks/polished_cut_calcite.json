@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:polished_cut_calcite",
+      "identifier": "bearing:polished_cut_calcite",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_calcite_polished",
+          "texture": "bearing_calcite_polished",
           "render_method": "opaque"
         }
       }

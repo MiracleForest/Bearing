@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:small_rose_quartz_tiles",
+      "identifier": "bearing:small_rose_quartz_tiles",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_small_rose_quartz_tiles",
+          "texture": "bearing_small_rose_quartz_tiles",
           "render_method": "opaque"
         }
       }

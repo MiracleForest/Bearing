@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the basin unit (client mod only): the parts that move.
 //
@@ -79,7 +79,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::basin {
+namespace br::client::basin {
 
 namespace cb = core::basin;
 namespace ck = core::kinetics;
@@ -87,10 +87,10 @@ using Json   = nlohmann::json;
 
 namespace {
 
-constexpr char const* kBasin  = "levitate:basin";
-constexpr char const* kPress  = "levitate:mechanical_press";
-constexpr char const* kMixer  = "levitate:mechanical_mixer";
-constexpr char const* kBurner = "levitate:blaze_burner";
+constexpr char const* kBasin  = "bearing:basin";
+constexpr char const* kPress  = "bearing:mechanical_press";
+constexpr char const* kMixer  = "bearing:mechanical_mixer";
+constexpr char const* kBurner = "bearing:blaze_burner";
 
 struct PosHash {
     std::size_t operator()(BlockPos const& p) const noexcept {
@@ -139,7 +139,7 @@ State& state() {
 std::map<std::string, ck::RotorModel> const& models() {
     static std::map<std::string, ck::RotorModel> m = [] {
         std::map<std::string, ck::RotorModel> out;
-        auto dir = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto dir = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         for (auto const* file : {"mechanical_press.geo.json", "mechanical_mixer_whisk.geo.json", "blaze_burner_head.geo.json"}) {
             std::ifstream in(dir / file);
             auto          j = nlohmann::json::parse(in, nullptr, false, true);
@@ -175,7 +175,7 @@ mce::Mesh* boneMesh(Tessellator& tess, std::string const& model, std::string con
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_basin", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_basin", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -193,18 +193,18 @@ mce::Mesh* fluidMesh(Tessellator& tess, std::string const& texture) {
     tess.color(1.f, 1.f, 1.f, 1.f);
     tess.simpleQuad(Vec3{a, 0, a}, Vec2{u0, v0}, Vec3{a, 0, b}, Vec2{u0, v1}, Vec3{b, 0, b}, Vec2{u1, v1}, Vec3{b, 0, a}, Vec2{u1, v0});
     tess.simpleQuad(Vec3{b, 0, a}, Vec2{u1, v0}, Vec3{b, 0, b}, Vec2{u1, v1}, Vec3{a, 0, b}, Vec2{u0, v1}, Vec3{a, 0, a}, Vec2{u0, v0});
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_basin_fluid", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_basin_fluid", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
 std::string fluidTexture(std::string const& fluid) {
-    if (fluid == "minecraft:water") return "levitate_basin_fluid_water";
-    if (fluid == "minecraft:lava") return "levitate_basin_fluid_lava";
-    if (fluid == "minecraft:milk") return "levitate_basin_fluid_milk";
-    if (fluid == "levitate:honey") return "levitate_basin_fluid_honey";
-    if (fluid == "levitate:chocolate") return "levitate_basin_fluid_chocolate";
-    if (fluid == "levitate:tea") return "levitate_basin_fluid_tea";
-    return "levitate_basin_fluid_generic";
+    if (fluid == "minecraft:water") return "bearing_basin_fluid_water";
+    if (fluid == "minecraft:lava") return "bearing_basin_fluid_lava";
+    if (fluid == "minecraft:milk") return "bearing_basin_fluid_milk";
+    if (fluid == "bearing:honey") return "bearing_basin_fluid_honey";
+    if (fluid == "bearing:chocolate") return "bearing_basin_fluid_chocolate";
+    if (fluid == "bearing:tea") return "bearing_basin_fluid_tea";
+    return "bearing_basin_fluid_generic";
 }
 
 // ---- state from the server -------------------------------------------------------------------------
@@ -339,7 +339,7 @@ float shortestAngle(float from, float to) {
 }
 
 void renderParts(BaseActorRenderContext& rc) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     auto* level  = ci->getLevel();
     auto* player = ci->getLocalPlayer();
@@ -385,21 +385,21 @@ void renderParts(BaseActorRenderContext& rc) {
             float offset = cb::pressHeadOffset(m.running, m.prev, m.ticks, partial) * cb::pressModeHeadOffset(static_cast<cb::PressMode>(m.mode));
             glm::mat4 local{1.f};
             local = glm::translate(local, glm::vec3{0.f, -offset, 0.f});
-            if (game::intState(block, "levitate:axis").value_or(0) == 2) local = local * aroundCentreY(90.f);
-            d.draw(boneMesh(d.tess, "geometry.levitate.mechanical_press", "head", "levitate_mechanical_press_head"), pos, local);
+            if (game::intState(block, "bearing:axis").value_or(0) == 2) local = local * aroundCentreY(90.f);
+            d.draw(boneMesh(d.tess, "geometry.bearing.mechanical_press", "head", "bearing_mechanical_press_head"), pos, local);
             ++drawn;
         } else if (id == kMixer) {
             float offset = cb::mixerHeadOffset(m.running, m.ticks, partial) - 7.f / 16.f;
             float speed  = cb::mixerHeadSpeed(m.speed, m.running, m.ticks);
             float angle  = static_cast<float>(std::fmod(time * speed * 0.6, 360.0));
             glm::mat4 local = glm::translate(glm::mat4{1.f}, glm::vec3{0.f, -offset, 0.f}) * aroundCentreY(angle);
-            d.draw(boneMesh(d.tess, "geometry.levitate.mechanical_mixer_whisk", "pole", "levitate_mechanical_mixer_pole"), pos, local);
-            d.draw(boneMesh(d.tess, "geometry.levitate.mechanical_mixer_whisk", "whisk", "levitate_mechanical_mixer_whisk"), pos, local);
+            d.draw(boneMesh(d.tess, "geometry.bearing.mechanical_mixer_whisk", "pole", "bearing_mechanical_mixer_pole"), pos, local);
+            d.draw(boneMesh(d.tess, "geometry.bearing.mechanical_mixer_whisk", "whisk", "bearing_mechanical_mixer_whisk"), pos, local);
             ++drawn;
         } else if (id == kBurner) {
             Machine& m  = s.machines[pos]; // keeps the head's angle between frames
-            int  blaze  = game::intState(block, "levitate:blaze").value_or(1);
-            int  facing = game::intState(block, "levitate:facing").value_or(3);
+            int  blaze  = game::intState(block, "bearing:blaze").value_or(1);
+            int  facing = game::intState(block, "bearing:facing").value_or(3);
             // Create: the head faces forward while heating something above, else looks at the player
             BlockPos above{pos.x, pos.y + 1, pos.z};
             auto     aboveId = region.getBlock(above).getTypeName();
@@ -425,8 +425,8 @@ void renderParts(BaseActorRenderContext& rc) {
             float headY = bob - m.headAnim * .175f * .75f;
             glm::mat4 local = glm::translate(glm::mat4{1.f}, glm::vec3{0.f, headY, 0.f}) * aroundCentreY(m.headAngle);
             auto heat = heatName(blaze);
-            d.draw(boneMesh(d.tess, "geometry.levitate.blaze_burner_head", "head", "levitate_blaze_burner_head_" + heat), pos, local);
-            d.draw(boneMesh(d.tess, "geometry.levitate.blaze_burner_head", "face", "levitate_blaze_burner_head_" + heat + "_front"), pos, local);
+            d.draw(boneMesh(d.tess, "geometry.bearing.blaze_burner_head", "head", "bearing_blaze_burner_head_" + heat), pos, local);
+            d.draw(boneMesh(d.tess, "geometry.bearing.blaze_burner_head", "face", "bearing_blaze_burner_head_" + heat + "_front"), pos, local);
             ++drawn;
         } else if (id == kBasin) {
             int total = 0;
@@ -463,10 +463,10 @@ Block const* hiddenBurner(Block const& block) {
     auto& s = state();
     std::lock_guard lock(s.mutex);
     auto [it, fresh] = s.burnerHidden.try_emplace(&block, nullptr);
-    if (fresh && game::intState(block, "levitate:rotor").value_or(1) == 0) {
-        it->second = game::blockWith(kBurner, {{"levitate:blaze", game::intState(block, "levitate:blaze").value_or(1)},
-                                               {"levitate:facing", game::intState(block, "levitate:facing").value_or(3)},
-                                               {"levitate:rotor", 1}});
+    if (fresh && game::intState(block, "bearing:rotor").value_or(1) == 0) {
+        it->second = game::blockWith(kBurner, {{"bearing:blaze", game::intState(block, "bearing:blaze").value_or(1)},
+                                               {"bearing:facing", game::intState(block, "bearing:facing").value_or(3)},
+                                               {"bearing:rotor", 1}});
     }
     return it->second;
 }
@@ -558,8 +558,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::basin
+} // namespace br::client::basin
 
-LV_REGISTER_MODULE(lv::client::basin::BasinClientModule);
+BR_REGISTER_MODULE(br::client::basin::BasinClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

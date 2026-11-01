@@ -2,7 +2,7 @@
 // worldshaper is held, the blocks its brush would change at the looked-at block (up to 128
 // blocks away) are outlined (Outliner#showCluster, 0xbfbfbf, 1/32 wide).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <memory>
 #include <mutex>
@@ -32,12 +32,12 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 
 namespace {
 
-namespace ce    = lv::core::equipment;
-namespace items = lv::feature::common::items;
+namespace ce    = br::core::equipment;
+namespace items = br::feature::common::items;
 
 std::mutex& previewMutex() {
     static std::mutex m;
@@ -58,8 +58,8 @@ ce::IPos stepFace(ce::IPos p, int face) {
 /// The settings of the held worldshaper (main hand first, as Create), when its brush was set.
 std::optional<ce::ShaperSettings> heldSettings(LocalPlayer& p) {
     for (ItemStack const* s : {&p.getSelectedItem(), &p.getOffhandSlot()}) {
-        if (items::isEmpty(*s) || items::idOf(*s) != "levitate:handheld_worldshaper") continue;
-        auto st = ce::ShaperSettings::fromJson(items::getData(*s, "lv:shaper"));
+        if (items::isEmpty(*s) || items::idOf(*s) != "bearing:handheld_worldshaper") continue;
+        auto st = ce::ShaperSettings::fromJson(items::getData(*s, "br:shaper"));
         if (!st.configured) return std::nullopt;
         return st;
     }
@@ -180,11 +180,11 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
-LV_REGISTER_MODULE(lv::client::equipment::ShaperPreviewModule);
+BR_REGISTER_MODULE(br::client::equipment::ShaperPreviewModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT
 
 // Create's symmetry mirror (U59)
 #include "client/equipment/SymmetryPreview.inc"

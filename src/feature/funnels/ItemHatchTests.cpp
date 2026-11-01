@@ -21,10 +21,10 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace items  = lv::feature::common::items;
-namespace common = lv::feature::common;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace items  = br::feature::common::items;
+namespace common = br::feature::common;
 using Facing     = ScriptModuleMinecraft::ScriptFacing;
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
@@ -55,7 +55,7 @@ void clearInventory(Player& p) {
     for (int i = 0; i < inv.getContainerSize(); ++i) inv.setItem(i, items::empty());
 }
 
-LV_REGISTER_SELFTEST("funnels.item_hatch", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.item_hatch", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4990), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -71,7 +71,7 @@ LV_REGISTER_SELFTEST("funnels.item_hatch", [](Context& ctx) -> ll::coro::CoroTas
     // a click with the hatch item (a player's block placements are 10 ticks apart at least)
     auto click = [&](GlobalPos const& on, Facing face, Vec3 hit) -> ll::coro::CoroTask<bool> {
         clearInventory(sp);
-        ctx.give(sp, item(ctx, "levitate:item_hatch"), 0);
+        ctx.give(sp, item(ctx, "bearing:item_hatch"), 0);
         sp.setSelectedSlot(0);
         sp.simulateLookAt(Vec3{on.x + .5f, on.y + .5f, on.z + .5f}, sim::LookDuration::Continuous);
         co_await ctx.ticks(10);
@@ -84,12 +84,12 @@ LV_REGISTER_SELFTEST("funnels.item_hatch", [](Context& ctx) -> ll::coro::CoroTas
     ctx.require(ctx.setBlock(floor2, "minecraft:stone"), "a second floor block");
     ctx.cleanupBlock(at(floor2, 0, 1, 0));
     (void)co_await click(floor2, Facing::Up, Vec3{.5f, 1.f, .5f});
-    ctx.check(lv::game::blockIdAt(region, bp(at(floor2, 0, 1, 0))) != "levitate:item_hatch", "no hatch on top of a block");
+    ctx.check(br::game::blockIdAt(region, bp(at(floor2, 0, 1, 0))) != "bearing:item_hatch", "no hatch on top of a block");
     // the north side of the (future) container: facing it
     ctx.check(co_await click(chest, Facing::North, Vec3{.5f, .5f, 0.f}), "the click places a hatch");
-    ctx.require(lv::game::blockIdAt(region, bp(hatch)) == "levitate:item_hatch", "the hatch is on the chest's side");
-    ctx.check(lv::game::intState(region.getBlock(bp(hatch)), "levitate:facing").value_or(-1) == 3, "facing the chest (south)");
-    ctx.require(ctx.setBlock(chest, "levitate:item_vault", {{"levitate:axis", 0}}), "a container (an item vault)");
+    ctx.require(br::game::blockIdAt(region, bp(hatch)) == "bearing:item_hatch", "the hatch is on the chest's side");
+    ctx.check(br::game::intState(region.getBlock(bp(hatch)), "bearing:facing").value_or(-1) == 3, "facing the chest (south)");
+    ctx.require(ctx.setBlock(chest, "bearing:item_vault", {{"bearing:axis", 0}}), "a container (an item vault)");
     co_await ctx.ticks(2);
 
     // the held item goes in
@@ -109,16 +109,16 @@ LV_REGISTER_SELFTEST("funnels.item_hatch", [](Context& ctx) -> ll::coro::CoroTas
         std::string heldId = items::idOf(held);
         auto const& block  = region.getBlock(bp(hatch));
         std::string id     = block.getTypeName();
-        lv::feature::common::interactions::dispatchUseOn(
-            {sp, held, heldId, block, id, hatch, 2, lv::core::common::Vec{.5, .8, .5}, false, true, false}
+        br::feature::common::interactions::dispatchUseOn(
+            {sp, held, heldId, block, id, hatch, 2, br::core::common::Vec{.5, .8, .5}, false, true, false}
         );
     }
     co_await ctx.ticks(2);
     ctx.check(stored(sp, chest, "minecraft:apple") == 10, "the held apples are deposited");
     ctx.check(items::countOf(sp.getInventory().getItem(1)) == 5, "other hotbar slots stay");
-    ctx.check(lv::game::intState(region.getBlock(bp(hatch)), "levitate:open").value_or(0) == 1, "the hatch opens");
+    ctx.check(br::game::intState(region.getBlock(bp(hatch)), "bearing:open").value_or(0) == 1, "the hatch opens");
     co_await ctx.ticks(12);
-    ctx.check(lv::game::intState(region.getBlock(bp(hatch)), "levitate:open").value_or(1) == 0, "and closes 10 ticks later");
+    ctx.check(br::game::intState(region.getBlock(bp(hatch)), "bearing:open").value_or(1) == 0, "and closes 10 ticks later");
 
     // sneaking: everything outside the hotbar that passes the filter
     common::filterslot::set(hatch, item(ctx, "minecraft:bread"));
@@ -144,7 +144,7 @@ LV_REGISTER_SELFTEST("funnels.item_hatch", [](Context& ctx) -> ll::coro::CoroTas
     sp.simulateUseItemInSlotOnBlock(1, bp(hatch), Facing::North, Vec3{.5f, .8f, .5f});
     co_await ctx.ticks(2);
     sp.setSneaking(false);
-    ctx.check(lv::game::intState(region.getBlock(bp(hatch)), "levitate:open").value_or(1) == 0, "nothing deposited: closed");
+    ctx.check(br::game::intState(region.getBlock(bp(hatch)), "bearing:open").value_or(1) == 0, "nothing deposited: closed");
     clearInventory(sp);
 });
 

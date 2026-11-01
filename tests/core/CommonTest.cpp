@@ -9,7 +9,7 @@
 #include "core/common/Transfer.h"
 #include "core/common/ValueSettings.h"
 
-using namespace lv::core::common;
+using namespace br::core::common;
 
 // ---- filters -----------------------------------------------------------------------------------
 
@@ -109,11 +109,11 @@ TEST(Recipe, ParsesCreate6Pressing) {
         "processing_time": 150
     })");
     std::string err;
-    auto r = parseRecipe(doc, "pressing", "levitate:pressing/iron_ingot", &err);
+    auto r = parseRecipe(doc, "pressing", "bearing:pressing/iron_ingot", &err);
     ASSERT_TRUE(r) << err;
     ASSERT_EQ(r->ingredients.size(), 1u);
     EXPECT_EQ(r->ingredients[0].tags[0], "c:ingots/iron");
-    EXPECT_EQ(r->results[0].id, "levitate:iron_sheet");
+    EXPECT_EQ(r->results[0].id, "bearing:iron_sheet");
     EXPECT_EQ(r->processingTime, 150);
     EXPECT_EQ(r->heat, HeatRequirement::None);
 }
@@ -135,11 +135,11 @@ TEST(Recipe, ParsesMixingWithFluidsAndHeat) {
     ASSERT_TRUE(r);
     ASSERT_EQ(r->ingredients.size(), 3u);
     EXPECT_EQ(r->ingredients[0].items.size(), 2u);
-    EXPECT_EQ(r->ingredients[1].items[0], "levitate:zinc_ingot");
+    EXPECT_EQ(r->ingredients[1].items[0], "bearing:zinc_ingot");
     ASSERT_EQ(r->fluidIngredients.size(), 2u);
     EXPECT_EQ(r->fluidIngredients[0].fluid, "minecraft:lava");
     EXPECT_EQ(r->fluidIngredients[1].tag, "c:milk");
-    EXPECT_EQ(r->fluidResults[0].fluid, "levitate:chocolate");
+    EXPECT_EQ(r->fluidResults[0].fluid, "bearing:chocolate");
     EXPECT_FLOAT_EQ(r->results[0].chance, 0.5f);
     EXPECT_EQ(r->heat, HeatRequirement::Heated);
     EXPECT_EQ(r->processingTime, 80);
@@ -173,7 +173,7 @@ TEST(Recipe, Heat) {
     EXPECT_TRUE(heatSatisfies(HeatRequirement::Heated, HeatLevel::Seething));
     EXPECT_FALSE(heatSatisfies(HeatRequirement::Superheated, HeatLevel::Kindled));
     EXPECT_TRUE(heatSatisfies(HeatRequirement::Superheated, HeatLevel::Seething));
-    EXPECT_EQ(mapId("create:x"), "levitate:x");
+    EXPECT_EQ(mapId("create:x"), "bearing:x");
     EXPECT_EQ(mapId("minecraft:x"), "minecraft:x");
 }
 
@@ -203,7 +203,7 @@ TEST(Transfer, Keys) {
     EXPECT_EQ(chunkOf(-1), -1);
     EXPECT_EQ(chunkOf(-16), -1);
     EXPECT_EQ(chunkOf(-17), -2);
-    EXPECT_EQ(blockDataChunkKey(1, -2, 3), "lv:common:bd:1:-2:3");
+    EXPECT_EQ(blockDataChunkKey(1, -2, 3), "br:common:bd:1:-2:3");
     int d, x, z;
     ASSERT_TRUE(parseChunkSuffix("1:-2:3", d, x, z));
     EXPECT_EQ(d, 1);

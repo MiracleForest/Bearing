@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_smithing_transform": {
     "description": {
-      "identifier": "levitate:netherite_backtank"
+      "identifier": "bearing:netherite_backtank"
     },
     "tags": [
       "smithing_table"
     ],
     "template": "minecraft:netherite_upgrade_smithing_template",
-    "base": "levitate:copper_backtank",
+    "base": "bearing:copper_backtank",
     "addition": "minecraft:netherite_ingot",
-    "result": "levitate:netherite_backtank"
+    "result": "bearing:netherite_backtank"
   }
 }

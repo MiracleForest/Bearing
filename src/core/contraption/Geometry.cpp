@@ -2,7 +2,7 @@
 
 #include <numbers>
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 Pos offset(Dir d) {
     switch (d) {
@@ -199,4 +199,4 @@ bool Box::contains(Vec3d const& p) const {
     return p.x >= min.x && p.x <= max.x && p.y >= min.y && p.y <= max.y && p.z >= min.z && p.z <= max.z;
 }
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

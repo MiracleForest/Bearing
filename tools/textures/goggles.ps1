@@ -98,7 +98,7 @@ $modelPal = @{ s = '#5c3a1e'; t = '#7a5230'; b = '#6b4a14'; r = '#e0b03c'; e = '
 Save-All $rows $modelPal (Join-Path $models 'goggles.png')
 
 # U52: the frame of the goggle overlay drawn by the resource pack's HUD for vanilla clients
-# (ui/hud_screen.json; nine-slice 3 px, levitate_goggle_tooltip.json). A tooltip box: a dark
+# (ui/hud_screen.json; nine-slice 3 px, bearing_goggle_tooltip.json). A tooltip box: a dark
 # translucent fill, a one pixel dark rim with cut corners and a purple inner border, lighter on top.
 $tooltip = @(
     '.ddddddd.',
@@ -115,4 +115,4 @@ $tooltipPal = @{
     d = '#f0100010'; f = '#f0100010'
     t = '#f05000ff'; u = '#f03c00bf'; b = '#f028007f'
 }
-Save-All $tooltip $tooltipPal (Join-Path $ui 'levitate_goggle_tooltip.png')
+Save-All $tooltip $tooltipPal (Join-Path $ui 'bearing_goggle_tooltip.png')

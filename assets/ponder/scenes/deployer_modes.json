@@ -2,8 +2,8 @@
   "id": "deployer_modes",
   "size": [5, 5],
   "blocks": [
-    {"at": [1, 1, 2], "id": "levitate:deployer", "states": {"levitate:facing": 5, "levitate:axis_along_first": 0}},
-    {"at": [1, 1, 3], "id": "levitate:creative_motor", "states": {"levitate:facing": 2}},
+    {"at": [1, 1, 2], "id": "bearing:deployer", "states": {"bearing:facing": 5, "bearing:axis_along_first": 0}},
+    {"at": [1, 1, 3], "id": "bearing:creative_motor", "states": {"bearing:facing": 2}},
     {"at": [3, 1, 2], "id": "minecraft:stone"}
   ],
   "timeline": [
@@ -20,7 +20,7 @@
     {"idle": 10},
     {"text": 1, "at": [1.5, 1.5, 2.5], "ticks": 70, "keyframe": true},
     {"idle": 80},
-    {"input": [1.5, 1.5, 2.0], "action": "right", "item": "levitate:wrench", "ticks": 40, "keyframe": true},
+    {"input": [1.5, 1.5, 2.0], "action": "right", "item": "bearing:wrench", "ticks": 40, "keyframe": true},
     {"idle": 20},
     {"input": [1.9, 1.5, 2.5], "action": "left", "item": "minecraft:stone_pickaxe", "ticks": 40},
     {"idle": 20},

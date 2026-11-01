@@ -1,5 +1,5 @@
-tile.levitate:belt.name=传送带
-item.levitate:belt_connector=传送带
-item.levitate:belt_connector.name=传送带
-tile.levitate:depot.name=置物台
-tile.levitate:weighted_ejector.name=弹射置物台
+tile.bearing:belt.name=传送带
+item.bearing:belt_connector=传送带
+item.bearing:belt_connector.name=传送带
+tile.bearing:depot.name=置物台
+tile.bearing:weighted_ejector.name=弹射置物台

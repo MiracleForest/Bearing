@@ -2,7 +2,7 @@
 
 #include <deque>
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 DirMask glueableFaces(ChassisKind kind, Axis axis) {
     switch (kind) {
@@ -166,4 +166,4 @@ assemble(std::vector<Pos> const& start, WorldQuery const& world, GlueQuery const
     return result;
 }
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

@@ -6,7 +6,7 @@
     },
     {
       "type": "fluid_stack",
-      "fluid": "levitate:potion/regular/harming",
+      "fluid": "bearing:potion/regular/harming",
       "amount": 25
     }
   ],

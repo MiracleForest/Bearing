@@ -25,13 +25,13 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace ct = feature::contraption;
 
 namespace {
 
-constexpr char kDbActive[] = "lv:pistons:active";
+constexpr char kDbActive[] = "br:pistons:active";
 
 std::set<GlobalPos>& active() {
     static std::set<GlobalPos> s;
@@ -1099,4 +1099,4 @@ void loadActuators() {
     }
 }
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

@@ -36,9 +36,9 @@
 // feature/kinetics/Feedback.cpp).
 inline MolangVariableMap::MolangVariableMap() {}
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
-LV_REGISTER_CONFIG("steam", SteamConfig);
+BR_REGISTER_CONFIG("steam", SteamConfig);
 
 cs::TankParams tankParams(bool creative) {
     auto const&    cfg = config::get<SteamConfig>();
@@ -215,7 +215,7 @@ void steamJet(int dim, double x, double y, double z, double mx, double my, doubl
         auto   e  = p.getPosition();
         double dx = e.x - x, dy = e.y - y, dz = e.z - z;
         if (dx * dx + dy * dy + dz * dz > 64.0 * 64.0) return true;
-        SpawnParticleEffectPacket pkt(SpawnParticleEffectPacketPayload(at, "levitate:steam_jet", static_cast<uchar>(dim), std::optional<MolangVariableMap>(map)));
+        SpawnParticleEffectPacket pkt(SpawnParticleEffectPacketPayload(at, "bearing:steam_jet", static_cast<uchar>(dim), std::optional<MolangVariableMap>(map)));
         pkt.sendTo(p);
         return true;
     });
@@ -231,4 +231,4 @@ void giveOrDrop(Player& player, ItemStack const& stack) {
 cs::Pos3 pos3(GlobalPos const& p) { return {p.x, p.y, p.z}; }
 GlobalPos globalOf(int dim, cs::Pos3 const& p) { return {dim, p.x, p.y, p.z}; }
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam

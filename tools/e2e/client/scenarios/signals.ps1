@@ -26,14 +26,14 @@ if ($contentLog) {
 Invoke-Chat '/gamemode creative'
 Invoke-Chat '/time set noon'
 Invoke-Chat '/fill ~-4 ~ ~-6 ~20 ~4 ~6 air'
-Invoke-Chat '/fill ~2 ~ ~ ~18 ~ ~ levitate:track ["levitate:shape"=2]'
+Invoke-Chat '/fill ~2 ~ ~ ~18 ~ ~ bearing:track ["bearing:shape"=2]'
 # lamps (fixed states, not bound): red, yellow, green entry signals, a green cross signal, a lit observer
-Invoke-Chat '/setblock ~5 ~ ~-3 levitate:track_signal ["levitate:signal_state"=1]'
-Invoke-Chat '/setblock ~7 ~ ~-3 levitate:track_signal ["levitate:signal_state"=2]'
-Invoke-Chat '/setblock ~9 ~ ~-3 levitate:track_signal ["levitate:signal_state"=3]'
-Invoke-Chat '/setblock ~11 ~ ~-3 levitate:track_signal ["levitate:signal_type"=1,"levitate:signal_state"=3]'
-Invoke-Chat '/setblock ~13 ~ ~-3 levitate:track_observer ["levitate:powered"=1]'
-Invoke-Chat '/give @s levitate:track_signal 4'
+Invoke-Chat '/setblock ~5 ~ ~-3 bearing:track_signal ["bearing:signal_state"=1]'
+Invoke-Chat '/setblock ~7 ~ ~-3 bearing:track_signal ["bearing:signal_state"=2]'
+Invoke-Chat '/setblock ~9 ~ ~-3 bearing:track_signal ["bearing:signal_state"=3]'
+Invoke-Chat '/setblock ~11 ~ ~-3 bearing:track_signal ["bearing:signal_type"=1,"bearing:signal_state"=3]'
+Invoke-Chat '/setblock ~13 ~ ~-3 bearing:track_observer ["bearing:powered"=1]'
+Invoke-Chat '/give @s bearing:track_signal 4'
 Press-Key 1
 Invoke-Chat '/tp @s ~ ~ ~ -60 20'
 Start-Sleep -Milliseconds 1200

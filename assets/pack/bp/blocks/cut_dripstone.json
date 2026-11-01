@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:cut_dripstone",
+      "identifier": "bearing:cut_dripstone",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_dripstone_cut",
+          "texture": "bearing_dripstone_cut",
           "render_method": "opaque"
         }
       }

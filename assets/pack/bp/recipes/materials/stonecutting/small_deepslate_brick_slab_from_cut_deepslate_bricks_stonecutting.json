@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_deepslate_brick_slab_from_cut_deepslate_bricks_stonecutting"
+      "identifier": "bearing:small_deepslate_brick_slab_from_cut_deepslate_bricks_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:cut_deepslate_bricks"
+        "item": "bearing:cut_deepslate_bricks"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:cut_deepslate_bricks"
+        "item": "bearing:cut_deepslate_bricks"
       }
     ],
     "result": {
-      "item": "levitate:small_deepslate_brick_slab",
+      "item": "bearing:small_deepslate_brick_slab",
       "count": 2
     }
   }

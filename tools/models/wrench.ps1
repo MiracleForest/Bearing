@@ -111,25 +111,25 @@ $geo = [ordered]@{
     format_version       = '1.16.0'
     'minecraft:geometry' = @(
         # third person: under the player's rightItem bone, the grip at that bone's pivot (the hand)
-        (Geometry 'geometry.levitate.wrench' (Bones ([ordered]@{ name = 'wrench'; parent = 'rightItem' }) @(-6, 15, 1))),
+        (Geometry 'geometry.bearing.wrench' (Bones ([ordered]@{ name = 'wrench'; parent = 'rightItem' }) @(-6, 15, 1))),
         # first person: the grip at the origin, bound to the hand of the slot
-        (Geometry 'geometry.levitate.wrench.first_person' (Bones ([ordered]@{ name = 'wrench'; binding = 'q.item_slot_to_bone_name(c.item_slot)' }) @(0, 0, 0)))
+        (Geometry 'geometry.bearing.wrench.first_person' (Bones ([ordered]@{ name = 'wrench'; binding = 'q.item_slot_to_bone_name(c.item_slot)' }) @(0, 0, 0)))
     )
 }
 $anim = [ordered]@{
     format_version = '1.10.0'
     animations     = [ordered]@{
         # ScrollValueHandler's passive scroll: 0.5 degrees per tick = 10 degrees per second
-        'animation.levitate.wrench.cog'          = [ordered]@{ loop = $true; bones = [ordered]@{ cog = [ordered]@{ rotation = @(0, 'q.life_time * 10.0', 0) } } }
+        'animation.bearing.wrench.cog'          = [ordered]@{ loop = $true; bones = [ordered]@{ cog = [ordered]@{ rotation = @(0, 'q.life_time * 10.0', 0) } } }
         # held like a tool, grip in the hand and the head up and forward
-        'animation.levitate.wrench.third_person' = [ordered]@{ loop = $true; bones = [ordered]@{ wrench = [ordered]@{ position = $TpPos; rotation = $TpRot; scale = $TpScale } } }
-        'animation.levitate.wrench.first_person' = [ordered]@{ loop = $true; bones = [ordered]@{ wrench = [ordered]@{ position = $FpPos; rotation = $FpRot; scale = $FpScale } } }
+        'animation.bearing.wrench.third_person' = [ordered]@{ loop = $true; bones = [ordered]@{ wrench = [ordered]@{ position = $TpPos; rotation = $TpRot; scale = $TpScale } } }
+        'animation.bearing.wrench.first_person' = [ordered]@{ loop = $true; bones = [ordered]@{ wrench = [ordered]@{ position = $FpPos; rotation = $FpRot; scale = $FpScale } } }
     }
 }
 $controllers = [ordered]@{
     format_version        = '1.10.0'
     animation_controllers = [ordered]@{
-        'controller.animation.levitate.wrench.held' = [ordered]@{
+        'controller.animation.bearing.wrench.held' = [ordered]@{
             initial_state = 'first_person'
             states        = [ordered]@{
                 first_person = [ordered]@{ animations = @('first_person'); transitions = @([ordered]@{ third_person = '!c.is_first_person' }) }
@@ -141,28 +141,28 @@ $controllers = [ordered]@{
 $renderControllers = [ordered]@{
     format_version     = '1.8.0'
     render_controllers = [ordered]@{
-        'controller.render.levitate.wrench'              = [ordered]@{ geometry = 'Geometry.default'; materials = @([ordered]@{ '*' = 'variable.is_enchanted ? Material.enchanted : Material.default' }); textures = @('Texture.default', 'Texture.enchanted') }
-        'controller.render.levitate.wrench.first_person' = [ordered]@{ geometry = 'Geometry.first_person'; materials = @([ordered]@{ '*' = 'variable.is_enchanted ? Material.enchanted : Material.default' }); textures = @('Texture.default', 'Texture.enchanted') }
+        'controller.render.bearing.wrench'              = [ordered]@{ geometry = 'Geometry.default'; materials = @([ordered]@{ '*' = 'variable.is_enchanted ? Material.enchanted : Material.default' }); textures = @('Texture.default', 'Texture.enchanted') }
+        'controller.render.bearing.wrench.first_person' = [ordered]@{ geometry = 'Geometry.first_person'; materials = @([ordered]@{ '*' = 'variable.is_enchanted ? Material.enchanted : Material.default' }); textures = @('Texture.default', 'Texture.enchanted') }
     }
 }
 $attachable = [ordered]@{
     format_version         = '1.10.0'
     'minecraft:attachable' = [ordered]@{
         description = [ordered]@{
-            identifier         = 'levitate:wrench'
+            identifier         = 'bearing:wrench'
             materials          = [ordered]@{ default = 'entity_alphatest'; enchanted = 'entity_alphatest_glint' }
             textures           = [ordered]@{ default = 'textures/items/wrench'; enchanted = 'textures/misc/enchanted_item_glint' }
-            geometry           = [ordered]@{ default = 'geometry.levitate.wrench'; first_person = 'geometry.levitate.wrench.first_person' }
+            geometry           = [ordered]@{ default = 'geometry.bearing.wrench'; first_person = 'geometry.bearing.wrench.first_person' }
             animations         = [ordered]@{
-                cog          = 'animation.levitate.wrench.cog'
-                first_person = 'animation.levitate.wrench.first_person'
-                third_person = 'animation.levitate.wrench.third_person'
-                held         = 'controller.animation.levitate.wrench.held'
+                cog          = 'animation.bearing.wrench.cog'
+                first_person = 'animation.bearing.wrench.first_person'
+                third_person = 'animation.bearing.wrench.third_person'
+                held         = 'controller.animation.bearing.wrench.held'
             }
             scripts            = [ordered]@{ animate = @('held', 'cog') }
             render_controllers = @(
-                [ordered]@{ 'controller.render.levitate.wrench.first_person' = 'c.is_first_person' }
-                [ordered]@{ 'controller.render.levitate.wrench' = '!c.is_first_person' }
+                [ordered]@{ 'controller.render.bearing.wrench.first_person' = 'c.is_first_person' }
+                [ordered]@{ 'controller.render.bearing.wrench' = '!c.is_first_person' }
             )
         }
     }

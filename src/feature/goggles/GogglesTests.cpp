@@ -30,16 +30,16 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::goggles {
+namespace br::feature::goggles {
 
 namespace {
 
 using selftest::Context;
 using Facing = ScriptModuleMinecraft::ScriptFacing;
 
-constexpr char const* kShaft    = "levitate:kinetics_test_shaft";
-constexpr char const* kSource   = "levitate:kinetics_test_source";
-constexpr char const* kConsumer = "levitate:kinetics_test_consumer";
+constexpr char const* kShaft    = "bearing:kinetics_test_shaft";
+constexpr char const* kSource   = "bearing:kinetics_test_source";
+constexpr char const* kConsumer = "bearing:kinetics_test_consumer";
 constexpr int         X = 0, Y = 1, Z = 2;
 
 core::GlobalPos at(Context& ctx, int dx, int dy = 0, int dz = 0) {
@@ -129,7 +129,7 @@ bool& providerActive() {
     return b;
 }
 
-LV_REGISTER_GOGGLE_INFO(
+BR_REGISTER_GOGGLE_INFO(
     "minecraft:cauldron",
     {
         .goggle =
@@ -143,65 +143,65 @@ LV_REGISTER_GOGGLE_INFO(
 
 } // namespace
 
-LV_REGISTER_SELFTEST("goggles.registry", [](Context& ctx) {
-    ctx.require(common::items::make(wrench::kWrenchId).has_value(), "levitate:wrench is in the behavior pack");
-    ctx.require(common::items::make("levitate:goggles").has_value(), "levitate:goggles is in the behavior pack");
+BR_REGISTER_SELFTEST("goggles.registry", [](Context& ctx) {
+    ctx.require(common::items::make(wrench::kWrenchId).has_value(), "bearing:wrench is in the behavior pack");
+    ctx.require(common::items::make("bearing:goggles").has_value(), "bearing:goggles is in the behavior pack");
     ctx.check(wrench::isWrenchable(kShaft), "kinetic blocks are wrenchable");
-    for (auto const* id : {"levitate:sticker", "levitate:linear_chassis", "levitate:radial_chassis", "levitate:track"})
+    for (auto const* id : {"bearing:sticker", "bearing:linear_chassis", "bearing:radial_chassis", "bearing:track"})
         ctx.check(wrench::isWrenchable(id), std::string(id) + " is wrenchable");
     ctx.check(!wrench::isWrenchable("minecraft:stone"), "stone is not wrenchable");
     ctx.check(wrench::canWrenchPickup("minecraft:lever") && wrench::canWrenchPickup("minecraft:oak_button"), "#create:wrench_pickup");
     ctx.check(!wrench::canWrenchPickup("minecraft:stone"), "stone can't be picked up");
-    auto gen = generatorSpeedOf("levitate:creative_motor");
+    auto gen = generatorSpeedOf("bearing:creative_motor");
     ctx.check(gen && gen->rpm == 256 && gen->mayGenerateLess, "creative motor generates up to 256 RPM");
 });
 
-LV_REGISTER_SELFTEST("goggles.wrench_rotates_axis", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.wrench_rotates_axis", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto src = at(ctx, 800), shaft = at(ctx, 801);
     ctx.require(co_await ctx.ensureLoaded(shaft), "test area loaded");
     auto& sp = wrenchPlayer(ctx);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", X}}), "place the source");
-    ctx.require(ctx.setBlock(shaft, kShaft, {{"levitate:axis", X}}), "place the shaft");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", X}}), "place the source");
+    ctx.require(ctx.setBlock(shaft, kShaft, {{"bearing:axis", X}}), "place the shaft");
     co_await ctx.ticks(2);
     ctx.check(kinetics::speedAt(shaft) == 16, "the shaft turns before the wrench");
 
     ctx.require(click(sp, shaft, Facing::Up), "wrench the top face");
     co_await ctx.ticks(2);
-    ctx.check(intStateAt(ctx, shaft, "levitate:axis") == Z, "x axis clicked on top turns to z, got " + std::to_string(intStateAt(ctx, shaft, "levitate:axis")));
+    ctx.check(intStateAt(ctx, shaft, "bearing:axis") == Z, "x axis clicked on top turns to z, got " + std::to_string(intStateAt(ctx, shaft, "bearing:axis")));
     ctx.check(kinetics::speedAt(shaft) == 0, "the turned shaft left the network");
 
     co_await ctx.ticks(10); // one action per click; the simulated player has a use delay
     click(sp, shaft, Facing::East);
     co_await ctx.ticks(2);
-    ctx.check(intStateAt(ctx, shaft, "levitate:axis") == Y, "z axis clicked on the east face turns to y");
+    ctx.check(intStateAt(ctx, shaft, "bearing:axis") == Y, "z axis clicked on the east face turns to y");
 
     co_await ctx.ticks(10);
     click(sp, shaft, Facing::North);
     co_await ctx.ticks(2);
-    ctx.check(intStateAt(ctx, shaft, "levitate:axis") == X, "y axis clicked on the north face turns to x");
+    ctx.check(intStateAt(ctx, shaft, "bearing:axis") == X, "y axis clicked on the north face turns to x");
     co_await ctx.ticks(2);
     ctx.check(kinetics::speedAt(shaft) == 16, "back in line: turns again");
 });
 
-LV_REGISTER_SELFTEST("goggles.wrench_rotates_facing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.wrench_rotates_facing", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx, 810);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = wrenchPlayer(ctx);
-    ctx.require(ctx.setBlock(p, "levitate:sticker", {{"levitate:facing", 2}}), "place a sticker facing north");
+    ctx.require(ctx.setBlock(p, "bearing:sticker", {{"bearing:facing", 2}}), "place a sticker facing north");
     ctx.require(click(sp, p, Facing::Up), "wrench the top face");
     co_await ctx.ticks(2);
-    ctx.check(intStateAt(ctx, p, "levitate:facing") == 5, "north turns to east about the vertical axis");
+    ctx.check(intStateAt(ctx, p, "bearing:facing") == 5, "north turns to east about the vertical axis");
     co_await ctx.ticks(10);
     click(sp, p, Facing::West);
     co_await ctx.ticks(2);
-    ctx.check(intStateAt(ctx, p, "levitate:facing") == 5, "a facing along the clicked axis stays");
+    ctx.check(intStateAt(ctx, p, "bearing:facing") == 5, "a facing along the clicked axis stays");
 });
 
-LV_REGISTER_SELFTEST("goggles.wrench_dismantles", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.wrench_dismantles", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto shaft = at(ctx, 820), hopper = at(ctx, 822), stone = at(ctx, 824);
     ctx.require(co_await ctx.ensureLoaded(shaft), "test area loaded");
     auto& sp = wrenchPlayer(ctx);
-    ctx.require(ctx.setBlock(shaft, kShaft, {{"levitate:axis", X}}), "place a shaft");
+    ctx.require(ctx.setBlock(shaft, kShaft, {{"bearing:axis", X}}), "place a shaft");
     ctx.require(ctx.setBlock(hopper, "minecraft:hopper"), "place a hopper");
     ctx.require(ctx.setBlock(stone, "minecraft:stone"), "place stone");
     int shafts = countOf(sp, kShaft), hoppers = countOf(sp, "minecraft:hopper");
@@ -235,19 +235,19 @@ LV_REGISTER_SELFTEST("goggles.wrench_dismantles", [](Context& ctx) -> ll::coro::
     sp.setSneaking(false);
 });
 
-LV_REGISTER_SELFTEST("goggles.overlay_kinetic", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.overlay_kinetic", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto src = at(ctx, 830), user = at(ctx, 831);
     ctx.require(co_await ctx.ensureLoaded(user), "test area loaded");
     auto& p = ctx.player();
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", X}}), "place the source");
-    ctx.require(ctx.setBlock(user, kConsumer, {{"levitate:axis", X}}), "place the consumer");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", X}}), "place the source");
+    ctx.require(ctx.setBlock(user, kConsumer, {{"bearing:axis", X}}), "place the consumer");
     co_await ctx.ticks(2);
 
     p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, ItemStack{});
     ctx.check(!isWearingGoggles(p), "no goggles");
     ctx.check(overlayFor(p, user).lines.empty(), "without goggles a running consumer shows nothing");
 
-    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("levitate:goggles"));
+    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("bearing:goggles"));
     ctx.require(isWearingGoggles(p), "goggles in the head slot");
     auto consumer = overlayFor(p, user).lines;
     ctx.check(contains(consumer, "Kinetic Stats:") && contains(consumer, "64su"), "consumer: 4 SU/RPM x 16 RPM = 64su: " + dump(consumer));
@@ -258,12 +258,12 @@ LV_REGISTER_SELFTEST("goggles.overlay_kinetic", [](Context& ctx) -> ll::coro::Co
     p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, ItemStack{});
 });
 
-LV_REGISTER_SELFTEST("goggles.overlay_overstressed", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.overlay_overstressed", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto src = at(ctx, 840);
     ctx.require(co_await ctx.ensureLoaded(src), "test area loaded");
     auto& p = ctx.player();
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", X}}), "place the source");
-    for (int i = 1; i <= 3; ++i) ctx.setBlock(at(ctx, 840 + i), kConsumer, {{"levitate:axis", X}}); // 192 su > 128 su
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", X}}), "place the source");
+    for (int i = 1; i <= 3; ++i) ctx.setBlock(at(ctx, 840 + i), kConsumer, {{"bearing:axis", X}}); // 192 su > 128 su
     co_await ctx.ticks(3);
     ctx.require(kinetics::isOverstressed(at(ctx, 842)), "the network is overstressed");
 
@@ -273,19 +273,19 @@ LV_REGISTER_SELFTEST("goggles.overlay_overstressed", [](Context& ctx) -> ll::cor
     ctx.check(contains(plain, "overstressed") && contains(plain, "§f"), "the hint highlights words: " + dump(plain));
     ctx.check(!contains(plain, "Kinetic Stats:"), "without goggles: no stats");
 
-    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("levitate:goggles"));
+    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("bearing:goggles"));
     auto full = overlayFor(p, at(ctx, 842)).lines;
     ctx.check(contains(full, "Kinetic Stats:") && contains(full, "Overstressed"), "with goggles: stats and the hint: " + dump(full));
     ctx.check(std::find(full.begin(), full.end(), std::string{}) != full.end(), "a blank line separates them");
     p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, ItemStack{});
 });
 
-LV_REGISTER_SELFTEST("goggles.overlay_provider", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.overlay_provider", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto cauldron = at(ctx, 850);
     ctx.require(co_await ctx.ensureLoaded(cauldron), "test area loaded");
     auto& p = ctx.player();
     ctx.require(ctx.setBlock(cauldron, "minecraft:cauldron"), "place a cauldron");
-    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("levitate:goggles"));
+    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("bearing:goggles"));
     providerActive() = true;
     auto empty       = overlayFor(p, cauldron).lines;
     ctx.check(contains(empty, "Test provider") && contains(empty, "Fluid Container Info:"), "provider lines: " + dump(empty));
@@ -295,14 +295,14 @@ LV_REGISTER_SELFTEST("goggles.overlay_provider", [](Context& ctx) -> ll::coro::C
     p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, ItemStack{});
 });
 
-LV_REGISTER_SELFTEST("goggles.overlay_query", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.overlay_query", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto src = at(ctx, 860), user = at(ctx, 861);
     ctx.require(co_await ctx.ensureLoaded(user), "test area loaded");
     auto& p = ctx.player();
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", X}}), "place the source");
-    ctx.require(ctx.setBlock(user, kConsumer, {{"levitate:axis", X}}), "place the consumer");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", X}}), "place the source");
+    ctx.require(ctx.setBlock(user, kConsumer, {{"bearing:axis", X}}), "place the consumer");
     co_await ctx.ticks(2);
-    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("levitate:goggles"));
+    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, make("bearing:goggles"));
     net::setTestCompanion(p, true);
     (void)net::takeTestMessages(p);
     net::injectFromClient(p, "goggles.query", {{"pos", {user.dim, user.x, user.y, user.z}}});
@@ -313,10 +313,10 @@ LV_REGISTER_SELFTEST("goggles.overlay_query", [](Context& ctx) -> ll::coro::Coro
     ctx.require(it != msgs.end(), "the server answers goggles.info");
     auto lines = it->payload.value("lines", nlohmann::json::array());
     ctx.check(lines.size() >= 3, "the answer carries the overlay lines: " + lines.dump());
-    ctx.check(it->payload.value("icon", std::string{}) == "levitate:goggles", "the default icon is the goggles");
+    ctx.check(it->payload.value("icon", std::string{}) == "bearing:goggles", "the default icon is the goggles");
 });
 
-LV_REGISTER_SELFTEST("goggles.wrench_breaks_minecarts", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.wrench_breaks_minecarts", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx, 870, 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp     = wrenchPlayer(ctx);
@@ -353,33 +353,33 @@ LV_REGISTER_SELFTEST("goggles.wrench_breaks_minecarts", [](Context& ctx) -> ll::
 // ---- U52: alignment with Create 6.0.10 (testPos dx 5286..5299) ----------------------------------------------------
 
 // K11, K12, K13: the wrench pickup tag, speed requirements and generator speeds of Create's blocks
-LV_REGISTER_SELFTEST("goggles.create_tables", [](Context& ctx) {
-    for (auto const* id : {"minecraft:redstone_lamp", "minecraft:lit_redstone_lamp", "levitate:andesite_bars", "levitate:brass_bars",
-                           "levitate:copper_bars", "levitate:industrial_iron_block", "levitate:weathered_iron_block"})
+BR_REGISTER_SELFTEST("goggles.create_tables", [](Context& ctx) {
+    for (auto const* id : {"minecraft:redstone_lamp", "minecraft:lit_redstone_lamp", "bearing:andesite_bars", "bearing:brass_bars",
+                           "bearing:copper_bars", "bearing:industrial_iron_block", "bearing:weathered_iron_block"})
         ctx.check(wrench::canWrenchPickup(id), std::string(id) + " is in #create:wrench_pickup");
-    ctx.check(speedRequirementOf("levitate:mechanical_mixer") == SpeedLevel::Medium, "the mixer needs medium speed");
-    ctx.check(speedRequirementOf("levitate:display_board") == SpeedLevel::Medium, "the display board needs medium speed");
-    ctx.check(speedRequirementOf("levitate:mechanical_press") == SpeedLevel::None, "the press has no requirement");
-    auto windmill = generatorSpeedOf("levitate:windmill_bearing");
+    ctx.check(speedRequirementOf("bearing:mechanical_mixer") == SpeedLevel::Medium, "the mixer needs medium speed");
+    ctx.check(speedRequirementOf("bearing:display_board") == SpeedLevel::Medium, "the display board needs medium speed");
+    ctx.check(speedRequirementOf("bearing:mechanical_press") == SpeedLevel::None, "the press has no requirement");
+    auto windmill = generatorSpeedOf("bearing:windmill_bearing");
     ctx.check(windmill && windmill->rpm == 16 && windmill->mayGenerateLess, "windmill bearing: up to 16 RPM");
-    auto engine = generatorSpeedOf("levitate:steam_engine");
+    auto engine = generatorSpeedOf("bearing:steam_engine");
     ctx.check(engine && engine->rpm == 64 && engine->mayGenerateLess, "steam engine: up to 64 RPM");
-    ctx.check(kinetics::stressCapacityOf("levitate:steam_engine") == 1024, "steam engine capacity 1024 (the item's stats)");
+    ctx.check(kinetics::stressCapacityOf("bearing:steam_engine") == 1024, "steam engine capacity 1024 (the item's stats)");
 });
 
 // K12: a mixer turning slower than medium speed shows Create's speed requirement hint
-LV_REGISTER_SELFTEST("goggles.speed_requirement_hint", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("goggles.speed_requirement_hint", [](Context& ctx) -> ll::coro::CoroTask<> {
     // the mixer has no shaft: a cog beside it meshes with its integrated cog, a source below drives the cog
     auto mixer = at(ctx, 5288, 1), cog = at(ctx, 5289, 1), src = at(ctx, 5289, 0);
     ctx.require(co_await ctx.ensureLoaded(mixer), "test area loaded");
-    if (!game::blockWith("levitate:mechanical_mixer")) {
+    if (!game::blockWith("bearing:mechanical_mixer")) {
         ctx.info("no mechanical mixer: not tested");
         co_return;
     }
     auto& p = ctx.player();
-    ctx.require(ctx.setBlock(mixer, "levitate:mechanical_mixer"), "a mixer");
-    ctx.require(ctx.setBlock(cog, "levitate:kinetics_test_cog", {{"levitate:axis", Y}}), "a cog beside it");
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", Y}}), "a 16 RPM source under the cog");
+    ctx.require(ctx.setBlock(mixer, "bearing:mechanical_mixer"), "a mixer");
+    ctx.require(ctx.setBlock(cog, "bearing:kinetics_test_cog", {{"bearing:axis", Y}}), "a cog beside it");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", Y}}), "a 16 RPM source under the cog");
     co_await ctx.ticks(3);
     ctx.require(kinetics::speedAt(mixer) != 0, "the mixer turns, got " + std::to_string(kinetics::speedAt(mixer)));
     p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, ItemStack{});
@@ -387,4 +387,4 @@ LV_REGISTER_SELFTEST("goggles.speed_requirement_hint", [](Context& ctx) -> ll::c
     ctx.check(contains(lines, "Speed Requirement:") && contains(lines, "enough"), "16 RPM < 30: the hint: " + dump(lines));
 });
 
-} // namespace lv::feature::goggles
+} // namespace br::feature::goggles

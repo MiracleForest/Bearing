@@ -30,7 +30,7 @@
 #include "feature/common/Redstone.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 BlockSource* regionOf(int dim) {
     auto level = ll::service::getLevel();
@@ -101,7 +101,7 @@ bool placardPowersBlock(GlobalPos const& p) {
         auto const* n = blockAt(offset(p, d));
         if (!n || n->getTypeName() != kPlacardId) continue;
         // the placard faces away from the block it hangs on
-        if (game::intState(*n, "levitate:powered").value_or(0) != 0 && game::intState(*n, "levitate:facing").value_or(1) == d) return true;
+        if (game::intState(*n, "bearing:powered").value_or(0) != 0 && game::intState(*n, "bearing:facing").value_or(1) == d) return true;
     }
     return false;
 }
@@ -125,7 +125,7 @@ bool hasNeighborSignal(GlobalPos const& p) {
 void registerPlacardSignal() {
     // Create's PlacardBlock.getSignal: 15 to every side while powered
     common::redstone::registerEmitter(kPlacardId, [](BlockSource&, BlockPos const&, Block const& block, int) {
-        return game::intState(block, "levitate:powered").value_or(0) != 0 ? 15 : 0;
+        return game::intState(block, "bearing:powered").value_or(0) != 0 ? 15 : 0;
     });
 }
 
@@ -225,4 +225,4 @@ int horizontalFacing(Player const& player) {
     return map[game::playerFacing(player) & 3];
 }
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

@@ -2,15 +2,15 @@
   "format_version": "1.21.40",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:filter",
+      "identifier": "bearing:filter",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_filter",
+      "minecraft:icon": "bearing_filter",
       "minecraft:display_name": {
-        "value": "item.levitate:filter.name"
+        "value": "item.bearing:filter.name"
       },
       "minecraft:max_stack_size": 64
     }

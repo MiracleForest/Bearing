@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cut_granite_stairs_from_granite_stonecutting"
+      "identifier": "bearing:cut_granite_stairs_from_granite_stonecutting"
     },
     "tags": [
       "stonecutter"
@@ -18,7 +18,7 @@
       }
     ],
     "result": {
-      "item": "levitate:cut_granite_stairs",
+      "item": "bearing:cut_granite_stairs",
       "count": 1
     }
   }

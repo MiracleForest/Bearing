@@ -27,7 +27,7 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::basin::burners {
+namespace br::feature::basin::burners {
 
 namespace items = common::items;
 namespace bd    = common::blockdata;
@@ -342,4 +342,4 @@ void particles(BlockSource& region, GlobalPos const& pos, Kind kind) {
     else if (heat == HeatLevel::Fading || heat == HeatLevel::Kindled) particle(dim, px, py, pz, "minecraft:basic_flame_particle");
 }
 
-} // namespace lv::feature::basin::burners
+} // namespace br::feature::basin::burners

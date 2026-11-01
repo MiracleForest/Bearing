@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include "client/building/BlockQuads.h"
 
@@ -56,13 +56,13 @@
 #include "mod/Log.h"
 #include "mod/Main.h"
 
-namespace lv::client::building {
+namespace br::client::building {
 
 namespace cp = core::ponder;
 
 namespace {
 
-// ---- the pack's block models (Levitate blocks) ---------------------------------------------------
+// ---- the pack's block models (Bearing blocks) ---------------------------------------------------
 
 struct Models {
     std::map<std::string, cp::BlockFile> blocks;     ///< by block id
@@ -72,16 +72,16 @@ struct Models {
 Models const& models() {
     static Models m = [] {
         Models out;
-        auto   mod  = lv::Mod::getInstance().getSelf().getModDir();
+        auto   mod  = br::Mod::getInstance().getSelf().getModDir();
         auto   read = [](std::filesystem::path const& p) {
             std::ifstream in(p);
             return nlohmann::json::parse(in, nullptr, false, true);
         };
         std::error_code ec;
-        for (auto const& e : std::filesystem::directory_iterator(mod / "behavior_packs" / "Levitate_BP" / "blocks", ec)) {
+        for (auto const& e : std::filesystem::directory_iterator(mod / "behavior_packs" / "Bearing_BP" / "blocks", ec)) {
             if (auto f = cp::parseBlockFile(read(e.path()))) out.blocks[f->id] = std::move(*f);
         }
-        for (auto const& e : std::filesystem::recursive_directory_iterator(mod / "resource_packs" / "Levitate_RP" / "models" / "blocks", ec)) {
+        for (auto const& e : std::filesystem::recursive_directory_iterator(mod / "resource_packs" / "Bearing_RP" / "models" / "blocks", ec)) {
             if (e.path().extension() != ".json") continue;
             out.geometries.merge(cp::parseGeometries(read(e.path())));
         }
@@ -210,7 +210,7 @@ std::vector<Quad> const& quadsOf(Tessellator& tess, Block const& block) {
     auto& c = cache().quads;
     if (auto it = c.find(&block); it != c.end()) return it->second;
     auto quads = modelQuads(block);
-    if (quads.empty() && block.getTypeName().rfind("levitate:", 0) != 0) quads = gameQuads(tess, block);
+    if (quads.empty() && block.getTypeName().rfind("bearing:", 0) != 0) quads = gameQuads(tess, block);
     return c.emplace(&block, std::move(quads)).first->second;
 }
 
@@ -241,7 +241,7 @@ std::unique_ptr<mce::Mesh> buildMesh(Tessellator& tess, std::vector<Quad> const&
         tess.simpleQuad(v3(q.pos[0]), v2(q.uv[0]), v3(q.pos[1]), v2(q.uv[1]), v3(q.pos[2]), v2(q.uv[2]), v3(q.pos[3]), v2(q.uv[3]));
         if (twoSided) tess.simpleQuad(v3(q.pos[3]), v2(q.uv[3]), v3(q.pos[2]), v2(q.uv[2]), v3(q.pos[1]), v2(q.uv[1]), v3(q.pos[0]), v2(q.uv[0]));
     }
-    return std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_building", SupplementaryFieldAutoGenerationMode::None));
+    return std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_building", SupplementaryFieldAutoGenerationMode::None));
 }
 
 glm::vec4 atlasUv(std::string const& texture) {
@@ -308,6 +308,6 @@ void Drawer::drawWith(void const* material, mce::Mesh const& mesh, glm::mat4 con
     mesh.renderMesh(screen, *static_cast<mce::MaterialPtr const*>(material), texture, 0, 0, OffscreenCaptureDescription{}, nullptr);
 }
 
-} // namespace lv::client::building
+} // namespace br::client::building
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

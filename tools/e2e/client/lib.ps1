@@ -1,4 +1,4 @@
-# Levitate client e2e helpers: deploy the mod into the LeviLauncher game instance,
+# Bearing client e2e helpers: deploy the mod into the LeviLauncher game instance,
 # drive Minecraft Bedrock with input (the BeDD mod's control pipe by default, real
 # SendInput with run.ps1 -Foreground) and capture screenshots.
 # Adapted from BEI's tools/e2e/lib.ps1 (same machine, same game instance, same lock).
@@ -9,10 +9,10 @@
 . "$PSScriptRoot/../common/common.ps1"
 
 $script:ClientDir    = $PSScriptRoot
-$script:ModName      = 'Levitate'
-$script:Launcher     = if ($env:LV_E2E_LAUNCHER) { $env:LV_E2E_LAUNCHER } else { Join-Path $env:USERPROFILE 'Desktop\LeviLauncher.exe' }
+$script:ModName      = 'Bearing'
+$script:Launcher     = if ($env:BR_E2E_LAUNCHER) { $env:BR_E2E_LAUNCHER } else { Join-Path $env:USERPROFILE 'Desktop\LeviLauncher.exe' }
 $script:LauncherData = Join-Path $env:APPDATA 'levilauncher.exe'
-$script:BaseVersion  = if ($env:LV_E2E_CLIENT_VERSION) { $env:LV_E2E_CLIENT_VERSION } else { '1.26.51.01' }
+$script:BaseVersion  = if ($env:BR_E2E_CLIENT_VERSION) { $env:BR_E2E_CLIENT_VERSION } else { '1.26.51.01' }
 # Mods that stay loaded during our runs. BeDD (headless input, see run.ps1) is
 # installed fresh by every headless run and removed after it: never park it aside (a restored copy
 # would make a normally started game ignore the real mouse and keyboard).
@@ -37,15 +37,15 @@ function Set-E2EInstance([int]$Slot) {
     $script:VersionDir   = Join-Path $script:LauncherData "versions\$script:VersionName"
     $script:ModsDir      = Join-Path $script:VersionDir 'mods'
     # Other mods are moved here for the duration of a run (outside mods\, so LeviLamina ignores them).
-    $script:AsideDir     = Join-Path $script:VersionDir 'mods.lv-e2e-aside'
+    $script:AsideDir     = Join-Path $script:VersionDir 'mods.br-e2e-aside'
     $script:LockFile     = if ($Slot -le 1) { Join-Path $script:LauncherData 'bei-e2e.lock' } else { Join-Path $script:LauncherData "hi$Slot-e2e.lock" }
     # BeDD control pipe of this instance's game.
     $script:BeDDPipe = "BeDD-$script:VersionName"
     # Child pwsh processes that source this file (helpers, scenario scripts) start on the same slot.
-    $env:LV_E2E_INSTANCE_SLOT = "$Slot"
+    $env:BR_E2E_INSTANCE_SLOT = "$Slot"
 }
-Set-E2EInstance $(if ($env:LV_E2E_INSTANCE_SLOT -match '^\d+$') { [int]$env:LV_E2E_INSTANCE_SLOT } else { 1 })
-$script:WorldName    = 'LV-Test'
+Set-E2EInstance $(if ($env:BR_E2E_INSTANCE_SLOT -match '^\d+$') { [int]$env:BR_E2E_INSTANCE_SLOT } else { 1 })
+$script:WorldName    = 'BR-Test'
 $script:Unit         = 'scratch'
 
 if (-not ('BsE2E.Native' -as [type])) {
@@ -268,9 +268,9 @@ function Restore-OtherMods {
 }
 
 # The game caches server packs by uuid + version (games\com.mojang\...\packcache). Builds of other
-# branches can carry the same version, so a cached Levitate pack could hide this build's: drop every
+# branches can carry the same version, so a cached Bearing pack could hide this build's: drop every
 # cached copy of our packs (matched by the header uuids of assets/pack/*/manifest.json) before a launch.
-function Clear-CachedLevitatePacks {
+function Clear-CachedBearingPacks {
     $uuids = @(foreach ($kind in 'rp', 'bp') {
         $m = Join-Path $script:RepoRoot "assets/pack/$kind/manifest.json"
         if (Test-Path $m) { (Get-Content $m -Raw | ConvertFrom-Json).header.uuid }
@@ -285,13 +285,13 @@ function Clear-CachedLevitatePacks {
             try { $uuid = (Get-Content $manifest -Raw | ConvertFrom-Json).header.uuid } catch { continue }
             if ($uuids -contains $uuid) {
                 Remove-Item -Recurse -Force $pack.FullName -ErrorAction SilentlyContinue
-                Write-Step "dropped cached Levitate pack $($pack.FullName)"
+                Write-Step "dropped cached Bearing pack $($pack.FullName)"
             }
         }
     }
 }
 
-# Install the LV-Test world from fixtures\LV-Test (a level.dat template; the game generates the
+# Install the BR-Test world from fixtures\BR-Test (a level.dat template; the game generates the
 # terrain on first load). LastPlayed is set to now so it is the first world in the list.
 function Restore-TestWorld {
     . "$PSScriptRoot/../common/nbt.ps1"
@@ -308,7 +308,7 @@ function Restore-TestWorld {
     Write-Step "restored world fixture to $target"
 }
 
-# Delete every world called LV-Test. Run after each run so that it never shows up as the most
+# Delete every world called BR-Test. Run after each run so that it never shows up as the most
 # recently played world in BEI's harness (which opens the first world in the list).
 function Remove-TestWorld {
     $worlds = Get-WorldsDir
@@ -340,7 +340,7 @@ function Start-Game([int]$TimeoutSeconds = 180) {
         Write-Step "launching $script:VersionName in the background"
         & (Join-Path $script:BeDDDir 'Start-BeDDGame.ps1') -Instance $script:VersionName | Out-Null
     } else {
-        if (-not (Test-Path $script:Launcher)) { throw "LeviLauncher not found at $script:Launcher (set `$env:LV_E2E_LAUNCHER)" }
+        if (-not (Test-Path $script:Launcher)) { throw "LeviLauncher not found at $script:Launcher (set `$env:BR_E2E_LAUNCHER)" }
         # A leftover launcher instance swallows --launch (single-instance hand-off) without
         # starting the game, so close any running launcher first.
         Get-Process -Name 'LeviLauncher' -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
@@ -717,7 +717,7 @@ function Enter-TestWorld([int]$LoadSeconds = 10, [int]$Attempts = 3) {
         $mark = Get-LogMark
         Enter-PlayScreen | Out-Null
         Start-Sleep -Seconds 4
-        Click 0.173 0.43 -Relative      # first world thumbnail (LV-Test: LastPlayed = now)
+        Click 0.173 0.43 -Relative      # first world thumbnail (BR-Test: LastPlayed = now)
         Start-Sleep -Seconds $LoadSeconds
         try {
             Wait-LogLine 'Player Spawned' 75 -Since $mark | Out-Null
@@ -741,7 +741,7 @@ function Enter-TestWorld([int]$LoadSeconds = 10, [int]$Attempts = 3) {
 # ---------------------------------------------------------------------------------------
 # Remote modes: join a BDS (tools/e2e/server, scenario client-host) instead of the local world
 # ---------------------------------------------------------------------------------------
-$script:ExternalServerName = 'LV-E2E'
+$script:ExternalServerName = 'BR-E2E'
 
 # The external server list of the signed-in user (games\com.mojang\minecraftpe\external_servers.txt).
 function Get-ExternalServersFile {

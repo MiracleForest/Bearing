@@ -9,7 +9,7 @@
 //   - belts / depots (U11) may run Create's fan processing on their own items (Create's
 //     TransportedItemStackHandlerBehaviour): `airflow::typeAt` names the processing air at a block,
 //     `canProcess` / `process` / `processingTime` apply Create's FanProcessing rules. (U13 already
-//     processes the slots of `levitate:belt`, `levitate:depot` and `levitate:weighted_ejector`
+//     processes the slots of `bearing:belt`, `bearing:depot` and `bearing:weighted_ejector`
 //     through the item capability when those blocks are in a fan's current.)
 //
 // Server thread only. Every function returns "nothing" until U13 is installed.
@@ -25,7 +25,7 @@ class BlockPos;
 class BlockSource;
 class ItemStack;
 
-namespace lv::feature::common::airflow {
+namespace br::feature::common::airflow {
 
 /// An air current source (Create's IAirCurrentSource: the encased fan).
 struct Source {
@@ -57,4 +57,4 @@ struct Provider {
 };
 void setProvider(Provider provider);
 
-} // namespace lv::feature::common::airflow
+} // namespace br::feature::common::airflow

@@ -3,7 +3,7 @@
 // The server sends "pistons.rope" (src/feature/pistons/Sync.cpp); between two updates (3 ticks)
 // the offset is extrapolated with the synced speed.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -36,7 +36,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::pistons {
+namespace br::client::pistons {
 
 namespace {
 
@@ -211,8 +211,8 @@ size_t knownRopes() {
     return gRopes.size();
 }
 
-} // namespace lv::client::pistons
+} // namespace br::client::pistons
 
-LV_REGISTER_MODULE(lv::client::pistons::RopeRendererModule);
+BR_REGISTER_MODULE(br::client::pistons::RopeRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

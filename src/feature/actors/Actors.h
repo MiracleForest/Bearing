@@ -26,23 +26,23 @@ class BlockSource;
 class ItemStack;
 class Player;
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace cc  = ::lv::core::contraption;
-namespace con = ::lv::feature::contraption;
+namespace cc  = ::br::core::contraption;
+namespace con = ::br::feature::contraption;
 using Json    = nlohmann::json;
 using core::GlobalPos;
 
-inline constexpr std::string_view kHarvester = "levitate:mechanical_harvester";
-inline constexpr std::string_view kPlough    = "levitate:mechanical_plough";
-inline constexpr std::string_view kRoller    = "levitate:mechanical_roller";
-inline constexpr std::string_view kPsi       = "levitate:portable_storage_interface";
-inline constexpr std::string_view kControls  = "levitate:contraption_controls";
-inline constexpr std::string_view kSeatEntity = "levitate:seat";
+inline constexpr std::string_view kHarvester = "bearing:mechanical_harvester";
+inline constexpr std::string_view kPlough    = "bearing:mechanical_plough";
+inline constexpr std::string_view kRoller    = "bearing:mechanical_roller";
+inline constexpr std::string_view kPsi       = "bearing:portable_storage_interface";
+inline constexpr std::string_view kControls  = "bearing:contraption_controls";
+inline constexpr std::string_view kSeatEntity = "bearing:seat";
 /// The seat entity players ride (another rider offset: Bedrock places a riding player lower).
-inline constexpr std::string_view kPlayerSeatEntity = "levitate:player_seat";
+inline constexpr std::string_view kPlayerSeatEntity = "bearing:player_seat";
 [[nodiscard]] inline bool isSeatEntityId(std::string_view id) { return id == kSeatEntity || id == kPlayerSeatEntity; }
-inline constexpr char             kFacing[]  = "levitate:facing";
+inline constexpr char             kFacing[]  = "bearing:facing";
 
 /// Create's 16 dye colours in their order (white first).
 inline constexpr std::string_view kColours[16]{
@@ -64,10 +64,10 @@ struct Config {
 // ---- blocks -----------------------------------------------------------------------------------
 
 [[nodiscard]] bool isSeat(std::string_view id);
-/// "levitate:<colour>_seat" -> colour index (nullopt for other blocks).
+/// "bearing:<colour>_seat" -> colour index (nullopt for other blocks).
 [[nodiscard]] std::optional<int> seatColour(std::string_view id);
 [[nodiscard]] std::string        seatId(int colour);
-/// The front of an actor block (`levitate:facing`, Bedrock facing order).
+/// The front of an actor block (`bearing:facing`, Bedrock facing order).
 [[nodiscard]] cc::Dir facingOf(cc::States const& states, cc::Dir fallback = cc::Dir::North);
 [[nodiscard]] cc::Dir facingAt(BlockSource& region, BlockPos const& pos, cc::Dir fallback = cc::Dir::North);
 [[nodiscard]] BlockPos toBlockPos(cc::Pos const& p);
@@ -215,4 +215,4 @@ bool useOnContraption(Player& player, ContraptionHit const& hit);
 /// Logs one line per user-visible action (`actors: ...`).
 void logAction(std::string const& text);
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

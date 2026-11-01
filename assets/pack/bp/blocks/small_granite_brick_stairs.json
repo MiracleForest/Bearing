@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:small_granite_brick_stairs",
+      "identifier": "bearing:small_granite_brick_stairs",
       "menu_category": {
         "category": "construction",
         "group": "minecraft:itemGroup.name.stairs"
@@ -13,62 +13,62 @@
             "minecraft:corner_and_cardinal_direction"
           ],
           "blocks_to_corner_with": [
-            "levitate:cut_granite_stairs",
-            "levitate:polished_cut_granite_stairs",
-            "levitate:cut_granite_brick_stairs",
-            "levitate:small_granite_brick_stairs",
-            "levitate:cut_diorite_stairs",
-            "levitate:polished_cut_diorite_stairs",
-            "levitate:cut_diorite_brick_stairs",
-            "levitate:small_diorite_brick_stairs",
-            "levitate:cut_andesite_stairs",
-            "levitate:polished_cut_andesite_stairs",
-            "levitate:cut_andesite_brick_stairs",
-            "levitate:small_andesite_brick_stairs",
-            "levitate:cut_calcite_stairs",
-            "levitate:polished_cut_calcite_stairs",
-            "levitate:cut_calcite_brick_stairs",
-            "levitate:small_calcite_brick_stairs",
-            "levitate:cut_dripstone_stairs",
-            "levitate:polished_cut_dripstone_stairs",
-            "levitate:cut_dripstone_brick_stairs",
-            "levitate:small_dripstone_brick_stairs",
-            "levitate:cut_deepslate_stairs",
-            "levitate:polished_cut_deepslate_stairs",
-            "levitate:cut_deepslate_brick_stairs",
-            "levitate:small_deepslate_brick_stairs",
-            "levitate:cut_tuff_stairs",
-            "levitate:polished_cut_tuff_stairs",
-            "levitate:cut_tuff_brick_stairs",
-            "levitate:small_tuff_brick_stairs",
-            "levitate:cut_asurine_stairs",
-            "levitate:polished_cut_asurine_stairs",
-            "levitate:cut_asurine_brick_stairs",
-            "levitate:small_asurine_brick_stairs",
-            "levitate:cut_crimsite_stairs",
-            "levitate:polished_cut_crimsite_stairs",
-            "levitate:cut_crimsite_brick_stairs",
-            "levitate:small_crimsite_brick_stairs",
-            "levitate:cut_limestone_stairs",
-            "levitate:polished_cut_limestone_stairs",
-            "levitate:cut_limestone_brick_stairs",
-            "levitate:small_limestone_brick_stairs",
-            "levitate:cut_ochrum_stairs",
-            "levitate:polished_cut_ochrum_stairs",
-            "levitate:cut_ochrum_brick_stairs",
-            "levitate:small_ochrum_brick_stairs",
-            "levitate:cut_scoria_stairs",
-            "levitate:polished_cut_scoria_stairs",
-            "levitate:cut_scoria_brick_stairs",
-            "levitate:small_scoria_brick_stairs",
-            "levitate:cut_scorchia_stairs",
-            "levitate:polished_cut_scorchia_stairs",
-            "levitate:cut_scorchia_brick_stairs",
-            "levitate:small_scorchia_brick_stairs",
-            "levitate:cut_veridium_stairs",
-            "levitate:polished_cut_veridium_stairs",
-            "levitate:cut_veridium_brick_stairs",
-            "levitate:small_veridium_brick_stairs"
+            "bearing:cut_granite_stairs",
+            "bearing:polished_cut_granite_stairs",
+            "bearing:cut_granite_brick_stairs",
+            "bearing:small_granite_brick_stairs",
+            "bearing:cut_diorite_stairs",
+            "bearing:polished_cut_diorite_stairs",
+            "bearing:cut_diorite_brick_stairs",
+            "bearing:small_diorite_brick_stairs",
+            "bearing:cut_andesite_stairs",
+            "bearing:polished_cut_andesite_stairs",
+            "bearing:cut_andesite_brick_stairs",
+            "bearing:small_andesite_brick_stairs",
+            "bearing:cut_calcite_stairs",
+            "bearing:polished_cut_calcite_stairs",
+            "bearing:cut_calcite_brick_stairs",
+            "bearing:small_calcite_brick_stairs",
+            "bearing:cut_dripstone_stairs",
+            "bearing:polished_cut_dripstone_stairs",
+            "bearing:cut_dripstone_brick_stairs",
+            "bearing:small_dripstone_brick_stairs",
+            "bearing:cut_deepslate_stairs",
+            "bearing:polished_cut_deepslate_stairs",
+            "bearing:cut_deepslate_brick_stairs",
+            "bearing:small_deepslate_brick_stairs",
+            "bearing:cut_tuff_stairs",
+            "bearing:polished_cut_tuff_stairs",
+            "bearing:cut_tuff_brick_stairs",
+            "bearing:small_tuff_brick_stairs",
+            "bearing:cut_asurine_stairs",
+            "bearing:polished_cut_asurine_stairs",
+            "bearing:cut_asurine_brick_stairs",
+            "bearing:small_asurine_brick_stairs",
+            "bearing:cut_crimsite_stairs",
+            "bearing:polished_cut_crimsite_stairs",
+            "bearing:cut_crimsite_brick_stairs",
+            "bearing:small_crimsite_brick_stairs",
+            "bearing:cut_limestone_stairs",
+            "bearing:polished_cut_limestone_stairs",
+            "bearing:cut_limestone_brick_stairs",
+            "bearing:small_limestone_brick_stairs",
+            "bearing:cut_ochrum_stairs",
+            "bearing:polished_cut_ochrum_stairs",
+            "bearing:cut_ochrum_brick_stairs",
+            "bearing:small_ochrum_brick_stairs",
+            "bearing:cut_scoria_stairs",
+            "bearing:polished_cut_scoria_stairs",
+            "bearing:cut_scoria_brick_stairs",
+            "bearing:small_scoria_brick_stairs",
+            "bearing:cut_scorchia_stairs",
+            "bearing:polished_cut_scorchia_stairs",
+            "bearing:cut_scorchia_brick_stairs",
+            "bearing:small_scorchia_brick_stairs",
+            "bearing:cut_veridium_stairs",
+            "bearing:polished_cut_veridium_stairs",
+            "bearing:cut_veridium_brick_stairs",
+            "bearing:small_veridium_brick_stairs"
           ]
         },
         "minecraft:placement_position": {
@@ -88,10 +88,10 @@
       "minecraft:map_color": "#976d4d",
       "minecraft:loot": "loot_tables/blocks/small_granite_brick_stairs.json",
       "tag:minecraft:is_pickaxe_item_destructible": {},
-      "minecraft:geometry": "geometry.levitate.materials_stairs",
+      "minecraft:geometry": "geometry.bearing.materials_stairs",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_granite_small_brick",
+          "texture": "bearing_granite_small_brick",
           "render_method": "opaque"
         }
       },
@@ -113,7 +113,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -171,7 +171,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -241,7 +241,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -311,7 +311,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -357,7 +357,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -403,7 +403,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -461,7 +461,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -531,7 +531,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -601,7 +601,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -647,7 +647,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -693,7 +693,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -751,7 +751,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -821,7 +821,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -891,7 +891,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -937,7 +937,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -983,7 +983,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -1041,7 +1041,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -1111,7 +1111,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -1181,7 +1181,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -1227,7 +1227,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": true,
               "slab_top": false,
@@ -1273,7 +1273,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1331,7 +1331,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1401,7 +1401,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1471,7 +1471,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1517,7 +1517,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1563,7 +1563,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1621,7 +1621,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1691,7 +1691,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1761,7 +1761,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1807,7 +1807,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1853,7 +1853,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1911,7 +1911,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -1981,7 +1981,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -2051,7 +2051,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -2097,7 +2097,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -2143,7 +2143,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'none'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -2201,7 +2201,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'inner_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -2271,7 +2271,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'inner_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -2341,7 +2341,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'outer_left'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,
@@ -2387,7 +2387,7 @@
         "condition": "q.block_state('minecraft:vertical_half') == 'top' && q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:corner') == 'outer_right'",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.materials_stairs",
+            "identifier": "geometry.bearing.materials_stairs",
             "bone_visibility": {
               "slab_bottom": false,
               "slab_top": true,

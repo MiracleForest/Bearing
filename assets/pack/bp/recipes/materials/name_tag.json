@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:name_tag"
+      "identifier": "bearing:name_tag"
     },
     "tags": [
       "crafting_table"
@@ -15,7 +15,7 @@
         "item": "minecraft:string"
       },
       {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     ],
     "unlock": [

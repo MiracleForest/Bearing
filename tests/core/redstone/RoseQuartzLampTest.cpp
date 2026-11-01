@@ -4,7 +4,7 @@
 
 #include "core/redstone/RoseQuartzLamp.h"
 
-using namespace lv::core::redstone;
+using namespace br::core::redstone;
 
 TEST(RoseQuartzLamp, RisingInputActivates) {
     LampState off{};

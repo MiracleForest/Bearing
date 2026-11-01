@@ -21,13 +21,13 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP = core::GlobalPos;
-namespace bd = ::lv::feature::common::blockdata;
+namespace bd = ::br::feature::common::blockdata;
 
 GP      at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 cc::Pos ccp(GP const& p) { return {p.x, p.y, p.z}; }
@@ -63,7 +63,7 @@ struct Guard {
 } // namespace
 
 // R5: Create's discard: the contraption goes, nothing is placed or dropped
-LV_REGISTER_SELFTEST("contraption.discard", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.discard", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 0);
     ctx.setBlock(p, "minecraft:gold_block");
     AssembleOptions o;
@@ -80,30 +80,30 @@ LV_REGISTER_SELFTEST("contraption.discard", [](Context& ctx) -> ll::coro::CoroTa
 });
 
 // R14: the sticker reacts to redstone through the shared watch (no polling of its own)
-LV_REGISTER_SELFTEST("contraption.sticker_watch", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.sticker_watch", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 2);
-    ctx.setBlock(p, std::string(kSticker), {{"levitate:facing", 1}, {"levitate:extended", 0}});
+    ctx.setBlock(p, std::string(kSticker), {{"bearing:facing", 1}, {"bearing:extended", 0}});
     detail::trackSticker(p.dim, ccp(p));
     co_await ctx.ticks(4);
-    ctx.check(game::intState(ctx.player().getDimensionBlockSource().getBlock(game::blockPos(p)), "levitate:extended").value_or(-1) == 0, "unpowered: retracted");
+    ctx.check(game::intState(ctx.player().getDimensionBlockSource().getBlock(game::blockPos(p)), "bearing:extended").value_or(-1) == 0, "unpowered: retracted");
     ctx.setBlock(at(p, 1, 0, 0), "minecraft:redstone_block");
     co_await ctx.ticks(5);
-    ctx.check(game::intState(ctx.player().getDimensionBlockSource().getBlock(game::blockPos(p)), "levitate:extended").value_or(-1) == 1, "powered: extended");
+    ctx.check(game::intState(ctx.player().getDimensionBlockSource().getBlock(game::blockPos(p)), "bearing:extended").value_or(-1) == 1, "powered: extended");
     ctx.setBlock(at(p, 1, 0, 0), "minecraft:air");
     co_await ctx.ticks(5);
-    ctx.check(game::intState(ctx.player().getDimensionBlockSource().getBlock(game::blockPos(p)), "levitate:extended").value_or(-1) == 0, "retracted again");
+    ctx.check(game::intState(ctx.player().getDimensionBlockSource().getBlock(game::blockPos(p)), "bearing:extended").value_or(-1) == 0, "retracted again");
 });
 
 // R142 / R106: carried states change (setBlockStates); doors close on a contraption without door
 // control and open at an elevator floor whose contact allows them
-LV_REGISTER_SELFTEST("contraption.doors", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.doors", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto  p = co_await area(ctx, 4);
     Guard g;
-    std::vector<std::pair<std::string, int>> lower{{"levitate:facing", 2}, {"levitate:upper", 0}, {"levitate:open", 1}};
-    std::vector<std::pair<std::string, int>> upper{{"levitate:facing", 2}, {"levitate:upper", 1}, {"levitate:open", 1}};
+    std::vector<std::pair<std::string, int>> lower{{"bearing:facing", 2}, {"bearing:upper", 0}, {"bearing:open", 1}};
+    std::vector<std::pair<std::string, int>> upper{{"bearing:facing", 2}, {"bearing:upper", 1}, {"bearing:open", 1}};
     ctx.setBlock(p, "minecraft:stone");
-    ctx.setBlock(at(p, 0, 1, 0), "levitate:train_door", lower);
-    ctx.setBlock(at(p, 0, 2, 0), "levitate:train_door", upper);
+    ctx.setBlock(at(p, 0, 1, 0), "bearing:train_door", lower);
+    ctx.setBlock(at(p, 0, 2, 0), "bearing:train_door", upper);
     AssembleOptions o;
     o.anchor        = p;
     o.includeAnchor = true;
@@ -114,15 +114,15 @@ LV_REGISTER_SELFTEST("contraption.doors", [](Context& ctx) -> ll::coro::CoroTask
     co_await ctx.ticks(4);
     auto* c = find(*r.id);
     ctx.require(c != nullptr, "still there");
-    ctx.check(carriedState(*c, {0, 1, 0}, "levitate:open") == 0 && carriedState(*c, {0, 2, 0}, "levitate:open") == 0, "no door control: the door closed");
-    ctx.check(setBlockStates(*r.id, {0, 0, 0}, {{"levitate:open", std::int64_t{1}}}) == false, "a state the block doesn't have changes nothing");
+    ctx.check(carriedState(*c, {0, 1, 0}, "bearing:open") == 0 && carriedState(*c, {0, 2, 0}, "bearing:open") == 0, "no door control: the door closed");
+    ctx.check(setBlockStates(*r.id, {0, 0, 0}, {{"bearing:open", std::int64_t{1}}}) == false, "a state the block doesn't have changes nothing");
     discard(*r.id);
 
     // an elevator cabin standing at a floor whose contact opens every door
     auto q = at(p, 3, 0, 0);
     ctx.setBlock(q, "minecraft:stone");
-    ctx.setBlock(at(q, 0, 1, 0), "levitate:train_door", {{"levitate:facing", 2}, {"levitate:upper", 0}, {"levitate:open", 0}});
-    ctx.setBlock(at(q, 0, 2, 0), "levitate:train_door", {{"levitate:facing", 2}, {"levitate:upper", 1}, {"levitate:open", 0}});
+    ctx.setBlock(at(q, 0, 1, 0), "bearing:train_door", {{"bearing:facing", 2}, {"bearing:upper", 0}, {"bearing:open", 0}});
+    ctx.setBlock(at(q, 0, 2, 0), "bearing:train_door", {{"bearing:facing", 2}, {"bearing:upper", 1}, {"bearing:open", 0}});
     GP anchor = at(q, 0, 4, 0), contact = at(q, -1, 0, 0);
     ctx.setBlock(anchor, "minecraft:stone");
     ctx.setBlock(contact, "minecraft:stone");
@@ -139,19 +139,19 @@ LV_REGISTER_SELFTEST("contraption.doors", [](Context& ctx) -> ll::coro::CoroTask
     co_await ctx.ticks(4);
     c = find(*r2.id);
     ctx.require(c != nullptr, "cabin there");
-    ctx.check(carriedState(*c, doorLocal, "levitate:open") == 1, "the elevator door opened at the floor");
+    ctx.check(carriedState(*c, doorLocal, "bearing:open") == 1, "the elevator door opened at the floor");
     // "keep doors closed"
     bd::edit(contact)["pistons"]["door"] = 5;
     co_await ctx.ticks(3);
     c = find(*r2.id);
-    ctx.check(c && carriedState(*c, doorLocal, "levitate:open") == 0, "closed again by the contact's door control");
+    ctx.check(c && carriedState(*c, doorLocal, "bearing:open") == 0, "closed again by the contact's door control");
     discard(*r2.id);
     (void)bd::take(anchor);
     (void)bd::take(contact);
 });
 
 // R109: paused actors don't tick while the contraption moves
-LV_REGISTER_SELFTEST("contraption.actors_paused", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.actors_paused", [](Context& ctx) -> ll::coro::CoroTask<> {
     static int ticks = 0;
     static bool registered = false;
     if (!registered) {
@@ -188,7 +188,7 @@ LV_REGISTER_SELFTEST("contraption.actors_paused", [](Context& ctx) -> ll::coro::
 
 // R12: entities collide with contraption blocks through the game's own collision (a pig lands on
 // a lifted block and stands on it: on ground, not pushed up by the engine each tick)
-LV_REGISTER_SELFTEST("contraption.collision_shapes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.collision_shapes", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 8);
     p.y += 3;
     ctx.setBlock(p, "minecraft:stone");
@@ -222,4 +222,4 @@ LV_REGISTER_SELFTEST("contraption.collision_shapes", [](Context& ctx) -> ll::cor
     ctx.check(boxes.empty(), "a discarded contraption collides no more");
 });
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

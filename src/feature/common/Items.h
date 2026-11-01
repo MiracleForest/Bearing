@@ -11,7 +11,7 @@
 class ItemStack;
 class CompoundTag;
 
-namespace lv::feature::common::items {
+namespace br::feature::common::items {
 
 /// A stack of `id` (nullopt when the item is not registered).
 [[nodiscard]] std::optional<ItemStack> make(std::string_view id, int count = 1, int aux = 0);
@@ -41,13 +41,13 @@ namespace lv::feature::common::items {
 
 /// The item's user data (custom NBT), nullptr when it has none.
 [[nodiscard]] CompoundTag const* userData(ItemStack const& stack);
-/// A Levitate JSON document stored in the stack's user data under `key` (null when absent).
+/// A Bearing JSON document stored in the stack's user data under `key` (null when absent).
 [[nodiscard]] nlohmann::json getData(ItemStack const& stack, std::string_view key);
-/// Stores (or with null removes) a Levitate JSON document in the stack's user data.
+/// Stores (or with null removes) a Bearing JSON document in the stack's user data.
 void setData(ItemStack& stack, std::string_view key, nlohmann::json const& value);
 
 /// Display name of the stack (custom name or the item's localised name, server side default
 /// language).
 [[nodiscard]] std::string displayName(ItemStack const& stack);
 
-} // namespace lv::feature::common::items
+} // namespace br::feature::common::items

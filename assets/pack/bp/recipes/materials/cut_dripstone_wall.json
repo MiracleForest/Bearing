@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_dripstone_wall"
+      "identifier": "bearing:cut_dripstone_wall"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_dripstone"
+        "item": "bearing:cut_dripstone"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_dripstone"
+        "item": "bearing:cut_dripstone"
       }
     ],
     "result": {
-      "item": "levitate:cut_dripstone_wall",
+      "item": "bearing:cut_dripstone_wall",
       "count": 6
     }
   }

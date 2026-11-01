@@ -3,13 +3,13 @@
 $script:E2ERoot  = (Resolve-Path "$PSScriptRoot/..").Path
 $script:RepoRoot = (Resolve-Path "$PSScriptRoot/../../..").Path
 
-# Machine-wide cache/instance root. Override with $env:LV_E2E_HOME (e.g. to put it on another drive).
+# Machine-wide cache/instance root. Override with $env:BR_E2E_HOME (e.g. to put it on another drive).
 # NOTE: when this runs inside a packaged (MSIX) app such as the Claude desktop app, Windows
 # virtualizes %LOCALAPPDATA%: files really live under
-# %LOCALAPPDATA%\Packages\<package>\LocalCache\Local\lv-e2e. Every process started from the same
+# %LOCALAPPDATA%\Packages\<package>\LocalCache\Local\br-e2e. Every process started from the same
 # app sees the same view, so this is transparent unless you browse the folder from Explorer.
 function Get-E2EHome {
-    $h = if ($env:LV_E2E_HOME) { $env:LV_E2E_HOME } else { Join-Path $env:LOCALAPPDATA 'lv-e2e' }
+    $h = if ($env:BR_E2E_HOME) { $env:BR_E2E_HOME } else { Join-Path $env:LOCALAPPDATA 'br-e2e' }
     New-Item -ItemType Directory -Force $h | Out-Null
     return $h
 }
@@ -227,7 +227,7 @@ function Invoke-ModBuild([ValidateSet('server', 'client')] [string]$Target) {
 # Regex for log lines that make a run fail: ERR/FTL from the mod, LeviLamina or CrashLogger.
 # Matches both the server console format "12:00:00.000 ERR [Name] ..." and the client log
 # file format "[2026-01-01 12:00:00.000 ERR][Name] ...".
-$script:ErrorLineRegex = '\b(ERR|FTL)\]?\s?\[(Levitate|LeviLamina|CrashLogger)\]'
+$script:ErrorLineRegex = '\b(ERR|FTL)\]?\s?\[(Bearing|LeviLamina|CrashLogger)\]'
 # Bedrock's own content errors (pack loading: "ERR [Server] [Recipes] ...", "[Components]",
 # "[Blocks]", "[Geometry]", "[Texture]", "[JSON]", ...) fail runs too, so units catch pack mistakes.
 # The transport banner ("TRANSPORT TYPE ERROR", NetherNet lines) has no [Category] and stays out.

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:raw_zinc_block"
+      "identifier": "bearing:raw_zinc_block"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:raw_zinc"
+        "item": "bearing:raw_zinc"
       }
     },
     "unlock": [
       {
-        "item": "levitate:raw_zinc"
+        "item": "bearing:raw_zinc"
       }
     ],
     "result": {
-      "item": "levitate:raw_zinc_block",
+      "item": "bearing:raw_zinc_block",
       "count": 1
     }
   }

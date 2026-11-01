@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cut_asurine_brick_slab_from_asurine_pillar_stonecutting"
+      "identifier": "bearing:cut_asurine_brick_slab_from_asurine_pillar_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:asurine_pillar"
+        "item": "bearing:asurine_pillar"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:asurine_pillar"
+        "item": "bearing:asurine_pillar"
       }
     ],
     "result": {
-      "item": "levitate:cut_asurine_brick_slab",
+      "item": "bearing:cut_asurine_brick_slab",
       "count": 2
     }
   }

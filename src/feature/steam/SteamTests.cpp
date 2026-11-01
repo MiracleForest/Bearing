@@ -27,7 +27,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 namespace {
 
@@ -102,7 +102,7 @@ std::string joined(std::vector<std::string> const& lines) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("steam.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("steam.registry", [](Context& ctx) {
     for (auto const* id : {kTank, kCreativeTank, kEngine, kWhistle, kExtension, kPoweredShaft, kTestHeater})
         ctx.check(game::blockWith(id) != nullptr, std::string(id) + " is in the behavior pack");
     auto const* spec = kinetics::specOf(kPoweredShaft);
@@ -112,7 +112,7 @@ LV_REGISTER_SELFTEST("steam.registry", [](Context& ctx) {
     ctx.check(p.capacityPerBlock == 8000 && p.maxHeight == 32 && p.maxWidth == 3, "tank config: 8 buckets per block, 32 high, 3 wide");
 });
 
-LV_REGISTER_SELFTEST("steam.tank_forms", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.tank_forms", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1800};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     tankBox(ctx, a, 0, 1, 0, 2, 2);
@@ -122,9 +122,9 @@ LV_REGISTER_SELFTEST("steam.tank_forms", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(t->width == 2 && t->height == 2, "a 2x2x2 tank formed: " + std::to_string(t->width) + "x" + std::to_string(t->height));
     ctx.check(t->controller == a.at(0, 1, 0), "its controller is the lowest corner");
     ctx.check(t->capacity == 64000, "capacity 8 blocks x 8000 mB: " + std::to_string(t->capacity));
-    ctx.check(state(a.at(0, 1, 0), "levitate:below") == 0 && state(a.at(0, 1, 0), "levitate:above") == 1, "bottom part states");
-    ctx.check(state(a.at(1, 2, 1), "levitate:above") == 0 && state(a.at(1, 2, 1), "levitate:below") == 1, "top part states");
-    ctx.check(state(a.at(0, 1, 0), "levitate:shape") == 2 && state(a.at(1, 1, 1), "levitate:shape") == 5, "corner windows (nw / se)");
+    ctx.check(state(a.at(0, 1, 0), "bearing:below") == 0 && state(a.at(0, 1, 0), "bearing:above") == 1, "bottom part states");
+    ctx.check(state(a.at(1, 2, 1), "bearing:above") == 0 && state(a.at(1, 2, 1), "bearing:below") == 1, "top part states");
+    ctx.check(state(a.at(0, 1, 0), "bearing:shape") == 2 && state(a.at(1, 1, 1), "bearing:shape") == 5, "corner windows (nw / se)");
     // a third layer on top joins
     for (int x = 0; x < 2; ++x)
         for (int z = 0; z < 2; ++z) place(ctx, a.at(x, 3, z), kTank);
@@ -139,7 +139,7 @@ LV_REGISTER_SELFTEST("steam.tank_forms", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(t && t->height == 1 && t->creative, "a creative tank stays apart from a fluid tank");
 });
 
-LV_REGISTER_SELFTEST("steam.tank_fluid", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.tank_fluid", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1806};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     place(ctx, a.at(0, 1), kTank);
@@ -161,14 +161,14 @@ LV_REGISTER_SELFTEST("steam.tank_fluid", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(lines.size() == 3 && lines[0].find("Fluid Container") != std::string::npos, "goggles: fluid container info: " + joined(lines));
 });
 
-LV_REGISTER_SELFTEST("steam.tank_split", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.tank_split", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1812};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     for (int y = 1; y <= 3; ++y) place(ctx, a.at(0, y), kTank);
     co_await ctx.ticks(2);
     ctx.require(fill(a.at(0, 1), "minecraft:lava", 8000) == 8000, "fill a third of the column with lava");
     co_await ctx.ticks(1);
-    ctx.check(state(a.at(0, 1), "levitate:light") == 12 && state(a.at(0, 2), "levitate:light") == 12 && state(a.at(0, 3), "levitate:light") == 1,
+    ctx.check(state(a.at(0, 1), "bearing:light") == 12 && state(a.at(0, 2), "bearing:light") == 12 && state(a.at(0, 3), "bearing:light") == 1,
               "lava glows up to its level (12), 1 above");
     ctx.require(fill(a.at(0, 1), "minecraft:lava", 12000) == 12000, "fill up to 20 buckets");
     clear(a.at(0, 2));
@@ -179,7 +179,7 @@ LV_REGISTER_SELFTEST("steam.tank_split", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(top->height == 1 && top->amount == 8000 && top->fluid == "minecraft:lava", "the top gets the next 8000 mB");
 });
 
-LV_REGISTER_SELFTEST("steam.bucket", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.bucket", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1818};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     place(ctx, a.at(0, 1), kTank);
@@ -223,7 +223,7 @@ int countOf(Player& p, std::string const& id, int aux = -1) {
     return n;
 }
 
-LV_REGISTER_SELFTEST("steam.tank_containers", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.tank_containers", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5100};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     place(ctx, a.at(0, 1), kTank);
@@ -235,7 +235,7 @@ LV_REGISTER_SELFTEST("steam.tank_containers", [](Context& ctx) -> ll::coro::Coro
     p.setSelectedItem(item(ctx, "minecraft:honey_bottle"));
     ctx.check(useItemOnTank(p, a.at(0, 1), p.getSelectedItem()), "a honey bottle empties into the tank");
     auto t = tank(a.at(0, 1));
-    ctx.check(t && t->fluid == "levitate:honey" && t->amount == 250, "250 mB of honey, got " + (t ? t->fluid : std::string{}));
+    ctx.check(t && t->fluid == "bearing:honey" && t->amount == 250, "250 mB of honey, got " + (t ? t->fluid : std::string{}));
     ctx.check(common::items::idOf(p.getSelectedItem()) == "minecraft:honey_bottle", "creative: no bucket (or anything) in exchange");
     ctx.check(drain(a.at(0, 1), "", 250).amount == 250, "drain the honey again");
     auto potion = common::items::make("minecraft:potion", 1, 14); // swiftness
@@ -243,12 +243,12 @@ LV_REGISTER_SELFTEST("steam.tank_containers", [](Context& ctx) -> ll::coro::Coro
     p.setSelectedItem(*potion);
     ctx.check(useItemOnTank(p, a.at(0, 1), p.getSelectedItem()), "a potion empties into the tank");
     t = tank(a.at(0, 1));
-    ctx.check(t && t->fluid == "levitate:potion/regular/swiftness" && t->amount == 250, "250 mB of swiftness, got " + (t ? t->fluid : std::string{}));
+    ctx.check(t && t->fluid == "bearing:potion/regular/swiftness" && t->amount == 250, "250 mB of swiftness, got " + (t ? t->fluid : std::string{}));
     // a survival player fills a glass bottle from a creative tank: the bottle stays, the potion comes in
     p.setPlayerGameType(GameType::Survival);
     auto ct = tank(a.at(2, 1));
     ctx.require(ct.has_value(), "creative tank");
-    setTankFluid(ct->controller, "levitate:potion/regular/swiftness", 1);
+    setTankFluid(ct->controller, "bearing:potion/regular/swiftness", 1);
     p.setSelectedItem(item(ctx, "minecraft:glass_bottle"));
     int before = countOf(p, "minecraft:potion", 14);
     ctx.check(useItemOnTank(p, a.at(2, 1), p.getSelectedItem()), "survival: a glass bottle on a creative tank");
@@ -259,20 +259,20 @@ LV_REGISTER_SELFTEST("steam.tank_containers", [](Context& ctx) -> ll::coro::Coro
     p.setSelectedItem(item(ctx, "minecraft:honey_bottle"));
     ctx.check(useItemOnTank(p, a.at(2, 1), p.getSelectedItem()), "survival: a honey bottle on a creative tank");
     ct = tank(a.at(2, 1));
-    ctx.check(ct && ct->fluid == "levitate:honey" && ct->amount == ct->capacity, "the creative tank is full of honey");
+    ctx.check(ct && ct->fluid == "bearing:honey" && ct->amount == ct->capacity, "the creative tank is full of honey");
     ctx.check(common::items::idOf(p.getSelectedItem()) == "minecraft:honey_bottle", "the honey bottle is not used up");
     p.setSelectedItem(common::items::empty());
 });
 
-LV_REGISTER_SELFTEST("steam.creative_engine", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.creative_engine", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5110};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     // Create's SteamEngineBlockEntity.isValid: only on a FLUID_TANK; a creative tank boiler (200 mB/t
     // of water by itself) stands still under an engine
-    place(ctx, a.at(0, 0), kTestHeater, {{"levitate:heat", 3}});
+    place(ctx, a.at(0, 0), kTestHeater, {{"bearing:heat", 3}});
     for (int y = 1; y <= 4; ++y) place(ctx, a.at(0, y), kCreativeTank);
     place(ctx, a.at(0, 5), kEngine, {}, {{"minecraft:block_face", "up"}, {"minecraft:cardinal_direction", "south"}});
-    place(ctx, a.at(0, 7), kPoweredShaft, {{"levitate:axis", 0}});
+    place(ctx, a.at(0, 7), kPoweredShaft, {{"bearing:axis", 0}});
     co_await ctx.ticks(2);
     auto t = tank(a.at(0, 1));
     ctx.require(t && t->creative, "a creative tank column");
@@ -283,14 +283,14 @@ LV_REGISTER_SELFTEST("steam.creative_engine", [](Context& ctx) -> ll::coro::Coro
                                                                     + std::to_string(kinetics::theoreticalSpeedAt(a.at(0, 7))));
 });
 
-LV_REGISTER_SELFTEST("steam.goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5115};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     // a 1x1x4 boiler with an engine on top, a whistle on its side, and a creative tank
-    place(ctx, a.at(0, 0), kTestHeater, {{"levitate:heat", 3}});
+    place(ctx, a.at(0, 0), kTestHeater, {{"bearing:heat", 3}});
     for (int y = 1; y <= 4; ++y) place(ctx, a.at(0, y), kTank);
     place(ctx, a.at(0, 5), kEngine, {}, {{"minecraft:block_face", "up"}, {"minecraft:cardinal_direction", "south"}});
-    place(ctx, a.at(0, 7), kPoweredShaft, {{"levitate:axis", 0}});
+    place(ctx, a.at(0, 7), kPoweredShaft, {{"bearing:axis", 0}});
     place(ctx, a.at(0, 2, 1), kWhistle, {}, {{"minecraft:block_face", "south"}});
     place(ctx, a.at(3, 1), kCreativeTank);
     place(ctx, a.at(5, 1), kTank);
@@ -300,7 +300,7 @@ LV_REGISTER_SELFTEST("steam.goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
         co_await ctx.ticks(1);
     }
     auto& p = ctx.player();
-    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, item(ctx, "levitate:goggles"));
+    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, item(ctx, "bearing:goggles"));
     auto text = [&](GlobalPos const& at) {
         std::string s;
         for (auto const& l : goggles::overlayFor(p, at).lines) s += l + " | ";
@@ -320,7 +320,7 @@ LV_REGISTER_SELFTEST("steam.goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
     p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, ItemStack{});
 });
 
-LV_REGISTER_SELFTEST("steam.engine_shaft_helper", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.engine_shaft_helper", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5125};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     place(ctx, a.at(0, 1), kTank);
@@ -345,28 +345,28 @@ LV_REGISTER_SELFTEST("steam.engine_shaft_helper", [](Context& ctx) -> ll::coro::
     common::interactions::UseOnContext c{p, p.getSelectedItem(), itemId, block, blockId, a.at(1, 1), 4, {0.f, .5f, .5f}, false, true};
     ctx.check(common::interactions::dispatchUseOn(c) == common::interactions::Result::Consume, "the shaft helper takes the click");
     ctx.check(blockAt(a.at(3, 1)) == kPoweredShaft, "a powered shaft two in front of the engine, got " + blockAt(a.at(3, 1)));
-    ctx.check(state(a.at(3, 1), "levitate:axis") == 2, "along z, got " + std::to_string(state(a.at(3, 1), "levitate:axis")));
+    ctx.check(state(a.at(3, 1), "bearing:axis") == 2, "along z, got " + std::to_string(state(a.at(3, 1), "bearing:axis")));
     ctx.check(common::items::countOf(p.getSelectedItem()) == 3, "one shaft used");
     p.setSelectedItem(common::items::empty());
 });
 
-LV_REGISTER_SELFTEST("steam.windows", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.windows", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1824};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     tankBox(ctx, a, 0, 1, 0, 3, 1);
     co_await ctx.ticks(2);
-    // levitate:shape: 0 window, 1 plain
-    ctx.check(state(a.at(1, 1, 0), "levitate:shape") == 0 && state(a.at(0, 1, 0), "levitate:shape") == 1 && state(a.at(1, 1, 1), "levitate:shape") == 1,
+    // bearing:shape: 0 window, 1 plain
+    ctx.check(state(a.at(1, 1, 0), "bearing:shape") == 0 && state(a.at(0, 1, 0), "bearing:shape") == 1 && state(a.at(1, 1, 1), "bearing:shape") == 1,
               "3 wide: windows in the middle of each side only");
     ctx.check(toggleWindows(a.at(2, 1, 2)), "the wrench toggles windows");
     co_await ctx.ticks(1);
-    ctx.check(state(a.at(1, 1, 0), "levitate:shape") == 1, "windows closed");
+    ctx.check(state(a.at(1, 1, 0), "bearing:shape") == 1, "windows closed");
     toggleWindows(a.at(0, 1, 1));
     co_await ctx.ticks(1);
-    ctx.check(state(a.at(0, 1, 1), "levitate:shape") == 0, "windows open again");
+    ctx.check(state(a.at(0, 1, 1), "bearing:shape") == 0, "windows open again");
 });
 
-LV_REGISTER_SELFTEST("steam.multi_place", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.multi_place", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1830};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     tankBox(ctx, a, 0, 1, 0, 2, 1);
@@ -383,7 +383,7 @@ LV_REGISTER_SELFTEST("steam.multi_place", [](Context& ctx) -> ll::coro::CoroTask
     p.setSelectedItem(common::items::empty());
 });
 
-LV_REGISTER_SELFTEST("steam.creative_tank", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.creative_tank", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1836};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     place(ctx, a.at(0, 1), kCreativeTank);
@@ -398,16 +398,16 @@ LV_REGISTER_SELFTEST("steam.creative_tank", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(fill(a.at(0, 1), "minecraft:water", 4000) == 4000 && tank(a.at(0, 1))->fluid == "minecraft:lava", "it voids what it is given");
 });
 
-LV_REGISTER_SELFTEST("steam.boiler_engine", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.boiler_engine", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1842};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     // 3x3x2 tank (size 18: max level 4), two kindled burners under it
     for (int x = 0; x < 3; ++x)
-        for (int z = 0; z < 3; ++z) place(ctx, a.at(x, 0, z), kTestHeater, {{"levitate:heat", (x == 1 && z < 2) ? 3 : 0}});
+        for (int z = 0; z < 3; ++z) place(ctx, a.at(x, 0, z), kTestHeater, {{"bearing:heat", (x == 1 && z < 2) ? 3 : 0}});
     tankBox(ctx, a, 0, 1, 0, 3, 2);
     // an engine on the east side and its shaft two blocks further east (axis z)
     place(ctx, a.at(3, 1, 1), kEngine, {}, {{"minecraft:block_face", "east"}});
-    place(ctx, a.at(5, 1, 1), kPoweredShaft, {{"levitate:axis", 2}});
+    place(ctx, a.at(5, 1, 1), kPoweredShaft, {{"bearing:axis", 2}});
     co_await ctx.ticks(2);
     auto ctrl = a.at(0, 1, 0);
     auto t    = tank(ctrl);
@@ -437,7 +437,7 @@ LV_REGISTER_SELFTEST("steam.boiler_engine", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(kinetics::theoreticalSpeedAt(shaft) == 64, "counter-clockwise: +64 rpm, got " + std::to_string(kinetics::theoreticalSpeedAt(shaft)));
     // without heat it idles
     for (int x = 0; x < 3; ++x)
-        for (int z = 0; z < 3; ++z) place(ctx, a.at(x, 0, z), kTestHeater, {{"levitate:heat", 0}});
+        for (int z = 0; z < 3; ++z) place(ctx, a.at(x, 0, z), kTestHeater, {{"bearing:heat", 0}});
     for (int i = 0; i < 3; ++i) {
         fill(ctrl, "minecraft:water", 40);
         co_await ctx.ticks(1);
@@ -445,13 +445,13 @@ LV_REGISTER_SELFTEST("steam.boiler_engine", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(kinetics::theoreticalSpeedAt(shaft) == 0, "no heat: the shaft stops");
 });
 
-LV_REGISTER_SELFTEST("steam.passive_boiler", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.passive_boiler", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1850};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
-    place(ctx, a.at(0, 0), kTestHeater, {{"levitate:heat", 1}}); // smouldering: passive heat
+    place(ctx, a.at(0, 0), kTestHeater, {{"bearing:heat", 1}}); // smouldering: passive heat
     for (int y = 1; y <= 4; ++y) place(ctx, a.at(0, y), kTank);
     place(ctx, a.at(0, 5), kEngine, {}, {{"minecraft:block_face", "up"}, {"minecraft:cardinal_direction", "south"}});
-    place(ctx, a.at(0, 7), kPoweredShaft, {{"levitate:axis", 0}});
+    place(ctx, a.at(0, 7), kPoweredShaft, {{"bearing:axis", 0}});
     co_await ctx.ticks(2);
     for (int i = 0; i < 20; ++i) {
         fill(a.at(0, 1), "minecraft:water", 10);
@@ -467,7 +467,7 @@ LV_REGISTER_SELFTEST("steam.passive_boiler", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(!lines.empty() && lines[0].find("Passive") != std::string::npos, "goggles: " + joined(lines));
 });
 
-LV_REGISTER_SELFTEST("steam.engine_support", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.engine_support", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1858};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     place(ctx, a.at(0, 1), kEngine, {}, {{"minecraft:block_face", "up"}});
@@ -486,10 +486,10 @@ LV_REGISTER_SELFTEST("steam.engine_support", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(blockAt(a.at(4, 1, 1)) != kWhistle, "the whistle breaks with its tank");
 });
 
-LV_REGISTER_SELFTEST("steam.whistle", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.whistle", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1864};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
-    place(ctx, a.at(0, 0), kTestHeater, {{"levitate:heat", 3}});
+    place(ctx, a.at(0, 0), kTestHeater, {{"bearing:heat", 3}});
     place(ctx, a.at(0, 1), kTank);
     place(ctx, a.at(0, 2), kWhistle, {}, {{"minecraft:block_face", "up"}});
     co_await ctx.ticks(2);
@@ -499,13 +499,13 @@ LV_REGISTER_SELFTEST("steam.whistle", [](Context& ctx) -> ll::coro::CoroTask<> {
     for (int i = 0; i < 3; ++i) useOnWhistle(p, a.at(0, 2), p.getSelectedItem(), false);
     co_await ctx.ticks(1);
     ctx.check(whistlePitch(a.at(0, 2)) == 3, "1.5 extensions: pitch 3, got " + std::to_string(whistlePitch(a.at(0, 2))));
-    ctx.check(state(a.at(0, 3), "levitate:shape") == 2 && state(a.at(0, 4), "levitate:shape") == 0, "a connected full extension under a half one");
+    ctx.check(state(a.at(0, 3), "bearing:shape") == 2 && state(a.at(0, 4), "bearing:shape") == 0, "a connected full extension under a half one");
     ctx.check(common::items::countOf(p.getSelectedItem()) == 1, "the whistle in hand is not used up");
     p.setSelectedItem(common::items::empty());
     // powered by redstone on a heated boiler: it sounds
     place(ctx, a.at(1, 2), "minecraft:redstone_block");
     co_await ctx.ticks(4);
-    ctx.check(state(a.at(0, 2), "levitate:powered") == 1, "the whistle sees the redstone");
+    ctx.check(state(a.at(0, 2), "bearing:powered") == 1, "the whistle sees the redstone");
     ctx.check(whistleSounding(a.at(0, 2)), "it sounds");
     clear(a.at(1, 2));
     co_await ctx.ticks(4);
@@ -516,7 +516,7 @@ LV_REGISTER_SELFTEST("steam.whistle", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(blockAt(a.at(0, 3)) != kExtension, "extensions vanish with their whistle");
 });
 
-LV_REGISTER_SELFTEST("steam.whistle_halves", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.whistle_halves", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5130};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     place(ctx, a.at(0, 1), kTank);
@@ -536,7 +536,7 @@ LV_REGISTER_SELFTEST("steam.whistle_halves", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(useOnWhistle(p, a.at(0, 3), p.getSelectedItem(), true, .75), "the upper half of the lower extension halves it");
     co_await ctx.ticks(1);
     ctx.check(blockAt(a.at(0, 4)) != kExtension, "the extension above it is gone");
-    ctx.check(state(a.at(0, 3), "levitate:shape") == 0, "a half extension now");
+    ctx.check(state(a.at(0, 3), "bearing:shape") == 0, "a half extension now");
     ctx.check(whistlePitch(a.at(0, 2)) == 1, "pitch 1, got " + std::to_string(whistlePitch(a.at(0, 2))));
     ctx.check(!useOnWhistle(p, a.at(0, 3), p.getSelectedItem(), true, .75), "a half extension: left to the wrench's dismantling");
     p.setSelectedItem(common::items::empty());
@@ -544,11 +544,11 @@ LV_REGISTER_SELFTEST("steam.whistle_halves", [](Context& ctx) -> ll::coro::CoroT
 
 // ---- U40: gauges, the looping whistle tone (test area dx 4050..4069) ---------------------------------
 
-LV_REGISTER_SELFTEST("steam.gauges", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.gauges", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4050};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     // 1x1x4 boiler (size limit 1) on a kindled heater, an engine on top
-    place(ctx, a.at(0, 0), kTestHeater, {{"levitate:heat", 3}});
+    place(ctx, a.at(0, 0), kTestHeater, {{"bearing:heat", 3}});
     tankBox(ctx, a, 0, 1, 0, 1, 4);
     place(ctx, a.at(0, 5), kEngine, {}, {{"minecraft:block_face", "up"}});
     place(ctx, a.at(0, 1, 1), "minecraft:stone"); // in front of the south gauge
@@ -565,7 +565,7 @@ LV_REGISTER_SELFTEST("steam.gauges", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(rt->gauge == 1.f, "level 1 of a size limit 1: the gauge is full, got " + std::to_string(rt->gauge));
     ctx.check(rt->occluded == 1, "only the south gauge is hidden (stone in front), mask " + std::to_string(rt->occluded));
     // passive heat: Create's 1/8
-    place(ctx, a.at(0, 0), kTestHeater, {{"levitate:heat", 1}});
+    place(ctx, a.at(0, 0), kTestHeater, {{"bearing:heat", 1}});
     for (int i = 0; i < 4; ++i) {
         fill(ctrl, "minecraft:water", 20);
         co_await ctx.ticks(1);
@@ -573,10 +573,10 @@ LV_REGISTER_SELFTEST("steam.gauges", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(rt->gauge == 1.f / 8.f, "passive: the gauge shows 1/8, got " + std::to_string(rt->gauge));
 });
 
-LV_REGISTER_SELFTEST("steam.whistle_tone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("steam.whistle_tone", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4060};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
-    place(ctx, a.at(0, 0), kTestHeater, {{"levitate:heat", 3}});
+    place(ctx, a.at(0, 0), kTestHeater, {{"bearing:heat", 3}});
     place(ctx, a.at(0, 1), kTank);
     place(ctx, a.at(0, 2), kWhistle, {}, {{"minecraft:block_face", "up"}});
     for (int i = 3; i <= 5; ++i) ctx.cleanupBlock(a.at(0, i));
@@ -599,7 +599,7 @@ LV_REGISTER_SELFTEST("steam.whistle_tone", [](Context& ctx) -> ll::coro::CoroTas
     co_await ctx.ticks(2);
     ctx.check(whistleToneHandle(w) == handle, "a pitch change keeps the instance");
     // a new size (octave) is a new instance
-    if (auto* r = regionOf(w.dim)) setStates(*r, w, {{"levitate:size", 2}});
+    if (auto* r = regionOf(w.dim)) setStates(*r, w, {{"bearing:size", 2}});
     co_await ctx.ticks(2);
     auto large = whistleToneHandle(w);
     ctx.check(large != 0 && large != handle, "a new size restarts the instance");
@@ -614,4 +614,4 @@ LV_REGISTER_SELFTEST("steam.whistle_tone", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(whistleToneHandle(w) == 0, "unpowered: the tone stopped");
 });
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam

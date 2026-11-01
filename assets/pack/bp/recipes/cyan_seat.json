@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cyan_seat"
+      "identifier": "bearing:cyan_seat"
     },
     "tags": [
       "crafting_table"
@@ -21,7 +21,7 @@
       }
     ],
     "result": {
-      "item": "levitate:cyan_seat"
+      "item": "bearing:cyan_seat"
     }
   }
 }

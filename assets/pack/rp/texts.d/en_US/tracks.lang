@@ -1,4 +1,4 @@
-tile.levitate:track.name=Train Track
-item.levitate:track=Train Track
-tile.levitate:fake_track.name=Track Marker for Maps
-item.levitate:incomplete_track=Incomplete Track
+tile.bearing:track.name=Train Track
+item.bearing:track=Train Track
+tile.bearing:fake_track.name=Track Marker for Maps
+item.bearing:incomplete_track=Incomplete Track

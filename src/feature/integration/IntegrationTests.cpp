@@ -34,11 +34,11 @@
 #include "game/WorldDb.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::integration {
+namespace br::feature::integration {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP = core::GlobalPos;
 namespace bd = common::blockdata;
 namespace ia = common::interactions;
@@ -46,9 +46,9 @@ namespace ks = core::kinetics::sync;
 namespace kn = feature::kinetics;
 namespace ct = feature::contraption;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
-constexpr char kShaft[]  = "levitate:kinetics_test_shaft";
-constexpr char kLinearChassis[] = "levitate:linear_chassis";
+constexpr char kSource[] = "bearing:kinetics_test_source";
+constexpr char kShaft[]  = "bearing:kinetics_test_shaft";
+constexpr char kLinearChassis[] = "bearing:linear_chassis";
 
 GP at(GP p, int dx, int dy = 0, int dz = 0) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -89,12 +89,12 @@ struct ContraptionGuard {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("integration.kinetics_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.kinetics_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3200);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& player = ctx.player();
-    ctx.setBlock(p, kSource, {{"levitate:axis", 0}});
-    ctx.setBlock(at(p, 1), kShaft, {{"levitate:axis", 0}});
+    ctx.setBlock(p, kSource, {{"bearing:axis", 0}});
+    ctx.setBlock(at(p, 1), kShaft, {{"bearing:axis", 0}});
     co_await ctx.ticks(2);
     // a vanilla client gets nothing
     ctx.check(!net::send(player, kn::detail::kSyncChannel, {}), "nothing is sent to a non-companion");
@@ -123,12 +123,12 @@ LV_REGISTER_SELFTEST("integration.kinetics_sync", [](Context& ctx) -> ll::coro::
     ctx.check(gone, "a broken shaft is synced as removed");
 });
 
-LV_REGISTER_SELFTEST("integration.sequence_context", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.sequence_context", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3280);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.setBlock(p, kSource, {{"levitate:axis", 0}});
-    ctx.setBlock(at(p, 1), kShaft, {{"levitate:axis", 0}});
-    ctx.setBlock(at(p, 2), kShaft, {{"levitate:axis", 0}});
+    ctx.setBlock(p, kSource, {{"bearing:axis", 0}});
+    ctx.setBlock(at(p, 1), kShaft, {{"bearing:axis", 0}});
+    ctx.setBlock(at(p, 2), kShaft, {{"bearing:axis", 0}});
     co_await ctx.ticks(2);
     using SC = kn::SequenceContext;
     kn::setSequenceContext(at(p, 1), SC{SC::Kind::TurnAngle, 90});
@@ -142,7 +142,7 @@ LV_REGISTER_SELFTEST("integration.sequence_context", [](Context& ctx) -> ll::cor
     ctx.check(!kn::sequenceContextAt(at(p, 2)), "cleared");
 });
 
-LV_REGISTER_SELFTEST("integration.tracks_sync", [](Context& ctx) {
+BR_REGISTER_SELFTEST("integration.tracks_sync", [](Context& ctx) {
     auto& player = ctx.player();
     net::joinTestCompanion(player);
     CompanionGuard guard{player};
@@ -152,11 +152,11 @@ LV_REGISTER_SELFTEST("integration.tracks_sync", [](Context& ctx) {
     ctx.check(reset, "the handshake brings the curve list (reset first)");
 });
 
-LV_REGISTER_SELFTEST("integration.kinetics_blockdata", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.kinetics_blockdata", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3210);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.setBlock(p, kSource, {{"levitate:axis", 0}});
-    ctx.setBlock(at(p, 1), kShaft, {{"levitate:axis", 0}});
+    ctx.setBlock(p, kSource, {{"bearing:axis", 0}});
+    ctx.setBlock(at(p, 1), kShaft, {{"bearing:axis", 0}});
     co_await ctx.ticks(2);
     kn::setStressImpact(at(p, 1), 3.0);
     kn::detail::saveNow();
@@ -167,7 +167,7 @@ LV_REGISTER_SELFTEST("integration.kinetics_blockdata", [](Context& ctx) -> ll::c
 
     // a world saved by wave 1: the record in the old per-chunk key, nothing in BlockData
     bd::set(at(p, 1), nlohmann::json());
-    auto legacyKey = "lv:kinetics:c:" + std::to_string(p.dim) + ":" + std::to_string(ks::chunkOf(p.x + 1)) + ":"
+    auto legacyKey = "br:kinetics:c:" + std::to_string(p.dim) + ":" + std::to_string(ks::chunkOf(p.x + 1)) + ":"
                    + std::to_string(ks::chunkOf(p.z));
     auto legacy = game::db::load(legacyKey).value_or(nlohmann::json::array());
     legacy.push_back(record);
@@ -188,12 +188,12 @@ LV_REGISTER_SELFTEST("integration.kinetics_blockdata", [](Context& ctx) -> ll::c
     ctx.check(!bd::has(at(p, 1)), "no document after the block broke");
 });
 
-LV_REGISTER_SELFTEST("integration.contraption_blockdata", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.contraption_blockdata", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3220);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, kSource, {{"levitate:axis", 0}}), "source placed");
-    ctx.setBlock(at(p, 1), kShaft, {{"levitate:axis", 0}});
+    ctx.require(ctx.setBlock(p, kSource, {{"bearing:axis", 0}}), "source placed");
+    ctx.setBlock(at(p, 1), kShaft, {{"bearing:axis", 0}});
     ctx.setBlock(at(p, 2), "minecraft:stone");
     co_await ctx.ticks(2);
     kn::setGeneratedSpeed(p, 24);
@@ -243,7 +243,7 @@ LV_REGISTER_SELFTEST("integration.contraption_blockdata", [](Context& ctx) -> ll
     ctx.check(shaft && shaft->speed == 24, "and turns again at the generator's speed");
 });
 
-LV_REGISTER_SELFTEST("integration.contraption_client", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.contraption_client", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3230);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -290,12 +290,12 @@ LV_REGISTER_SELFTEST("integration.contraption_client", [](Context& ctx) -> ll::c
     ct::clearGlue(p.dim, {p.x, p.y, p.z}, 3);
 });
 
-LV_REGISTER_SELFTEST("integration.chassis_value_box", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.chassis_value_box", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3240);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, kLinearChassis, {{"levitate:axis", 1}}), "chassis placed");
-    ctx.setBlock(at(p, 0, 1), kLinearChassis, {{"levitate:axis", 1}});
+    ctx.require(ctx.setBlock(p, kLinearChassis, {{"bearing:axis", 1}}), "chassis placed");
+    ctx.setBlock(at(p, 0, 1), kLinearChassis, {{"bearing:axis", 1}});
     auto& player = ctx.player();
     auto& region = player.getDimensionBlockSource();
     auto const& block = region.getBlock(game::blockPos(p));
@@ -326,7 +326,7 @@ LV_REGISTER_SELFTEST("integration.chassis_value_box", [](Context& ctx) -> ll::co
     ctx.check(ia::dispatchUseOn(empty) == ia::Result::Pass, "an empty hand does not open it");
 });
 
-LV_REGISTER_SELFTEST("integration.interactions", [](Context& ctx) {
+BR_REGISTER_SELFTEST("integration.interactions", [](Context& ctx) {
     auto& player = ctx.player();
     auto  p      = ctx.testPos(3260);
     std::vector<std::string> calls;
@@ -348,7 +348,7 @@ LV_REGISTER_SELFTEST("integration.interactions", [](Context& ctx) {
     ctx.check(ia::dispatchUseOn(c) == ia::Result::Pass && calls.empty(), "removed handlers are gone");
 });
 
-LV_REGISTER_SELFTEST("integration.redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
     namespace rs = common::redstone;
     auto p = ctx.testPos(3270);
     p.y += 1;
@@ -431,4 +431,4 @@ LV_REGISTER_SELFTEST("integration.redstone", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(seen == before, "an unwatched position is no longer reported");
 });
 
-} // namespace lv::feature::integration
+} // namespace br::feature::integration

@@ -21,7 +21,7 @@
 
 #include "feature/building/Building.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace {
 
@@ -39,7 +39,7 @@ Box clip(Box b) {
 
 Info const* infoOfType(BlockType const& type) {
     auto const& n = type.getTypeName();
-    if (n.size() <= 9 || n[0] != 'l' || n.compare(0, 9, "levitate:") != 0) return nullptr;
+    if (n.size() <= 9 || n[0] != 'l' || n.compare(0, 9, "bearing:") != 0) return nullptr;
     return infoOf(std::string_view(n));
 }
 
@@ -56,7 +56,7 @@ std::optional<std::vector<Box>> collisionBoxes(Info const& info, Block const& bl
     std::vector<Box> out;
     switch (info.kind) {
     case Kind::CopperStairs: {
-        int facing = hfacingOf(block), shape = stateOf(block, "levitate:shape"), upside = stateOf(block, "levitate:upside");
+        int facing = hfacingOf(block), shape = stateOf(block, "bearing:shape"), upside = stateOf(block, "bearing:upside");
         float slab0 = upside ? 8.f : 0.f, step0 = upside ? 0.f : 8.f;
         out.push_back({0, slab0, 0, 16, slab0 + 8, 16});
         // quadrants for facing north (0 nw, 1 ne, 2 se, 3 sw), as the model
@@ -74,8 +74,8 @@ std::optional<std::vector<Box>> collisionBoxes(Info const& info, Block const& bl
     case Kind::Door: {
         int  q    = quarterOf(hfacingOf(block));
         // a closing door keeps its open shape until the panel is back (Create: !open && visible)
-        bool open = stateOf(block, "levitate:open") != 0 || stateOf(block, "levitate:closing") != 0;
-        int  hinge = stateOf(block, "levitate:hinge");
+        bool open = stateOf(block, "bearing:open") != 0 || stateOf(block, "bearing:closing") != 0;
+        int  hinge = stateOf(block, "bearing:hinge");
         Box  b;
         if (!open) b = {0, 0, 13, 16, 16, 16};
         else if (info.folds) b = hinge ? Box{13, 0, 7, 19, 16, 16} : Box{-3, 0, 7, 3, 16, 16};
@@ -86,16 +86,16 @@ std::optional<std::vector<Box>> collisionBoxes(Info const& info, Block const& bl
     case Kind::Pane:
     case Kind::Bars: {
         out.push_back({7, 0, 7, 9, 16, 9});
-        if (stateOf(block, "levitate:north")) out.push_back({7, 0, 0, 9, 16, 7});
-        if (stateOf(block, "levitate:south")) out.push_back({7, 0, 9, 9, 16, 16});
-        if (stateOf(block, "levitate:west")) out.push_back({0, 0, 7, 7, 16, 9});
-        if (stateOf(block, "levitate:east")) out.push_back({9, 0, 7, 16, 16, 9});
+        if (stateOf(block, "bearing:north")) out.push_back({7, 0, 0, 9, 16, 7});
+        if (stateOf(block, "bearing:south")) out.push_back({7, 0, 9, 9, 16, 16});
+        if (stateOf(block, "bearing:west")) out.push_back({0, 0, 7, 7, 16, 9});
+        if (stateOf(block, "bearing:east")) out.push_back({9, 0, 7, 16, 16, 9});
         return out;
     }
     case Kind::Scaffold: {
         // Create's MetalScaffoldingBlock: the bottom variant is a half block; otherwise vanilla
         // scaffolding: solid top and legs while standing on it, nothing when inside or sneaking
-        if (stateOf(block, "levitate:bottom")) {
+        if (stateOf(block, "bearing:bottom")) {
             out.push_back({0, 8, 0, 16, 16, 16});
             return out;
         }
@@ -109,7 +109,7 @@ std::optional<std::vector<Box>> collisionBoxes(Info const& info, Block const& bl
         return out;
     }
     case Kind::Girder: {
-        bool x = stateOf(block, "levitate:x") != 0, z = stateOf(block, "levitate:z") != 0;
+        bool x = stateOf(block, "bearing:x") != 0, z = stateOf(block, "bearing:z") != 0;
         if (x && z) out.push_back({3, 0, 3, 13, 16, 13});
         if (x) out.push_back({0, 2, 4, 16, 14, 12});
         if (z) out.push_back({4, 2, 0, 12, 14, 16});
@@ -117,7 +117,7 @@ std::optional<std::vector<Box>> collisionBoxes(Info const& info, Block const& bl
         return out;
     }
     case Kind::GirderShaft: {
-        int axis = stateOf(block, "levitate:axis");
+        int axis = stateOf(block, "bearing:axis");
         if (axis == 0) {
             out.push_back({4, 2, 0, 12, 14, 16});
             out.push_back({0, 5, 5, 16, 11, 11});
@@ -178,7 +178,7 @@ void applyBlockProperties() {
 void installShapes() { BuildingCollisionHook::hook(); }
 void uninstallShapes() { BuildingCollisionHook::unhook(); }
 
-} // namespace lv::feature::building
+} // namespace br::feature::building
 
 // Create's requiresCorrectToolForDrops and the copycats' material rules (U59; an .inc so the build
 // adds no object file: the prelink command line is near the Windows limit)

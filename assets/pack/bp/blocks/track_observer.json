@@ -2,12 +2,12 @@
   "format_version": "1.21.120",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:track_observer",
+      "identifier": "bearing:track_observer",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ]
@@ -17,11 +17,11 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_track_observer_side",
+          "texture": "bearing_track_observer_side",
           "render_method": "opaque"
         },
         "up": {
-          "texture": "levitate_track_observer_top",
+          "texture": "bearing_track_observer_top",
           "render_method": "opaque"
         }
       },
@@ -36,15 +36,15 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_track_observer_side",
+              "texture": "bearing_track_observer_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_track_observer_top_on",
+              "texture": "bearing_track_observer_top_on",
               "render_method": "opaque"
             }
           },

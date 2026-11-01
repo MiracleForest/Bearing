@@ -15,15 +15,15 @@ Start-Sleep -Milliseconds 800
 
 # a 3x2 board facing north (towards the player) with a generator behind it
 foreach ($x in -1, 0, 1) {
-    foreach ($y in -60, -59) { Invoke-Chat "/setblock $x $y 5 levitate:display_board [""levitate:facing""=2]" }
+    foreach ($y in -60, -59) { Invoke-Chat "/setblock $x $y 5 bearing:display_board [""bearing:facing""=2]" }
 }
-Invoke-Chat '/setblock 0 -60 6 levitate:kinetics_test_source ["levitate:axis"=2]'
+Invoke-Chat '/setblock 0 -60 6 bearing:kinetics_test_source ["bearing:axis"=2]'
 Start-Sleep -Milliseconds 600
 # the board shows text only while it turns: wait until the generator confirms its speed
 Invoke-ChatConfirmed '/create kinetics 0 -60 6 speed 64' 'kinetics: Generator at 0 -60 6 now turns at 64 ' | Out-Null
 # nixie tubes on the floor, the row running west to east (facing south rotated: see SPEC §3.6.24)
-Invoke-Chat '/setblock -3 -60 3 levitate:nixie_tube ["levitate:facing"=3]'
-Invoke-Chat '/setblock -2 -60 3 levitate:nixie_tube ["levitate:facing"=3]'
+Invoke-Chat '/setblock -3 -60 3 bearing:nixie_tube ["bearing:facing"=3]'
+Invoke-Chat '/setblock -2 -60 3 bearing:nixie_tube ["bearing:facing"=3]'
 Start-Sleep -Milliseconds 600
 # text: the board's controller is its top east end (the left end as seen from the front)
 Invoke-ChatConfirmed '/create display text 1 -59 5 0 HELLO' "display text 'HELLO' written at 0:1:-59:5" | Out-Null
@@ -33,7 +33,7 @@ Start-Sleep -Milliseconds 4000
 Save-Screenshot 'board' | Out-Null
 
 # a display link on top of the right nixie tube, bound to the board
-Invoke-Chat '/setblock -2 -59 3 levitate:display_link ["minecraft:block_face"="up"]'
+Invoke-Chat '/setblock -2 -59 3 bearing:display_link ["minecraft:block_face"="up"]'
 Start-Sleep -Milliseconds 500
 $mark = Get-LogMark
 Invoke-Chat '/create display bind -2 -59 3 1 -59 5 nixie_tube'
@@ -60,12 +60,12 @@ if ($script:Mode -eq 'local') {
 }
 
 # the clipboard (last: closing it may leave the inventory open): right-click in the air opens it
-Invoke-Chat '/give @s levitate:clipboard 1'
+Invoke-Chat '/give @s bearing:clipboard 1'
 Press-Key '1'
 if (-not $vanilla) {
     # U44: Create's "Clipboard Actions" tip and white outline on a block with settings
     $mark = Get-LogMark
-    Invoke-Chat '/setblock ~ ~ ~2 levitate:creative_motor'
+    Invoke-Chat '/setblock ~ ~ ~2 bearing:creative_motor'
     Invoke-Chat '/tp @s ~ ~ ~ 0 35'
     Wait-LogLine 'clipboard: showing the Clipboard Actions tip \(2 lines\)' 20 -Since $mark | Out-Null
     Start-Sleep -Milliseconds 600

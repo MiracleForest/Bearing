@@ -10,12 +10,12 @@
 // `forEachBlock` gives every known block of the player's dimension with its world transform at
 // this frame's partial tick, so drawing follows the contraption exactly as the display entities do:
 //
-//     lv::client::contraption::forEachBlock("levitate:mechanical_harvester", partialTicks,
+//     br::client::contraption::forEachBlock("bearing:mechanical_harvester", partialTicks,
 //         [&](auto const& b) { drawBlade(b.center, b.axis, b.angle, b.visual.value("speed", 0.f)); });
 //
 // Client thread only (render passes).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <cstdint>
 #include <functional>
@@ -25,7 +25,7 @@
 
 #include "core/contraption/Geometry.h"
 
-namespace lv::client::contraption {
+namespace br::client::contraption {
 
 struct BlockView {
     std::uint64_t                    contraption = 0;
@@ -43,6 +43,6 @@ struct BlockView {
 /// = every block) and whose display entity is loaded, at `partialTicks` (0..1).
 void forEachBlock(std::string const& blockId, float partialTicks, std::function<void(BlockView const&)> const& fn);
 
-} // namespace lv::client::contraption
+} // namespace br::client::contraption
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

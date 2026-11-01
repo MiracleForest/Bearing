@@ -4,8 +4,8 @@
 
 #include "core/basin/BasinLogic.h"
 
-using namespace lv::core::basin;
-using lv::core::common::HeatLevel;
+using namespace br::core::basin;
+using br::core::common::HeatLevel;
 
 // ---- blaze burner --------------------------------------------------------------------------------
 
@@ -155,7 +155,7 @@ TEST(BasinCrafting, Compression) {
     mixed[4] = "minecraft:gold_ingot";
     EXPECT_FALSE(canCompress(mixed));
     EXPECT_FALSE(canCompress(std::vector<std::string>(4, "")));
-    EXPECT_TRUE(ignoredInAutomation("levitate:foo_manual_only"));
+    EXPECT_TRUE(ignoredInAutomation("bearing:foo_manual_only"));
     EXPECT_FALSE(ignoredInAutomation("minecraft:bread"));
 }
 

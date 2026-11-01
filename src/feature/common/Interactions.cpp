@@ -34,7 +34,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common::interactions {
+namespace br::feature::common::interactions {
 
 namespace {
 
@@ -550,6 +550,6 @@ private:
     ll::event::ListenerPtr mTick;
 };
 
-} // namespace lv::feature::common::interactions
+} // namespace br::feature::common::interactions
 
-LV_REGISTER_MODULE_ORDERED(lv::feature::common::interactions::InteractionsModule, lv::ModuleOrder::Services);
+BR_REGISTER_MODULE_ORDERED(br::feature::common::interactions::InteractionsModule, br::ModuleOrder::Services);

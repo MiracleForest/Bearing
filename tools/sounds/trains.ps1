@@ -8,7 +8,7 @@
 # train_horn.wav     a sustained two-tone train horn (Create's WHISTLE_TRAIN_MANUAL); the low horn
 #                    is the same sample an octave down (sounds.d/trains.json)
 # train_horn_end.wav the horn's short release (WHISTLE_TRAIN_MANUAL_END)
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

@@ -5,7 +5,7 @@
 #include <map>
 #include <utility>
 
-namespace lv::core::kinetics::sync {
+namespace br::core::kinetics::sync {
 
 namespace {
 
@@ -118,4 +118,4 @@ std::vector<Batch> byChunk(int dim, std::vector<Entry> entries, bool reset) {
     return out;
 }
 
-} // namespace lv::core::kinetics::sync
+} // namespace br::core::kinetics::sync

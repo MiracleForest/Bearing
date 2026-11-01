@@ -3,9 +3,9 @@
 // The server sends every board / tube state on the "display.board" / "display.nixie" channels
 // (src/feature/display/Board.cpp, Nixie.cpp). This file keeps them per dimension and draws the
 // characters with a 5x7 pixel font as coloured quads after the block entities of the opaque pass.
-// The name tags vanilla clients see instead (entity levitate:display_text) are hidden here.
+// The name tags vanilla clients see instead (entity bearing:display_text) are hidden here.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <chrono>
@@ -41,10 +41,10 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::display {
+namespace br::client::display {
 
 namespace {
-namespace net = lv::feature::net;
+namespace net = br::feature::net;
 using Json    = nlohmann::json;
 
 struct V3 {
@@ -336,7 +336,7 @@ public:
             auto* p = currentPlayer();
             if (!p || !net::client::connected()) return;
             for (auto* a : p->getLevel().getRuntimeActorList()) {
-                if (!a || a->getTypeName() != "levitate:display_text") continue;
+                if (!a || a->getTypeName() != "bearing:display_text") continue;
                 if (!a->getNameTag().empty()) a->setNameTag("");
             }
         });
@@ -361,8 +361,8 @@ std::pair<std::size_t, std::size_t> knownDisplays() {
     return {gBoards.size(), gTubes.size()};
 }
 
-} // namespace lv::client::display
+} // namespace br::client::display
 
-LV_REGISTER_MODULE(lv::client::display::DisplayRendererModule);
+BR_REGISTER_MODULE(br::client::display::DisplayRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -8,7 +8,7 @@
 $r = Invoke-SelfTest 'equipment.*'
 if ($r.Pass -lt 34) { throw "expected at least 34 equipment selftests to pass, got $($r.Pass)" }
 Wait-LogLine 'equipment: peculiar bell at .* became a haunted bell' 10 | Out-Null
-Wait-LogLine 'equipment: levitate:haunted_bell at .* rang' 10 | Out-Null
+Wait-LogLine 'equipment: bearing:haunted_bell at .* rang' 10 | Out-Null
 Wait-LogLine 'equipment: .* hides as a cardboard box' 10 | Out-Null
 Wait-LogLine 'equipment: .* bonked minecraft:cow with a cardboard sword' 10 | Out-Null
 Wait-LogLine 'equipment: .* equipped minecraft:torch from the toolbox at ' 10 | Out-Null
@@ -22,14 +22,14 @@ Wait-LogLine 'equipment: toolbox at .* dyed lime by ' 10 | Out-Null
 Wait-LogLine 'equipment: .* used tree fertilizer on minecraft:oak_sapling at .* \(grew: dream world ' 10 | Out-Null
 
 # a toolbox, a backtank on a turning shaft and a lectern controller from the console
-Send-Console 'tickingarea add 0 -64 0 15 0 15 lv_equipment'
+Send-Console 'tickingarea add 0 -64 0 15 0 15 br_equipment'
 Wait-Seconds 3
 $mark = Get-LogMark
-Send-Console 'setblock 4 -60 4 levitate:white_toolbox ["levitate:facing"=2]'
-Send-Console 'setblock 6 -61 4 levitate:kinetics_test_source ["levitate:axis"=1]'
-Send-Console 'setblock 6 -60 4 levitate:copper_backtank ["levitate:facing"=0]'
+Send-Console 'setblock 4 -60 4 bearing:white_toolbox ["bearing:facing"=2]'
+Send-Console 'setblock 6 -61 4 bearing:kinetics_test_source ["bearing:axis"=1]'
+Send-Console 'setblock 6 -60 4 bearing:copper_backtank ["bearing:facing"=0]'
 Wait-Seconds 1
 Send-Console 'create kinetics 6 -61 4 speed 256'
 Wait-LogLine 'equipment: backtank at 6 -60 4 is full' 30 -Since $mark | Out-Null
 Send-Console 'fill 4 -61 4 6 -60 4 air'
-Send-Console 'tickingarea remove lv_equipment'
+Send-Console 'tickingarea remove br_equipment'

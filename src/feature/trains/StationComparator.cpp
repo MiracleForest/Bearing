@@ -8,7 +8,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace {
 namespace rs = common::redstone;
@@ -25,6 +25,6 @@ public:
     void uninstall() { rs::unregisterAnalog(std::string(kStation)); }
 };
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains
 
-LV_REGISTER_MODULE(lv::feature::trains::StationComparatorModule);
+BR_REGISTER_MODULE(br::feature::trains::StationComparatorModule);

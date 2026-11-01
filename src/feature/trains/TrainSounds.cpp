@@ -24,7 +24,7 @@
 #include "feature/trains/Trains.h"
 #include "mod/Log.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace cs = core::steam;
 
@@ -65,7 +65,7 @@ std::map<std::uint64_t, Effects>& effects() {
     return m;
 }
 
-bool isBell(std::string const& id) { return id == "minecraft:bell" || id == "levitate:peculiar_bell" || id == "levitate:haunted_bell"; }
+bool isBell(std::string const& id) { return id == "minecraft:bell" || id == "bearing:peculiar_bell" || id == "bearing:haunted_bell"; }
 
 /// Create's ArrivalSoundQueue.isPlayable / play.
 void playBlock(Train const& t, std::uint64_t contraption, cc::Pos const& local) {
@@ -78,7 +78,7 @@ void playBlock(Train const& t, std::uint64_t contraption, cc::Pos const& local) 
     auto w  = con->toWorld(cc::Vec3d::center(local));
     int  dm = con->dimension();
     if (isBell(carried->id)) {
-        playSound(dm, {w.x, w.y, w.z}, carried->id == "levitate:haunted_bell" ? "levitate.haunted_bell.use" : "block.bell.hit", 2.f, 1.f);
+        playSound(dm, {w.x, w.y, w.z}, carried->id == "bearing:haunted_bell" ? "bearing.haunted_bell.use" : "block.bell.hit", 2.f, 1.f);
         return;
     }
     if (carried->id == "minecraft:noteblock") {
@@ -89,26 +89,26 @@ void playBlock(Train const& t, std::uint64_t contraption, cc::Pos const& local) 
         playSound(dm, {w.x, w.y, w.z}, "note.harp", 2.f, float(std::pow(2.0, (note - 12) / 12.0)));
         return;
     }
-    if (carried->id == "levitate:steam_whistle") {
+    if (carried->id == "bearing:steam_whistle") {
         // the whistle and its extensions above (only parsed for a whistle)
         std::map<cc::Pos, Block const*> blocks;
         for (auto const& b : con->blocks())
             if (b.local.x == local.x && b.local.z == local.z && b.local.y >= local.y)
                 blocks[b.local] = contraption::detail::blockFromSnbt(b.block);
         auto const* block = blocks[local];
-        int         size  = block ? int(contraption::detail::intStateOf(*block, "levitate:size").value_or(0)) : 0;
+        int         size  = block ? int(contraption::detail::intStateOf(*block, "bearing:size").value_or(0)) : 0;
         int         pitch = cs::whistlePitch([&](int i) -> std::optional<cs::ExtensionShape> {
             auto it = blocks.find(local + cc::Pos{0, i, 0});
-            if (it == blocks.end() || !it->second || it->second->getTypeName() != "levitate:steam_whistle_extension") return std::nullopt;
-            return static_cast<cs::ExtensionShape>(std::clamp<std::int64_t>(contraption::detail::intStateOf(*it->second, "levitate:shape").value_or(0), 0, 2));
+            if (it == blocks.end() || !it->second || it->second->getTypeName() != "bearing:steam_whistle_extension") return std::nullopt;
+            return static_cast<cs::ExtensionShape>(std::clamp<std::int64_t>(contraption::detail::intStateOf(*it->second, "bearing:shape").value_or(0), 0, 2));
         });
         // Create: WHISTLE_TRAIN(_LOW) at 2^(((small ? 12 : 0) - pitch) / 12)
         float f = float(std::pow(2.0, ((size == 1 ? 12 : 0) - pitch) / 12.0));
-        playSound(dm, {w.x, w.y, w.z}, size == 2 ? "levitate.trains.horn_low_end" : "levitate.trains.horn_end", 2.f, f);
+        playSound(dm, {w.x, w.y, w.z}, size == 2 ? "bearing.trains.horn_low_end" : "bearing.trains.horn_end", 2.f, f);
     }
 }
 
-bool playable(std::string const& id) { return isBell(id) || id == "minecraft:noteblock" || id == "levitate:steam_whistle"; }
+bool playable(std::string const& id) { return isBell(id) || id == "minecraft:noteblock" || id == "bearing:steam_whistle"; }
 
 /// The playable blocks of the train ordered from its front (one step per block).
 std::multimap<int, std::pair<std::uint64_t, cc::Pos>> soundQueue(Train const& t) {
@@ -174,11 +174,11 @@ void tickEffects(Train& t, Effects& e) {
     if (!e.arrived && motion > 0.01) {
         float volume = float(std::min(1.0, motion * 2));
         // the steam rhythm of the leading carriage
-        if ((3 + e.tick) % 4 == 0) playSound(dim, at, "levitate.trains.steam", volume * ((e.tick + 7) % 8 == 0 ? 0.75f : 0.45f), 1.17f);
-        if (e.tick % 16 == 0) playSound(dim, at, "levitate.trains.steam", volume * 1.5f, 0.8f);
+        if ((3 + e.tick) % 4 == 0) playSound(dim, at, "bearing.trains.steam", volume * ((e.tick + 7) % 8 == 0 ? 0.75f : 0.45f), 1.17f);
+        if (e.tick % 16 == 0) playSound(dim, at, "bearing.trains.steam", volume * 1.5f, 0.8f);
         // the wheels: faster and higher with the speed
         int every = std::clamp(int(8 / std::max(0.25, motion * 4)), 3, 16);
-        if (e.tick % every == 0) playSound(dim, at, "levitate.trains.rolling", volume, float(std::clamp(motion * 2 + .25, .75, 1.95)));
+        if (e.tick % every == 0) playSound(dim, at, "bearing.trains.rolling", volume, float(std::clamp(motion * 2 + .25, .75, 1.95)));
     }
     bool stopped = motion < 0.002;
     if (stopped && !e.arrived && e.release > 1) {
@@ -188,7 +188,7 @@ void tickEffects(Train& t, Effects& e) {
         e.depressure   = int(20 * e.release / 10);
         playSound(dim, at, "random.fizz", .25f * rel, .78f);
         playSound(dim, at, "random.door_close", .2f * rel, 1.5f);
-        playSound(dim, at, "levitate.trains.steam", .75f * rel, .5f);
+        playSound(dim, at, "bearing.trains.steam", .75f * rel, .5f);
     } else if (stopped && !e.arrived) {
         e.arrived = true;
     }
@@ -230,4 +230,4 @@ void tickTrainEffects() {
 
 void resetTrainEffects() { effects().clear(); }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains

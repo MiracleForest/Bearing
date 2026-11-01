@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:red_sand_paper"
+      "identifier": "bearing:red_sand_paper"
     },
     "tags": [
       "crafting_table"
@@ -21,7 +21,7 @@
       }
     ],
     "result": {
-      "item": "levitate:red_sand_paper",
+      "item": "bearing:red_sand_paper",
       "count": 1
     }
   }

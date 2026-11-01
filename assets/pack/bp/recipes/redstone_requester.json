@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:redstone_requester"
+      "identifier": "bearing:redstone_requester"
     },
     "tags": [
       "crafting_table"
@@ -17,7 +17,7 @@
         "item": "minecraft:redstone"
       },
       "A": {
-        "item": "levitate:stock_link"
+        "item": "bearing:stock_link"
       },
       "B": {
         "item": "minecraft:iron_ingot"
@@ -29,7 +29,7 @@
       }
     ],
     "result": {
-      "item": "levitate:redstone_requester",
+      "item": "bearing:redstone_requester",
       "count": 1
     }
   }

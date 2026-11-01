@@ -22,7 +22,7 @@ class BlockPos;
 class BlockSource;
 class Player;
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace cc = core::contraption;
 namespace cp = core::pistons;
@@ -30,34 +30,34 @@ using core::GlobalPos;
 using Json = nlohmann::json;
 
 // ---- ids --------------------------------------------------------------------------------------
-inline constexpr std::string_view kPiston          = "levitate:mechanical_piston";
-inline constexpr std::string_view kStickyPiston    = "levitate:sticky_mechanical_piston";
-inline constexpr std::string_view kPole            = "levitate:piston_extension_pole";
-inline constexpr std::string_view kHead            = "levitate:mechanical_piston_head";
-inline constexpr std::string_view kRopePulley      = "levitate:rope_pulley";
-inline constexpr std::string_view kRope            = "levitate:rope";
-inline constexpr std::string_view kMagnet          = "levitate:pulley_magnet";
-inline constexpr std::string_view kElevatorPulley  = "levitate:elevator_pulley";
-inline constexpr std::string_view kElevatorContact = "levitate:elevator_contact";
-inline constexpr std::string_view kGantryCarriage  = "levitate:gantry_carriage";
-inline constexpr std::string_view kGantryShaft     = "levitate:gantry_shaft";
+inline constexpr std::string_view kPiston          = "bearing:mechanical_piston";
+inline constexpr std::string_view kStickyPiston    = "bearing:sticky_mechanical_piston";
+inline constexpr std::string_view kPole            = "bearing:piston_extension_pole";
+inline constexpr std::string_view kHead            = "bearing:mechanical_piston_head";
+inline constexpr std::string_view kRopePulley      = "bearing:rope_pulley";
+inline constexpr std::string_view kRope            = "bearing:rope";
+inline constexpr std::string_view kMagnet          = "bearing:pulley_magnet";
+inline constexpr std::string_view kElevatorPulley  = "bearing:elevator_pulley";
+inline constexpr std::string_view kElevatorContact = "bearing:elevator_contact";
+inline constexpr std::string_view kGantryCarriage  = "bearing:gantry_carriage";
+inline constexpr std::string_view kGantryShaft     = "bearing:gantry_shaft";
 /// Owned by U23 (redstone): referenced by id only.
-inline constexpr std::string_view kRedstoneContact = "levitate:redstone_contact";
+inline constexpr std::string_view kRedstoneContact = "bearing:redstone_contact";
 /// Owned by U8 (goggles / wrench): referenced by id only.
-inline constexpr std::string_view kWrench = "levitate:wrench";
+inline constexpr std::string_view kWrench = "bearing:wrench";
 
 // ---- states -----------------------------------------------------------------------------------
-inline constexpr char kFacing[]    = "levitate:facing";      ///< 0..5 (down, up, north, south, west, east)
-inline constexpr char kAxisFirst[] = "levitate:axis_first";  ///< Create's AXIS_ALONG_FIRST_COORDINATE
-inline constexpr char kState[]     = "levitate:state";       ///< piston: 0 retracted, 1 moving, 2 extended
-inline constexpr char kAxis[]      = "levitate:axis";        ///< rope pulley: 0 x, 2 z
-inline constexpr char kSticky[]    = "levitate:sticky";      ///< piston head
-inline constexpr char kRunning[]   = "levitate:running";     ///< pulleys: running (unmovable)
-inline constexpr char kPart[]      = "levitate:part";        ///< gantry shaft: start, middle, end, single
-inline constexpr char kPowered[]   = "levitate:powered";
-inline constexpr char kCalling[]   = "levitate:calling";     ///< elevator contact
-inline constexpr char kPowering[]  = "levitate:powering";    ///< elevator contact: emits redstone
-inline constexpr char kRotor[]     = "levitate:rotor";       ///< client mod chunk model (kinetics)
+inline constexpr char kFacing[]    = "bearing:facing";      ///< 0..5 (down, up, north, south, west, east)
+inline constexpr char kAxisFirst[] = "bearing:axis_first";  ///< Create's AXIS_ALONG_FIRST_COORDINATE
+inline constexpr char kState[]     = "bearing:state";       ///< piston: 0 retracted, 1 moving, 2 extended
+inline constexpr char kAxis[]      = "bearing:axis";        ///< rope pulley: 0 x, 2 z
+inline constexpr char kSticky[]    = "bearing:sticky";      ///< piston head
+inline constexpr char kRunning[]   = "bearing:running";     ///< pulleys: running (unmovable)
+inline constexpr char kPart[]      = "bearing:part";        ///< gantry shaft: start, middle, end, single
+inline constexpr char kPowered[]   = "bearing:powered";
+inline constexpr char kCalling[]   = "bearing:calling";     ///< elevator contact
+inline constexpr char kPowering[]  = "bearing:powering";    ///< elevator contact: emits redstone
+inline constexpr char kRotor[]     = "bearing:rotor";       ///< client mod chunk model (kinetics)
 
 enum class PistonState : int { Retracted = 0, Moving = 1, Extended = 2 };
 
@@ -230,4 +230,4 @@ bool markRopesClimbable();
 /// Movement mode labels (value box options).
 [[nodiscard]] std::vector<std::string> movementModeNames(Player const* viewer);
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

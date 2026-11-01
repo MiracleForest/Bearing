@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:white_sail"
+      "identifier": "bearing:white_sail"
     },
     "tags": [
       "crafting_table"
@@ -19,16 +19,16 @@
         "item": "minecraft:stick"
       },
       "A": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:white_sail",
+      "item": "bearing:white_sail",
       "count": 2
     }
   }

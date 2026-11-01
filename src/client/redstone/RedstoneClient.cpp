@@ -2,7 +2,7 @@
 // ThresholdSwitchScreen) and the hover panel showing a redstone link's frequency items and mode
 // (and, with goggles, an analog lever's strength) next to the crosshair.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -31,16 +31,16 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::redstone {
+namespace br::client::redstone {
 
 namespace {
-namespace net   = lv::feature::net;
-namespace items = lv::feature::common::items;
-namespace cr    = lv::core::redstone;
-using namespace lv::client::screen;
+namespace net   = br::feature::net;
+namespace items = br::feature::common::items;
+namespace cr    = br::core::redstone;
+using namespace br::client::screen;
 
-constexpr char kLinkId[]  = "levitate:redstone_link";
-constexpr char kLeverId[] = "levitate:analog_lever";
+constexpr char kLinkId[]  = "bearing:redstone_link";
+constexpr char kLeverId[] = "bearing:analog_lever";
 
 // ---- threshold switch screen -------------------------------------------------------------------
 
@@ -250,7 +250,7 @@ public:
             }
             bool was = h.has;
             h.has    = !h.lines.empty();
-            if (h.has && !was) lv::log().info("redstone client: hover panel shown ({} lines)", h.lines.size());
+            if (h.has && !was) br::log().info("redstone client: hover panel shown ({} lines)", h.lines.size());
         });
         auto& bus = ll::event::EventBus::getInstance();
         mListeners.push_back(bus.emplaceListener<ll::event::ClientLevelTickEvent>([](auto&) { pollHover(); }));
@@ -282,8 +282,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::redstone
+} // namespace br::client::redstone
 
-LV_REGISTER_MODULE(lv::client::redstone::RedstoneClientModule);
+BR_REGISTER_MODULE(br::client::redstone::RedstoneClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -32,7 +32,7 @@
 #include "feature/packages/PackagesInternal.h"
 #include "game/WorldDb.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items = common::items;
 
@@ -55,7 +55,7 @@ std::map<std::string, Shown>& shown() {
     return m;
 }
 
-/// Runtime ids far above the server's own counter and the funnels' range ("LV" + 'P').
+/// Runtime ids far above the server's own counter and the funnels' range ("BR" + 'P').
 std::uint64_t nextId() {
     static std::uint64_t id = 0x4C56500000000000ull;
     return ++id;
@@ -198,4 +198,4 @@ void flushVanillaItems() {
     }
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

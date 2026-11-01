@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_crimsite_brick_slab"
+      "identifier": "bearing:cut_crimsite_brick_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_crimsite_bricks"
+        "item": "bearing:cut_crimsite_bricks"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_crimsite_bricks"
+        "item": "bearing:cut_crimsite_bricks"
       }
     ],
     "result": {
-      "item": "levitate:cut_crimsite_brick_slab",
+      "item": "bearing:cut_crimsite_brick_slab",
       "count": 6
     }
   }

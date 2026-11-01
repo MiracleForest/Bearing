@@ -6,7 +6,7 @@
         { "condition": "survives_explosion" }
       ],
       "entries": [
-        { "type": "item", "name": "levitate:steam_engine" }
+        { "type": "item", "name": "bearing:steam_engine" }
       ]
     }
   ]

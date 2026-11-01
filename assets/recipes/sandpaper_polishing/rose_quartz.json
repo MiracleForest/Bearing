@@ -1,13 +1,13 @@
 {
-  "type": "levitate:sandpaper_polishing",
+  "type": "bearing:sandpaper_polishing",
   "ingredients": [
     {
-      "item": "levitate:rose_quartz"
+      "item": "bearing:rose_quartz"
     }
   ],
   "results": [
     {
-      "id": "levitate:polished_rose_quartz"
+      "id": "bearing:polished_rose_quartz"
     }
   ]
 }

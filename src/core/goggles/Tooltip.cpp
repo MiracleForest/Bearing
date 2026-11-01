@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <cstdio>
 
-namespace lv::core::goggles {
+namespace br::core::goggles {
 
 namespace {
 
@@ -260,4 +260,4 @@ std::vector<std::string> describeItem(DescriptionText const& text, bool shift, b
     return lines;
 }
 
-} // namespace lv::core::goggles
+} // namespace br::core::goggles

@@ -1,9 +1,9 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Desk bells (U49), drawn by the client mod as Create's DeskBellRenderer: after a ring
 // (`redstone.bell`) the plunger dips and the bell wobbles (its animation falls from 1 to 0 by
 // 0.05 a tick, the wobble's phase is random per ring). Chunk meshes hold the bell without its bell
-// and plunger (`levitate:rotor` = 1, swapped in here), which are drawn every frame instead; vanilla
+// and plunger (`bearing:rotor` = 1, swapped in here), which are drawn every frame instead; vanilla
 // clients see the static model with the plunger pressed while the bell is powered.
 
 #include <algorithm>
@@ -69,7 +69,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::redstone {
+namespace br::client::redstone {
 
 namespace k  = core::kinetics;
 namespace cr = core::redstone;
@@ -77,7 +77,7 @@ namespace fr = feature::redstone;
 
 namespace {
 
-constexpr char kBell[] = "levitate:desk_bell";
+constexpr char kBell[] = "bearing:desk_bell";
 
 struct PosKey {
     int  x, y, z;
@@ -125,14 +125,14 @@ Block const* hiddenVariant(Block const& block) {
 void loadBones() {
     auto& s  = state();
     s.loaded = true;
-    auto path = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks" / "desk_bell.geo.json";
+    auto path = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks" / "desk_bell.geo.json";
     std::ifstream in(path);
     if (!in) return;
     auto j = nlohmann::json::parse(in, nullptr, false, true);
     if (j.is_discarded()) return;
     auto models = k::parseGeometry(j);
     if (!models) return;
-    auto m = models->find("geometry.levitate.desk_bell");
+    auto m = models->find("geometry.bearing.desk_bell");
     if (m == models->end()) return;
     for (auto const* bone : {"bell", "plunger"}) {
         if (auto b = m->second.bones.find(bone); b != m->second.bones.end()) s.bones[bone] = b->second;
@@ -146,7 +146,7 @@ mce::Mesh* boneMesh(Tessellator& tess, std::string const& bone) {
     auto& slot = s.meshes[bone];
     auto  b    = s.bones.find(bone);
     if (b == s.bones.end() || b->second.empty()) return nullptr;
-    auto  tex = BlockGraphics::getTextureUVCoordinateSet("levitate_desk_bell", 0, 0);
+    auto  tex = BlockGraphics::getTextureUVCoordinateSet("bearing_desk_bell", 0, 0);
     float u0 = tex._u0, v0 = tex._v0, u1 = tex._u1, v1 = tex._v1;
     auto  uv = [&](std::array<float, 2> const& t) { return Vec2{u0 + (u1 - u0) * t[0], v0 + (v1 - v0) * t[1]}; };
     auto  at = [](std::array<float, 3> const& p) { return Vec3{p[0], p[1], p[2]}; };
@@ -156,7 +156,7 @@ mce::Mesh* boneMesh(Tessellator& tess, std::string const& bone) {
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_desk_bell_part", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_desk_bell_part", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -336,8 +336,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::redstone
+} // namespace br::client::redstone
 
-LV_REGISTER_MODULE(lv::client::redstone::DeskBellRendererModule);
+BR_REGISTER_MODULE(br::client::redstone::DeskBellRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

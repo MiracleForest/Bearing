@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace lv::core::redstone {
+namespace br::core::redstone {
 
 bool LinkNetwork::withinRange(LinkNode const& a, LinkNode const& b, int range) {
     if (a.dim != b.dim) return false;
@@ -145,4 +145,4 @@ std::vector<Delivery> LinkNetwork::evaluate(LinkNode const& actor, std::optional
     return out;
 }
 
-} // namespace lv::core::redstone
+} // namespace br::core::redstone

@@ -20,7 +20,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -63,7 +63,7 @@ void nameForm(Player& player, Json const&) {
     form.appendLabel(sizeText(player, stateOf(player).sel.size()));
     form.appendInput("name", trFor(player, "create.schematicAndQuill.title", "Schematic Name:"), trFor(player, "create.schematicAndQuill.fallbackName", "My Schematic"));
     form.appendToggle("convert", trFor(player, "create.schematicAndQuill.convert", "Save and Upload Immediately"), false);
-    form.appendToggle("abort", trFor(player, "lv.schematics.quill.discard", "Discard the selection"), false);
+    form.appendToggle("abort", trFor(player, "br.schematics.quill.discard", "Discard the selection"), false);
     form.sendTo(player, [](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
         if (!result) return;
         auto get = [&](std::string const& k) -> ll::form::CustomFormElementResult const* {
@@ -263,4 +263,4 @@ void registerQuill() {
 
 } // namespace detail
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

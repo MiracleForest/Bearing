@@ -1,7 +1,7 @@
 // Item drain (Create's ItemDrainBlockEntity): items cross the drain (from belts, funnels, chutes,
 // thrown on top or inserted through the item capability); at the centre an item that holds a
 // fluid is emptied into the 1500 mB tank (20 ticks), then the item moves on and leaves on the far
-// side (into the next Levitate block, or as an item entity when that side is open). Players
+// side (into the next Bearing block, or as an item entity when that side is open). Players
 // exchange fluid by right-clicking with containers and take the held item with an empty hand.
 // Pipes extract from the tank on every side; nothing is inserted from outside.
 
@@ -27,7 +27,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace items = common::items;
 namespace cfl   = common::fluids;
@@ -150,7 +150,7 @@ void output(BlockSource& region, GlobalPos const& p, Held& held) {
     auto      id   = blockIdAt(next);
     common::Access acc{region, toBlockPos(next), cf::oppositeFace(side)};
     bool direct = belts::hasDirectInput(next);
-    if (direct || (id.starts_with("levitate:") && items::find(acc))) {
+    if (direct || (id.starts_with("bearing:") && items::find(acc))) {
         // Create's DirectBeltInputBehaviour of belts, depots, chutes, funnels, drains, basins, ...
         ItemStack rest;
         if (direct) {
@@ -163,7 +163,7 @@ void output(BlockSource& region, GlobalPos const& p, Held& held) {
         }
         if (items::countOf(rest) == items::countOf(held.stack)) return;
         log().info("item drain at {} {} {} passed {} on", p.x, p.y, p.z, items::idOf(held.stack));
-        if (items::isEmpty(rest) && id == "levitate:item_drain") advancements::awardOwner(p, "chained_drain");
+        if (items::isEmpty(rest) && id == "bearing:item_drain") advancements::awardOwner(p, "chained_drain");
         // the insertion may have touched other BlockData documents: look ours up again
         if (items::isEmpty(rest)) setHeld(editData(p), std::nullopt);
         else {
@@ -341,4 +341,4 @@ void registerDrain() {
     });
 }
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

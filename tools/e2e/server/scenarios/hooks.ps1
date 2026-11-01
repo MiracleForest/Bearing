@@ -5,4 +5,4 @@
 $r = Invoke-SelfTest 'hooks.*'
 if ($r.Pass -lt 5 -or $r.Fail -gt 0) { throw "expected the 5 hooks selftests to pass, got pass=$($r.Pass) fail=$($r.Fail)" }
 # the generic wrench turned the shaft in hooks.wrench_order (one log line per action)
-Wait-LogLine 'wrench: .* rotated levitate:shaft at' 10 | Out-Null
+Wait-LogLine 'wrench: .* rotated bearing:shaft at' 10 | Out-Null

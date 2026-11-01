@@ -2,7 +2,7 @@
 // level, also on a placed backtank) and Potato Recovery (potato cannon: 12.5 % + 12.5 % per level).
 //
 // Bedrock's enchantment registry is a closed enum (Enchant::Type, vanilla ids 0..41) that clients
-// know by id, so the levels live in the item's user data (`lv:enchants`) and are shown as lore lines
+// know by id, so the levels live in the item's user data (`br:enchants`) and are shown as lore lines
 // named like enchantments. The enchanting table offers them as Java does: when Bedrock computed the
 // table's options, each option rolls Java's EnchantmentHelper#selectEnchantment over the item's
 // vanilla candidates plus Create's enchantment (weight 10, costs 15 + 15·(L-1) .. 45 + 15·(L-1)),
@@ -36,14 +36,14 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
 
 namespace {
 
-constexpr char kEnchantLore[] = "lv:enchant_lore"; ///< the lore lines this unit wrote (to replace them)
+constexpr char kEnchantLore[] = "br:enchant_lore"; ///< the lore lines this unit wrote (to replace them)
 constexpr std::string_view kKeys[] = {kCapacity, kPotatoRecovery};
 
 std::string enchantName(std::string_view key, Player const* viewer) {
@@ -280,10 +280,10 @@ void asTableEnchant(Player& player, std::function<void()> const& fn) {
     gEnchanting = prev;
 }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-namespace eq    = lv::feature::equipment;
-namespace items = lv::feature::common::items;
+namespace eq    = br::feature::equipment;
+namespace items = br::feature::common::items;
 
 LL_TYPE_INSTANCE_HOOK(
     EquipmentEnchantOptionsHook,
@@ -296,7 +296,7 @@ LL_TYPE_INSTANCE_HOOK(
     try {
         eq::onOptions(*this);
     } catch (std::exception const& e) {
-        lv::log().error("equipment: enchanting options failed: {}", e.what());
+        br::log().error("equipment: enchanting options failed: {}", e.what());
     }
 }
 
@@ -329,7 +329,7 @@ LL_TYPE_INSTANCE_HOOK(
     try {
         eq::onEnchanted(*this, enchants);
     } catch (std::exception const& e) {
-        lv::log().error("equipment: enchanting failed: {}", e.what());
+        br::log().error("equipment: enchanting failed: {}", e.what());
     }
 }
 
@@ -356,13 +356,13 @@ LL_STATIC_HOOK(
                 if (a > 0 && eq::enchantLevel(out, key) != a) eq::setEnchantLevel(out, key, a);
                 continue;
             }
-            int level = a > 0 ? lv::core::equipment::mergeEnchantLevel(a, b) : b;
+            int level = a > 0 ? br::core::equipment::mergeEnchantLevel(a, b) : b;
             eq::setEnchantLevel(out, key, level);
             extra += bookEnchant ? std::max(1, level / 2) : level;
         }
         return cost + extra;
     } catch (std::exception const& e) {
-        lv::log().error("equipment: anvil merge failed: {}", e.what());
+        br::log().error("equipment: anvil merge failed: {}", e.what());
         return cost;
     }
 }
@@ -374,11 +374,11 @@ LL_STATIC_HOOK(EquipmentGrindstoneHook, ll::memory::HookPriority::Normal, &Encha
         if (items::isEmpty(out) || !items::getData(out, eq::kEnchantsData).is_object()) return;
         for (auto key : {eq::kCapacity, eq::kPotatoRecovery}) eq::setEnchantLevel(out, key, 0);
     } catch (std::exception const& e) {
-        lv::log().error("equipment: grindstone failed: {}", e.what());
+        br::log().error("equipment: grindstone failed: {}", e.what());
     }
 }
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 namespace {
 class EnchantsModule {
 public:
@@ -399,6 +399,6 @@ public:
     }
 };
 } // namespace
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-LV_REGISTER_MODULE(lv::feature::equipment::EnchantsModule);
+BR_REGISTER_MODULE(br::feature::equipment::EnchantsModule);

@@ -16,9 +16,9 @@ Start-Sleep -Milliseconds 800
 
 # --- U46: package entities (every mode: the entity's model comes with the resource pack) ---------
 Invoke-Chat '/gamemode survival'
-Invoke-Chat '/kill @e[type=levitate:package]'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 0 levitate:cardboard_package_12x12 1'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 1 levitate:rare_creeper_package 1'
+Invoke-Chat '/kill @e[type=bearing:package]'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 0 bearing:cardboard_package_12x12 1'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 1 bearing:rare_creeper_package 1'
 Invoke-Chat '/tp @s 0.5 -60 0.5 0 50'
 Press-Key '1'
 Start-Sleep -Milliseconds 1200
@@ -36,7 +36,7 @@ Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'packages: .* picked up a package entity' 20 -Since $mark | Out-Null
 # put it down again and break it open with a hit
 Press-Key '9'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 0 levitate:cardboard_package_12x12 1'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 0 bearing:cardboard_package_12x12 1'
 Press-Key '1'
 Start-Sleep -Milliseconds 800
 $mark = Get-LogMark
@@ -60,14 +60,14 @@ Start-Sleep -Milliseconds 2000
 Invoke-Chat '/tp @s 0.5 -58 -2 0 30'
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'package-landed' | Out-Null
-Invoke-Chat '/kill @e[type=levitate:package]'
+Invoke-Chat '/kill @e[type=bearing:package]'
 Invoke-Chat '/gamemode creative'
 Invoke-Chat '/clear @s'
 Invoke-Chat '/tp @s 0 -60 0'
 Start-Sleep -Milliseconds 800
 
-# --- U56: a frogport placed from the side faces the player (levitate:yaw, 22.5 degree steps) ------
-Invoke-Chat '/replaceitem entity @s slot.hotbar 4 levitate:package_frogport 1'
+# --- U56: a frogport placed from the side faces the player (bearing:yaw, 22.5 degree steps) ------
+Invoke-Chat '/replaceitem entity @s slot.hotbar 4 bearing:package_frogport 1'
 Press-Key '5'
 Invoke-Chat '/tp @s 7.5 -60 -0.5 facing 5.5 -61 -2.5'
 Start-Sleep -Milliseconds 1200
@@ -85,7 +85,7 @@ Invoke-Chat '/tp @s 0 -60 0'
 Start-Sleep -Milliseconds 600
 
 # --- the port screen ---------------------------------------------------------------------------
-Invoke-Chat '/setblock 5 -60 -3 levitate:package_frogport'
+Invoke-Chat '/setblock 5 -60 -3 bearing:package_frogport'
 Invoke-Chat '/tp @s 5.5 -60 0.5 180 25'
 Press-Key '9'                      # an empty hotbar slot
 Start-Sleep -Milliseconds 800
@@ -107,11 +107,11 @@ Start-Sleep -Milliseconds 800
 Invoke-Chat '/setblock 5 -60 -3 air'
 
 # --- chain conveyors -------------------------------------------------------------------------------
-Invoke-Chat '/setblock 3 -60 6 levitate:chain_conveyor'
-Invoke-Chat '/setblock 11 -60 6 levitate:chain_conveyor'
-Invoke-Chat '/setblock 3 -61 6 levitate:kinetics_test_source ["levitate:axis"=1]'
+Invoke-Chat '/setblock 3 -60 6 bearing:chain_conveyor'
+Invoke-Chat '/setblock 11 -60 6 bearing:chain_conveyor'
+Invoke-Chat '/setblock 3 -61 6 bearing:kinetics_test_source ["bearing:axis"=1]'
 Invoke-Chat '/give @s iron_chain 16'
-Invoke-Chat '/give @s levitate:cardboard_package_12x12 1'
+Invoke-Chat '/give @s bearing:cardboard_package_12x12 1'
 # a package first (a plain item), then the chains (a block item)
 Press-Key '2'
 Start-Sleep -Milliseconds 600
@@ -121,7 +121,7 @@ Start-Sleep -Milliseconds 1200
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'packages: .* hung a package for .* on the chain conveyor at 0:3:-60:6' 20 -Since $mark | Out-Null
 # placing a block item by hand (the frogport, with no target selected)
-Invoke-Chat '/give @s levitate:package_frogport 1'
+Invoke-Chat '/give @s bearing:package_frogport 1'
 Press-Key '3'
 Invoke-Chat '/tp @s 0.5 -60 0.5 180 45'
 Start-Sleep -Milliseconds 1200

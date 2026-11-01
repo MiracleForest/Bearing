@@ -12,12 +12,12 @@
     {"at": [5, 1, 4], "id": "minecraft:rail", "states": {"rail_direction": 0}},
     {"at": [5, 1, 5], "id": "minecraft:rail", "states": {"rail_direction": 0}},
     {"at": [5, 1, 6], "id": "minecraft:rail", "states": {"rail_direction": 0}},
-    {"at": [1, 1, 1], "id": "levitate:cart_assembler", "states": {"levitate:rail_axis": 1, "levitate:rail_type": 0, "levitate:powered": 1, "levitate:backwards": 0}},
+    {"at": [1, 1, 1], "id": "bearing:cart_assembler", "states": {"bearing:rail_axis": 1, "bearing:rail_type": 0, "bearing:powered": 1, "bearing:backwards": 0}},
     {"at": [1, 1, 0], "id": "minecraft:redstone_block"},
     {"at": [1, 2, 1], "id": "minecraft:oak_planks"},
-    {"at": [2, 2, 1], "id": "levitate:andesite_casing"},
+    {"at": [2, 2, 1], "id": "bearing:andesite_casing"},
     {"at": [5, 2, 1], "id": "minecraft:oak_planks"},
-    {"at": [5, 2, 2], "id": "levitate:andesite_casing"}
+    {"at": [5, 2, 2], "id": "bearing:andesite_casing"}
   ],
   "timeline": [
     {"show": "base", "from": "up"},
@@ -59,7 +59,7 @@
     {"outline": [2, 2, 1], "color": "green", "ticks": 70},
     {"text": 2, "at": [1.5, 1.5, 1.5], "ticks": 80, "keyframe": true},
     {"idle": 90},
-    {"input": [1.5, 1.5, 2.0], "action": "scroll", "item": "levitate:wrench", "ticks": 50},
+    {"input": [1.5, 1.5, 2.0], "action": "scroll", "item": "bearing:wrench", "ticks": 50},
     {"idle": 10},
     {"text": 3, "at": [1.5, 1.5, 2.0], "ticks": 90, "keyframe": true},
     {"idle": 100},

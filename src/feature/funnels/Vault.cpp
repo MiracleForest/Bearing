@@ -34,7 +34,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::funnels::detail {
+namespace br::feature::funnels::detail {
 
 namespace items = common::items;
 
@@ -374,4 +374,4 @@ void installVaults() {
     });
 }
 
-} // namespace lv::feature::funnels::detail
+} // namespace br::feature::funnels::detail

@@ -1,13 +1,13 @@
 {
-  "type": "levitate:pressing",
+  "type": "bearing:pressing",
   "ingredients": [
     {
-      "item": "levitate:pulp"
+      "item": "bearing:pulp"
     }
   ],
   "results": [
     {
-      "id": "levitate:cardboard"
+      "id": "bearing:cardboard"
     }
   ]
 }

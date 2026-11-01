@@ -46,15 +46,15 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("redstone", lv::feature::redstone::RedstoneConfig);
+BR_REGISTER_CONFIG("redstone", br::feature::redstone::RedstoneConfig);
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace ia = common::interactions;
 
 namespace {
 
-constexpr char kDbBlocks[] = "lv:redstone:blocks";
+constexpr char kDbBlocks[] = "br:redstone:blocks";
 
 struct UnitState {
     std::map<GP, Runtime> tracked;
@@ -223,11 +223,11 @@ Json hoverLines(Player& player, GP const& pos, int face, core::common::Vec const
     if (*kind == Kind::Link) {
         auto [a, b] = frequencies(pos);
         auto name   = [&](ItemStack const& s) {
-            return common::items::isEmpty(s) ? trFor(player, "lv.common.filter.empty", "(empty)") : common::items::displayName(s);
+            return common::items::isEmpty(s) ? trFor(player, "br.common.filter.empty", "(empty)") : common::items::displayName(s);
         };
         auto slot   = frequencySlotAt(block, hit);
         out["lines"].push_back(
-            state(block, sReceiver) ? trFor(player, "lv.redstone.receiver", "Receiver") : trFor(player, "lv.redstone.transmitter", "Transmitter")
+            state(block, sReceiver) ? trFor(player, "br.redstone.receiver", "Receiver") : trFor(player, "br.redstone.transmitter", "Transmitter")
         );
         out["lines"].push_back(std::string(slot && *slot ? "> " : "") + trFor(player, "create.logistics.firstFrequency", "Frequency #1") + ": " + name(a));
         out["lines"].push_back(std::string(slot && !*slot ? "> " : "") + trFor(player, "create.logistics.secondFrequency", "Frequency #2") + ": " + name(b));
@@ -478,6 +478,6 @@ private:
     std::vector<ia::HandlerId>          mHandlers;
 };
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone
 
-LV_REGISTER_MODULE(lv::feature::redstone::RedstoneModule);
+BR_REGISTER_MODULE(br::feature::redstone::RedstoneModule);

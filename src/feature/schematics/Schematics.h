@@ -27,29 +27,29 @@ class BlockSource;
 class ItemStack;
 class Player;
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace cs = core::schematics;
 using core::GlobalPos;
 using Json = nlohmann::json;
 
 // ---- ids ---------------------------------------------------------------------------------------
-inline constexpr std::string_view kTable          = "levitate:schematic_table";
-inline constexpr std::string_view kCannon         = "levitate:schematicannon";
-inline constexpr std::string_view kEmptySchematic = "levitate:empty_schematic";
-inline constexpr std::string_view kSchematic      = "levitate:schematic";
-inline constexpr std::string_view kQuill          = "levitate:schematic_and_quill";
-inline constexpr std::string_view kBlueprintItem  = "levitate:crafting_blueprint";
-inline constexpr std::string_view kBlueprintBlock = "levitate:placed_crafting_blueprint";
+inline constexpr std::string_view kTable          = "bearing:schematic_table";
+inline constexpr std::string_view kCannon         = "bearing:schematicannon";
+inline constexpr std::string_view kEmptySchematic = "bearing:empty_schematic";
+inline constexpr std::string_view kSchematic      = "bearing:schematic";
+inline constexpr std::string_view kQuill          = "bearing:schematic_and_quill";
+inline constexpr std::string_view kBlueprintItem  = "bearing:crafting_blueprint";
+inline constexpr std::string_view kBlueprintBlock = "bearing:placed_crafting_blueprint";
 /// Owned by U12 (creative crate): referenced by id only.
-inline constexpr std::string_view kCreativeCrate = "levitate:creative_crate";
+inline constexpr std::string_view kCreativeCrate = "bearing:creative_crate";
 /// Owned by U8 (wrench): referenced by id only.
-inline constexpr std::string_view kWrench = "levitate:wrench";
+inline constexpr std::string_view kWrench = "bearing:wrench";
 /// Owned by U24 (clipboard): accepted as checklist paper; the cannon prints a read-only checklist
 /// clipboard on it (display/Clipboard.h).
-inline constexpr std::string_view kClipboard = "levitate:clipboard";
+inline constexpr std::string_view kClipboard = "bearing:clipboard";
 
-inline constexpr char kFacing[] = "levitate:facing"; ///< table: 0..3 (S W N E), blueprint: 0..5
+inline constexpr char kFacing[] = "bearing:facing"; ///< table: 0..3 (S W N E), blueprint: 0..5
 
 /// `config/schematics.json` (Create's CSchematics keys and defaults).
 struct Config {
@@ -79,7 +79,7 @@ bool                       clearAt(GlobalPos const& p);
 void                       destroyAt(GlobalPos const& p, bool drop);
 /// The block is a full solid cube (Create's isRedstoneConductor for replace modes).
 [[nodiscard]] bool solid(Block const& block);
-/// The block holds data (vanilla block entity or Levitate BlockData).
+/// The block holds data (vanilla block entity or Bearing BlockData).
 [[nodiscard]] bool holdsData(GlobalPos const& p, Block const& block);
 [[nodiscard]] bool replaceable(GlobalPos const& p);
 /// Bedrock, barriers, ... (destroy time -1; air and liquids never count).
@@ -128,7 +128,7 @@ void dropAt(GlobalPos const& p, ItemStack const& stack);
 /// Moves a stack out of a player inventory slot (count = -1: all) and returns it.
 [[nodiscard]] ItemStack takeFromInventory(Player& player, int slot, int count = -1);
 
-/// The data of a written schematic (`lv:schematic`).
+/// The data of a written schematic (`br:schematic`).
 struct SchematicData {
     std::string file;
     std::string owner;
@@ -259,4 +259,4 @@ void setBlueprintSlot(GlobalPos const& section, int slot, ItemStack const& stack
 /// The crafting recipes giving `result` (selftest diagnostics).
 [[nodiscard]] std::string debugRecipes(std::string const& result);
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

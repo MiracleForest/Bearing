@@ -5,7 +5,7 @@
 // "trains.interact" / "trains.throttle"; the HUD bar shows speed and throttle. A right-click with an
 // empty hand in the air sends "trains.interact" (vanilla clients send nothing for it).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -30,12 +30,12 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::trains {
+namespace br::client::trains {
 
 namespace {
 
-namespace net = lv::feature::net;
-using namespace lv::client::screen;
+namespace net = br::feature::net;
+using namespace br::client::screen;
 
 constexpr int kEsc = 27, kCtrl = 17;
 
@@ -171,8 +171,8 @@ void drawHud(MinecraftUIRenderContext& ctx) {
     cv.fill({x, y, static_cast<float>(w * std::clamp(speed / top, 0.0, 1.0)), h}, 0xFF7FB8E0);
     float mx = x + static_cast<float>(w * throttle);
     cv.fill({mx - 1, y - 3, 2, h + 6}, color::kTextGold);
-    auto label = ctr("lv.trains.hud.throttle", "Throttle: {0}%", static_cast<int>(std::lround(throttle * 100)));
-    if (c.hud.value("approach", false)) label = ctr("lv.trains.hud.approaching", "Approaching station...");
+    auto label = ctr("br.trains.hud.throttle", "Throttle: {0}%", static_cast<int>(std::lround(throttle * 100)));
+    if (c.hud.value("approach", false)) label = ctr("br.trains.hud.approaching", "Approaching station...");
     // beside the bar: the action bar above it carries the game's prompts
     cv.text(x + w + 6, y - 1, label, color::kText, Align::Left);
 }
@@ -276,8 +276,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::trains
+} // namespace br::client::trains
 
-LV_REGISTER_MODULE(lv::client::trains::TrainControlsModule);
+BR_REGISTER_MODULE(br::client::trains::TrainControlsModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

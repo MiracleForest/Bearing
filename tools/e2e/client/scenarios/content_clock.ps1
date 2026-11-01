@@ -14,16 +14,16 @@ Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1 ~'
 Start-Sleep -Milliseconds 500
 $mark0 = Get-LogMark
 # cuckoo clock 4 east, its dial towards the player (west), driven from behind
-Invoke-Chat '/setblock ~4 ~ ~-1 levitate:cuckoo_clock ["levitate:horizontal_facing"=1]'
-Invoke-Chat '/setblock ~5 ~ ~-1 levitate:kinetics_test_source ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~4 ~ ~-1 bearing:cuckoo_clock ["bearing:horizontal_facing"=1]'
+Invoke-Chat '/setblock ~5 ~ ~-1 bearing:kinetics_test_source ["bearing:axis"=0]'
 # flywheel on an x axis (its face towards the player), driven from behind
-Invoke-Chat '/setblock ~6 ~1 ~3 levitate:flywheel ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~7 ~1 ~3 levitate:kinetics_test_source ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~3 bearing:flywheel ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~7 ~1 ~3 bearing:kinetics_test_source ["bearing:axis"=0]'
 # desk bell straight ahead
-Invoke-Chat '/setblock ~2 ~ ~ levitate:desk_bell ["levitate:facing"=1]'
+Invoke-Chat '/setblock ~2 ~ ~ bearing:desk_bell ["bearing:facing"=1]'
 # two rose quartz lamps; a redstone block lights the far one
-Invoke-Chat '/setblock ~4 ~ ~-3 levitate:rose_quartz_lamp'
-Invoke-Chat '/setblock ~4 ~ ~-4 levitate:rose_quartz_lamp'
+Invoke-Chat '/setblock ~4 ~ ~-3 bearing:rose_quartz_lamp'
+Invoke-Chat '/setblock ~4 ~ ~-4 bearing:rose_quartz_lamp'
 Start-Sleep -Seconds 1
 Invoke-Chat '/setblock ~4 ~1 ~-4 redstone_block'
 Wait-LogLine 'rose quartz lamp at .* activated' 20 -Since $mark0 | Out-Null

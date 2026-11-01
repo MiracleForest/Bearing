@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:extendo_grip",
+      "identifier": "bearing:extendo_grip",
       "menu_category": {
         "category": "equipment"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_extendo_grip",
+      "minecraft:icon": "bearing_extendo_grip",
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.levitate:extendo_grip.name"
+        "value": "item.bearing:extendo_grip.name"
       },
       "minecraft:durability": {
         "max_durability": 200

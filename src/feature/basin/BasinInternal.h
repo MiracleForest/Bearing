@@ -26,31 +26,31 @@ class BlockSource;
 class Player;
 class Recipe;
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace cb = core::basin;
 using core::GlobalPos;
 using Json = nlohmann::json;
 
 // ---- ids -----------------------------------------------------------------------------------------
-inline constexpr char const* kBasin       = "levitate:basin";
-inline constexpr char const* kPress       = "levitate:mechanical_press";
-inline constexpr char const* kMixer       = "levitate:mechanical_mixer";
-inline constexpr char const* kBurner      = "levitate:blaze_burner";
-inline constexpr char const* kEmptyBurner = "levitate:empty_blaze_burner";
-inline constexpr char const* kLitBurner   = "levitate:lit_blaze_burner";
-inline constexpr char const* kBlazeCake   = "levitate:blaze_cake";
-inline constexpr char const* kCreativeCake = "levitate:creative_blaze_cake";
-inline constexpr char const* kGoggles     = "levitate:goggles";
-inline constexpr char const* kWrench      = "levitate:wrench";
+inline constexpr char const* kBasin       = "bearing:basin";
+inline constexpr char const* kPress       = "bearing:mechanical_press";
+inline constexpr char const* kMixer       = "bearing:mechanical_mixer";
+inline constexpr char const* kBurner      = "bearing:blaze_burner";
+inline constexpr char const* kEmptyBurner = "bearing:empty_blaze_burner";
+inline constexpr char const* kLitBurner   = "bearing:lit_blaze_burner";
+inline constexpr char const* kBlazeCake   = "bearing:blaze_cake";
+inline constexpr char const* kCreativeCake = "bearing:creative_blaze_cake";
+inline constexpr char const* kGoggles     = "bearing:goggles";
+inline constexpr char const* kWrench      = "bearing:wrench";
 
 /// Bedrock face (0 down, 2 north, 3 south, 4 west, 5 east): the basin's spout side (0 = none),
 /// the side a burner's blaze looks at.
-inline constexpr char const* kFacingState = "levitate:facing";
-inline constexpr char const* kAxisState   = "levitate:axis";  ///< press: 0 x, 2 z
-inline constexpr char const* kRotorState  = "levitate:rotor"; ///< press / mixer: 0 full model, 1 static parts
-inline constexpr char const* kBlazeState  = "levitate:blaze"; ///< blaze burner heat 1..4
-inline constexpr char const* kFlameState  = "levitate:flame_type"; ///< lit burner: 0 regular, 1 soul
+inline constexpr char const* kFacingState = "bearing:facing";
+inline constexpr char const* kAxisState   = "bearing:axis";  ///< press: 0 x, 2 z
+inline constexpr char const* kRotorState  = "bearing:rotor"; ///< press / mixer: 0 full model, 1 static parts
+inline constexpr char const* kBlazeState  = "bearing:blaze"; ///< blaze burner heat 1..4
+inline constexpr char const* kFlameState  = "bearing:flame_type"; ///< lit burner: 0 regular, 1 soul
 
 enum class Kind : int { Basin = 0, Press = 1, Mixer = 2, Burner = 3, LitBurner = 4, EmptyBurner = 5 };
 [[nodiscard]] std::optional<Kind> kindOf(std::string_view blockId);
@@ -263,4 +263,4 @@ struct BasinConfig {
     bool burnerParticles          = true;
 };
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin

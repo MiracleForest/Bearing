@@ -5,7 +5,7 @@
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/block/Block.h"
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 namespace {
 template <class Query>
@@ -89,4 +89,4 @@ std::optional<ItemStack> sideInputAbove(BlockSource& region, BlockPos const& bel
 
 } // namespace beltlink
 
-} // namespace lv::feature::common
+} // namespace br::feature::common

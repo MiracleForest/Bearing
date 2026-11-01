@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:copper_diving_helmet"
+      "identifier": "bearing:copper_diving_helmet"
     },
     "tags": [
       "crafting_table"
@@ -25,7 +25,7 @@
       }
     ],
     "result": {
-      "item": "levitate:copper_diving_helmet",
+      "item": "bearing:copper_diving_helmet",
       "count": 1
     }
   }

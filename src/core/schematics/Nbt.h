@@ -12,7 +12,7 @@
 #include <variant>
 #include <vector>
 
-namespace lv::core::schematics::nbt {
+namespace br::core::schematics::nbt {
 
 enum class Type : std::uint8_t {
     End       = 0,
@@ -115,4 +115,4 @@ struct ReadResult {
 /// Compact text form for logs and tests (SNBT-like).
 [[nodiscard]] std::string toString(Tag const& tag);
 
-} // namespace lv::core::schematics::nbt
+} // namespace br::core::schematics::nbt

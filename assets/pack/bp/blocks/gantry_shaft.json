@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:gantry_shaft",
+      "identifier": "bearing:gantry_shaft",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,17 +15,17 @@
           4,
           5
         ],
-        "levitate:part": [
+        "bearing:part": [
           0,
           1,
           2,
           3
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1
         ]
@@ -33,22 +33,22 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.gantry_shaft",
+        "identifier": "geometry.bearing.gantry_shaft",
         "bone_visibility": {
-          "shaft": "q.block_state('levitate:rotor') == 0"
+          "shaft": "q.block_state('bearing:rotor') == 0"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_gantry_shaft",
+          "texture": "bearing_gantry_shaft",
           "render_method": "alpha_test"
         },
         "side": {
-          "texture": "levitate_gantry_shaft",
+          "texture": "bearing_gantry_shaft",
           "render_method": "alpha_test"
         },
         "end": {
-          "texture": "levitate_gantry_shaft_end",
+          "texture": "bearing_gantry_shaft_end",
           "render_method": "alpha_test"
         }
       },
@@ -88,7 +88,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -100,7 +100,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -112,7 +112,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -124,7 +124,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -136,7 +136,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -148,7 +148,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -160,19 +160,19 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_gantry_shaft_powered",
+              "texture": "bearing_gantry_shaft_powered",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_gantry_shaft_powered",
+              "texture": "bearing_gantry_shaft_powered",
               "render_method": "alpha_test"
             },
             "end": {
-              "texture": "levitate_gantry_shaft_end",
+              "texture": "bearing_gantry_shaft_end",
               "render_method": "alpha_test"
             }
           }

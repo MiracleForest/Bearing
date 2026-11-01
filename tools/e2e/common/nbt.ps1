@@ -2,7 +2,7 @@
 # world fixtures. Dot-source it, then:
 #
 #   $ld = Read-LevelDat 'path\level.dat'
-#   $ld.Root['LevelName'].Value = 'LV-Test'
+#   $ld.Root['LevelName'].Value = 'BR-Test'
 #   Set-NbtValue $ld.Root 'doDaylightCycle' 1 0     # (compound, name, tagType, value): adds or replaces
 #   Write-LevelDat $ld 'path\level.dat'
 #   Show-Nbt $ld.Root                                # dump for inspection

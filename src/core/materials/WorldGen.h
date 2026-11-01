@@ -9,7 +9,7 @@
 #include <functional>
 #include <vector>
 
-namespace lv::core::materials {
+namespace br::core::materials {
 
 /// Small deterministic generator (splitmix64 seeded xoshiro256**).
 class Rng {
@@ -112,4 +112,4 @@ struct Origin {
 /// number of blocks placed.
 int decorateChunk(World const& world, std::uint64_t worldSeed, int dim, int cx, int cz);
 
-} // namespace lv::core::materials
+} // namespace br::core::materials

@@ -2,7 +2,7 @@
 
 #include <optional>
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 namespace {
 
@@ -91,11 +91,11 @@ bool rotateStates(States& s, Axis axis, int quarterTurns, std::string_view block
     };
 
     // chassis sticky sides first: they depend on the axis before rotation
-    if (auto* ax = intOf(s, "levitate:axis"); ax && *ax >= 0 && *ax <= 2) {
+    if (auto* ax = intOf(s, "bearing:axis"); ax && *ax >= 0 && *ax <= 2) {
         Axis oldAxis = static_cast<Axis>(*ax);
         Axis newAxis = rotate(oldAxis, axis, q);
-        auto* top    = intOf(s, "levitate:sticky_top");
-        auto* bottom = intOf(s, "levitate:sticky_bottom");
+        auto* top    = intOf(s, "bearing:sticky_top");
+        auto* bottom = intOf(s, "bearing:sticky_bottom");
         if (top && bottom) {
             // top = the positive end of the axis
             Dir  newTopDir  = rotate(dirOf(oldAxis, true), axis, q);
@@ -106,10 +106,10 @@ bool rotateStates(States& s, Axis axis, int quarterTurns, std::string_view block
             }
         }
         static constexpr std::array<char const*, 4> kRadialKeys{
-            "levitate:sticky_north",
-            "levitate:sticky_south",
-            "levitate:sticky_east",
-            "levitate:sticky_west"
+            "bearing:sticky_north",
+            "bearing:sticky_south",
+            "bearing:sticky_east",
+            "bearing:sticky_west"
         };
         std::array<std::int64_t*, 4> radial{};
         bool                         isRadial = true;
@@ -128,7 +128,7 @@ bool rotateStates(States& s, Axis axis, int quarterTurns, std::string_view block
         setInt(ax, static_cast<std::int64_t>(newAxis));
     }
 
-    for (auto const* key : {"facing_direction", "levitate:facing"}) {
+    for (auto const* key : {"facing_direction", "bearing:facing"}) {
         if (auto* v = intOf(s, key); v && *v >= 0 && *v <= 5) {
             setInt(v, static_cast<std::int64_t>(rotate(static_cast<Dir>(*v), axis, q)));
         }
@@ -228,4 +228,4 @@ bool rotateStates(States& s, Axis axis, int quarterTurns, std::string_view block
     return changed;
 }
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:portable_fluid_interface",
+      "identifier": "bearing:portable_fluid_interface",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -21,7 +21,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_portable_fluid_interface_side",
+          "texture": "bearing_portable_fluid_interface_side",
           "render_method": "opaque"
         }
       },
@@ -36,114 +36,114 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_portable_fluid_interface_side",
+              "texture": "bearing_portable_fluid_interface_side",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_portable_fluid_interface_front",
+              "texture": "bearing_portable_fluid_interface_front",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_portable_fluid_interface_back",
+              "texture": "bearing_portable_fluid_interface_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_portable_fluid_interface_side",
+              "texture": "bearing_portable_fluid_interface_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_portable_fluid_interface_front",
+              "texture": "bearing_portable_fluid_interface_front",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_portable_fluid_interface_back",
+              "texture": "bearing_portable_fluid_interface_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_portable_fluid_interface_side",
+              "texture": "bearing_portable_fluid_interface_side",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_portable_fluid_interface_front",
+              "texture": "bearing_portable_fluid_interface_front",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_portable_fluid_interface_back",
+              "texture": "bearing_portable_fluid_interface_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_portable_fluid_interface_side",
+              "texture": "bearing_portable_fluid_interface_side",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_portable_fluid_interface_front",
+              "texture": "bearing_portable_fluid_interface_front",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_portable_fluid_interface_back",
+              "texture": "bearing_portable_fluid_interface_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_portable_fluid_interface_side",
+              "texture": "bearing_portable_fluid_interface_side",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_portable_fluid_interface_front",
+              "texture": "bearing_portable_fluid_interface_front",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_portable_fluid_interface_back",
+              "texture": "bearing_portable_fluid_interface_back",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_portable_fluid_interface_side",
+              "texture": "bearing_portable_fluid_interface_side",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_portable_fluid_interface_front",
+              "texture": "bearing_portable_fluid_interface_front",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_portable_fluid_interface_back",
+              "texture": "bearing_portable_fluid_interface_back",
               "render_method": "opaque"
             }
           }

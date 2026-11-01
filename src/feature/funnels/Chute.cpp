@@ -30,7 +30,7 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::funnels::detail {
+namespace br::feature::funnels::detail {
 
 namespace items = common::items;
 
@@ -85,7 +85,7 @@ Block const* chuteBlock(BlockSource& region, BlockPos const& p) {
 
 bool isSmart(Block const& b) { return b.getTypeName() == kSmartChute; }
 
-/// `levitate:facing` of a chute runs 0..4 (Bedrock integer states are 0..n): 0 = down, 1..4 =
+/// `bearing:facing` of a chute runs 0..4 (Bedrock integer states are 0..n): 0 = down, 1..4 =
 /// north / south / west / east (FacingID 2..5).
 int facingState(int facing) { return cf::isHorizontal(facing) ? facing - 1 : 0; }
 int chuteFacingOf(Block const& b) {
@@ -644,7 +644,7 @@ void installChutes() {
     common::filterslot::registerSlot(kSmartChute, std::move(smartSlot));
     registerAmountBox(kSmartChute, smartAmountCentre);
     for (char const* id : {kChute, kSmartChute}) goggles::registerBlock(id, {.goggle = chuteGoggle, .replaceDefaults = true});
-    // `levitate:facing` of a chute is not in facing order (0 down, 1..4 north..east): undo the
+    // `bearing:facing` of a chute is not in facing order (0 down, 1..4 north..east): undo the
     // common rotation, turn the real facing and keep the old one when it would leave the chute's
     // set (down or horizontal), as Create's horizontal-only states
     namespace ct = contraption;
@@ -662,4 +662,4 @@ void installChutes() {
     });
 }
 
-} // namespace lv::feature::funnels::detail
+} // namespace br::feature::funnels::detail

@@ -23,7 +23,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common::filter {
+namespace br::feature::common::filter {
 
 namespace {
 using core::common::AttributeMode;
@@ -104,26 +104,26 @@ void listForm(Player& player, Json const& ctx) {
     if (!held) return;
     auto data = readList(*held);
     auto inv  = inventoryItems(player);
-    auto keep = trFor(player, "lv.common.form.keep", "(keep)");
-    auto none = trFor(player, "lv.common.form.empty", "(empty)");
+    auto keep = trFor(player, "br.common.form.keep", "(keep)");
+    auto none = trFor(player, "br.common.form.empty", "(empty)");
 
     ll::form::CustomForm form(items::displayName(*held));
-    form.appendLabel(trFor(player, "lv.common.filter.form.hint", "Pick an item for each slot. Items in your inventory are listed."));
+    form.appendLabel(trFor(player, "br.common.filter.form.hint", "Pick an item for each slot. Items in your inventory are listed."));
     for (int i = 0; i < kListFilterSlots; ++i) {
         auto const&              cur = data.items[static_cast<std::size_t>(i)];
         std::vector<std::string> options{keep + " " + (items::isEmpty(cur) ? none : items::displayName(cur)), none};
         for (auto const& s : inv) options.push_back(items::displayName(s));
-        form.appendDropdown("slot" + std::to_string(i), trFor(player, "lv.common.filter.form.slot", "Slot {}", i + 1), options, 0);
+        form.appendDropdown("slot" + std::to_string(i), trFor(player, "br.common.filter.form.slot", "Slot {}", i + 1), options, 0);
     }
     form.appendDropdown(
         "mode",
-        trFor(player, "lv.common.filter.form.mode", "Mode"),
+        trFor(player, "br.common.filter.form.mode", "Mode"),
         {trFor(player, "create.gui.filter.allow_list", "Allow-List"), trFor(player, "create.gui.filter.deny_list", "Deny-List")},
         data.blacklist ? 1 : 0
     );
     form.appendDropdown(
         "data",
-        trFor(player, "lv.common.filter.form.data", "Data"),
+        trFor(player, "br.common.filter.form.data", "Data"),
         {trFor(player, "create.gui.filter.ignore_data", "Ignore Data"), trFor(player, "create.gui.filter.respect_data", "Respect Data")},
         data.respectData ? 1 : 0
     );
@@ -245,7 +245,7 @@ void attributeAddForm(Player& player, Json const& ctx, ItemStack const& ref) {
         return;
     }
     auto                     locale = localeOf(player);
-    std::vector<std::string> options{trFor(player, "lv.common.form.none", "(none)")};
+    std::vector<std::string> options{trFor(player, "br.common.form.none", "(none)")};
     for (auto const& a : offered) {
         AttributeEntry inv = a;
         inv.inverted       = true;
@@ -254,7 +254,7 @@ void attributeAddForm(Player& player, Json const& ctx, ItemStack const& ref) {
     }
     ll::form::CustomForm form(trFor(player, "create.gui.attribute_filter.add_attribute", "Add attribute to List"));
     form.appendLabel(items::displayName(ref));
-    form.appendDropdown("attr", trFor(player, "lv.common.attribute_filter.form.attribute", "Attribute"), options, 0);
+    form.appendDropdown("attr", trFor(player, "br.common.attribute_filter.form.attribute", "Attribute"), options, 0);
     form.sendTo(player, [ctx, offered](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
         if (!result) return;
         auto const* held = heldFilter(p, ctx, true);
@@ -269,7 +269,7 @@ void attributeAddForm(Player& player, Json const& ctx, ItemStack const& ref) {
         e.inverted       = ((*v - 1) % 2) == 1;
         ItemStack filter = *held;
         if (addAttribute(p, filter, e)) storeHeld(p, filter);
-        else p.sendMessage(trFor(p, "lv.common.attribute_filter.full", "This attribute is already in the list."));
+        else p.sendMessage(trFor(p, "br.common.attribute_filter.full", "This attribute is already in the list."));
     });
 }
 
@@ -287,16 +287,16 @@ void attributeForm(Player& player, Json const& ctx) {
     form.appendLabel(summary);
     form.appendDropdown(
         "mode",
-        trFor(player, "lv.common.filter.form.mode", "Mode"),
+        trFor(player, "br.common.filter.form.mode", "Mode"),
         {trFor(player, "create.gui.attribute_filter.allow_list_disjunctive", "Allow-List (Any)"),
          trFor(player, "create.gui.attribute_filter.allow_list_conjunctive", "Allow-List (All)"),
          trFor(player, "create.gui.attribute_filter.deny_list", "Deny-List")},
         static_cast<std::size_t>(data.mode)
     );
-    std::vector<std::string> refs{trFor(player, "lv.common.form.none", "(none)")};
+    std::vector<std::string> refs{trFor(player, "br.common.form.none", "(none)")};
     for (auto const& s : inv) refs.push_back(items::displayName(s));
-    form.appendDropdown("ref", trFor(player, "lv.common.attribute_filter.form.reference", "Add attributes of"), refs, 0);
-    form.appendToggle("reset", trFor(player, "lv.common.attribute_filter.form.reset", "Reset (remove every attribute)"), false);
+    form.appendDropdown("ref", trFor(player, "br.common.attribute_filter.form.reference", "Add attributes of"), refs, 0);
+    form.appendToggle("reset", trFor(player, "br.common.attribute_filter.form.reset", "Reset (remove every attribute)"), false);
     form.sendTo(player, [ctx, inv](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
         if (!result) return;
         auto const* held = heldFilter(p, ctx, true);
@@ -369,6 +369,6 @@ private:
     ll::event::ListenerPtr  mLeave;
 };
 
-} // namespace lv::feature::common::filter
+} // namespace br::feature::common::filter
 
-LV_REGISTER_MODULE(lv::feature::common::filter::FilterItemsModule);
+BR_REGISTER_MODULE(br::feature::common::filter::FilterItemsModule);

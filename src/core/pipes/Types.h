@@ -10,7 +10,7 @@
 #include "core/GlobalPos.h"
 #include "core/kinetics/Types.h"
 
-namespace lv::core::pipes {
+namespace br::core::pipes {
 
 using core::GlobalPos;
 using kinetics::Axis;
@@ -25,7 +25,7 @@ using kinetics::offsetOf;
 using kinetics::opposite;
 using kinetics::shifted;
 
-/// A fluid amount: `id` is the fluid id ("minecraft:water", "levitate:honey", "potion:swiftness"),
+/// A fluid amount: `id` is the fluid id ("minecraft:water", "bearing:honey", "potion:swiftness"),
 /// `amount` in mB (1 bucket = 1000 mB).
 struct Fluid {
     std::string id;
@@ -60,4 +60,4 @@ using FaceMask = std::uint8_t;
 [[nodiscard]] constexpr FaceMask axisMask(Axis a) { return bit(faceOf(a, true)) | bit(faceOf(a, false)); }
 [[nodiscard]] int                count(FaceMask m);
 
-} // namespace lv::core::pipes
+} // namespace br::core::pipes

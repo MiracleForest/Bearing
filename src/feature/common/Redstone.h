@@ -8,7 +8,7 @@
 // blocks, wire, levers, buttons, plates, redstone blocks, torches, repeaters, comparators,
 // observers, ...) and polls watched positions centrally:
 //
-//     namespace rs = lv::feature::common::redstone;
+//     namespace rs = br::feature::common::redstone;
 //     int  p  = rs::power(region, pos);      // 0..15, the strongest signal into the block
 //     auto id = rs::watch(gpos, [](core::GlobalPos const& at, int power) { ... });   // on changes
 //     rs::unwatch(id);
@@ -20,7 +20,7 @@
 // vanilla comparators read it (one ComparatorCapacitor hook here gives the comparator's circuit
 // component its rear analog input):
 //
-//     rs::registerAnalog("levitate:fluid_tank", [](BlockSource& r, BlockPos const& p, Block const& b)
+//     rs::registerAnalog("bearing:fluid_tank", [](BlockSource& r, BlockPos const& p, Block const& b)
 //         -> std::optional<int> { return level0to15; });   // nullopt: no comparator output now
 //
 // As in Java (ComparatorBlock.getInputSignal) a comparator reads the block right behind it, or,
@@ -38,7 +38,7 @@ class Block;
 class BlockPos;
 class BlockSource;
 
-namespace lv::feature::common::redstone {
+namespace br::feature::common::redstone {
 
 using core::GlobalPos;
 
@@ -91,4 +91,4 @@ void unregisterAnalog(std::string const& blockId);
 /// Create's ComparatorUtil.fractionToRedstoneLevel: 0 when empty, else 1 + floor(fraction * 14).
 [[nodiscard]] int fractionToRedstoneLevel(double fraction);
 
-} // namespace lv::feature::common::redstone
+} // namespace br::feature::common::redstone

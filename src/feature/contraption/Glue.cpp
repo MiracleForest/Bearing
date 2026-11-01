@@ -18,11 +18,11 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
-constexpr char kDbGlue[] = "lv:contraption:glue";
+constexpr char kDbGlue[] = "br:contraption:glue";
 
 std::map<int, std::vector<cc::GlueBox>>& regions() {
     static std::map<int, std::vector<cc::GlueBox>> r;
@@ -243,7 +243,7 @@ bool glueOnPlace(Player& player, cc::Pos const& placed, cc::Pos const& against) 
     // Create's SuperGlueHandler#glueInOffHandAppliesOnBlockPlace
     ItemStack offhand = player.getOffhandSlot();
     if (offhand.isNull() || offhand.getTypeName() != kSuperGlue) return false;
-    if (player.getSelectedItem().getTypeName() == "levitate:wrench") return false;
+    if (player.getSelectedItem().getTypeName() == "bearing:wrench") return false;
     if (placed == against) return false; // placed into a replaceable block: nothing it was placed against
     cc::Pos d = placed - against;
     std::optional<cc::Dir> face;
@@ -323,4 +323,4 @@ void glueOutlines(Player& player) {
 }
 
 } // namespace detail
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

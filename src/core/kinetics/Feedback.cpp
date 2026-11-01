@@ -4,7 +4,7 @@
 #include <cmath>
 #include <map>
 
-namespace lv::core::kinetics::feedback {
+namespace br::core::kinetics::feedback {
 
 float overstressEffectAfter(float initial, int ticks) {
     float v = initial;
@@ -131,4 +131,4 @@ std::vector<Scape> groupSources(std::vector<Source> const& sources) {
     return out;
 }
 
-} // namespace lv::core::kinetics::feedback
+} // namespace br::core::kinetics::feedback

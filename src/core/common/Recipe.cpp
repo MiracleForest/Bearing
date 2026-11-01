@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace lv::core::common {
+namespace br::core::common {
 
 namespace {
 using json = nlohmann::json;
@@ -96,7 +96,7 @@ bool heatSatisfies(HeatRequirement required, HeatLevel level) {
 }
 
 std::string mapId(std::string_view id) {
-    if (id.starts_with("create:")) return "levitate:" + std::string(id.substr(7));
+    if (id.starts_with("create:")) return "bearing:" + std::string(id.substr(7));
     return std::string(id);
 }
 
@@ -178,4 +178,4 @@ int rollResult(ItemResult const& result, std::function<float()> const& random01)
     return out;
 }
 
-} // namespace lv::core::common
+} // namespace br::core::common

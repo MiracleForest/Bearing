@@ -4,7 +4,7 @@
 #include <cmath>
 #include <map>
 
-namespace lv::core::stock {
+namespace br::core::stock {
 
 // ---- Summary -------------------------------------------------------------------------------------
 
@@ -315,4 +315,4 @@ connectionIssue(PanelRef const& target, PanelRef const& input, bool alreadyConne
     return std::nullopt;
 }
 
-} // namespace lv::core::stock
+} // namespace br::core::stock

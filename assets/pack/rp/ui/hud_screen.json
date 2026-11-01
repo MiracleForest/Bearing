@@ -1,7 +1,7 @@
 {
   "namespace": "hud",
 
-  "lv_goggle_overlay": {
+  "br_goggle_overlay": {
     "type": "panel",
     "size": [ 0, 0 ],
     "anchor_from": "center",
@@ -9,16 +9,16 @@
     "layer": 25,
     "controls": [
       {
-        "lv_goggle_frame": {
+        "br_goggle_frame": {
           "type": "image",
-          "texture": "textures/ui/levitate_goggle_tooltip",
+          "texture": "textures/ui/bearing_goggle_tooltip",
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [ 32, -12 ],
           "size": [ "100%c + 8px", "100%c + 8px" ],
           "controls": [
             {
-              "lv_goggle_text": {
+              "br_goggle_text": {
                 "type": "label",
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -79,7 +79,7 @@
         "array_name": "controls",
         "operation": "insert_back",
         "value": [
-          { "lv_goggle_overlay@hud.lv_goggle_overlay": {} }
+          { "br_goggle_overlay@hud.br_goggle_overlay": {} }
         ]
       }
     ]

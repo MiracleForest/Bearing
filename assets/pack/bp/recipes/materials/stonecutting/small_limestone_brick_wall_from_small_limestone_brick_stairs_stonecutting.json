@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_limestone_brick_wall_from_small_limestone_brick_stairs_stonecutting"
+      "identifier": "bearing:small_limestone_brick_wall_from_small_limestone_brick_stairs_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:small_limestone_brick_stairs"
+        "item": "bearing:small_limestone_brick_stairs"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:small_limestone_brick_stairs"
+        "item": "bearing:small_limestone_brick_stairs"
       }
     ],
     "result": {
-      "item": "levitate:small_limestone_brick_wall",
+      "item": "bearing:small_limestone_brick_wall",
       "count": 1
     }
   }

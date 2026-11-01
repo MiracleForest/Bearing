@@ -3,7 +3,7 @@
 // Client mod side of the schematics unit (U29): native screens, the schematic tools, the ghost
 // preview, the quill selection outline, the schematicannon's launched blocks and its barrel. Internal.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <filesystem>
 #include <string>
@@ -11,7 +11,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::client::schematics {
+namespace br::client::schematics {
 
 using Json = nlohmann::json;
 
@@ -32,6 +32,6 @@ bool startUpload(std::string const& file, Json const& pos, int maxSizeKb, int pa
 /// Text field focus (screens with text fields route keys to it).
 struct TextFieldFocus;
 
-} // namespace lv::client::schematics
+} // namespace br::client::schematics
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

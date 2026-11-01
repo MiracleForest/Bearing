@@ -1,24 +1,24 @@
 {
-  "type": "levitate:sequenced_assembly",
+  "type": "bearing:sequenced_assembly",
   "ingredient": {
     "tag": "c:plates/gold"
   },
   "loops": 5,
   "results": [
     {
-      "id": "levitate:precision_mechanism",
+      "id": "bearing:precision_mechanism",
       "chance": 120.0
     },
     {
-      "id": "levitate:golden_sheet",
+      "id": "bearing:golden_sheet",
       "chance": 8.0
     },
     {
-      "id": "levitate:andesite_alloy",
+      "id": "bearing:andesite_alloy",
       "chance": 8.0
     },
     {
-      "id": "levitate:cogwheel",
+      "id": "bearing:cogwheel",
       "chance": 5.0
     },
     {
@@ -26,11 +26,11 @@
       "chance": 3.0
     },
     {
-      "id": "levitate:shaft",
+      "id": "bearing:shaft",
       "chance": 2.0
     },
     {
-      "id": "levitate:crushed_raw_gold",
+      "id": "bearing:crushed_raw_gold",
       "chance": 2.0
     },
     {
@@ -42,42 +42,42 @@
   ],
   "sequence": [
     {
-      "type": "levitate:deploying",
+      "type": "bearing:deploying",
       "ingredients": [
         {
-          "item": "levitate:incomplete_precision_mechanism"
+          "item": "bearing:incomplete_precision_mechanism"
         },
         {
-          "item": "levitate:cogwheel"
+          "item": "bearing:cogwheel"
         }
       ],
       "results": [
         {
-          "id": "levitate:incomplete_precision_mechanism"
+          "id": "bearing:incomplete_precision_mechanism"
         }
       ]
     },
     {
-      "type": "levitate:deploying",
+      "type": "bearing:deploying",
       "ingredients": [
         {
-          "item": "levitate:incomplete_precision_mechanism"
+          "item": "bearing:incomplete_precision_mechanism"
         },
         {
-          "item": "levitate:large_cogwheel"
+          "item": "bearing:large_cogwheel"
         }
       ],
       "results": [
         {
-          "id": "levitate:incomplete_precision_mechanism"
+          "id": "bearing:incomplete_precision_mechanism"
         }
       ]
     },
     {
-      "type": "levitate:deploying",
+      "type": "bearing:deploying",
       "ingredients": [
         {
-          "item": "levitate:incomplete_precision_mechanism"
+          "item": "bearing:incomplete_precision_mechanism"
         },
         {
           "tag": "c:nuggets/iron"
@@ -85,12 +85,12 @@
       ],
       "results": [
         {
-          "id": "levitate:incomplete_precision_mechanism"
+          "id": "bearing:incomplete_precision_mechanism"
         }
       ]
     }
   ],
   "transitional_item": {
-    "id": "levitate:incomplete_precision_mechanism"
+    "id": "bearing:incomplete_precision_mechanism"
   }
 }

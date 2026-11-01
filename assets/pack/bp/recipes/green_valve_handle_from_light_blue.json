@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:green_valve_handle_from_light_blue"
+      "identifier": "bearing:green_valve_handle_from_light_blue"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:light_blue_valve_handle"
+        "item": "bearing:light_blue_valve_handle"
       },
       {
         "item": "minecraft:green_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:light_blue_valve_handle"
+        "item": "bearing:light_blue_valve_handle"
       }
     ],
     "result": {
-      "item": "levitate:green_valve_handle",
+      "item": "bearing:green_valve_handle",
       "count": 1
     }
   }

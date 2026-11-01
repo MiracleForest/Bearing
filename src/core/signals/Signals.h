@@ -38,13 +38,13 @@
 
 #include "core/tracks/Graph.h"
 
-namespace lv::core::signals {
+namespace br::core::signals {
 
 namespace ct = core::tracks;
 
-/// Create's SignalBlock.SignalType (block state `levitate:signal_type`).
+/// Create's SignalBlock.SignalType (block state `bearing:signal_type`).
 enum class SignalType : int { Entry = 0, Cross = 1 };
-/// Create's SignalBlockEntity.SignalState (block state `levitate:signal_state`).
+/// Create's SignalBlockEntity.SignalState (block state `bearing:signal_state`).
 enum class SignalState : int { Red = 0, Yellow = 1, Green = 2, Invalid = 3 };
 
 /// One side of a boundary.
@@ -240,4 +240,4 @@ private:
     std::vector<Reservation>                 mReservations;
 };
 
-} // namespace lv::core::signals
+} // namespace br::core::signals

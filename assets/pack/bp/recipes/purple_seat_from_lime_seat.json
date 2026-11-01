@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:purple_seat_from_lime_seat"
+      "identifier": "bearing:purple_seat_from_lime_seat"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:lime_seat"
+        "item": "bearing:lime_seat"
       },
       {
         "item": "minecraft:purple_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:lime_seat"
+        "item": "bearing:lime_seat"
       }
     ],
     "result": {
-      "item": "levitate:purple_seat"
+      "item": "bearing:purple_seat"
     }
   }
 }

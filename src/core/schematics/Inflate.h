@@ -10,7 +10,7 @@
 #include <string>
 #include <string_view>
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 /// Inflates a raw DEFLATE stream. nullopt on corrupt input or when the output would exceed `maxOutput`.
 [[nodiscard]] std::optional<std::string> inflateRaw(std::string_view data, std::size_t maxOutput = 64u << 20, std::size_t* consumed = nullptr);
@@ -26,4 +26,4 @@ namespace lv::core::schematics {
 [[nodiscard]] std::string                base64Encode(std::string_view data);
 [[nodiscard]] std::optional<std::string> base64Decode(std::string_view text);
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

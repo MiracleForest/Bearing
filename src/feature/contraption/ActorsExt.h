@@ -23,7 +23,7 @@ class Block;
 class BlockSource;
 class Player;
 
-namespace lv::feature::contraption::actors_ext {
+namespace br::feature::contraption::actors_ext {
 
 /// Name of the BlockData carrier ("blockdata").
 inline constexpr char kBlockDataCarrier[] = "blockdata";
@@ -48,9 +48,9 @@ void actionBar(Player& player, std::string const& text);
 void playSound(int dim, cc::Vec3d const& pos, std::string const& sound, float volume = 1.f, float pitch = 1.f);
 /// Runs `fn` at the start of the next server tick.
 void defer(std::function<void()> fn);
-/// The block states of a block (as carried: `levitate:facing`, ...).
+/// The block states of a block (as carried: `bearing:facing`, ...).
 [[nodiscard]] cc::States statesOf(Block const& block);
 /// `block` with `states` applied (unknown states ignored).
 [[nodiscard]] Block const* withStates(Block const& block, cc::States const& states);
 
-} // namespace lv::feature::contraption::actors_ext
+} // namespace br::feature::contraption::actors_ext

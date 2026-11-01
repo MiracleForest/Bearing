@@ -77,8 +77,8 @@ TEST(RecipeFiles, ProcessingRecipesParse) {
             continue;
         }
         std::string err;
-        auto        id = "levitate:" + fs::path(rel).replace_extension().generic_string();
-        auto        r  = lv::core::common::parseRecipe(doc, type, id, &err);
+        auto        id = "bearing:" + fs::path(rel).replace_extension().generic_string();
+        auto        r  = br::core::common::parseRecipe(doc, type, id, &err);
         EXPECT_TRUE(r.has_value()) << rel << ": " << err;
         if (r) EXPECT_FALSE(r->results.empty() && r->fluidResults.empty() && type != "sequenced_assembly") << rel << " has no result";
     }

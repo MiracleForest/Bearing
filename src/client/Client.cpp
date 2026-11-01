@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include "client/Client.h"
 
@@ -11,7 +11,7 @@
 
 #include "mod/I18n.h"
 
-namespace lv::client {
+namespace br::client {
 
 ClientInstance* currentClient() { return ll::service::getClientInstance().as_ptr(); }
 
@@ -37,6 +37,6 @@ std::string translateClient(std::string_view key, std::string_view fallback) {
     return std::string(translate(key, fallback, clientLocale()));
 }
 
-} // namespace lv::client
+} // namespace br::client
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

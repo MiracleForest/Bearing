@@ -25,14 +25,14 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace {
 
 using selftest::Context;
 namespace citems = common::items;
 
-constexpr char const* kSource = "levitate:kinetics_test_source";
+constexpr char const* kSource = "bearing:kinetics_test_source";
 constexpr int         AX = 0, AZ = 2;
 
 struct Area {
@@ -97,10 +97,10 @@ int countOn(GlobalPos const& pos) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("belts.registry", [](Context& ctx) {
-    ctx.require(game::blockWith(kBeltId) != nullptr, "levitate:belt is in the behavior pack");
-    ctx.check(game::blockWith(kDepotId) != nullptr, "levitate:depot is in the behavior pack");
-    ctx.check(game::blockWith(kEjectorId) != nullptr, "levitate:weighted_ejector is in the behavior pack");
+BR_REGISTER_SELFTEST("belts.registry", [](Context& ctx) {
+    ctx.require(game::blockWith(kBeltId) != nullptr, "bearing:belt is in the behavior pack");
+    ctx.check(game::blockWith(kDepotId) != nullptr, "bearing:depot is in the behavior pack");
+    ctx.check(game::blockWith(kEjectorId) != nullptr, "bearing:weighted_ejector is in the behavior pack");
     ctx.check(citems::make(kBeltConnectorId).has_value(), "the belt connector item exists");
     ctx.check(kinetics::specOf(kBeltId) != nullptr, "belts are kinetic");
     ctx.check(kinetics::specOf(kEjectorId) != nullptr, "ejectors are kinetic");
@@ -115,7 +115,7 @@ LV_REGISTER_SELFTEST("belts.registry", [](Context& ctx) {
     ctx.check(segmentOf(*b) == s, "belt states read back");
 });
 
-LV_REGISTER_SELFTEST("belts.connect", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.connect", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1100};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     GlobalPos s = a.at(0, 0, 1), e = a.at(4, 0, 1);
@@ -146,7 +146,7 @@ LV_REGISTER_SELFTEST("belts.connect", [](Context& ctx) -> ll::coro::CoroTask<> {
     p.setSelectedItem(ItemStack());
 });
 
-LV_REGISTER_SELFTEST("belts.rules", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.rules", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1110};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.shaft(a.at(0, 0, 1), AZ);
@@ -176,7 +176,7 @@ LV_REGISTER_SELFTEST("belts.rules", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(kinetics::speedAt(a.at(2, 2, 1)) == 16, "the slope's segments turn, got " + std::to_string(kinetics::speedAt(a.at(2, 2, 1))));
 });
 
-LV_REGISTER_SELFTEST("belts.transport", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.transport", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1120};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await makeBelt(a, 4, -96), "belt built");
@@ -196,7 +196,7 @@ LV_REGISTER_SELFTEST("belts.transport", [](Context& ctx) -> ll::coro::CoroTask<>
     clearDepot(a.at(4, 0, 1));
 });
 
-LV_REGISTER_SELFTEST("belts.queue", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.queue", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1130};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await makeBelt(a, 5, -240), "belt built");
@@ -225,7 +225,7 @@ LV_REGISTER_SELFTEST("belts.queue", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearItems(a.at(0, 0, 1));
 });
 
-LV_REGISTER_SELFTEST("belts.eject_and_transfer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.eject_and_transfer", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1140};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     // belt A (x 0..3) feeds belt B (x 4..7) which ends in the air
@@ -247,7 +247,7 @@ LV_REGISTER_SELFTEST("belts.eject_and_transfer", [](Context& ctx) -> ll::coro::C
     ctx.check(bb && bb->inv.empty(), "it fell off the open end of belt B");
 });
 
-LV_REGISTER_SELFTEST("belts.entities", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.entities", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1150};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await makeBelt(a, 6, -240), "belt built");
@@ -278,7 +278,7 @@ LV_REGISTER_SELFTEST("belts.entities", [](Context& ctx) -> ll::coro::CoroTask<> 
     clearItems(a.at(0, 0, 1));
 });
 
-LV_REGISTER_SELFTEST("belts.break", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.break", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1160};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await makeBelt(a, 5, -32), "belt built");
@@ -295,7 +295,7 @@ LV_REGISTER_SELFTEST("belts.break", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(!state().belts.contains(a.at(0, 0, 1)), "the belt's items were dropped");
 });
 
-LV_REGISTER_SELFTEST("belts.edit", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.edit", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1170};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await makeBelt(a, 6, -32), "belt built");
@@ -333,7 +333,7 @@ LV_REGISTER_SELFTEST("belts.edit", [](Context& ctx) -> ll::coro::CoroTask<> {
     p.setSelectedItem(ItemStack());
 });
 
-LV_REGISTER_SELFTEST("belts.depot", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.depot", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1180};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     GlobalPos d = a.at(0, 0, 1);
@@ -375,7 +375,7 @@ LV_REGISTER_SELFTEST("belts.depot", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearDepot(d);
 });
 
-LV_REGISTER_SELFTEST("belts.ejector", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.ejector", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1185};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     GlobalPos e = a.at(0, 0, 1), target = a.at(4, 1, 1);
@@ -410,7 +410,7 @@ LV_REGISTER_SELFTEST("belts.ejector", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearDepot(target);
 });
 
-LV_REGISTER_SELFTEST("belts.persist", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.persist", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1190};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await makeBelt(a, 3, 0), "belt built (standing still)");
@@ -429,4 +429,4 @@ LV_REGISTER_SELFTEST("belts.persist", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearItems(a.at(0, 0, 1));
 });
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

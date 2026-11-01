@@ -6,9 +6,9 @@
 //
 // Internal header of the unit (server thread unless noted). Block state conventions are shared
 // with tools/gen/building.ps1:
-//   levitate:facing  0..5 down, up, north, south, west, east (Java Direction order);
+//   bearing:facing  0..5 down, up, north, south, west, east (Java Direction order);
 //                    horizontal blocks use 2..5
-//   levitate:c_<dir> connected-texture neighbours, levitate:<dir> pane arms
+//   bearing:c_<dir> connected-texture neighbours, bearing:<dir> pane arms
 
 #include <array>
 #include <cstdint>
@@ -31,7 +31,7 @@ class ItemStack;
 class Player;
 class Vec3;
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 using core::GlobalPos;
 
@@ -89,7 +89,7 @@ enum class Kind : std::uint8_t {
 enum class Ct : std::uint8_t { None, Omni, Horizontal, Vertical, Rect };
 
 struct Info {
-    std::string id; ///< "levitate:<path>"
+    std::string id; ///< "bearing:<path>"
     Kind        kind = Kind::None;
     Ct          ct   = Ct::None;
     bool        folds = false; ///< folding sliding door (Create: andesite and copper doors)
@@ -104,14 +104,14 @@ struct Info {
 [[nodiscard]] Info const* infoOf(std::string_view id);
 [[nodiscard]] Info const* infoOf(Block const& block);
 [[nodiscard]] std::vector<Info const*> const& allBlocks();
-/// The copper id of `shape` at `age`, waxed or not ("levitate:waxed_exposed_copper_shingles").
+/// The copper id of `shape` at `age`, waxed or not ("bearing:waxed_exposed_copper_shingles").
 [[nodiscard]] std::string copperId(std::string const& shape, int age, bool waxed);
 
-inline constexpr char kShaftId[]          = "levitate:shaft";
-inline constexpr char kWrenchId[]         = "levitate:wrench";
-inline constexpr char kGirderId[]         = "levitate:metal_girder";
-inline constexpr char kGirderShaftId[]    = "levitate:metal_girder_encased_shaft";
-inline constexpr char kPlacardId[]        = "levitate:placard";
+inline constexpr char kShaftId[]          = "bearing:shaft";
+inline constexpr char kWrenchId[]         = "bearing:wrench";
+inline constexpr char kGirderId[]         = "bearing:metal_girder";
+inline constexpr char kGirderShaftId[]    = "bearing:metal_girder_encased_shaft";
+inline constexpr char kPlacardId[]        = "bearing:placard";
 inline constexpr char kDataKey[]          = "building"; ///< BlockData top-level key
 
 // ---- block states -----------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void defer(std::function<void()> fn);
 void markDirty(GlobalPos const& p);
 /// Recomputes the connection-dependent states of the block at `p` now. Returns true if changed.
 bool updateConnections(GlobalPos const& p);
-/// Whether a block / pane of CT type `ct` has the connected-texture state levitate:c_<dir>.
+/// Whether a block / pane of CT type `ct` has the connected-texture state bearing:c_<dir>.
 [[nodiscard]] bool ctUses(Ct ct, int dir);
 
 /// A use of `item` on the block at `pos` (face, hit inside the block 0..1). Returns true when the
@@ -202,7 +202,7 @@ bool useDoor(Player* player, GlobalPos const& pos);
 bool useTrapdoor(Player* player, GlobalPos const& pos);
 void trackRedstone(GlobalPos const& pos);
 void redstoneTick();
-/// Closing doors whose panel is back lose `levitate:closing` (closed collision, sound).
+/// Closing doors whose panel is back lose `bearing:closing` (closed collision, sound).
 void doorAnimationTick();
 
 // placard
@@ -251,7 +251,7 @@ enum class HarvestNeed : std::uint8_t { None, Pickaxe, AxeOrPickaxe, StonePickax
 [[nodiscard]] std::function<Block const*(BlockPos const&)>& clientCopycatMaterial();
 /// Create's CopycatBlockEntity.updateLight: the light (0..15) of a copycat with `material` (none: 0).
 [[nodiscard]] int copycatLightOf(Block const* material);
-/// Sets the copycat's levitate:light state to its material's light.
+/// Sets the copycat's bearing:light state to its material's light.
 void syncCopycatLight(GlobalPos const& pos);
 [[nodiscard]] std::optional<std::string> bracketAt(GlobalPos const& pos);
 /// The bracket document {id, facing, axis, cog} (nullptr when none).
@@ -283,4 +283,4 @@ void applyBlockProperties();
 void installHooks();
 void uninstallHooks();
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

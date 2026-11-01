@@ -35,11 +35,11 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::tracks {
+namespace br::feature::tracks {
 
 namespace {
 
-constexpr std::string_view kGirderId = "levitate:metal_girder";
+constexpr std::string_view kGirderId = "bearing:metal_girder";
 
 std::string uuidOf(Player const& p) { return p.getUuid().asString(); }
 
@@ -174,7 +174,7 @@ int paveStraight(
         bool alongX = std::abs(direction.x) > 1e-6;
         if (auto const* g = game::blockWith(
                 std::string(kGirderId),
-                {{"levitate:axis", alongX ? 0 : 2}, {"levitate:top", 0}, {"levitate:bottom", 0}, {alongX ? "levitate:x" : "levitate:z", 1}}
+                {{"bearing:axis", alongX ? 0 : 2}, {"bearing:top", 0}, {"bearing:bottom", 0}, {alongX ? "bearing:x" : "bearing:z", 1}}
             ))
             block = g;
     }
@@ -332,7 +332,7 @@ struct PendingConnection {
     ct::PlacementRequest request;
 };
 
-void denyAndCancel(Player& player) { playSound(player, "levitate.tracks.deny", 1, 1); }
+void denyAndCancel(Player& player) { playSound(player, "bearing.tracks.deny", 1, 1); }
 
 std::optional<ct::PlacementPlan> planFor(Player& player, BlockSource& region, ct::PlacementRequest& req, ct::Shape& shape1, ct::Shape& shape2) {
     auto& s   = state();
@@ -804,4 +804,4 @@ void onPortalRemoved(int dim, ct::BlockPos3 const& portalPos) {
     }
 }
 
-} // namespace lv::feature::tracks
+} // namespace br::feature::tracks

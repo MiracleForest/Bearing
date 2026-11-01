@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-namespace lv::core::common {
+namespace br::core::common {
 
 /// A point on a board.
 struct ValueSettings {
@@ -62,4 +62,4 @@ using Vec = std::array<double, 3>;
 /// Create's ValueBoxTransform.testHit: the hit is within `scale / 2` blocks of the box centre.
 [[nodiscard]] bool testBoxHit(Vec const& localHit, Vec const& boxCentre, double scale = 0.5);
 
-} // namespace lv::core::common
+} // namespace br::core::common

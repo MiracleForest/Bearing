@@ -2,7 +2,7 @@
 
 // Block models of data-driven blocks for the Ponder renderer (U30), pure C++.
 //
-// The Ponder scene draws Levitate blocks from the same data the game uses: the behavior pack
+// The Ponder scene draws Bearing blocks from the same data the game uses: the behavior pack
 // block (`minecraft:geometry` + `bone_visibility`, `minecraft:material_instances`,
 // `minecraft:transformation`, permutations with Molang conditions on block states) and the resource
 // pack geometry (`models/blocks/*.geo.json`). `resolve` picks the components for a set of state
@@ -17,7 +17,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::ponder {
+namespace br::core::ponder {
 
 using V3 = std::array<float, 3>;
 using V2 = std::array<float, 2>;
@@ -107,4 +107,4 @@ struct Quad {
     std::map<std::string, std::string> const& strings = {}
 );
 
-} // namespace lv::core::ponder
+} // namespace br::core::ponder

@@ -16,7 +16,7 @@
 
 #include "nlohmann/json_fwd.hpp"
 
-namespace lv::core::kinetics {
+namespace br::core::kinetics {
 
 struct ModelQuad {
     std::array<std::array<float, 3>, 4> pos; ///< corners in order (outside view: TL, TR, BR, BL)
@@ -32,4 +32,4 @@ struct RotorModel {
 /// Returns nullopt (with `error`) if the file is not geometry.
 [[nodiscard]] std::optional<std::map<std::string, RotorModel>> parseGeometry(nlohmann::json const& file, std::string* error = nullptr);
 
-} // namespace lv::core::kinetics
+} // namespace br::core::kinetics

@@ -34,7 +34,7 @@
 #include "feature/net/Net.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::generators {
+namespace br::feature::generators {
 
 namespace {
 
@@ -162,7 +162,7 @@ void placeHandler(ia::PlaceContext const& c) {
 // IWrenchable.onWrenched: a rotated state that cannot survive (a water wheel turned against
 // another one) is not applied
 namespace wrench = goggles::wrench;
-LV_REGISTER_WRENCHABLE(
+BR_REGISTER_WRENCHABLE(
     kWaterWheel,
     wrench::Handler{.onWrenched = [](wrench::Context& c) {
         if (!canSurvive(c.region, c.pos, wrench::rotatedBlock(c.block, c.face))) return wrench::Result::Pass;
@@ -235,4 +235,4 @@ void uninstallHooks() {
 
 } // namespace detail
 
-} // namespace lv::feature::generators
+} // namespace br::feature::generators

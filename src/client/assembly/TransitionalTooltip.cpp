@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client mod: the tooltip of a transitional (incomplete) item of a sequenced assembly in the
 // game's language (Create's SequencedAssemblyRecipe.addToTooltip: "Sequenced Assembly",
@@ -26,12 +26,12 @@
 #include "mod/Module.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::client::assembly {
+namespace br::client::assembly {
 
 namespace sa = feature::assembly::sequenced;
 
-/// The item data tag of the sequenced assembly progress (common/Items.h stores data as "lv:<key>").
-std::string const kDataTag = "lv:" + std::string(sa::kDataKey);
+/// The item data tag of the sequenced assembly progress (common/Items.h stores data as "br:<key>").
+std::string const kDataTag = "br:" + std::string(sa::kDataKey);
 
 namespace {
 
@@ -68,7 +68,7 @@ LL_TYPE_INSTANCE_HOOK(
     auto r = origin(level, showCategory);
     if (isNull() || !mUserData || !mUserData->contains(kDataTag)) return r;
     auto id = getTypeName();
-    if (!id.starts_with("levitate:")) return r;
+    if (!id.starts_with("bearing:")) return r;
     // `this` may be an ItemInstance: the item data goes onto a stack of our own
     auto stack = feature::common::items::make(id, 1, getAuxValue());
     if (!stack) return r;
@@ -84,7 +84,7 @@ LL_TYPE_INSTANCE_HOOK(
 
 // the hover text of a transitional item made by the engine (local worlds: the integrated server's
 // level): Create's lines in the game's language, each once, the lore not repeated
-LV_REGISTER_SELFTEST("assembly.client_tooltip", [](selftest::Context& ctx) {
+BR_REGISTER_SELFTEST("assembly.client_tooltip", [](selftest::Context& ctx) {
     auto level = ll::service::getLevel();
     ctx.require(level.has_value(), "a level");
     auto slab = feature::common::items::make("minecraft:smooth_stone_slab");
@@ -110,8 +110,8 @@ public:
     void uninstall() { TransitionalHovertextHook::unhook(); }
 };
 
-} // namespace lv::client::assembly
+} // namespace br::client::assembly
 
-LV_REGISTER_MODULE(lv::client::assembly::TransitionalTooltipModule);
+BR_REGISTER_MODULE(br::client::assembly::TransitionalTooltipModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

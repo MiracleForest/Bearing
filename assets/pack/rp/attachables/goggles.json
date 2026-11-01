@@ -2,7 +2,7 @@
   "format_version": "1.10.0",
   "minecraft:attachable": {
     "description": {
-      "identifier": "levitate:goggles",
+      "identifier": "bearing:goggles",
       "materials": {
         "default": "armor",
         "enchanted": "armor_enchanted"
@@ -12,9 +12,9 @@
         "enchanted": "textures/misc/enchanted_item_glint"
       },
       "geometry": {
-        "default": "geometry.levitate.goggles"
+        "default": "geometry.bearing.goggles"
       },
-      "render_controllers": ["controller.render.levitate.goggles"]
+      "render_controllers": ["controller.render.bearing.goggles"]
     }
   }
 }

@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:layered_tuff_from_cut_tuff_stonecutting"
+      "identifier": "bearing:layered_tuff_from_cut_tuff_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:cut_tuff"
+        "item": "bearing:cut_tuff"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:cut_tuff"
+        "item": "bearing:cut_tuff"
       }
     ],
     "result": {
-      "item": "levitate:layered_tuff",
+      "item": "bearing:layered_tuff",
       "count": 1
     }
   }

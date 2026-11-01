@@ -31,19 +31,19 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
+using br::core::GlobalPos;
+using br::selftest::Context;
 using JsonT     = nlohmann::json;
-namespace adv   = lv::feature::advancements;
-namespace items = lv::feature::common::items;
-namespace caps  = lv::feature::common;
-namespace dsp   = lv::feature::display;
-namespace eq    = lv::feature::equipment;
-namespace rl    = lv::feature::redstone::link;
-namespace stock = lv::feature::stock;
-namespace tn    = lv::feature::trains;
-namespace tr    = lv::feature::tracks;
-namespace ct    = lv::core::trains;
+namespace adv   = br::feature::advancements;
+namespace items = br::feature::common::items;
+namespace caps  = br::feature::common;
+namespace dsp   = br::feature::display;
+namespace eq    = br::feature::equipment;
+namespace rl    = br::feature::redstone::link;
+namespace stock = br::feature::stock;
+namespace tn    = br::feature::trains;
+namespace tr    = br::feature::tracks;
+namespace ct    = br::core::trains;
 
 GlobalPos at(GlobalPos p, int dx, int dy = 0, int dz = 0) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -61,14 +61,14 @@ BlockSource& region(Context& ctx) { return ctx.player().getDimensionBlockSource(
 
 // ---- block owners and per-block counters ------------------------------------------------------
 
-LV_REGISTER_SELFTEST("advancements.trigger_counters", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("advancements.trigger_counters", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4920), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     revokeAll(p, {"mechanical_press", "track_crafting_factory", "spout", "foods", "self_deploying", "packager", "frogport", "factory_gauge"});
     // the blocks U49 added to Create's registerAwardables keep their placer as owner
     int x = 0;
-    for (auto const* id : {"levitate:packager", "levitate:repackager", "levitate:package_frogport", "levitate:factory_gauge"}) {
+    for (auto const* id : {"bearing:packager", "bearing:repackager", "bearing:package_frogport", "bearing:factory_gauge"}) {
         auto pos = at(base, x++, 0, 0);
         ctx.require(ctx.setBlock(pos, id), std::string("place ") + id);
         adv::setOwner(pos, p);
@@ -76,68 +76,68 @@ LV_REGISTER_SELFTEST("advancements.trigger_counters", [](Context& ctx) -> ll::co
     }
     // Create's MechanicalPressBlockEntity#onItemPressed: tracks count towards 1000
     auto press = at(base, 0, 0, 2);
-    ctx.require(ctx.setBlock(press, "levitate:mechanical_press"), "place a press");
+    ctx.require(ctx.setBlock(press, "bearing:mechanical_press"), "place a press");
     adv::setOwner(press, p);
     auto uuid = adv::ownerOf(press);
     ctx.require(!uuid.empty(), "the press has an owner");
-    adv::onItemPressed(press, "levitate:track", 999);
+    adv::onItemPressed(press, "bearing:track", 999);
     ctx.check(adv::has(p, "mechanical_press"), "pressing awards mechanical_press");
     ctx.check(!adv::has(p, "track_crafting_factory"), "999 tracks are not enough");
     adv::onItemPressed(press, "minecraft:iron_ingot", 1);
     ctx.check(!adv::has(p, "track_crafting_factory"), "other results don't count");
-    adv::onItemPressed(press, "levitate:track", 1);
+    adv::onItemPressed(press, "bearing:track", 1);
     ctx.check(adv::has(p, "track_crafting_factory"), "the 1000th track awards track_crafting_factory");
     // Create's SpoutBlockEntity: the three foods made by one spout
     auto spout = at(base, 2, 0, 2);
-    ctx.require(ctx.setBlock(spout, "levitate:spout"), "place a spout");
+    ctx.require(ctx.setBlock(spout, "bearing:spout"), "place a spout");
     adv::setOwner(spout, p);
-    adv::onSpoutFilled(spout, "levitate:honeyed_apple");
+    adv::onSpoutFilled(spout, "bearing:honeyed_apple");
     ctx.check(adv::has(p, "spout") && !adv::has(p, "foods"), "filling awards spout");
-    adv::onSpoutFilled(spout, "levitate:sweet_roll");
+    adv::onSpoutFilled(spout, "bearing:sweet_roll");
     ctx.check(!adv::has(p, "foods"), "two of the three foods");
-    adv::onSpoutFilled(spout, "levitate:chocolate_glazed_berries");
+    adv::onSpoutFilled(spout, "bearing:chocolate_glazed_berries");
     ctx.check(adv::has(p, "foods"), "all three foods award foods");
     // Create's DeployerMovementBehaviour#checkForTrackPlacementAdvancement
     JsonT doc{{"advancements", {{"owner", uuid}}}};
-    adv::onMovingDeployerUsed("mechanical_bearing", doc, "levitate:track", true);
+    adv::onMovingDeployerUsed("mechanical_bearing", doc, "bearing:track", true);
     ctx.check(!adv::has(p, "self_deploying"), "not on a minecart contraption or train");
     adv::onMovingDeployerUsed("train", doc, "minecraft:dirt", true);
     ctx.check(!adv::has(p, "self_deploying"), "not a track");
-    adv::onMovingDeployerUsed("train", doc, "levitate:track", true);
+    adv::onMovingDeployerUsed("train", doc, "bearing:track", true);
     ctx.check(adv::has(p, "self_deploying"), "a deployer on a train placing track awards self_deploying");
     revokeAll(p, {"mechanical_press", "track_crafting_factory", "spout", "foods", "self_deploying"});
 });
 
 // ---- a real machine: the millstone ------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("advancements.trigger_millstone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("advancements.trigger_millstone", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4905), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     adv::revoke(p, "millstone");
     auto mill = at(base, 0, 1);
-    ctx.require(ctx.setBlock(base, "levitate:kinetics_test_source", {{"levitate:axis", 1}}), "place the source");
-    ctx.require(ctx.setBlock(mill, "levitate:millstone"), "place the millstone");
+    ctx.require(ctx.setBlock(base, "bearing:kinetics_test_source", {{"bearing:axis", 1}}), "place the source");
+    ctx.require(ctx.setBlock(mill, "bearing:millstone"), "place the millstone");
     adv::setOwner(mill, p);
     co_await ctx.ticks(2);
-    lv::kinetics::setGeneratedSpeed(base, 256);
+    br::kinetics::setGeneratedSpeed(base, 256);
     co_await ctx.ticks(2);
     auto rest = caps::items::insert(region(ctx), BlockPos{mill.x, mill.y, mill.z}, 1, item(ctx, "minecraft:bone"), false);
     ctx.require(items::isEmpty(rest), "a bone goes in");
     for (int i = 0; i < 60 && !adv::has(p, "millstone"); ++i) co_await ctx.ticks(1);
     ctx.check(adv::has(p, "millstone"), "milling awards millstone to the owner");
-    lv::kinetics::setGeneratedSpeed(base, 0);
+    br::kinetics::setGeneratedSpeed(base, 0);
     adv::revoke(p, "millstone");
 });
 
 // ---- linked controller (U23 link query) -------------------------------------------------------
 
-LV_REGISTER_SELFTEST("advancements.trigger_linked_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("advancements.trigger_linked_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4910), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     adv::revoke(p, "linked_controller");
-    auto controller = item(ctx, "levitate:linked_controller");
+    auto controller = item(ctx, "bearing:linked_controller");
     auto pair       = [](JsonT a, JsonT b) { return JsonT::array({a, b}); };
     JsonT none      = nullptr;
     JsonT freq      = JsonT::array({pair(items::toJson(item(ctx, "minecraft:redstone")), items::toJson(item(ctx, "minecraft:emerald"))), pair(none, none),
@@ -171,7 +171,7 @@ struct TestPackagers {
     TestPackagers() {
         previous = stock::currentPackagerProvider();
         stock::PackagerProvider pr;
-        pr.isPackager     = [](BlockSource& r, BlockPos const& pos) { return lv::game::blockIdAt(r, pos) == "minecraft:barrel"; };
+        pr.isPackager     = [](BlockSource& r, BlockPos const& pos) { return br::game::blockIdAt(r, pos) == "minecraft:barrel"; };
         pr.availableItems = [](BlockSource& r, BlockPos const& pos) -> std::optional<std::vector<stock::BigStack>> {
             std::vector<stock::BigStack> out;
             int                          n = caps::items::slotCount(r, pos, -1);
@@ -183,7 +183,7 @@ struct TestPackagers {
             }
             return out;
         };
-        pr.inventoryId    = [](BlockSource& r, BlockPos const& pos) { return lv::game::globalPos(r, pos).key(); };
+        pr.inventoryId    = [](BlockSource& r, BlockPos const& pos) { return br::game::globalPos(r, pos).key(); };
         pr.queuedPackages = [](BlockSource&, BlockPos const&) { return 0; };
         pr.send           = [this](BlockSource&, BlockPos const&, std::vector<stock::PackagingRequest> const& reqs) { sent += int(reqs.size()); };
         stock::setPackagerProvider(pr);
@@ -194,15 +194,15 @@ struct TestPackagers {
 /// A barrel (packager) with a stock link on top, on a new network.
 std::string linkedBarrel(Context& ctx, GlobalPos const& barrel, char const* fillId, int count) {
     ctx.require(ctx.setBlock(barrel, "minecraft:barrel"), "place a barrel");
-    auto rest = caps::items::insert(region(ctx), lv::game::blockPos(barrel), -1, item(ctx, fillId, count), false);
+    auto rest = caps::items::insert(region(ctx), br::game::blockPos(barrel), -1, item(ctx, fillId, count), false);
     ctx.require(items::isEmpty(rest), "the barrel takes the items");
     auto link = at(barrel, 0, 1, 0);
-    ctx.require(ctx.setBlock(link, stock::kStockLink, {{"levitate:face", 0}, {"levitate:facing", 2}}), "place a stock link");
+    ctx.require(ctx.setBlock(link, stock::kStockLink, {{"bearing:face", 0}, {"bearing:facing", 2}}), "place a stock link");
     stock::onLinkPlaced(link, &ctx.player(), item(ctx, stock::kStockLink));
     return stock::networkAt(link);
 }
 
-LV_REGISTER_SELFTEST("advancements.trigger_stock", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("advancements.trigger_stock", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4912), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
@@ -211,7 +211,7 @@ LV_REGISTER_SELFTEST("advancements.trigger_stock", [](Context& ctx) -> ll::coro:
     auto          network = linkedBarrel(ctx, base, "minecraft:iron_ingot", 64);
     // Create's PackageOrderRequestPacket: an order from the stock ticker
     auto tickerPos = at(base, 0, 0, 3);
-    ctx.require(ctx.setBlock(tickerPos, stock::kStockTicker, {{"levitate:facing", 0}}), "place a stock ticker");
+    ctx.require(ctx.setBlock(tickerPos, stock::kStockTicker, {{"bearing:facing", 0}}), "place a stock ticker");
     ItemStack tickerItem = item(ctx, stock::kStockTicker);
     stock::tuneItem(tickerItem, network);
     stock::onTickerPlaced(tickerPos, &p, tickerItem);
@@ -220,10 +220,10 @@ LV_REGISTER_SELFTEST("advancements.trigger_stock", [](Context& ctx) -> ll::coro:
     stock::placeOrder(p, tickerPos, {{item(ctx, "minecraft:iron_ingot"), 4}}, "Mill", false);
     ctx.check(adv::has(p, "stock_ticker"), "ordering awards stock_ticker");
     // Create's TableClothBlock#setPlacedBy with an encoded order
-    if (lv::game::blockWith("levitate:white_table_cloth")) {
+    if (br::game::blockWith("bearing:white_table_cloth")) {
         auto cloth = at(base, 3, 0, 3);
-        ctx.require(ctx.setBlock(cloth, "levitate:white_table_cloth"), "place a table cloth");
-        ItemStack clothItem = item(ctx, "levitate:white_table_cloth");
+        ctx.require(ctx.setBlock(cloth, "bearing:white_table_cloth"), "place a table cloth");
+        ItemStack clothItem = item(ctx, "bearing:white_table_cloth");
         items::setData(clothItem, stock::kRequestData,
                        {{"order", stock::orderToJson({{item(ctx, "minecraft:iron_ingot"), 2}})}, {"address", "Buyer"}, {"ticker", stock::posJson(tickerPos)}});
         stock::onClothPlaced(cloth, p, clothItem);
@@ -235,7 +235,7 @@ LV_REGISTER_SELFTEST("advancements.trigger_stock", [](Context& ctx) -> ll::coro:
     ctx.setBlock(at(wall, 1, 0, 0), "minecraft:stone");
     auto out = at(wall, 0, 0, -1), in = at(wall, 1, 0, -1);
     for (auto g : {out, in}) {
-        ctx.require(ctx.setBlock(g, stock::kFactoryGauge, {{"levitate:face", 1}, {"levitate:facing", 2}}), "place a gauge on the wall");
+        ctx.require(ctx.setBlock(g, stock::kFactoryGauge, {{"bearing:face", 1}, {"bearing:facing", 2}}), "place a gauge on the wall");
         ctx.require(stock::placeGaugePanel(g, 0, network, nullptr), "panel");
     }
     adv::setOwner(out, p);
@@ -245,7 +245,7 @@ LV_REGISTER_SELFTEST("advancements.trigger_stock", [](Context& ctx) -> ll::coro:
     stock::useGauge(p, in, 0, false);
     p.setSelectedItem(items::empty());
     ctx.require(stock::connectPanels(&p, out, 0, in, 0), "the panels connect");
-    lv::feature::common::valuebox::apply(p, out, "panel0", {0, 2});
+    br::feature::common::valuebox::apply(p, out, "panel0", {0, 2});
     auto& panel                      = stock::editData(out)["panels"]["0"];
     panel["address"]                 = "Press";
     panel["targetedBy"][0]["amount"] = 9;
@@ -260,23 +260,23 @@ LV_REGISTER_SELFTEST("advancements.trigger_stock", [](Context& ctx) -> ll::coro:
 // ---- trains: assembly, conductor, display link and board --------------------------------------
 
 std::vector<std::pair<std::string, int>> xo() {
-    int s = int(lv::core::tracks::Shape::XO);
+    int s = int(br::core::tracks::Shape::XO);
     return {{std::string(tr::kShapeState), s % 16}, {std::string(tr::kShapeHiState), s / 16}, {std::string(tr::kTurnState), 0}};
 }
 
 void clearBox(Context& ctx, GlobalPos a, GlobalPos b) {
     auto&       r   = region(ctx);
-    auto const* air = lv::game::blockWith("minecraft:air");
+    auto const* air = br::game::blockWith("minecraft:air");
     if (!air) return;
     for (int x = std::min(a.x, b.x); x <= std::max(a.x, b.x); ++x)
         for (int y = std::min(a.y, b.y); y <= std::max(a.y, b.y); ++y)
             for (int z = std::min(a.z, b.z); z <= std::max(a.z, b.z); ++z) {
                 BlockPos bp{x, y, z};
-                if (!r.getBlock(bp).isAir()) lv::game::setBlock(r, bp, *air);
+                if (!r.getBlock(bp).isAir()) br::game::setBlock(r, bp, *air);
             }
 }
 
-LV_REGISTER_SELFTEST("advancements.trigger_trains", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("advancements.trigger_trains", [](Context& ctx) -> ll::coro::CoroTask<> {
     // a 28-block east-west line with a station at x + 20 (its assembly area runs west of it)
     auto base = ctx.testPos(4900, 2);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
@@ -302,7 +302,7 @@ LV_REGISTER_SELFTEST("advancements.trigger_trains", [](Context& ctx) -> ll::coro
     // Create's StationBlockEntity#assemble: train (and long_train from 6 carriages)
     tn::setAssembling(*s, true, nullptr);
     ctx.check(tn::useCasingOnTrack(nullptr, at(track, -1), true).starts_with("+"), "a bogey at the station marker");
-    ctx.setBlock(at(track, -1, 2), std::string(tn::kControls), {{"levitate:facing", 4}});
+    ctx.setBlock(at(track, -1, 2), std::string(tn::kControls), {{"bearing:facing", 4}});
     auto id = tn::assemble(*s, nullptr);
     ctx.require(id.has_value(), "the train assembles");
     ctx.check(adv::has(p, "train"), "assembling awards train to the station's owner");
@@ -320,11 +320,11 @@ LV_REGISTER_SELFTEST("advancements.trigger_trains", [](Context& ctx) -> ll::coro
     // a display link on the station targeting a display board: display_link and display_board_0
     auto link  = at(station, 0, 1);
     auto board = at(station, 3, 1);
-    ctx.require(ctx.setBlock(board, dsp::kBoardId, {{"levitate:facing", 0}}), "place a display board");
+    ctx.require(ctx.setBlock(board, dsp::kBoardId, {{"bearing:facing", 0}}), "place a display board");
     dsp::board::updateColumns(region(ctx), board);
     ctx.require(ctx.setBlock(link, dsp::kLinkId), "place a display link");
-    if (auto const* up = dsp::withStates(region(ctx).getBlock(lv::game::blockPos(link)), {{"minecraft:block_face", std::string("up")}}))
-        lv::game::setBlock(region(ctx), lv::game::blockPos(link), *up);
+    if (auto const* up = dsp::withStates(region(ctx).getBlock(br::game::blockPos(link)), {{"minecraft:block_face", std::string("up")}}))
+        br::game::setBlock(region(ctx), br::game::blockPos(link), *up);
     dsp::link::LinkData d;
     d.targetOffset = {board.x - link.x, board.y - link.y, board.z - link.z};
     dsp::link::write(link, d);

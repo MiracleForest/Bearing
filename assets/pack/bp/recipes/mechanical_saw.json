@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:mechanical_saw"
+      "identifier": "bearing:mechanical_saw"
     },
     "tags": [
       "crafting_table"
@@ -14,10 +14,10 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       },
       "C": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "I": {
         "item": "minecraft:iron_ingot"
@@ -25,11 +25,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:mechanical_saw",
+      "item": "bearing:mechanical_saw",
       "count": 1
     }
   }

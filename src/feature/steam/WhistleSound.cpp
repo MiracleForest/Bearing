@@ -27,7 +27,7 @@
 #include "feature/steam/SteamInternal.h"
 #include "mod/Log.h"
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 namespace {
 
@@ -176,7 +176,7 @@ void whistleChiff(GlobalPos const& whistle, float pitch) {
         auto packet = MinecraftPackets::createPacket(MinecraftPacketIds::PlaySound);
         if (!packet) return true;
         auto& pkt   = static_cast<PlaySoundPacket&>(*packet);
-        pkt.mName   = "levitate.steam.whistle_chiff";
+        pkt.mName   = "bearing.steam.whistle_chiff";
         pkt.mPos    = BlockPos{whistle.x * 8 + 4, whistle.y * 8 + 4, whistle.z * 8 + 4};
         pkt.mVolume = static_cast<float>(maxVolume * .175);
         pkt.mPitch  = pitch;
@@ -225,4 +225,4 @@ int whistleToneListeners(GlobalPos const& whistle) {
     return it == tones().end() ? 0 : static_cast<int>(it->second.listeners.size());
 }
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam

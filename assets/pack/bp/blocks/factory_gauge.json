@@ -2,23 +2,23 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:factory_gauge",
+      "identifier": "bearing:factory_gauge",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:face": [
+        "bearing:face": [
           0,
           1,
           2
         ],
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
           3
         ],
-        "levitate:panels": [
+        "bearing:panels": [
           0,
           1,
           2,
@@ -48,21 +48,21 @@
       "minecraft:map_color": "#b8862d",
       "minecraft:loot": "loot_tables/blocks/factory_gauge.json",
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.factory_gauge",
+        "identifier": "geometry.bearing.factory_gauge",
         "bone_visibility": {
-          "tl": "math.mod(q.block_state('levitate:panels'), 2) == 1",
-          "tr": "math.mod(math.floor(q.block_state('levitate:panels') / 2), 2) == 1",
-          "bl": "math.mod(math.floor(q.block_state('levitate:panels') / 4), 2) == 1 || q.block_state('levitate:panels') == 0",
-          "br": "math.floor(q.block_state('levitate:panels') / 8) == 1"
+          "tl": "math.mod(q.block_state('bearing:panels'), 2) == 1",
+          "tr": "math.mod(math.floor(q.block_state('bearing:panels') / 2), 2) == 1",
+          "bl": "math.mod(math.floor(q.block_state('bearing:panels') / 4), 2) == 1 || q.block_state('bearing:panels') == 0",
+          "br": "math.floor(q.block_state('bearing:panels') / 8) == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_factory_gauge",
+          "texture": "bearing_factory_gauge",
           "render_method": "opaque"
         },
         "dial": {
-          "texture": "levitate_factory_gauge_dial",
+          "texture": "bearing_factory_gauge_dial",
           "render_method": "opaque"
         }
       },
@@ -94,7 +94,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -106,7 +106,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -118,7 +118,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -130,7 +130,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 0 && q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -142,7 +142,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -154,7 +154,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -166,7 +166,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -178,7 +178,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 1 && q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -190,7 +190,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -202,7 +202,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -214,7 +214,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -226,7 +226,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:face') == 2 && q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [

@@ -1,5 +1,5 @@
 {
-  "type": "levitate:pressing",
+  "type": "bearing:pressing",
   "ingredients": [
     {
       "tag": "c:ingots/brass"
@@ -7,7 +7,7 @@
   ],
   "results": [
     {
-      "id": "levitate:brass_sheet"
+      "id": "bearing:brass_sheet"
     }
   ]
 }

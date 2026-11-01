@@ -30,9 +30,9 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("bearings", lv::feature::bearings::Config);
+BR_REGISTER_CONFIG("bearings", br::feature::bearings::Config);
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
 namespace ia = common::interactions;
 
@@ -43,7 +43,7 @@ bool fitsInsideContainerItems(std::string_view itemId) {
 
 namespace {
 
-constexpr char kIndexKey[] = "lv:bearings:index";
+constexpr char kIndexKey[] = "br:bearings:index";
 
 struct ModuleState {
     std::map<GP, Kind>                  index;
@@ -327,6 +327,6 @@ private:
     std::vector<ia::HandlerId>                  mHandlers;
 };
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings
 
-LV_REGISTER_MODULE(lv::feature::bearings::BearingsModule);
+BR_REGISTER_MODULE(br::feature::bearings::BearingsModule);

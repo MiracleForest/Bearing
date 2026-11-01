@@ -1,6 +1,6 @@
 // Selftests of the fluids unit (U19, testPos dx 1900..1999; U40's additions 4040..4049; U51's 5150..5199).
 //
-// `levitate:fluids_test_depot` stands in for Create's depot (U11) in these tests: one slot from
+// `bearing:fluids_test_depot` stands in for Create's depot (U11) in these tests: one slot from
 // the top through the item capability, and a mounted 8000 mB tank on contraptions.
 
 #include <cmath>
@@ -34,7 +34,7 @@
 #include "mod/Config.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace {
 
@@ -163,7 +163,7 @@ int countBlocks(Context& ctx, GlobalPos const& from, GlobalPos const& to, std::s
 
 // ---- registry ----------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("fluids.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("fluids.registry", [](Context& ctx) {
     for (auto const* id : {kSpout, kItemDrain, kHosePulley, kPfi, kHoneyBlock, kChocolateBlock, kTestDepot})
         ctx.check(game::blockWith(id) != nullptr, std::string(id) + " is registered");
     ctx.check(items::make(kHoneyBucket).has_value() && items::make(kChocolateBucket).has_value(), "buckets are registered");
@@ -172,27 +172,27 @@ LV_REGISTER_SELFTEST("fluids.registry", [](Context& ctx) {
     ctx.check(water && water->fluid == FluidStack{"minecraft:water", 1000} && items::idOf(water->container) == "minecraft:bucket",
               "water bucket -> 1000 mB water + bucket");
     auto harm = emptyItem(item(ctx, "minecraft:splash_potion", 1, 23));
-    ctx.check(harm && harm->fluid == FluidStack{"levitate:potion/splash/harming", 250}
+    ctx.check(harm && harm->fluid == FluidStack{"bearing:potion/splash/harming", 250}
                   && items::idOf(harm->container) == "minecraft:glass_bottle",
               "splash potion of harming -> 250 mB potion fluid");
     auto honey = emptyItem(item(ctx, kHoneyBucket));
-    ctx.check(honey && honey->fluid == FluidStack{"levitate:honey", 1000}, "honey bucket -> 1000 mB honey");
+    ctx.check(honey && honey->fluid == FluidStack{"bearing:honey", 1000}, "honey bucket -> 1000 mB honey");
     auto bottle = emptyItem(item(ctx, "minecraft:honey_bottle"));
-    ctx.check(bottle && bottle->fluid == FluidStack{"levitate:honey", 250}, "honey bottle -> 250 mB honey (emptying recipe)");
+    ctx.check(bottle && bottle->fluid == FluidStack{"bearing:honey", 250}, "honey bottle -> 250 mB honey (emptying recipe)");
     ctx.check(!emptyItem(item(ctx, "minecraft:powder_snow_bucket")), "powder snow is no fluid for the drain (as Create)");
 
     auto glass = item(ctx, "minecraft:glass_bottle");
     ctx.check(requiredAmount(glass, {"minecraft:water", 1000}, false) == 250, "glass bottle takes 250 mB water");
-    ctx.check(requiredAmount(glass, {"levitate:honey", 1000}, false) == -1, "a glass bottle takes honey only by recipe");
-    ctx.check(requiredAmount(glass, {"levitate:honey", 1000}, true) == 250, "the spout fills honey bottles (filling recipe)");
-    auto filled = fillItem(glass, {"levitate:potion/lingering/swiftness", 250}, false);
+    ctx.check(requiredAmount(glass, {"bearing:honey", 1000}, false) == -1, "a glass bottle takes honey only by recipe");
+    ctx.check(requiredAmount(glass, {"bearing:honey", 1000}, true) == 250, "the spout fills honey bottles (filling recipe)");
+    auto filled = fillItem(glass, {"bearing:potion/lingering/swiftness", 250}, false);
     ctx.check(items::idOf(filled) == "minecraft:lingering_potion" && filled.getAuxValue() == 14, "potion fluid keeps its type and bottle");
     auto bucket = item(ctx, "minecraft:bucket");
-    ctx.check(items::idOf(fillItem(bucket, {"levitate:chocolate", 1000}, false)) == kChocolateBucket, "bucket + chocolate -> chocolate bucket");
-    ctx.check(requiredAmount(bucket, {"levitate:tea", 1000}, false) == -1, "builder's tea has no bucket");
+    ctx.check(items::idOf(fillItem(bucket, {"bearing:chocolate", 1000}, false)) == kChocolateBucket, "bucket + chocolate -> chocolate bucket");
+    ctx.check(requiredAmount(bucket, {"bearing:tea", 1000}, false) == -1, "builder's tea has no bucket");
     ctx.check(requiredAmount(item(ctx, "minecraft:dirt"), {"minecraft:water", 1000}, true) == 500, "dirt needs 500 mB water (filling recipe)");
     ctx.check(requiredAmount(item(ctx, "minecraft:bread"), {"minecraft:milk", 1000}, true) == 250, "bread + milk (sweet roll recipe)");
-    ctx.check(common::fluidtypes::displayName("levitate:honey", "en_US") == "Honey", "fluid name");
+    ctx.check(common::fluidtypes::displayName("bearing:honey", "en_US") == "Honey", "fluid name");
 });
 
 // ---- spout -------------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ ll::coro::CoroTask<bool> spoutRig(Context& ctx, GlobalPos p) {
 }
 } // namespace
 
-LV_REGISTER_SELFTEST("fluids.spout_fills_bottles", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.spout_fills_bottles", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1905), 0, 1, 0);
     ctx.require(co_await spoutRig(ctx, p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -226,7 +226,7 @@ LV_REGISTER_SELFTEST("fluids.spout_fills_bottles", [](Context& ctx) -> ll::coro:
     ctx.check(tank(ctx, spout).amount == 750, "250 mB used");
 });
 
-LV_REGISTER_SELFTEST("fluids.spout_recipes_and_waiting", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.spout_recipes_and_waiting", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1910), 0, 1, 0);
     ctx.require(co_await spoutRig(ctx, p), "test area loaded");
     auto& region = regionOf(ctx);
@@ -276,7 +276,7 @@ int countOnTransporter(GlobalPos const& p, std::string const& id) {
 }
 } // namespace
 
-LV_REGISTER_SELFTEST("fluids.spout_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.spout_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(4040, kU40Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, belts::kDepotId);
@@ -302,7 +302,7 @@ LV_REGISTER_SELFTEST("fluids.spout_depot", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(takeAll(ctx, p, "minecraft:potion") == 2, "the depot holds two water bottles");
 });
 
-LV_REGISTER_SELFTEST("fluids.drain_direct_input", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.drain_direct_input", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(4042, kU40Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, kItemDrain);
@@ -323,15 +323,15 @@ LV_REGISTER_SELFTEST("fluids.drain_direct_input", [](Context& ctx) -> ll::coro::
     (void)countItemsNear(ctx, p, "minecraft:bucket", true); // an ejected bucket
 });
 
-LV_REGISTER_SELFTEST("fluids.spout_belt",[](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.spout_belt",[](Context& ctx) -> ll::coro::CoroTask<> {
     GlobalPos base = at(ctx.testPos(4044, kU40Shift), 0, 1, 0);
     auto      bx   = [&](int dx, int dy = 0, int dz = 1) { return at(base, dx, dy, dz); };
     ctx.require(co_await ctx.ensureLoaded(bx(5)), "test area loaded");
     // a 4 block belt along +x (shafts on axis z, driven from the north), a depot at its end
-    ctx.setBlock(bx(0), "levitate:kinetics_test_shaft", {{"levitate:axis", 2}});
-    ctx.setBlock(bx(3), "levitate:kinetics_test_shaft", {{"levitate:axis", 2}});
+    ctx.setBlock(bx(0), "bearing:kinetics_test_shaft", {{"bearing:axis", 2}});
+    ctx.setBlock(bx(3), "bearing:kinetics_test_shaft", {{"bearing:axis", 2}});
     for (int i = 1; i < 3; ++i) ctx.cleanupBlock(bx(i));
-    ctx.setBlock(bx(0, 0, 0), "levitate:kinetics_test_source", {{"levitate:axis", 2}});
+    ctx.setBlock(bx(0, 0, 0), "bearing:kinetics_test_source", {{"bearing:axis", 2}});
     co_await ctx.ticks(2);
     auto& sp = ctx.spawnPlayer("fluids_belt");
     sp.teleport(Vec3{base.x + 1.5f, float(base.y + 1), base.z - 1.5f}, DimensionType(base.dim));
@@ -347,7 +347,7 @@ LV_REGISTER_SELFTEST("fluids.spout_belt",[](Context& ctx) -> ll::coro::CoroTask<
     }
     sp.setSelectedItem(ItemStack());
     ctx.require(belts::beltAt(bx(2)).has_value(), "belt connected");
-    lv::kinetics::setGeneratedSpeed(bx(0, 0, 0), -96);
+    br::kinetics::setGeneratedSpeed(bx(0, 0, 0), -96);
     ctx.setBlock(bx(4), belts::kDepotId);
     ctx.setBlock(bx(2, 1), "minecraft:air");
     auto spout = bx(2, 2);
@@ -375,11 +375,11 @@ LV_REGISTER_SELFTEST("fluids.spout_belt",[](Context& ctx) -> ll::coro::CoroTask<
         bottles += countOnTransporter(bx(i), "minecraft:glass_bottle");
     }
     ctx.check(potions == 3 && bottles == 0, "three water bottles moved on (" + std::to_string(potions) + " water, " + std::to_string(bottles) + " empty)");
-    lv::kinetics::setGeneratedSpeed(bx(0, 0, 0), 0);
+    br::kinetics::setGeneratedSpeed(bx(0, 0, 0), 0);
     for (int i = 0; i <= 4; ++i) (void)takeAll(ctx, bx(i), "");
 });
 
-LV_REGISTER_SELFTEST("fluids.spout_fills_cauldron", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.spout_fills_cauldron", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1915), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, "minecraft:cauldron");
@@ -394,7 +394,7 @@ LV_REGISTER_SELFTEST("fluids.spout_fills_cauldron", [](Context& ctx) -> ll::coro
 
 // ---- item drain --------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("fluids.drain_empties_and_ejects", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.drain_empties_and_ejects", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1920), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, kItemDrain);
@@ -418,7 +418,7 @@ LV_REGISTER_SELFTEST("fluids.drain_empties_and_ejects", [](Context& ctx) -> ll::
     ctx.check(drained == FluidStack{"minecraft:water", 400}, "pipes drain it");
 });
 
-LV_REGISTER_SELFTEST("fluids.drain_passes_items_on", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.drain_passes_items_on", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1925), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, kItemDrain);
@@ -427,7 +427,7 @@ LV_REGISTER_SELFTEST("fluids.drain_passes_items_on", [](Context& ctx) -> ll::cor
     auto& region = regionOf(ctx);
     (void)items::insert(region, toBlockPos(p), 4, item(ctx, "minecraft:potion", 1, 5), false);
     co_await ctx.ticks(45);
-    ctx.check(tank(ctx, p) == FluidStack{"levitate:potion/regular/night_vision", 250}, "potion fluid in the drain");
+    ctx.check(tank(ctx, p) == FluidStack{"bearing:potion/regular/night_vision", 250}, "potion fluid in the drain");
     ctx.check(items::idOf(slot0(ctx, at(p, 1, 0, 0))) == "minecraft:glass_bottle", "the bottle moved on into the depot");
     // items that hold no fluid just pass through
     (void)items::insert(region, toBlockPos(p), 4, item(ctx, "minecraft:stone", 3), false);
@@ -435,7 +435,7 @@ LV_REGISTER_SELFTEST("fluids.drain_passes_items_on", [](Context& ctx) -> ll::cor
     ctx.check(items::idOf(slot0(ctx, p)) == "minecraft:stone", "stone waits at the far edge (the depot is full)");
 });
 
-LV_REGISTER_SELFTEST("fluids.drain_player_exchange", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.drain_player_exchange", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1930), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, kItemDrain);
@@ -463,7 +463,7 @@ int stateOf(Context& ctx, GlobalPos const& p, char const* name) {
     return game::intState(b, name).value_or(-1);
 }
 
-LV_REGISTER_SELFTEST("fluids.spout_block_behaviours", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.spout_block_behaviours", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's AllBlockSpoutingBehaviours: water cauldron levels (250 mB each), dirt / coarse dirt
     // -> mud (250)
     auto p = at(ctx.testPos(5150), 0, 1, 0);
@@ -493,7 +493,7 @@ LV_REGISTER_SELFTEST("fluids.spout_block_behaviours", [](Context& ctx) -> ll::co
     ctx.check(tank(ctx, at(p, 6, 2, 0)) == FluidStack{"minecraft:water", 750}, "250 mB for the coarse dirt");
 });
 
-LV_REGISTER_SELFTEST("fluids.drain_thrown_item", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.drain_thrown_item", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's ItemDrainBlock.updateEntityAfterFallOn: an item landing on a drain is inserted from its
     // horizontal motion, crosses it and leaves on the far side (here: a drain standing on stone)
     auto p = at(ctx.testPos(5160), 0, 1, 0);
@@ -521,7 +521,7 @@ LV_REGISTER_SELFTEST("fluids.drain_thrown_item", [](Context& ctx) -> ll::coro::C
     ctx.check(sticks >= 1, "the stick was ejected east of the drain");
 });
 
-LV_REGISTER_SELFTEST("fluids.capability_sides", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.capability_sides", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(5165), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, kSpout);
@@ -544,7 +544,7 @@ LV_REGISTER_SELFTEST("fluids.capability_sides", [](Context& ctx) -> ll::coro::Co
     (void)countItemsNear(ctx, drain, "minecraft:bucket", true);
 });
 
-LV_REGISTER_SELFTEST("fluids.drain_creative_exchange", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.drain_creative_exchange", [](Context& ctx) -> ll::coro::CoroTask<> {
     // FluidHelper.tryFillItemFromBE: a creative player keeps the empty bucket and gets nothing
     auto p = at(ctx.testPos(5170), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -567,7 +567,7 @@ LV_REGISTER_SELFTEST("fluids.drain_creative_exchange", [](Context& ctx) -> ll::c
     pl.setPlayerGameType(GameType::Survival);
 });
 
-LV_REGISTER_SELFTEST("fluids.drain_display", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.drain_display", [](Context& ctx) -> ll::coro::CoroTask<> {
     // ItemDrainRenderer: the held item is shown crossing the drain (display item / client-only entity)
     auto p = at(ctx.testPos(5175), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -586,19 +586,19 @@ LV_REGISTER_SELFTEST("fluids.drain_display", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(itemrender::find(p, 0) == nullptr, "nothing shown once it is gone");
 });
 
-LV_REGISTER_SELFTEST("fluids.potion_names", [](Context& ctx) {
+BR_REGISTER_SELFTEST("fluids.potion_names", [](Context& ctx) {
     // Create's PotionFluidType: the potion item's name for its bottle type, translated
     namespace ft = common::fluidtypes;
     auto name    = [](char const* id, char const* locale) { return ft::displayName(id, locale); };
-    ctx.check(name("levitate:potion/regular/long_swiftness", "en_US") == "Potion of Swiftness", "regular: " + name("levitate:potion/regular/long_swiftness", "en_US"));
-    ctx.check(name("levitate:potion/splash/strong_healing", "en_US") == "Splash Potion of Healing", "splash: " + name("levitate:potion/splash/strong_healing", "en_US"));
-    ctx.check(name("levitate:potion/lingering/water", "en_US") == "Lingering Water Bottle", "lingering water: " + name("levitate:potion/lingering/water", "en_US"));
-    ctx.check(name("levitate:potion/splash/swiftness", "zh_CN") == "喷溅型迅捷药水", "zh_CN: " + name("levitate:potion/splash/swiftness", "zh_CN"));
+    ctx.check(name("bearing:potion/regular/long_swiftness", "en_US") == "Potion of Swiftness", "regular: " + name("bearing:potion/regular/long_swiftness", "en_US"));
+    ctx.check(name("bearing:potion/splash/strong_healing", "en_US") == "Splash Potion of Healing", "splash: " + name("bearing:potion/splash/strong_healing", "en_US"));
+    ctx.check(name("bearing:potion/lingering/water", "en_US") == "Lingering Water Bottle", "lingering water: " + name("bearing:potion/lingering/water", "en_US"));
+    ctx.check(name("bearing:potion/splash/swiftness", "zh_CN") == "喷溅型迅捷药水", "zh_CN: " + name("bearing:potion/splash/swiftness", "zh_CN"));
 });
 
 // ---- hose pulley -------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("fluids.hose_pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.hose_pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(1937);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     // a 3x3 pool of water on a stone floor, walled with glass
@@ -611,7 +611,7 @@ LV_REGISTER_SELFTEST("fluids.hose_pulley", [](Context& ctx) -> ll::coro::CoroTas
     auto hose = at(base, 0, 6, 0);
     auto src  = at(base, -1, 6, 0);
     ctx.setBlock(hose, kHosePulley, {{kFacing, 2}});
-    ctx.setBlock(src, "levitate:kinetics_test_source", {{"levitate:axis", 0}});
+    ctx.setBlock(src, "bearing:kinetics_test_source", {{"bearing:axis", 0}});
     co_await ctx.ticks(3);
     float lower = 256;
     kinetics::setGeneratedSpeed(src, lower);
@@ -634,7 +634,7 @@ LV_REGISTER_SELFTEST("fluids.hose_pulley", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(filled == 1000, "filled 1000 mB back");
     ctx.check(countBlocks(ctx, at(base, -1, 1, -1), at(base, 1, 1, 1), "minecraft:water") == 9, "one source placed");
     // a small threshold makes the pool infinite: water is drained without removing blocks
-    auto& cfg     = lv::config::mut<FluidsConfig>();
+    auto& cfg     = br::config::mut<FluidsConfig>();
     int   saved   = cfg.hosePulleyBlockThreshold;
     cfg.hosePulleyBlockThreshold = 4;
     (void)cfl::fill(region, toBlockPos(hose), back, {"minecraft:lava", 1}, true); // resets nothing, different fluid
@@ -648,7 +648,7 @@ LV_REGISTER_SELFTEST("fluids.hose_pulley", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(hoseOffset(hose) == 0, "the hose is wound up again");
 });
 
-LV_REGISTER_SELFTEST("fluids.hose_pulley_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.hose_pulley_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1944), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, "minecraft:stone");
@@ -666,7 +666,7 @@ LV_REGISTER_SELFTEST("fluids.hose_pulley_placement", [](Context& ctx) -> ll::cor
 
 // ---- honey and chocolate -----------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("fluids.honey_bucket", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.honey_bucket", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1946), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, "minecraft:stone");
@@ -683,7 +683,7 @@ LV_REGISTER_SELFTEST("fluids.honey_bucket", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(items::idOf(sp.getSelectedItem()) == kHoneyBucket, "a honey bucket again");
 });
 
-LV_REGISTER_SELFTEST("fluids.chocolate_with_lava", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.chocolate_with_lava", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1950), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(at(p, 0, -1, 0), "minecraft:stone");
@@ -704,7 +704,7 @@ LV_REGISTER_SELFTEST("fluids.chocolate_with_lava", [](Context& ctx) -> ll::coro:
 
 // ---- portable fluid interface ------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("fluids.portable_fluid_interface", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("fluids.portable_fluid_interface", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = at(ctx.testPos(1960), 0, 3, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, kTestDepot);
@@ -758,4 +758,4 @@ LV_REGISTER_SELFTEST("fluids.portable_fluid_interface", [](Context& ctx) -> ll::
     ctx.check(d && tankOf(*d).amount == 3700, "the depot kept its tank (3700 mB) through the move");
 });
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

@@ -26,16 +26,16 @@ class Player;
 class SimulatedPlayer;
 class Vec3;
 
-namespace lv::feature::assembly {
+namespace br::feature::assembly {
 
 using core::GlobalPos;
 using Json = nlohmann::json;
 namespace ca = core::assembly;
 using ca::Face;
 
-inline constexpr char kDeployerId[] = "levitate:deployer";
-inline constexpr char kArmId[]      = "levitate:mechanical_arm";
-inline constexpr char kWrenchId[]   = "levitate:wrench";
+inline constexpr char kDeployerId[] = "bearing:deployer";
+inline constexpr char kArmId[]      = "bearing:mechanical_arm";
+inline constexpr char kWrenchId[]   = "bearing:wrench";
 
 /// Config section `assembly` (Create's CLogistics key of the mechanical arm).
 struct AssemblyConfig {
@@ -176,4 +176,4 @@ void uninstall();
 void installHooks();
 void uninstallHooks();
 
-} // namespace lv::feature::assembly
+} // namespace br::feature::assembly

@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:rose_quartz_block",
+      "identifier": "bearing:rose_quartz_block",
       "menu_category": {
         "category": "construction"
       },
@@ -27,15 +27,15 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_rose_quartz_block",
+          "texture": "bearing_rose_quartz_block",
           "render_method": "opaque"
         },
         "up": {
-          "texture": "levitate_rose_quartz_block_top",
+          "texture": "bearing_rose_quartz_block_top",
           "render_method": "opaque"
         },
         "down": {
-          "texture": "levitate_rose_quartz_block_top",
+          "texture": "bearing_rose_quartz_block_top",
           "render_method": "opaque"
         }
       }

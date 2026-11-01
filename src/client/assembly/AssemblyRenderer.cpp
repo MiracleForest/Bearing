@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client mod: animated deployers and mechanical arms (Create's DeployerRenderer / ArmRenderer).
 //
@@ -76,15 +76,15 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::assembly {
+namespace br::client::assembly {
 
 namespace ca = core::assembly;
 using Json   = nlohmann::json;
 
 namespace {
 
-constexpr char kDeployerId[] = "levitate:deployer";
-constexpr char kArmId[]      = "levitate:mechanical_arm";
+constexpr char kDeployerId[] = "bearing:deployer";
+constexpr char kArmId[]      = "bearing:mechanical_arm";
 
 struct PosHash {
     std::size_t operator()(BlockPos const& p) const noexcept {
@@ -150,7 +150,7 @@ ca::ArmAngles anglesOf(Json const& j) {
 std::map<std::string, core::kinetics::RotorModel> const& models() {
     static std::map<std::string, core::kinetics::RotorModel> m = [] {
         std::map<std::string, core::kinetics::RotorModel> out;
-        auto dir = Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto dir = Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         for (auto const* name : {"deployer_head.geo.json", "mechanical_arm_parts.geo.json"}) {
             std::ifstream in(dir / name);
             auto          j = Json::parse(in, nullptr, false, true);
@@ -186,7 +186,7 @@ mce::Mesh* mesh(Tessellator& tess, std::string const& model, std::string const& 
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_assembly", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_assembly", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -237,7 +237,7 @@ void drawHeld(Drawer& d, ItemStack const& stack, glm::mat4 const& tip, float siz
 }
 
 void drawDeployer(Drawer& d, Tessellator& tess, BlockPos const& pos, Block const& block, DeployerAnim const* anim, double now) {
-    int   facing = game::intState(block, "levitate:facing").value_or(1);
+    int   facing = game::intState(block, "bearing:facing").value_or(1);
     float offset = 0;
     int   pose   = 0;
     if (anim) {
@@ -252,14 +252,14 @@ void drawDeployer(Drawer& d, Tessellator& tess, BlockPos const& pos, Block const
     m           = m * facingRotation(facing);
     m           = glm::translate(m, glm::vec3{0.f, offset, 0.f});
     m           = glm::translate(m, glm::vec3{-.5f, -.5f, -.5f});
-    constexpr char kModel[] = "geometry.levitate.deployer_head";
-    d.draw(mesh(tess, kModel, "pole", "levitate_deployer"), m);
-    d.draw(mesh(tess, kModel, pose == static_cast<int>(ca::HandPose::Punching) ? "fist" : "hand", "levitate_deployer"), m);
+    constexpr char kModel[] = "geometry.bearing.deployer_head";
+    d.draw(mesh(tess, kModel, "pole", "bearing_deployer"), m);
+    d.draw(mesh(tess, kModel, pose == static_cast<int>(ca::HandPose::Punching) ? "fist" : "hand", "bearing_deployer"), m);
     if (anim) drawHeld(d, anim->held, glm::translate(m, glm::vec3{.5f, 17 / 16.f, .5f}), .5f);
 }
 
 void drawArm(Drawer& d, Tessellator& tess, BlockPos const& pos, Block const& block, ArmAnim const* anim, double now) {
-    bool          ceiling = game::intState(block, "levitate:ceiling").value_or(0) != 0;
+    bool          ceiling = game::intState(block, "bearing:ceiling").value_or(0) != 0;
     ca::ArmAngles a       = ca::armRestAngles();
     if (anim) {
         float progress = std::min(1.f, anim->progress + static_cast<float>(now - static_cast<double>(anim->at)) * anim->step);
@@ -271,8 +271,8 @@ void drawArm(Drawer& d, Tessellator& tess, BlockPos const& pos, Block const& blo
             a.head += std::sin(t * .7f) * 30.f;
         }
     }
-    constexpr char kModel[] = "geometry.levitate.mechanical_arm_parts";
-    constexpr char kTex[]   = "levitate_mechanical_arm";
+    constexpr char kModel[] = "geometry.bearing.mechanical_arm_parts";
+    constexpr char kTex[]   = "bearing_mechanical_arm";
     glm::mat4      base     = d.at(pos);
     base = glm::translate(base, glm::vec3{.5f, ceiling ? .25f : .75f, .5f});
     if (ceiling) base = glm::rotate(base, glm::radians(180.f), {1, 0, 0});
@@ -326,7 +326,7 @@ void renderParts(BaseActorRenderContext& ctx) {
             continue;
         }
         // only blocks the chunk mesh shows without their moving parts
-        if (game::intState(block, "levitate:rotor").value_or(0) != 0) continue;
+        if (game::intState(block, "bearing:rotor").value_or(0) != 0) continue;
         if (id == kDeployerId) {
             std::optional<DeployerAnim> anim;
             {
@@ -454,8 +454,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::assembly
+} // namespace br::client::assembly
 
-LV_REGISTER_MODULE(lv::client::assembly::AssemblyClientModule);
+BR_REGISTER_MODULE(br::client::assembly::AssemblyClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

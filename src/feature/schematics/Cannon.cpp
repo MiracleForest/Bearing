@@ -44,7 +44,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -55,7 +55,7 @@ namespace {
 constexpr char const* kScreen          = "schematics.cannon";
 constexpr int         kNeighbourCheck  = 100;
 constexpr int         kMaxAnchorDist   = 256;
-constexpr char const* kDbKey           = "lv:schematics:cannons";
+constexpr char const* kDbKey           = "br:schematics:cannons";
 constexpr char const* kOptionsKey      = "schematicannon"; ///< item data: Create's SCHEMATICANNON_OPTIONS
 constexpr std::array<cs::Pos, 6> kDirs{{{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}}};
 
@@ -249,30 +249,30 @@ std::optional<std::int64_t> state(Block const& b, std::string_view key) {
 
 std::map<Block const*, Requirement> gReqCache;
 
-/// Create's SpecialBlockItemRequirement.getRequiredItems of the blocks Levitate has (blocks whose
+/// Create's SpecialBlockItemRequirement.getRequiredItems of the blocks Bearing has (blocks whose
 /// item is another block's: encased shafts and cogwheels, encased and glass pipes, girder-encased
 /// shafts, elevator contacts, lectern controllers, bogeys, nixie tubes). Belt funnels share the
 /// funnels' ids here, backtanks drop their own item already.
 std::optional<std::vector<std::pair<std::string, int>>> specialRequirement(std::string const& id) {
     using List = std::vector<std::pair<std::string, int>>;
     static std::map<std::string, List, std::less<>> const kTable{
-        {"levitate:andesite_encased_shaft",          {{"levitate:shaft", 1}}                                },
-        {"levitate:brass_encased_shaft",             {{"levitate:shaft", 1}}                                },
-        {"levitate:andesite_encased_cogwheel",       {{"levitate:cogwheel", 1}}                             },
-        {"levitate:brass_encased_cogwheel",          {{"levitate:cogwheel", 1}}                             },
-        {"levitate:andesite_encased_large_cogwheel", {{"levitate:large_cogwheel", 1}}                       },
-        {"levitate:brass_encased_large_cogwheel",    {{"levitate:large_cogwheel", 1}}                       },
-        {"levitate:encased_fluid_pipe",              {{"levitate:fluid_pipe", 1}}                           },
-        {"levitate:glass_fluid_pipe",                {{"levitate:fluid_pipe", 1}}                           },
-        {"levitate:metal_girder_encased_shaft",      {{"levitate:shaft", 1}, {"levitate:metal_girder", 1}}  },
-        {"levitate:elevator_contact",                {{"levitate:redstone_contact", 1}}                     },
-        {"levitate:lectern_controller",              {{"minecraft:lectern", 1}, {"levitate:linked_controller", 1}}},
-        {"levitate:small_bogey",                     {{"levitate:railway_casing", 1}}                       },
-        {"levitate:large_bogey",                     {{"levitate:railway_casing", 1}}                       },
+        {"bearing:andesite_encased_shaft",          {{"bearing:shaft", 1}}                                },
+        {"bearing:brass_encased_shaft",             {{"bearing:shaft", 1}}                                },
+        {"bearing:andesite_encased_cogwheel",       {{"bearing:cogwheel", 1}}                             },
+        {"bearing:brass_encased_cogwheel",          {{"bearing:cogwheel", 1}}                             },
+        {"bearing:andesite_encased_large_cogwheel", {{"bearing:large_cogwheel", 1}}                       },
+        {"bearing:brass_encased_large_cogwheel",    {{"bearing:large_cogwheel", 1}}                       },
+        {"bearing:encased_fluid_pipe",              {{"bearing:fluid_pipe", 1}}                           },
+        {"bearing:glass_fluid_pipe",                {{"bearing:fluid_pipe", 1}}                           },
+        {"bearing:metal_girder_encased_shaft",      {{"bearing:shaft", 1}, {"bearing:metal_girder", 1}}  },
+        {"bearing:elevator_contact",                {{"bearing:redstone_contact", 1}}                     },
+        {"bearing:lectern_controller",              {{"minecraft:lectern", 1}, {"bearing:linked_controller", 1}}},
+        {"bearing:small_bogey",                     {{"bearing:railway_casing", 1}}                       },
+        {"bearing:large_bogey",                     {{"bearing:railway_casing", 1}}                       },
     };
     if (auto it = kTable.find(id); it != kTable.end()) return it->second;
     // NixieTubeBlock: every colour is printed from the (orange) nixie tube
-    if (id.starts_with("levitate:") && id.ends_with("_nixie_tube")) return List{{"levitate:nixie_tube", 1}};
+    if (id.starts_with("bearing:") && id.ends_with("_nixie_tube")) return List{{"bearing:nixie_tube", 1}};
     return std::nullopt;
 }
 
@@ -319,12 +319,12 @@ Requirement requirementOf(Block const& b) {
 std::vector<std::pair<std::string, int>> neededItems(Cannon& c, cs::Pos offset, Block const& want, Requirement const& req) {
     std::vector<std::pair<std::string, int>> out{{req.item, req.count}};
     out.insert(out.end(), req.extra.begin(), req.extra.end());
-    if (want.getTypeName() != "levitate:placard" || !c.sch) return out;
+    if (want.getTypeName() != "bearing:placard" || !c.sch) return out;
     auto const& s     = c.sch->schematic;
     cs::Pos     local = cs::unapply(c.sd.transform, offset);
     if (!s.contains(local)) return out;
-    auto it = s.levitateData.find(s.index(local));
-    if (it == s.levitateData.end()) return out;
+    auto it = s.bearingData.find(s.index(local));
+    if (it == s.bearingData.end()) return out;
     auto doc = Json::parse(it->second, nullptr, false);
     if (doc.is_discarded() || !doc.contains("building") || !doc["building"].is_object() || !doc["building"].contains("item")) return out;
     auto held = items::fromJson(doc["building"]["item"]);
@@ -527,7 +527,7 @@ bool deferred(Cannon& c, cs::Pos offset) {
     std::string const& n = b->getTypeName();
     static constexpr std::array<std::string_view, 24> kBrittle{
         "torch", "lever", "button", "pressure_plate", "rail", "redstone_wire", "repeater", "comparator", "ladder", "sign", "banner",
-        "carpet", "door", "lantern", "tripwire", "flower_pot", "bell", "vine", "candle", "levitate:gantry_carriage", "levitate:mechanical_arm",
+        "carpet", "door", "lantern", "tripwire", "flower_pot", "bell", "vine", "candle", "bearing:gantry_carriage", "bearing:mechanical_arm",
         "skull", "_head", "snow_layer"
     };
     for (auto k : kBrittle) {
@@ -810,7 +810,7 @@ void tickPrinter(Cannon& c) {
 }
 
 /// Create's launchBlockOrBelt -> BlockHelper.prepareBlockEntityData: the landed block gets the safe
-/// part of its saved data (a sign's text, a banner; Levitate's BlockData of SAFE_NBT blocks, the
+/// part of its saved data (a sign's text, a banner; Bearing's BlockData of SAFE_NBT blocks, the
 /// filters and settings of the others).
 void printedData(Cannon& c, GlobalPos const& t, Block const& b) {
     if (!c.sch) return;
@@ -823,7 +823,7 @@ void printedData(Cannon& c, GlobalPos const& t, Block const& b) {
             if (auto safe = cs::safeBlockEntity(it->second)) placeBlockEntity(t, *safe, s.worldOrigin, c.sd.transform, c.sd.anchor);
         }
     }
-    if (auto it = s.levitateData.find(index); it != s.levitateData.end()) {
+    if (auto it = s.bearingData.find(index); it != s.bearingData.end()) {
         auto doc = Json::parse(it->second, nullptr, false);
         if (doc.is_discarded()) return;
         if (auto safe = cs::safeBlockData(b.getTypeName(), doc); !safe.is_null()) common::blockdata::set(t, std::move(safe));
@@ -1164,12 +1164,12 @@ void cannonForm(Player& player, Json const& ctx) {
     int per = config().schematicannonShotsPerGunpowder;
     content += "\n" + trFor(player, "create.gui.schematicannon.shotsRemaining", "Shots left: {0}", c.fuel);
     content += "\n" + trFor(player, "create.gui.schematicannon.shotsRemainingWithBackup", "With backup: {0}", c.fuel + per * items::countOf(c.inv[Gunpowder]));
-    static constexpr std::array<char const*, 5> kSlotKeys{"lv.schematics.cannon.slot.schematic", "lv.schematics.cannon.slot.empty", "lv.schematics.cannon.slot.book", "lv.schematics.cannon.slot.checklist", "lv.schematics.cannon.slot.gunpowder"};
+    static constexpr std::array<char const*, 5> kSlotKeys{"br.schematics.cannon.slot.schematic", "br.schematics.cannon.slot.empty", "br.schematics.cannon.slot.book", "br.schematics.cannon.slot.checklist", "br.schematics.cannon.slot.gunpowder"};
     static constexpr std::array<char const*, 5> kSlotNames{"Schematic", "Used schematics", "Book", "Checklist", "Gunpowder"};
     for (int i = 0; i < 5; ++i) {
         auto const& s = c.inv[static_cast<std::size_t>(i)];
         content += "\n" + trFor(player, kSlotKeys[static_cast<std::size_t>(i)], kSlotNames[static_cast<std::size_t>(i)]) + ": "
-                 + (items::isEmpty(s) ? trFor(player, "lv.common.form.empty", "(empty)") : items::displayName(s) + " x" + std::to_string(items::countOf(s)));
+                 + (items::isEmpty(s) ? trFor(player, "br.common.form.empty", "(empty)") : items::displayName(s) + " x" + std::to_string(items::countOf(s)));
     }
     ll::form::SimpleForm form(trFor(player, "create.gui.schematicannon.title", "Schematicannon"), content);
     auto act = [pos](Json a) {
@@ -1179,9 +1179,9 @@ void cannonForm(Player& player, Json const& ctx) {
             cannonForm(pl, {{"pos", posJson(pos)}});
         };
     };
-    form.appendButton(trFor(player, "lv.schematics.cannon.play", "Start printing"), act({{"op", "play"}}));
-    form.appendButton(trFor(player, "lv.schematics.cannon.pause", "Pause"), act({{"op", "pause"}}));
-    form.appendButton(trFor(player, "lv.schematics.cannon.stop", "Stop and reset"), act({{"op", "stop"}}));
+    form.appendButton(trFor(player, "br.schematics.cannon.play", "Start printing"), act({{"op", "play"}}));
+    form.appendButton(trFor(player, "br.schematics.cannon.pause", "Pause"), act({{"op", "pause"}}));
+    form.appendButton(trFor(player, "br.schematics.cannon.stop", "Stop and reset"), act({{"op", "stop"}}));
     form.appendButton(trFor(player, "create.gui.schematicannon.showOptions", "Show Printer Settings"), [pos](Player& pl) {
         if (idAt(pos) != kCannon || !inReach(pl, pos)) return;
         auto&                    c2 = cannonAt(pos);
@@ -1192,7 +1192,7 @@ void cannonForm(Player& player, Json const& ctx) {
             trFor(pl, "create.gui.schematicannon.option.replaceWithAny", "Replace Solid with Any"),
             trFor(pl, "create.gui.schematicannon.option.replaceWithEmpty", "Replace Solid with Empty"),
         };
-        f.appendDropdown("replace", trFor(pl, "lv.schematics.cannon.replace", "Replace mode"), modes, c2.replace);
+        f.appendDropdown("replace", trFor(pl, "br.schematics.cannon.replace", "Replace mode"), modes, c2.replace);
         f.appendToggle("skip", trFor(pl, "create.gui.schematicannon.option.skipMissing", "Skip missing Blocks"), c2.skipMissing);
         f.appendToggle("protect", trFor(pl, "create.gui.schematicannon.option.skipBlockEntities", "Protect Block Entities"), !c2.replaceBE);
         f.sendTo(pl, [pos](Player& p2, ll::form::CustomFormResult const& r, ll::form::FormCancelReason) {
@@ -1208,7 +1208,7 @@ void cannonForm(Player& player, Json const& ctx) {
         });
     });
     // inserting held items and taking items out
-    form.appendButton(trFor(player, "lv.schematics.cannon.insert_held", "Insert the held item"), [pos](Player& pl) {
+    form.appendButton(trFor(player, "br.schematics.cannon.insert_held", "Insert the held item"), [pos](Player& pl) {
         if (idAt(pos) != kCannon || !inReach(pl, pos)) return;
         doAction(&pl, cannonAt(pos), {{"op", "insert"}, {"slot", pl.getSelectedItemSlot()}});
         cannonForm(pl, {{"pos", posJson(pos)}});
@@ -1216,7 +1216,7 @@ void cannonForm(Player& player, Json const& ctx) {
     for (int i = 0; i < 5; ++i) {
         if (items::isEmpty(c.inv[static_cast<std::size_t>(i)])) continue;
         form.appendButton(
-            trFor(player, "lv.schematics.cannon.take", "Take out: {0}", items::displayName(c.inv[static_cast<std::size_t>(i)])),
+            trFor(player, "br.schematics.cannon.take", "Take out: {0}", items::displayName(c.inv[static_cast<std::size_t>(i)])),
             act({{"op", "take"}, {"slot", i}})
         );
     }
@@ -1417,4 +1417,4 @@ void registerCannon() {
 
 } // namespace detail
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

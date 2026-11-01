@@ -4,7 +4,7 @@
 
 #include "core/bearings/BearingMath.h"
 
-using namespace lv::core::bearings;
+using namespace br::core::bearings;
 
 TEST(Bearings, AngularSpeed) {
     EXPECT_FLOAT_EQ(angularSpeed(32), 9.6f);
@@ -82,7 +82,7 @@ TEST(Bearings, CartActions) {
 }
 
 TEST(Bearings, ControllerRail) {
-    using lv::core::contraption::Dir;
+    using br::core::contraption::Dir;
     EXPECT_EQ(railDirection(true, false), Dir::West);
     EXPECT_EQ(railDirection(true, true), Dir::East);
     EXPECT_EQ(railDirection(false, false), Dir::North);
@@ -101,7 +101,7 @@ TEST(Bearings, ControllerRail) {
 }
 
 TEST(Bearings, Headings) {
-    using lv::core::contraption::Dir;
+    using br::core::contraption::Dir;
     EXPECT_NEAR(headingOf(Dir::East), 0, 1e-9);
     EXPECT_NEAR(headingOf(Dir::North), 90, 1e-9);
     EXPECT_NEAR(std::abs(headingOf(Dir::West)), 180, 1e-9);
@@ -111,8 +111,8 @@ TEST(Bearings, Headings) {
 }
 
 TEST(Bearings, SailPlacementOrder) {
-    using lv::core::contraption::Axis;
-    using lv::core::contraption::Dir;
+    using br::core::contraption::Axis;
+    using br::core::contraption::Dir;
     // a sail facing up: the helper only offers horizontal neighbours, nearest to the hit first
     auto order = orderedByDistanceExceptAxis({0.95, 1.0, 0.5}, Axis::Y);
     ASSERT_EQ(order.size(), 4u);

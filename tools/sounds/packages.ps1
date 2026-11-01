@@ -7,7 +7,7 @@
 # packages_frogport_open.wav    the frogport opening its mouth: a wet, rising blop
 # packages_frogport_catch.wav   the tongue catching a package: a quick slurp ending in a smack
 # packages_frogport_deposit.wav a package dropped into the frogport: a low gulp
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

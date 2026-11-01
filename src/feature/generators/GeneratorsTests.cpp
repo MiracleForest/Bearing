@@ -19,15 +19,15 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::generators {
+namespace br::feature::generators {
 
 namespace {
 
 using selftest::Context;
 namespace k = core::kinetics;
 
-constexpr char kShaft[]  = "levitate:kinetics_test_shaft";
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kShaft[]  = "bearing:kinetics_test_shaft";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 struct Area {
     Context& ctx;
@@ -51,7 +51,7 @@ std::string num(float v) { return std::to_string(static_cast<int>(v)); }
 
 bool shaftLine(Context& ctx, Area const& a, int from, int to, int dy = 0) {
     bool ok = true;
-    for (int i = from; i <= to; ++i) ok &= ctx.setBlock(a.at(i, dy), kShaft, {{"levitate:axis", 0}});
+    for (int i = from; i <= to; ++i) ok &= ctx.setBlock(a.at(i, dy), kShaft, {{"bearing:axis", 0}});
     return ok;
 }
 
@@ -90,7 +90,7 @@ ll::coro::CoroTask<bool> bubbleColumn(Context& ctx, Area const& a, int dx, int y
 
 } // namespace
 
-LV_REGISTER_SELFTEST("generators.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("generators.registry", [](Context& ctx) {
     std::vector<std::string> ids{kHandCrank, kCopperValve, kWaterWheel, kLargeWheel, kMotor};
     for (int c = 0; c < 16; ++c) ids.push_back(valveId(c));
     for (auto const& i : ids) {
@@ -108,7 +108,7 @@ LV_REGISTER_SELFTEST("generators.registry", [](Context& ctx) {
     ctx.check(kindOf(std::string_view(kStructure)) == Kind::Structure && kindOf(std::string_view("minecraft:stone")) == Kind::None, "kinds");
 });
 
-LV_REGISTER_SELFTEST("generators.crank", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.crank", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 700};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     // crank facing west: its shaft points east into the shaft line
@@ -132,7 +132,7 @@ LV_REGISTER_SELFTEST("generators.crank", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(crankInUse(a.at(0)) == 0, "no longer in use");
 });
 
-LV_REGISTER_SELFTEST("generators.crank_click", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.crank_click", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 708};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -148,14 +148,14 @@ LV_REGISTER_SELFTEST("generators.crank_click", [](Context& ctx) -> ll::coro::Cor
     co_await ctx.ticks(cg::kCrankUseTicks + 2);
 });
 
-LV_REGISTER_SELFTEST("generators.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 714};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     stand(sp, a.at(0, 0, 3));
     co_await ctx.ticks(2);
     // a crank placed on top of a vertical shaft points its shaft down into it (facing up)
-    ctx.require(ctx.setBlock(a.at(0), kShaft, {{"levitate:axis", 1}}), "vertical shaft");
+    ctx.require(ctx.setBlock(a.at(0), kShaft, {{"bearing:axis", 1}}), "vertical shaft");
     ctx.cleanupBlock(a.at(0, 1));
     auto crank = item(kHandCrank);
     useOn(sp, crank, a.at(0), ScriptModuleMinecraft::ScriptFacing::Up);
@@ -173,7 +173,7 @@ LV_REGISTER_SELFTEST("generators.placement", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(id(a.at(4)) == kCopperValve, "the valve handle was placed, got " + id(a.at(4)));
     ctx.check(facing(a.at(4)) == static_cast<int>(Face::East), "facing the clicked face, got " + std::to_string(facing(a.at(4))));
     // a creative motor next to a horizontal shaft turns its shaft towards it
-    ctx.require(ctx.setBlock(a.at(7, 1), kShaft, {{"levitate:axis", 0}}), "horizontal shaft");
+    ctx.require(ctx.setBlock(a.at(7, 1), kShaft, {{"bearing:axis", 0}}), "horizontal shaft");
     ctx.require(ctx.setBlock(a.at(6), "minecraft:stone"), "stone below");
     ctx.cleanupBlock(a.at(6, 1));
     stand(sp, a.at(6, 1, 2));
@@ -186,7 +186,7 @@ LV_REGISTER_SELFTEST("generators.placement", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(kinetics::speedAt(a.at(7, 1)) == 16, "the motor drives the shaft at 16 RPM, got " + num(kinetics::speedAt(a.at(7, 1))));
 });
 
-LV_REGISTER_SELFTEST("generators.valve", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.valve", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 724};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(ctx.setBlock(a.at(0), kCopperValve, {{kFacing, static_cast<int>(Face::West)}}), "place the valve");
@@ -211,7 +211,7 @@ LV_REGISTER_SELFTEST("generators.valve", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(kinetics::speedAt(a.at(3)) == 32, "clockwise: +32 RPM, got " + num(kinetics::speedAt(a.at(3))));
     co_await ctx.ticks(14);
     // a turning network: the valve does not start
-    ctx.require(ctx.setBlock(a.at(4), kSource, {{"levitate:axis", 0}}), "a turning source");
+    ctx.require(ctx.setBlock(a.at(4), kSource, {{"bearing:axis", 0}}), "a turning source");
     co_await ctx.ticks(cg::kValveCooldown + 2);
     useValve(ctx.player(), a.at(0), "", false);
     ctx.check(crankInUse(a.at(0)) == 0, "no turn while the network already turns");
@@ -224,7 +224,7 @@ LV_REGISTER_SELFTEST("generators.valve", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(kinetics::specOf(id(a.at(0))) != nullptr, "the red handle is kinetic");
 });
 
-LV_REGISTER_SELFTEST("generators.value_boxes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.value_boxes", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 732};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(ctx.setBlock(a.at(0), kCopperValve, {{kFacing, static_cast<int>(Face::Up)}}), "valve");
@@ -256,7 +256,7 @@ LV_REGISTER_SELFTEST("generators.value_boxes", [](Context& ctx) -> ll::coro::Cor
     ctx.check(motorSpeed(a.at(2)) == 256, "clamped to 256, got " + std::to_string(motorSpeed(a.at(2))));
 });
 
-LV_REGISTER_SELFTEST("generators.motor_facing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.motor_facing", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 740};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(ctx.setBlock(a.at(3), kMotor, {{kFacing, static_cast<int>(Face::West)}}), "motor facing west");
@@ -270,7 +270,7 @@ LV_REGISTER_SELFTEST("generators.motor_facing", [](Context& ctx) -> ll::coro::Co
     ctx.check(kinetics::speedAt(a.at(3)) == 16, "facing east: +16 RPM, got " + num(kinetics::speedAt(a.at(3))));
 });
 
-LV_REGISTER_SELFTEST("generators.water_wheel_bubbles", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.water_wheel_bubbles", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 746};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto wheel = a.at(0, 3);
@@ -293,7 +293,7 @@ LV_REGISTER_SELFTEST("generators.water_wheel_bubbles", [](Context& ctx) -> ll::c
     ctx.check(kinetics::speedAt(wheel) == 0, "the wheel stops when the flow is gone, got " + num(kinetics::speedAt(wheel)));
 });
 
-LV_REGISTER_SELFTEST("generators.water_wheel_flow", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.water_wheel_flow", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 760};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto wheel = a.at(0, 3);
@@ -320,7 +320,7 @@ LV_REGISTER_SELFTEST("generators.water_wheel_flow", [](Context& ctx) -> ll::coro
     for (int dx = -1; dx <= 1; ++dx) ctx.setBlock(a.at(dx, 4), "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("generators.large_wheel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.large_wheel", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 780};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto wheel = a.at(0, 4);
@@ -364,7 +364,7 @@ LV_REGISTER_SELFTEST("generators.large_wheel", [](Context& ctx) -> ll::coro::Cor
     ctx.check(!tracksWheel(wheel), "the wheel is no longer tracked");
 });
 
-LV_REGISTER_SELFTEST("generators.large_wheel_place", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.large_wheel_place", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 790};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -414,7 +414,7 @@ LV_REGISTER_SELFTEST("generators.large_wheel_place", [](Context& ctx) -> ll::cor
 // ---- U52: alignment with Create 6.0.10 (testPos dx 5260..5285) ----------------------------------------------------
 
 // K6: HandCrankBlock.canSurvive / neighborChanged
-LV_REGISTER_SELFTEST("generators.crank_support", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.crank_support", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5260};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(ctx.setBlock(a.at(0), "minecraft:stone"), "stone");
@@ -433,7 +433,7 @@ LV_REGISTER_SELFTEST("generators.crank_support", [](Context& ctx) -> ll::coro::C
     co_await ctx.ticks(2);
     ctx.check(id(a.at(0, 1)) == "minecraft:air", "the crank broke without its support, got " + id(a.at(0, 1)));
     // a shaft behind holds it (it has a collision shape)
-    ctx.require(ctx.setBlock(a.at(4), kShaft, {{"levitate:axis", 1}}), "a vertical shaft");
+    ctx.require(ctx.setBlock(a.at(4), kShaft, {{"bearing:axis", 1}}), "a vertical shaft");
     ctx.require(ctx.setBlock(a.at(4, 1), kHandCrank, {{kFacing, static_cast<int>(Face::Up)}}), "a crank on the shaft");
     ctx.require(ctx.setBlock(a.at(5, 1), "minecraft:stone"), "a neighbour");
     ctx.require(ctx.setBlock(a.at(5, 1), "minecraft:air"), "the neighbour goes");
@@ -442,7 +442,7 @@ LV_REGISTER_SELFTEST("generators.crank_support", [](Context& ctx) -> ll::coro::C
 });
 
 // K9: ItemUseOverrides: sneaking with an item in hand turns the crank backwards
-LV_REGISTER_SELFTEST("generators.crank_sneak_item", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.crank_sneak_item", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5268};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -461,7 +461,7 @@ LV_REGISTER_SELFTEST("generators.crank_sneak_item", [](Context& ctx) -> ll::coro
 });
 
 // K7: WaterWheelBlock.canSurvive
-LV_REGISTER_SELFTEST("generators.water_wheel_neighbours", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.water_wheel_neighbours", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5272};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(ctx.setBlock(a.at(0, 1), kWaterWheel, {{kFacing, static_cast<int>(Face::East)}}), "a wheel along x");
@@ -477,7 +477,7 @@ LV_REGISTER_SELFTEST("generators.water_wheel_neighbours", [](Context& ctx) -> ll
 });
 
 // K10: ValveHandleBlock.onRemove keeps the block entity when dyed; K18: one stress entry
-LV_REGISTER_SELFTEST("generators.valve_dye_keeps_angle", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("generators.valve_dye_keeps_angle", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 5278};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(ctx.setBlock(a.at(0), "minecraft:stone"), "support");
@@ -491,4 +491,4 @@ LV_REGISTER_SELFTEST("generators.valve_dye_keeps_angle", [](Context& ctx) -> ll:
     ctx.check(spec && spec->stressKey == "copper_valve_handle", "dyed handles use the copper handle's stress entry");
 });
 
-} // namespace lv::feature::generators
+} // namespace br::feature::generators

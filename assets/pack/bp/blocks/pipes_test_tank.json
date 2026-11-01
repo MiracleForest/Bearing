@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:pipes_test_tank",
+      "identifier": "bearing:pipes_test_tank",
       "menu_category": {
         "category": "none"
       }
@@ -11,7 +11,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_pipes_test_tank",
+          "texture": "bearing_pipes_test_tank",
           "render_method": "opaque"
         }
       },

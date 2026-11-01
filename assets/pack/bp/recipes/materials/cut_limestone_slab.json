@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_limestone_slab"
+      "identifier": "bearing:cut_limestone_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_limestone"
+        "item": "bearing:cut_limestone"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_limestone"
+        "item": "bearing:cut_limestone"
       }
     ],
     "result": {
-      "item": "levitate:cut_limestone_slab",
+      "item": "bearing:cut_limestone_slab",
       "count": 6
     }
   }

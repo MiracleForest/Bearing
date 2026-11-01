@@ -5,7 +5,7 @@
 
 #include "mod/Log.h"
 
-namespace lv {
+namespace br {
 
 namespace {
 std::vector<ModuleEntry> gInstalled;
@@ -53,4 +53,4 @@ void uninstallModules() {
     gInstalled.clear();
 }
 
-} // namespace lv
+} // namespace br

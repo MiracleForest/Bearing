@@ -19,18 +19,18 @@ for ($i = 0; $i -lt $glass.Count; $i++) {
         $left = $glass[$i]; $right = $glass[$j]
         $plain = $left -eq 'glass' -and $right -eq 'glass'
         $id    = if ($plain) { 'goggles' } else { "goggles_$($left)_$($right)" }
-        $key   = [ordered]@{ S = [ordered]@{ item = 'minecraft:string' }; L = [ordered]@{ item = "minecraft:$left" }; P = [ordered]@{ item = 'levitate:golden_sheet' } }
+        $key   = [ordered]@{ S = [ordered]@{ item = 'minecraft:string' }; L = [ordered]@{ item = "minecraft:$left" }; P = [ordered]@{ item = 'bearing:golden_sheet' } }
         $pattern = @(' S ', 'LPR')
         if ($left -eq $right) { $pattern = @(' S ', 'LPL') } else { $key['R'] = [ordered]@{ item = "minecraft:$right" } }
         $recipe = [ordered]@{
             format_version          = '1.20.10'
             'minecraft:recipe_shaped' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$id" }
+                description = [ordered]@{ identifier = "bearing:$id" }
                 tags        = @('crafting_table')
                 pattern     = $pattern
                 key         = $key
-                unlock      = @([ordered]@{ item = 'levitate:golden_sheet' })
-                result      = [ordered]@{ item = 'levitate:goggles' }
+                unlock      = @([ordered]@{ item = 'bearing:golden_sheet' })
+                result      = [ordered]@{ item = 'bearing:goggles' }
             }
         }
         $json = $recipe | ConvertTo-Json -Depth 10

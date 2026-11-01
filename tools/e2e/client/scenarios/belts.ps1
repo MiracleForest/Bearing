@@ -21,14 +21,14 @@ Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~-3 ~3'
 Start-Sleep -Milliseconds 500
 # a 5 block belt along +x two blocks to the right, driven from its start; a depot at its end;
 # a dyed sloped piece and an ejector next to it
-Invoke-Chat '/setblock ~3 ~ ~1 levitate:kinetics_test_source ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~3 ~ ~2 levitate:belt ["levitate:facing"=3,"levitate:part"=0]'
-Invoke-Chat '/fill ~4 ~ ~2 ~6 ~ ~2 levitate:belt ["levitate:facing"=3,"levitate:part"=1]'
-Invoke-Chat '/setblock ~7 ~ ~2 levitate:belt ["levitate:facing"=3,"levitate:part"=2]'
-Invoke-Chat '/setblock ~8 ~ ~2 levitate:depot'
-Invoke-Chat '/setblock ~3 ~ ~4 levitate:belt ["levitate:facing"=3,"levitate:slope"=1,"levitate:part"=0,"levitate:dyed"=1,"levitate:color"=14]'
-Invoke-Chat '/setblock ~4 ~1 ~4 levitate:belt ["levitate:facing"=3,"levitate:slope"=1,"levitate:part"=2,"levitate:dyed"=1,"levitate:color"=14]'
-Invoke-Chat '/setblock ~6 ~ ~4 levitate:weighted_ejector ["levitate:facing"=3]'
+Invoke-Chat '/setblock ~3 ~ ~1 bearing:kinetics_test_source ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~3 ~ ~2 bearing:belt ["bearing:facing"=3,"bearing:part"=0]'
+Invoke-Chat '/fill ~4 ~ ~2 ~6 ~ ~2 bearing:belt ["bearing:facing"=3,"bearing:part"=1]'
+Invoke-Chat '/setblock ~7 ~ ~2 bearing:belt ["bearing:facing"=3,"bearing:part"=2]'
+Invoke-Chat '/setblock ~8 ~ ~2 bearing:depot'
+Invoke-Chat '/setblock ~3 ~ ~4 bearing:belt ["bearing:facing"=3,"bearing:slope"=1,"bearing:part"=0,"bearing:dyed"=1,"bearing:color"=14]'
+Invoke-Chat '/setblock ~4 ~1 ~4 bearing:belt ["bearing:facing"=3,"bearing:slope"=1,"bearing:part"=2,"bearing:dyed"=1,"bearing:color"=14]'
+Invoke-Chat '/setblock ~6 ~ ~4 bearing:weighted_ejector ["bearing:facing"=3]'
 Start-Sleep -Seconds 2
 Invoke-Chat '/create kinetics ~3 ~ ~1 speed -64'
 if (-not $vanilla) {
@@ -41,12 +41,12 @@ Save-Screenshot 'belts-b' | Out-Null
 
 # U41: a brass-encased slope and an andesite-encased vertical belt; a pulling belt funnel with its
 # chest on the north side of the main belt
-Invoke-Chat '/setblock ~3 ~ ~6 levitate:belt ["levitate:facing"=3,"levitate:slope"=1,"levitate:part"=0,"levitate:casing"=2]'
-Invoke-Chat '/setblock ~4 ~1 ~6 levitate:belt ["levitate:facing"=3,"levitate:slope"=1,"levitate:part"=2,"levitate:casing"=2]'
-Invoke-Chat '/setblock ~7 ~ ~6 levitate:belt ["levitate:facing"=2,"levitate:slope"=3,"levitate:part"=0,"levitate:casing"=1]'
-Invoke-Chat '/setblock ~7 ~1 ~6 levitate:belt ["levitate:facing"=2,"levitate:slope"=3,"levitate:part"=2,"levitate:casing"=1]'
+Invoke-Chat '/setblock ~3 ~ ~6 bearing:belt ["bearing:facing"=3,"bearing:slope"=1,"bearing:part"=0,"bearing:casing"=2]'
+Invoke-Chat '/setblock ~4 ~1 ~6 bearing:belt ["bearing:facing"=3,"bearing:slope"=1,"bearing:part"=2,"bearing:casing"=2]'
+Invoke-Chat '/setblock ~7 ~ ~6 bearing:belt ["bearing:facing"=2,"bearing:slope"=3,"bearing:part"=0,"bearing:casing"=1]'
+Invoke-Chat '/setblock ~7 ~1 ~6 bearing:belt ["bearing:facing"=2,"bearing:slope"=3,"bearing:part"=2,"bearing:casing"=1]'
 Invoke-Chat '/setblock ~5 ~1 ~3 chest'
-Invoke-Chat '/setblock ~5 ~1 ~2 levitate:andesite_funnel ["levitate:facing"=2,"levitate:shape"=4]'
+Invoke-Chat '/setblock ~5 ~1 ~2 bearing:andesite_funnel ["bearing:facing"=2,"bearing:shape"=4]'
 Start-Sleep -Seconds 2
 Invoke-Chat '/tp @s ~ ~ ~ -40 10'      # towards the encased slope and vertical belt (+x, +z)
 Start-Sleep -Milliseconds 800
@@ -55,9 +55,9 @@ Save-Screenshot 'belts-casing' | Out-Null
 # the connector preview: two shafts (axis z) 3 blocks apart within reach north of the player,
 # select the left one, then look at the right one
 Invoke-Chat '/fill ~-2 ~ ~-3 ~4 ~2 ~-1 air'
-Invoke-Chat '/setblock ~-1 ~1 ~-2 levitate:shaft ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~2 ~1 ~-2 levitate:shaft ["levitate:axis"=2]'
-Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 levitate:belt_connector 4'
+Invoke-Chat '/setblock ~-1 ~1 ~-2 bearing:shaft ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~2 ~1 ~-2 bearing:shaft ["bearing:axis"=2]'
+Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 bearing:belt_connector 4'
 Start-Sleep -Milliseconds 800
 Invoke-Chat '/tp @s ~ ~ ~ 153 3'      # at the left shaft (1 west, 2 north)
 Start-Sleep -Milliseconds 600
@@ -77,7 +77,7 @@ Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 air'
 if (-not $vanilla) {
     Invoke-Chat '/fill 1 -60 -1 7 -58 1 air'
     Invoke-Chat '/setblock 5 -60 0 stone'
-    Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 levitate:weighted_ejector 4'
+    Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 bearing:weighted_ejector 4'
     Invoke-Chat '/tp @s 0.5 -60 0.5 -90 12.6'   # at the stone (5 -60 0)
     Start-Sleep -Milliseconds 800
     $mark = Get-LogMark

@@ -9,7 +9,7 @@
 
 #include "core/pipes/Types.h"
 
-namespace lv::core::pipes {
+namespace br::core::pipes {
 
 // ---- fluid pipe (Create's FluidPipeBlock) --------------------------------------------------------
 
@@ -105,4 +105,4 @@ struct SmartPipeState {
 [[nodiscard]] SmartPipeState
 smartPipePlacement(Face nearestLook, Face horizontalLook, double lookX, double lookZ, std::array<bool, 6> const& pipeAt);
 
-} // namespace lv::core::pipes
+} // namespace br::core::pipes

@@ -3,7 +3,7 @@
   "create.recipe.heat_requirement.none": "No Heating Required",
   "create.recipe.heat_requirement.heated": "Heated",
   "create.recipe.heat_requirement.superheated": "Super-Heated",
-  "lv.basin.demo": "Basin demo built at {} {} {}",
-  "lv.basin.need_op": "You need operator permission.",
-  "lv.basin.need_player": "Run this as a player."
+  "br.basin.demo": "Basin demo built at {} {} {}",
+  "br.basin.need_op": "You need operator permission.",
+  "br.basin.need_player": "Run this as a player."
 }

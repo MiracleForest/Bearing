@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.schematic_table",
+        "identifier": "geometry.bearing.schematic_table",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 3,

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_scoria_slab"
+      "identifier": "bearing:cut_scoria_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_scoria"
+        "item": "bearing:cut_scoria"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_scoria"
+        "item": "bearing:cut_scoria"
       }
     ],
     "result": {
-      "item": "levitate:cut_scoria_slab",
+      "item": "bearing:cut_scoria_slab",
       "count": 6
     }
   }

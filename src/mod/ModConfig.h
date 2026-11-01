@@ -2,10 +2,10 @@
 
 #include <string>
 
-namespace lv {
+namespace br {
 
 /// `config/mod.json`: foundation-wide settings. Feature options live in their own sections,
-/// owned by the units that use them (`LV_REGISTER_CONFIG`).
+/// owned by the units that use them (`BR_REGISTER_CONFIG`).
 struct ModConfig {
     int         version = 1;
     /// Language for server messages and GUI text when a player's locale has no translation
@@ -17,4 +17,4 @@ struct ModConfig {
     bool        requireResourcePack = true;
 };
 
-} // namespace lv
+} // namespace br

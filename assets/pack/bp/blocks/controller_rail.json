@@ -2,32 +2,32 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:controller_rail",
+      "identifier": "bearing:controller_rail",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:rail_axis": [
+        "bearing:rail_axis": [
           0,
           1
         ],
-        "levitate:power": {
+        "bearing:power": {
           "values": {
             "min": 0,
             "max": 15
           }
         },
-        "levitate:backwards": [
+        "bearing:backwards": [
           0,
           1
         ]
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.controller_rail",
+      "minecraft:geometry": "geometry.bearing.controller_rail",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_controller_rail",
+          "texture": "bearing_controller_rail",
           "render_method": "alpha_test"
         }
       },
@@ -55,7 +55,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:rail_axis') == 0 && q.block_state('levitate:backwards') == 0",
+        "condition": "q.block_state('bearing:rail_axis') == 0 && q.block_state('bearing:backwards') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -67,7 +67,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:rail_axis') == 0 && q.block_state('levitate:backwards') == 1",
+        "condition": "q.block_state('bearing:rail_axis') == 0 && q.block_state('bearing:backwards') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -79,7 +79,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:rail_axis') == 1 && q.block_state('levitate:backwards') == 0",
+        "condition": "q.block_state('bearing:rail_axis') == 1 && q.block_state('bearing:backwards') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -91,7 +91,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:rail_axis') == 1 && q.block_state('levitate:backwards') == 1",
+        "condition": "q.block_state('bearing:rail_axis') == 1 && q.block_state('bearing:backwards') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -103,11 +103,11 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:power') > 0",
+        "condition": "q.block_state('bearing:power') > 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_controller_rail_on",
+              "texture": "bearing_controller_rail_on",
               "render_method": "alpha_test"
             }
           }

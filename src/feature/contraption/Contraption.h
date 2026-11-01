@@ -41,9 +41,9 @@ class ItemStack;
 class Player;
 class Actor;
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
-namespace cc = ::lv::core::contraption;
+namespace cc = ::br::core::contraption;
 using Id     = std::uint64_t;
 
 // ---- per-block data carried with the blocks ---------------------------------------------------
@@ -69,7 +69,7 @@ void registerRotationHandler(std::string blockId, RotationHandler handler);
 // ---- movement checks (Create's BlockMovementChecks) -------------------------------------------
 
 /// Lets a unit describe how its blocks attach. Each function is optional. `states` are the
-/// block's states (`levitate:facing`, ...).
+/// block's states (`bearing:facing`, ...).
 struct MovementRules {
     std::function<bool(cc::States const&)>          movable;         ///< default: true
     std::function<bool(cc::States const&)>          brittle;         ///< default: false
@@ -345,4 +345,4 @@ int clearGlue(int dim, cc::Pos const& center, int radius);
 /// Sets the range of a chassis and of its connected chassis group (as Create's bulk value).
 void setChassisRange(core::GlobalPos const& pos, int range);
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

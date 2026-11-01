@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.weighted_ejector",
+        "identifier": "geometry.bearing.weighted_ejector",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 4,

@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.item_hatch_open",
+        "identifier": "geometry.bearing.item_hatch_open",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 3,

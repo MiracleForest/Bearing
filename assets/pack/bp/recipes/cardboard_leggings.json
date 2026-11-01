@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cardboard_leggings"
+      "identifier": "bearing:cardboard_leggings"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "P": {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     ],
     "result": {
-      "item": "levitate:cardboard_leggings",
+      "item": "bearing:cardboard_leggings",
       "count": 1
     }
   }

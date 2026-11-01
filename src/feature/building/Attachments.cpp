@@ -33,7 +33,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace bd    = common::blockdata;
 namespace items = common::items;
@@ -72,7 +72,7 @@ void placardDisplay(GlobalPos const& pos, Block const& block, std::vector<std::p
     ItemStack item = heldItemOf(pos, "item");
     if (item.isNull()) return;
     static constexpr int kNormal[6][3]{{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}};
-    int  facing = std::clamp(stateOf(block, "levitate:facing", 2), 0, 5);
+    int  facing = std::clamp(stateOf(block, "bearing:facing", 2), 0, 5);
     auto n      = kNormal[facing];
     double const front = -.5 + 3 / 16.0 + .01; // from the centre along the facing
     itemrender::DisplayItem d;
@@ -134,7 +134,7 @@ bool usePlacard(Player& player, ItemStack const& inHand, GlobalPos const& pos) {
     ItemStack inBlock = heldItemOf(pos, "item");
     if (!player.canUseAbility(AbilitiesIndex::Build) || inHand.isNull() || !inBlock.isNull()) {
         if (inBlock.isNull() || inHand.isNull()) return true; // FAIL: nothing happens
-        if (stateOf(*block, "levitate:powered")) {
+        if (stateOf(*block, "bearing:powered")) {
             ensurePlacardPulse(pos); // powered when the world was saved: finish the pulse
             return true;
         }
@@ -145,7 +145,7 @@ bool usePlacard(Player& player, ItemStack const& inHand, GlobalPos const& pos) {
             return true;
         }
         playSound(pos, "random.orb", 1.f, 1.2f); // Create's CONFIRM
-        set(pos, *withStates(*block, {{"levitate:powered", 1}}));
+        set(pos, *withStates(*block, {{"bearing:powered", 1}}));
         pulses()[pos] = 19;
         log().info("building: placard at {} {} {} matched {}, pulse", pos.x, pos.y, pos.z, inHand.getTypeName());
         return true;
@@ -179,7 +179,7 @@ void placardTick() {
             continue;
         }
         auto const* b = blockAt(it->first);
-        if (b && b->getTypeName() == kPlacardId && stateOf(*b, "levitate:powered")) set(it->first, *withStates(*b, {{"levitate:powered", 0}}));
+        if (b && b->getTypeName() == kPlacardId && stateOf(*b, "bearing:powered")) set(it->first, *withStates(*b, {{"bearing:powered", 0}}));
         it = p.erase(it);
     }
 }
@@ -322,7 +322,7 @@ int dirOfTrapdoorDirection(int d) { return d == 0 ? East : d == 1 ? West : d == 
 /// A trapdoor material with Java's FACING / OPEN / HALF set (vanilla and our own trapdoors).
 Block const* withTrapdoorStates(Block const& material, int facing, bool open, bool top) {
     if (auto const* info = infoOf(material); info && info->kind == Kind::Trapdoor)
-        return withStates(material, {{"levitate:facing", facing}, {"levitate:open", open ? 1 : 0}, {"levitate:top", top ? 1 : 0}});
+        return withStates(material, {{"bearing:facing", facing}, {"bearing:open", open ? 1 : 0}, {"bearing:top", top ? 1 : 0}});
     auto nbt = nbtOf(material);
     if (hasState(*nbt, "direction")) setInt(*nbt, "direction", trapdoorDirection(facing));
     if (hasState(*nbt, "minecraft:cardinal_direction")) setStr(*nbt, "minecraft:cardinal_direction", kDirWords[facing]);
@@ -335,9 +335,9 @@ Block const* withTrapdoorStates(Block const& material, int facing, bool open, bo
 TrapdoorState trapdoorStateOf(Block const& material) {
     TrapdoorState t;
     if (auto const* info = infoOf(material); info && info->kind == Kind::Trapdoor) {
-        t.facing = stateOf(material, "levitate:facing", North);
-        t.open   = stateOf(material, "levitate:open") != 0;
-        t.top    = stateOf(material, "levitate:top") != 0;
+        t.facing = stateOf(material, "bearing:facing", North);
+        t.open   = stateOf(material, "bearing:open") != 0;
+        t.top    = stateOf(material, "bearing:top") != 0;
         return t;
     }
     auto nbt = nbtOf(material);
@@ -395,8 +395,8 @@ void syncCopycatLight(GlobalPos const& pos) {
     auto kind = infoOf(*block)->kind;
     if (kind != Kind::CopycatPanel && kind != Kind::CopycatStep) return;
     int light = copycatLightOf(copycatMaterialBlock(pos));
-    if (stateOf(*block, "levitate:light") == light) return;
-    if (auto const* lit = withStates(*block, {{"levitate:light", light}}); lit && lit != block) set(pos, *lit);
+    if (stateOf(*block, "bearing:light") == light) return;
+    if (auto const* lit = withStates(*block, {{"bearing:light", light}}); lit && lit != block) set(pos, *lit);
 }
 
 Block const* copycatMaterialBlock(GlobalPos const& pos) {
@@ -462,7 +462,7 @@ bool useCopycat(Player& player, ItemStack const& item, GlobalPos const& pos, int
     Block const* applied = orientToFace(*game::blockWith(material->getTypeName()), face);
     // Create's CopycatPanelBlock.prepareMaterial
     if (panel && isTrapdoorMaterial(*applied))
-        applied = prepareTrapdoor(*applied, stateOf(*block, "levitate:facing", Up), horizontalFacing(player), hitY);
+        applied = prepareTrapdoor(*applied, stateOf(*block, "bearing:facing", Up), horizontalFacing(player), hitY);
     // Create's setMaterial: a neighbour of the same copycat state with the same material block lends
     // its exact material state (orientations match)
     for (int d = 0; d < 6; ++d) {
@@ -517,15 +517,15 @@ std::optional<std::string> bracketAt(GlobalPos const& pos) {
 
 namespace {
 
-bool isBracketItem(std::string const& id) { return id == "levitate:metal_bracket" || id == "levitate:wooden_bracket"; }
+bool isBracketItem(std::string const& id) { return id == "bearing:metal_bracket" || id == "bearing:wooden_bracket"; }
 
 /// Create's BracketedBlockEntityBehaviour.isAvailable: simple kinetic blocks with an axis.
 bool bracketableKinetic(std::string const& id) {
-    return id == "levitate:shaft" || id == "levitate:cogwheel" || id == "levitate:large_cogwheel";
+    return id == "bearing:shaft" || id == "bearing:cogwheel" || id == "bearing:large_cogwheel";
 }
 
 void bracketSound(GlobalPos const& pos, std::string const& id) {
-    playSound(pos, id == "levitate:wooden_bracket" ? "use.scaffolding" : "use.netherite", 0.75f, 1.f);
+    playSound(pos, id == "bearing:wooden_bracket" ? "use.scaffolding" : "use.netherite", 0.75f, 1.f);
 }
 
 } // namespace
@@ -538,14 +538,14 @@ bool useBracket(Player& player, ItemStack const& item, GlobalPos const& pos, int
     std::string target = idAt(pos);
     if (!bracketableKinetic(target)) return true;
     auto const* block = blockAt(pos);
-    int         axis  = block ? stateOf(*block, "levitate:axis", 1) : 1;
+    int         axis  = block ? stateOf(*block, "bearing:axis", 1) : 1;
     // Create's BracketBlockItem: the clicked face, or (an end of the shaft) the face towards the player
     int facing = face;
     if (axisOf(facing) == axis) facing = opposite(nearestLooking(player)[0]);
     if (axisOf(facing) == axis) return true;
     auto previous = bracketAt(pos);
     if (previous && *previous == id) return true;
-    nlohmann::json value{{"id", id}, {"facing", facing}, {"axis", axis}, {"cog", target != "levitate:shaft"}};
+    nlohmann::json value{{"id", id}, {"facing", facing}, {"axis", axis}, {"cog", target != "bearing:shaft"}};
     setUnitValue(pos, "bracket", value);
     if (previous && !player.isCreative()) give(player, makeItem(*previous)); // swapped
     consumeHeld(player);
@@ -584,7 +584,7 @@ void registerDrops() {
         if (u.contains("item")) drop(pos, items::fromJson(u["item"]));
         // Create's CopycatBlock.playerWillDestroy: a creative player's break keeps the material
         if (u.contains("consumed") && !creativeBreakAt(pos)) drop(pos, items::fromJson(u["consumed"]));
-        if (u.contains("bracket")) drop(pos, makeItem(u["bracket"].value("id", std::string("levitate:metal_bracket"))));
+        if (u.contains("bracket")) drop(pos, makeItem(u["bracket"].value("id", std::string("bearing:metal_bracket"))));
         if (u.contains("material") || u.contains("bracket")) pushRemoved(pos);
         (void)previousId;
     });
@@ -628,4 +628,4 @@ void clearPulses() { pulses().clear(); }
 
 } // namespace detail
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

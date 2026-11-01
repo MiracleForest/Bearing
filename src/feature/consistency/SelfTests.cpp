@@ -20,7 +20,7 @@
 #include "mod/I18n.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::consistency {
+namespace br::feature::consistency {
 
 namespace {
 
@@ -30,10 +30,10 @@ namespace ft    = common::fluidtypes;
 namespace items = common::items;
 namespace cc    = core::contraption;
 
-constexpr char kChute[]      = "levitate:chute";
-constexpr char kSmartChute[] = "levitate:smart_chute";
-constexpr char kFacing[]     = "levitate:facing";
-constexpr char kShape[]      = "levitate:shape";
+constexpr char kChute[]      = "bearing:chute";
+constexpr char kSmartChute[] = "bearing:smart_chute";
+constexpr char kFacing[]     = "bearing:facing";
+constexpr char kShape[]      = "bearing:shape";
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -48,7 +48,7 @@ int stateAt(Context& ctx, GlobalPos const& p, char const* name) {
 
 // Bedrock reads integer states by their position in the state list; the chute's lists run 0..n,
 // so a value set is the value read (and the funnels unit maps it to a direction).
-LV_REGISTER_SELFTEST("consistency.chute_states", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("consistency.chute_states", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3500), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     ctx.require(co_await ctx.ensureLoaded(at(base, 8, 6, 8)), "test area corner loaded");
@@ -62,8 +62,8 @@ LV_REGISTER_SELFTEST("consistency.chute_states", [](Context& ctx) -> ll::coro::C
     }
     for (int v = 0; v <= 1; ++v) {
         auto p = at(base, v * 2, 6, 8);
-        ctx.require(ctx.setBlock(p, kSmartChute, {{"levitate:powered", v}}), "smart chute placed");
-        ctx.check(stateAt(ctx, p, "levitate:powered") == v, "smart chute powered reads back");
+        ctx.require(ctx.setBlock(p, kSmartChute, {{"bearing:powered", v}}), "smart chute placed");
+        ctx.check(stateAt(ctx, p, "bearing:powered") == v, "smart chute powered reads back");
     }
     // a diagonal chute facing west (state 3) feeding the chute below and east of it stays diagonal
     // (Create's ChuteBlock.updateChuteState: no inputs -> intersection)
@@ -81,7 +81,7 @@ LV_REGISTER_SELFTEST("consistency.chute_states", [](Context& ctx) -> ll::coro::C
 });
 
 // Contraptions turn a chute's facing state as a direction (0 down, 1..4 north / south / west / east).
-LV_REGISTER_SELFTEST("consistency.chute_rotation", [](Context& ctx) {
+BR_REGISTER_SELFTEST("consistency.chute_rotation", [](Context& ctx) {
     auto const* handler = contraption::detail::rotationHandler(kChute);
     ctx.require(handler != nullptr, "the chute has a rotation handler");
     struct Case {
@@ -104,43 +104,43 @@ LV_REGISTER_SELFTEST("consistency.chute_rotation", [](Context& ctx) {
 });
 
 // One fluid registry: Create's fluids (registered by U19), their containers and names.
-LV_REGISTER_SELFTEST("consistency.fluid_registry", [](Context& ctx) {
-    auto const* honey = ft::find("levitate:honey");
+BR_REGISTER_SELFTEST("consistency.fluid_registry", [](Context& ctx) {
+    auto const* honey = ft::find("bearing:honey");
     ctx.require(honey != nullptr, "honey is registered");
-    ctx.check(honey->bucketItem == "levitate:honey_bucket" && honey->bottleItem == "minecraft:honey_bottle", "honey's containers");
+    ctx.check(honey->bucketItem == "bearing:honey_bucket" && honey->bottleItem == "minecraft:honey_bottle", "honey's containers");
     ctx.check(ft::bucketOf("minecraft:water") == "minecraft:water_bucket", "water's bucket");
     ctx.check(ft::bucketOf("minecraft:powder_snow").empty(), "powder snow fills no bucket");
-    ctx.check(ft::bucketOf("levitate:tea").empty(), "builder's tea has no bucket");
-    ctx.check(ft::hasBlockState("levitate:chocolate") && !ft::hasBlockState("minecraft:milk"), "world blocks");
-    ctx.check(ft::find("potion:swiftness") != nullptr && ft::find("potion:swiftness") == ft::find("levitate:potion/splash/swiftness"), "both potion forms share the potion entry");
-    ctx.check(ft::effectFor("levitate:potion/regular/swiftness") == ft::effectFor("potion:swiftness"), "both potion forms share the open-pipe effect");
+    ctx.check(ft::bucketOf("bearing:tea").empty(), "builder's tea has no bucket");
+    ctx.check(ft::hasBlockState("bearing:chocolate") && !ft::hasBlockState("minecraft:milk"), "world blocks");
+    ctx.check(ft::find("potion:swiftness") != nullptr && ft::find("potion:swiftness") == ft::find("bearing:potion/splash/swiftness"), "both potion forms share the potion entry");
+    ctx.check(ft::effectFor("bearing:potion/regular/swiftness") == ft::effectFor("potion:swiftness"), "both potion forms share the open-pipe effect");
     ctx.check(ft::kBucket == 1000 && ft::kBottle == 250, "bucket and bottle amounts");
-    for (auto const& [id, fluid, amount] : {std::tuple{"levitate:honey_bucket", "levitate:honey", 1000}, std::tuple{"minecraft:honey_bottle", "levitate:honey", 250},
-                                            std::tuple{"levitate:builders_tea", "levitate:tea", 250}, std::tuple{"levitate:chocolate_bucket", "levitate:chocolate", 1000}}) {
+    for (auto const& [id, fluid, amount] : {std::tuple{"bearing:honey_bucket", "bearing:honey", 1000}, std::tuple{"minecraft:honey_bottle", "bearing:honey", 250},
+                                            std::tuple{"bearing:builders_tea", "bearing:tea", 250}, std::tuple{"bearing:chocolate_bucket", "bearing:chocolate", 1000}}) {
         auto stack = items::make(id);
         ctx.require(stack.has_value(), std::string("item ") + id);
         auto f = common::fluids::fluidInItem(*stack);
         ctx.check(f.fluid == fluid && f.amount == amount, std::string(id) + " holds " + std::to_string(amount) + " mB of " + fluid + ": " + f.fluid);
     }
-    ctx.check(ft::displayName("levitate:honey", "en_US") == "Honey", "honey's name");
-    ctx.check(ft::displayName("levitate:honey", "zh_CN") == "蜂蜜", "honey's Chinese name");
+    ctx.check(ft::displayName("bearing:honey", "en_US") == "Honey", "honey's name");
+    ctx.check(ft::displayName("bearing:honey", "zh_CN") == "蜂蜜", "honey's Chinese name");
     ctx.check(ft::displayName("minecraft:water", "en_US") == "Water", "water's name");
-    ctx.check(ft::displayName("levitate:potion/regular/long_swiftness", "en_US") == "Potion of Swiftness", "potion name (Create's PotionFluidType, U51): " + ft::displayName("levitate:potion/regular/long_swiftness", "en_US"));
+    ctx.check(ft::displayName("bearing:potion/regular/long_swiftness", "en_US") == "Potion of Swiftness", "potion name (Create's PotionFluidType, U51): " + ft::displayName("bearing:potion/regular/long_swiftness", "en_US"));
     ctx.check(ft::displayName("othermod:liquid_gold", "en_US") == "Liquid Gold", "unknown fluids are made readable");
 });
 
 // Shared strings are Create's keys with Create's text, defined once.
-LV_REGISTER_SELFTEST("consistency.strings", [](Context& ctx) {
+BR_REGISTER_SELFTEST("consistency.strings", [](Context& ctx) {
     ctx.check(translate("create.generic.unit.ticks", "?", "en_US") == "Ticks", "create.generic.unit.ticks");
     ctx.check(translate("create.generic.unit.seconds", "?", "zh_CN") == "秒", "create.generic.unit.seconds (zh_CN)");
     ctx.check(translate("create.schedule.condition.threshold.items", "?", "zh_CN") == "个", "threshold units are shared");
     ctx.check(translate("create.action.confirm", "?", "en_US") == "Confirm", "create.action.confirm");
-    ctx.check(translate("lv.redstone.unit.ticks", "gone", "en_US") == "gone", "U23's copy of the time units is gone");
-    ctx.check(translate("lv.equipment.confirm", "gone", "en_US") == "gone", "U31's copy of Confirm is gone");
+    ctx.check(translate("br.redstone.unit.ticks", "gone", "en_US") == "gone", "U23's copy of the time units is gone");
+    ctx.check(translate("br.equipment.confirm", "gone", "en_US") == "gone", "U31's copy of Confirm is gone");
     namespace filter = common::filter;
     ctx.check(filter::describe({"book_copy", "copy_of_original", false}, "en_US") == "is a first-generation copy", "book copy attribute: " + filter::describe({"book_copy", "copy_of_original", false}, "en_US"));
     ctx.check(filter::describe({"shulker_fill_level", "partial", true}, "en_US") == "is shulker not partially filled", "shulker attribute: " + filter::describe({"shulker_fill_level", "partial", true}, "en_US"));
     ctx.check(filter::describe({"blastable", "", false}, "en_US") == "can be Smelted in a Blast Furnace", "blastable attribute");
 });
 
-} // namespace lv::feature::consistency
+} // namespace br::feature::consistency

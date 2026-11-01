@@ -2,11 +2,11 @@
   "id": "cogwheel",
   "size": [5, 5],
   "blocks": [
-    {"at": [1, 1, 4], "id": "levitate:creative_motor", "states": {"levitate:facing": 2}},
-    {"at": [1, 1, 3], "id": "levitate:shaft", "states": {"levitate:axis": 2}},
-    {"area": [[1, 1, 2], [3, 1, 2]], "id": "levitate:cogwheel", "states": {"levitate:axis": 2}},
-    {"area": [[1, 1, 1], [2, 1, 1]], "id": "levitate:shaft", "states": {"levitate:axis": 2}},
-    {"area": [[1, 1, 0], [2, 1, 0]], "id": "levitate:speedometer", "states": {"levitate:facing": 1, "levitate:along_first": 0}}
+    {"at": [1, 1, 4], "id": "bearing:creative_motor", "states": {"bearing:facing": 2}},
+    {"at": [1, 1, 3], "id": "bearing:shaft", "states": {"bearing:axis": 2}},
+    {"area": [[1, 1, 2], [3, 1, 2]], "id": "bearing:cogwheel", "states": {"bearing:axis": 2}},
+    {"area": [[1, 1, 1], [2, 1, 1]], "id": "bearing:shaft", "states": {"bearing:axis": 2}},
+    {"area": [[1, 1, 0], [2, 1, 0]], "id": "bearing:speedometer", "states": {"bearing:facing": 1, "bearing:along_first": 0}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

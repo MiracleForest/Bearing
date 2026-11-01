@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:brown_toolbox"
+      "identifier": "bearing:brown_toolbox"
     },
     "tags": [
       "crafting_table"
@@ -14,10 +14,10 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       },
       "S": {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       },
       "W": {
         "item": "minecraft:chest"
@@ -28,11 +28,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       }
     ],
     "result": {
-      "item": "levitate:brown_toolbox",
+      "item": "bearing:brown_toolbox",
       "count": 1
     }
   }

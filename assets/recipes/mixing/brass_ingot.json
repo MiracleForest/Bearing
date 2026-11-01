@@ -1,5 +1,5 @@
 {
-  "type": "levitate:mixing",
+  "type": "bearing:mixing",
   "ingredients": [
     {
       "tag": "c:ingots/copper"
@@ -10,7 +10,7 @@
   ],
   "results": [
     {
-      "id": "levitate:brass_ingot",
+      "id": "bearing:brass_ingot",
       "count": 2
     }
   ],

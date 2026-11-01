@@ -3,7 +3,7 @@
 #include "core/schematics/Nbt.h"
 #include "core/schematics/SafeData.h"
 
-using namespace lv::core::schematics;
+using namespace br::core::schematics;
 using nbt::Compound;
 using nbt::Tag;
 using Json = nlohmann::json;
@@ -42,8 +42,8 @@ TEST(SchematicsSafeData, OnlySignsAndBannersKeepVanillaBlockEntityData) {
 
 TEST(SchematicsSafeData, SafeNbtBlocksKeepTheirDocumentButRuntimeKeys) {
     Json doc{{"redstone", {{"first", "diamond"}}}, {"kinetics", {{"speed", 16}}}, {"advancements", "owner"}, {"filter", {{"filter", 1}}}};
-    EXPECT_TRUE(isSafeNbtBlock("levitate:redstone_link"));
-    auto safe = safeBlockData("levitate:redstone_link", doc);
+    EXPECT_TRUE(isSafeNbtBlock("bearing:redstone_link"));
+    auto safe = safeBlockData("bearing:redstone_link", doc);
     EXPECT_TRUE(safe.contains("redstone"));
     EXPECT_TRUE(safe.contains("filter"));
     EXPECT_FALSE(safe.contains("kinetics"));
@@ -52,13 +52,13 @@ TEST(SchematicsSafeData, SafeNbtBlocksKeepTheirDocumentButRuntimeKeys) {
 
 TEST(SchematicsSafeData, OtherBlocksKeepOnlyFiltersAndSettings) {
     Json doc{{"depot", {{"items", {1, 2, 3}}}}, {"filter", {{"filter", "gold"}}}};
-    EXPECT_FALSE(isSafeNbtBlock("levitate:depot"));
-    auto safe = safeBlockData("levitate:depot", doc);
+    EXPECT_FALSE(isSafeNbtBlock("bearing:depot"));
+    auto safe = safeBlockData("bearing:depot", doc);
     EXPECT_EQ(safe, (Json{{"filter", {{"filter", "gold"}}}}));
-    EXPECT_TRUE(safeBlockData("levitate:depot", Json{{"depot", 1}}).is_null());
+    EXPECT_TRUE(safeBlockData("bearing:depot", Json{{"depot", 1}}).is_null());
     // the threshold switch: its thresholds (PartialSafeNBT), not its measurement
     Json sw{{"redstone", {{"onAbove", 100}, {"offBelow", 10}, {"inverted", true}, {"inStacks", false}, {"current", 50}, {"state", true}}}};
-    auto s = safeBlockData("levitate:stockpile_switch", sw);
+    auto s = safeBlockData("bearing:stockpile_switch", sw);
     EXPECT_EQ(s["redstone"], (Json{{"onAbove", 100}, {"offBelow", 10}, {"inverted", true}, {"inStacks", false}}));
 }
 

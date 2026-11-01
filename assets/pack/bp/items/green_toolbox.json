@@ -2,24 +2,24 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:green_toolbox",
+      "identifier": "bearing:green_toolbox",
       "menu_category": {
         "category": "equipment"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_green_toolbox_item",
+      "minecraft:icon": "bearing_green_toolbox_item",
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.levitate:green_toolbox.name"
+        "value": "item.bearing:green_toolbox.name"
       },
       "minecraft:block_placer": {
-        "block": "levitate:green_toolbox",
+        "block": "bearing:green_toolbox",
         "replace_block_item": true
       },
       "minecraft:tags": {
         "tags": [
-          "levitate:toolbox"
+          "bearing:toolbox"
         ]
       }
     }

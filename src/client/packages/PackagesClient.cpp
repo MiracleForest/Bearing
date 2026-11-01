@@ -3,7 +3,7 @@
 // and the native package port screen (frogport / postbox). Data comes from the server through
 // the companion protocol ("packages.*" channels, src/feature/packages/Sync.cpp).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <chrono>
@@ -38,7 +38,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::packages {
+namespace br::client::packages {
 
 namespace cp    = core::packages;
 namespace items = feature::common::items;
@@ -152,13 +152,13 @@ Style styleOf(std::string const& itemId) {
         }
         return s;
     }
-    if (!itemId.starts_with("levitate:rare_")) return s;
+    if (!itemId.starts_with("bearing:rare_")) return s;
     s.w = 12, s.h = 10;
     static std::map<std::string, int> const kRare{{"creeper", 0x5fa83b}, {"darcy", 0x8e5ea8}, {"evan", 0x3b6fa8}, {"jinx", 0xd04a6a},
                                                  {"kryppers", 0x7a7a7a}, {"simi", 0xe0a040}, {"starlotte", 0xf0d060}, {"thunder", 0x4a8ad0},
                                                  {"up", 0xd06a3b}, {"vector", 0x3bb8a8}};
     for (auto const& [name, rgb] : kRare)
-        if (itemId == "levitate:rare_" + name + "_package") s.rgb = rgb;
+        if (itemId == "bearing:rare_" + name + "_package") s.rgb = rgb;
     return s;
 }
 
@@ -320,7 +320,7 @@ std::vector<std::string> addressTips() {
 class PortScreen : public screen::Screen {
 public:
     PortScreen(Json const& data, screen::SendFn send)
-    : Screen(data.value("postbox", false) ? ctr("lv.packages.postbox", "Postbox") : ctr("lv.packages.frogport", "Package Frogport"), 176, 104),
+    : Screen(data.value("postbox", false) ? ctr("br.packages.postbox", "Postbox") : ctr("br.packages.frogport", "Package Frogport"), 176, 104),
       mSend(std::move(send)),
       mData(data) {
         showInventory = true;
@@ -388,7 +388,7 @@ private:
 class PackageFilterScreen : public screen::Screen {
 public:
     PackageFilterScreen(Json const& data, screen::SendFn send)
-    : Screen(ctr("lv.packages.package_filter", "Package Filter"), 176, 52),
+    : Screen(ctr("br.packages.package_filter", "Package Filter"), 176, 52),
       mSend(std::move(send)),
       mAddress(data.value("address", std::string{})),
       mSuggestions(suggestionsOf(data)) {}
@@ -472,8 +472,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::packages
+} // namespace br::client::packages
 
-LV_REGISTER_MODULE(lv::client::packages::PackagesClientModule);
+BR_REGISTER_MODULE(br::client::packages::PackagesClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

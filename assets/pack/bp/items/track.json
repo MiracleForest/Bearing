@@ -2,15 +2,15 @@
   "format_version": "1.21.60",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:track",
+      "identifier": "bearing:track",
       "menu_category": {
         "category": "construction"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_track",
+      "minecraft:icon": "bearing_track",
       "minecraft:block_placer": {
-        "block": "levitate:track",
+        "block": "bearing:track",
         "replace_block_item": true
       },
       "minecraft:max_stack_size": 64

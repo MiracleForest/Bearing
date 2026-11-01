@@ -29,13 +29,13 @@ Start-Sleep -Milliseconds 400
 # a haunted bell on the floor in front (facing east: rung from its west side), a peculiar bell beside
 # it, a peculiar bell on a wall and one hanging over soul fire (it turns haunted)
 $mark = Get-LogMark
-Invoke-Chat '/setblock ~3 ~ ~ levitate:haunted_bell ["levitate:facing"=5,"levitate:attachment"=0]'
-Invoke-Chat '/setblock ~3 ~ ~-2 levitate:peculiar_bell ["levitate:facing"=2,"levitate:attachment"=0]'
+Invoke-Chat '/setblock ~3 ~ ~ bearing:haunted_bell ["bearing:facing"=5,"bearing:attachment"=0]'
+Invoke-Chat '/setblock ~3 ~ ~-2 bearing:peculiar_bell ["bearing:facing"=2,"bearing:attachment"=0]'
 Invoke-Chat '/setblock ~5 ~ ~2 stone'
-Invoke-Chat '/setblock ~4 ~ ~2 levitate:peculiar_bell ["levitate:facing"=5,"levitate:attachment"=2]'
+Invoke-Chat '/setblock ~4 ~ ~2 bearing:peculiar_bell ["bearing:facing"=5,"bearing:attachment"=2]'
 Invoke-Chat '/setblock ~5 ~-1 ~-4 soul_soil'
 Invoke-Chat '/setblock ~5 ~2 ~-4 stone'
-Invoke-Chat '/setblock ~5 ~1 ~-4 levitate:peculiar_bell ["levitate:facing"=5,"levitate:attachment"=1]'
+Invoke-Chat '/setblock ~5 ~1 ~-4 bearing:peculiar_bell ["bearing:facing"=5,"bearing:attachment"=1]'
 Invoke-Chat '/setblock ~5 ~ ~-4 soul_fire'
 Wait-LogLine 'equipment: peculiar bell at .* became a haunted bell' 15 -Since $mark | Out-Null
 Start-Sleep -Seconds 1
@@ -45,7 +45,7 @@ Save-Screenshot 'bells' | Out-Null
 # the view (the client mod draws the swing; vanilla clients see it still)
 $mark = Get-LogMark
 Invoke-Chat '/setblock ~3 ~ ~-3 redstone_block'
-Wait-LogLine 'equipment: levitate:peculiar_bell at .* rang' 15 -Since $mark | Out-Null
+Wait-LogLine 'equipment: bearing:peculiar_bell at .* rang' 15 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 200
 Save-Screenshot 'bell-swing' | Out-Null
 if (-not $vanilla) { Wait-LogLine 'equipment client: bell at .* swings' 10 -Since $mark | Out-Null }
@@ -53,7 +53,7 @@ if (-not $vanilla) { Wait-LogLine 'equipment client: bell at .* swings' 10 -Sinc
 # ring the haunted bell from its west side (the crosshair is on its body)
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
-Wait-LogLine 'equipment: levitate:haunted_bell at .* rang' 15 -Since $mark | Out-Null
+Wait-LogLine 'equipment: bearing:haunted_bell at .* rang' 15 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 250
 Save-Screenshot 'bell-rung' | Out-Null
 Start-Sleep -Milliseconds 1500
@@ -64,10 +64,10 @@ Invoke-Chat '/fill ~1 ~ ~-6 ~10 ~5 ~6 air'
 Start-Sleep -Milliseconds 400
 
 # --- cardboard armour ----------------------------------------------------------------------------------------
-Invoke-Chat '/replaceitem entity @s slot.armor.head 0 levitate:cardboard_helmet'
-Invoke-Chat '/replaceitem entity @s slot.armor.chest 0 levitate:cardboard_chestplate'
-Invoke-Chat '/replaceitem entity @s slot.armor.legs 0 levitate:cardboard_leggings'
-Invoke-Chat '/replaceitem entity @s slot.armor.feet 0 levitate:cardboard_boots'
+Invoke-Chat '/replaceitem entity @s slot.armor.head 0 bearing:cardboard_helmet'
+Invoke-Chat '/replaceitem entity @s slot.armor.chest 0 bearing:cardboard_chestplate'
+Invoke-Chat '/replaceitem entity @s slot.armor.legs 0 bearing:cardboard_leggings'
+Invoke-Chat '/replaceitem entity @s slot.armor.feet 0 bearing:cardboard_boots'
 Invoke-Chat '/tp @s ~ ~ ~ -90 10'
 Start-Sleep -Milliseconds 600
 Press-Key F5; Press-Key F5          # third person, from the front
@@ -100,13 +100,13 @@ Start-Sleep -Milliseconds 400
 # a chest with a hatch on its west side, facing it; the player holds apples and clicks the hatch
 Invoke-Chat '/tp @s ~ ~ ~ -90 15'      # the crosshair on the chest's west side, also with the lower eyes of a sneaking player
 Invoke-Chat '/setblock ~4 ~ ~ chest'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 0 levitate:item_hatch'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 0 bearing:item_hatch'
 Press-Key '1'
 Start-Sleep -Milliseconds 600
 # sneak-click the chest's west side (a plain click would open the chest): the hatch faces the chest
 $mark = Get-LogMark
 Hold-Key 0x10 { Start-Sleep -Milliseconds 300; Click 0.5 0.5 -Relative -Right; Start-Sleep -Milliseconds 500 }
-Wait-LogLine 'funnels: levitate:item_hatch placed at .* by ' 15 -Since $mark | Out-Null
+Wait-LogLine 'funnels: bearing:item_hatch placed at .* by ' 15 -Since $mark | Out-Null
 Invoke-Chat '/replaceitem entity @s slot.hotbar 0 apple 32'
 Start-Sleep -Milliseconds 800
 Save-Screenshot 'hatch' | Out-Null
@@ -118,7 +118,7 @@ Save-Screenshot 'hatch-open' | Out-Null
 Start-Sleep -Milliseconds 1200
 Save-Screenshot 'hatch-closed' | Out-Null
 # the open model (the hatch is open for 10 ticks only: shown here with the state set by command)
-Invoke-Chat '/setblock ~3 ~ ~ levitate:item_hatch ["levitate:facing"=5,"levitate:open"=1]'
+Invoke-Chat '/setblock ~3 ~ ~ bearing:item_hatch ["bearing:facing"=5,"bearing:open"=1]'
 Start-Sleep -Milliseconds 1200
 Save-Screenshot 'hatch-open-model' | Out-Null
 # the apples went into the chest: nothing left to clear

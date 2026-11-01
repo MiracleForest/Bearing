@@ -2,7 +2,7 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:oxidized_copper_shingles",
+      "identifier": "bearing:oxidized_copper_shingles",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_copper_shingles_oxidized",
+          "texture": "bearing_copper_shingles_oxidized",
           "render_method": "opaque"
         }
       }

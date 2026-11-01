@@ -4,12 +4,12 @@
 #   pwsh tools/models/equipment.ps1
 #
 # A toolbox is a body with two drawers in front under a lid with a handle; front = +z (south) for
-# levitate:facing 0. Block state levitate:toolbox_lid picks the geometry:
-#   0  geometry.levitate.toolbox        closed (nobody has it open)
-#   1  geometry.levitate.toolbox_open   open: lid turned 135 degrees back, drawers out (Create's
+# bearing:facing 0. Block state bearing:toolbox_lid picks the geometry:
+#   0  geometry.bearing.toolbox        closed (nobody has it open)
+#   1  geometry.bearing.toolbox_open   open: lid turned 135 degrees back, drawers out (Create's
 #                                       renderer at rest), set by the server while the screen is open
-#   2  geometry.levitate.toolbox_body   the body only: the client mod meshes this for states 0 and 1
-#                                       and draws lid and drawers animated (geometry.levitate.toolbox_parts,
+#   2  geometry.bearing.toolbox_body   the body only: the client mod meshes this for states 0 and 1
+#                                       and draws lid and drawers animated (geometry.bearing.toolbox_parts,
 #                                       bones lid / drawer); never set in the world
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path "$PSScriptRoot/../..").Path
@@ -68,36 +68,36 @@ $open = @($body) + (Drawer 4 5.6) + (Drawer 6 2.8) + (Lid 135)
 $geo = [ordered]@{
     format_version      = '1.12.0'
     'minecraft:geometry' = @(
-        (Geometry 'geometry.levitate.toolbox' (Bone 'box' $closed)),
-        (Geometry 'geometry.levitate.toolbox_open' (Bone 'box' $open)),
-        (Geometry 'geometry.levitate.toolbox_body' (Bone 'box' $body)),
-        (Geometry 'geometry.levitate.toolbox_parts' @((Bone 'lid' (Lid $null)), (Bone 'drawer' (Drawer 4 0))))
+        (Geometry 'geometry.bearing.toolbox' (Bone 'box' $closed)),
+        (Geometry 'geometry.bearing.toolbox_open' (Bone 'box' $open)),
+        (Geometry 'geometry.bearing.toolbox_body' (Bone 'box' $body)),
+        (Geometry 'geometry.bearing.toolbox_parts' @((Bone 'lid' (Lid $null)), (Bone 'drawer' (Drawer 4 0))))
     )
 }
 Write-Json $geo (Join-Path $rp 'models/blocks/toolbox.geo.json')
 
 # ---- the 16 toolbox blocks -----------------------------------------------------------------------------------------
 $facingRotation = @(0, -90, 180, 90)
-$lidGeometry = @('geometry.levitate.toolbox', 'geometry.levitate.toolbox_open', 'geometry.levitate.toolbox_body')
+$lidGeometry = @('geometry.bearing.toolbox', 'geometry.bearing.toolbox_open', 'geometry.bearing.toolbox_body')
 foreach ($c in $colours) {
     $perms = @()
     for ($f = 0; $f -lt 4; $f++) {
-        $perms += [ordered]@{ condition = "q.block_state('levitate:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $facingRotation[$f], 0) } } }
+        $perms += [ordered]@{ condition = "q.block_state('bearing:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $facingRotation[$f], 0) } } }
     }
     for ($l = 1; $l -lt 3; $l++) {
-        $perms += [ordered]@{ condition = "q.block_state('levitate:toolbox_lid') == $l"; components = [ordered]@{ 'minecraft:geometry' = $lidGeometry[$l] } }
+        $perms += [ordered]@{ condition = "q.block_state('bearing:toolbox_lid') == $l"; components = [ordered]@{ 'minecraft:geometry' = $lidGeometry[$l] } }
     }
     $block = [ordered]@{
         format_version   = '1.21.70'
         'minecraft:block' = [ordered]@{
             description  = [ordered]@{
-                identifier    = "levitate:${c}_toolbox"
+                identifier    = "bearing:${c}_toolbox"
                 menu_category = [ordered]@{ category = 'equipment' }
-                states        = [ordered]@{ 'levitate:facing' = @(0, 1, 2, 3); 'levitate:toolbox_lid' = @(0, 1, 2) }
+                states        = [ordered]@{ 'bearing:facing' = @(0, 1, 2, 3); 'bearing:toolbox_lid' = @(0, 1, 2) }
             }
             components   = [ordered]@{
                 'minecraft:geometry'                  = $lidGeometry[0]
-                'minecraft:material_instances'        = [ordered]@{ '*' = [ordered]@{ texture = "levitate_${c}_toolbox"; render_method = 'alpha_test' } }
+                'minecraft:material_instances'        = [ordered]@{ '*' = [ordered]@{ texture = "bearing_${c}_toolbox"; render_method = 'alpha_test' } }
                 'minecraft:collision_box'             = [ordered]@{ origin = @(-7, 0, -4); size = @(14, 10, 8) }
                 'minecraft:selection_box'             = [ordered]@{ origin = @(-7, 0, -4); size = @(14, 13, 8) }
                 'minecraft:destructible_by_mining'    = [ordered]@{ seconds_to_destroy = 1.0 }

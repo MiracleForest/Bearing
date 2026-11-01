@@ -4,7 +4,7 @@
 #include <cmath>
 #include <string>
 
-namespace lv::core::generators {
+namespace br::core::generators {
 
 using kinetics::axisOf;
 using kinetics::isPositive;
@@ -259,4 +259,4 @@ std::array<StructureCell, 8> structureCells(Axis axis) {
     return out;
 }
 
-} // namespace lv::core::generators
+} // namespace br::core::generators

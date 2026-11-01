@@ -2,32 +2,32 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:vertical_framed_glass_pane",
+      "identifier": "bearing:vertical_framed_glass_pane",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:north": [
+        "bearing:north": [
           0,
           1
         ],
-        "levitate:south": [
+        "bearing:south": [
           0,
           1
         ],
-        "levitate:west": [
+        "bearing:west": [
           0,
           1
         ],
-        "levitate:east": [
+        "bearing:east": [
           0,
           1
         ],
-        "levitate:c_down": [
+        "bearing:c_down": [
           0,
           1
         ],
-        "levitate:c_up": [
+        "bearing:c_up": [
           0,
           1
         ]
@@ -44,18 +44,18 @@
       "minecraft:loot": "loot_tables/blocks/vertical_framed_glass_pane.json",
       "minecraft:light_dampening": 0,
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.pane",
+        "identifier": "geometry.bearing.pane",
         "bone_visibility": {
           "post": true,
-          "n": "q.block_state('levitate:north') == 1",
-          "s": "q.block_state('levitate:south') == 1",
-          "w": "q.block_state('levitate:west') == 1",
-          "e": "q.block_state('levitate:east') == 1"
+          "n": "q.block_state('bearing:north') == 1",
+          "s": "q.block_state('bearing:south') == 1",
+          "w": "q.block_state('bearing:west') == 1",
+          "e": "q.block_state('bearing:east') == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_vertical_framed_glass_pane",
+          "texture": "bearing_vertical_framed_glass_pane",
           "render_method": "alpha_test"
         }
       },
@@ -86,152 +86,70 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && !(q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && !(q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && (q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && (q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_vertical_framed_glass_0",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_vertical_framed_glass_0",
-              "render_method": "alpha_test"
-            }
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -8,
-              0,
-              -8
-            ],
-            "size": [
-              16,
-              16,
-              16
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && !(q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
-        "components": {
-          "minecraft:material_instances": {
-            "north": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "south": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "east": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "west": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
-              "render_method": "alpha_test"
-            },
-            "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
-              "render_method": "alpha_test"
-            },
-            "*": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            }
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && (q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
-        "components": {
-          "minecraft:material_instances": {
-            "north": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "south": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "east": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "west": {
-              "texture": "levitate_vertical_framed_glass_4",
-              "render_method": "alpha_test"
-            },
-            "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
-              "render_method": "alpha_test"
-            },
-            "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
-              "render_method": "alpha_test"
-            },
-            "*": {
-              "texture": "levitate_vertical_framed_glass_4",
+              "texture": "bearing_vertical_framed_glass_0",
               "render_method": "alpha_test"
             }
           },
@@ -250,70 +168,70 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && !(q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && !(q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && (q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && (q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_vertical_framed_glass_1",
+              "texture": "bearing_vertical_framed_glass_4",
               "render_method": "alpha_test"
             }
           },
@@ -332,70 +250,152 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && !(q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && !(q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && (q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && (q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_vertical_framed_glass_pane",
+              "texture": "bearing_vertical_framed_glass_pane",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_vertical_framed_glass_5",
+              "texture": "bearing_vertical_framed_glass_1",
+              "render_method": "alpha_test"
+            }
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && !(q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "south": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "east": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "west": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "up": {
+              "texture": "bearing_vertical_framed_glass_pane",
+              "render_method": "alpha_test"
+            },
+            "down": {
+              "texture": "bearing_vertical_framed_glass_pane",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && (q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "south": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "east": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "west": {
+              "texture": "bearing_vertical_framed_glass_5",
+              "render_method": "alpha_test"
+            },
+            "up": {
+              "texture": "bearing_vertical_framed_glass_pane",
+              "render_method": "alpha_test"
+            },
+            "down": {
+              "texture": "bearing_vertical_framed_glass_pane",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "bearing_vertical_framed_glass_5",
               "render_method": "alpha_test"
             }
           },

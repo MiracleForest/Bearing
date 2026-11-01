@@ -43,41 +43,41 @@
 #include "mod/ModConfig.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("goggles", lv::feature::goggles::GogglesConfig);
+BR_REGISTER_CONFIG("goggles", br::feature::goggles::GogglesConfig);
 
-namespace lv::feature::goggles {
+namespace br::feature::goggles {
 
 namespace fmt = core::goggles::fmt;
 using Json    = nlohmann::json;
 
 namespace {
 
-constexpr char const* kGogglesId   = "levitate:goggles";
+constexpr char const* kGogglesId   = "bearing:goggles";
 constexpr double      kMaxQueryRange = 8.0; // the value boxes' edit range (U3)
 
 /// Create's IRotate.getMinimumRequiredSpeedLevel overrides (MechanicalMixerBlock, FlapDisplayBlock;
 /// blocks of U14 / U24, by id).
 std::unordered_map<std::string, SpeedLevel> presetSpeedRequirements() {
     return {
-        {"levitate:mechanical_mixer", SpeedLevel::Medium},
-        {"levitate:display_board",    SpeedLevel::Medium},
+        {"bearing:mechanical_mixer", SpeedLevel::Medium},
+        {"bearing:display_board",    SpeedLevel::Medium},
     };
 }
 
 /// Create's AllBlocks `BlockStressValues.setGeneratorSpeed` calls (blocks of U7, by id).
 std::unordered_map<std::string, GeneratorSpeed> presetGeneratorSpeeds() {
     std::unordered_map<std::string, GeneratorSpeed> m{
-        {"levitate:hand_crank",          {32, false} },
-        {"levitate:copper_valve_handle", {32, false} },
-        {"levitate:water_wheel",         {8, false}  },
-        {"levitate:large_water_wheel",   {4, false}  },
-        {"levitate:creative_motor",      {256, true} },
-        {"levitate:windmill_bearing",    {16, true}  },
-        {"levitate:steam_engine",        {64, true}  },
+        {"bearing:hand_crank",          {32, false} },
+        {"bearing:copper_valve_handle", {32, false} },
+        {"bearing:water_wheel",         {8, false}  },
+        {"bearing:large_water_wheel",   {4, false}  },
+        {"bearing:creative_motor",      {256, true} },
+        {"bearing:windmill_bearing",    {16, true}  },
+        {"bearing:steam_engine",        {64, true}  },
     };
     for (auto const* c : {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan",
                           "purple", "blue", "brown", "green", "red", "black"}) {
-        m[std::string("levitate:") + c + "_valve_handle"] = {32, false};
+        m[std::string("bearing:") + c + "_valve_handle"] = {32, false};
     }
     return m;
 }
@@ -131,7 +131,7 @@ char const* speedLevelEnglish(SpeedLevel l) {
     }
 }
 
-/// A readable name from an id when no translation is known ("levitate:fluid_tank" -> "Fluid Tank").
+/// A readable name from an id when no translation is known ("bearing:fluid_tank" -> "Fluid Tank").
 std::string prettyId(std::string_view id) {
     auto        colon = id.find(':');
     std::string path(colon == std::string_view::npos ? id : id.substr(colon + 1));
@@ -168,12 +168,12 @@ std::string fluidName(InfoContext const& ctx, std::string const& fluid) {
 
 std::string heatName(InfoContext const& ctx, core::common::HeatLevel h) {
     auto name = std::string(core::common::heatLevelName(h));
-    return ctx.tr("lv.goggles.heat." + lower(name), prettyId(name));
+    return ctx.tr("br.goggles.heat." + lower(name), prettyId(name));
 }
 
-bool isLevitate(std::string_view id) { return id.starts_with("levitate:"); }
+bool isBearing(std::string_view id) { return id.starts_with("bearing:"); }
 
-/// Items held by the block (Levitate blocks with an item capability).
+/// Items held by the block (Bearing blocks with an item capability).
 bool itemTooltip(InfoContext const& ctx, Tooltip& t) {
     common::Access at{ctx.region, game::blockPos(ctx.pos), -1};
     auto           handler = common::items::find(at);
@@ -189,13 +189,13 @@ bool itemTooltip(InfoContext const& ctx, Tooltip& t) {
         else it->second += common::items::countOf(s);
     }
     if (stacks.empty()) return false;
-    t.push_back(line(ctx.tr("lv.goggles.item_contents", "Contents:")));
+    t.push_back(line(ctx.tr("br.goggles.item_contents", "Contents:")));
     constexpr std::size_t kMaxShown = 8;
     for (std::size_t i = 0; i < stacks.size() && i < kMaxShown; ++i) {
         t.push_back(line(std::string(fmt::kGray) + stacks[i].first + fmt::kGreen + " x" + std::to_string(stacks[i].second), 1));
     }
     if (stacks.size() > kMaxShown) {
-        t.push_back(line(std::string(fmt::kDarkGray) + ctx.tr("lv.goggles.more_items", "...and {} more", stacks.size() - kMaxShown), 1));
+        t.push_back(line(std::string(fmt::kDarkGray) + ctx.tr("br.goggles.more_items", "...and {} more", stacks.size() - kMaxShown), 1));
     }
     return true;
 }
@@ -203,7 +203,7 @@ bool itemTooltip(InfoContext const& ctx, Tooltip& t) {
 bool heatTooltip(InfoContext const& ctx, Tooltip& t) {
     auto h = common::heat::level(ctx.region, game::blockPos(ctx.pos));
     if (h == core::common::HeatLevel::None) return false;
-    t.push_back(line(ctx.tr("lv.goggles.heat", "Heat") + ": " + fmt::kGold + heatName(ctx, h)));
+    t.push_back(line(ctx.tr("br.goggles.heat", "Heat") + ": " + fmt::kGold + heatName(ctx, h)));
     return true;
 }
 
@@ -475,7 +475,7 @@ Overlay overlayFor(Player& player, core::GlobalPos const& target) {
 
     auto const* providers = providersOf(*block);
     auto        id        = block->getTypeName();
-    bool        defaults  = isLevitate(id);
+    bool        defaults  = isBearing(id);
     if (providers)
         for (auto const& p : *providers)
             if (p.replaceDefaults) defaults = false;
@@ -609,7 +609,7 @@ private:
             pos = game::globalPos(player.getDimensionBlockSource(), hit.mBlock);
             o   = overlayFor(player, pos);
         }
-        // the HUD panel needs Levitate's resource pack: only when the server requires it
+        // the HUD panel needs Bearing's resource pack: only when the server requires it
         bool useHud = config::get<GogglesConfig>().vanillaOverlayHud && config::get<ModConfig>().requireResourcePack;
         if (o.lines.empty() || (s.hud && !useHud)) {
             // the action bar fades by itself (a blank one would erase other units' messages); the
@@ -640,30 +640,30 @@ private:
     std::uint64_t                             mTick = 0;
 };
 
-} // namespace lv::feature::goggles
+} // namespace br::feature::goggles
 
-LV_REGISTER_MODULE(lv::feature::goggles::OverlayModule);
+BR_REGISTER_MODULE(br::feature::goggles::OverlayModule);
 
 // `/create overlay` (Create's OverlayConfigCommand): opens the overlay position screen of the
 // client mod; `/create overlay reset` puts the overlay back to its default position.
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
-    namespace net = lv::feature::net;
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+    namespace net = br::feature::net;
     cmd.overload().text("overlay").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        auto* player = lv::commands::playerOf(origin);
+        auto* player = br::commands::playerOf(origin);
         if (!player || !net::isCompanion(*player)) {
-            return output.error(lv::tr("lv.goggles.overlay.needs_client", "The overlay position can only be changed with the Levitate client mod."));
+            return output.error(br::tr("br.goggles.overlay.needs_client", "The overlay position can only be changed with the Bearing client mod."));
         }
         net::send(*player, "goggles.overlay", {{"action", "screen"}});
-        lv::log().info("goggles: overlay screen opened for {}", player->getRealName());
-        output.success(lv::trFor(*player, "lv.goggles.overlay.opened", "Opened the overlay position screen."));
+        br::log().info("goggles: overlay screen opened for {}", player->getRealName());
+        output.success(br::trFor(*player, "br.goggles.overlay.opened", "Opened the overlay position screen."));
     });
     cmd.overload().text("overlay").text("reset").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        auto* player = lv::commands::playerOf(origin);
+        auto* player = br::commands::playerOf(origin);
         if (player && net::isCompanion(*player)) net::send(*player, "goggles.overlay", {{"action", "reset"}});
-        lv::log().info("goggles: overlay reset for {}", player ? player->getRealName() : std::string("console"));
+        br::log().info("goggles: overlay reset for {}", player ? player->getRealName() : std::string("console"));
         output.success(
-            player ? lv::trFor(*player, "lv.goggles.overlay.reset", "Create Goggle Overlay has been reset to default position")
-                   : lv::tr("lv.goggles.overlay.reset", "Create Goggle Overlay has been reset to default position")
+            player ? br::trFor(*player, "br.goggles.overlay.reset", "Create Goggle Overlay has been reset to default position")
+                   : br::tr("br.goggles.overlay.reset", "Create Goggle Overlay has been reset to default position")
         );
     });
 });

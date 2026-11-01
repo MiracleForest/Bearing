@@ -1,9 +1,9 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client mod: the schematicannon's moving barrel (Create's SchematicannonRenderer).
 //
-// - Chunk meshes: a schematicannon (`levitate:barrel` = 0, what vanilla clients see) is tessellated
-//   with `levitate:barrel` = 1, whose permutation hides the connector and barrel bones; its
+// - Chunk meshes: a schematicannon (`bearing:barrel` = 0, what vanilla clients see) is tessellated
+//   with `bearing:barrel` = 1, whose permutation hides the connector and barrel bones; its
 //   position is remembered.
 // - Every frame (block entity pass) the connector is drawn turned towards the printer's current
 //   target (yaw) and the barrel also pitched up (Create: pitch = atan2(distance, dy * 3 + distance
@@ -60,12 +60,12 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::schematics {
+namespace br::client::schematics {
 
 namespace {
 
-constexpr char kCannonId[]    = "levitate:schematicannon";
-constexpr char kBarrelState[] = "levitate:barrel";
+constexpr char kCannonId[]    = "bearing:schematicannon";
+constexpr char kBarrelState[] = "bearing:barrel";
 using Clock                   = std::chrono::steady_clock;
 using Key                     = std::tuple<int, int, int, int>;
 
@@ -273,8 +273,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::schematics
+} // namespace br::client::schematics
 
-LV_REGISTER_MODULE(lv::client::schematics::CannonRendererModule);
+BR_REGISTER_MODULE(br::client::schematics::CannonRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

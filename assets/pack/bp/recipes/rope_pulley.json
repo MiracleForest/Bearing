@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:rope_pulley"
+      "identifier": "bearing:rope_pulley"
     },
     "tags": [
       "crafting_table"
@@ -14,22 +14,22 @@
     ],
     "key": {
       "B": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "C": {
         "tag": "minecraft:wool"
       },
       "I": {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:rope_pulley",
+      "item": "bearing:rope_pulley",
       "count": 1
     }
   }

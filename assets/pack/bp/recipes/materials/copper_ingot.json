@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:copper_ingot"
+      "identifier": "bearing:copper_ingot"
     },
     "tags": [
       "crafting_table"
@@ -14,12 +14,12 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:copper_nugget"
+        "item": "bearing:copper_nugget"
       }
     },
     "unlock": [
       {
-        "item": "levitate:copper_nugget"
+        "item": "bearing:copper_nugget"
       }
     ],
     "result": {

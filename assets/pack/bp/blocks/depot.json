@@ -2,24 +2,24 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:depot",
+      "identifier": "bearing:depot",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.depot",
+      "minecraft:geometry": "geometry.bearing.depot",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_depot_side",
+          "texture": "bearing_depot_side",
           "render_method": "opaque"
         },
         "up": {
-          "texture": "levitate_depot_top",
+          "texture": "bearing_depot_top",
           "render_method": "opaque"
         },
         "down": {
-          "texture": "levitate_depot_bottom",
+          "texture": "bearing_depot_bottom",
           "render_method": "opaque"
         }
       },

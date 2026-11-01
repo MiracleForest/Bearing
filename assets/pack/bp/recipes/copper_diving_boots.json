@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:copper_diving_boots"
+      "identifier": "bearing:copper_diving_boots"
     },
     "tags": [
       "crafting_table"
@@ -17,7 +17,7 @@
         "item": "minecraft:copper_ingot"
       },
       "G": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     },
     "unlock": [
@@ -26,7 +26,7 @@
       }
     ],
     "result": {
-      "item": "levitate:copper_diving_boots",
+      "item": "bearing:copper_diving_boots",
       "count": 1
     }
   }

@@ -5,8 +5,8 @@
 // world blocks) are in the one fluid registry, `feature/common/FluidRegistry.h`; U19 registers
 // Create's fluids there.
 //
-// Fluid ids: "minecraft:water", "minecraft:lava", "minecraft:milk", "levitate:honey",
-// "levitate:chocolate", "levitate:tea", potion fluids "levitate:potion/<bottle>/<potion>"
+// Fluid ids: "minecraft:water", "minecraft:lava", "minecraft:milk", "bearing:honey",
+// "bearing:chocolate", "bearing:tea", potion fluids "bearing:potion/<bottle>/<potion>"
 // (bottle regular / splash / lingering, potion = Java potion name, e.g. "long_swiftness").
 //
 // Containers (Create's GenericItemEmptying / GenericItemFilling / FillingBySpout):
@@ -23,7 +23,7 @@
 
 #include "feature/common/Capabilities.h"
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 using common::fluids::FluidStack;
 
@@ -50,4 +50,4 @@ struct Emptied {
 /// filled item (empty on failure).
 [[nodiscard]] ItemStack fillItem(ItemStack const& stack, FluidStack const& available, bool bySpout);
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

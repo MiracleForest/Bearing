@@ -14,19 +14,19 @@
 #include "selftest/SelfTest.h"
 
 namespace {
-using lv::selftest::Context;
+using br::selftest::Context;
 using JsonT     = nlohmann::json;
-namespace common = lv::feature::common;
-namespace ia     = lv::feature::common::interactions;
-namespace net    = lv::feature::net;
-using lv::core::GlobalPos;
+namespace common = br::feature::common;
+namespace ia     = br::feature::common::interactions;
+namespace net    = br::feature::net;
+using br::core::GlobalPos;
 
 GlobalPos up(GlobalPos p, int dy) { return {p.dim, p.x, p.y + dy, p.z}; }
 
 /// A right-click on face north of `pos` at the face centre through the shared dispatch.
 ia::Result click(Player& p, GlobalPos const& pos, ItemStack const& held, bool first = true) {
     auto&       region  = p.getDimensionBlockSource();
-    auto const& block   = region.getBlock(lv::game::blockPos(pos));
+    auto const& block   = region.getBlock(br::game::blockPos(pos));
     std::string blockId = block.getTypeName();
     std::string itemId  = common::items::isEmpty(held) ? "" : common::items::idOf(held);
     ia::UseOnContext c{p, held, itemId, block, blockId, pos, 2, {0.5, 0.5, 0.0}, false, first};
@@ -42,22 +42,22 @@ std::uint64_t holdToken(Player& p) {
 }
 } // namespace
 
-LV_REGISTER_SELFTEST("common.value_box_hold", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("common.value_box_hold", [](Context& ctx) -> ll::coro::CoroTask<> {
     namespace vb = common::valuebox;
     auto pos = up(ctx.testPos(4200), 1);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     ctx.require(ctx.setBlock(pos, "minecraft:smooth_stone"), "place the test block");
     int shortClicks = 0;
     vb::registerBox("minecraft:smooth_stone", {
-        .id            = "lv_hold",
+        .id            = "br_hold",
         .labelFallback = "Hold Test",
-        .board         = [](Block const&) { return lv::core::common::plainBoard(16, 4, ""); },
-        .centre        = [](Block const&, int face) -> std::optional<lv::core::common::Vec> {
+        .board         = [](Block const&) { return br::core::common::plainBoard(16, 4, ""); },
+        .centre        = [](Block const&, int face) -> std::optional<br::core::common::Vec> {
             if (face != 2) return std::nullopt;
-            return lv::core::common::faceLocalPoint(face, 8, 8);
+            return br::core::common::faceLocalPoint(face, 8, 8);
         },
-        .get           = [](GlobalPos const&) { return lv::core::common::ValueSettings{0, 3}; },
-        .set           = [](GlobalPos const&, lv::core::common::ValueSettings, Player&) {},
+        .get           = [](GlobalPos const&) { return br::core::common::ValueSettings{0, 3}; },
+        .set           = [](GlobalPos const&, br::core::common::ValueSettings, Player&) {},
         .onShortClick  = [&shortClicks](GlobalPos const&, Player&) { ++shortClicks; },
     });
     auto& p = ctx.player();
@@ -86,7 +86,7 @@ LV_REGISTER_SELFTEST("common.value_box_hold", [](Context& ctx) -> ll::coro::Coro
     net::injectFromClient(p, "valuebox.release", {{"token", token}, {"state", "hold"}});
     co_await ctx.ticks(1);
     bool opened = false;
-    for (auto const& m : net::takeTestMessages(p)) opened |= m.channel == "valuebox.open" && m.payload.value("box", "") == "lv_hold";
+    for (auto const& m : net::takeTestMessages(p)) opened |= m.channel == "valuebox.open" && m.payload.value("box", "") == "br_hold";
     ctx.check(opened, "holding opens the board");
     ctx.check(shortClicks == 1, "holding is not a short click");
     co_await ctx.ticks(6);
@@ -106,10 +106,10 @@ LV_REGISTER_SELFTEST("common.value_box_hold", [](Context& ctx) -> ll::coro::Coro
     // filter slot with onHold
     int held = 0;
     common::filterslot::registerSlot("minecraft:smooth_stone", {
-        .id     = "lv_hold_slot",
-        .centre = [](Block const&, int face) -> std::optional<lv::core::common::Vec> {
+        .id     = "br_hold_slot",
+        .centre = [](Block const&, int face) -> std::optional<br::core::common::Vec> {
             if (face != 2) return std::nullopt;
-            return lv::core::common::faceLocalPoint(face, 8, 8);
+            return br::core::common::faceLocalPoint(face, 8, 8);
         },
         .onHold = [&held](Player&, GlobalPos const&) { ++held; },
     });
@@ -121,7 +121,7 @@ LV_REGISTER_SELFTEST("common.value_box_hold", [](Context& ctx) -> ll::coro::Coro
     net::injectFromClient(p, "valuebox.release", {{"token", token}, {"state", "hold"}});
     ctx.check(held == 1, "holding the slot runs onHold");
     net::setTestCompanion(p, false);
-    common::filterslot::unregisterSlot("minecraft:smooth_stone", "lv_hold_slot");
-    vb::unregisterBox("minecraft:smooth_stone", "lv_hold");
+    common::filterslot::unregisterSlot("minecraft:smooth_stone", "br_hold_slot");
+    vb::unregisterBox("minecraft:smooth_stone", "br_hold");
     common::blockdata::erase(pos);
 });

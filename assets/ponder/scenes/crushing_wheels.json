@@ -2,15 +2,15 @@
   "id": "crushing_wheels",
   "size": [7, 5],
   "blocks": [
-    {"at": [2, 2, 2], "id": "levitate:crushing_wheel", "states": {"levitate:axis": 2}},
-    {"at": [4, 2, 2], "id": "levitate:crushing_wheel", "states": {"levitate:axis": 2}},
-    {"at": [2, 2, 3], "id": "levitate:shaft", "states": {"levitate:axis": 2}},
-    {"at": [4, 2, 3], "id": "levitate:shaft", "states": {"levitate:axis": 2}},
-    {"at": [2, 2, 4], "id": "levitate:creative_motor", "states": {"levitate:facing": 2}},
-    {"at": [4, 2, 4], "id": "levitate:creative_motor", "states": {"levitate:facing": 2}},
-    {"area": [[2, 1, 4], [4, 1, 4]], "id": "levitate:andesite_casing"},
-    {"at": [3, 1, 2], "id": "levitate:depot"},
-    {"at": [3, 4, 2], "id": "levitate:chute", "states": {"levitate:facing": 0, "levitate:shape": 2}}
+    {"at": [2, 2, 2], "id": "bearing:crushing_wheel", "states": {"bearing:axis": 2}},
+    {"at": [4, 2, 2], "id": "bearing:crushing_wheel", "states": {"bearing:axis": 2}},
+    {"at": [2, 2, 3], "id": "bearing:shaft", "states": {"bearing:axis": 2}},
+    {"at": [4, 2, 3], "id": "bearing:shaft", "states": {"bearing:axis": 2}},
+    {"at": [2, 2, 4], "id": "bearing:creative_motor", "states": {"bearing:facing": 2}},
+    {"at": [4, 2, 4], "id": "bearing:creative_motor", "states": {"bearing:facing": 2}},
+    {"area": [[2, 1, 4], [4, 1, 4]], "id": "bearing:andesite_casing"},
+    {"at": [3, 1, 2], "id": "bearing:depot"},
+    {"at": [3, 4, 2], "id": "bearing:chute", "states": {"bearing:facing": 0, "bearing:shape": 2}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},
@@ -43,7 +43,7 @@
     {"idle": 10},
     {"item": "minecraft:raw_iron", "at": [3.5, 4.5, 2.5], "to": [3.5, 2.6, 2.5], "ticks": 25},
     {"idle": 25},
-    {"item": "levitate:crushed_raw_iron", "at": [3.5, 2.4, 2.5], "to": [3.5, 1.3, 2.5], "ticks": 20},
+    {"item": "bearing:crushed_raw_iron", "at": [3.5, 2.4, 2.5], "to": [3.5, 1.3, 2.5], "ticks": 20},
     {"text": 4, "at": [3.5, 1.5, 2.5], "ticks": 80, "keyframe": true},
     {"idle": 90}
   ]

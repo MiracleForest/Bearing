@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstdio>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 int backtankFillAmount(float rpm) {
     int v = static_cast<int>(std::floor((std::fabs(rpm) - 100.0f) / 20.0f));
@@ -86,11 +86,11 @@ std::vector<PotatoType> const& potatoTypes() {
         v.push_back(make("golden_carrot", {"minecraft:golden_carrot"}, 12, 15, 1.45f, 0.5f, 1, 1.5f));
         v.push_back(make("sweet_berry", {"minecraft:sweet_berries"}, 3, 10, 1.05f, 0.1f, 3, 1.25f));
         v.push_back(potion(make("glow_berry", {"minecraft:glow_berries"}, 2, 10, 1.05f, 0.05f, 2, 1.2f, false, E::Glowing), 0, 200, 0, true));
-        v.push_back(make("chocolate_berry", {"levitate:chocolate_glazed_berries"}, 4, 10, 1.05f, 0.2f, 3, 1.25f));
+        v.push_back(make("chocolate_berry", {"bearing:chocolate_glazed_berries"}, 4, 10, 1.05f, 0.2f, 3, 1.25f));
         v.push_back(potion(make("poison_potato", {"minecraft:poisonous_potato"}, 5, 15, 1.25f, 0.05f, 1, 1, false, E::Poison), 19, 160, 0, false));
         v.push_back(make("chorus_fruit", {"minecraft:chorus_fruit"}, 3, 15, 1.2f, 0.05f, 1, 1, false, E::ChorusTeleport));
         v.push_back(make("apple", {"minecraft:apple"}, 5, 10, 1.45f, 0.5f, 1, 1.1f));
-        v.push_back(potion(make("honeyed_apple", {"levitate:honeyed_apple"}, 6, 15, 1.35f, 0.1f, 1, 1.1f, false, E::Slowness), 2, 160, 1, false));
+        v.push_back(potion(make("honeyed_apple", {"bearing:honeyed_apple"}, 6, 15, 1.35f, 0.1f, 1, 1.1f, false, E::Slowness), 2, 160, 1, false));
         v.push_back(make("golden_apple", {"minecraft:golden_apple"}, 1, 100, 1.45f, 0.05f, 1, 1.1f, false, E::GoldenApple));
         v.push_back(make("enchanted_golden_apple", {"minecraft:enchanted_golden_apple"}, 1, 100, 1.45f, 0.05f, 1, 1.1f, false, E::EnchantedGoldenApple));
         v.push_back(make("beetroot", {"minecraft:beetroot"}, 2, 5, 1.6f, 0.1f, 1, 1.6f));
@@ -100,7 +100,7 @@ std::vector<PotatoType> const& potatoTypes() {
         v.push_back(make("pumpkin_block", {"minecraft:pumpkin"}, 6, 15, 0.95f, 2.0f, 1, 0.9f, false, E::PlacePumpkin));
         v.push_back(make("pumpkin_pie", {"minecraft:pumpkin_pie"}, 7, 15, 1.1f, 0.05f, 1, 1.1f, true));
         v.push_back(make("cake", {"minecraft:cake"}, 8, 15, 1.1f, 0.1f, 1, 1, true));
-        auto blaze          = make("blaze_cake", {"levitate:blaze_cake"}, 15, 20, 1.1f, 0.3f, 1, 1, true, E::SetOnFire);
+        auto blaze          = make("blaze_cake", {"bearing:blaze_cake"}, 15, 20, 1.1f, 0.3f, 1, 1, true, E::SetOnFire);
         blaze.effectSeconds = 12;
         v.push_back(blaze);
         v.push_back(make("fish", {"minecraft:cod", "minecraft:cooked_cod", "minecraft:salmon", "minecraft:cooked_salmon", "minecraft:tropical_fish"},
@@ -285,4 +285,4 @@ Vec3f lavaBootsMultiplier(double yMotion, bool onGround, bool jumping, bool spri
     return {h, v, h};
 }
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

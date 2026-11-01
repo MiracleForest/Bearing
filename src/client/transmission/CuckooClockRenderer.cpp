@@ -1,10 +1,10 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Cuckoo clocks (U49), drawn by the client mod as Create's CuckooClockRenderer: the hands chase
 // the time of day (a fifth of the way per tick, only while the clock turns; 24 times faster
 // outside the overworld), the doors swing open and the pig / creeper slides out while the server's
 // animation runs (`transmission.cuckoo`: start and progress). The chunk mesh holds the clock
-// without these parts (`levitate:rotor` = 1, done by the kinetic renderer, which also spins the
+// without these parts (`bearing:rotor` = 1, done by the kinetic renderer, which also spins the
 // shaft at the back); vanilla clients see the static parts the server's block states pick.
 
 #include <algorithm>
@@ -69,7 +69,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::transmission {
+namespace br::client::transmission {
 
 namespace k  = core::kinetics;
 namespace ct = core::transmission;
@@ -112,19 +112,19 @@ State& state() {
     return s;
 }
 
-bool isClock(std::string const& id) { return id == "levitate:cuckoo_clock" || id == "levitate:mysterious_cuckoo_clock"; }
+bool isClock(std::string const& id) { return id == "bearing:cuckoo_clock" || id == "bearing:mysterious_cuckoo_clock"; }
 
 void loadBones() {
     auto& s  = state();
     s.loaded = true;
-    auto path = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks" / "cuckoo_clock.geo.json";
+    auto path = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks" / "cuckoo_clock.geo.json";
     std::ifstream in(path);
     if (!in) return;
     auto j = nlohmann::json::parse(in, nullptr, false, true);
     if (j.is_discarded()) return;
     auto models = k::parseGeometry(j);
     if (!models) return;
-    auto m = models->find("geometry.levitate.cuckoo_clock");
+    auto m = models->find("geometry.bearing.cuckoo_clock");
     if (m == models->end()) return;
     for (auto const* bone : {"hour_0", "minute_0", "door_left", "door_right", "pig", "creeper"}) {
         if (auto b = m->second.bones.find(bone); b != m->second.bones.end()) s.bones[bone] = b->second;
@@ -138,7 +138,7 @@ mce::Mesh* boneMesh(Tessellator& tess, std::string const& bone) {
     auto& slot = s.meshes[bone];
     auto  b    = s.bones.find(bone);
     if (b == s.bones.end() || b->second.empty()) return nullptr;
-    auto  tex = BlockGraphics::getTextureUVCoordinateSet("levitate_cuckoo_clock", 0, 0);
+    auto  tex = BlockGraphics::getTextureUVCoordinateSet("bearing_cuckoo_clock", 0, 0);
     float u0 = tex._u0, v0 = tex._v0, u1 = tex._u1, v1 = tex._v1;
     auto  uv = [&](std::array<float, 2> const& t) { return Vec2{u0 + (u1 - u0) * t[0], v0 + (v1 - v0) * t[1]}; };
     auto  at = [](std::array<float, 3> const& p) { return Vec3{p[0], p[1], p[2]}; };
@@ -148,7 +148,7 @@ mce::Mesh* boneMesh(Tessellator& tess, std::string const& bone) {
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_cuckoo_clock_part", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_cuckoo_clock_part", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -164,8 +164,8 @@ void advanceHands(std::uint64_t tick, int dim, std::int64_t dayTime, std::vector
         auto& h = s.hands[p];
         if (!h.init) {
             // start where the static model shows them
-            h.hour = h.prevHour = 30.f * static_cast<float>(game::intState(*block, "levitate:hour").value_or(0));
-            h.minute = h.prevMinute = 30.f * static_cast<float>(game::intState(*block, "levitate:minute").value_or(0));
+            h.hour = h.prevHour = 30.f * static_cast<float>(game::intState(*block, "bearing:hour").value_or(0));
+            h.minute = h.prevMinute = 30.f * static_cast<float>(game::intState(*block, "bearing:minute").value_or(0));
             h.init                  = true;
         }
         auto speed = kinetics::syncedSpeed(dim, p.x, p.y, p.z);
@@ -256,7 +256,7 @@ void drawClocks(BaseActorRenderContext& ctx) {
     };
 
     for (auto const& [p, block] : clocks) {
-        float yaw = yawOf(game::intState(*block, "levitate:horizontal_facing").value_or(2));
+        float yaw = yawOf(game::intState(*block, "bearing:horizontal_facing").value_or(2));
         auto& h   = s.hands[p];
         // hands: clockwise as seen from the front (about +z of the north-facing model)
         glm::vec3 dial{8.f / 16, 6.f / 16, 2.5f / 16};
@@ -380,8 +380,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::transmission
+} // namespace br::client::transmission
 
-LV_REGISTER_MODULE(lv::client::transmission::CuckooClockRendererModule);
+BR_REGISTER_MODULE(br::client::transmission::CuckooClockRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -6,7 +6,7 @@
 // mode (the station texture's flag colours). The server sends "trains.flags" (Stations.cpp);
 // vanilla clients see the flag painted on the station's sides.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -38,7 +38,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::trains {
+namespace br::client::trains {
 
 namespace {
 
@@ -233,8 +233,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::trains
+} // namespace br::client::trains
 
-LV_REGISTER_MODULE(lv::client::trains::StationFlagModule);
+BR_REGISTER_MODULE(br::client::trains::StationFlagModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

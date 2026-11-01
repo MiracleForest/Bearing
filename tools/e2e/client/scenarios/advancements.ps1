@@ -45,7 +45,7 @@ if (-not $vanilla) {
     Invoke-Chat '/tp @s ~ ~ ~ -90 45'
     Invoke-Chat '/fill ~1 ~-1 ~-4 ~8 ~-1 ~4 stone'
     Invoke-Chat '/clear @s'
-    Invoke-Chat '/replaceitem entity @s slot.hotbar 0 levitate:handheld_worldshaper'
+    Invoke-Chat '/replaceitem entity @s slot.hotbar 0 bearing:handheld_worldshaper'
     Press-Key '1'
     Start-Sleep -Milliseconds 600
     # sneak + right-click: the screen; width / height / length 3; confirm

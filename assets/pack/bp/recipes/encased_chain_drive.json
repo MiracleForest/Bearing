@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:encased_chain_drive"
+      "identifier": "bearing:encased_chain_drive"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       {
         "item": "minecraft:iron_nugget"
@@ -23,11 +23,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:encased_chain_drive",
+      "item": "bearing:encased_chain_drive",
       "count": 1
     }
   }

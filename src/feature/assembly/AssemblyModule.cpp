@@ -11,7 +11,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::assembly {
+namespace br::feature::assembly {
 
 namespace {
 std::uint64_t                       gTick = 0;
@@ -85,6 +85,6 @@ private:
     ll::event::ListenerPtr mTick;
 };
 
-} // namespace lv::feature::assembly
+} // namespace br::feature::assembly
 
-LV_REGISTER_MODULE(lv::feature::assembly::AssemblyModule);
+BR_REGISTER_MODULE(br::feature::assembly::AssemblyModule);

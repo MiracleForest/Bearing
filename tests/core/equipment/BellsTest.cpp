@@ -5,7 +5,7 @@
 
 #include "core/equipment/Bells.h"
 
-using namespace lv::core::equipment;
+using namespace br::core::equipment;
 
 namespace {
 

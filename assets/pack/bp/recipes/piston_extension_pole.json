@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:piston_extension_pole"
+      "identifier": "bearing:piston_extension_pole"
     },
     "tags": [
       "crafting_table"
@@ -17,16 +17,16 @@
         "tag": "minecraft:planks"
       },
       "A": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:piston_extension_pole",
+      "item": "bearing:piston_extension_pole",
       "count": 8
     }
   }

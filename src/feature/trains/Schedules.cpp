@@ -23,14 +23,14 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace items   = common::items;
 namespace screens = common::screens;
 namespace ids     = ct::ids;
 
 namespace {
-constexpr char kDataKey[] = "lv:schedule";
+constexpr char kDataKey[] = "br:schedule";
 }
 
 std::optional<ct::Schedule> scheduleOf(ItemStack const& stack) {
@@ -237,7 +237,7 @@ void conditionForm(Player& p, int slot, int entry, int column, int index) {
         form.appendSlider("value", trP(p, "create.generic.duration", "Duration"), 0, 120, 1, d.value("Value", 5));
         form.appendDropdown(
             "unit",
-            trP(p, "lv.trains.unit", "Unit"),
+            trP(p, "br.trains.unit", "Unit"),
             {trP(p, "create.generic.unit.ticks", "Ticks"), trP(p, "create.generic.unit.seconds", "Seconds"), trP(p, "create.generic.unit.minutes", "Minutes")},
             size_t(std::clamp(d.value("TimeUnit", 1), 0, 2))
         );
@@ -264,7 +264,7 @@ void conditionForm(Player& p, int slot, int entry, int column, int index) {
                 size_t(std::clamp(d.value("Measure", 0), 0, 1))
             );
         }
-        form.appendToggle("offhand", trP(p, "lv.trains.filter_from_offhand", "Use the item in your off hand as the filter"), false);
+        form.appendToggle("offhand", trP(p, "br.trains.filter_from_offhand", "Use the item in your off hand as the filter"), false);
     } else if (c.id == ids::kPlayerCount) {
         form.appendSlider("count", trP(p, "create.schedule.condition.player_count.players", "Players"), 0, 20, 1, d.value("Count", 1));
         form.appendDropdown(
@@ -275,7 +275,7 @@ void conditionForm(Player& p, int slot, int entry, int column, int index) {
         );
     } else if (c.id == ids::kRedstoneLink) {
         form.appendToggle("inverted", trP(p, "create.schedule.condition.redstone_link.unpowered", "Link Off"), d.value("Inverted", 0) != 0);
-        form.appendToggle("frequency", trP(p, "lv.trains.frequency_from_hands", "Use the items in your off hand and main hand as the frequency"), false);
+        form.appendToggle("frequency", trP(p, "br.trains.frequency_from_hands", "Use the items in your off hand and main hand as the frequency"), false);
     }
     form.appendToggle("remove", trP(p, "create.gui.schedule.rmb_remove", "Right-Click to Remove"), false);
     form.sendTo(p, [slot, entry, column, index](Player& pl, ll::form::CustomFormResult const& r, ll::form::FormCancelReason) {
@@ -340,7 +340,7 @@ void entryForm(Player& p, int slot, int entry) {
     if (ct::supportsConditions(e.instruction.id)) {
         for (int c = 0; c < int(e.conditions.size()); ++c) {
             for (int i = 0; i < int(e.conditions[c].size()); ++i) {
-                std::string prefix = (c > 0 && i == 0) ? trP(p, "lv.trains.or", "or") + " " : (i > 0 ? trP(p, "lv.trains.and", "and") + " " : "");
+                std::string prefix = (c > 0 && i == 0) ? trP(p, "br.trains.or", "or") + " " : (i > 0 ? trP(p, "br.trains.and", "and") + " " : "");
                 buttons.push_back({prefix + conditionSummary(p, e.conditions[c][i]), [slot, entry, c, i](Player& pl) { conditionForm(pl, slot, entry, c, i); }});
             }
             buttons.push_back({"+ " + trP(p, "create.gui.schedule.add_condition", "Add Condition"), [slot, entry, c](Player& pl) {
@@ -658,4 +658,4 @@ bool handScheduleTo(Player& player, Train& t, int slot) {
     return true;
 }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains

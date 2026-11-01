@@ -2,21 +2,21 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:linear_chassis",
+      "identifier": "bearing:linear_chassis",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1,
           2
         ],
-        "levitate:sticky_top": [
+        "bearing:sticky_top": [
           0,
           1
         ],
-        "levitate:sticky_bottom": [
+        "bearing:sticky_bottom": [
           0,
           1
         ]
@@ -34,235 +34,235 @@
       "minecraft:loot": "loot_tables/blocks/linear_chassis.json",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_linear_chassis_side",
+          "texture": "bearing_linear_chassis_side",
           "render_method": "opaque"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:sticky_top') == 0 && q.block_state('levitate:sticky_bottom') == 0",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:sticky_top') == 0 && q.block_state('bearing:sticky_bottom') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:sticky_top') == 0 && q.block_state('levitate:sticky_bottom') == 1",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:sticky_top') == 0 && q.block_state('bearing:sticky_bottom') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:sticky_top') == 1 && q.block_state('levitate:sticky_bottom') == 0",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:sticky_top') == 1 && q.block_state('bearing:sticky_bottom') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:sticky_top') == 1 && q.block_state('levitate:sticky_bottom') == 1",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:sticky_top') == 1 && q.block_state('bearing:sticky_bottom') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:sticky_top') == 0 && q.block_state('levitate:sticky_bottom') == 0",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:sticky_top') == 0 && q.block_state('bearing:sticky_bottom') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:sticky_top') == 0 && q.block_state('levitate:sticky_bottom') == 1",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:sticky_top') == 0 && q.block_state('bearing:sticky_bottom') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:sticky_top') == 1 && q.block_state('levitate:sticky_bottom') == 0",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:sticky_top') == 1 && q.block_state('bearing:sticky_bottom') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:sticky_top') == 1 && q.block_state('levitate:sticky_bottom') == 1",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:sticky_top') == 1 && q.block_state('bearing:sticky_bottom') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2 && q.block_state('levitate:sticky_top') == 0 && q.block_state('levitate:sticky_bottom') == 0",
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:sticky_top') == 0 && q.block_state('bearing:sticky_bottom') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2 && q.block_state('levitate:sticky_top') == 0 && q.block_state('levitate:sticky_bottom') == 1",
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:sticky_top') == 0 && q.block_state('bearing:sticky_bottom') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2 && q.block_state('levitate:sticky_top') == 1 && q.block_state('levitate:sticky_bottom') == 0",
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:sticky_top') == 1 && q.block_state('bearing:sticky_bottom') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_linear_chassis_end",
+              "texture": "bearing_linear_chassis_end",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2 && q.block_state('levitate:sticky_top') == 1 && q.block_state('levitate:sticky_bottom') == 1",
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:sticky_top') == 1 && q.block_state('bearing:sticky_bottom') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_linear_chassis_side",
+              "texture": "bearing_linear_chassis_side",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_linear_chassis_end_sticky",
+              "texture": "bearing_linear_chassis_end_sticky",
               "render_method": "opaque"
             }
           }

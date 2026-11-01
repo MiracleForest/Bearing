@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::itemrender {
+namespace br::core::itemrender {
 
 namespace {
 bool close(double a, double b, double eps = 1e-3) { return std::abs(a - b) < eps; }
@@ -118,4 +118,4 @@ std::optional<std::pair<std::array<int, 3>, std::int64_t>> decodeKey(Json const&
     return std::pair{std::array<int, 3>{j[0].get<int>(), j[1].get<int>(), j[2].get<int>()}, j[3].get<std::int64_t>()};
 }
 
-} // namespace lv::core::itemrender
+} // namespace br::core::itemrender

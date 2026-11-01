@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:wheat_flour",
+      "identifier": "bearing:wheat_flour",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_wheat_flour",
+      "minecraft:icon": "bearing_wheat_flour",
       "minecraft:display_name": {
-        "value": "item.levitate:wheat_flour.name"
+        "value": "item.bearing:wheat_flour.name"
       },
       "minecraft:max_stack_size": 64
     }

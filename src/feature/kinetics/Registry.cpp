@@ -13,7 +13,7 @@
 #include "feature/kinetics/KineticsInternal.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 namespace {
 struct Registry {
@@ -90,4 +90,4 @@ Block const* withState(Block const& block, std::string const& state, int value) 
 
 } // namespace detail
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics

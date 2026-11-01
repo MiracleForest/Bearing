@@ -23,25 +23,25 @@ Start-Sleep -Milliseconds 800
 $cmds = @(
     '/fill -1 -60 4 19 -56 8 air',
     # chest -> chute -> belt along +x (driven from its start) -> depot
-    '/setblock 0 -60 5 levitate:kinetics_test_source ["levitate:axis"=2]',
-    '/setblock 0 -60 6 levitate:belt ["levitate:facing"=3,"levitate:part"=0]',
-    '/fill 1 -60 6 3 -60 6 levitate:belt ["levitate:facing"=3,"levitate:part"=1]',
-    '/setblock 4 -60 6 levitate:belt ["levitate:facing"=3,"levitate:part"=2]',
-    '/setblock 5 -60 6 levitate:depot',
-    '/setblock 0 -59 6 levitate:chute',
+    '/setblock 0 -60 5 bearing:kinetics_test_source ["bearing:axis"=2]',
+    '/setblock 0 -60 6 bearing:belt ["bearing:facing"=3,"bearing:part"=0]',
+    '/fill 1 -60 6 3 -60 6 bearing:belt ["bearing:facing"=3,"bearing:part"=1]',
+    '/setblock 4 -60 6 bearing:belt ["bearing:facing"=3,"bearing:part"=2]',
+    '/setblock 5 -60 6 bearing:depot',
+    '/setblock 0 -59 6 bearing:chute',
     '/setblock 0 -58 6 minecraft:chest',
     # filters, placard, deployer
-    '/setblock 7 -60 6 levitate:smart_chute',
-    '/setblock 9 -60 6 levitate:brass_funnel ["levitate:facing"=1]',
+    '/setblock 7 -60 6 bearing:smart_chute',
+    '/setblock 9 -60 6 bearing:brass_funnel ["bearing:facing"=1]',
     '/setblock 11 -59 7 minecraft:stone',
-    '/setblock 11 -59 6 levitate:placard ["levitate:facing"=2]',
-    '/setblock 13 -59 6 levitate:deployer ["levitate:facing"=2]',
+    '/setblock 11 -59 6 bearing:placard ["bearing:facing"=2]',
+    '/setblock 13 -59 6 bearing:deployer ["bearing:facing"=2]',
     # a crafter and a basin, each fed by a chest and a chute above it
-    '/setblock 15 -60 6 levitate:mechanical_crafter ["levitate:facing"=2,"levitate:pointing"=0]',
-    '/setblock 15 -59 6 levitate:chute',
+    '/setblock 15 -60 6 bearing:mechanical_crafter ["bearing:facing"=2,"bearing:pointing"=0]',
+    '/setblock 15 -59 6 bearing:chute',
     '/setblock 15 -58 6 minecraft:chest',
-    '/setblock 17 -60 6 levitate:basin',
-    '/setblock 17 -59 6 levitate:chute',
+    '/setblock 17 -60 6 bearing:basin',
+    '/setblock 17 -59 6 bearing:chute',
     '/setblock 17 -58 6 minecraft:chest'
 )
 foreach ($c in $cmds) { Invoke-Chat $c; Start-Sleep -Milliseconds 200 }

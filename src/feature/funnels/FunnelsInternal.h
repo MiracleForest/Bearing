@@ -27,38 +27,38 @@ class BlockSource;
 class ItemActor;
 class Player;
 
-namespace lv::feature::funnels {
+namespace br::feature::funnels {
 
 namespace cf = core::funnels;
 using core::GlobalPos;
 using Json = nlohmann::json;
 
-inline constexpr char kAndesiteFunnel[] = "levitate:andesite_funnel";
-inline constexpr char kBrassFunnel[]    = "levitate:brass_funnel";
-inline constexpr char kAndesiteTunnel[] = "levitate:andesite_tunnel";
-inline constexpr char kBrassTunnel[]    = "levitate:brass_tunnel";
-inline constexpr char kChute[]          = "levitate:chute";
-inline constexpr char kSmartChute[]     = "levitate:smart_chute";
-inline constexpr char kItemVault[]      = "levitate:item_vault";
-inline constexpr char kCreativeCrate[]  = "levitate:creative_crate";
+inline constexpr char kAndesiteFunnel[] = "bearing:andesite_funnel";
+inline constexpr char kBrassFunnel[]    = "bearing:brass_funnel";
+inline constexpr char kAndesiteTunnel[] = "bearing:andesite_tunnel";
+inline constexpr char kBrassTunnel[]    = "bearing:brass_tunnel";
+inline constexpr char kChute[]          = "bearing:chute";
+inline constexpr char kSmartChute[]     = "bearing:smart_chute";
+inline constexpr char kItemVault[]      = "bearing:item_vault";
+inline constexpr char kCreativeCrate[]  = "bearing:creative_crate";
 // items of other units, referenced by id only
-inline constexpr char kWrench[]              = "levitate:wrench";
-inline constexpr char kIndustrialIronBlock[] = "levitate:industrial_iron_block";
-inline constexpr char kMechanicalArm[]       = "levitate:mechanical_arm";
+inline constexpr char kWrench[]              = "bearing:wrench";
+inline constexpr char kIndustrialIronBlock[] = "bearing:industrial_iron_block";
+inline constexpr char kMechanicalArm[]       = "bearing:mechanical_arm";
 
 // block states
-inline constexpr char kFacing[]     = "levitate:facing";
-inline constexpr char kExtracting[] = "levitate:extracting";
-inline constexpr char kPowered[]    = "levitate:powered";
-inline constexpr char kFlap[]       = "levitate:flap";
-inline constexpr char kAxis[]       = "levitate:axis";
-inline constexpr char kShape[]      = "levitate:shape";
-inline constexpr char kLen[]        = "levitate:len";
-inline constexpr char kU[]          = "levitate:u";
-inline constexpr char kV[]          = "levitate:v";
-inline constexpr char kLarge[]      = "levitate:large";
+inline constexpr char kFacing[]     = "bearing:facing";
+inline constexpr char kExtracting[] = "bearing:extracting";
+inline constexpr char kPowered[]    = "bearing:powered";
+inline constexpr char kFlap[]       = "bearing:flap";
+inline constexpr char kAxis[]       = "bearing:axis";
+inline constexpr char kShape[]      = "bearing:shape";
+inline constexpr char kLen[]        = "bearing:len";
+inline constexpr char kU[]          = "bearing:u";
+inline constexpr char kV[]          = "bearing:v";
+inline constexpr char kLarge[]      = "bearing:large";
 
-// belt funnels (Create's BeltFunnelBlock.Shape) in a funnel's `levitate:shape`
+// belt funnels (Create's BeltFunnelBlock.Shape) in a funnel's `bearing:shape`
 inline constexpr int kNotOnBelt     = 0;
 inline constexpr int kBeltRetracted = 1;
 inline constexpr int kBeltExtended  = 2;
@@ -214,4 +214,4 @@ void defer(std::function<void()> fn);
 
 } // namespace detail
 
-} // namespace lv::feature::funnels
+} // namespace br::feature::funnels

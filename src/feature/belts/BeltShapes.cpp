@@ -19,7 +19,7 @@
 
 #include "feature/belts/BeltsInternal.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 using Box = std::array<float, 6>; ///< x0 y0 z0 x1 y1 z1 in pixels of the block
 
@@ -90,4 +90,4 @@ LL_TYPE_INSTANCE_HOOK(
 void installShapes() { BeltsCollisionHook::hook(); }
 void uninstallShapes() { BeltsCollisionHook::unhook(); }
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

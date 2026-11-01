@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:white_toolbox_dyeing"
+      "identifier": "bearing:white_toolbox_dyeing"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "tag": "levitate:toolbox"
+        "tag": "bearing:toolbox"
       },
       {
         "item": "minecraft:white_dye"
@@ -21,7 +21,7 @@
       }
     ],
     "result": {
-      "item": "levitate:white_toolbox"
+      "item": "bearing:white_toolbox"
     }
   }
 }

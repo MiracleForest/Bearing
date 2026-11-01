@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cardboard_boots"
+      "identifier": "bearing:cardboard_boots"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "P": {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     ],
     "result": {
-      "item": "levitate:cardboard_boots",
+      "item": "bearing:cardboard_boots",
       "count": 1
     }
   }

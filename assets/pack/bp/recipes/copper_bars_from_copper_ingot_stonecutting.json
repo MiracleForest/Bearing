@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:copper_bars_from_copper_ingot_stonecutting"
+      "identifier": "bearing:copper_bars_from_copper_ingot_stonecutting"
     },
     "tags": [
       "stonecutter"
@@ -18,7 +18,7 @@
       }
     ],
     "result": {
-      "item": "levitate:copper_bars",
+      "item": "bearing:copper_bars",
       "count": 4
     }
   }

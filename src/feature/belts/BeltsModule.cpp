@@ -42,15 +42,15 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("belts", lv::feature::belts::BeltsConfig);
+BR_REGISTER_CONFIG("belts", br::feature::belts::BeltsConfig);
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace blockdata = common::blockdata;
 namespace citems    = common::items;
 namespace k         = core::kinetics;
 
-BeltsConfig const& config() { return lv::config::get<BeltsConfig>(); }
+BeltsConfig const& config() { return br::config::get<BeltsConfig>(); }
 
 State& state() {
     static State s;
@@ -800,19 +800,19 @@ k::KineticSpec ejectorSpec() {
     s.hasShaftTowards = [](k::BlockState const& st, k::Face f) { return k::axisOf(f) == k::Axis(cb::facingAxis(cb::clockwise(st.get(kFacing)))); };
     s.impact          = 2;
     s.rotorState      = kRotor;
-    s.rotorModel      = "geometry.levitate.weighted_ejector";
-    s.rotorTexture    = "levitate_weighted_ejector";
+    s.rotorModel      = "geometry.bearing.weighted_ejector";
+    s.rotorTexture    = "bearing_weighted_ejector";
     return s;
 }
 } // namespace
 
-LV_REGISTER_KINETIC_BLOCK(kBeltId, beltSpec());
-LV_REGISTER_KINETIC_BLOCK(kEjectorId, ejectorSpec());
+BR_REGISTER_KINETIC_BLOCK(kBeltId, beltSpec());
+BR_REGISTER_KINETIC_BLOCK(kEjectorId, ejectorSpec());
 
 // ---- persistence ---------------------------------------------------------------------------------------
 
 namespace {
-constexpr char const* kIndexKey = "lv:belts:index";
+constexpr char const* kIndexKey = "br:belts:index";
 }
 
 void loadWorld() {
@@ -1068,6 +1068,6 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts
 
-LV_REGISTER_MODULE(lv::feature::belts::BeltsModule);
+BR_REGISTER_MODULE(br::feature::belts::BeltsModule);

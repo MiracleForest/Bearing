@@ -12,7 +12,7 @@
 
 #include "core/tracks/Curve.h"
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 class CurveStore {
 public:
@@ -63,4 +63,4 @@ private:
     std::map<int, DimData> mDims;
 };
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

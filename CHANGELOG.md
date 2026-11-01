@@ -9,12 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The repository moved to [MiracleForest/Levitate](https://github.com/MiracleForest/Levitate).
-- The lip package is now `github.com/MiracleForest/Levitate` (was `github.com/LiteLDev/Levitate`).
+- Levitate is now **Bearing**. The repository is [MiracleForest/Bearing](https://github.com/MiracleForest/Bearing)
+  (it was LiteLDev/Levitate, then MiracleForest/Levitate; GitHub redirects the old URLs).
+- The lip package is now `github.com/MiracleForest/Bearing` (was `github.com/LiteLDev/Levitate`).
   Installing by the new path needs lip 0.35.0 or later. `lip update` does not move an existing install
   to the new path; run `lip uninstall github.com/LiteLDev/Levitate[#client]` and then
-  `lip install github.com/MiracleForest/Levitate[#client]`. `plugins/Levitate/config/` (server) and
-  `mods/Levitate/config/` (client) are kept. Versions up to 0.1.0 stay installable at the old path.
+  `lip install github.com/MiracleForest/Bearing[#client]`. Versions up to 0.1.0 stay installable at the old path.
+- The mod folder is now `plugins/Bearing/` (server) and `mods/Bearing/` (client), and the release zips are
+  `bearing-server-windows-x64.zip` and `bearing-client-windows-x64.zip`. To keep your settings, move
+  `config/` from the old `Levitate/` folder into the new one.
+- The block, item and entity namespace is now `bearing:` (was `levitate:`), the resource and behaviour
+  packs are named Bearing, and `/bearing` is the alias of `/create` (was `/levitate`).
+
+### Removed
+
+- Worlds saved with 0.1.0 do not carry over: their `levitate:` blocks, items and entities are not
+  recognised under the new namespace.
 
 ## [0.1.0] - 2026-11-01
 
@@ -56,5 +66,5 @@ server and play with forms in place of Create's screens. `docs/SPEC.md` §8 list
   commands (`/create clone`, `debuginfo`, `util`, `killtrain`, `glue` and more).
 - English and Simplified Chinese translations.
 
-[Unreleased]: https://github.com/MiracleForest/Levitate/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/MiracleForest/Levitate/releases/tag/v0.1.0
+[Unreleased]: https://github.com/MiracleForest/Bearing/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/MiracleForest/Bearing/releases/tag/v0.1.0

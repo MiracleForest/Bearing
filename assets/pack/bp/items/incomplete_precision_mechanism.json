@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:incomplete_precision_mechanism",
+      "identifier": "bearing:incomplete_precision_mechanism",
       "menu_category": {
         "category": "none"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_incomplete_precision_mechanism",
+      "minecraft:icon": "bearing_incomplete_precision_mechanism",
       "minecraft:display_name": {
-        "value": "item.levitate:incomplete_precision_mechanism.name"
+        "value": "item.bearing:incomplete_precision_mechanism.name"
       },
       "minecraft:max_stack_size": 1
     }

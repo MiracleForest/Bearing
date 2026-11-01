@@ -28,7 +28,7 @@
 #include "feature/pipes/Pipes.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 namespace {
 
@@ -208,4 +208,4 @@ std::optional<nlohmann::json> glassState(GlobalPos const& p) {
     return it->second;
 }
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes

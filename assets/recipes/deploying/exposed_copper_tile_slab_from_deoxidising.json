@@ -1,8 +1,8 @@
 {
-  "type": "levitate:deploying",
+  "type": "bearing:deploying",
   "ingredients": [
     {
-      "item": "levitate:weathered_copper_tile_slab"
+      "item": "bearing:weathered_copper_tile_slab"
     },
     {
       "tag": "minecraft:axes"
@@ -10,7 +10,7 @@
   ],
   "results": [
     {
-      "item": "levitate:exposed_copper_tile_slab"
+      "item": "bearing:exposed_copper_tile_slab"
     }
   ],
   "keep_held_item": true

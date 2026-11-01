@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-namespace lv::core::packages {
+namespace br::core::packages {
 
 namespace {
 
@@ -245,4 +245,4 @@ bool matchAddress(std::string_view boxAddress, std::string_view address) {
     return compiled(boxAddress).matches(address) || compiled(address).matches(boxAddress);
 }
 
-} // namespace lv::core::packages
+} // namespace br::core::packages

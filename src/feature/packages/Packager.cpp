@@ -22,7 +22,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items     = common::items;
 namespace blockdata = common::blockdata;
@@ -63,7 +63,7 @@ std::optional<Target> targetOf(GlobalPos const& pos) {
     if (!isLoaded(t.pos)) return std::nullopt;
     auto id = idAt(t.pos);
     // Create: never a packager's own handler, never a portable storage interface
-    if (kindOf(id) == Kind::Packager || kindOf(id) == Kind::Repackager || id == "levitate:portable_storage_interface") return std::nullopt;
+    if (kindOf(id) == Kind::Packager || kindOf(id) == Kind::Repackager || id == "bearing:portable_storage_interface") return std::nullopt;
     t.handler = common::items::find(Access{*region, game::blockPos(t.pos), t.face});
     if (!t.handler) return std::nullopt;
     return t;
@@ -400,7 +400,7 @@ void tickPackager(GlobalPos const& pos, bool repackager, bool lazy) {
         return;
     }
     // sounds (Create plays them on the client at these ticks)
-    if (s.animationTicks == kPackagerCycle - (s.animationInward ? 5 : 1)) playSound(pos.dim, centre(pos), "levitate.packages.packager");
+    if (s.animationTicks == kPackagerCycle - (s.animationInward ? 5 : 1)) playSound(pos.dim, centre(pos), "bearing.packages.packager");
     if (s.animationTicks == (s.animationInward ? 1 : 5)) playSound(pos.dim, centre(pos), "random.door_close", 0.25f, 0.75f);
     s.animationTicks--;
     if (s.animationTicks == 0) {
@@ -595,7 +595,7 @@ bool usePackager(Player& player, GlobalPos const& pos) {
             unwrapBox(pos, held, false);
             player.setSelectedItem(items::withCount(held, items::countOf(held) - 1)); // Create shrinks in creative too
             player.sendInventory(false);
-            playSound(pos.dim, centre(pos), "levitate.packages.depot_plop");
+            playSound(pos.dim, centre(pos), "bearing.packages.depot_plop");
         }
         return true;
     }
@@ -624,7 +624,7 @@ std::optional<int> packagerPlacementFacing(Player& player, GlobalPos const& pos,
         }
     }
     if (!preferred) preferred = player.isSneaking() ? faces[0] : oppositeFace(faces[0]);
-    if (idAt(offsetFace(pos, oppositeFace(*preferred))) == "levitate:portable_storage_interface") {
+    if (idAt(offsetFace(pos, oppositeFace(*preferred))) == "bearing:portable_storage_interface") {
         actionBar(player, trFor(player, "create.packager.no_portable_storage", "Packagers cannot interface with Portable Storage directly"));
         return std::nullopt;
     }
@@ -714,4 +714,4 @@ void setLinkProvider(std::function<bool(BlockSource&, BlockPos const&)> provider
 
 void registerUnpackingHandler(std::string const& blockId, UnpackingHandler handler) { unpackers()[blockId] = std::move(handler); }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

@@ -18,7 +18,7 @@
 #include "mod/Commands.h"
 #include "mod/Log.h"
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 // Command parameter types need external linkage.
 struct HighlightParams {
@@ -48,7 +48,7 @@ void outline(Level& level, Dimension& dim, BlockPos const& p) {
 }
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload<HighlightParams>().text("highlight").required("pos").execute(
         [](CommandOrigin const& origin, CommandOutput& output, HighlightParams const& params) {
             if (!commands::isAdmin(origin)) return output.error("You need operator permission.");
@@ -63,4 +63,4 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     );
 });
 
-} // namespace lv::feature::common
+} // namespace br::feature::common

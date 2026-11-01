@@ -20,12 +20,12 @@
 #include "feature/building/Building.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace {
 
-constexpr char kPanelId[] = "levitate:copycat_panel";
-constexpr char kStepId[]  = "levitate:copycat_step";
+constexpr char kPanelId[] = "bearing:copycat_panel";
+constexpr char kStepId[]  = "bearing:copycat_step";
 
 /// Create's IPlacementHelper.orderedByDistance: the directions passing `filter`, nearest to the
 /// hit (relative to the block centre) first.
@@ -58,7 +58,7 @@ std::optional<CopycatOffset> copycatHelperOffset(
     int                range
 ) {
     std::string const& clickedId = clicked.getTypeName();
-    int                facing    = game::intState(clicked, "levitate:facing").value_or(Up);
+    int                facing    = game::intState(clicked, "bearing:facing").value_or(Up);
     auto               free      = [&](GlobalPos const& p) {
         BlockPos b = bp(p);
         return b.y >= region.getMinHeight() && b.y < region.getMaxHeight() && region.hasChunksAt(b, 0, false)
@@ -69,17 +69,17 @@ std::optional<CopycatOffset> copycatHelperOffset(
         int axis = axisOf(facing);
         auto dirs = orderedByDistance(hx, hy, hz, [&](int d) { return axisOf(d) != axis && free(offset(pos, d)); });
         if (dirs.empty()) return std::nullopt;
-        auto const* block = game::blockWith(kPanelId, {{"levitate:facing", facing}});
+        auto const* block = game::blockWith(kPanelId, {{"bearing:facing", facing}});
         if (!block) return std::nullopt;
         return CopycatOffset{offset(pos, dirs.front()), block};
     }
 
     if (heldId == kStepId && clickedId == kStepId) {
         int  axis  = axisOf(clockwise(facing)); // PoleHelper's axis: facing.getClockWise()
-        int  top   = game::intState(clicked, "levitate:top").value_or(0);
+        int  top   = game::intState(clicked, "bearing:top").value_or(0);
         auto onAxis = [&](GlobalPos const& p) {
             Block const& b = region.getBlock(bp(p));
-            return b.getTypeName() == kStepId && axisOf(clockwise(game::intState(b, "levitate:facing").value_or(North))) == axis;
+            return b.getTypeName() == kStepId && axisOf(clockwise(game::intState(b, "bearing:facing").value_or(North))) == axis;
         };
         for (int dir : orderedByDistance(hx, hy, hz, [&](int d) { return axisOf(d) == axis; })) {
             int poles = 0;
@@ -87,7 +87,7 @@ std::optional<CopycatOffset> copycatHelperOffset(
             if (poles >= range) continue;
             GlobalPos target = offset(pos, dir, poles + 1);
             if (!free(target)) continue;
-            auto const* block = game::blockWith(kStepId, {{"levitate:facing", facing}, {"levitate:top", top}});
+            auto const* block = game::blockWith(kStepId, {{"bearing:facing", facing}, {"bearing:top", top}});
             if (!block) return std::nullopt;
             return CopycatOffset{target, block};
         }
@@ -96,4 +96,4 @@ std::optional<CopycatOffset> copycatHelperOffset(
     return std::nullopt;
 }
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

@@ -6,7 +6,7 @@
         {
           "weight": 1,
           "type": "item",
-          "name": "levitate:fluid_pipe"
+          "name": "bearing:fluid_pipe"
         }
       ]
     }

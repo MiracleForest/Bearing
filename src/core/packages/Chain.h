@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace lv::core::packages {
+namespace br::core::packages {
 
 struct V3 {
     double x = 0, y = 0, z = 0;
@@ -160,4 +160,4 @@ struct Fragment {
 /// are then grouped into packages of 9. Returns the packages' slots.
 [[nodiscard]] std::vector<std::vector<Stack>> repackSlots(std::vector<Stack> summary, std::vector<Stack> ordered);
 
-} // namespace lv::core::packages
+} // namespace br::core::packages

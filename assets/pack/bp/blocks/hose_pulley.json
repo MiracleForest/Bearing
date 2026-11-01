@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:hose_pulley",
+      "identifier": "bearing:hose_pulley",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,7 +15,7 @@
           4,
           5
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -24,15 +24,15 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.hose_pulley",
+        "identifier": "geometry.bearing.hose_pulley",
         "bone_visibility": {
-          "casing": "q.block_state('levitate:rotor') != 2",
-          "rotor": "q.block_state('levitate:rotor') != 1"
+          "casing": "q.block_state('bearing:rotor') != 2",
+          "rotor": "q.block_state('bearing:rotor') != 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_hose_pulley",
+          "texture": "bearing_hose_pulley",
           "render_method": "alpha_test"
         }
       },
@@ -48,7 +48,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -60,7 +60,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -72,7 +72,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:transformation": {
             "rotation": [

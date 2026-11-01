@@ -1,6 +1,6 @@
 // Kinetic feedback (U37 `gaps`, filling U2's "not yet"): Create's rotation indicator particles
 // and ambient kinetic soundscapes, sent from the server to every client (vanilla and client mod
-// alike: the particle and the sounds are part of Levitate's resource pack, so there is one path
+// alike: the particle and the sounds are part of Bearing's resource pack, so there is one path
 // and no doubled effects). Rules in core/kinetics/Feedback.h, docs/SPEC.md §3.1.
 // Selftest positions: testPos dx 3780..3799 (U37).
 
@@ -44,7 +44,7 @@
 // storage) construct themselves empty (the same inline definition as in feature/bulk/World.cpp).
 inline MolangVariableMap::MolangVariableMap() {}
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 /// `config/gaps.json` (U37): Create's CClient ambience keys, applied by the server for everyone.
 struct FeedbackConfig {
@@ -57,20 +57,20 @@ struct FeedbackConfig {
     bool rotationIndicators = true;
 };
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics
 
-LV_REGISTER_CONFIG("gaps", lv::feature::kinetics::FeedbackConfig);
+BR_REGISTER_CONFIG("gaps", br::feature::kinetics::FeedbackConfig);
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 namespace fb = core::kinetics::feedback;
 
 namespace {
 
-constexpr char kIndicatorEffect[] = "levitate:rotation_indicator";
-constexpr char kCogsSound[]       = "levitate.kinetics.cogs";
-constexpr char kRumbleSound[]     = "levitate.kinetics.rumble";
-constexpr char kGearbox[]         = "levitate:gearbox";
+constexpr char kIndicatorEffect[] = "bearing:rotation_indicator";
+constexpr char kCogsSound[]       = "bearing.kinetics.cogs";
+constexpr char kRumbleSound[]     = "bearing.kinetics.rumble";
+constexpr char kGearbox[]         = "bearing:gearbox";
 
 struct Burst {
     GlobalPos     pos;
@@ -333,9 +333,9 @@ namespace {
 
 using selftest::Context;
 
-constexpr char const* kSource = "levitate:kinetics_test_source";
-constexpr char const* kCog    = "levitate:kinetics_test_cog";
-constexpr char const* kShaft  = "levitate:kinetics_test_shaft";
+constexpr char const* kSource = "bearing:kinetics_test_source";
+constexpr char const* kCog    = "bearing:kinetics_test_cog";
+constexpr char const* kShaft  = "bearing:kinetics_test_shaft";
 
 std::optional<Burst> burstAt(GlobalPos const& pos, std::uint64_t since) {
     std::optional<Burst> out;
@@ -345,21 +345,21 @@ std::optional<Burst> burstAt(GlobalPos const& pos, std::uint64_t since) {
 }
 
 void wearGoggles(Player& p, bool on) {
-    ItemStack goggles = on ? common::items::make("levitate:goggles").value_or(ItemStack{}) : ItemStack{};
+    ItemStack goggles = on ? common::items::make("bearing:goggles").value_or(ItemStack{}) : ItemStack{};
     p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, goggles);
 }
 
 } // namespace
 
-LV_REGISTER_SELFTEST("gaps.feedback_indicators", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.feedback_indicators", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3780);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& player = ctx.player();
     wearGoggles(player, true);
     ctx.require(goggles::isWearingGoggles(player), "the test player wears goggles");
     auto mark = st().tick;
-    ctx.require(ctx.setBlock(p, kSource, {{"levitate:axis", 0}}), "place the generator");
-    ctx.setBlock(GlobalPos{p.dim, p.x + 1, p.y, p.z}, kShaft, {{"levitate:axis", 0}});
+    ctx.require(ctx.setBlock(p, kSource, {{"bearing:axis", 0}}), "place the generator");
+    ctx.setBlock(GlobalPos{p.dim, p.x + 1, p.y, p.z}, kShaft, {{"bearing:axis", 0}});
     co_await ctx.ticks(5);
     auto first = burstAt(p, mark);
     ctx.check(first.has_value(), "a new generator (none -> slow) shows its indicators");
@@ -396,12 +396,12 @@ LV_REGISTER_SELFTEST("gaps.feedback_indicators", [](Context& ctx) -> ll::coro::C
     ctx.check(!burstAt(p, mark), "a stopped generator shows none");
 });
 
-LV_REGISTER_SELFTEST("gaps.feedback_ambience", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.feedback_ambience", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3790);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, kSource, {{"levitate:axis", 0}}), "place the generator");
+    ctx.require(ctx.setBlock(p, kSource, {{"bearing:axis", 0}}), "place the generator");
     GlobalPos cog{p.dim, p.x + 1, p.y, p.z};
-    ctx.setBlock(cog, kCog, {{"levitate:axis", 0}});
+    ctx.setBlock(cog, kCog, {{"bearing:axis", 0}});
     co_await ctx.ticks(3);
     ctx.require(speedAt(cog) == 16, "the cog turns");
 
@@ -445,6 +445,6 @@ LV_REGISTER_SELFTEST("gaps.feedback_ambience", [](Context& ctx) -> ll::coro::Cor
     ctx.check(!still, "stopped blocks are silent");
 });
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics
 
-LV_REGISTER_MODULE(lv::feature::kinetics::FeedbackModule);
+BR_REGISTER_MODULE(br::feature::kinetics::FeedbackModule);

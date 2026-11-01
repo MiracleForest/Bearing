@@ -8,7 +8,7 @@
 //   CRUSHING_3 = netherite break every 2 ticks) at the soundscape's volume (SoundScape.getVolume).
 // - Create's air current wind (AirCurrent.enableClientPlayerSound): a player caught in a fan's
 //   current hears wind, louder with the fan's speed, higher with the player's speed. Create loops
-//   the elytra sound; Levitate plays its own 0.5 s wind sample (tools/sounds/bulk.ps1) every 10
+//   the elytra sound; Bearing plays its own 0.5 s wind sample (tools/sounds/bulk.ps1) every 10
 //   ticks.
 
 #include <algorithm>
@@ -29,7 +29,7 @@
 #include "core/kinetics/Feedback.h"
 #include "feature/bulk/Bulk.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace fb = core::kinetics::feedback;
 
@@ -162,11 +162,11 @@ void tickSounds() {
             auto* a = entityById(id);
             if (!a || !a->isPlayer()) continue;
             auto& p = static_cast<Player&>(*a);
-            playTo(p, "levitate.fan_wind", p.getPosition(), w.volume, w.pitch);
+            playTo(p, "bearing.fan_wind", p.getPosition(), w.volume, w.pitch);
         }
     }
 }
 
 void clearSounds() { st() = SoundState{}; }
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

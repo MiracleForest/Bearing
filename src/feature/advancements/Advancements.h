@@ -1,7 +1,7 @@
 #pragma once
 
 // Create's advancements (U45, SPEC §3.6.45): the tree of Create 6.0.10 (core/advancements),
-// progress per player in the world DB (`lv:advancements:player:<uuid>`), a toast (client mod: a
+// progress per player in the world DB (`br:advancements:player:<uuid>`), a toast (client mod: a
 // Create toast; vanilla: the game's toast) and Create's chat line on unlock, the tree screen
 // (`/create advancements`: native in the client mod, a form for vanilla players).
 //
@@ -26,7 +26,7 @@
 
 class Player;
 
-namespace lv::feature::advancements {
+namespace br::feature::advancements {
 
 using core::GlobalPos;
 
@@ -69,4 +69,4 @@ void onSpoutFilled(GlobalPos const& pos, std::string_view resultId);
 /// Opens the advancement tree for the player (native screen or form).
 void openTree(Player& player);
 
-} // namespace lv::feature::advancements
+} // namespace br::feature::advancements

@@ -14,7 +14,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::common {
+namespace br::core::common {
 
 /// Bumped whenever a message changes incompatibly.
 inline constexpr int kProtocolVersion = 1;
@@ -38,4 +38,4 @@ struct Envelope {
 /// Channels are "<unit>.<name>" (lowercase, digits, '_', '.'); at most 64 characters.
 [[nodiscard]] bool validChannel(std::string_view channel);
 
-} // namespace lv::core::common
+} // namespace br::core::common

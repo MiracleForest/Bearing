@@ -6,7 +6,7 @@
 #include <string_view>
 #include <vector>
 
-namespace lv::core {
+namespace br::core {
 
 /// Formats a translation string. Supports `{}` (next argument), `{0}`, `{1}`... (positional),
 /// and `{{` / `}}` escapes. Never throws: unknown placeholders are kept verbatim.
@@ -27,4 +27,4 @@ template <class... Args>
 /// Formats a large count compactly: 999 -> "999", 1234 -> "1.2k", 1500000 -> "1.5M".
 [[nodiscard]] std::string compactCount(long long n);
 
-} // namespace lv::core
+} // namespace br::core

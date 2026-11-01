@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the goggles unit (U8):
 // - the goggle overlay: while looking at a block the client asks the server for its Create
@@ -8,7 +8,7 @@
 // - `/create overlay`: Create's GoggleConfigScreen (click / drag the sample to move the
 //   overlay, Esc saves) and `/create overlay reset`;
 // - item tooltips: Create's ItemDescription ("Hold [Shift] for Summary") and KineticStats
-//   (stress impact / capacity) appended to the game's hover text of Levitate items.
+//   (stress impact / capacity) appended to the game's hover text of Bearing items.
 
 #include <algorithm>
 #include <cmath>
@@ -48,17 +48,17 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::goggles {
+namespace br::client::goggles {
 
 namespace {
 
-namespace net = lv::feature::net;
-namespace fmt = lv::core::goggles::fmt;
+namespace net = br::feature::net;
+namespace fmt = br::core::goggles::fmt;
 using feature::goggles::GogglesConfig;
 using screen::Canvas;
 using Json = nlohmann::json;
 
-constexpr char const* kGogglesId = "levitate:goggles";
+constexpr char const* kGogglesId = "bearing:goggles";
 constexpr int         kKeyShift  = 16;
 constexpr int         kKeyCtrl   = 17;
 constexpr int         kKeyEscape = 27;
@@ -123,7 +123,7 @@ bool lookingAtValueBox(LocalPlayer& player, HitResult const& hit) {
     auto&        region = player.getDimensionBlockSource();
     Block const& block  = region.getBlock(hit.mBlock);
     auto         id     = block.getTypeName();
-    namespace c = lv::feature::common;
+    namespace c = br::feature::common;
     if (!c::valuebox::boxesOf(id) && !c::filterslot::hasSlots(id)) return false;
     core::common::Vec local{hit.mPos.x - hit.mBlock.x, hit.mPos.y - hit.mBlock.y, hit.mPos.z - hit.mBlock.z};
     return c::valuebox::boxAt(block, hit.mFacing, local) || c::filterslot::slotAt(block, hit.mFacing, local);
@@ -465,7 +465,7 @@ std::vector<std::string> kineticStats(std::string const& id) {
     std::vector<std::string> out;
     // KineticStats.create: IRotate blocks and the steam engine (its capacity entry; the powered
     // shaft is the kinetic block)
-    if (!feature::kinetics::specOf(id) && id != "levitate:steam_engine") return out;
+    if (!feature::kinetics::specOf(id) && id != "bearing:steam_engine") return out;
     auto const& k        = config::get<feature::kinetics::KineticsConfig>();
     if (k.disableStress) return out;
     bool        goggles  = wearingGoggles();
@@ -561,7 +561,7 @@ LL_TYPE_INSTANCE_HOOK(
     auto r = origin(level, showCategory);
     if (isNull()) return r;
     auto id = getTypeName();
-    if (!id.starts_with("levitate:")) return r;
+    if (!id.starts_with("bearing:")) return r;
     extendHovertext(r.mUnredactedString, id);
     if (r.mRedactedString) extendHovertext(*r.mRedactedString, id);
     return r;
@@ -638,8 +638,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::goggles
+} // namespace br::client::goggles
 
-LV_REGISTER_MODULE(lv::client::goggles::GogglesClientModule);
+BR_REGISTER_MODULE(br::client::goggles::GogglesClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

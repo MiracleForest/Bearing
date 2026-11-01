@@ -1,7 +1,7 @@
 #pragma once
 
-// Filters (U3, SPEC §2.26 / §3.2): `levitate:filter` (list filter) and
-// `levitate:attribute_filter`, matched with Create's semantics (FilterItemStack):
+// Filters (U3, SPEC §2.26 / §3.2): `bearing:filter` (list filter) and
+// `bearing:attribute_filter`, matched with Create's semantics (FilterItemStack):
 //
 // - an empty filter slot matches everything;
 // - a plain item matches the same item (data ignored unless `matchData`);
@@ -11,7 +11,7 @@
 // - an attribute filter combines its attribute tests in allow-list (any) / allow-list (all) /
 //   deny-list mode; an empty attribute list matches only attribute filter items.
 //
-// Filter contents live in the item's user data (Levitate keys "lv:filter" / "lv:attribute_filter").
+// Filter contents live in the item's user data (Bearing keys "br:filter" / "br:attribute_filter").
 // Units with filter slots use `matches()` / `predicate()`; the slots themselves are FilterSlot.h.
 
 #include <functional>
@@ -26,12 +26,12 @@
 class ItemStack;
 class Player;
 
-namespace lv::feature::common::filter {
+namespace br::feature::common::filter {
 
 using Json = nlohmann::json;
 
-inline constexpr char const* kListFilterId      = "levitate:filter";
-inline constexpr char const* kAttributeFilterId = "levitate:attribute_filter";
+inline constexpr char const* kListFilterId      = "bearing:filter";
+inline constexpr char const* kAttributeFilterId = "bearing:attribute_filter";
 
 [[nodiscard]] bool isListFilter(ItemStack const& stack);
 [[nodiscard]] bool isAttributeFilter(ItemStack const& stack);
@@ -102,4 +102,4 @@ void registerAttribute(AttributeType type);
 void updateLore(ItemStack& filter);
 
 
-} // namespace lv::feature::common::filter
+} // namespace br::feature::common::filter

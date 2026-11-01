@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::assembly {
+namespace br::core::assembly {
 
 int deployerTimerSpeed(float speed) {
     if (speed == 0) return 0;
@@ -65,4 +65,4 @@ float deployerHandOffset(DeployerState state, float timer, int timerSpeed, float
 
 float deployerReach(float hitDistance) { return 0.5f + std::min(hitDistance, 0.75f); }
 
-} // namespace lv::core::assembly
+} // namespace br::core::assembly

@@ -9,9 +9,9 @@
 
 #include "core/tracks/Math.h"
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
-/// The `levitate:shape` block state value of `levitate:track` (same order as Create's TrackShape).
+/// The `bearing:shape` block state value of `bearing:track` (same order as Create's TrackShape).
 enum class Shape : int {
     None   = 0,
     ZO     = 1,  ///< straight north-south
@@ -35,7 +35,7 @@ enum class Shape : int {
 };
 inline constexpr int kShapeCount = 19;
 
-/// Java horizontal directions in Levitate's 2D order (0 S, 1 W, 2 N, 3 E), see game::playerFacing.
+/// Java horizontal directions in Bearing's 2D order (0 S, 1 W, 2 N, 3 E), see game::playerFacing.
 enum class Dir2 : int { South = 0, West = 1, North = 2, East = 3 };
 [[nodiscard]] Vec3d dirVec(Dir2 d);
 [[nodiscard]] Dir2  dirOpposite(Dir2 d);
@@ -77,4 +77,4 @@ enum class Dir2 : int { South = 0, West = 1, North = 2, East = 3 };
 /// Where a curve leaves the block along `axis` (`TrackBlock.getCurveStart`).
 [[nodiscard]] Vec3d curveStart(BlockPos3 const& pos, Vec3d const& axis);
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

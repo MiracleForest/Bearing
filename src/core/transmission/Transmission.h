@@ -15,7 +15,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::transmission {
+namespace br::core::transmission {
 
 using kinetics::Axis;
 using kinetics::Face;
@@ -55,11 +55,11 @@ struct ChainState {
 [[nodiscard]] float stressDialTarget(bool stressEnabled, float speed, bool overstressed, double stress, double capacity);
 /// Create's GaugeBlock.getAnalogOutputSignal: ceil(clamp(target * 14, 0, 15)).
 [[nodiscard]] int gaugeComparatorSignal(float dialTarget);
-/// The static needle position for vanilla clients (`levitate:dial`: the needle angle, 90° per 1.0
+/// The static needle position for vanilla clients (`bearing:dial`: the needle angle, 90° per 1.0
 /// of the dial, in steps of 22.5° as Bedrock block models allow).
 [[nodiscard]] int dialStateOf(float dialTarget);
 inline constexpr int kDialStates = 6;
-/// The dial value a `levitate:dial` state shows.
+/// The dial value a `bearing:dial` state shows.
 [[nodiscard]] float dialOfState(int state);
 /// Needle angle in degrees for a dial value (Create: a quarter turn per 1.0).
 [[nodiscard]] inline float dialAngle(float dial) { return 90.f * dial; }
@@ -104,7 +104,7 @@ struct Instruction {
 [[nodiscard]] int instructionSpeedModifier(Instruction const& i);
 /// Create's SequencerInstructions.formatValue ("90°", "5m", "1s" / "10t").
 [[nodiscard]] std::string formatInstructionValue(Instr type, int value, std::string const& degreesUnit = "°");
-/// `levitate:mod` state values (0, 1, 2, -1, -2 stored as 0..4).
+/// `bearing:mod` state values (0, 1, 2, -1, -2 stored as 0..4).
 [[nodiscard]] int modifierToState(int modifier);
 [[nodiscard]] int stateToModifier(int state);
 /// JSON (BlockData) of an instruction list; invalid entries are clamped, an empty list gives the default.
@@ -148,4 +148,4 @@ template <class Pred>
     return out;
 }
 
-} // namespace lv::core::transmission
+} // namespace br::core::transmission

@@ -34,11 +34,11 @@ for ($i = 0; $i -lt $Flowers.Count; $i++) {
             $doc = [ordered]@{
                 format_version            = '1.20.10'
                 'minecraft:recipe_shapeless' = [ordered]@{
-                    description = [ordered]@{ identifier = "levitate:$name" }
+                    description = [ordered]@{ identifier = "bearing:$name" }
                     tags        = @('crafting_table')
                     ingredients = $ingredients.ToArray()
                     unlock      = @([ordered]@{ item = "minecraft:$a" })
-                    result      = [ordered]@{ item = 'levitate:tree_fertilizer'; count = 2 }
+                    result      = [ordered]@{ item = 'bearing:tree_fertilizer'; count = 2 }
                 }
             }
             $path = Join-Path $recipes "$name.json"

@@ -17,7 +17,7 @@
 #include "feature/net/Net.h"
 #include "mod/Log.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace bd = common::blockdata;
 
@@ -92,4 +92,4 @@ void installSync() {
 }
 void uninstallSync() { net::off(kQueryChannel); }
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

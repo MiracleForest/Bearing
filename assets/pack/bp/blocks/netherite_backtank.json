@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:netherite_backtank",
+      "identifier": "bearing:netherite_backtank",
       "menu_category": {
         "category": "equipment"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -16,10 +16,10 @@
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.backtank",
+      "minecraft:geometry": "geometry.bearing.backtank",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_netherite_backtank",
+          "texture": "bearing_netherite_backtank",
           "render_method": "alpha_test"
         }
       },
@@ -59,7 +59,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -71,7 +71,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -83,7 +83,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -95,7 +95,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [

@@ -46,7 +46,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 // ---- dyes -------------------------------------------------------------------------------------
 
@@ -225,7 +225,7 @@ void broadcast(int dim, std::string const& channel, Json const& payload) {
 // ---- floating text ----------------------------------------------------------------------------
 
 namespace {
-constexpr char kTextTag[] = "lv_display_text";
+constexpr char kTextTag[] = "br_display_text";
 
 struct FloatingText {
     int                   dim = 0;
@@ -372,6 +372,6 @@ private:
     std::uint64_t          mTicks = 0;
 };
 
-} // namespace lv::feature::display
+} // namespace br::feature::display
 
-LV_REGISTER_MODULE(lv::feature::display::DisplayModule);
+BR_REGISTER_MODULE(br::feature::display::DisplayModule);

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:powered_latch_from_diorite"
+      "identifier": "bearing:powered_latch_from_diorite"
     },
     "tags": [
       "crafting_table"
@@ -32,7 +32,7 @@
       }
     ],
     "result": {
-      "item": "levitate:powered_latch",
+      "item": "bearing:powered_latch",
       "count": 1
     }
   }

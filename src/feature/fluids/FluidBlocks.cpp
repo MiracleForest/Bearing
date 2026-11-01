@@ -1,5 +1,5 @@
 // Honey and chocolate in the world (SPEC §3.6.19, §8): Bedrock has no data-driven fluids, so a
-// bucket places a non-flowing source block (`levitate:honey` / `levitate:chocolate`) that an
+// bucket places a non-flowing source block (`bearing:honey` / `bearing:chocolate`) that an
 // empty bucket, a hose pulley or a pump picks up again. Entities inside are slowed down as by
 // Create's viscous fluids and take no fall damage; lava next to them turns into obsidian (lava
 // source) or limestone / scoria (flowing lava), as Create's fluid interactions.
@@ -28,7 +28,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace items = common::items;
 
@@ -126,7 +126,7 @@ void tickSources(std::uint64_t tick) {
             auto        id = b.getTypeName();
             if (id != "minecraft:lava" && id != "minecraft:flowing_lava") continue;
             bool        source = game::intState(b, "liquid_depth").value_or(0) == 0;
-            std::string into   = source ? "minecraft:obsidian" : (own == kHoneyBlock ? "levitate:limestone" : "levitate:scoria");
+            std::string into   = source ? "minecraft:obsidian" : (own == kHoneyBlock ? "bearing:limestone" : "bearing:scoria");
             auto const* nb     = game::blockWith(into);
             if (!nb) continue; // the stone of another unit is not there (yet)
             game::setBlock(*region, toBlockPos(q), *nb);
@@ -168,4 +168,4 @@ bool poweredAt(GlobalPos const& p) {
     return region && common::redstone::powered(*region, toBlockPos(p));
 }
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

@@ -15,7 +15,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace {
 namespace items = common::items;
@@ -25,11 +25,11 @@ constexpr int kDx[6]{0, 0, 0, 0, -1, 1}, kDy[6]{-1, 1, 0, 0, 0, 0}, kDz[6]{0, 0,
 
 /// The inventory a packager works on (opposite of its facing; Create's InvManipulationBehaviour).
 std::optional<std::pair<GlobalPos, int>> targetOf(GlobalPos const& packager) {
-    int facing = std::clamp(stateOr(packager, "levitate:facing", 1), 0, 5);
+    int facing = std::clamp(stateOr(packager, "bearing:facing", 1), 0, 5);
     int back   = facing ^ 1;
     auto t     = offset(packager, kDx[back], kDy[back], kDz[back]);
     auto id    = idAt(t);
-    if (id.empty() || id == pk::kPackagerId || id == pk::kRepackagerId || id == "levitate:portable_storage_interface") return std::nullopt;
+    if (id.empty() || id == pk::kPackagerId || id == pk::kRepackagerId || id == "bearing:portable_storage_interface") return std::nullopt;
     return std::pair{t, facing};
 }
 
@@ -109,6 +109,6 @@ public:
     }
 };
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock
 
-LV_REGISTER_MODULE(lv::feature::stock::StockPackagesModule);
+BR_REGISTER_MODULE(br::feature::stock::StockPackagesModule);

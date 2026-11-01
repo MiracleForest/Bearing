@@ -15,13 +15,13 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace ct = feature::contraption;
 
 namespace {
 
-constexpr char kDbShafts[] = "lv:pistons:shafts";
+constexpr char kDbShafts[] = "br:pistons:shafts";
 
 struct GantryState {
     std::set<GlobalPos>   shafts;
@@ -388,4 +388,4 @@ void loadGantries() {
     }
 }
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

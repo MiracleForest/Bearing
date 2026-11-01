@@ -1,6 +1,6 @@
 #include "core/kinetics/Spec.h"
 
-namespace lv::core::kinetics {
+namespace br::core::kinetics {
 
 char const* faceName(Face f) {
     static constexpr char const* kNames[] = {"down", "up", "north", "south", "west", "east"};
@@ -42,7 +42,7 @@ std::function<std::optional<Axis>(BlockState const&)> axisFromFacing(std::string
     return [state = std::move(state)](BlockState const& s) -> std::optional<Axis> {
         int v = s.get(state, 0);
         if (v < 0 || v > 5) return std::nullopt;
-        return lv::core::kinetics::axisOf(static_cast<Face>(v));
+        return br::core::kinetics::axisOf(static_cast<Face>(v));
     };
 }
 
@@ -53,9 +53,9 @@ KineticSpec axial(std::string axisState) {
     spec.rotationAxis = axisFromState(axisState);
     spec.hasShaftTowards = [axis = spec.rotationAxis](BlockState const& s, Face f) {
         auto a = axis(s);
-        return a && *a == lv::core::kinetics::axisOf(f);
+        return a && *a == br::core::kinetics::axisOf(f);
     };
-    spec.rotorState = "levitate:rotor";
+    spec.rotorState = "bearing:rotor";
     return spec;
 }
 } // namespace
@@ -86,7 +86,7 @@ float gearboxModifier(NodeView const& self, Face face) {
     if (!(self.hasSource() || self.generator)) return 1;
     auto source = self.sourceFacing();
     if (!source) return 1;
-    if (lv::core::kinetics::axisOf(face) == lv::core::kinetics::axisOf(*source)) return face == *source ? 1.f : -1.f;
+    if (br::core::kinetics::axisOf(face) == br::core::kinetics::axisOf(*source)) return face == *source ? 1.f : -1.f;
     return isPositive(face) == isPositive(*source) ? -1.f : 1.f;
 }
 
@@ -100,4 +100,4 @@ float splitShaftModifier(NodeView const& self, Face face, bool active, bool reve
 
 } // namespace specs
 
-} // namespace lv::core::kinetics
+} // namespace br::core::kinetics

@@ -1,11 +1,11 @@
-// Native config screen (U42): Create's config GUI for Levitate's `config/<section>.json` files,
+// Native config screen (U42): Create's config GUI for Bearing's `config/<section>.json` files,
 // opened by `/create config` (server type "common.config", feature/common/ConfigScreen.cpp).
 // The first page lists the sections; a section page lists its entries (scroll with the wheel),
 // booleans as On / Off toggles, numbers and text as text boxes (Enter applies), and a reset
 // button on entries that differ from their default. Changes go to the server, which checks the
 // player is an operator, writes the file, reloads the configs and sends fresh values.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <cctype>
@@ -15,7 +15,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::screen {
+namespace br::client::screen {
 
 namespace {
 
@@ -87,7 +87,7 @@ std::string valueText(Json const& v) {
 
 class ConfigScreen : public Screen {
 public:
-    ConfigScreen(Json const& data, SendFn send) : Screen(ctr("lv.common.config.title", "Levitate Configuration"), kWidth, 0), mSend(std::move(send)), mData(data) {
+    ConfigScreen(Json const& data, SendFn send) : Screen(ctr("br.common.config.title", "Bearing Configuration"), kWidth, 0), mSend(std::move(send)), mData(data) {
         height = 30 + kRows * kRowH + 8;
     }
 
@@ -106,7 +106,7 @@ public:
     }
 
     void renderExtra(Canvas& c, float, float) override {
-        if (!mData.value("admin", false)) c.text(8, height - 12, ctr("lv.common.config.need_op", "Only operators can change the configuration."), color::kButtonOff, Align::Left, false);
+        if (!mData.value("admin", false)) c.text(8, height - 12, ctr("br.common.config.need_op", "Only operators can change the configuration."), color::kButtonOff, Align::Left, false);
         auto entries = mData.value("entries", Json::array());
         if (entries.size() > kRows) {
             // the scroll bar
@@ -128,7 +128,7 @@ private:
         bool admin   = mData.value("admin", false);
         auto section = mData.value("section", std::string{});
         if (section.empty()) {
-            title      = ctr("lv.common.config.title", "Levitate Configuration");
+            title      = ctr("br.common.config.title", "Bearing Configuration");
             auto names = mData.value("sections", Json::array());
             for (std::size_t i = 0; i < names.size(); ++i) {
                 auto  name = names[i].get<std::string>();
@@ -138,8 +138,8 @@ private:
             height = std::max(height, 26 + static_cast<float>((names.size() + 1) / 2) * 20 + 22);
             return;
         }
-        title = ctr("lv.common.config.title", "Levitate Configuration") + ": " + humanize(section);
-        add<TextButton>(Rect{kWidth - 52, 4, 44, 14}, ctr("lv.common.config.back", "Back"), [this] { mSend({{"op", "open"}, {"section", ""}}); });
+        title = ctr("br.common.config.title", "Bearing Configuration") + ": " + humanize(section);
+        add<TextButton>(Rect{kWidth - 52, 4, 44, 14}, ctr("br.common.config.back", "Back"), [this] { mSend({{"op", "open"}, {"section", ""}}); });
         auto entries = mData.value("entries", Json::array());
         mOffset      = std::min(mOffset, entries.size() > kRows ? entries.size() - kRows : 0);
         for (std::size_t r = 0; r < kRows && mOffset + r < entries.size(); ++r) {
@@ -152,10 +152,10 @@ private:
             auto name = humanize(path);
             if (name.size() > 28) name = ".." + name.substr(name.size() - 26);
             auto&       label = add<Label>(Rect{8, y + 4, 160, 9}, name, color::kTextDark);
-            label.tooltip = {humanize(path), "§7" + path, "§8" + ctr("lv.common.config.default", "Default: {}", valueText(def))};
+            label.tooltip = {humanize(path), "§7" + path, "§8" + ctr("br.common.config.default", "Default: {}", valueText(def))};
             if (v.is_boolean()) {
                 bool  on = v.get<bool>();
-                auto& b  = add<TextButton>(Rect{172, y, 80, 16}, on ? ctr("lv.common.config.on", "On") : ctr("lv.common.config.off", "Off"), [this, path, on] {
+                auto& b  = add<TextButton>(Rect{172, y, 80, 16}, on ? ctr("br.common.config.on", "On") : ctr("br.common.config.off", "Off"), [this, path, on] {
                     mSend({{"op", "set"}, {"path", path}, {"value", !on}});
                 });
                 b.fillColour = on ? color::kButtonOn : color::kButtonOff;
@@ -169,7 +169,7 @@ private:
             }
             if (!def.is_null() && def != v) {
                 auto& reset = add<TextButton>(Rect{256, y, 16, 16}, "⟲", [this, path] { mSend({{"op", "reset"}, {"path", path}}); });
-                reset.tooltip = {ctr("lv.common.config.reset", "Reset to default")};
+                reset.tooltip = {ctr("br.common.config.reset", "Reset to default")};
                 reset.enabled = admin;
             }
         }
@@ -204,8 +204,8 @@ public:
     void uninstall() {}
 };
 
-} // namespace lv::client::screen
+} // namespace br::client::screen
 
-LV_REGISTER_MODULE(lv::client::screen::ConfigScreenClientModule);
+BR_REGISTER_MODULE(br::client::screen::ConfigScreenClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

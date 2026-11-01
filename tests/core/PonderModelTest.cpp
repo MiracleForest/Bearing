@@ -7,19 +7,19 @@
 #include "core/ponder/BlockModel.h"
 #include "core/ponder/View.h"
 
-using namespace lv::core::ponder;
+using namespace br::core::ponder;
 using Json = nlohmann::json;
 
 TEST(PonderModel, Molang) {
-    std::map<std::string, int> st{{"levitate:facing", 2}, {"levitate:rotor", 0}};
+    std::map<std::string, int> st{{"bearing:facing", 2}, {"bearing:rotor", 0}};
     auto                       is = [&](std::string const& e) { return evalMolang(e, st).value_or(-1.f); };
-    EXPECT_EQ(is("q.block_state('levitate:facing') == 2"), 1.f);
-    EXPECT_EQ(is("query.block_state('levitate:facing') != 2"), 0.f);
-    EXPECT_EQ(is("q.block_state('levitate:facing') == 2 && q.block_state('levitate:rotor') == 0"), 1.f);
-    EXPECT_EQ(is("(q.block_state('levitate:facing') == 1 || q.block_state('levitate:facing') == 2) && !(q.block_state('levitate:rotor') == 1)"), 1.f);
-    EXPECT_EQ(is("q.block_state('levitate:facing') >= 3"), 0.f);
-    EXPECT_EQ(is("q.block_state('levitate:facing') <= 3 || 0 == 1"), 1.f);
-    EXPECT_EQ(is("q.block_state('levitate:facing') + q.block_state('levitate:rotor') * 2 == 2"), 1.f);
+    EXPECT_EQ(is("q.block_state('bearing:facing') == 2"), 1.f);
+    EXPECT_EQ(is("query.block_state('bearing:facing') != 2"), 0.f);
+    EXPECT_EQ(is("q.block_state('bearing:facing') == 2 && q.block_state('bearing:rotor') == 0"), 1.f);
+    EXPECT_EQ(is("(q.block_state('bearing:facing') == 1 || q.block_state('bearing:facing') == 2) && !(q.block_state('bearing:rotor') == 1)"), 1.f);
+    EXPECT_EQ(is("q.block_state('bearing:facing') >= 3"), 0.f);
+    EXPECT_EQ(is("q.block_state('bearing:facing') <= 3 || 0 == 1"), 1.f);
+    EXPECT_EQ(is("q.block_state('bearing:facing') + q.block_state('bearing:rotor') * 2 == 2"), 1.f);
     EXPECT_EQ(is("-1 + 3 == 2 && 4 / 2 - 1 == 1"), 1.f);
     EXPECT_EQ(is("True"), 1.f);
     EXPECT_EQ(is("false"), 0.f);
@@ -56,22 +56,22 @@ TEST(PonderModel, FullBlockShading) {
 
 TEST(PonderModel, ResolvesPermutations) {
     auto file = parseBlockFile(Json::parse(R"({"minecraft:block": {
-        "description": {"identifier": "levitate:test", "states": {"levitate:facing": [0, 1, 2, 3, 4, 5], "levitate:rotor": [0, 1]}},
+        "description": {"identifier": "bearing:test", "states": {"bearing:facing": [0, 1, 2, 3, 4, 5], "bearing:rotor": [0, 1]}},
         "components": {
-            "minecraft:geometry": {"identifier": "geometry.test", "bone_visibility": {"rotor": "q.block_state('levitate:rotor') == 0"}},
+            "minecraft:geometry": {"identifier": "geometry.test", "bone_visibility": {"rotor": "q.block_state('bearing:rotor') == 0"}},
             "minecraft:material_instances": {"*": {"texture": "body"}, "casing": "side_alias", "side_alias": {"texture": "casing_tex"}}
         },
         "permutations": [
-            {"condition": "q.block_state('levitate:facing') == 2", "components": {"minecraft:transformation": {"rotation": [-90, 0, 0]}}},
-            {"condition": "q.block_state('levitate:facing') == 5", "components": {"minecraft:transformation": {"rotation": [0, 0, -90]}}}
+            {"condition": "q.block_state('bearing:facing') == 2", "components": {"minecraft:transformation": {"rotation": [-90, 0, 0]}}},
+            {"condition": "q.block_state('bearing:facing') == 5", "components": {"minecraft:transformation": {"rotation": [0, 0, -90]}}}
         ]}})"));
     ASSERT_TRUE(file);
-    EXPECT_EQ(file->defaults["levitate:facing"], 0);
-    auto r = resolve(*file, {{"levitate:facing", 2}});
+    EXPECT_EQ(file->defaults["bearing:facing"], 0);
+    auto r = resolve(*file, {{"bearing:facing", 2}});
     EXPECT_EQ(r.geometry, "geometry.test");
     EXPECT_EQ(r.rotation, (V3{-90, 0, 0}));
     EXPECT_EQ(r.materials["casing"], "casing_tex");
-    EXPECT_EQ(resolve(*file, {{"levitate:facing", 1}}).rotation, (V3{0, 0, 0}));
+    EXPECT_EQ(resolve(*file, {{"bearing:facing", 1}}).rotation, (V3{0, 0, 0}));
 
     // a thin pole along +y: facing north (rotation x -90) points it to -z, east (z -90) to +x
     auto geo = parseGeometries(Json::parse(R"({"minecraft:geometry": [{"description": {"identifier": "geometry.test"},
@@ -84,12 +84,12 @@ TEST(PonderModel, ResolvesPermutations) {
             for (auto const& p : q.pos) best = maxSide ? std::max(best, p[static_cast<std::size_t>(axis)]) : std::min(best, p[static_cast<std::size_t>(axis)]);
         return best;
     };
-    auto north = buildQuads(r, geo["geometry.test"], {{"levitate:facing", 2}, {"levitate:rotor", 1}});
+    auto north = buildQuads(r, geo["geometry.test"], {{"bearing:facing", 2}, {"bearing:rotor", 1}});
     EXPECT_EQ(north.size(), 6u); // the rotor bone is hidden (rotor = 1)
     EXPECT_NEAR(tip(north, 2, false), 0.f, 1e-4);  // reaches the north face
-    auto east = buildQuads(resolve(*file, {{"levitate:facing", 5}}), geo["geometry.test"], {{"levitate:facing", 5}, {"levitate:rotor", 0}});
+    auto east = buildQuads(resolve(*file, {{"bearing:facing", 5}}), geo["geometry.test"], {{"bearing:facing", 5}, {"bearing:rotor", 0}});
     EXPECT_EQ(east.size(), 12u);
-    EXPECT_NEAR(tip(buildQuads(resolve(*file, {{"levitate:facing", 5}}), geo["geometry.test"], {{"levitate:rotor", 1}}), 0, true), 1.f, 1e-4);
+    EXPECT_NEAR(tip(buildQuads(resolve(*file, {{"bearing:facing", 5}}), geo["geometry.test"], {{"bearing:rotor", 1}}), 0, true), 1.f, 1e-4);
     for (auto const& q : north) EXPECT_EQ(q.texture, "body");
 }
 

@@ -28,12 +28,12 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
+using br::core::GlobalPos;
+using br::selftest::Context;
 using SharedTypes::Legacy::ArmorSlot;
-namespace eq    = lv::feature::equipment;
-namespace adv   = lv::feature::advancements;
-namespace items = lv::feature::common::items;
+namespace eq    = br::feature::equipment;
+namespace adv   = br::feature::advancements;
+namespace items = br::feature::common::items;
 using Facing    = ScriptModuleMinecraft::ScriptFacing;
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
@@ -53,7 +53,7 @@ void strip(Player& p) {
 
 // ---- bells ----------------------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("equipment.bell_place_and_ring", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.bell_place_and_ring", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4965), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -62,7 +62,7 @@ LV_REGISTER_SELFTEST("equipment.bell_place_and_ring", [](Context& ctx) -> ll::co
     ctx.cleanupBlock(bell);
     sp.teleport(Vec3{base.x + .5f, float(base.y + 1), base.z + 3.5f}, DimensionType(0));
     co_await ctx.ticks(2);
-    ctx.give(sp, item(ctx, "levitate:peculiar_bell"), 0);
+    ctx.give(sp, item(ctx, "bearing:peculiar_bell"), 0);
     sp.simulateUseItemInSlotOnBlock(0, bp(base), Facing::Up, Vec3{.5f, 1.f, .5f});
     co_await ctx.ticks(3);
     ctx.require(eq::idAt(bell) == eq::kPeculiarBell, "the bell is placed on the floor");
@@ -79,12 +79,12 @@ LV_REGISTER_SELFTEST("equipment.bell_place_and_ring", [](Context& ctx) -> ll::co
     ctx.check(!eq::bellInfo(bell).ringing, "it stops after 74 ticks");
     (void)across;
     // the floor is gone: the bell drops
-    lv::game::clearBlock(sp.getDimensionBlockSource(), bp(base));
+    br::game::clearBlock(sp.getDimensionBlockSource(), bp(base));
     co_await ctx.ticks(3);
     ctx.check(eq::idAt(bell) == "minecraft:air", "the bell lost its support and dropped");
 });
 
-LV_REGISTER_SELFTEST("equipment.bell_walls", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.bell_walls", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4968), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp   = static_cast<SimulatedPlayer&>(ctx.player());
@@ -94,7 +94,7 @@ LV_REGISTER_SELFTEST("equipment.bell_walls", [](Context& ctx) -> ll::coro::CoroT
     ctx.cleanupBlock(bell);
     sp.teleport(Vec3{base.x + .5f, float(base.y + 1), base.z - 2.5f}, DimensionType(0));
     co_await ctx.ticks(2);
-    ctx.give(sp, item(ctx, "levitate:peculiar_bell"), 0);
+    ctx.give(sp, item(ctx, "bearing:peculiar_bell"), 0);
     sp.simulateUseItemInSlotOnBlock(0, bp(wall), Facing::North, Vec3{.5f, .5f, 0.f});
     co_await ctx.ticks(3);
     ctx.require(eq::idAt(bell) == eq::kPeculiarBell, "the bell hangs on the wall");
@@ -105,19 +105,19 @@ LV_REGISTER_SELFTEST("equipment.bell_walls", [](Context& ctx) -> ll::coro::CoroT
     co_await ctx.ticks(3);
     ctx.check(stateOf(bell, eq::kBellAttachment) == 3, "a double wall bell");
     // the first wall goes: it hangs on the second one
-    lv::game::clearBlock(sp.getDimensionBlockSource(), bp(wall));
+    br::game::clearBlock(sp.getDimensionBlockSource(), bp(wall));
     co_await ctx.ticks(3);
     ctx.check(stateOf(bell, eq::kBellAttachment) == 2 && stateOf(bell, eq::kFacing) == 2, "a single wall bell facing north");
 });
 
-LV_REGISTER_SELFTEST("equipment.bell_convert", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.bell_convert", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4971), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     ctx.require(ctx.setBlock(base, "minecraft:soul_soil"), "soul soil");
     auto ceiling = at(base, 0, 3, 0);
     ctx.require(ctx.setBlock(ceiling, "minecraft:stone"), "a ceiling");
     auto bell = at(base, 0, 2, 0);
-    ctx.require(ctx.setBlock(bell, std::string(eq::kPeculiarBell), {{"levitate:facing", 3}, {"levitate:attachment", 1}}), "a hanging peculiar bell");
+    ctx.require(ctx.setBlock(bell, std::string(eq::kPeculiarBell), {{"bearing:facing", 3}, {"bearing:attachment", 1}}), "a hanging peculiar bell");
     co_await ctx.ticks(3);
     ctx.check(eq::idAt(bell) == eq::kPeculiarBell, "no soul fire: it stays peculiar");
     ctx.require(ctx.setBlock(at(base, 0, 1, 0), "minecraft:soul_fire"), "soul fire below");
@@ -127,7 +127,7 @@ LV_REGISTER_SELFTEST("equipment.bell_convert", [](Context& ctx) -> ll::coro::Cor
     ctx.check(eq::bellInfo(bell).effectTicks > 0, "the souls stir (HauntedBellBlock#onPlace)");
 });
 
-LV_REGISTER_SELFTEST("equipment.haunted_bell_pulse", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.haunted_bell_pulse", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4974), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
@@ -135,7 +135,7 @@ LV_REGISTER_SELFTEST("equipment.haunted_bell_pulse", [](Context& ctx) -> ll::cor
     for (int x = -2; x <= 2; ++x)
         for (int z = -2; z <= 2; ++z) ctx.require(ctx.setBlock(at(base, x, 0, z), "minecraft:stone"), "floor");
     auto bell = at(base, 0, 1, 0);
-    ctx.require(ctx.setBlock(bell, std::string(eq::kHauntedBell), {{"levitate:facing", 3}, {"levitate:attachment", 0}}), "a haunted bell");
+    ctx.require(ctx.setBlock(bell, std::string(eq::kHauntedBell), {{"bearing:facing", 3}, {"bearing:attachment", 0}}), "a haunted bell");
     co_await ctx.ticks(2);
     (void)eq::takeSoulMarks();
     adv::revoke(p, "haunted_bell");
@@ -154,12 +154,12 @@ LV_REGISTER_SELFTEST("equipment.haunted_bell_pulse", [](Context& ctx) -> ll::cor
     ctx.check(eq::ringBell(bell, 3, nullptr), "rings again after the recharge");
 });
 
-LV_REGISTER_SELFTEST("equipment.bell_redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.bell_redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4978), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     ctx.require(ctx.setBlock(base, "minecraft:stone"), "floor");
     auto bell = at(base, 0, 1, 0);
-    ctx.require(ctx.setBlock(bell, std::string(eq::kPeculiarBell), {{"levitate:facing", 2}, {"levitate:attachment", 0}}), "a bell");
+    ctx.require(ctx.setBlock(bell, std::string(eq::kPeculiarBell), {{"bearing:facing", 2}, {"bearing:attachment", 0}}), "a bell");
     co_await ctx.ticks(6);
     ctx.check(!eq::bellInfo(bell).ringing, "quiet without power");
     ctx.require(ctx.setBlock(at(base, 1, 1, 0), "minecraft:redstone_block"), "power");
@@ -169,7 +169,7 @@ LV_REGISTER_SELFTEST("equipment.bell_redstone", [](Context& ctx) -> ll::coro::Co
     ctx.check(eq::bellInfo(bell).direction == 2, "swinging along its facing");
 });
 
-LV_REGISTER_SELFTEST("equipment.held_haunted_bell", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.held_haunted_bell", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4981), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -181,7 +181,7 @@ LV_REGISTER_SELFTEST("equipment.held_haunted_bell", [](Context& ctx) -> ll::coro
     for (int i = 0; i < 400 && eq::soulPulseCount() > 0; ++i) co_await ctx.ticks(1);
     ctx.require(eq::soulPulseCount() == 0, "no other soul pulse running");
     (void)eq::takeSoulMarks();
-    ctx.give(sp, item(ctx, "levitate:haunted_bell"), sp.getSelectedItemSlot());
+    ctx.give(sp, item(ctx, "bearing:haunted_bell"), sp.getSelectedItemSlot());
     co_await ctx.ticks(6);
     ctx.check(eq::takeSoulMarks().empty(), "nothing during the 10-tick warmup");
     co_await ctx.ticks(20);
@@ -192,20 +192,20 @@ LV_REGISTER_SELFTEST("equipment.held_haunted_bell", [](Context& ctx) -> ll::coro
 
 // ---- cardboard armour and sword ---------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("equipment.cardboard_hiding", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.cardboard_hiding", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4984), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     strip(sp);
     adv::revoke(sp, "cardboard_armor");
-    sp.setArmor(ArmorSlot::Head, item(ctx, "levitate:cardboard_helmet"));
-    sp.setArmor(ArmorSlot::Torso, item(ctx, "levitate:cardboard_chestplate"));
-    sp.setArmor(ArmorSlot::Legs, item(ctx, "levitate:cardboard_leggings"));
+    sp.setArmor(ArmorSlot::Head, item(ctx, "bearing:cardboard_helmet"));
+    sp.setArmor(ArmorSlot::Torso, item(ctx, "bearing:cardboard_chestplate"));
+    sp.setArmor(ArmorSlot::Legs, item(ctx, "bearing:cardboard_leggings"));
     co_await ctx.ticks(2);
     sp.setSneaking(true);
     co_await ctx.ticks(2);
     ctx.check(!eq::hidingAsBox(sp) && !sp.isInvisible(), "three pieces are not enough");
-    sp.setArmor(ArmorSlot::Feet, item(ctx, "levitate:cardboard_boots"));
+    sp.setArmor(ArmorSlot::Feet, item(ctx, "bearing:cardboard_boots"));
     co_await ctx.ticks(2);
     ctx.check(eq::hidingAsBox(sp), "the full set while sneaking: a box");
     ctx.check(sp.isInvisible(), "the player is hidden (only the box is drawn)");
@@ -229,12 +229,12 @@ LV_REGISTER_SELFTEST("equipment.cardboard_hiding", [](Context& ctx) -> ll::coro:
     strip(sp);
 });
 
-LV_REGISTER_SELFTEST("equipment.cardboard_sword", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.cardboard_sword", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4987), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     sp.teleport(Vec3{base.x + .5f, float(base.y + 1), base.z + .5f}, DimensionType(0));
-    ctx.give(sp, item(ctx, "levitate:cardboard_sword"), sp.getSelectedItemSlot());
+    ctx.give(sp, item(ctx, "bearing:cardboard_sword"), sp.getSelectedItemSlot());
     co_await ctx.ticks(2);
     auto  level = ll::service::getLevel();
     auto* cow   = level->getSpawner().spawnMob(sp.getDimensionBlockSource(), ActorDefinitionIdentifier("minecraft:cow"), nullptr,
@@ -260,7 +260,7 @@ LV_REGISTER_SELFTEST("equipment.cardboard_sword", [](Context& ctx) -> ll::coro::
 // Client e2e helper: dresses the first real player in cardboard armour with a trimmed chestplate
 // (Bedrock's item data "Trim" {Material, Pattern}, as the smithing table writes it), to see whether
 // the attachable draws the trim.
-LV_REGISTER_SELFTEST("equipment.cardboard_trim_showcase", [](Context& ctx) {
+BR_REGISTER_SELFTEST("equipment.cardboard_trim_showcase", [](Context& ctx) {
     auto level = ll::service::getLevel();
     ctx.require(level != nullptr, "level");
     Player* viewer = nullptr;
@@ -272,17 +272,17 @@ LV_REGISTER_SELFTEST("equipment.cardboard_trim_showcase", [](Context& ctx) {
         ctx.info("no real player: nothing to show");
         return;
     }
-    auto chest = item(ctx, "levitate:cardboard_chestplate");
+    auto chest = item(ctx, "bearing:cardboard_chestplate");
     auto tag   = chest.mUserData ? chest.mUserData->clone() : std::make_unique<CompoundTag>();
     CompoundTag trim;
     trim.putString("Material", "diamond");
     trim.putString("Pattern", "sentry");
     tag->putCompound("Trim", std::move(trim));
     chest.setUserData(std::move(tag));
-    viewer->setArmor(ArmorSlot::Head, item(ctx, "levitate:cardboard_helmet"));
+    viewer->setArmor(ArmorSlot::Head, item(ctx, "bearing:cardboard_helmet"));
     viewer->setArmor(ArmorSlot::Torso, chest);
-    viewer->setArmor(ArmorSlot::Legs, item(ctx, "levitate:cardboard_leggings"));
-    viewer->setArmor(ArmorSlot::Feet, item(ctx, "levitate:cardboard_boots"));
+    viewer->setArmor(ArmorSlot::Legs, item(ctx, "bearing:cardboard_leggings"));
+    viewer->setArmor(ArmorSlot::Feet, item(ctx, "bearing:cardboard_boots"));
     viewer->sendInventory(false);
     ctx.info("trimmed cardboard chestplate on " + viewer->getRealName());
 });

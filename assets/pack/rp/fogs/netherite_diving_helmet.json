@@ -2,7 +2,7 @@
   "format_version": "1.16.100",
   "minecraft:fog_settings": {
     "description": {
-      "identifier": "levitate:netherite_diving_helmet"
+      "identifier": "bearing:netherite_diving_helmet"
     },
     "distance": {
       "water": {

@@ -19,7 +19,7 @@ class Player;
 class Actor;
 class Vec3;
 
-namespace lv::feature::materials {
+namespace br::feature::materials {
 
 // ---- block table (generated: MaterialsBlocks.inc) ----------------------------------------------
 
@@ -39,7 +39,7 @@ struct BlockInfo {
     Drop             drop;
 };
 
-/// Every block of the unit (Create's ids under levitate:).
+/// Every block of the unit (Create's ids under bearing:).
 [[nodiscard]] std::vector<BlockInfo> const& allBlocks();
 [[nodiscard]] BlockInfo const*              blockInfo(std::string_view id);
 /// The unit's block of `block`'s type (nullptr: not one of ours, or no world yet). Fast (type table).
@@ -133,4 +133,4 @@ int decorateChunk(BlockSource& region, int dim, int chunkX, int chunkZ);
 /// The loaded block of `id` (nullptr if the pack didn't load it).
 [[nodiscard]] Block const* defaultBlock(std::string const& id);
 
-} // namespace lv::feature::materials
+} // namespace br::feature::materials

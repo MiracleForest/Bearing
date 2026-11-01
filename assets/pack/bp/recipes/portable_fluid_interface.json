@@ -2,26 +2,26 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:portable_fluid_interface"
+      "identifier": "bearing:portable_fluid_interface"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:copper_casing"
+        "item": "bearing:copper_casing"
       },
       {
-        "item": "levitate:chute"
+        "item": "bearing:chute"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:copper_casing"
+        "item": "bearing:copper_casing"
       }
     ],
     "result": {
-      "item": "levitate:portable_fluid_interface"
+      "item": "bearing:portable_fluid_interface"
     }
   }
 }

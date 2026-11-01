@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:mechanical_crafter"
+      "identifier": "bearing:mechanical_crafter"
     },
     "tags": [
       "crafting_table"
@@ -14,10 +14,10 @@
     ],
     "key": {
       "B": {
-        "item": "levitate:electron_tube"
+        "item": "bearing:electron_tube"
       },
       "C": {
-        "item": "levitate:brass_casing"
+        "item": "bearing:brass_casing"
       },
       "R": {
         "item": "minecraft:crafting_table"
@@ -25,11 +25,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:brass_casing"
+        "item": "bearing:brass_casing"
       }
     ],
     "result": {
-      "item": "levitate:mechanical_crafter",
+      "item": "bearing:mechanical_crafter",
       "count": 3
     }
   }

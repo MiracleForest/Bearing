@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:whisk"
+      "identifier": "bearing:whisk"
     },
     "tags": [
       "crafting_table"
@@ -14,19 +14,19 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "S": {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:whisk",
+      "item": "bearing:whisk",
       "count": 1
     }
   }

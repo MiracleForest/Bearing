@@ -19,22 +19,22 @@ Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1 ~'
 $mark0 = Get-LogMark
 Start-Sleep -Milliseconds 500
 # large water wheel along x (seen face on), bubble columns on its north side
-Invoke-Chat '/setblock ~9 ~2 ~ levitate:large_water_wheel ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~9 ~2 ~ bearing:large_water_wheel ["bearing:axis"=0]'
 # (water walled in by glass over soul sand becomes a bubble column)
 Invoke-Chat '/fill ~8 ~1 ~-3 ~10 ~4 ~-2 glass'
 Invoke-Chat '/fill ~9 ~1 ~-2 ~9 ~3 ~-2 water'
 Invoke-Chat '/setblock ~9 ~0 ~-2 soul_sand'
 # water wheel facing west, a bubble column north of it
-Invoke-Chat '/setblock ~6 ~1 ~3 levitate:water_wheel ["levitate:facing"=4,"levitate:wood"=7]'
+Invoke-Chat '/setblock ~6 ~1 ~3 bearing:water_wheel ["bearing:facing"=4,"bearing:wood"=7]'
 Invoke-Chat '/fill ~5 ~1 ~1 ~7 ~2 ~2 glass'
 Invoke-Chat '/setblock ~6 ~1 ~2 water'
 Invoke-Chat '/setblock ~6 ~0 ~2 soul_sand'
 # creative motor facing west into a shaft
-Invoke-Chat '/setblock ~6 ~1 ~-3 levitate:creative_motor ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~5 ~1 ~-3 levitate:kinetics_test_shaft ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~-3 bearing:creative_motor ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~5 ~1 ~-3 bearing:kinetics_test_shaft ["bearing:axis"=0]'
 # a hand crank and a red valve handle on the ground
-Invoke-Chat '/setblock ~3 ~ ~ levitate:hand_crank ["levitate:facing"=1]'
-Invoke-Chat '/setblock ~3 ~ ~-2 levitate:red_valve_handle ["levitate:facing"=1]'
+Invoke-Chat '/setblock ~3 ~ ~ bearing:hand_crank ["bearing:facing"=1]'
+Invoke-Chat '/setblock ~3 ~ ~-2 bearing:red_valve_handle ["bearing:facing"=1]'
 Start-Sleep -Seconds 3
 if (-not $vanilla) {
     Wait-LogLine 'kinetics client: drawing \d+ rotating parts' 30 | Out-Null

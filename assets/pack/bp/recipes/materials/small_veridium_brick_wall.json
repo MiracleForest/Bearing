@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:small_veridium_brick_wall"
+      "identifier": "bearing:small_veridium_brick_wall"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:small_veridium_bricks"
+        "item": "bearing:small_veridium_bricks"
       }
     },
     "unlock": [
       {
-        "item": "levitate:small_veridium_bricks"
+        "item": "bearing:small_veridium_bricks"
       }
     ],
     "result": {
-      "item": "levitate:small_veridium_brick_wall",
+      "item": "bearing:small_veridium_brick_wall",
       "count": 6
     }
   }

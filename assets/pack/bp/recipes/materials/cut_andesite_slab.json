@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_andesite_slab"
+      "identifier": "bearing:cut_andesite_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_andesite"
+        "item": "bearing:cut_andesite"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_andesite"
+        "item": "bearing:cut_andesite"
       }
     ],
     "result": {
-      "item": "levitate:cut_andesite_slab",
+      "item": "bearing:cut_andesite_slab",
       "count": 6
     }
   }

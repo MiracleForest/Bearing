@@ -4,7 +4,7 @@
 #include <cstring>
 #include <sstream>
 
-namespace lv::core::schematics::nbt {
+namespace br::core::schematics::nbt {
 
 // ---- Compound -----------------------------------------------------------------------------------
 
@@ -458,4 +458,4 @@ std::string toString(Tag const& tag) {
     return os.str();
 }
 
-} // namespace lv::core::schematics::nbt
+} // namespace br::core::schematics::nbt

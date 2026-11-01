@@ -46,13 +46,13 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace items  = common::items;
 namespace fluids = common::fluids;
 namespace cr     = common::recipes;
 namespace bd     = common::blockdata;
-namespace k      = lv::kinetics;
+namespace k      = br::kinetics;
 namespace sa     = assembly::sequenced;
 
 // ---- recipes ---------------------------------------------------------------------------------------------
@@ -271,7 +271,7 @@ BasinRecipe const* brewingRecipe(std::string const& fluid, ItemStack const& reag
     auto to = brewedFluid(fluid, reagent);
     if (to.empty()) return nullptr;
     auto  reagentId = items::idOf(reagent);
-    auto  id        = "levitate:potion_mixing/" + fluid + "/" + reagentId;
+    auto  id        = "bearing:potion_mixing/" + fluid + "/" + reagentId;
     auto& br        = brewing();
     if (auto it = br.basin.find(id); it != br.basin.end()) return &it->second;
     core::common::ProcessingRecipe p;
@@ -317,8 +317,8 @@ BasinRecipe const* byId(bool press, std::string const& id) {
         if (r.id == id) return &r;
     if (!press) {
         if (auto it = brewing().basin.find(id); it != brewing().basin.end()) return &it->second;
-        // a brewing recipe saved by a mixer before a reload: "levitate:potion_mixing/<fluid>/<reagent>"
-        constexpr std::string_view kPrefix = "levitate:potion_mixing/";
+        // a brewing recipe saved by a mixer before a reload: "bearing:potion_mixing/<fluid>/<reagent>"
+        constexpr std::string_view kPrefix = "bearing:potion_mixing/";
         if (id.starts_with(kPrefix)) {
             auto rest  = id.substr(kPrefix.size());
             auto slash = rest.rfind('/');
@@ -417,8 +417,8 @@ ItemStack remainderOf(ItemStack const& ingredient) {
         {"minecraft:water_bucket",       "minecraft:bucket"      },
         {"minecraft:lava_bucket",        "minecraft:bucket"      },
         {"minecraft:powder_snow_bucket", "minecraft:bucket"      },
-        {"levitate:honey_bucket",        "minecraft:bucket"      },
-        {"levitate:chocolate_bucket",    "minecraft:bucket"      },
+        {"bearing:honey_bucket",        "minecraft:bucket"      },
+        {"bearing:chocolate_bucket",    "minecraft:bucket"      },
         {"minecraft:honey_bottle",       "minecraft:glass_bottle"},
         {"minecraft:dragon_breath",      "minecraft:glass_bottle"},
     };
@@ -530,7 +530,7 @@ void applyBasinRecipe(BlockSource& region, GlobalPos const& pos, OperatorState& 
 
 // ---- press ----
 
-bool beltLike(std::string const& id) { return id == "levitate:depot" || id == "levitate:belt"; }
+bool beltLike(std::string const& id) { return id == "bearing:depot" || id == "bearing:belt"; }
 
 std::vector<ItemActor*> itemsIn(BlockSource& region, AABB const& box) {
     std::vector<ItemActor*> out;
@@ -751,7 +751,7 @@ void tickPress(BlockSource& region, GlobalPos const& pos, OperatorState& s) {
         if (mode == cb::PressMode::Basin) applyBasinRecipe(region, pos, s, true);
         if (mode == cb::PressMode::Belt) applyOnBelt(pos);
         auto below2 = offsetOf(bp, kDown, 2);
-        if (beltLike(idAt(region, below2)) && idAt(region, below2) == "levitate:belt") {
+        if (beltLike(idAt(region, below2)) && idAt(region, below2) == "bearing:belt") {
             playSound(pos.dim, bp, "dig.cloth", .5f, 1.f);
             playSound(pos.dim, bp, "random.break", .25f, 1.f);
         } else {
@@ -848,4 +848,4 @@ Json renderJson(GlobalPos const& pos, OperatorState const& s, bool press) {
 
 } // namespace operators
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin

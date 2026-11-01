@@ -13,22 +13,22 @@
 #include "feature/trains/Trains.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 std::optional<bool> stationFlagRaised(GlobalPos const& pos); // Stations.cpp
-} // namespace lv::feature::trains
+} // namespace br::feature::trains
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace tn  = lv::feature::trains;
-namespace tr  = lv::feature::tracks;
-namespace net = lv::feature::net;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace tn  = br::feature::trains;
+namespace tr  = br::feature::tracks;
+namespace net = br::feature::net;
 
 GlobalPos at(GlobalPos b, int dx, int dy = 0, int dz = 0) { return {b.dim, b.x + dx, b.y + dy, b.z + dz}; }
 
 /// The last "trains.flags" entry of `pos` the test companion got (-1: none).
-int lastFlag(std::vector<lv::core::common::Envelope> const& msgs, GlobalPos const& pos) {
+int lastFlag(std::vector<br::core::common::Envelope> const& msgs, GlobalPos const& pos) {
     int out = -1;
     for (auto const& m : msgs) {
         if (m.channel != "trains.flags") continue;
@@ -40,11 +40,11 @@ int lastFlag(std::vector<lv::core::common::Envelope> const& msgs, GlobalPos cons
 
 } // namespace
 
-LV_REGISTER_SELFTEST("trains.station_flag", [](Context& ctx) -> ll::coro::CoroTask<> {
-    auto base = ctx.testPos(3895, ::lv::feature::contraption::kU38Dz);
+BR_REGISTER_SELFTEST("trains.station_flag", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto base = ctx.testPos(3895, ::br::feature::contraption::kU38Dz);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     ctx.require(co_await ctx.ensureLoaded(at(base, 9)), "test area loaded");
-    int s = int(lv::core::tracks::Shape::XO);
+    int s = int(br::core::tracks::Shape::XO);
     std::vector<std::pair<std::string, int>> xo{
         {std::string(tr::kShapeState), s % 16},
         {std::string(tr::kShapeHiState), s / 16},

@@ -14,14 +14,14 @@ Start-Sleep -Milliseconds 500
 
 # a row of blocks: funnels on a chest (wall: extracting, floor: inserting), tunnels, chutes, smart chute, crate
 Invoke-Chat '/setblock ~4 ~ ~-3 chest'
-Invoke-Chat '/setblock ~3 ~ ~-3 levitate:andesite_funnel ["levitate:facing"=4,"levitate:extracting"=1]'
-Invoke-Chat '/setblock ~4 ~1 ~-3 levitate:brass_funnel ["levitate:facing"=1]'
-Invoke-Chat '/setblock ~4 ~ ~-1 levitate:andesite_tunnel'
-Invoke-Chat '/setblock ~4 ~ ~0 levitate:brass_tunnel ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~4 ~ ~1 levitate:smart_chute ["levitate:powered"=0]'
-Invoke-Chat '/setblock ~4 ~ ~3 levitate:creative_crate'
+Invoke-Chat '/setblock ~3 ~ ~-3 bearing:andesite_funnel ["bearing:facing"=4,"bearing:extracting"=1]'
+Invoke-Chat '/setblock ~4 ~1 ~-3 bearing:brass_funnel ["bearing:facing"=1]'
+Invoke-Chat '/setblock ~4 ~ ~-1 bearing:andesite_tunnel'
+Invoke-Chat '/setblock ~4 ~ ~0 bearing:brass_tunnel ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~4 ~ ~1 bearing:smart_chute ["bearing:powered"=0]'
+Invoke-Chat '/setblock ~4 ~ ~3 bearing:creative_crate'
 # a 2x2x3 vault behind them
-Invoke-Chat '/fill ~7 ~ ~-1 ~8 ~1 ~1 levitate:item_vault ["levitate:axis"=2]'
+Invoke-Chat '/fill ~7 ~ ~-1 ~8 ~1 ~1 bearing:item_vault ["bearing:axis"=2]'
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'blocks' | Out-Null
 if ($script:Mode -ne 'remote-vanilla') { Wait-LogLine 'funnels client: drawing \d+ funnels' 30 | Out-Null }
@@ -30,8 +30,8 @@ Save-Screenshot 'vault' | Out-Null
 
 # a chute column: a chest on top, two chutes, a chest below; fill the top chest
 Invoke-Chat '/setblock ~5 ~ ~2 chest'
-Invoke-Chat '/setblock ~5 ~1 ~2 levitate:chute'
-Invoke-Chat '/setblock ~5 ~2 ~2 levitate:chute ["levitate:shape"=1]'
+Invoke-Chat '/setblock ~5 ~1 ~2 bearing:chute'
+Invoke-Chat '/setblock ~5 ~2 ~2 bearing:chute ["bearing:shape"=1]'
 Invoke-Chat '/setblock ~5 ~3 ~2 chest'
 Start-Sleep -Milliseconds 800
 Invoke-Chat '/replaceitem block ~5 ~3 ~2 slot.container 0 cobblestone 64'

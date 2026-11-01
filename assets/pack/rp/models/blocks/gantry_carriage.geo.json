@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.gantry_carriage",
+        "identifier": "geometry.bearing.gantry_carriage",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 3,

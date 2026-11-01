@@ -36,7 +36,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
@@ -45,8 +45,8 @@ namespace ia = common::interactions;
 namespace vb = common::valuebox;
 
 /// Wave-1 storage of the ranges (one array for the world), migrated into BlockData on load.
-constexpr char kDbChassis[]  = "lv:contraption:chassis";
-constexpr char kDbStickers[] = "lv:contraption:stickers";
+constexpr char kDbChassis[]  = "br:contraption:chassis";
+constexpr char kDbStickers[] = "br:contraption:stickers";
 /// Wave-1 data carrier of the ranges: contraptions saved with it still restore it.
 constexpr char kRangeCarrier[] = "contraption:chassis_range";
 /// BlockData key of a chassis (`{"range": n}`).
@@ -102,19 +102,19 @@ bool setStates(BlockSource& region, cc::Pos const& p, cc::States const& states) 
 char const* glueableState(cc::ChassisKind kind, cc::Axis axis, cc::Dir face) {
     if (kind == cc::ChassisKind::Radial) {
         if (cc::axisOf(face) == axis) return nullptr;
-        static constexpr char const* keys[4]{"levitate:sticky_north", "levitate:sticky_south", "levitate:sticky_east", "levitate:sticky_west"};
+        static constexpr char const* keys[4]{"bearing:sticky_north", "bearing:sticky_south", "bearing:sticky_east", "bearing:sticky_west"};
         auto sides = cc::radialSides(axis);
         for (int i = 0; i < 4; ++i)
             if (sides[i] == face) return keys[i];
         return nullptr;
     }
     if (cc::axisOf(face) != axis) return nullptr;
-    return cc::positive(face) ? "levitate:sticky_top" : "levitate:sticky_bottom";
+    return cc::positive(face) ? "bearing:sticky_top" : "bearing:sticky_bottom";
 }
 
 cc::Axis chassisAxisAt(BlockSource& region, cc::Pos const& p) {
     auto states = detail::statesOf(region.getBlock(detail::toBlockPos(p)));
-    auto it     = states.find("levitate:axis");
+    auto it     = states.find("bearing:axis");
     auto v      = it == states.end() ? nullptr : std::get_if<std::int64_t>(&it->second);
     return static_cast<cc::Axis>(std::clamp<std::int64_t>(v ? *v : 1, 0, 2));
 }
@@ -209,7 +209,7 @@ bool chassisUse(Player& player, int dim, cc::Pos const& pos, cc::Dir face, std::
     if (kind == cc::ChassisKind::None) return false;
     auto const& block  = region->getBlock(toBlockPos(pos));
     auto        states = statesOf(block);
-    auto        axis   = static_cast<cc::Axis>(std::clamp<std::int64_t>(std::get<std::int64_t>(states["levitate:axis"]), 0, 2));
+    auto        axis   = static_cast<cc::Axis>(std::clamp<std::int64_t>(std::get<std::int64_t>(states["bearing:axis"]), 0, 2));
     bool        isSlime = heldId == "minecraft:slime_ball" || heldId == kSuperGlue;
     auto const* side    = glueableState(kind, axis, face);
     if (!side) return false;
@@ -221,7 +221,7 @@ bool chassisUse(Player& player, int dim, cc::Pos const& pos, cc::Dir face, std::
         auto const& other  = region->getBlock(toBlockPos(n));
         if (other.getTypeName() != id) return true;
         auto        ostates = statesOf(other);
-        auto        it      = ostates.find("levitate:axis");
+        auto        it      = ostates.find("bearing:axis");
         auto const* oaxis   = it == ostates.end() ? nullptr : std::get_if<std::int64_t>(&it->second);
         return !oaxis || static_cast<cc::Axis>(std::clamp<std::int64_t>(*oaxis, 0, 2)) != axis;
     };
@@ -252,7 +252,7 @@ void orientPlaced(BlockSource& region, cc::Pos const& pos, cc::Dir clickedFace, 
     auto id = blockIdAt(region, pos);
     if (chassisKind(id) != cc::ChassisKind::None) {
         // Create: the chassis axis follows the clicked face (pillar placement)
-        cc::States s{{"levitate:axis", std::int64_t(cc::axisOf(clickedFace))}};
+        cc::States s{{"bearing:axis", std::int64_t(cc::axisOf(clickedFace))}};
         setStates(region, pos, s);
         return;
     }
@@ -261,8 +261,8 @@ void orientPlaced(BlockSource& region, cc::Pos const& pos, cc::Dir clickedFace, 
         cc::Dir facing = player.isSneaking() ? look : cc::opposite(look);
         int     dim    = static_cast<int>(region.getDimensionId());
         cc::States s{
-            {"levitate:facing",   std::int64_t(facing)                   },
-            {"levitate:extended", std::int64_t(powered(region, pos) ? 1 : 0)}
+            {"bearing:facing",   std::int64_t(facing)                   },
+            {"bearing:extended", std::int64_t(powered(region, pos) ? 1 : 0)}
         };
         setStates(region, pos, s);
         trackSticker(dim, pos);
@@ -284,10 +284,10 @@ void updateSticker(BlockSource& region, int dim, cc::Pos const& pos) {
         return;
     }
     auto states   = statesOf(region.getBlock(toBlockPos(pos)));
-    bool extended = std::get<std::int64_t>(states["levitate:extended"]) != 0;
+    bool extended = std::get<std::int64_t>(states["bearing:extended"]) != 0;
     bool power    = powered(region, pos);
     if (extended == power) return;
-    states["levitate:extended"] = std::int64_t{power ? 1 : 0};
+    states["bearing:extended"] = std::int64_t{power ? 1 : 0};
     setStates(region, pos, states);
     playSound(dim, cc::Vec3d::center(pos), power ? "tile.piston.out" : "tile.piston.in", 0.35f, power ? 0.75f : 0.6f);
     log().info("sticker at {} {} {} {}", pos.x, pos.y, pos.z, power ? "extended" : "retracted");
@@ -476,6 +476,6 @@ private:
     std::uint64_t                                   mTicks = 0;
 };
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption
 
-LV_REGISTER_MODULE(lv::feature::contraption::SupportModule);
+BR_REGISTER_MODULE(br::feature::contraption::SupportModule);

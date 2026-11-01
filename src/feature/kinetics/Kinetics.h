@@ -5,10 +5,10 @@
 // Registering a block (in a .cpp file, at static init or in the unit's `install()`):
 //
 //     #include "feature/kinetics/Kinetics.h"
-//     namespace k = lv::kinetics;
-//     LV_REGISTER_KINETIC_BLOCK("levitate:shaft", k::specs::shaft());
-//     LV_REGISTER_KINETIC_BLOCK("levitate:creative_motor", [] {
-//         auto s = k::specs::generatorShaft(16384, "levitate:axis");
+//     namespace k = br::kinetics;
+//     BR_REGISTER_KINETIC_BLOCK("bearing:shaft", k::specs::shaft());
+//     BR_REGISTER_KINETIC_BLOCK("bearing:creative_motor", [] {
+//         auto s = k::specs::generatorShaft(16384, "bearing:axis");
 //         return s;
 //     }());
 //
@@ -34,7 +34,7 @@
 #include "core/kinetics/Spec.h"
 #include "mod/Registry.h"
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 using core::GlobalPos;
 using core::kinetics::Axis;
@@ -53,7 +53,7 @@ using core::kinetics::StressLevel;
 namespace specs = core::kinetics::specs;
 
 // ---- registry --------------------------------------------------------------------------------------------
-/// Declares `id` ("levitate:<path>") a kinetic block. Later registrations replace earlier ones.
+/// Declares `id` ("bearing:<path>") a kinetic block. Later registrations replace earlier ones.
 void registerBlock(std::string id, KineticSpec spec);
 /// The spec of `id`, nullptr if it is not a kinetic block. Pointers stay valid for the process.
 [[nodiscard]] KineticSpec const* specOf(std::string_view id);
@@ -148,13 +148,13 @@ struct BlockRegistrar {
 };
 } // namespace detail
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics
 
-namespace lv {
-/// Short alias used by the other units: `lv::kinetics::registerBlock(...)`.
+namespace br {
+/// Short alias used by the other units: `br::kinetics::registerBlock(...)`.
 namespace kinetics = feature::kinetics;
-} // namespace lv
+} // namespace br
 
-/// Registers a kinetic block at static init: `LV_REGISTER_KINETIC_BLOCK("levitate:shaft", spec);`
-#define LV_REGISTER_KINETIC_BLOCK(id, ...)                                                                            \
-    static ::lv::feature::kinetics::detail::BlockRegistrar LV_UNIQUE(lv_kinetic_block_)(id, __VA_ARGS__)
+/// Registers a kinetic block at static init: `BR_REGISTER_KINETIC_BLOCK("bearing:shaft", spec);`
+#define BR_REGISTER_KINETIC_BLOCK(id, ...)                                                                            \
+    static ::br::feature::kinetics::detail::BlockRegistrar BR_UNIQUE(br_kinetic_block_)(id, __VA_ARGS__)

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:experience_block"
+      "identifier": "bearing:experience_block"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:experience_nugget"
+        "item": "bearing:experience_nugget"
       }
     },
     "unlock": [
       {
-        "item": "levitate:experience_nugget"
+        "item": "bearing:experience_nugget"
       }
     ],
     "result": {
-      "item": "levitate:experience_block",
+      "item": "bearing:experience_block",
       "count": 1
     }
   }

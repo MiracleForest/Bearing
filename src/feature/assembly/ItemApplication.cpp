@@ -17,7 +17,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::assembly::application {
+namespace br::feature::assembly::application {
 
 namespace items   = common::items;
 namespace recipes = common::recipes;
@@ -57,4 +57,4 @@ bool tryApply(Player& player, BlockSource& region, BlockPos const& pos, ItemStac
     return false;
 }
 
-} // namespace lv::feature::assembly::application
+} // namespace br::feature::assembly::application

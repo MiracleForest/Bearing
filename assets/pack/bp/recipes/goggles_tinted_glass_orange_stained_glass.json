@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:goggles_tinted_glass_orange_stained_glass"
+      "identifier": "bearing:goggles_tinted_glass_orange_stained_glass"
     },
     "tags": [
       "crafting_table"
@@ -19,7 +19,7 @@
         "item": "minecraft:tinted_glass"
       },
       "P": {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       },
       "R": {
         "item": "minecraft:orange_stained_glass"
@@ -27,11 +27,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       }
     ],
     "result": {
-      "item": "levitate:goggles"
+      "item": "bearing:goggles"
     }
   }
 }

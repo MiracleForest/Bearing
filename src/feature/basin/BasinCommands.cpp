@@ -1,4 +1,4 @@
-// `/create basin demo` (Levitate debug, op only): builds a working mixer, press and burner set in
+// `/create basin demo` (Bearing debug, op only): builds a working mixer, press and burner set in
 // front of the player, driven by the kinetic test source, for screenshots and e2e runs.
 
 #include "ll/api/command/CommandHandle.h"
@@ -18,12 +18,12 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace {
 
-constexpr char const* kSource = "levitate:kinetics_test_source";
-constexpr char const* kCog    = "levitate:kinetics_test_cog";
+constexpr char const* kSource = "bearing:kinetics_test_source";
+constexpr char const* kCog    = "bearing:kinetics_test_cog";
 
 bool put(BlockSource& region, BlockPos const& p, char const* id, std::vector<std::pair<std::string_view, int>> states = {}) {
     auto const* b = game::blockWith(id, states);
@@ -50,8 +50,8 @@ void buildDemo(Player& player, CommandOutput& output) {
     put(region, at(-3, 1), kBasin);
     put(region, at(-3, 2), "minecraft:air");
     put(region, at(-3, 3), kMixer);
-    put(region, at(-4, 2), kSource, {{"levitate:axis", 1}});
-    put(region, at(-4, 3), kCog, {{"levitate:axis", 1}});
+    put(region, at(-4, 2), kSource, {{"bearing:axis", 1}});
+    put(region, at(-4, 3), kCog, {{"bearing:axis", 1}});
     kinetics::setGeneratedSpeed(game::globalPos(dim, at(-4, 2)), 64);
     auto mixBasin = game::globalPos(dim, at(-3, 1));
     if (auto* b = basinops::get(region, mixBasin)) {
@@ -66,7 +66,7 @@ void buildDemo(Player& player, CommandOutput& output) {
     put(region, at(1, 0), kBasin);
     put(region, at(1, 1), "minecraft:air");
     put(region, at(1, 2), kPress, {{kAxisState, axis}});
-    put(region, at(2, 2), kSource, {{"levitate:axis", axis}});
+    put(region, at(2, 2), kSource, {{"bearing:axis", axis}});
     kinetics::setGeneratedSpeed(game::globalPos(dim, at(2, 2)), 128);
     auto pressBasin = game::globalPos(dim, at(1, 0));
     if (auto* b = basinops::get(region, pressBasin)) {
@@ -85,18 +85,18 @@ void buildDemo(Player& player, CommandOutput& output) {
     put(region, at(6, 0), kLitBurner, {{kFlameState, 1}});
     put(region, at(7, 0), kEmptyBurner);
     log().info("basin demo built at {} {} {} by {}", base.x, base.y, base.z, player.getRealName());
-    output.success(tr("lv.basin.demo", "Basin demo built at {} {} {}", base.x, base.y, base.z));
+    output.success(tr("br.basin.demo", "Basin demo built at {} {} {}", base.x, base.y, base.z));
 }
 
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload().text("basin").text("demo").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!commands::isAdmin(origin)) return output.error(tr("lv.basin.need_op", "You need operator permission."));
+        if (!commands::isAdmin(origin)) return output.error(tr("br.basin.need_op", "You need operator permission."));
         auto* player = commands::playerOf(origin);
-        if (!player) return output.error(tr("lv.basin.need_player", "Run this as a player."));
+        if (!player) return output.error(tr("br.basin.need_player", "Run this as a player."));
         buildDemo(*player, output);
     });
 });
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin

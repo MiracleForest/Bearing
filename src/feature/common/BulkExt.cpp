@@ -2,7 +2,7 @@
 
 #include "mc/world/item/ItemStack.h"
 
-namespace lv::feature::common::airflow {
+namespace br::feature::common::airflow {
 
 namespace {
 Provider& provider() {
@@ -31,4 +31,4 @@ std::optional<std::vector<ItemStack>> process(ItemStack const& stack, std::strin
 
 int processingTime(int count) { return provider().processingTime ? provider().processingTime(count) : 0; }
 
-} // namespace lv::feature::common::airflow
+} // namespace br::feature::common::airflow

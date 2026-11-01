@@ -8,8 +8,8 @@
 
 #include "core/kinetics/Solver.h"
 
-using namespace lv::core::kinetics;
-using lv::core::GlobalPos;
+using namespace br::core::kinetics;
+using br::core::GlobalPos;
 
 namespace {
 
@@ -18,7 +18,7 @@ GlobalPos P(int x, int y, int z) { return GlobalPos{0, x, y, z}; }
 BlockState S(std::string id, int axis = 1) {
     BlockState s;
     s.id = std::move(id);
-    s.set("levitate:axis", axis);
+    s.set("bearing:axis", axis);
     return s;
 }
 
@@ -45,23 +45,23 @@ protected:
 
         // gearbox: shafts on the four faces not on its axis
         KineticSpec gearbox;
-        gearbox.states          = {"levitate:axis"};
-        gearbox.rotationAxis    = specs::axisFromState("levitate:axis");
-        gearbox.hasShaftTowards = [](BlockState const& s, Face f) { return static_cast<int>(axisOf(f)) != s.get("levitate:axis"); };
+        gearbox.states          = {"bearing:axis"};
+        gearbox.rotationAxis    = specs::axisFromState("bearing:axis");
+        gearbox.hasShaftTowards = [](BlockState const& s, Face f) { return static_cast<int>(axisOf(f)) != s.get("bearing:axis"); };
         gearbox.axisModifier    = specs::gearboxModifier;
         specs["gearbox"]        = gearbox;
 
         auto gearshift         = specs::shaft();
-        gearshift.states       = {"levitate:axis", "levitate:powered"};
+        gearshift.states       = {"bearing:axis", "bearing:powered"};
         gearshift.axisModifier = [](NodeView const& v, Face f) {
-            return specs::splitShaftModifier(v, f, v.state->get("levitate:powered") != 0, true);
+            return specs::splitShaftModifier(v, f, v.state->get("bearing:powered") != 0, true);
         };
         specs["gearshift"] = gearshift;
 
         auto clutch         = specs::shaft();
-        clutch.states       = {"levitate:axis", "levitate:powered"};
+        clutch.states       = {"bearing:axis", "bearing:powered"};
         clutch.axisModifier = [](NodeView const& v, Face f) {
-            return specs::splitShaftModifier(v, f, v.state->get("levitate:powered") != 0, false);
+            return specs::splitShaftModifier(v, f, v.state->get("bearing:powered") != 0, false);
         };
         specs["clutch"] = clutch;
 
@@ -381,7 +381,7 @@ TEST_F(World, PoweredGearshiftReversesTheFarSide) {
     place(P(2, 0, 0), "shaft", X);
     EXPECT_EQ(speed(P(2, 0, 0)), 16);
     auto powered = S("gearshift", X);
-    powered.set("levitate:powered", 1);
+    powered.set("bearing:powered", 1);
     solver.update(P(1, 0, 0), powered);
     EXPECT_EQ(speed(P(1, 0, 0)), 16);
     EXPECT_EQ(speed(P(2, 0, 0)), -16);
@@ -395,7 +395,7 @@ TEST_F(World, PoweredClutchDisconnectsTheFarSide) {
     place(P(2, 0, 0), "shaft", X);
     EXPECT_EQ(speed(P(2, 0, 0)), 16);
     auto powered = S("clutch", X);
-    powered.set("levitate:powered", 1);
+    powered.set("bearing:powered", 1);
     solver.update(P(1, 0, 0), powered);
     EXPECT_EQ(speed(P(1, 0, 0)), 16);
     EXPECT_EQ(speed(P(2, 0, 0)), 0);
@@ -574,7 +574,7 @@ TEST_F(World, RandomEditsKeepTheNetworkConsistent) {
         if (o < 6) {
             auto k = kinds[kind(rng)];
             auto s = S(k, axis(rng));
-            if (k == "gearshift") s.set("levitate:powered", axis(rng) == 0);
+            if (k == "gearshift") s.set("bearing:powered", axis(rng) == 0);
             solver.add(p, s);
             if (k == "motor") solver.setGeneratedSpeed(p, static_cast<float>(rpm(rng)));
         } else if (o < 8) {
@@ -639,5 +639,5 @@ TEST(Kinetics, DefaultRotorParts) {
     EXPECT_EQ(parts[0].bone, "rotor");
     EXPECT_EQ(parts[0].axis, Axis::Z);
     EXPECT_TRUE(parts[0].largeCog);
-    EXPECT_EQ(defaultStressKey("levitate:mechanical_press"), "mechanical_press");
+    EXPECT_EQ(defaultStressKey("bearing:mechanical_press"), "mechanical_press");
 }

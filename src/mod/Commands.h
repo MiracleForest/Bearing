@@ -10,12 +10,12 @@ class CommandHandle;
 class CommandOrigin;
 class Player;
 
-namespace lv::commands {
+namespace br::commands {
 
 /// Adds overloads to the `/create` command. The function runs every time the command is
 /// (re)registered (BDS start, every client local world):
 ///
-///     LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+///     BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
 ///         cmd.overload().text("count").execute([](CommandOrigin const& o, CommandOutput& out) { ... });
 ///     });
 using SubcommandFn       = std::function<void(ll::command::CommandHandle&)>;
@@ -32,7 +32,7 @@ struct SubcommandRegistrar {
 };
 } // namespace detail
 
-} // namespace lv::commands
+} // namespace br::commands
 
-#define LV_REGISTER_SUBCOMMAND(...)                                                                                   \
-    static ::lv::commands::detail::SubcommandRegistrar LV_UNIQUE(lv_subcommand_)(__VA_ARGS__)
+#define BR_REGISTER_SUBCOMMAND(...)                                                                                   \
+    static ::br::commands::detail::SubcommandRegistrar BR_UNIQUE(br_subcommand_)(__VA_ARGS__)

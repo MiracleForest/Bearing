@@ -4,14 +4,14 @@
 // client mod (channel "kinetics.sync" of the companion protocol). Other client units read them
 // here instead of listening to the channel themselves (a channel has one client handler).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <functional>
 #include <optional>
 
 #include "core/kinetics/SyncCodec.h"
 
-namespace lv::client::kinetics {
+namespace br::client::kinetics {
 
 struct SyncedSpeed {
     float speed      = 0; ///< effective speed (RPM, signed)
@@ -26,6 +26,6 @@ struct SyncedSpeed {
 using SyncListener = std::function<void(core::kinetics::sync::Batch const&)>;
 void onSync(SyncListener fn);
 
-} // namespace lv::client::kinetics
+} // namespace br::client::kinetics
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

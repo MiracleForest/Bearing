@@ -35,31 +35,31 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace tn = lv::feature::trains;
-namespace tr = lv::feature::tracks;
-namespace cn = lv::feature::contraption;
-namespace ct = lv::core::trains;
-namespace sg = lv::feature::tracks::signals;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace tn = br::feature::trains;
+namespace tr = br::feature::tracks;
+namespace cn = br::feature::contraption;
+namespace ct = br::core::trains;
+namespace sg = br::feature::tracks::signals;
 
 GlobalPos at(GlobalPos b, int dx, int dy = 0, int dz = 0) { return {b.dim, b.x + dx, b.y + dy, b.z + dz}; }
 
 std::vector<std::pair<std::string, int>> xo() {
-    int s = int(lv::core::tracks::Shape::XO);
+    int s = int(br::core::tracks::Shape::XO);
     return {{std::string(tr::kShapeState), s % 16}, {std::string(tr::kShapeHiState), s / 16}, {std::string(tr::kTurnState), 0}};
 }
 
 /// Clears blocks (and carriages / stations) in a box without drops.
 void clearBox(GlobalPos a, GlobalPos b) {
     auto* region = tn::regionOf(a.dim);
-    auto const* air = lv::game::blockWith("minecraft:air");
+    auto const* air = br::game::blockWith("minecraft:air");
     if (!region || !air) return;
     for (int x = std::min(a.x, b.x); x <= std::max(a.x, b.x); ++x)
         for (int y = std::min(a.y, b.y); y <= std::max(a.y, b.y); ++y)
             for (int z = std::min(a.z, b.z); z <= std::max(a.z, b.z); ++z) {
                 BlockPos bp{x, y, z};
-                if (!region->getBlock(bp).isAir()) lv::game::setBlock(*region, bp, *air);
+                if (!region->getBlock(bp).isAir()) br::game::setBlock(*region, bp, *air);
             }
 }
 
@@ -124,10 +124,10 @@ std::optional<std::uint64_t> assembleTrain(Context& ctx, Line const& l, bool dou
     auto msg    = tn::useCasingOnTrack(nullptr, track0, true);
     ctx.check(msg.starts_with("+"), "train casing creates a bogey (" + msg + ")");
     auto bogey = at(track0, 0, 1);
-    // controls: forward ones face the assembly direction (west, levitate:facing 4)
-    ctx.setBlock(at(bogey, 0, 1), std::string(tn::kControls), {{"levitate:facing", 4}});
+    // controls: forward ones face the assembly direction (west, bearing:facing 4)
+    ctx.setBlock(at(bogey, 0, 1), std::string(tn::kControls), {{"bearing:facing", 4}});
     if (doubleEnded) {
-        ctx.setBlock(at(bogey, 0, 2), std::string(tn::kControls), {{"levitate:facing", 5}});
+        ctx.setBlock(at(bogey, 0, 2), std::string(tn::kControls), {{"bearing:facing", 5}});
         cn::addGlue(l.base.dim, {{bogey.x, bogey.y, bogey.z}, {bogey.x, bogey.y + 2, bogey.z}});
     }
     auto id = tn::assemble(*s, nullptr);
@@ -144,7 +144,7 @@ bool displaysFollow(cn::Contraption const& con) {
         uid.rawID = b.display;
         auto* a   = level->fetchEntity(uid, false);
         if (!a) return false;
-        auto   w = con.toWorld(lv::core::contraption::Vec3d::center(b.local));
+        auto   w = con.toWorld(br::core::contraption::Vec3d::center(b.local));
         auto   f = a->getPosition();
         double d = std::abs(f.x - w.x) + std::abs(f.z - w.z);
         if (d > 1.0) return false;
@@ -166,9 +166,9 @@ ct::Schedule twoStops(std::string const& suffix, int waitTicks) {
 
 // U38 (R146 / R106 / R5): relocating a train with the wrench puts it on another stretch of track;
 // the station it stands at gives its doors' control; removing it places nothing
-LV_REGISTER_SELFTEST("trains.relocate", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.relocate", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
-    ctx.require(co_await buildLine(ctx, l, 3830, " relocate", ::lv::feature::contraption::kU38Dz), "line and stations built");
+    ctx.require(co_await buildLine(ctx, l, 3830, " relocate", ::br::feature::contraption::kU38Dz), "line and stations built");
     auto id = assembleTrain(ctx, l, false);
     ctx.require(id.has_value(), "train assembled");
     co_await ctx.ticks(5);
@@ -181,7 +181,7 @@ LV_REGISTER_SELFTEST("trains.relocate", [](Context& ctx) -> ll::coro::CoroTask<>
     }
     auto before = cn::find(cid)->transform().toWorld({0.5, 0.5, 0.5});
     // Create's TrainRelocator: 12 blocks further along the line, facing the same way
-    lv::core::trains::Vec3d point{l.base.x + 42.5, double(l.base.y), l.base.z + 0.5};
+    br::core::trains::Vec3d point{l.base.x + 42.5, double(l.base.y), l.base.z + 0.5};
     auto body = tn::bodyAt(*t, point, {1, 0, 0}, 1.0);
     ctx.require(body.has_value(), "the train fits there");
     tn::relocate(*t, std::move(*body));
@@ -192,7 +192,7 @@ LV_REGISTER_SELFTEST("trains.relocate", [](Context& ctx) -> ll::coro::CoroTask<>
     ctx.check(std::abs(after.x - before.x) > 5 && std::abs(after.z - before.z) < 0.5, "the carriage stands at the new place: moved " + std::to_string(after.x - before.x));
     ctx.check(!t->derailed && std::abs(t->speed) < 1e-9, "on track and stopped");
     // off the track: it doesn't fit
-    lv::core::trains::Vec3d away{l.base.x + 42.5, double(l.base.y), l.base.z + 9.5};
+    br::core::trains::Vec3d away{l.base.x + 42.5, double(l.base.y), l.base.z + 9.5};
     ctx.check(!tn::bodyAt(*t, away, {1, 0, 0}, 1.0).has_value(), "no track there: refused");
     // Create's train remove: the carriages vanish, nothing is placed
     tn::removeTrain(*id);
@@ -206,9 +206,9 @@ LV_REGISTER_SELFTEST("trains.relocate", [](Context& ctx) -> ll::coro::CoroTask<>
 });
 } // namespace
 
-LV_REGISTER_SELFTEST("trains.blocks", [](Context& ctx) {
+BR_REGISTER_SELFTEST("trains.blocks", [](Context& ctx) {
     for (auto id : {tn::kStation, tn::kSmallBogey, tn::kLargeBogey, tn::kControls})
-        ctx.check(lv::game::blockWith(id) != nullptr, std::string(id) + " is registered");
+        ctx.check(br::game::blockWith(id) != nullptr, std::string(id) + " is registered");
     auto item = tn::makeScheduleItem(twoStops("", 20));
     ctx.require(!item.isNull(), "the schedule item exists");
     auto back = tn::scheduleOf(item);
@@ -217,7 +217,7 @@ LV_REGISTER_SELFTEST("trains.blocks", [](Context& ctx) {
     ctx.check(back->entries[0].instruction.data.value("Text", std::string()) == "U27 Station B", "the destination is stored");
 });
 
-LV_REGISTER_SELFTEST("trains.station_and_assembly_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.station_and_assembly_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, 2700, " rules"), "line and stations built");
     auto* s = tn::stationAt(l.stationA);
@@ -243,11 +243,11 @@ LV_REGISTER_SELFTEST("trains.station_and_assembly_rules", [](Context& ctx) -> ll
     ctx.check(!tn::assemble(*s, nullptr), "a lone bogey doesn't assemble");
     ctx.check(s->lastError.value("key", std::string()) == "create.train_assembly.nothing_attached", "error: nothing attached");
     // sideways controls
-    ctx.setBlock(at(l.trackA, -1, 2), std::string(tn::kControls), {{"levitate:facing", 2}});
+    ctx.setBlock(at(l.trackA, -1, 2), std::string(tn::kControls), {{"bearing:facing", 2}});
     ctx.check(!tn::assemble(*s, nullptr), "sideways controls don't assemble");
     ctx.check(s->lastError.value("key", std::string()) == "create.train_assembly.sideways_controls", "error: sideways controls");
     // backwards only
-    ctx.setBlock(at(l.trackA, -1, 2), std::string(tn::kControls), {{"levitate:facing", 5}});
+    ctx.setBlock(at(l.trackA, -1, 2), std::string(tn::kControls), {{"bearing:facing", 5}});
     ctx.check(!tn::assemble(*s, nullptr), "backward controls alone don't assemble");
     ctx.check(s->lastError.value("key", std::string()) == "create.train_assembly.no_controls", "error: no controls");
     tn::setAssembling(*s, false, nullptr);
@@ -255,7 +255,7 @@ LV_REGISTER_SELFTEST("trains.station_and_assembly_rules", [](Context& ctx) -> ll
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("trains.schedule_round_trip", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.schedule_round_trip", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, 2700, ""), "line and stations built");
     auto id = assembleTrain(ctx, l, true);
@@ -318,7 +318,7 @@ LV_REGISTER_SELFTEST("trains.schedule_round_trip", [](Context& ctx) -> ll::coro:
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("trains.manual_controls", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.manual_controls", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, 2700, " manual"), "line and stations built");
     auto id = assembleTrain(ctx, l, false);
@@ -363,7 +363,7 @@ LV_REGISTER_SELFTEST("trains.manual_controls", [](Context& ctx) -> ll::coro::Cor
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("trains.derail_and_collide", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.derail_and_collide", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, 2700, " crash"), "line and stations built");
     auto first = assembleTrain(ctx, l, false);
@@ -405,7 +405,7 @@ LV_REGISTER_SELFTEST("trains.derail_and_collide", [](Context& ctx) -> ll::coro::
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("trains.ext_and_commands", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.ext_and_commands", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, 2700, " ext"), "line and stations built");
     auto id = assembleTrain(ctx, l, false);
@@ -419,9 +419,9 @@ LV_REGISTER_SELFTEST("trains.ext_and_commands", [](Context& ctx) -> ll::coro::Co
     ctx.check(listed, "TrainsExt lists station A with its train");
     // an edge point ahead: the train entering it is reported (TrainsExt.h)
     auto pt = *tn::stationAt(l.stationA)->point();
-    lv::core::tracks::EdgePoint p;
+    br::core::tracks::EdgePoint p;
     p.id       = "u27test:point";
-    p.type     = "levitate:u27test";
+    p.type     = "bearing:u27test";
     p.node1    = pt.from;
     p.node2    = pt.to;
     p.position = std::min(pt.pos + 4, ct::edgeLength(tr::railways(), pt) - 1);
@@ -431,7 +431,7 @@ LV_REGISTER_SELFTEST("trains.ext_and_commands", [](Context& ctx) -> ll::coro::Co
     entered                = 0;
     if (!registered) {
         registered = true;
-        tr::trains::onPointEntered([](std::uint64_t, lv::core::tracks::EdgePoint const& e) {
+        tr::trains::onPointEntered([](std::uint64_t, br::core::tracks::EdgePoint const& e) {
             if (e.id == "u27test:point") ++entered;
         });
     }
@@ -456,13 +456,13 @@ LV_REGISTER_SELFTEST("trains.ext_and_commands", [](Context& ctx) -> ll::coro::Co
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("trains.signal", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.signal", [](Context& ctx) -> ll::coro::CoroTask<> {
     // two trains on one line split by a signal (U28): the second waits at red until the first
     // leaves the section
     Line l;
     ctx.require(co_await buildLine(ctx, l, 2700, " signal"), "line and stations built");
     auto& sp   = static_cast<SimulatedPlayer&>(ctx.player());
-    auto  item = lv::feature::common::items::make(sg::kSignalId, 4);
+    auto  item = br::feature::common::items::make(sg::kSignalId, 4);
     ctx.require(item.has_value(), "the signal item exists");
     ctx.give(sp, *item, 0);
     auto look = [&](GlobalPos const& p) { sp.simulateLookAt(Vec3{p.x + .5f, p.y + .5f, p.z + .5f}, sim::LookDuration::Continuous); };
@@ -489,7 +489,7 @@ LV_REGISTER_SELFTEST("trains.signal", [](Context& ctx) -> ll::coro::CoroTask<> {
     t1->currentStation.clear();
     tn::placeCarriages(*t1);
     co_await ctx.ticks(17); // Create's SignalBlockEntity: a green signal turns red 15 ticks later
-    ctx.check(sg::signalState(signal) == lv::core::signals::SignalState::Red, "the occupied section shows red");
+    ctx.check(sg::signalState(signal) == br::core::signals::SignalState::Red, "the occupied section shows red");
 
     auto second = assembleTrain(ctx, l, false);
     ctx.require(second.has_value(), "the second train assembles");
@@ -519,7 +519,7 @@ LV_REGISTER_SELFTEST("trains.signal", [](Context& ctx) -> ll::coro::CoroTask<> {
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("trains.curve", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.curve", [](Context& ctx) -> ll::coro::CoroTask<> {
     // a line east, a 90° curve (made with the track item, as a player) and a line north
     GlobalPos base = ctx.testPos(2740, 12);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
@@ -527,13 +527,13 @@ LV_REGISTER_SELFTEST("trains.curve", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearBox(at(base, -1, 0, -32), at(base, 32, 4, 2));
     co_await ctx.ticks(2);
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
-    auto tracksItem = lv::feature::common::items::make(tr::kTrackId, 64);
+    auto tracksItem = br::feature::common::items::make(tr::kTrackId, 64);
     ctx.require(tracksItem.has_value(), "track item");
     ctx.give(sp, *tracksItem, 0);
     GlobalPos a = at(base, 20), b = at(base, 29, 0, -9);
     ctx.setBlock(a, std::string(tr::kTrackId), xo());
     auto zo = xo();
-    zo[0].second = int(lv::core::tracks::Shape::ZO);
+    zo[0].second = int(br::core::tracks::Shape::ZO);
     ctx.setBlock(b, std::string(tr::kTrackId), zo);
     auto look = [&](GlobalPos const& p) {
         sp.simulateLookAt(Vec3{p.x + .5f, p.y + .5f, p.z + .5f}, sim::LookDuration::Continuous);

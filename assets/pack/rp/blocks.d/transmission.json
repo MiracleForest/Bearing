@@ -1,65 +1,65 @@
 {
-  "levitate:shaft": {
+  "bearing:shaft": {
     "sound": "metal"
   },
-  "levitate:cogwheel": {
+  "bearing:cogwheel": {
     "sound": "wood"
   },
-  "levitate:large_cogwheel": {
+  "bearing:large_cogwheel": {
     "sound": "wood"
   },
-  "levitate:andesite_encased_shaft": {
+  "bearing:andesite_encased_shaft": {
     "sound": "stone"
   },
-  "levitate:brass_encased_shaft": {
+  "bearing:brass_encased_shaft": {
     "sound": "metal"
   },
-  "levitate:andesite_encased_cogwheel": {
+  "bearing:andesite_encased_cogwheel": {
     "sound": "stone"
   },
-  "levitate:brass_encased_cogwheel": {
+  "bearing:brass_encased_cogwheel": {
     "sound": "metal"
   },
-  "levitate:andesite_encased_large_cogwheel": {
+  "bearing:andesite_encased_large_cogwheel": {
     "sound": "stone"
   },
-  "levitate:brass_encased_large_cogwheel": {
+  "bearing:brass_encased_large_cogwheel": {
     "sound": "metal"
   },
-  "levitate:gearbox": {
+  "bearing:gearbox": {
     "sound": "stone"
   },
-  "levitate:clutch": {
+  "bearing:clutch": {
     "sound": "stone"
   },
-  "levitate:gearshift": {
+  "bearing:gearshift": {
     "sound": "stone"
   },
-  "levitate:encased_chain_drive": {
+  "bearing:encased_chain_drive": {
     "sound": "stone"
   },
-  "levitate:adjustable_chain_gearshift": {
+  "bearing:adjustable_chain_gearshift": {
     "sound": "stone"
   },
-  "levitate:sequenced_gearshift": {
+  "bearing:sequenced_gearshift": {
     "sound": "metal"
   },
-  "levitate:rotation_speed_controller": {
+  "bearing:rotation_speed_controller": {
     "sound": "metal"
   },
-  "levitate:speedometer": {
+  "bearing:speedometer": {
     "sound": "stone"
   },
-  "levitate:stressometer": {
+  "bearing:stressometer": {
     "sound": "stone"
   },
-  "levitate:cuckoo_clock": {
+  "bearing:cuckoo_clock": {
     "sound": "wood"
   },
-  "levitate:mysterious_cuckoo_clock": {
+  "bearing:mysterious_cuckoo_clock": {
     "sound": "wood"
   },
-  "levitate:flywheel": {
+  "bearing:flywheel": {
     "sound": "metal"
   }
 }

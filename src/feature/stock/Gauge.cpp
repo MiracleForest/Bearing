@@ -41,7 +41,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -52,7 +52,7 @@ struct StockConfig {
     int version           = 1;
     int factoryGaugeTimer = 100; ///< ticks between a gauge's requests (Create's default, min 5)
 };
-LV_REGISTER_CONFIG("stock", StockConfig);
+BR_REGISTER_CONFIG("stock", StockConfig);
 
 namespace {
 constexpr char kScreen[]     = "stock.gauge";
@@ -240,7 +240,7 @@ void tickStorageMonitor(GlobalPos const& p, int slot, Json& panel, bool& changed
         && panel.value("satisfied", false) == satisfy && panel.value("promisedSatisfied", false) == promiseSatisfy && panel.value("waiting", false) == wait)
         return;
     if (!panel.value("satisfied", false) && satisfy && demand > 0) {
-        playSound(p, "levitate.stock.confirm", 0.075f, 1.0f);
+        playSound(p, "bearing.stock.confirm", 0.075f, 1.0f);
         log().info("stock: factory gauge at {} {} {} panel {} satisfied ({} of {})", p.x, p.y, p.z, slot, inStorage, demand);
     }
     bool notifyOutputs = panel.value("satisfied", false) != satisfy;
@@ -560,7 +560,7 @@ void form(Player& player, Json const& ctx) {
     }
     extra.push_back(trFor(player, "create.gui.factory_panel.reset", "Reset all settings"));
     thenOps.push_back("reset");
-    f.appendDropdown("then", trFor(player, "lv.stock.form.then", "Then"), extra, 0);
+    f.appendDropdown("then", trFor(player, "br.stock.form.then", "Then"), extra, 0);
     std::size_t n = inputs.size();
     f.sendTo(player, [p, slot, n, restocker, thenOps, suggestions](Player& q, ll::form::CustomFormResult const& r, ll::form::FormCancelReason) {
         if (!r || !isGauge(p) || !active(readPanel(p, slot)) || !mayInteract(readPanel(p, slot).value("freq", std::string{}), q)) return;
@@ -724,7 +724,7 @@ bool connectPanels(Player* player, GlobalPos const& target, int targetSlot, Glob
     if (issue) {
         if (player) {
             status(*player, "§c" + trFor(*player, *issue, *issue));
-            playSound(target, "levitate.stock.deny", 1.0f, 1.0f);
+            playSound(target, "bearing.stock.deny", 1.0f, 1.0f);
         }
         log().info("stock: gauge connection refused: {}", *issue);
         return false;
@@ -737,7 +737,7 @@ bool connectPanels(Player* player, GlobalPos const& target, int targetSlot, Glob
     writePanel(input, inputSlot, i);
     if (player)
         status(*player, "§a" + trFor(*player, "create.factory_panel.panels_connected", "Now using {} to create {}", itemName(i.value("filter", Json())), itemName(t.value("filter", Json()))));
-    playSound(target, "levitate.stock.connect", 0.5f, 0.5f);
+    playSound(target, "bearing.stock.connect", 0.5f, 0.5f);
     log().info("stock: gauge at {} {} {} slot {} now takes input from {} {} {} slot {}", target.x, target.y, target.z, targetSlot, input.x, input.y, input.z, inputSlot);
     return true;
 }
@@ -982,7 +982,7 @@ void syncVanillaGauges() {
 
 // Create's value box label and count of each panel, for players without the client mod (the
 // client mod shows them next to the crosshair, `stock.hover`): the goggle overlay's action bar.
-LV_REGISTER_GOGGLE_INFO(kFactoryGauge, {
+BR_REGISTER_GOGGLE_INFO(kFactoryGauge, {
     .hover = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
         if (net::isCompanion(c.player)) return false;
         bool any = false;
@@ -1249,7 +1249,7 @@ void registerGaugeScreens() {
     });
 }
 
-// ---- `/create stock gauges` (Levitate debug: a connected pair of gauges to look at) --------------
+// ---- `/create stock gauges` (Bearing debug: a connected pair of gauges to look at) --------------
 
 namespace {
 void buildGaugeDemo(Player& player, CommandOutput& output) {
@@ -1257,10 +1257,10 @@ void buildGaugeDemo(Player& player, CommandOutput& output) {
     auto  feet   = player.getFeetBlockPos();
     GlobalPos a{static_cast<int>(player.getDimensionId()), feet.x + 2, feet.y, feet.z};
     GlobalPos b{a.dim, a.x + 1, a.y, a.z};
-    std::string network = "levitate-gauge-demo";
+    std::string network = "bearing-gauge-demo";
     for (auto const& p : {a, b}) {
         for (int s = 0; s < 4; ++s) removeGaugePanel(p, s, nullptr);
-        auto const* block = game::blockWith(kFactoryGauge, {{"levitate:face", 0}, {"levitate:facing", 2}});
+        auto const* block = game::blockWith(kFactoryGauge, {{"bearing:face", 0}, {"bearing:facing", 2}});
         if (!block || !game::setBlock(*region, game::blockPos(p), *block)) return output.error("Could not place the gauges.");
     }
     // two inputs on the first gauge, the recipe panel on the second
@@ -1281,13 +1281,13 @@ void buildGaugeDemo(Player& player, CommandOutput& output) {
 }
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload().text("stock").text("gauges").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!commands::isAdmin(origin)) return output.error(tr("lv.stock.need_op", "You need operator permission."));
+        if (!commands::isAdmin(origin)) return output.error(tr("br.stock.need_op", "You need operator permission."));
         auto* player = commands::playerOf(origin);
-        if (!player) return output.error(tr("lv.stock.need_player", "Run this as a player."));
+        if (!player) return output.error(tr("br.stock.need_player", "Run this as a player."));
         buildGaugeDemo(*player, output);
     });
 });
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

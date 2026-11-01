@@ -28,13 +28,13 @@ class ItemStack;
 class Player;
 class Vec3;
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
-inline constexpr char kLinkId[]       = "levitate:display_link";
-inline constexpr char kBoardId[]      = "levitate:display_board";
-inline constexpr char kNixieId[]      = "levitate:nixie_tube"; ///< the orange one (Create's ORANGE_NIXIE_TUBE)
-inline constexpr char kTextEntityId[] = "levitate:display_text";
-inline constexpr char kWrenchId[]     = "levitate:wrench";
+inline constexpr char kLinkId[]       = "bearing:display_link";
+inline constexpr char kBoardId[]      = "bearing:display_board";
+inline constexpr char kNixieId[]      = "bearing:nixie_tube"; ///< the orange one (Create's ORANGE_NIXIE_TUBE)
+inline constexpr char kTextEntityId[] = "bearing:display_text";
+inline constexpr char kWrenchId[]     = "bearing:wrench";
 
 /// Dye colours in Java's DyeColor order.
 inline constexpr std::array<char const*, 16> kDyeNames{
@@ -236,4 +236,4 @@ void broadcast(int dim, std::string const& channel, Json const& payload);
 void installHooks();
 void uninstallHooks();
 
-} // namespace lv::feature::display
+} // namespace br::feature::display

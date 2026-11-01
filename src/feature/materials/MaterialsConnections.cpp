@@ -1,12 +1,12 @@
 // Materials unit (U9): states that follow the neighbours (Java updateShape), kept by the server for
 // every client (docs/SPEC.md §3.6.9):
 // - walls: Bedrock's minecraft:connection trait gives the four connections; this adds Java's
-//   WallBlock side heights (levitate:tall_<dir>: the side is covered by the block above) and the
-//   post (levitate:up: unless exactly straight, forced by a wall post / torch / sign / banner /
+//   WallBlock side heights (bearing:tall_<dir>: the side is covered by the block above) and the
+//   post (bearing:up: unless exactly straight, forced by a wall post / torch / sign / banner /
 //   pressure plate above or a block above covering the post), and the 24 px collision;
-// - layered stone (Create's HorizontalCTBehaviour): levitate:c_<dir> for the 4 horizontal
+// - layered stone (Create's HorizontalCTBehaviour): bearing:c_<dir> for the 4 horizontal
 //   neighbours of the same block;
-// - stone pillars (Create's RotatedPillarCTBehaviour): levitate:c_<dir> in world space: along the
+// - stone pillars (Create's RotatedPillarCTBehaviour): bearing:c_<dir> in world space: along the
 //   axis the same pillar on the same axis; across it also needs both columns to end at the same
 //   places (pillars join sideways into rectangles only).
 //
@@ -44,7 +44,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::materials {
+namespace br::feature::materials {
 
 namespace {
 
@@ -154,7 +154,7 @@ bool postOverride(Block const& b) {
 /// A wall above with a post (Java: WallBlock with UP).
 bool wallPostAbove(Block const& above) {
     if (!isWall(above)) return false;
-    if (auto up = game::intState(above, "levitate:up")) return *up != 0;
+    if (auto up = game::intState(above, "bearing:up")) return *up != 0;
     auto bit = stringState(above, "wall_post_bit"); // vanilla walls
     return bit == "1" || bit == "true";
 }
@@ -179,8 +179,8 @@ bool updateWall(BlockSource& region, BlockPos const& pos, Block const& block) {
             up            = !tallLine && (postOverride(above) || covered(face, kPostTest));
         }
     }
-    std::vector<std::pair<std::string, int>> s{{"levitate:up", up ? 1 : 0}};
-    for (int i = 0; i < 4; ++i) s.emplace_back(std::string("levitate:tall_") + kSides[i], side[i] == Side::Tall ? 1 : 0);
+    std::vector<std::pair<std::string, int>> s{{"bearing:up", up ? 1 : 0}};
+    for (int i = 0; i < 4; ++i) s.emplace_back(std::string("bearing:tall_") + kSides[i], side[i] == Side::Tall ? 1 : 0);
     Block const* next = withStates(block, s);
     if (!next || next == &block) return false;
     return game::setBlock(region, pos, *next);
@@ -222,7 +222,7 @@ bool updateCt(BlockSource& region, BlockPos const& pos, Block const& block, Shap
     if (shape == Shape::Layered) {
         for (int d = 2; d < 6; ++d) {
             BlockPos n = step(pos, d);
-            s.emplace_back(std::string("levitate:c_") + kDirNames[d], loaded(region, n) && region.getBlock(n).getTypeName() == id ? 1 : 0);
+            s.emplace_back(std::string("bearing:c_") + kDirNames[d], loaded(region, n) && region.getBlock(n).getTypeName() == id ? 1 : 0);
         }
     } else {
         int                 axis = pillarAxis(block);
@@ -238,7 +238,7 @@ bool updateCt(BlockSource& region, BlockPos const& pos, Block const& block, Shap
                     on = columnExtent(region, n, id, axis) == own;
                 }
             }
-            s.emplace_back(std::string("levitate:c_") + kDirNames[d], on ? 1 : 0);
+            s.emplace_back(std::string("bearing:c_") + kDirNames[d], on ? 1 : 0);
         }
     }
     Block const* next = withStates(block, s);
@@ -307,7 +307,7 @@ void processDirty() {
         try {
             updateConnections(*region, p);
         } catch (std::exception const& e) {
-            lv::log().error("materials: updating {} {} {} failed: {}", p.x, p.y, p.z, e.what());
+            br::log().error("materials: updating {} {} {} failed: {}", p.x, p.y, p.z, e.what());
         }
     }
 }
@@ -332,7 +332,7 @@ bool updateConnections(BlockSource& region, BlockPos const& pos) {
 std::vector<std::array<float, 6>> wallCollision(Block const& block) {
     // Java WallBlock.makeShapes(4, 3, 24, 0, 24, 24): post 4..12, sides 5..11, all 24 px high
     std::vector<Box> out;
-    if (game::intState(block, "levitate:up").value_or(1) != 0) out.push_back({4, 0, 4, 12, 24, 12});
+    if (game::intState(block, "bearing:up").value_or(1) != 0) out.push_back({4, 0, 4, 12, 24, 12});
     auto conn = [&](char const* d) { return game::intState(block, std::string("minecraft:connection_") + d).value_or(0) != 0; };
     if (conn("north")) out.push_back({5, 0, 0, 11, 24, 11});
     if (conn("south")) out.push_back({5, 0, 5, 11, 24, 16});
@@ -388,4 +388,4 @@ void uninstallConnections() {
     MaterialsWallCollisionHook::unhook();
 }
 
-} // namespace lv::feature::materials
+} // namespace br::feature::materials

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 namespace {
 constexpr float kSpeed = .2f;
@@ -11,7 +11,7 @@ constexpr float kSpeed = .2f;
 constexpr float kSettle = 1.f / 512.f;
 
 bool isToolboxId(std::string const& id) {
-    return id.starts_with("levitate:") && id.ends_with("_toolbox") && id.size() > 9 + 8;
+    return id.starts_with("bearing:") && id.ends_with("_toolbox") && id.size() > 9 + 8;
 }
 bool isDyeId(std::string const& id) { return id.starts_with("minecraft:") && id.ends_with("_dye"); }
 } // namespace
@@ -51,4 +51,4 @@ std::optional<int> dyeingToolboxSlot(std::vector<std::string> const& grid) {
     return std::nullopt;
 }
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

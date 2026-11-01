@@ -4,7 +4,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::assembly {
+namespace br::core::assembly {
 
 namespace {
 constexpr double kDeg = 180.0 / std::numbers::pi;
@@ -106,4 +106,4 @@ ArmAngles armPoseAt(ArmAngles const& previous, ArmAngles const& target, bool has
     return out;
 }
 
-} // namespace lv::core::assembly
+} // namespace br::core::assembly

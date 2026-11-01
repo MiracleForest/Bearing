@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:display_link",
+      "identifier": "bearing:display_link",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ]
@@ -21,22 +21,22 @@
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.display_link",
+      "minecraft:geometry": "geometry.bearing.display_link",
       "minecraft:material_instances": {
         "body": {
-          "texture": "levitate_display_link_side",
+          "texture": "bearing_display_link_side",
           "render_method": "alpha_test"
         },
         "base": {
-          "texture": "levitate_display_link",
+          "texture": "bearing_display_link",
           "render_method": "alpha_test"
         },
         "lens": {
-          "texture": "levitate_display_link_lens",
+          "texture": "bearing_display_link_lens",
           "render_method": "alpha_test"
         },
         "*": {
-          "texture": "levitate_display_link",
+          "texture": "bearing_display_link",
           "render_method": "alpha_test"
         }
       },
@@ -115,24 +115,24 @@
         "components": {
           "minecraft:material_instances": {
             "body": {
-              "texture": "levitate_display_link_side",
+              "texture": "bearing_display_link_side",
               "render_method": "alpha_test"
             },
             "base": {
-              "texture": "levitate_display_link",
+              "texture": "bearing_display_link",
               "render_method": "alpha_test"
             },
             "lens": {
-              "texture": "levitate_display_link_powered",
+              "texture": "bearing_display_link_powered",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_display_link",
+              "texture": "bearing_display_link",
               "render_method": "alpha_test"
             }
           }
         },
-        "condition": "q.block_state('levitate:powered') == 1"
+        "condition": "q.block_state('bearing:powered') == 1"
       }
     ]
   }

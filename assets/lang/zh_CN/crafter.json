@@ -3,6 +3,6 @@
   "create.recipe.sawing": "切削",
   "create.recipe.block_cutting": "方块切割",
   "create.logistics.recipe_filter": "配方过滤器",
-  "lv.crafter.inputs_connected": "合成器输入已连接",
-  "lv.crafter.inputs_disconnected": "合成器输入已断开"
+  "br.crafter.inputs_connected": "合成器输入已连接",
+  "br.crafter.inputs_disconnected": "合成器输入已断开"
 }

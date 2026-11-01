@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:portable_storage_interface",
+      "identifier": "bearing:portable_storage_interface",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,7 +15,7 @@
           4,
           5
         ],
-        "levitate:extended": [
+        "bearing:extended": [
           0,
           1
         ]
@@ -23,22 +23,22 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.portable_storage_interface",
+        "identifier": "geometry.bearing.portable_storage_interface",
         "bone_visibility": {
           "plate": true
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_psi_side",
+          "texture": "bearing_psi_side",
           "render_method": "opaque"
         },
         "front": {
-          "texture": "levitate_psi_front",
+          "texture": "bearing_psi_front",
           "render_method": "opaque"
         },
         "plate": {
-          "texture": "levitate_psi_plate",
+          "texture": "bearing_psi_plate",
           "render_method": "opaque"
         }
       },
@@ -78,7 +78,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -90,7 +90,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -102,7 +102,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -114,7 +114,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -126,7 +126,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -138,7 +138,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -150,10 +150,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:extended') == 0",
+        "condition": "q.block_state('bearing:extended') == 0",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.portable_storage_interface",
+            "identifier": "geometry.bearing.portable_storage_interface",
             "bone_visibility": {
               "plate": false
             }

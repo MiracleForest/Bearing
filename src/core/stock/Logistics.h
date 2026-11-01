@@ -18,7 +18,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::stock {
+namespace br::core::stock {
 
 /// Create's BigItemStack.INF: counts at or above this are infinite (creative crates).
 inline constexpr int kInfinite = 1'000'000'000;
@@ -167,4 +167,4 @@ connectionIssue(PanelRef const& target, PanelRef const& input, bool alreadyConne
 inline constexpr int kMaxPanelInputs = 9;
 inline constexpr int kMaxOrderSlots  = 9;
 
-} // namespace lv::core::stock
+} // namespace br::core::stock

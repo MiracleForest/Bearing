@@ -17,11 +17,11 @@ Invoke-Chat '/clear @s'
 Invoke-Chat '/tp @s ~ ~ ~ facing ~3 ~1 ~'
 Start-Sleep -Milliseconds 500
 # the blocks: a wall of redstone requesters ahead, a ticker, a link and a gauge to the side
-Invoke-Chat '/fill ~3 ~ ~-1 ~3 ~2 ~1 levitate:redstone_requester ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~4 ~ ~-3 levitate:stock_ticker ["levitate:facing"=1]'
-Invoke-Chat '/setblock ~4 ~ ~-4 levitate:stock_link ["levitate:face"=0,"levitate:facing"=1]'
-Invoke-Chat '/setblock ~4 ~ ~3 levitate:factory_gauge ["levitate:face"=0,"levitate:facing"=1,"levitate:panels"=15]'
-Invoke-Chat '/setblock ~4 ~1 ~3 levitate:factory_gauge ["levitate:face"=1,"levitate:facing"=1,"levitate:panels"=5]'
+Invoke-Chat '/fill ~3 ~ ~-1 ~3 ~2 ~1 bearing:redstone_requester ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~4 ~ ~-3 bearing:stock_ticker ["bearing:facing"=1]'
+Invoke-Chat '/setblock ~4 ~ ~-4 bearing:stock_link ["bearing:face"=0,"bearing:facing"=1]'
+Invoke-Chat '/setblock ~4 ~ ~3 bearing:factory_gauge ["bearing:face"=0,"bearing:facing"=1,"bearing:panels"=15]'
+Invoke-Chat '/setblock ~4 ~1 ~3 bearing:factory_gauge ["bearing:face"=1,"bearing:facing"=1,"bearing:panels"=5]'
 Start-Sleep -Seconds 1
 Save-Screenshot 'built' | Out-Null
 Invoke-Chat '/tp @s ~ ~ ~ facing ~4 ~-0.5 ~3'
@@ -39,8 +39,8 @@ Close-StockScreen
 
 # a stock ticker with a keeper: a pig sitting on a seat beside it (mobs on a free seat sit down)
 Invoke-Chat '/fill ~3 ~ ~-1 ~3 ~2 ~1 air'
-Invoke-Chat '/setblock ~3 ~ ~ levitate:stock_ticker ["levitate:facing"=1]'
-Invoke-Chat '/setblock ~3 ~ ~1 levitate:white_seat'
+Invoke-Chat '/setblock ~3 ~ ~ bearing:stock_ticker ["bearing:facing"=1]'
+Invoke-Chat '/setblock ~3 ~ ~1 bearing:white_seat'
 Invoke-Chat '/summon pig ~3 ~ ~1'
 Start-Sleep -Milliseconds 500
 Start-Sleep -Milliseconds 1000   # the pig sits down on the seat

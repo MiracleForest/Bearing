@@ -33,10 +33,10 @@
 
 namespace {
 
-using lv::selftest::Context;
-namespace pk    = lv::feature::packages;
-namespace items = lv::feature::common::items;
-using lv::core::GlobalPos;
+using br::selftest::Context;
+namespace pk    = br::feature::packages;
+namespace items = br::feature::common::items;
+using br::core::GlobalPos;
 
 /// U44's tests (dx 4400..): row 44 lies outside the area the run keeps ticking (z spawn-60..+60),
 /// where entities vanish; this z offset moves them to its free strip at spawn - 55.
@@ -53,9 +53,9 @@ ItemStack stack(char const* id, int count) { return items::make(id, count).value
 int countIn(GlobalPos const& p, char const* id) {
     auto* region = pk::regionOf(p.dim);
     if (!region) return 0;
-    auto h = lv::feature::common::items::find({*region, lv::game::blockPos(p), -1});
+    auto h = br::feature::common::items::find({*region, br::game::blockPos(p), -1});
     if (!h) return 0;
-    lv::feature::common::Access a{*region, lv::game::blockPos(p), -1};
+    br::feature::common::Access a{*region, br::game::blockPos(p), -1};
     int n = 0;
     for (int i = 0; i < h->slots(a); ++i) {
         auto s = h->getSlot(a, i);
@@ -66,13 +66,13 @@ int countIn(GlobalPos const& p, char const* id) {
 
 bool putIntoChest(GlobalPos const& p, ItemStack const& s) {
     auto* region = pk::regionOf(p.dim);
-    return region && items::isEmpty(lv::feature::common::items::insert(*region, lv::game::blockPos(p), -1, s, false));
+    return region && items::isEmpty(br::feature::common::items::insert(*region, br::game::blockPos(p), -1, s, false));
 }
 
 bool writeSign(GlobalPos const& p, std::string const& text) {
     auto* region = pk::regionOf(p.dim);
     if (!region) return false;
-    auto* actor = region->getBlockEntity(lv::game::blockPos(p));
+    auto* actor = region->getBlockEntity(br::game::blockPos(p));
     if (!actor || actor->getType() != BlockActorType::Sign) return false;
     static_cast<SignBlockActor*>(actor)->setMessageForServerScripingOnly(SignTextSide::Front, text, "");
     return true;
@@ -104,17 +104,17 @@ int countPlayer(Player& player, std::string const& id) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("packages.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("packages.registry", [](Context& ctx) {
     for (char const* id : {pk::kPackagerId, pk::kRepackagerId, pk::kFrogportId, pk::kChainConveyorId})
-        ctx.check(lv::game::blockWith(id) != nullptr, std::string(id) + " is registered");
-    for (auto const& id : pk::postboxIds()) ctx.check(lv::game::blockWith(id) != nullptr, id + " is registered");
+        ctx.check(br::game::blockWith(id) != nullptr, std::string(id) + " is registered");
+    for (auto const& id : pk::postboxIds()) ctx.check(br::game::blockWith(id) != nullptr, id + " is registered");
     for (auto const& id : pk::packageIds()) ctx.check(items::make(id).has_value(), id + " is registered");
     ctx.check(items::make(pk::kPackageFilterId).has_value(), "package filter is registered");
-    ctx.check(lv::feature::kinetics::specOf(pk::kChainConveyorId) != nullptr, "chain conveyor is kinetic");
+    ctx.check(br::feature::kinetics::specOf(pk::kChainConveyorId) != nullptr, "chain conveyor is kinetic");
     ctx.check(pk::postboxIds().size() == 16 && pk::packageIds().size() == 14, "16 postboxes, 14 box styles");
 });
 
-LV_REGISTER_SELFTEST("packages.package_items", [](Context& ctx) {
+BR_REGISTER_SELFTEST("packages.package_items", [](Context& ctx) {
     auto box = pk::containing({stack("minecraft:diamond", 70), stack("minecraft:stick", 3)});
     ctx.require(pk::isPackage(box), "containing() makes a package");
     auto contents = pk::contentsOf(box);
@@ -146,19 +146,19 @@ LV_REGISTER_SELFTEST("packages.package_items", [](Context& ctx) {
     ctx.check(pk::filterMatches(filter, pk::containing({stack("minecraft:stone", 1)})), "an empty package filter matches unaddressed packages");
     ctx.check(!pk::filterMatches(filter, stack("minecraft:stone", 1)), "an empty package filter rejects other items");
     // U56 (Create's canFitInsideContainerItems): toolboxes and minecart contraptions are bulky
-    ctx.check(!pk::fitsInPackage(stack("levitate:minecart_contraption", 1)) || items::isEmpty(stack("levitate:minecart_contraption", 1)), "minecart contraptions don't fit");
-    ctx.check(!pk::fitsInPackage(stack("levitate:brown_toolbox", 1)) || items::isEmpty(stack("levitate:brown_toolbox", 1)), "toolboxes don't fit");
+    ctx.check(!pk::fitsInPackage(stack("bearing:minecart_contraption", 1)) || items::isEmpty(stack("bearing:minecart_contraption", 1)), "minecart contraptions don't fit");
+    ctx.check(!pk::fitsInPackage(stack("bearing:brown_toolbox", 1)) || items::isEmpty(stack("bearing:brown_toolbox", 1)), "toolboxes don't fit");
     pk::setAddress(filter, "farm_*");
     ctx.check(pk::filterMatches(filter, addressed), "address filter matches the package");
     ctx.check(!pk::filterMatches(filter, stack("minecraft:stone", 1)), "address filter rejects non-packages");
     // filter slots (Create's FilterItemStack.of -> PackageFilterItemStack)
-    ctx.check(lv::feature::common::filter::isFilterItem(filter), "the package filter counts as a filter item");
-    ctx.check(lv::feature::common::filter::matches(filter, addressed), "filter slots match packages by address");
-    ctx.check(!lv::feature::common::filter::matches(filter, stack("minecraft:stone", 1)), "filter slots reject non-packages");
-    ctx.check(lv::feature::common::filter::predicate(filter)(addressed), "filter predicate matches packages by address");
+    ctx.check(br::feature::common::filter::isFilterItem(filter), "the package filter counts as a filter item");
+    ctx.check(br::feature::common::filter::matches(filter, addressed), "filter slots match packages by address");
+    ctx.check(!br::feature::common::filter::matches(filter, stack("minecraft:stone", 1)), "filter slots reject non-packages");
+    ctx.check(br::feature::common::filter::predicate(filter)(addressed), "filter predicate matches packages by address");
 });
 
-LV_REGISTER_SELFTEST("packages.packager_redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.packager_redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto chest    = at(ctx, 2500);
     auto packager = at(ctx, 2501);
     auto sign     = at(ctx, 2501, 0, 1);
@@ -185,13 +185,13 @@ LV_REGISTER_SELFTEST("packages.packager_redstone", [](Context& ctx) -> ll::coro:
     ctx.check(pk::stateAt(packager, pk::kPowered).value_or(0) == 1, "powered state");
     // a held package blocks the next pulse; the frogport / player takes it out through the capability
     auto* region = pk::regionOf(packager.dim);
-    auto  taken  = lv::feature::common::items::extract(*region, lv::game::blockPos(packager), 1, items::any(), 1, false);
+    auto  taken  = br::feature::common::items::extract(*region, br::game::blockPos(packager), 1, items::any(), 1, false);
     ctx.check(pk::isPackage(taken), "the package can be extracted");
     ctx.check(items::isEmpty(pk::packager(packager).held), "the packager is empty again");
     // and unpacked again: back into the chest
     ctx.setBlock(power, "minecraft:air");
     co_await ctx.ticks(2);
-    auto rest = lv::feature::common::items::insert(*region, lv::game::blockPos(packager), 1, taken, false);
+    auto rest = br::feature::common::items::insert(*region, br::game::blockPos(packager), 1, taken, false);
     ctx.check(items::isEmpty(rest), "the packager accepts the package");
     co_await ctx.ticks(2);
     ctx.check(countIn(chest, "minecraft:cobblestone") == 40 && countIn(chest, "minecraft:iron_ingot") == 5, "the contents are back in the chest");
@@ -199,7 +199,7 @@ LV_REGISTER_SELFTEST("packages.packager_redstone", [](Context& ctx) -> ll::coro:
     co_await ctx.ticks(25);
 });
 
-LV_REGISTER_SELFTEST("packages.packager_player", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.packager_player", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto chest    = at(ctx, 2505);
     auto packager = at(ctx, 2506);
     ctx.require(co_await ctx.ensureLoaded(packager), "test area loaded");
@@ -212,7 +212,7 @@ LV_REGISTER_SELFTEST("packages.packager_player", [](Context& ctx) -> ll::coro::C
     ctx.give(sp, box, 0);
     sp.simulateSetItem(box, true, 0);
     co_await ctx.ticks(1);
-    sp.simulateUseItemInSlotOnBlock(0, lv::game::blockPos(packager), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 1.f, 0.5f});
+    sp.simulateUseItemInSlotOnBlock(0, br::game::blockPos(packager), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 1.f, 0.5f});
     co_await ctx.ticks(3);
     ctx.check(countIn(chest, "minecraft:apple") == 7, "right-clicking with a package unpacks it into the barrel");
     ctx.check(countPlayer(sp, items::idOf(box)) == 0, "the package was used up");
@@ -230,7 +230,7 @@ LV_REGISTER_SELFTEST("packages.packager_player", [](Context& ctx) -> ll::coro::C
     ctx.check(boxes == 1, "the package is in the player's inventory: " + inventoryText(sp));
 });
 
-LV_REGISTER_SELFTEST("packages.open_package", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.open_package", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 2510);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     auto& sp  = static_cast<SimulatedPlayer&>(ctx.player());
@@ -246,7 +246,7 @@ LV_REGISTER_SELFTEST("packages.open_package", [](Context& ctx) -> ll::coro::Coro
     ctx.check(countPlayer(sp, items::idOf(box)) == 0, "the package is gone");
 });
 
-LV_REGISTER_SELFTEST("packages.repackager", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.repackager", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto chest = at(ctx, 2515);
     auto rp    = at(ctx, 2516);
     auto power = at(ctx, 2516, 1);
@@ -289,7 +289,7 @@ LV_REGISTER_SELFTEST("packages.repackager", [](Context& ctx) -> ll::coro::CoroTa
     co_await ctx.ticks(25);
 });
 
-LV_REGISTER_SELFTEST("packages.chain_connect", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.chain_connect", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto a    = at(ctx, 2520);
     auto b    = at(ctx, 2526);
     auto near = at(ctx, 2522);
@@ -328,21 +328,21 @@ LV_REGISTER_SELFTEST("packages.chain_connect", [](Context& ctx) -> ll::coro::Cor
     ctx.check(pk::conveyor(b).connections.empty(), "the other end lost its connection");
 });
 
-LV_REGISTER_SELFTEST("packages.chain_routing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.chain_routing", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto a      = at(ctx, 2530);
     auto b      = at(ctx, 2537);
     auto source = at(ctx, 2530, -1);
     auto frog   = at(ctx, 2537, 0, 2);
     ctx.require(co_await ctx.ensureLoaded(b), "test area loaded");
     ctx.require(ctx.setBlock(a, pk::kChainConveyorId) && ctx.setBlock(b, pk::kChainConveyorId), "conveyors placed");
-    ctx.require(ctx.setBlock(source, "levitate:kinetics_test_source", {{"levitate:axis", 1}}), "a rotation source below");
+    ctx.require(ctx.setBlock(source, "bearing:kinetics_test_source", {{"bearing:axis", 1}}), "a rotation source below");
     pk::track(a, pk::Kind::ChainConveyor);
     pk::track(b, pk::Kind::ChainConveyor);
     co_await ctx.ticks(2);
     ctx.require(pk::connectConveyors(nullptr, a, b), "connected");
-    lv::feature::kinetics::setGeneratedSpeed(source, 128);
+    br::feature::kinetics::setGeneratedSpeed(source, 128);
     co_await ctx.ticks(3);
-    ctx.require(lv::feature::kinetics::speedAt(b) != 0, "the far conveyor turns: " + std::to_string(lv::feature::kinetics::speedAt(b)));
+    ctx.require(br::feature::kinetics::speedAt(b) != 0, "the far conveyor turns: " + std::to_string(br::feature::kinetics::speedAt(b)));
     // a frogport catching "Depot" on the loop of b
     ctx.require(ctx.setBlock(frog, pk::kFrogportId), "frogport placed");
     pk::track(frog, pk::Kind::Frogport);
@@ -364,20 +364,20 @@ LV_REGISTER_SELFTEST("packages.chain_routing", [](Context& ctx) -> ll::coro::Cor
         for (auto const& s : pk::port(frog).inventory) caught |= pk::isPackage(s) && pk::addressOf(s) == "Depot";
     }
     ctx.check(caught, "the frogport caught its package after travelling along the chain");
-    lv::feature::kinetics::setGeneratedSpeed(source, 0);
+    br::feature::kinetics::setGeneratedSpeed(source, 0);
     pk::deregisterFromTarget(frog);
     pk::disconnectConveyors(a, b, false, nullptr);
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("packages.frogport_send", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.frogport_send", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto conv     = at(ctx, 2540);
     auto source   = at(ctx, 2540, -1);
     auto packager = at(ctx, 2542);
     auto frog     = at(ctx, 2542, 1);
     ctx.require(co_await ctx.ensureLoaded(conv), "test area loaded");
     ctx.require(ctx.setBlock(conv, pk::kChainConveyorId), "conveyor placed");
-    ctx.require(ctx.setBlock(source, "levitate:kinetics_test_source", {{"levitate:axis", 1}}), "rotation source");
+    ctx.require(ctx.setBlock(source, "bearing:kinetics_test_source", {{"bearing:axis", 1}}), "rotation source");
     pk::track(conv, pk::Kind::ChainConveyor);
     ctx.require(placePackager(ctx, packager, 1), "packager placed below the frogport");
     ctx.require(ctx.setBlock(frog, pk::kFrogportId), "frogport placed");
@@ -403,11 +403,11 @@ LV_REGISTER_SELFTEST("packages.frogport_send", [](Context& ctx) -> ll::coro::Cor
     pk::deregisterFromTarget(frog);
 });
 
-LV_REGISTER_SELFTEST("packages.postbox", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.postbox", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto box     = at(ctx, 2550);
     auto station = at(ctx, 2553);
     ctx.require(co_await ctx.ensureLoaded(box), "test area loaded");
-    ctx.require(ctx.setBlock(box, "levitate:red_postbox"), "postbox placed");
+    ctx.require(ctx.setBlock(box, "bearing:red_postbox"), "postbox placed");
     pk::track(box, pk::Kind::Postbox);
     auto& port   = pk::port(box);
     port.address = "Home";
@@ -422,15 +422,15 @@ LV_REGISTER_SELFTEST("packages.postbox", [](Context& ctx) -> ll::coro::CoroTask<
     auto away = pk::containing({stack("minecraft:torch", 8)});
     pk::setAddress(away, "Mine");
     // automation: packages for elsewhere go in, packages for the port come out
-    auto rest = lv::feature::common::items::insert(*region, lv::game::blockPos(box), 1, home, false);
+    auto rest = br::feature::common::items::insert(*region, br::game::blockPos(box), 1, home, false);
     ctx.check(!items::isEmpty(rest), "automation can't insert a package addressed to the port");
-    rest = lv::feature::common::items::insert(*region, lv::game::blockPos(box), 1, away, false);
+    rest = br::feature::common::items::insert(*region, br::game::blockPos(box), 1, away, false);
     ctx.check(items::isEmpty(rest), "automation inserts packages for elsewhere");
     // a train delivers
     ctx.check(items::isEmpty(pk::insertIntoPort(box, home, false)), "a train unloads into the postbox");
     co_await ctx.ticks(1);
     ctx.check(pk::stateAt(box, pk::kFlag).value_or(0) == 1, "the flag is up");
-    auto out = lv::feature::common::items::extract(*region, lv::game::blockPos(box), 0, items::any(), 1, false);
+    auto out = br::feature::common::items::extract(*region, br::game::blockPos(box), 0, items::any(), 1, false);
     ctx.check(pk::addressOf(out) == "Home", "automation extracts the delivered package");
     auto picked = pk::extractFromPort(box, [](ItemStack const& s) { return pk::addressOf(s) != "Home"; }, false);
     ctx.check(pk::addressOf(picked) == "Mine", "a train picks up the outgoing package");
@@ -440,42 +440,42 @@ LV_REGISTER_SELFTEST("packages.postbox", [](Context& ctx) -> ll::coro::CoroTask<
 });
 
 // U44 (dx 4410..4419): right-clicking a port with a clipboard adds "#address" to it
-LV_REGISTER_SELFTEST("packages.port_clipboard", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.port_clipboard", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto box = at(ctx, 4410, 0, kRowDz);
     ctx.require(co_await ctx.ensureLoaded(box), "test area loaded");
-    ctx.require(ctx.setBlock(box, "levitate:blue_postbox"), "postbox placed");
+    ctx.require(ctx.setBlock(box, "bearing:blue_postbox"), "postbox placed");
     pk::track(box, pk::Kind::Postbox);
     pk::port(box).address = "Farm";
     pk::savePort(box);
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     sp.teleport(Vec3{box.x + 0.5f, box.y + 0.f, box.z + 2.5f}, DimensionType(box.dim));
     co_await ctx.ticks(2);
-    sp.simulateSetItem(stack("levitate:clipboard", 1), true, 0);
+    sp.simulateSetItem(stack("bearing:clipboard", 1), true, 0);
     co_await ctx.ticks(1);
-    sp.simulateUseItemInSlotOnBlock(0, lv::game::blockPos(box), ScriptModuleMinecraft::ScriptFacing::South, Vec3{0.5f, 0.5f, 1.f});
+    sp.simulateUseItemInSlotOnBlock(0, br::game::blockPos(box), ScriptModuleMinecraft::ScriptFacing::South, Vec3{0.5f, 0.5f, 1.f});
     co_await ctx.ticks(3);
-    auto c = lv::feature::display::clipboard::ofItem(sp.getSelectedItem());
+    auto c = br::feature::display::clipboard::ofItem(sp.getSelectedItem());
     ctx.check(c.pages.size() == 1 && c.pages[0].size() == 1 && c.pages[0][0].text == "#Farm" && c.type == 2,
               "the port's address is on the clipboard");
     co_await ctx.ticks(25);
-    sp.simulateUseItemInSlotOnBlock(0, lv::game::blockPos(box), ScriptModuleMinecraft::ScriptFacing::South, Vec3{0.5f, 0.5f, 1.f});
+    sp.simulateUseItemInSlotOnBlock(0, br::game::blockPos(box), ScriptModuleMinecraft::ScriptFacing::South, Vec3{0.5f, 0.5f, 1.f});
     co_await ctx.ticks(3);
-    c = lv::feature::display::clipboard::ofItem(sp.getSelectedItem());
+    c = br::feature::display::clipboard::ofItem(sp.getSelectedItem());
     ctx.check(c.pages.size() == 1 && c.pages[0].size() == 1, "an address already on the clipboard is not added twice");
     // pages hold up to 12 addresses
-    ItemStack full = stack("levitate:clipboard", 1);
-    for (int i = 0; i < 12; ++i) ctx.check(lv::feature::display::clipboard::addAddress(full, "a" + std::to_string(i)), "address added");
-    ctx.check(!lv::feature::display::clipboard::addAddress(full, "  "), "blank addresses are not added");
-    auto fc = lv::feature::display::clipboard::ofItem(full);
+    ItemStack full = stack("bearing:clipboard", 1);
+    for (int i = 0; i < 12; ++i) ctx.check(br::feature::display::clipboard::addAddress(full, "a" + std::to_string(i)), "address added");
+    ctx.check(!br::feature::display::clipboard::addAddress(full, "  "), "blank addresses are not added");
+    auto fc = br::feature::display::clipboard::ofItem(full);
     ctx.check(fc.pages.size() == 1 && fc.pages[0].size() == 12, "a page takes 12 addresses");
-    lv::feature::display::clipboard::addAddress(full, "a12");
-    fc = lv::feature::display::clipboard::ofItem(full);
+    br::feature::display::clipboard::addAddress(full, "a12");
+    fc = br::feature::display::clipboard::ofItem(full);
     ctx.check(fc.pages.size() == 2 && fc.pages[0].size() == 12 && fc.pages[1].size() == 1, "the 13th address goes on a new page");
     sp.simulateSetItem(ItemStack::EMPTY_ITEM(), true, 0);
 });
 
 // U44 (dx 4420..4429): spawn eggs in an opened package spawn their mob in front of the player
-LV_REGISTER_SELFTEST("packages.open_spawn_egg", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.open_spawn_egg", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = at(ctx, 4420, 0, kRowDz);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -500,7 +500,7 @@ LV_REGISTER_SELFTEST("packages.open_spawn_egg", [](Context& ctx) -> ll::coro::Co
     for (int i = 0; i < inv.getContainerSize(); ++i) inv.setItem(i, items::empty());
 });
 
-LV_REGISTER_SELFTEST("packages.chain_package_pick", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("packages.chain_package_pick", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto conv = at(ctx, 2560);
     ctx.require(co_await ctx.ensureLoaded(conv), "test area loaded");
     ctx.require(ctx.setBlock(conv, pk::kChainConveyorId), "conveyor placed");
@@ -510,7 +510,7 @@ LV_REGISTER_SELFTEST("packages.chain_package_pick", [](Context& ctx) -> ll::coro
     // stand south of the conveyor, looking north at the loop (chain position 0 = south side)
     sp.teleport(Vec3{conv.x + 0.5f, conv.y - 1.2f, conv.z + 3.5f}, DimensionType(conv.dim));
     co_await ctx.ticks(2);
-    sp.simulateLookAt(lv::game::blockPos(conv), sim::LookDuration::Instant);
+    sp.simulateLookAt(br::game::blockPos(conv), sim::LookDuration::Instant);
     co_await ctx.ticks(2);
     auto pick = pk::pickChain(sp, false, 8);
     ctx.check(pick.has_value() && pick->conveyor == conv && !pick->connection, "the loop is under the crosshair");

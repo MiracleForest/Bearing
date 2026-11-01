@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:attribute_filter_clear"
+      "identifier": "bearing:attribute_filter_clear"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:attribute_filter"
+        "item": "bearing:attribute_filter"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:attribute_filter"
+        "item": "bearing:attribute_filter"
       }
     ],
     "result": {
-      "item": "levitate:attribute_filter",
+      "item": "bearing:attribute_filter",
       "count": 1
     }
   }

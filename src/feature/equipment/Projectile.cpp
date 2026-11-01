@@ -1,9 +1,9 @@
 // Potato cannon (Create's PotatoCannonItem / PotatoProjectileEntity / the built-in projectile types).
 //
-// Each projectile is a `levitate:potato_projectile` entity (behaviour pack: no physics, no gravity,
+// Each projectile is a `bearing:potato_projectile` entity (behaviour pack: no physics, no gravity,
 // no collision, immune to damage; never saved with the world). Its variant (an init event) picks the
 // ammo item's texture and Create's render mode in the resource pack (tumbling billboard, or along the
-// motion with a spin); a stuck projectile (event `levitate:stuck`) is drawn as Create's StuckToEntity.
+// motion with a spin); a stuck projectile (event `bearing:stuck`) is drawn as Create's StuckToEntity.
 // The server simulates Create's flight (core/equipment: v = (v - 0.05·gravity) · drag), its block /
 // entity / projectile hits, and moves the entity every tick (a normal move: clients interpolate).
 
@@ -52,7 +52,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -118,8 +118,8 @@ void itemParticle(int dim, double x, double y, double z, ItemStack const& stack)
 /// Create's PotatoProjectileEntity#playHitSound (AllSoundEvents.POTATO_HIT: an item frame breaking at
 /// 0.75 / 0.75 and weeping vines breaking at 0.75 / 1.25).
 void hitSound(int dim, double x, double y, double z) {
-    sound(dim, x, y, z, "levitate.potato_cannon.hit", 1.f, 1.f);
-    sound(dim, x, y, z, "levitate.potato_cannon.hit_vines", 1.f, 1.f);
+    sound(dim, x, y, z, "bearing.potato_cannon.hit", 1.f, 1.f);
+    sound(dim, x, y, z, "bearing.potato_cannon.hit_vines", 1.f, 1.f);
 }
 
 /// Create's pop: 7 item particles at the hit and the hit sound at the projectile.
@@ -271,7 +271,7 @@ void stick(Projectile& p, Actor& target) {
     if (auto* e = actorById(p.entity)) {
         VariantParameterList params{};
         params.mSelf = e;
-        e->executeEvent("levitate:stuck", params);
+        e->executeEvent("bearing:stuck", params);
     }
 }
 
@@ -322,7 +322,7 @@ void hitEntity(Projectile& p, Actor& target, double x, double y, double z) {
         if (!custom.empty()) common::deathmsg::mark(target, "death.attack.create.potato_cannon.item", {ownerName, custom});
         else common::deathmsg::mark(target, "death.attack.create.potato_cannon", {ownerName});
     } else {
-        common::deathmsg::mark(target, "death.attack.create.potato_cannon", {"%entity.levitate:potato_projectile.name"});
+        common::deathmsg::mark(target, "death.attack.create.potato_cannon", {"%entity.bearing:potato_projectile.name"});
     }
     bool hurt     = owner ? target.hurtByCause(t.damage, SharedTypes::Legacy::ActorDamageCause::Projectile, *owner)
                           : target.hurtByCause(t.damage, SharedTypes::Legacy::ActorDamageCause::Projectile);
@@ -421,7 +421,7 @@ std::int64_t spawnProjectile(Projectile& p) {
     if (!level || !region) return 0;
     int  variant = std::max(0, ce::potatoAmmoIndex(items::idOf(p.ammo)));
     auto owner   = level->getActorFactory().createSpawnedActor(
-        ActorDefinitionIdentifier("levitate", "potato_projectile", "levitate:ammo_" + std::to_string(variant)),
+        ActorDefinitionIdentifier("bearing", "potato_projectile", "bearing:ammo_" + std::to_string(variant)),
         nullptr,
         mcVec(p.pos),
         Vec2{0, 0}
@@ -463,7 +463,7 @@ void tickOne(Projectile& p) {
         if (auto* a = actorById(p.entity)) {
             VariantParameterList params{};
             params.mSelf = a;
-            a->executeEvent("levitate:unstuck", params);
+            a->executeEvent("bearing:unstuck", params);
         }
     }
     ce::Vec3f a = p.pos, b{p.pos.x + p.vel.x, p.pos.y + p.vel.y, p.pos.z + p.vel.z};
@@ -527,7 +527,7 @@ void tickOne(Projectile& p) {
     p.pos = b;
     p.vel = ce::potatoStep(p.vel, *p.type);
     // Create's trail (AbstractHurtingProjectile#getTrailParticle: an air particle half a block up)
-    particle(p.dim, p.pos.x, p.pos.y + 0.5, p.pos.z, "levitate:potato_trail");
+    particle(p.dim, p.pos.x, p.pos.y + 0.5, p.pos.z, "bearing:potato_trail");
     moveEntity(p);
 }
 
@@ -634,7 +634,7 @@ bool firePotatoCannon(Player& player) {
     }
     // Create's PotatoCannonPacket: the fwoomp at the barrel and two item particles
     float pitch = type->pitch + float(random01() - .5) / 4.f;
-    sound(dim, start.x, start.y, start.z, "levitate.potato_cannon.fwoomp", 1.f, pitch);
+    sound(dim, start.x, start.y, start.z, "bearing.potato_cannon.fwoomp", 1.f, pitch);
     for (int i = 0; i < 2; ++i) itemParticle(dim, start.x, start.y, start.z, ammo);
     if (!player.isCreative()) {
         if (slot == -2) player.setOffhandSlot(items::withCount(ammo, items::countOf(ammo) - 1));
@@ -670,16 +670,16 @@ std::vector<ProjectileInfo> projectiles() {
     return out;
 }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
 // The projectile entities are never written to the world (Create's are, but ours are simulated by
 // the server only while it runs: a saved one would hang in the air without its simulation).
 LL_TYPE_INSTANCE_HOOK(EquipmentProjectileSaveHook, ll::memory::HookPriority::Normal, ::Actor, &::Actor::save, bool, CompoundTag& entityTag) {
-    if (!isClientSide() && getTypeName() == lv::feature::equipment::kPotatoProjectile) return false;
+    if (!isClientSide() && getTypeName() == br::feature::equipment::kPotatoProjectile) return false;
     return origin(entityTag);
 }
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 namespace {
 class ProjectileModule {
 public:
@@ -687,6 +687,6 @@ public:
     void uninstall() { EquipmentProjectileSaveHook::unhook(); }
 };
 } // namespace
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-LV_REGISTER_MODULE(lv::feature::equipment::ProjectileModule);
+BR_REGISTER_MODULE(br::feature::equipment::ProjectileModule);

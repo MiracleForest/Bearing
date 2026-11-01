@@ -34,7 +34,7 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 namespace ft = common::fluidtypes;
 
@@ -117,7 +117,7 @@ cp::Fluid drainVanillaTarget(BlockSource& region, BlockPos const& pos, bool simu
                 if (auto e = b.setState(*type, 0)) game::setBlock(region, pos, *e.as_ptr());
             }
         }
-        return {"levitate:honey", 250};
+        return {"bearing:honey", 250};
     }
     if (isCauldron(id)) {
         auto got = common::fluids::drain(region, pos, -1, {"", 1000}, simulate);
@@ -284,7 +284,7 @@ cp::Fluid openEndDrain(BlockSource& region, cp::BlockFace const& at, cp::OpenEnd
     cp::Fluid drained       = simulate ? peek : removeFluidFromSpace(region, out, false);
     if (drained.empty()) return {};
     // Create's OpenEndedPipe#removeFluidFromSpace: honey from a beehive, water from a source block
-    if (!simulate && vanillaTarget && drained.id == "levitate:honey") advancements::awardOwner(at.pos, "honey_drain");
+    if (!simulate && vanillaTarget && drained.id == "bearing:honey") advancements::awardOwner(at.pos, "honey_drain");
     if (!simulate && !vanillaTarget && drained.id == "minecraft:water") advancements::awardOwner(at.pos, "water_supply");
     int       remainder = drained.amount - request.amount;
     cp::Fluid got{drained.id, std::min(request.amount, drained.amount)};
@@ -381,7 +381,7 @@ void registerOpenPipeEffects() {
         for (auto* e : actorsIn(region, a))
             if (living(*e)) e->removeAllEffects();
     });
-    ft::registerEffect("levitate:tea", [](BlockSource& region, ft::Area const& a, common::fluids::FluidStack const&, std::int64_t t) {
+    ft::registerEffect("bearing:tea", [](BlockSource& region, ft::Area const& a, common::fluids::FluidStack const&, std::int64_t t) {
         if (t % 5 != 0) return;
         for (auto* e : actorsIn(region, a)) {
             if (!living(*e)) continue;
@@ -409,4 +409,4 @@ void registerOpenPipeEffects() {
     });
 }
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes

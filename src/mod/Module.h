@@ -5,10 +5,10 @@
 
 #include "mod/Registry.h"
 
-namespace lv {
+namespace br {
 
 /// A unit of the mod that hooks into the game. Any class with `install()` and `uninstall()`
-/// can be a module; register it with `LV_REGISTER_MODULE(T)` in its .cpp file.
+/// can be a module; register it with `BR_REGISTER_MODULE(T)` in its .cpp file.
 ///
 /// - `install()` runs on mod enable, `uninstall()` on disable (reverse order). Both run on the
 ///   server thread. Undo everything in `uninstall()` (listeners, hooks, commands' state).
@@ -76,11 +76,11 @@ void installModules();
 /// Uninstalls all installed modules in reverse order. Called by the mod entry only.
 void uninstallModules();
 
-} // namespace lv
+} // namespace br
 
 /// Registers module `T` (default order 0). Put it in the module's .cpp file.
-#define LV_REGISTER_MODULE(T)                                                                                         \
-    static ::lv::detail::ModuleRegistrar<T> LV_UNIQUE(lv_module_registrar_)(#T, ::lv::ModuleOrder::Feature)
+#define BR_REGISTER_MODULE(T)                                                                                         \
+    static ::br::detail::ModuleRegistrar<T> BR_UNIQUE(br_module_registrar_)(#T, ::br::ModuleOrder::Feature)
 /// Registers module `T` with an explicit install order.
-#define LV_REGISTER_MODULE_ORDERED(T, order)                                                                          \
-    static ::lv::detail::ModuleRegistrar<T> LV_UNIQUE(lv_module_registrar_)(#T, (order))
+#define BR_REGISTER_MODULE_ORDERED(T, order)                                                                          \
+    static ::br::detail::ModuleRegistrar<T> BR_UNIQUE(br_module_registrar_)(#T, (order))

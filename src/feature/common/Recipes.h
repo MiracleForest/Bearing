@@ -3,7 +3,7 @@
 // Processing recipe loader (U3, SPEC §1.2 / §3.2).
 //
 // Create's own recipe types are JSON data in `assets/recipes/<type>/<name>.json` (Create's
-// recipe format, `create:` ids are mapped to `levitate:`), copied to `<mod>/recipes/` at build
+// recipe format, `create:` ids are mapped to `bearing:`), copied to `<mod>/recipes/` at build
 // time. Units read them by type; `/create reload` reloads them.
 //
 //     for (auto const& r : recipes::ofType("pressing")) ...
@@ -23,7 +23,7 @@
 
 class ItemStack;
 
-namespace lv::feature::common::recipes {
+namespace br::feature::common::recipes {
 
 using core::common::FluidIngredient;
 using core::common::HeatRequirement;
@@ -37,14 +37,14 @@ std::vector<ProcessingRecipe> const& loadType(std::string const& type);
 /// Recipes of `type` whose first item ingredient matches `stack`.
 [[nodiscard]] std::vector<ProcessingRecipe const*> withFirstIngredient(std::string const& type, ItemStack const& stack);
 [[nodiscard]] ProcessingRecipe const* findFirst(std::string const& type, ItemStack const& stack);
-/// A recipe by id ("levitate:pressing/iron_ingot"), nullptr if none.
+/// A recipe by id ("bearing:pressing/iron_ingot"), nullptr if none.
 [[nodiscard]] ProcessingRecipe const* byId(std::string const& type, std::string const& id);
 
 /// Whether `stack` satisfies an ingredient (item id or tag).
 [[nodiscard]] bool matches(ItemIngredient const& ingredient, ItemStack const& stack);
-/// Whether an item id is in a tag (Levitate tag files, then Bedrock item tags).
+/// Whether an item id is in a tag (Bearing tag files, then Bedrock item tags).
 [[nodiscard]] bool inTag(std::string const& tag, ItemStack const& stack);
-/// The item ids of a Levitate tag (resolved recursively; empty if the tag is only a Bedrock tag).
+/// The item ids of a Bearing tag (resolved recursively; empty if the tag is only a Bedrock tag).
 [[nodiscard]] std::vector<std::string> tagItems(std::string const& tag);
 /// Whether a fluid id satisfies a fluid ingredient (amount not checked).
 [[nodiscard]] bool matchesFluid(FluidIngredient const& ingredient, std::string const& fluid);
@@ -56,4 +56,4 @@ std::vector<ProcessingRecipe> const& loadType(std::string const& type);
 /// out earlier stay valid (they are retired, not freed), but are no longer listed.
 void reload();
 
-} // namespace lv::feature::common::recipes
+} // namespace br::feature::common::recipes

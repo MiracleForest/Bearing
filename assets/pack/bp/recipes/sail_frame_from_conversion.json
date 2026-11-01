@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:sail_frame_from_conversion"
+      "identifier": "bearing:sail_frame_from_conversion"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:white_sail"
+        "item": "bearing:white_sail"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:white_sail"
+        "item": "bearing:white_sail"
       }
     ],
     "result": {
-      "item": "levitate:sail_frame",
+      "item": "bearing:sail_frame",
       "count": 1
     }
   }

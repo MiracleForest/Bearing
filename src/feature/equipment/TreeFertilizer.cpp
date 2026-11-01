@@ -51,7 +51,7 @@
 bool        IBlockWorldGenAPI::canGetChunk() const { return false; }
 LevelChunk* IBlockWorldGenAPI::getChunk(ChunkPos const&) { return nullptr; }
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace {
 
@@ -337,4 +337,4 @@ bool useTreeFertilizer(Player& player, ItemStack& held, GlobalPos const& pos) {
     return true;
 }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

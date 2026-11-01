@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cart_assembler"
+      "identifier": "bearing:cart_assembler"
     },
     "tags": [
       "crafting_table"
@@ -13,7 +13,7 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "R": {
         "item": "minecraft:redstone"
@@ -23,12 +23,12 @@
       }
     },
     "result": {
-      "item": "levitate:cart_assembler",
+      "item": "bearing:cart_assembler",
       "count": 1
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ]
   }

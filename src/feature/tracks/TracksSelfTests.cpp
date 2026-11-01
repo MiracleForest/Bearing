@@ -20,12 +20,12 @@
 
 namespace {
 
-using lv::selftest::Context;
-namespace tr = lv::feature::tracks;
-namespace ct = lv::core::tracks;
+using br::selftest::Context;
+namespace tr = br::feature::tracks;
+namespace ct = br::core::tracks;
 
-ct::BlockPos3 cpos(lv::core::GlobalPos const& p) { return {p.x, p.y, p.z}; }
-lv::core::GlobalPos gpos(ct::BlockPos3 const& p) { return {0, p.x, p.y, p.z}; }
+ct::BlockPos3 cpos(br::core::GlobalPos const& p) { return {p.x, p.y, p.z}; }
+br::core::GlobalPos gpos(ct::BlockPos3 const& p) { return {0, p.x, p.y, p.z}; }
 
 std::optional<ct::Shape> shapeAtPos(ct::BlockPos3 const& p) {
     auto* region = tr::regionOf(0);
@@ -41,7 +41,7 @@ bool isFakeAt(ct::BlockPos3 const& p) {
 void clearArea(ct::BlockPos3 const& min, ct::BlockPos3 const& max) {
     auto& s      = tr::state();
     auto* region = tr::regionOf(0);
-    auto const* air = lv::game::blockWith("minecraft:air");
+    auto const* air = br::game::blockWith("minecraft:air");
     if (!region || !air) return;
     for (auto const& [dim, c] : s.curves.all()) {
         if (dim != 0) continue;
@@ -56,7 +56,7 @@ void clearArea(ct::BlockPos3 const& min, ct::BlockPos3 const& max) {
                 BlockPos bp{x, y, z};
                 if (region->getBlock(bp).isAir()) continue;
                 s.noDrops.insert({0, {x, y, z}});
-                lv::game::setBlock(*region, bp, *air);
+                br::game::setBlock(*region, bp, *air);
             }
 }
 
@@ -97,11 +97,11 @@ void stand(SimulatedPlayer& sp, ct::BlockPos3 const& at) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("tracks.block_states", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.block_states", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = ctx.testPos(500);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
-    ctx.require(lv::game::blockWith(tr::kTrackId) != nullptr, "levitate:track is registered");
-    ctx.require(lv::game::blockWith(tr::kFakeTrackId) != nullptr, "levitate:fake_track is registered");
+    ctx.require(br::game::blockWith(tr::kTrackId) != nullptr, "bearing:track is registered");
+    ctx.require(br::game::blockWith(tr::kFakeTrackId) != nullptr, "bearing:fake_track is registered");
     for (int shape : {int(ct::Shape::ZO), int(ct::Shape::AE), int(ct::Shape::CR_NDZ)}) {
         ctx.require(ctx.setBlock(pos, std::string(tr::kTrackId), states(ct::Shape(shape), true)), "set a track");
         co_await ctx.ticks(1);
@@ -112,7 +112,7 @@ LV_REGISTER_SELFTEST("tracks.block_states", [](Context& ctx) -> ll::coro::CoroTa
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("tracks.placement_shape", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.placement_shape", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(505);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -143,7 +143,7 @@ LV_REGISTER_SELFTEST("tracks.placement_shape", [](Context& ctx) -> ll::coro::Cor
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("tracks.straight_graph", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.straight_graph", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(515);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     ct::BlockPos3 b = cpos(base);
@@ -168,7 +168,7 @@ LV_REGISTER_SELFTEST("tracks.straight_graph", [](Context& ctx) -> ll::coro::Coro
     ctx.check(!tr::locate(0, Vec3{b.x + 1.5f, float(b.y), b.z + .5f}, 1), "no graph left after clearing");
 });
 
-LV_REGISTER_SELFTEST("tracks.connect_straight", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.connect_straight", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(530);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -198,7 +198,7 @@ LV_REGISTER_SELFTEST("tracks.connect_straight", [](Context& ctx) -> ll::coro::Co
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("tracks.connect_curve", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.connect_curve", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(545, 3);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -238,9 +238,9 @@ LV_REGISTER_SELFTEST("tracks.connect_curve", [](Context& ctx) -> ll::coro::CoroT
     auto* g = tr::railways().graph(mid->graph);
     auto const* e = g ? g->edge(mid->node1, mid->node2) : nullptr;
     ctx.check(e && e->isTurn(), "the curve is a turn edge");
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
     co_await ctx.ticks(2);
-    ctx.check(lv::client::tracks::knownCurves() > 0, "the client received the curve");
+    ctx.check(br::client::tracks::knownCurves() > 0, "the client received the curve");
 #endif
     ctx.info("curve length " + std::to_string(c->length()));
 
@@ -255,7 +255,7 @@ LV_REGISTER_SELFTEST("tracks.connect_curve", [](Context& ctx) -> ll::coro::CoroT
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("tracks.connect_errors", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.connect_errors", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(560, 3);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -291,7 +291,7 @@ LV_REGISTER_SELFTEST("tracks.connect_errors", [](Context& ctx) -> ll::coro::Coro
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("tracks.graph_api", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.graph_api", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(575);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     ct::BlockPos3 b = cpos(base);
@@ -313,7 +313,7 @@ LV_REGISTER_SELFTEST("tracks.graph_api", [](Context& ctx) -> ll::coro::CoroTask<
     // edge points
     ct::EdgePoint pt;
     pt.id       = "tracks.selftest.point";
-    pt.type     = "levitate:test";
+    pt.type     = "bearing:test";
     pt.node1    = g->node(start->node1)->location;
     pt.node2    = g->node(start->node2)->location;
     pt.position = 4;
@@ -329,7 +329,7 @@ LV_REGISTER_SELFTEST("tracks.graph_api", [](Context& ctx) -> ll::coro::CoroTask<
     co_await ctx.ticks(2);
 });
 
-LV_REGISTER_SELFTEST("tracks.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("tracks.persistence", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(590, 3);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     ct::BlockPos3 a = cpos(base);
@@ -345,7 +345,7 @@ LV_REGISTER_SELFTEST("tracks.persistence", [](Context& ctx) -> ll::coro::CoroTas
     ctx.require(plan.valid && plan.curve.has_value(), "plan a curve");
     for (auto const& piece : plan.straight) {
         auto const* blk = tr::trackBlock(piece.shape, false);
-        if (blk && !shapeAtPos(piece.pos)) lv::game::setBlock(*tr::regionOf(0), tr::toGame(piece.pos), *blk);
+        if (blk && !shapeAtPos(piece.pos)) br::game::setBlock(*tr::regionOf(0), tr::toGame(piece.pos), *blk);
     }
     tr::addCurve(0, *plan.curve);
     co_await ctx.ticks(2);

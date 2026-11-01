@@ -1,5 +1,5 @@
 name: Bug report
-description: Something in Levitate does not work as expected
+description: Something in Bearing does not work as expected
 labels: [bug]
 body:
   - type: textarea
@@ -27,13 +27,13 @@ body:
         - Dedicated server (BDS)
         - Single-player / local world (client mod)
         - Client mod joining a server
-        - Vanilla client joining a server with Levitate
+        - Vanilla client joining a server with Bearing
     validations:
       required: true
   - type: input
-    id: levitate
+    id: bearing
     attributes:
-      label: Levitate version
+      label: Bearing version
       placeholder: 0.1.0
     validations:
       required: true
@@ -55,7 +55,7 @@ body:
     id: log
     attributes:
       label: Log
-      description: Relevant lines from the server console or `logs/latest.log` (lines with `[Levitate]`, errors, crash reports).
+      description: Relevant lines from the server console or `logs/latest.log` (lines with `[Bearing]`, errors, crash reports).
       render: text
   - type: textarea
     id: screenshots

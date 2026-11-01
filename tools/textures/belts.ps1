@@ -28,7 +28,7 @@ $band = @(
 $plain = @{ e = '#1d1b1a'; d = '#2d2a28'; b = '#45403c'; c = '#5d5751' }
 Save-PixelArt -Rows $band -Palette $plain -Path "$blocks/belt.png"
 
-# Java dye order (white .. black), the order of the levitate:color state
+# Java dye order (white .. black), the order of the bearing:color state
 $dyes = [ordered]@{
     white = '#d8dcdc'; orange = '#e0712a'; magenta = '#b84ab0'; light_blue = '#4aa8d8'
     yellow = '#e8c230'; lime = '#78c22a'; pink = '#e48ca8'; gray = '#4a4f52'
@@ -208,5 +208,5 @@ $dust = @(
     '........................................'
 )
 $particles = Join-Path $PSScriptRoot '../../assets/pack/rp/textures/particle'
-Save-PixelArt -Rows $dust -Palette @{ w = '#ffffff' } -Path "$particles/levitate_belt_connector_dust.png"
+Save-PixelArt -Rows $dust -Palette @{ w = '#ffffff' } -Path "$particles/bearing_belt_connector_dust.png"
 Write-Host 'belts textures written'

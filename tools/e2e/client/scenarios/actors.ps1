@@ -21,22 +21,22 @@ Invoke-Chat '/clear @s'
 Invoke-Chat '/tp @s 0 -60 0 facing 10 -61 0'
 Start-Sleep -Milliseconds 600
 Invoke-Chat '/fill ~3 ~ ~-4 ~9 ~4 ~4 air'
-Invoke-Chat '/setblock ~5 ~ ~-3 levitate:mechanical_harvester ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~5 ~ ~-2 levitate:mechanical_plough ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~5 ~ ~-1 levitate:mechanical_roller ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~5 ~ ~ levitate:portable_storage_interface ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~5 ~ ~1 levitate:contraption_controls ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~5 ~ ~2 levitate:red_seat'
-Invoke-Chat '/setblock ~5 ~ ~3 levitate:light_blue_seat'
+Invoke-Chat '/setblock ~5 ~ ~-3 bearing:mechanical_harvester ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~5 ~ ~-2 bearing:mechanical_plough ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~5 ~ ~-1 bearing:mechanical_roller ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~5 ~ ~ bearing:portable_storage_interface ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~5 ~ ~1 bearing:contraption_controls ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~5 ~ ~2 bearing:red_seat'
+Invoke-Chat '/setblock ~5 ~ ~3 bearing:light_blue_seat'
 Start-Sleep -Seconds 2
 Save-Screenshot 'models' | Out-Null
 
 # a roller and a harvester hanging on slime blocks, moving towards the camera
 Invoke-Chat '/fill ~5 ~ ~-3 ~5 ~ ~3 air'
 Invoke-Chat '/setblock ~8 ~1 ~ slime'
-Invoke-Chat '/setblock ~7 ~1 ~ levitate:mechanical_roller ["levitate:facing"=4]'
+Invoke-Chat '/setblock ~7 ~1 ~ bearing:mechanical_roller ["bearing:facing"=4]'
 Invoke-Chat '/setblock ~8 ~1 ~1 slime'
-Invoke-Chat '/setblock ~7 ~1 ~1 levitate:mechanical_harvester ["levitate:facing"=4]'
+Invoke-Chat '/setblock ~7 ~1 ~1 bearing:mechanical_harvester ["bearing:facing"=4]'
 Invoke-Chat '/setblock ~8 ~1 ~-1 slime'
 Start-Sleep -Milliseconds 800
 $mark = Get-LogMark
@@ -46,7 +46,7 @@ $id = [regex]::Match($line, 'contraption #(\d+) assembled').Groups[1].Value
 Invoke-Chat "/create contraption move $id -3 0 0 60"
 $animError = $null
 if (-not $vanilla) {
-    try { Wait-LogLine 'actors client: animating levitate:mechanical_' 30 -Since $mark | Out-Null } catch { $animError = $_ }
+    try { Wait-LogLine 'actors client: animating bearing:mechanical_' 30 -Since $mark | Out-Null } catch { $animError = $_ }
 }
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'moving-a' | Out-Null
@@ -61,7 +61,7 @@ Save-Screenshot 'placed' | Out-Null
 Invoke-Chat '/fill ~3 ~ ~-4 ~9 ~4 ~4 air'
 
 # sit down: right-click a seat right in front
-Invoke-Chat '/setblock 2 -60 0 levitate:yellow_seat'
+Invoke-Chat '/setblock 2 -60 0 bearing:yellow_seat'
 Invoke-Chat '/tp @s 0.5 -60 0.5 -90 32'   # east, 32 degrees down: the crosshair is on the seat
 Start-Sleep -Milliseconds 800
 Save-Screenshot 'seat' | Out-Null

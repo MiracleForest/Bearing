@@ -37,7 +37,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -167,16 +167,16 @@ void flatten(int dim, std::vector<ce::IPos> const& targets, int face) {
 
 void openForm(Player& player, int slot) {
     auto st = settingsOf(player.getInventory().getItem(slot));
-    ll::form::CustomForm form(trFor(player, "item.levitate:handheld_worldshaper.name", "Creative Worldshaper"));
+    ll::form::CustomForm form(trFor(player, "item.bearing:handheld_worldshaper.name", "Creative Worldshaper"));
     std::vector<std::string> brushes, tools, placements, patterns;
     for (int b = 0; b < 5; ++b) brushes.push_back(trFor(player, ce::brushKey(ce::Brush(b)), ce::brushFallback(ce::Brush(b))));
     for (int t = 0; t < 6; ++t) tools.push_back(trFor(player, ce::toolKey(ce::ShaperTool(t)), ce::toolFallback(ce::ShaperTool(t))));
     for (int p = 0; p < 3; ++p) placements.push_back(trFor(player, ce::placementKey(ce::Placement(p)), ce::placementFallback(ce::Placement(p))));
     for (int p = 0; p < 6; ++p) patterns.push_back(trFor(player, ce::patternKey(ce::Pattern(p)), ce::patternFallback(ce::Pattern(p))));
     form.appendDropdown("brush", trFor(player, "create.gui.terrainzapper.brush", "Brush"), brushes, static_cast<std::size_t>(st.brush));
-    form.appendSlider("p0", tr("lv.equipment.worldshaper.param", "Parameter {}", 1), 0, 32, 1, st.params[0]);
-    form.appendSlider("p1", tr("lv.equipment.worldshaper.param", "Parameter {}", 2), 0, 32, 1, st.params[1]);
-    form.appendSlider("p2", tr("lv.equipment.worldshaper.param", "Parameter {}", 3), 0, 32, 1, st.params[2]);
+    form.appendSlider("p0", tr("br.equipment.worldshaper.param", "Parameter {}", 1), 0, 32, 1, st.params[0]);
+    form.appendSlider("p1", tr("br.equipment.worldshaper.param", "Parameter {}", 2), 0, 32, 1, st.params[1]);
+    form.appendSlider("p2", tr("br.equipment.worldshaper.param", "Parameter {}", 3), 0, 32, 1, st.params[2]);
     form.appendDropdown("tool", trFor(player, "create.gui.terrainzapper.tool", "Tool"), tools, static_cast<std::size_t>(st.tool));
     form.appendDropdown("placement", trFor(player, "create.gui.terrainzapper.placement", "Placement"), placements, static_cast<std::size_t>(st.placement));
     form.appendDropdown("pattern", trFor(player, "create.gui.terrainzapper.patternSection", "Pattern"), patterns, static_cast<std::size_t>(st.pattern));
@@ -224,7 +224,7 @@ void registerScreen() {
             for (int q = 0; q < 3; ++q) placements.push_back(trFor(p, ce::placementKey(ce::Placement(q)), ce::placementFallback(ce::Placement(q))));
             for (int q = 0; q < 6; ++q) patterns.push_back(trFor(p, ce::patternKey(ce::Pattern(q)), ce::patternFallback(ce::Pattern(q))));
             return Json{
-                {"title", trFor(p, "item.levitate:handheld_worldshaper.name", "Creative Worldshaper")},
+                {"title", trFor(p, "item.bearing:handheld_worldshaper.name", "Creative Worldshaper")},
                 {"settings", st.toJson()},
                 {"brushes", brushes},
                 {"tools", tools},
@@ -501,4 +501,4 @@ void installShaper() {
     registerScreen();
 }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

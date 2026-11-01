@@ -12,7 +12,7 @@
 #include "core/tracks/Curve.h"
 #include "core/tracks/Shape.h"
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 /// The end a player selected with the track item (Create's ConnectingFrom).
 struct TrackEnd {
@@ -67,4 +67,4 @@ struct PlacementPlan {
 /// straight, everything else keeps its shape).
 [[nodiscard]] Shape runShape(Shape s);
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

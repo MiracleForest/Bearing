@@ -5,7 +5,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::transmission {
+namespace br::core::transmission {
 
 using kinetics::axisOf;
 using kinetics::isPositive;
@@ -273,4 +273,4 @@ float controllerConveyedSpeed(
     return desired;
 }
 
-} // namespace lv::core::transmission
+} // namespace br::core::transmission

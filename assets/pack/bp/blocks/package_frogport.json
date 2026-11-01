@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:package_frogport",
+      "identifier": "bearing:package_frogport",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:goggles": [
+        "bearing:goggles": [
           0,
           1
         ],
-        "levitate:yaw": [
+        "bearing:yaw": [
           0,
           1,
           2,
@@ -33,25 +33,25 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.package_frogport",
+        "identifier": "geometry.bearing.package_frogport",
         "bone_visibility": {
-          "base": "q.block_state('levitate:yaw') == 0 || q.block_state('levitate:yaw') == 4 || q.block_state('levitate:yaw') == 8 || q.block_state('levitate:yaw') == 12",
-          "head": "q.block_state('levitate:yaw') == 0 || q.block_state('levitate:yaw') == 4 || q.block_state('levitate:yaw') == 8 || q.block_state('levitate:yaw') == 12",
-          "goggles": "(q.block_state('levitate:yaw') == 0 || q.block_state('levitate:yaw') == 4 || q.block_state('levitate:yaw') == 8 || q.block_state('levitate:yaw') == 12) && q.block_state('levitate:goggles') == 1",
-          "base_r1": "q.block_state('levitate:yaw') == 1 || q.block_state('levitate:yaw') == 5 || q.block_state('levitate:yaw') == 9 || q.block_state('levitate:yaw') == 13",
-          "head_r1": "q.block_state('levitate:yaw') == 1 || q.block_state('levitate:yaw') == 5 || q.block_state('levitate:yaw') == 9 || q.block_state('levitate:yaw') == 13",
-          "goggles_r1": "(q.block_state('levitate:yaw') == 1 || q.block_state('levitate:yaw') == 5 || q.block_state('levitate:yaw') == 9 || q.block_state('levitate:yaw') == 13) && q.block_state('levitate:goggles') == 1",
-          "base_r2": "q.block_state('levitate:yaw') == 2 || q.block_state('levitate:yaw') == 6 || q.block_state('levitate:yaw') == 10 || q.block_state('levitate:yaw') == 14",
-          "head_r2": "q.block_state('levitate:yaw') == 2 || q.block_state('levitate:yaw') == 6 || q.block_state('levitate:yaw') == 10 || q.block_state('levitate:yaw') == 14",
-          "goggles_r2": "(q.block_state('levitate:yaw') == 2 || q.block_state('levitate:yaw') == 6 || q.block_state('levitate:yaw') == 10 || q.block_state('levitate:yaw') == 14) && q.block_state('levitate:goggles') == 1",
-          "base_r3": "q.block_state('levitate:yaw') == 3 || q.block_state('levitate:yaw') == 7 || q.block_state('levitate:yaw') == 11 || q.block_state('levitate:yaw') == 15",
-          "head_r3": "q.block_state('levitate:yaw') == 3 || q.block_state('levitate:yaw') == 7 || q.block_state('levitate:yaw') == 11 || q.block_state('levitate:yaw') == 15",
-          "goggles_r3": "(q.block_state('levitate:yaw') == 3 || q.block_state('levitate:yaw') == 7 || q.block_state('levitate:yaw') == 11 || q.block_state('levitate:yaw') == 15) && q.block_state('levitate:goggles') == 1"
+          "base": "q.block_state('bearing:yaw') == 0 || q.block_state('bearing:yaw') == 4 || q.block_state('bearing:yaw') == 8 || q.block_state('bearing:yaw') == 12",
+          "head": "q.block_state('bearing:yaw') == 0 || q.block_state('bearing:yaw') == 4 || q.block_state('bearing:yaw') == 8 || q.block_state('bearing:yaw') == 12",
+          "goggles": "(q.block_state('bearing:yaw') == 0 || q.block_state('bearing:yaw') == 4 || q.block_state('bearing:yaw') == 8 || q.block_state('bearing:yaw') == 12) && q.block_state('bearing:goggles') == 1",
+          "base_r1": "q.block_state('bearing:yaw') == 1 || q.block_state('bearing:yaw') == 5 || q.block_state('bearing:yaw') == 9 || q.block_state('bearing:yaw') == 13",
+          "head_r1": "q.block_state('bearing:yaw') == 1 || q.block_state('bearing:yaw') == 5 || q.block_state('bearing:yaw') == 9 || q.block_state('bearing:yaw') == 13",
+          "goggles_r1": "(q.block_state('bearing:yaw') == 1 || q.block_state('bearing:yaw') == 5 || q.block_state('bearing:yaw') == 9 || q.block_state('bearing:yaw') == 13) && q.block_state('bearing:goggles') == 1",
+          "base_r2": "q.block_state('bearing:yaw') == 2 || q.block_state('bearing:yaw') == 6 || q.block_state('bearing:yaw') == 10 || q.block_state('bearing:yaw') == 14",
+          "head_r2": "q.block_state('bearing:yaw') == 2 || q.block_state('bearing:yaw') == 6 || q.block_state('bearing:yaw') == 10 || q.block_state('bearing:yaw') == 14",
+          "goggles_r2": "(q.block_state('bearing:yaw') == 2 || q.block_state('bearing:yaw') == 6 || q.block_state('bearing:yaw') == 10 || q.block_state('bearing:yaw') == 14) && q.block_state('bearing:goggles') == 1",
+          "base_r3": "q.block_state('bearing:yaw') == 3 || q.block_state('bearing:yaw') == 7 || q.block_state('bearing:yaw') == 11 || q.block_state('bearing:yaw') == 15",
+          "head_r3": "q.block_state('bearing:yaw') == 3 || q.block_state('bearing:yaw') == 7 || q.block_state('bearing:yaw') == 11 || q.block_state('bearing:yaw') == 15",
+          "goggles_r3": "(q.block_state('bearing:yaw') == 3 || q.block_state('bearing:yaw') == 7 || q.block_state('bearing:yaw') == 11 || q.block_state('bearing:yaw') == 15) && q.block_state('bearing:goggles') == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_package_frogport",
+          "texture": "bearing_package_frogport",
           "render_method": "alpha_test"
         }
       },
@@ -91,7 +91,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:yaw') == 3 || q.block_state('levitate:yaw') == 4 || q.block_state('levitate:yaw') == 5 || q.block_state('levitate:yaw') == 6",
+        "condition": "q.block_state('bearing:yaw') == 3 || q.block_state('bearing:yaw') == 4 || q.block_state('bearing:yaw') == 5 || q.block_state('bearing:yaw') == 6",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -103,7 +103,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:yaw') == 7 || q.block_state('levitate:yaw') == 8 || q.block_state('levitate:yaw') == 9 || q.block_state('levitate:yaw') == 10",
+        "condition": "q.block_state('bearing:yaw') == 7 || q.block_state('bearing:yaw') == 8 || q.block_state('bearing:yaw') == 9 || q.block_state('bearing:yaw') == 10",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -115,7 +115,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:yaw') == 11 || q.block_state('levitate:yaw') == 12 || q.block_state('levitate:yaw') == 13 || q.block_state('levitate:yaw') == 14",
+        "condition": "q.block_state('bearing:yaw') == 11 || q.block_state('bearing:yaw') == 12 || q.block_state('bearing:yaw') == 13 || q.block_state('bearing:yaw') == 14",
         "components": {
           "minecraft:transformation": {
             "rotation": [

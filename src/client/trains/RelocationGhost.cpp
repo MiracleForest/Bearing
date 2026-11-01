@@ -5,7 +5,7 @@
 // player relocates a train (feature/trains/Relocation.cpp) and an empty list when it ends. Each
 // carriage is drawn as the 12 edges of its (turned, tilted) bounding box, in Create's green.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cmath>
@@ -32,7 +32,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::trains {
+namespace br::client::trains {
 
 namespace {
 
@@ -161,8 +161,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::trains
+} // namespace br::client::trains
 
-LV_REGISTER_MODULE(lv::client::trains::RelocationGhostModule);
+BR_REGISTER_MODULE(br::client::trains::RelocationGhostModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -29,13 +29,13 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 namespace blockdata = common::blockdata;
 
 namespace {
 
-constexpr char kDbIndex[] = "lv:steam:index";
+constexpr char kDbIndex[] = "br:steam:index";
 
 struct ShaftState {
     std::optional<GlobalPos> engine;
@@ -106,7 +106,7 @@ void playPuffAt(GlobalPos const& p, int engines) {
     float volume = 3.f / static_cast<float>(std::max(2, engines / 6));
     float pitch  = 1.18f - d(puffRng()) * .25f;
     playSound(p.dim, p.x, p.y, p.z, "extinguish.candle", volume, pitch);
-    playSound(p.dim, p.x, p.y, p.z, "levitate.steam.engine", volume / 16.f, .8f);
+    playSound(p.dim, p.x, p.y, p.z, "bearing.steam.engine", volume / 16.f, .8f);
 }
 
 void playPuffs() {
@@ -186,18 +186,18 @@ std::string text(Player const* viewer, std::string_view key, std::string_view fa
     return viewer ? trFor(*viewer, key, fallback, args...) : tr(key, fallback, args...);
 }
 
-std::optional<int> shaftAxis(Block const& block) { return intState(block, "levitate:axis"); }
+std::optional<int> shaftAxis(Block const& block) { return intState(block, "bearing:axis"); }
 
-/// `levitate:size` holds 0 medium (the default), 1 small, 2 large.
+/// `bearing:size` holds 0 medium (the default), 1 small, 2 large.
 cs::WhistleSize sizeOfState(int v) { return v == 1 ? cs::WhistleSize::Small : v == 2 ? cs::WhistleSize::Large : cs::WhistleSize::Medium; }
 int stateOfSize(cs::WhistleSize s) { return s == cs::WhistleSize::Small ? 1 : s == cs::WhistleSize::Large ? 2 : 0; }
 
-cs::WhistleSize whistleSize(Block const& block) { return sizeOfState(intState(block, "levitate:size").value_or(0)); }
+cs::WhistleSize whistleSize(Block const& block) { return sizeOfState(intState(block, "bearing:size").value_or(0)); }
 
 std::optional<cs::ExtensionShape> extensionShapeAt(BlockSource& region, GlobalPos const& p) {
     if (idAt(region, p) != kExtension) return std::nullopt;
     auto const& b = region.getBlock(game::blockPos(p));
-    return static_cast<cs::ExtensionShape>(std::clamp(intState(b, "levitate:shape").value_or(0), 0, 2));
+    return static_cast<cs::ExtensionShape>(std::clamp(intState(b, "bearing:shape").value_or(0), 0, 2));
 }
 
 void markIndexDirty() { gIndexDirty = true; }
@@ -255,7 +255,7 @@ bool shaftStillValid(BlockSource& region, GlobalPos const& shaft, int axis) {
 }
 
 void convertShaft(BlockSource& region, GlobalPos const& pos, bool toPowered, int axis) {
-    auto const* block = game::blockWith(toPowered ? kPoweredShaft : kShaft, {{"levitate:axis", axis}});
+    auto const* block = game::blockWith(toPowered ? kPoweredShaft : kShaft, {{"bearing:axis", axis}});
     if (!block) return;
     converting().insert(pos);
     game::setBlock(region, game::blockPos(pos), *block);
@@ -532,7 +532,7 @@ void onWhistleAdded(GlobalPos const& pos) {
     }
     index().whistles.insert(pos);
     markIndexDirty();
-    setStates(*region, pos, {{"levitate:powered", redstonePowered(*region, pos) ? 1 : 0}});
+    setStates(*region, pos, {{"bearing:powered", redstonePowered(*region, pos) ? 1 : 0}});
     if (auto info = tankAt(tank)) markBoilerDirty(info->controller);
     log().info("steam: steam whistle placed at {}", at(pos));
 }
@@ -565,9 +565,9 @@ void onExtensionChanged(GlobalPos const& pos, bool added) {
             removeBlock(*region, pos);
             return;
         }
-        auto size = intState(region->getBlock(game::blockPos(below)), "levitate:size").value_or(0);
+        auto size = intState(region->getBlock(game::blockPos(below)), "bearing:size").value_or(0);
         auto shape = cs::connectedShape(extensionShapeAt(*region, pos).value_or(cs::ExtensionShape::Single), idAt(*region, offset(pos, cs::Dir::Up)) == kExtension);
-        setStates(*region, pos, {{"levitate:size", size}, {"levitate:shape", static_cast<int>(shape)}});
+        setStates(*region, pos, {{"bearing:size", size}, {"bearing:shape", static_cast<int>(shape)}});
     } else {
         // everything above falls apart
         for (int i = 1; i <= 32; ++i) {
@@ -580,7 +580,7 @@ void onExtensionChanged(GlobalPos const& pos, bool added) {
         auto shape = extensionShapeAt(*region, below);
         if (shape && *shape != cs::ExtensionShape::Single) {
             auto next = cs::connectedShape(*shape, added);
-            setStates(*region, below, {{"levitate:shape", static_cast<int>(next)}});
+            setStates(*region, below, {{"bearing:shape", static_cast<int>(next)}});
         }
     }
 }
@@ -652,10 +652,10 @@ bool useOnWhistle(Player& player, GlobalPos const& pos, ItemStack const& held, b
         );
         GlobalPos target = offset(base, cs::Dir::Up, action.offset);
         if (action.kind == cs::IncrementAction::Widen) {
-            setStates(*region, target, {{"levitate:shape", static_cast<int>(cs::ExtensionShape::Double)}});
+            setStates(*region, target, {{"bearing:shape", static_cast<int>(cs::ExtensionShape::Double)}});
         } else if (action.kind == cs::IncrementAction::Place) {
-            auto size = intState(baseBlock, "levitate:size").value_or(0);
-            if (auto const* b = game::blockWith(kExtension, {{"levitate:size", size}, {"levitate:shape", 0}})) game::setBlock(*region, game::blockPos(target), *b);
+            auto size = intState(baseBlock, "bearing:size").value_or(0);
+            if (auto const* b = game::blockWith(kExtension, {{"bearing:size", size}, {"bearing:shape", 0}})) game::setBlock(*region, game::blockPos(target), *b);
         }
         if (action.kind != cs::IncrementAction::None) {
             // Create: the note block xylophone at a quarter volume and the whistle's (copper) hit sound
@@ -677,7 +677,7 @@ bool useOnWhistle(Player& player, GlobalPos const& pos, ItemStack const& held, b
                 if (idAt(*region, p) != kExtension) break;
                 removeBlock(*region, p);
             }
-            setStates(*region, pos, {{"levitate:shape", static_cast<int>(cs::ExtensionShape::Single)}});
+            setStates(*region, pos, {{"bearing:shape", static_cast<int>(cs::ExtensionShape::Single)}});
             goggles::wrench::playRemoveSound(pos);
             log().info("steam: {} changed the whistle at {}: pitch {}", player.getRealName(), at(base), whistlePitchAt(base));
             return true;
@@ -686,11 +686,11 @@ bool useOnWhistle(Player& player, GlobalPos const& pos, ItemStack const& held, b
         // Create's WhistleBlock.onWrenched: the next size, for the whole column
         auto next = static_cast<cs::WhistleSize>((static_cast<int>(whistleSize(baseBlock)) + 1) % 3);
         int  size = stateOfSize(next);
-        setStates(*region, base, {{"levitate:size", size}});
+        setStates(*region, base, {{"bearing:size", size}});
         for (int i = 1; i <= 32; ++i) {
             GlobalPos p = offset(base, cs::Dir::Up, i);
             if (idAt(*region, p) != kExtension) break;
-            setStates(*region, p, {{"levitate:size", size}});
+            setStates(*region, p, {{"bearing:size", size}});
         }
         playSound(pos.dim, pos.x + .5, pos.y + .5, pos.z + .5, "block.itemframe.rotate_item", 1.f, 1.f);
         static constexpr char const* names[]{"small", "medium", "large"};
@@ -853,11 +853,11 @@ void tickSteam() {
             continue;
         }
         auto const& block = region->getBlock(game::blockPos(pos));
-        bool        powered = intState(block, "levitate:powered").value_or(0) != 0;
+        bool        powered = intState(block, "bearing:powered").value_or(0) != 0;
         if (gTick % 2 == 0) {
             bool now = redstonePowered(*region, pos);
             if (now != powered) {
-                setStates(*region, pos, {{"levitate:powered", now ? 1 : 0}});
+                setStates(*region, pos, {{"bearing:powered", now ? 1 : 0}});
                 powered = now;
             }
         }
@@ -871,7 +871,7 @@ void tickSteam() {
         int   pitch = sounding ? whistlePitchAt(pos) : 0;
         float f     = cs::whistleSoundPitch(pitch);
         static constexpr char const* sizeNames[]{"small", "medium", "large"};
-        static constexpr char const* toneSounds[]{"levitate.steam.whistle_high", "levitate.steam.whistle_medium", "levitate.steam.whistle_low"};
+        static constexpr char const* toneSounds[]{"bearing.steam.whistle_high", "bearing.steam.whistle_medium", "bearing.steam.whistle_low"};
         bool started = sounding && (!ws.sounding || ws.lastPitch != cs::pitchId(pitch, size));
         if (started) {
             if (!ws.sounding) whistleChiff(pos,size == cs::WhistleSize::Small ? f + .75f : f);
@@ -962,4 +962,4 @@ std::vector<std::string> describe(GlobalPos const& pos, Player const* viewer) {
     return out;
 }
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam

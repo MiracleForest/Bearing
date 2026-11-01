@@ -6,7 +6,7 @@
 #                    high = pitch 2, medium = 1, low = 0.5, times 2^(-semitones/12) at runtime)
 # steam_chiff.wav    the short hiss when a whistle starts
 # steam_engine.wav   one puff of the steam engine
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

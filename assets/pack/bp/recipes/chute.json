@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:chute"
+      "identifier": "bearing:chute"
     },
     "tags": [
       "crafting_table"
@@ -14,7 +14,7 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       },
       "I": {
         "item": "minecraft:iron_ingot"
@@ -22,11 +22,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       }
     ],
     "result": {
-      "item": "levitate:chute",
+      "item": "bearing:chute",
       "count": 4
     }
   }

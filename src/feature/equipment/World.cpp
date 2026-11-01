@@ -31,9 +31,9 @@
 #include "game/Blocks.h"
 #include "mod/Config.h"
 
-LV_REGISTER_CONFIG("equipment", lv::feature::equipment::Config);
+BR_REGISTER_CONFIG("equipment", br::feature::equipment::Config);
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace {
 std::vector<std::function<void()>>& deferred() {
@@ -43,7 +43,7 @@ std::vector<std::function<void()>>& deferred() {
 std::uint64_t gTick = 0;
 } // namespace
 
-Config const& config() { return lv::config::get<Config>(); }
+Config const& config() { return br::config::get<Config>(); }
 
 int placementAssistRange() {
     int range = config().placementAssistRange;
@@ -210,4 +210,4 @@ void runDeferred() {
 
 void clearDeferred() { deferred().clear(); }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

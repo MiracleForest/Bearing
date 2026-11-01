@@ -23,12 +23,12 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 namespace blockdata = common::blockdata;
 namespace fluids    = common::fluids;
 namespace citems    = common::items;
-namespace itemfluids = lv::feature::fluids;
+namespace itemfluids = br::feature::fluids;
 using common::fluids::FluidStack;
 
 namespace {
@@ -219,10 +219,10 @@ void refreshStructure(GlobalPos const& controller) {
                     *region,
                     globalOf(controller.dim, p),
                     {
-                        {"levitate:above", y < ctrl->height - 1 ? 1 : 0                                       },
-                        {"levitate:below", y > 0 ? 1 : 0                                                      },
-                        {"levitate:shape", shape == 0 ? 1 : shape == 1 ? 0 : shape                            },
-                        {"levitate:light", cs::partLight(light, amount, capacity, ctrl->height, y, ctrl->window)},
+                        {"bearing:above", y < ctrl->height - 1 ? 1 : 0                                       },
+                        {"bearing:below", y > 0 ? 1 : 0                                                      },
+                        {"bearing:shape", shape == 0 ? 1 : shape == 1 ? 0 : shape                            },
+                        {"bearing:light", cs::partLight(light, amount, capacity, ctrl->height, y, ctrl->window)},
                 }
                 );
             }
@@ -566,4 +566,4 @@ void registerTankCapabilities() {
     contraption::registerFluidStorage(kTank, adapter);
 }
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam

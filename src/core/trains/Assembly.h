@@ -12,7 +12,7 @@
 #include <variant>
 #include <vector>
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 struct AssemblyError {
     std::string              key;      ///< create.train_assembly.* / create.gui.assembly.exception.*
@@ -52,4 +52,4 @@ struct Layout {
 /// Returns the error for sideways controls; sets `forward` / `backward`.
 [[nodiscard]] std::optional<AssemblyError> checkControls(std::vector<int> const& controls, bool& forward, bool& backward);
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

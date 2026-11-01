@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:bar_of_chocolate",
+      "identifier": "bearing:bar_of_chocolate",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_bar_of_chocolate",
+      "minecraft:icon": "bearing_bar_of_chocolate",
       "minecraft:display_name": {
-        "value": "item.levitate:bar_of_chocolate.name"
+        "value": "item.bearing:bar_of_chocolate.name"
       },
       "minecraft:max_stack_size": 64,
       "minecraft:food": {

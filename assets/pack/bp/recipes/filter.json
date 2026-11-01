@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:filter"
+      "identifier": "bearing:filter"
     },
     "tags": ["crafting_table"],
     "pattern": ["NWN"],
@@ -11,6 +11,6 @@
       "W": { "tag": "minecraft:wool" }
     },
     "unlock": [{ "item": "minecraft:iron_nugget" }],
-    "result": { "item": "levitate:filter" }
+    "result": { "item": "bearing:filter" }
   }
 }

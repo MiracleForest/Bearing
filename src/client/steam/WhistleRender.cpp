@@ -1,10 +1,10 @@
 // Client (steam unit): the mouth of steam whistles (Create's WhistleRenderer). Chunk meshes draw
-// whistles without their mouth (levitate:mouth 1); the mouth is drawn here, moved up to 4/16 by
+// whistles without their mouth (bearing:mouth 1); the mouth is drawn here, moved up to 4/16 by
 // the whistle's animation (Create: chases 1 while it sounds, EXP .5, back to 0 LINEAR .4) and,
 // once more than half open, wiggled by sin(ticks / 8 · 2π · (4 − size)) / 16. The server sends the
 // sounding whistles ("steam.whistles"); vanilla clients see the mouth still.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -74,14 +74,14 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::steam {
+namespace br::client::steam {
 
 namespace {
 
 using Json = nlohmann::json;
 using Key  = std::array<int, 4>; // dim, x, y, z
 
-constexpr char const* kWhistle = "levitate:steam_whistle";
+constexpr char const* kWhistle = "bearing:steam_whistle";
 
 struct Mouth {
     float         value = 0, prev = 0; ///< Create's LerpedFloat animation (0 shut .. 1 open)
@@ -149,18 +149,18 @@ mce::Mesh* mouthMesh(Tessellator& tess, std::string const& bone) {
     if (auto it = s.meshes.find(bone); it != s.meshes.end()) return it->second.get();
     auto& slot = s.meshes[bone];
     static std::optional<core::kinetics::RotorModel> model = []() -> std::optional<core::kinetics::RotorModel> {
-        auto file = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks" / "steam_whistle.geo.json";
+        auto file = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks" / "steam_whistle.geo.json";
         std::ifstream in(file);
         auto          j = Json::parse(in, nullptr, false, true);
         if (j.is_discarded()) return std::nullopt;
         auto parsed = core::kinetics::parseGeometry(j);
-        if (!parsed || !parsed->contains("geometry.levitate.steam_whistle")) return std::nullopt;
-        return parsed->at("geometry.levitate.steam_whistle");
+        if (!parsed || !parsed->contains("geometry.bearing.steam_whistle")) return std::nullopt;
+        return parsed->at("geometry.bearing.steam_whistle");
     }();
     if (!model) return nullptr;
     auto b = model->bones.find(bone);
     if (b == model->bones.end() || b->second.empty()) return nullptr;
-    auto  tex = BlockGraphics::getTextureUVCoordinateSet("levitate_steam_whistle", 0, 0);
+    auto  tex = BlockGraphics::getTextureUVCoordinateSet("bearing_steam_whistle", 0, 0);
     float u0 = tex._u0, v0 = tex._v0, u1 = tex._u1, v1 = tex._v1;
     auto  uv = [&](std::array<float, 2> const& t) { return Vec2{u0 + (u1 - u0) * t[0], v0 + (v1 - v0) * t[1]}; };
     auto  at = [](std::array<float, 3> const& p) { return Vec3{p[0], p[1], p[2]}; };
@@ -170,7 +170,7 @@ mce::Mesh* mouthMesh(Tessellator& tess, std::string const& bone) {
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_whistle_mouth", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_whistle_mouth", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -218,7 +218,7 @@ void renderMouths(BaseActorRenderContext& rc) {
             continue;
         }
         auto const& block = region.getBlock(bp);
-        int         size  = game::intState(block, "levitate:size").value_or(0); // 0 medium, 1 small, 2 large
+        int         size  = game::intState(block, "bearing:size").value_or(0); // 0 medium, 1 small, 2 large
         int         ord   = size == 1 ? 0 : size == 0 ? 1 : 2;                   // Create's WhistleSize ordinal
         Key         key{dim, p[0], p[1], p[2]};
         bool        on = s.sounding.contains(key);
@@ -252,13 +252,13 @@ void renderMouths(BaseActorRenderContext& rc) {
     }
 }
 
-/// The whistle state without its mouth (levitate:mouth 1), cached per state.
+/// The whistle state without its mouth (bearing:mouth 1), cached per state.
 Block const* withoutMouth(Block const& block) {
     auto&           s = state();
     std::lock_guard lock(s.mutex);
     auto [it, fresh] = s.mouthless.try_emplace(&block, nullptr);
-    if (fresh && game::intState(block, "levitate:mouth").value_or(1) == 0) {
-        if (auto const* type = block.getBlockType().getBlockState(HashedString("levitate:mouth")))
+    if (fresh && game::intState(block, "bearing:mouth").value_or(1) == 0) {
+        if (auto const* type = block.getBlockType().getBlockState(HashedString("bearing:mouth")))
             if (auto b = block.setState(*type, 1)) it->second = b.as_ptr();
     }
     return it->second;
@@ -345,8 +345,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::steam
+} // namespace br::client::steam
 
-LV_REGISTER_MODULE(lv::client::steam::WhistleClientModule);
+BR_REGISTER_MODULE(br::client::steam::WhistleClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

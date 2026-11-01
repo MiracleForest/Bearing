@@ -55,7 +55,7 @@
 #include "feature/kinetics/Kinetics.h"
 #include "mod/Log.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace items = common::items;
 using cb::FanType;
@@ -126,7 +126,7 @@ std::map<GlobalPos, NozzleState>& nozzles() {
 
 /// Blocks the processing of items on them applies to (Create's TransportedItemStackHandlerBehaviour).
 bool isTransportedHandler(std::string_view id) {
-    return id == "levitate:belt" || id == "levitate:depot" || id == "levitate:weighted_ejector";
+    return id == "bearing:belt" || id == "bearing:depot" || id == "bearing:weighted_ejector";
 }
 
 // ---- blocks in the current -------------------------------------------------------------------------------------
@@ -134,13 +134,13 @@ bool isTransportedHandler(std::string_view id) {
 /// Create's #create:fan_transparent.
 bool fanTransparent(std::string_view id) {
     static std::unordered_set<std::string_view> const ids{
-        "levitate:blaze_burner",
-        "levitate:lit_blaze_burner",
-        "levitate:sail_frame",
-        "levitate:andesite_bars",
-        "levitate:brass_bars",
-        "levitate:copper_bars",
-        "levitate:copycat_base",
+        "bearing:blaze_burner",
+        "bearing:lit_blaze_burner",
+        "bearing:sail_frame",
+        "bearing:andesite_bars",
+        "bearing:brass_bars",
+        "bearing:copper_bars",
+        "bearing:copycat_base",
         "minecraft:iron_bars",
         "minecraft:mangrove_roots",
         "minecraft:campfire",
@@ -274,7 +274,7 @@ void airflowParticle(GlobalPos const& pos, FanState const& st) {
     particleWith(
         pos.dim,
         start,
-        "levitate:fan_airflow",
+        "bearing:fan_airflow",
         {
             {"dir_x",  float(flow.x)},
             {"dir_y",  float(flow.y)},
@@ -353,9 +353,9 @@ void rebuild(BlockSource& region, GlobalPos const& pos, cb::Face facing, FanStat
 // ---- item entities ---------------------------------------------------------------------------------------------------
 
 // Create keeps "CreateData.Processing" {Type, Time} in the item entity's persistent data, so it
-// survives saving and chunk unloading: Levitate mirrors it in an entity tag "lv_fan:<type>:<time>"
+// survives saving and chunk unloading: Bearing mirrors it in an entity tag "br_fan:<type>:<time>"
 // (written when the type changes, when it is done and every second while it counts down).
-constexpr std::string_view kProcessingTag = "lv_fan:";
+constexpr std::string_view kProcessingTag = "br_fan:";
 
 void writeProcessingTag(Actor& e, ItemProcessing const& st) {
     if (e.hasTags())
@@ -538,12 +538,12 @@ FanType catalystAt(BlockSource& region, BlockPos const& p) {
     auto isLava  = [](std::string const& s) { return s == "minecraft:lava" || s == "minecraft:flowing_lava"; };
     if (isWater(id) || isWater(liquid)) valid.push_back(FanType::Splashing);
     if (isLava(id) || isLava(liquid)) valid.push_back(FanType::Blasting);
-    if (id == "levitate:blaze_burner") {
+    if (id == "bearing:blaze_burner") {
         auto heat = common::heat::level(region, p);
         if (heat >= core::common::HeatLevel::Fading) valid.push_back(FanType::Blasting);
         if (heat == core::common::HeatLevel::Smouldering) valid.push_back(FanType::Smoking);
-    } else if (id == "levitate:lit_blaze_burner") {
-        bool soul = stateOf(block, "levitate:flame_type") == 1;
+    } else if (id == "bearing:lit_blaze_burner") {
+        bool soul = stateOf(block, "bearing:flame_type") == 1;
         valid.push_back(soul ? FanType::Haunting : FanType::Smoking);
     } else if (id == "minecraft:fire") {
         valid.push_back(FanType::Smoking);
@@ -606,7 +606,7 @@ std::optional<std::vector<ItemStack>> fanProcess(ItemStack const& stack, FanType
 }
 
 /// Create's haunting copies the horse's saved data (all but its UUID) onto the skeleton horse and
-/// drops its armor: Levitate copies what a horse's data holds that a skeleton horse can keep
+/// drops its armor: Bearing copies what a horse's data holds that a skeleton horse can keep
 /// (name, health / speed / jump attributes, tame state and owner, saddle).
 void copyHorse(Actor& horse, Actor& skeleton, BlockSource& region) {
     if (auto const& name = horse.getNameTag(); !name.empty()) skeleton.setNameTag(name);
@@ -719,7 +719,7 @@ void affectEntity(Actor& e, FanType type, int dim) {
 void tickFan(BlockSource& region, GlobalPos const& pos) {
     auto& st     = fans()[pos];
     auto  bp     = toBlockPos(pos);
-    auto  facing = faceOf(stateOf(region.getBlock(bp), "levitate:facing"));
+    auto  facing = faceOf(stateOf(region.getBlock(bp), "bearing:facing"));
     float speed  = kinetics::speedAt(pos);
     if (speed != st.speed || facing != st.current.direction) {
         st.speed = speed;
@@ -782,13 +782,13 @@ std::optional<FanView> fanAt(GlobalPos const& pos) {
 // ---- nozzle -----------------------------------------------------------------------------------------------------------------
 
 bool nozzleCanSurvive(BlockSource& region, BlockPos const& p) {
-    return nozzleCanSurvive(region, p, faceOf(stateOf(region.getBlock(p), "levitate:facing")));
+    return nozzleCanSurvive(region, p, faceOf(stateOf(region.getBlock(p), "bearing:facing")));
 }
 
 bool nozzleCanSurvive(BlockSource& region, BlockPos const& p, cb::Face facing) {
     auto behind = offset(p, opposite(facing));
     if (idAt(region, behind) != kFan) return false;
-    return stateOf(region.getBlock(behind), "levitate:facing") == int(facing);
+    return stateOf(region.getBlock(behind), "bearing:facing") == int(facing);
 }
 
 namespace {
@@ -822,7 +822,7 @@ void tickNozzle(BlockSource& region, GlobalPos const& pos) {
         return;
     }
     auto& st     = nozzles()[pos];
-    auto  facing = faceOf(stateOf(region.getBlock(bp), "levitate:facing"));
+    auto  facing = faceOf(stateOf(region.getBlock(bp), "bearing:facing"));
     auto  fanPos = toGlobal(pos.dim, offset(bp, opposite(facing)));
     float speed  = kinetics::speedAt(fanPos);
     float range  = speed == 0 ? 0.f : cb::fanMaxDistance(speed, fanConfig());
@@ -888,4 +888,4 @@ void tickNozzle(BlockSource& region, GlobalPos const& pos) {
     }
 }
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

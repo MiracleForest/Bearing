@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:haunted_bell",
+      "identifier": "bearing:haunted_bell",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,27 +15,27 @@
           4,
           5
         ],
-        "levitate:attachment": [
+        "bearing:attachment": [
           0,
           1,
           2,
           3
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ],
-        "levitate:part": [
+        "bearing:part": [
           0,
           1
         ]
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.bell_floor",
+      "minecraft:geometry": "geometry.bearing.bell_floor",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_haunted_bell",
+          "texture": "bearing_haunted_bell",
           "render_method": "alpha_test"
         }
       },
@@ -75,7 +75,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -87,7 +87,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -99,7 +99,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -111,7 +111,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -123,9 +123,9 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 0",
+        "condition": "q.block_state('bearing:attachment') == 0",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_floor",
+          "minecraft:geometry": "geometry.bearing.bell_floor",
           "minecraft:collision_box": {
             "origin": [
               -8,
@@ -153,15 +153,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 0 && q.block_state('levitate:part') == 1",
+        "condition": "q.block_state('bearing:attachment') == 0 && q.block_state('bearing:part') == 1",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_floor_frame"
+          "minecraft:geometry": "geometry.bearing.bell_floor_frame"
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 1",
+        "condition": "q.block_state('bearing:attachment') == 1",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_ceiling",
+          "minecraft:geometry": "geometry.bearing.bell_ceiling",
           "minecraft:collision_box": {
             "origin": [
               -6,
@@ -189,15 +189,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 1 && q.block_state('levitate:part') == 1",
+        "condition": "q.block_state('bearing:attachment') == 1 && q.block_state('bearing:part') == 1",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_ceiling_frame"
+          "minecraft:geometry": "geometry.bearing.bell_ceiling_frame"
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 2",
+        "condition": "q.block_state('bearing:attachment') == 2",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_single_wall",
+          "minecraft:geometry": "geometry.bearing.bell_single_wall",
           "minecraft:collision_box": {
             "origin": [
               -5,
@@ -225,15 +225,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 2 && q.block_state('levitate:part') == 1",
+        "condition": "q.block_state('bearing:attachment') == 2 && q.block_state('bearing:part') == 1",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_single_wall_frame"
+          "minecraft:geometry": "geometry.bearing.bell_single_wall_frame"
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 3",
+        "condition": "q.block_state('bearing:attachment') == 3",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_double_wall",
+          "minecraft:geometry": "geometry.bearing.bell_double_wall",
           "minecraft:collision_box": {
             "origin": [
               -5,
@@ -261,9 +261,9 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:attachment') == 3 && q.block_state('levitate:part') == 1",
+        "condition": "q.block_state('bearing:attachment') == 3 && q.block_state('bearing:part') == 1",
         "components": {
-          "minecraft:geometry": "geometry.levitate.bell_double_wall_frame"
+          "minecraft:geometry": "geometry.bearing.bell_double_wall_frame"
         }
       }
     ]
