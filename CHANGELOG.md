@@ -17,7 +17,8 @@ from `levitate:` to `bearing:`, so worlds saved with 0.1.0 do not carry over (se
 - Levitate is now **Bearing**. The repository is [MiracleForest/Bearing](https://github.com/MiracleForest/Bearing)
   (it was LiteLDev/Levitate, then MiracleForest/Levitate; GitHub redirects the old URLs).
 - The lip package is now `github.com/MiracleForest/Bearing` (was `github.com/LiteLDev/Levitate`).
-  Installing by the new path needs lip 0.35.0 or later. To move an existing install, run
+  Installing by the new path needs lip 0.35.0 or later. With lip 0.36.0 or later, `lip update` moves an existing
+  install of `github.com/LiteLDev/Levitate[#client]` to `github.com/MiracleForest/Bearing[#client]`. With older lip, run
   `lip uninstall github.com/LiteLDev/Levitate[#client]` and then `lip install github.com/MiracleForest/Bearing[#client]`.
   Versions up to 0.1.0 stay installable at the old path.
 - The mod folder is now `plugins/Bearing/` (server) and `mods/Bearing/` (client), and the release zips are
