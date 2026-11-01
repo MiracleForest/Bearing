@@ -3,11 +3,11 @@
 // backwards when it reverses).
 //
 // A carried bogey is shown by a display entity (a falling block, U4). While it is drawn, its block
-// is swapped for the animation step `levitate:anim` 0..3 (the brass wheel crosses turned in 22.5
+// is swapped for the animation step `bearing:anim` 0..3 (the brass wheel crosses turned in 22.5
 // degree steps, tools/models/bogeys.ps1) and put back afterwards, as the actors unit does for the
 // harvester and roller. Vanilla clients draw step 0 (still wheels).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cmath>
@@ -39,12 +39,12 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::trains {
+namespace br::client::trains {
 
 namespace {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
-namespace ft  = ::lv::feature::trains;
+namespace ext = ::br::feature::contraption::actors_ext;
+namespace ft  = ::br::feature::trains;
 
 struct Wheel {
     Vec3   last{};
@@ -66,7 +66,7 @@ Block const* stepped(Block const& base, int step) {
     static std::unordered_map<Block const*, std::array<Block const*, 4>> cache;
     auto [it, fresh] = cache.try_emplace(&base);
     if (fresh)
-        for (int i = 0; i < 4; ++i) it->second[i] = ext::withStates(base, {{"levitate:anim", std::int64_t{i}}});
+        for (int i = 0; i < 4; ++i) it->second[i] = ext::withStates(base, {{"bearing:anim", std::int64_t{i}}});
     return it->second[step & 3];
 }
 
@@ -97,7 +97,7 @@ double advance(Actor& entity, Block const& base, bool large, Vec3 const& renderP
     w.last = pos;
     if (std::abs(dx) + std::abs(dz) > 4) return w.angle; // a teleport (a display spawned again), not travel
     // the bogey's travel axis: model x, turned by bogey_axis and the display's residual yaw
-    double base0 = intState(base, "levitate:bogey_axis") == 1 ? 90.0 : 0.0;
+    double base0 = intState(base, "bearing:bogey_axis") == 1 ? 90.0 : 0.0;
     double yaw   = (base0 + residualDegrees) * std::numbers::pi / 180.0;
     double ax = std::cos(yaw), az = -std::sin(yaw); // (1, 0, 0) turned right-handed about +Y
     double along  = dx * ax + dz * az;
@@ -182,8 +182,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::trains
+} // namespace br::client::trains
 
-LV_REGISTER_MODULE(lv::client::trains::BogeyRendererModule);
+BR_REGISTER_MODULE(br::client::trains::BogeyRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

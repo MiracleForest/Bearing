@@ -4,7 +4,7 @@
 // selection, Ctrl + scroll for the range and to push / pull a face of the box, Create's blue
 // outline) and the schematicannon's launched blocks flying to their target.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <atomic>
@@ -75,7 +75,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::schematics {
+namespace br::client::schematics {
 
 namespace cs  = core::schematics;
 namespace fsc = feature::schematics;
@@ -347,8 +347,8 @@ std::uint64_t packPos(cs::Pos p) {
 }
 
 /// Ponder's block definition of a block (id and its integer / string states).
-lv::client::ponder::cp::BlockDef defOf(Block const& b) {
-    lv::client::ponder::cp::BlockDef def;
+br::client::ponder::cp::BlockDef defOf(Block const& b) {
+    br::client::ponder::cp::BlockDef def;
     auto                             st = fsc::stateOf(b);
     def.id                              = st.name;
     for (std::size_t i = 0; i < st.states.keys.size(); ++i) {
@@ -394,11 +394,11 @@ std::unique_ptr<mce::Mesh> buildGhost(Tessellator& tess, Preview const& p, cs::T
             skip[static_cast<std::size_t>(f)] = it != occ.end() && BlockGraphics::isFullAndOpaque(*it->second);
         }
         if (std::all_of(skip.begin(), skip.end(), [](bool hidden) { return hidden; })) continue; // enclosed
-        if (!lv::client::ponder::appendBlock(tess, defOf(b), b, float(off.x), float(off.y), float(off.z)))
+        if (!br::client::ponder::appendBlock(tess, defOf(b), b, float(off.x), float(off.y), float(off.z)))
             cube(tess, b, float(off.x), float(off.y), float(off.z), 1.f, skip);
         faces += 6;
     }
-    return std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_schematic_ghost", SupplementaryFieldAutoGenerationMode::None));
+    return std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_schematic_ghost", SupplementaryFieldAutoGenerationMode::None));
 }
 
 mce::MaterialPtr& lineMaterial() {
@@ -550,7 +550,7 @@ void renderSchematics(BaseActorRenderContext& ctx) {
             if (!mesh) {
                 tess.begin(Tessellator::DebugContextCallback{}, mce::PrimitiveMode::QuadList, 0, false);
                 cube(tess, *l.block, -0.5f, -0.5f, -0.5f, 1.f, {});
-                mesh = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_launched_block", SupplementaryFieldAutoGenerationMode::None));
+                mesh = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_launched_block", SupplementaryFieldAutoGenerationMode::None));
             }
             float t  = std::clamp(std::chrono::duration<float>(Clock::now() - l.start).count() * 20.f / std::max(1, l.ticks), 0.f, 1.f);
             float fx = l.from.x + 0.5f, fy = l.from.y + 1.2f, fz = l.from.z + 0.5f;
@@ -598,8 +598,8 @@ void hud(screen::Canvas& c) {
         if (!line.empty()) c.text(x, y, line, screen::color::kTextGray);
     }
     y += 13;
-    c.text(x, y, ctr("lv.schematics.tools.hint", "[Alt]+Scroll: select tool"), screen::color::kTextGray);
-    if (d->deployed) c.text(x, y + 11, ctr("lv.schematics.tools.deployed", "Schematic deployed"), screen::color::kTextGray);
+    c.text(x, y, ctr("br.schematics.tools.hint", "[Alt]+Scroll: select tool"), screen::color::kTextGray);
+    if (d->deployed) c.text(x, y + 11, ctr("br.schematics.tools.deployed", "Schematic deployed"), screen::color::kTextGray);
 }
 
 // ---- messages -----------------------------------------------------------------------------------------------
@@ -853,8 +853,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::schematics
+} // namespace br::client::schematics
 
-LV_REGISTER_MODULE(lv::client::schematics::SchematicsToolsModule);
+BR_REGISTER_MODULE(br::client::schematics::SchematicsToolsModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

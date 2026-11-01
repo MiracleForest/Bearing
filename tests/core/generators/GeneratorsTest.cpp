@@ -5,8 +5,8 @@
 
 #include "core/generators/Generators.h"
 
-using namespace lv::core::generators;
-using lv::core::kinetics::offsetOf;
+using namespace br::core::generators;
+using br::core::kinetics::offsetOf;
 
 namespace {
 std::tuple<int, int, int> T(Offset const& o) { return {o.x, o.y, o.z}; }
@@ -18,7 +18,7 @@ TEST(Generators, Dyes) {
     EXPECT_EQ(dyeColourOf("minecraft:black_dye"), 15);
     EXPECT_EQ(dyeColourOf("minecraft:ink_sac"), -1);
     EXPECT_EQ(dyeColourOf("minecraft:dye"), -1);
-    EXPECT_EQ(dyeColourOf("levitate:red_dye"), -1);
+    EXPECT_EQ(dyeColourOf("bearing:red_dye"), -1);
 }
 
 TEST(Generators, Planks) {
@@ -35,9 +35,9 @@ TEST(Generators, Directions) {
     EXPECT_EQ(convertToDirection(32, Face::Down), -32);
     EXPECT_FLOAT_EQ(convertToAngular(32), 9.6f);
     // clockwise turns visit every in-plane face once
-    for (Axis axis : lv::core::kinetics::kAxes) {
-        for (Face f : lv::core::kinetics::kFaces) {
-            if (lv::core::kinetics::axisOf(f) == axis) {
+    for (Axis axis : br::core::kinetics::kAxes) {
+        for (Face f : br::core::kinetics::kFaces) {
+            if (br::core::kinetics::axisOf(f) == axis) {
                 EXPECT_EQ(clockWise(f, axis), f);
                 continue;
             }
@@ -157,14 +157,14 @@ TEST(Generators, FlowScore) {
 }
 
 TEST(Generators, Structure) {
-    for (Axis axis : lv::core::kinetics::kAxes) {
+    for (Axis axis : br::core::kinetics::kAxes) {
         auto                                cells = structureCells(axis);
         std::set<std::tuple<int, int, int>> unique;
         std::set<int>                       segments;
         for (auto const& c : cells) {
             unique.insert(T(c.offset));
             segments.insert(c.segment);
-            EXPECT_EQ(lv::core::kinetics::choose(axis, c.offset), 0);
+            EXPECT_EQ(br::core::kinetics::choose(axis, c.offset), 0);
             EXPECT_EQ(T(segmentOffset(c.segment, axis)), T(c.offset));
             // the facing leads to the wheel (edges) or to an edge cell (corners)
             auto f      = offsetOf(c.facing);

@@ -14,11 +14,11 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP = core::GlobalPos;
 
 /// The last `contraption.glue` message among the test messages of `player` (null if none).
@@ -31,7 +31,7 @@ nlohmann::json lastGlue(Player const& player) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("contraption.glue_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraption.glue_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3880, kU38Dz);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -81,4 +81,4 @@ LV_REGISTER_SELFTEST("contraption.glue_sync", [](Context& ctx) -> ll::coro::Coro
     clearGlue(p.dim, a, 4);
 });
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

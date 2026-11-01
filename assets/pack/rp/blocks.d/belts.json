@@ -1,11 +1,11 @@
 {
-  "levitate:belt": {
+  "bearing:belt": {
     "sound": "cloth"
   },
-  "levitate:depot": {
+  "bearing:depot": {
     "sound": "stone"
   },
-  "levitate:weighted_ejector": {
+  "bearing:weighted_ejector": {
     "sound": "metal"
   }
 }

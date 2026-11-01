@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::redstone {
+namespace br::core::redstone {
 
 int defaultDelay(DiodeKind kind) { return kind == DiodeKind::Timer ? 20 : 2; }
 
@@ -165,4 +165,4 @@ std::pair<int, int> clampThresholds(int offBelow, int onAbove, int min, int max,
     return {offBelow, onAbove};
 }
 
-} // namespace lv::core::redstone
+} // namespace br::core::redstone

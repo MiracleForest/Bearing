@@ -1,6 +1,6 @@
 // Basin goggle information (Create's BasinBlockEntity.addToGoggleTooltip): "Basin Contents:", then
 // every item stack (gray name, green count) and every fluid (gray name, blue amount). An empty basin
-// shows nothing. It replaces Levitate's generic "Contents:" / tank lines for the basin. Blaze
+// shows nothing. It replaces Bearing's generic "Contents:" / tank lines for the basin. Blaze
 // burners have no goggle information in Create (no fuel or heat line).
 
 #include "mc/world/level/BlockSource.h"
@@ -13,7 +13,7 @@
 #include "game/Blocks.h"
 #include "mod/I18n.h"
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace {
 
@@ -59,9 +59,9 @@ bool basinContents(goggles::InfoContext const& ctx, goggles::Tooltip& t) {
 
 } // namespace
 
-LV_REGISTER_GOGGLE_INFO(kBasin, {.goggle = basinContents, .replaceDefaults = true});
-LV_REGISTER_GOGGLE_INFO(kBurner, {.replaceDefaults = true});
-LV_REGISTER_GOGGLE_INFO(kLitBurner, {.replaceDefaults = true});
-LV_REGISTER_GOGGLE_INFO(kEmptyBurner, {.replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kBasin, {.goggle = basinContents, .replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kBurner, {.replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kLitBurner, {.replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kEmptyBurner, {.replaceDefaults = true});
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin

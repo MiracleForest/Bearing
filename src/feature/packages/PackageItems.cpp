@@ -28,7 +28,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -82,9 +82,9 @@ ItemStack insertStackedInto(std::vector<ItemStack>& slots, ItemStack const& stac
 std::vector<std::string> const& packageIds() {
     static std::vector<std::string> ids = [] {
         std::vector<std::string> out;
-        for (char const* size : {"12x12", "10x12", "10x8", "12x10"}) out.push_back(std::string("levitate:cardboard_package_") + size);
+        for (char const* size : {"12x12", "10x12", "10x8", "12x10"}) out.push_back(std::string("bearing:cardboard_package_") + size);
         for (char const* rare : {"creeper", "darcy", "evan", "jinx", "kryppers", "simi", "starlotte", "thunder", "up", "vector"})
-            out.push_back(std::string("levitate:rare_") + rare + "_package");
+            out.push_back(std::string("bearing:rare_") + rare + "_package");
         return out;
     }();
     return ids;
@@ -95,14 +95,14 @@ std::vector<std::string> const& postboxIds() {
         std::vector<std::string> out;
         for (char const* c :
              {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"})
-            out.push_back(std::string("levitate:") + c + "_postbox");
+            out.push_back(std::string("bearing:") + c + "_postbox");
         return out;
     }();
     return ids;
 }
 
 bool isPostboxId(std::string_view id) {
-    if (!id.starts_with("levitate:") || !endsWith(id, "_postbox")) return false;
+    if (!id.starts_with("bearing:") || !endsWith(id, "_postbox")) return false;
     auto const& ids = postboxIds();
     return std::find(ids.begin(), ids.end(), id) != ids.end();
 }
@@ -111,7 +111,7 @@ bool isPostboxId(std::string_view id) {
 
 bool isPackage(ItemStack const& stack) {
     auto id = items::idOf(stack);
-    if (!id.starts_with("levitate:") || !(endsWith(id, "_package") || id.starts_with("levitate:cardboard_package_"))) return false;
+    if (!id.starts_with("bearing:") || !(endsWith(id, "_package") || id.starts_with("bearing:cardboard_package_"))) return false;
     auto const& ids = packageIds();
     return std::find(ids.begin(), ids.end(), id) != ids.end();
 }
@@ -172,7 +172,7 @@ bool fitsInPackage(ItemStack const& stack) {
     auto id = items::idOf(stack);
     // Create's canFitInsideContainerItems: toolboxes (UncontainableBlockItem) and minecart
     // contraptions (config minecartContraptionInContainers, false) are bulky too
-    if (id.starts_with("levitate:") && endsWith(id, "_toolbox")) return false;
+    if (id.starts_with("bearing:") && endsWith(id, "_toolbox")) return false;
     return !endsWith(id, "shulker_box") && !endsWith(id, "bundle")
         && bearings::fitsInsideContainerItems(id); // minecart contraptions (minecartContraptionInContainers)
 }
@@ -233,7 +233,7 @@ void updateLore(ItemStack& box) {
             ++visible;
             lines.push_back("§7" + items::displayName(s) + " x" + std::to_string(items::countOf(s)));
         }
-        if (skipped > 0) lines.push_back("§o" + tr("lv.packages.more_items", "and {} more...", skipped));
+        if (skipped > 0) lines.push_back("§o" + tr("br.packages.more_items", "and {} more...", skipped));
     }
     if (lines.empty()) box.clearCustomLore();
     else box.setCustomLore(lines);
@@ -293,7 +293,7 @@ void openPackage(Player& player) {
         giveOrDrop(player, s);
     }
     auto p = player.getFeetPos();
-    playSound(player.getDimensionId(), {p.x, p.y, p.z}, "levitate.packages.package_pop");
+    playSound(player.getDimensionId(), {p.x, p.y, p.z}, "bearing.packages.package_pop");
     log().info("packages: {} opened a package ({} stacks)", player.getRealName(), stacks);
 }
 
@@ -355,11 +355,11 @@ bool filterInHand(Player& p, nlohmann::json const& ctx) {
 void openPackageFilterForm(Player& player) {
     int slot = player.getSelectedItemSlot();
     if (!isPackageFilter(player.getSelectedItem())) return;
-    ll::form::CustomForm form(trFor(player, "lv.packages.package_filter", "Package Filter"));
+    ll::form::CustomForm form(trFor(player, "br.packages.package_filter", "Package Filter"));
     form.appendLabel(trFor(player, "create.gui.package_port.catch_packages_wildcard", "Use * as a text wildcard"));
     form.appendInput(
         "address",
-        trFor(player, "lv.packages.form.address", "Address"),
+        trFor(player, "br.packages.form.address", "Address"),
         "",
         addressOf(player.getSelectedItem())
     );
@@ -396,4 +396,4 @@ void installItemScreens() {
     });
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

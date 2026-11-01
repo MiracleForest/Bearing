@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace lv::core::assembly {
+namespace br::core::assembly {
 
 namespace {
 using json = nlohmann::json;
@@ -158,4 +158,4 @@ std::vector<TooltipLine> tooltipLines(SequencedRecipe const& recipe, int finishe
     return out;
 }
 
-} // namespace lv::core::assembly
+} // namespace br::core::assembly

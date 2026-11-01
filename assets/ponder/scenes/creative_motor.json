@@ -2,9 +2,9 @@
   "id": "creative_motor",
   "size": [5, 5],
   "blocks": [
-    {"at": [3, 1, 2], "id": "levitate:creative_motor", "states": {"levitate:facing": 4}},
-    {"area": [[1, 1, 2], [2, 1, 2]], "id": "levitate:shaft", "states": {"levitate:axis": 0}},
-    {"at": [0, 1, 2], "id": "levitate:speedometer", "states": {"levitate:facing": 1, "levitate:along_first": 1}}
+    {"at": [3, 1, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 4}},
+    {"area": [[1, 1, 2], [2, 1, 2]], "id": "bearing:shaft", "states": {"bearing:axis": 0}},
+    {"at": [0, 1, 2], "id": "bearing:speedometer", "states": {"bearing:facing": 1, "bearing:along_first": 1}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

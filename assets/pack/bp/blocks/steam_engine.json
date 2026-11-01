@@ -2,7 +2,7 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:steam_engine",
+      "identifier": "bearing:steam_engine",
       "menu_category": {
         "category": "items"
       },
@@ -20,10 +20,10 @@
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.steam_engine",
+      "minecraft:geometry": "geometry.bearing.steam_engine",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_steam_engine",
+          "texture": "bearing_steam_engine",
           "render_method": "alpha_test"
         }
       },

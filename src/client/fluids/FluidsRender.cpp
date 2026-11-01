@@ -7,13 +7,13 @@
 // Both are drawn as coloured boxes after the block entities of the opaque pass.
 // - Spout nozzles: Create's SpoutRenderer squeezes the three bits of the nozzle together while it
 //   fills (squeeze = the stream's curve, -1 from 10 to 2 ticks left, then back to 0): chunk meshes
-//   draw spouts without their nozzle (levitate:nozzle 1) and the bits are drawn here, each one
+//   draw spouts without their nozzle (bearing:nozzle 1) and the bits are drawn here, each one
 //   3 / 32 * squeeze higher than the one above it. Vanilla clients see the static nozzle.
 // - Item drain tanks (op level / levels / level_remove): the fluid inside, as Create's
 //   ItemDrainRenderer (2..14 px wide, from 5 px up by 7 px · level), the level easing towards the
 //   server's (Create's LerpedFloat chase).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <chrono>
@@ -76,7 +76,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::fluids {
+namespace br::client::fluids {
 
 namespace {
 
@@ -107,7 +107,7 @@ std::map<Key, Spout> gSpouts;
 std::map<Key, Level> gLevels;
 bool                 gLoggedHose = false;
 
-constexpr char const* kSpoutId = "levitate:spout";
+constexpr char const* kSpoutId = "bearing:spout";
 
 /// Spouts seen by the chunk builder (their nozzle is drawn here) and their nozzle-less states.
 struct Nozzles {
@@ -276,18 +276,18 @@ mce::Mesh* nozzleMesh(Tessellator& tess, std::string const& bone) {
     if (auto it = n.meshes.find(bone); it != n.meshes.end()) return it->second.get();
     auto& slot = n.meshes[bone];
     static std::optional<core::kinetics::RotorModel> model = []() -> std::optional<core::kinetics::RotorModel> {
-        auto          file = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks" / "spout.geo.json";
+        auto          file = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks" / "spout.geo.json";
         std::ifstream in(file);
         auto          j = nlohmann::json::parse(in, nullptr, false, true);
         if (j.is_discarded()) return std::nullopt;
         auto parsed = core::kinetics::parseGeometry(j);
-        if (!parsed || !parsed->contains("geometry.levitate.spout")) return std::nullopt;
-        return parsed->at("geometry.levitate.spout");
+        if (!parsed || !parsed->contains("geometry.bearing.spout")) return std::nullopt;
+        return parsed->at("geometry.bearing.spout");
     }();
     if (!model) return nullptr;
     auto b = model->bones.find(bone);
     if (b == model->bones.end() || b->second.empty()) return nullptr;
-    auto  tex = BlockGraphics::getTextureUVCoordinateSet("levitate_spout", 0, 0);
+    auto  tex = BlockGraphics::getTextureUVCoordinateSet("bearing_spout", 0, 0);
     float u0 = tex._u0, v0 = tex._v0, u1 = tex._u1, v1 = tex._v1;
     auto  uv = [&](std::array<float, 2> const& t) { return Vec2{u0 + (u1 - u0) * t[0], v0 + (v1 - v0) * t[1]}; };
     auto  at = [](std::array<float, 3> const& p) { return Vec3{p[0], p[1], p[2]}; };
@@ -297,7 +297,7 @@ mce::Mesh* nozzleMesh(Tessellator& tess, std::string const& bone) {
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_spout_nozzle", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_spout_nozzle", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -359,13 +359,13 @@ void drawNozzles(BaseActorRenderContext& ctx) {
     }
 }
 
-/// The spout state without its nozzle (levitate:nozzle 1), cached per state.
+/// The spout state without its nozzle (bearing:nozzle 1), cached per state.
 Block const* nozzleless(Block const& block) {
     auto&           n = nozzles();
     std::lock_guard lock(n.mutex);
     auto [it, fresh] = n.hidden.try_emplace(&block, nullptr);
     if (fresh) {
-        if (auto const* type = block.getBlockType().getBlockState(HashedString("levitate:nozzle")))
+        if (auto const* type = block.getBlockType().getBlockState(HashedString("bearing:nozzle")))
             if (auto b = block.setState(*type, 1)) it->second = b.as_ptr();
     }
     return it->second;
@@ -464,8 +464,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::fluids
+} // namespace br::client::fluids
 
-LV_REGISTER_MODULE(lv::client::fluids::FluidsRenderModule);
+BR_REGISTER_MODULE(br::client::fluids::FluidsRenderModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

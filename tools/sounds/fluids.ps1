@@ -3,7 +3,7 @@
 #
 # spout_1..3.wav  the spurt when a spout starts filling (Create's SPOUTING has three variants):
 #                 a short burst of wet, low-passed noise with a few falling bubble tones
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

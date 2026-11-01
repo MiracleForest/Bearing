@@ -2,11 +2,11 @@
   "id": "millstone",
   "size": [5, 5],
   "blocks": [
-    {"at": [2, 1, 2], "id": "levitate:millstone"},
-    {"at": [3, 1, 2], "id": "levitate:cogwheel", "states": {"levitate:axis": 1}},
-    {"at": [3, 2, 2], "id": "levitate:shaft", "states": {"levitate:axis": 1}},
-    {"at": [3, 3, 2], "id": "levitate:creative_motor", "states": {"levitate:facing": 0}},
-    {"at": [2, 1, 1], "id": "levitate:andesite_funnel", "states": {"levitate:facing": 2, "levitate:extracting": 1}},
+    {"at": [2, 1, 2], "id": "bearing:millstone"},
+    {"at": [3, 1, 2], "id": "bearing:cogwheel", "states": {"bearing:axis": 1}},
+    {"at": [3, 2, 2], "id": "bearing:shaft", "states": {"bearing:axis": 1}},
+    {"at": [3, 3, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 0}},
+    {"at": [2, 1, 1], "id": "bearing:andesite_funnel", "states": {"bearing:facing": 2, "bearing:extracting": 1}},
     {"at": [2, 1, 0], "id": "minecraft:chest"}
   ],
   "timeline": [

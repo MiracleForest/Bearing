@@ -2,7 +2,7 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "levitate:cardboard_disguise",
+      "identifier": "bearing:cardboard_disguise",
       "materials": {
         "default": "entity_alphatest"
       },
@@ -13,13 +13,13 @@
         "s3": "textures/entity/package/cardboard_package_12x10"
       },
       "geometry": {
-        "s0": "geometry.levitate.package_12x12",
-        "s1": "geometry.levitate.package_10x12",
-        "s2": "geometry.levitate.package_10x8",
-        "s3": "geometry.levitate.package_12x10"
+        "s0": "geometry.bearing.package_12x12",
+        "s1": "geometry.bearing.package_10x12",
+        "s2": "geometry.bearing.package_10x8",
+        "s3": "geometry.bearing.package_12x10"
       },
       "animations": {
-        "bob": "animation.levitate.cardboard_disguise.bob"
+        "bob": "animation.bearing.cardboard_disguise.bob"
       },
       "scripts": {
         "animate": [
@@ -27,7 +27,7 @@
         ]
       },
       "render_controllers": [
-        "controller.render.levitate.cardboard_disguise"
+        "controller.render.bearing.cardboard_disguise"
       ]
     }
   }

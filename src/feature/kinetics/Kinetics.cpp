@@ -37,9 +37,9 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("kinetics", lv::feature::kinetics::KineticsConfig);
+BR_REGISTER_CONFIG("kinetics", br::feature::kinetics::KineticsConfig);
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 namespace k  = core::kinetics;
 namespace bd = common::blockdata;
@@ -47,7 +47,7 @@ namespace bd = common::blockdata;
 namespace {
 
 /// Wave-1 storage (one array of records per chunk), migrated into BlockData on world load.
-constexpr char const* kLegacyChunkPrefix = "lv:kinetics:c:";
+constexpr char const* kLegacyChunkPrefix = "br:kinetics:c:";
 /// The top-level key of the kinetic record in a BlockData document.
 constexpr char const* kDataKey = "kinetics";
 /// Ticks between two world checks of the same kinetic block (block still there?).
@@ -369,7 +369,7 @@ public:
     }
 
     // ---- persistence ---------------------------------------------------------------------------------------------
-    /// Moves the wave-1 records (`lv:kinetics:c:<dim>:<cx>:<cz>`, one array per chunk) into BlockData once.
+    /// Moves the wave-1 records (`br:kinetics:c:<dim>:<cx>:<cz>`, one array per chunk) into BlockData once.
     void migrateLegacy() {
         std::vector<std::string> keys;
         game::db::forEachKey(kLegacyChunkPrefix, [&](std::string_view suffix) { keys.emplace_back(suffix); });
@@ -708,6 +708,6 @@ void reloadFromDb() {
 
 } // namespace detail
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics
 
-LV_REGISTER_MODULE(lv::feature::kinetics::KineticsModule);
+BR_REGISTER_MODULE(br::feature::kinetics::KineticsModule);

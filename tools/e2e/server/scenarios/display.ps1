@@ -5,11 +5,11 @@
 $r = Invoke-SelfTest 'display.*'
 if ($r.Pass -lt 11) { throw "expected at least 11 display selftests to pass, got $($r.Pass)" }
 
-Send-Console 'tickingarea add 0 -64 0 15 -40 15 lv_display_e2e true'
+Send-Console 'tickingarea add 0 -64 0 15 -40 15 br_display_e2e true'
 Wait-Seconds 3
-Send-Console 'setblock 3 -58 6 levitate:nixie_tube'
-Send-Console 'setblock 3 -57 6 levitate:display_link ["minecraft:block_face"="up"]'
-Send-Console 'setblock 6 -58 6 levitate:display_board'
+Send-Console 'setblock 3 -58 6 bearing:nixie_tube'
+Send-Console 'setblock 3 -57 6 bearing:display_link ["minecraft:block_face"="up"]'
+Send-Console 'setblock 6 -58 6 bearing:display_board'
 Wait-Seconds 1
 $mark = Get-LogMark
 Send-Console 'create display text 3 -58 6 0 A42'
@@ -19,5 +19,5 @@ Wait-LogLine 'display link at 0:3:-57:6 bound to 6 -58 6 \(nixie_tube\), update 
 Send-Console 'setblock 3 -57 6 air'
 Send-Console 'setblock 3 -58 6 air'
 Send-Console 'setblock 6 -58 6 air'
-Send-Console 'tickingarea remove lv_display_e2e'
+Send-Console 'tickingarea remove br_display_e2e'
 Wait-Seconds 1

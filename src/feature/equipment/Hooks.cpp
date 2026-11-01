@@ -45,7 +45,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace items = common::items;
 
@@ -294,7 +294,7 @@ LL_TYPE_INSTANCE_HOOK(EquipmentHurtAndBreakHook, ll::memory::HookPriority::Norma
 
 namespace {
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload().text("toolbox").execute([](CommandOrigin const& origin, CommandOutput& output) {
         auto* player = commands::playerOf(origin);
         if (!player) return output.error("Only players can use toolboxes.");
@@ -372,6 +372,6 @@ private:
 
 } // namespace
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-LV_REGISTER_MODULE(lv::feature::equipment::EquipmentModule);
+BR_REGISTER_MODULE(br::feature::equipment::EquipmentModule);

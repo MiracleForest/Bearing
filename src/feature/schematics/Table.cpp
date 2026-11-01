@@ -21,7 +21,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -138,14 +138,14 @@ void tableForm(Player& player, Json const& ctx) {
 
     ll::form::SimpleForm form(trFor(player, "create.gui.schematicTable.title", "Schematic Table"));
     std::string content;
-    content += trFor(player, "lv.schematics.table.input", "Input: {0}", items::isEmpty(in) ? trFor(player, "lv.common.form.empty", "(empty)") : items::displayName(in)) + "\n";
-    content += trFor(player, "lv.schematics.table.output", "Output: {0}", items::isEmpty(out) ? trFor(player, "lv.common.form.empty", "(empty)") : items::displayName(out)) + "\n\n";
+    content += trFor(player, "br.schematics.table.input", "Input: {0}", items::isEmpty(in) ? trFor(player, "br.common.form.empty", "(empty)") : items::displayName(in)) + "\n";
+    content += trFor(player, "br.schematics.table.output", "Output: {0}", items::isEmpty(out) ? trFor(player, "br.common.form.empty", "(empty)") : items::displayName(out)) + "\n\n";
     content += trFor(player, "create.gui.schematicTable.availableSchematics", "Available Schematics");
     if (files.empty()) content += "\n" + trFor(player, "create.gui.schematicTable.noSchematics", "No Schematics Saved");
     form.setContent(content);
     auto pos = *p;
     if (items::isEmpty(in)) {
-        form.appendButton(trFor(player, "lv.schematics.table.insert", "Put in an Empty Schematic"), [pos](Player& pl) {
+        form.appendButton(trFor(player, "br.schematics.table.insert", "Put in an Empty Schematic"), [pos](Player& pl) {
             auto& inv = pl.getInventory();
             for (int i = 0; i < inv.getContainerSize(); ++i) {
                 if (!isItem(inv.getItem(i), kEmptySchematic)) continue;
@@ -156,7 +156,7 @@ void tableForm(Player& player, Json const& ctx) {
         });
     }
     if (!items::isEmpty(out)) {
-        form.appendButton(trFor(player, "lv.schematics.table.take", "Take the Written Schematic"), [pos](Player& pl) {
+        form.appendButton(trFor(player, "br.schematics.table.take", "Take the Written Schematic"), [pos](Player& pl) {
             tableAction(pl, {{"pos", posJson(pos)}}, {{"op", "take"}, {"slot", 1}});
         });
     }
@@ -175,7 +175,7 @@ bool writeOnTable(Player& player, GlobalPos const& table, std::string const& fil
     };
     if (!isTable(table)) return fail("");
     if (!cs::isSchematicFileName(file)) return fail(trFor(player, "create.schematic.error", "Schematic failed to Load - Check Game Logs"));
-    if (!isItem(slotOf(table, 0), kEmptySchematic)) return fail(trFor(player, "lv.schematics.table.need_empty", "Put an Empty Schematic on the table first"));
+    if (!isItem(slotOf(table, 0), kEmptySchematic)) return fail(trFor(player, "br.schematics.table.need_empty", "Put an Empty Schematic on the table first"));
     std::string err;
     if (!loadSchematic(player.getRealName(), file, &err)) {
         log().warn("schematics: {} could not write {}: {}", player.getRealName(), file, err);
@@ -309,4 +309,4 @@ void registerTable() {
 
 } // namespace detail
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

@@ -29,7 +29,7 @@
 #include "feature/contraption/Registries.h"
 #include "mod/I18n.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
@@ -233,7 +233,7 @@ VanillaActors const gVanillaActors;
 
 } // namespace
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption
 
 // Right-clicks on blocks of a contraption (Create's AllInteractionBehaviours and
 // MountedItemStorage#handleInteraction): levers toggle (LeverMovingInteraction), wooden doors,
@@ -241,7 +241,7 @@ VanillaActors const gVanillaActors;
 // mounted inventories open. Create opens the container's own menu; a Bedrock client can only
 // show a container screen for a real block, so the inventory is a form (take a stack out, put the
 // held stack in). U22's ray cast over contraption blocks (actors) calls `interactionFor`.
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 namespace moving_interactions {
 
 
@@ -343,10 +343,10 @@ void openStorage(Player& player, Id id, cc::Pos local) {
     if (!c) return;
     auto stacks = stacksAt(*c, local);
     ll::form::SimpleForm form(
-        trFor(player, "lv.contraption.mounted_storage", "Mounted Storage"),
-        trFor(player, "lv.contraption.mounted_storage.content", "Take a stack out, or put the held stack in.")
+        trFor(player, "br.contraption.mounted_storage", "Mounted Storage"),
+        trFor(player, "br.contraption.mounted_storage.content", "Take a stack out, or put the held stack in.")
     );
-    form.appendButton(trFor(player, "lv.contraption.mounted_storage.deposit", "Put the held stack in"), [id, local](Player& p) {
+    form.appendButton(trFor(player, "br.contraption.mounted_storage.deposit", "Put the held stack in"), [id, local](Player& p) {
         if (auto* cc = find(id)) {
             deposit(p, *cc, local);
             openStorage(p, id, local);
@@ -429,4 +429,4 @@ Interactions const gInteractions;
 } // namespace
 
 } // namespace moving_interactions
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

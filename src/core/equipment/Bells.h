@@ -13,9 +13,9 @@
 #include <set>
 #include <vector>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
-/// Java's BellAttachType (block state `levitate:attachment`).
+/// Java's BellAttachType (block state `bearing:attachment`).
 enum class BellAttach { Floor = 0, Ceiling = 1, SingleWall = 2, DoubleWall = 3 };
 
 inline constexpr int kBellRingDuration    = 74; ///< AbstractBellBlockEntity.RING_DURATION
@@ -115,4 +115,4 @@ private:
 /// tick) pulses at game time `gameTime`. The first pulse comes after the warmup.
 [[nodiscard]] bool heldBellPulses(int heldTicks, long long gameTime);
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

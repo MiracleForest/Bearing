@@ -32,7 +32,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace citems = common::items;
 
@@ -215,7 +215,7 @@ public:
         for (int segment = first; positive ? segment <= nextOffset : segment + 1 >= nextOffset; segment += step) {
             if (segment < 0 || segment >= mBelt.length) break;
             GlobalPos above = offset(segmentPos(mBelt, mState, segment), {0, 1, 0});
-            if (idAt(above) != "levitate:crushing_wheel_controller") continue;
+            if (idAt(above) != "bearing:crushing_wheel_controller") continue;
             auto const* b = blockAt(above);
             if (!b || game::intState(*b, kFacing).value_or(-1) != mFace) continue;
             float entry     = segment + .5f + .399f * (positive ? -1 : 1);
@@ -320,12 +320,12 @@ void transportEntity(Belt& belt, BeltEnv const& env, Actor& entity, GlobalPos co
     if (isPlayer) {
         auto& p = static_cast<Player&>(entity);
         // sneaking players stay put, unless they wear cardboard boots (Create's stealth)
-        if (p.isSneaking() && armorId(entity, ArmorSlot::Feet) != "levitate:cardboard_boots") return;
+        if (p.isSneaking() && armorId(entity, ArmorSlot::Feet) != "bearing:cardboard_boots") return;
         if (p.isFlying()) return;
     }
     // diving boots keep their wearer in place (DivingBootsItem.isWornBy)
     auto boots = armorId(entity, ArmorSlot::Feet);
-    if (boots == "levitate:copper_diving_boots" || boots == "levitate:netherite_diving_boots") return;
+    if (boots == "bearing:copper_diving_boots" || boots == "bearing:netherite_diving_boots") return;
     // "lock entities in place": mobs get Slowness II while carried
     if (!isPlayer && entity.hasCategory(ActorCategory::Mob)) {
         EffectDuration d;
@@ -627,4 +627,4 @@ bool applyOnBelt(Belt& belt, float position, float maxDistance, ProcessFn const&
     return dirty;
 }
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

@@ -23,9 +23,9 @@
 #include "feature/contraption/ActorsExt.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
+namespace ext = ::br::feature::contraption::actors_ext;
 
 namespace {
 
@@ -36,8 +36,8 @@ bool ploughCanBreak(BlockSource& region, BlockPos const& pos, Block const& block
     if (region.getBlock(below).getTypeName() == "minecraft:farmland") return false;
     std::string id = block.getTypeName();
     if (isLiquid(id)) return false;
-    if (id == "levitate:track") return true;
-    if (id == "levitate:fake_track") return false;
+    if (id == "bearing:track") return true;
+    if (id == "bearing:fake_track") return false;
     if (id == "minecraft:snow_layer") return true; // Create's plough whitelist
     return !hasCollision(region, pos);
 }
@@ -82,7 +82,7 @@ void throwAnvils(con::MovementContext& ctx, GlobalPos const& pos) {
     if (!here.isAir() && here._isSolid() && hasCollision(*region, toBlockPos(pos))) return; // as damageEntities
     cc::Vec3d lo = cc::Vec3d::of(cc::Pos{pos.x, pos.y, pos.z});
     for (auto* a : entitiesIn(*region, lo, lo + cc::Vec3d{1, 1, 1})) {
-        if (!a || !a->isAlive() || a->getEntityTypeId() != ActorType::FallingBlock || a->hasTag("lv_contraption")) continue;
+        if (!a || !a->isAlive() || a->getEntityTypeId() != ActorType::FallingBlock || a->hasTag("br_contraption")) continue;
         auto block = Block::tryGetFromRegistry(static_cast<uint>(a->mEntityData->getInt(static_cast<ushort>(ActorDataIDs::Variant))));
         if (!block || block->getTypeName().find("anvil") == std::string::npos) continue;
         cc::Vec3d v = ctx.motion + cc::Vec3d{0, ctx.motion.length() / 4, 0};
@@ -165,4 +165,4 @@ Registrar const gRegistrar;
 
 } // namespace
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

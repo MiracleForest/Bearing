@@ -1,5 +1,5 @@
 {
-  "lv.itemrender.cleared": "已移除展示物品测试图案",
-  "lv.itemrender.demo": "已在 {} {} {} 放置展示物品测试图案",
-  "lv.itemrender.no_permission": "你需要管理员权限。"
+  "br.itemrender.cleared": "已移除展示物品测试图案",
+  "br.itemrender.demo": "已在 {} {} {} 放置展示物品测试图案",
+  "br.itemrender.no_permission": "你需要管理员权限。"
 }

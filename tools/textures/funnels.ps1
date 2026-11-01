@@ -22,7 +22,7 @@ function Save($c, $pal, $name) {
     $rows = Rows $c
     Save-PixelArt -Rows $rows -Palette $pal -Path "$tex/$name.png"
     if ($Preview) { Save-PixelArt -Rows $rows -Palette $pal -Path (Join-Path $root "tools/textures/preview/$name.png") -Scale 8 }
-    $terrain["levitate_$name"] = [ordered]@{ textures = "textures/blocks/$name" }
+    $terrain["bearing_$name"] = [ordered]@{ textures = "textures/blocks/$name" }
 }
 function Save-Json($path, $obj) {
     New-Item -ItemType Directory -Force (Split-Path -Parent $path) | Out-Null
@@ -165,7 +165,7 @@ function Save-Geo($id, $bones) {
     Save-Json "$models/$id.geo.json" ([ordered]@{
         format_version = '1.16.0'
         'minecraft:geometry' = @([ordered]@{
-            description = [ordered]@{ identifier = "geometry.levitate.$id"; texture_width = 16; texture_height = 16; visible_bounds_width = 3; visible_bounds_height = 3; visible_bounds_offset = @(0, 0.5, 0) }
+            description = [ordered]@{ identifier = "geometry.bearing.$id"; texture_width = 16; texture_height = 16; visible_bounds_width = 3; visible_bounds_height = 3; visible_bounds_offset = @(0, 0.5, 0) }
             bones = @($bones)
         })
     })
@@ -229,7 +229,7 @@ Save-Geo 'smart_chute' @((Bone 'body' @((Cube @(-8, 0, -8) @(16, 16, 16) ([order
 function Mat($texture, $method = 'alpha_test') { [ordered]@{ texture = $texture; render_method = $method } }
 function Box($o, $s) { [ordered]@{ origin = $o; size = $s } }
 function Block($id, $states, $components, $permutations, $category = 'items') {
-    $desc = [ordered]@{ identifier = "levitate:$id"; menu_category = [ordered]@{ category = $category } }
+    $desc = [ordered]@{ identifier = "bearing:$id"; menu_category = [ordered]@{ category = $category } }
     if ($states) { $desc.states = $states }
     $b = [ordered]@{ description = $desc; components = $components }
     if ($permutations) { $b.permutations = @($permutations) }
@@ -245,16 +245,16 @@ function Base($id, $seconds, $resistance, $color) {
     }
 }
 $yRot = @{ 2 = 0; 3 = 180; 4 = 90; 5 = -90 } # model faces north; Bedrock turns +90 from north to west
-$flapVis = [ordered]@{ flap_0 = "q.block_state('levitate:flap') == 0"; flap_1 = "q.block_state('levitate:flap') == 0"; flap_2 = "q.block_state('levitate:flap') == 0"; flap_3 = "q.block_state('levitate:flap') == 0"; flap_open = "q.block_state('levitate:flap') == 1" }
+$flapVis = [ordered]@{ flap_0 = "q.block_state('bearing:flap') == 0"; flap_1 = "q.block_state('bearing:flap') == 0"; flap_2 = "q.block_state('bearing:flap') == 0"; flap_3 = "q.block_state('bearing:flap') == 0"; flap_open = "q.block_state('bearing:flap') == 1" }
 
 # funnels: facing 0..5, extracting, powered, flap (horizontal funnels)
 foreach ($n in 'andesite', 'brass') {
     $id = "${n}_funnel"
     $comp = Base $id 0.8 6 ($(if ($n -eq 'brass') { '#d9a941' } else { '#93988d' }))
-    $comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.levitate.funnel_floor' }
+    $comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.bearing.funnel_floor' }
     $comp['minecraft:material_instances'] = [ordered]@{
-        '*' = Mat "levitate_${n}_funnel_side"; side = Mat "levitate_${n}_funnel_side"; frame = Mat "levitate_${n}_funnel_frame"
-        flap = Mat "levitate_${n}_funnel_flap"; back = Mat "levitate_${n}_funnel_back_extract"
+        '*' = Mat "bearing_${n}_funnel_side"; side = Mat "bearing_${n}_funnel_side"; frame = Mat "bearing_${n}_funnel_frame"
+        flap = Mat "bearing_${n}_funnel_flap"; back = Mat "bearing_${n}_funnel_back_extract"
     }
     $comp['minecraft:selection_box'] = Box @(-8, 0, -8) @(16, 10, 16)
     $comp['minecraft:collision_box'] = Box @(-8, 0, -8) @(16, 10, 16)
@@ -262,33 +262,33 @@ foreach ($n in 'andesite', 'brass') {
     foreach ($f in 0..5) {
         $pc = [ordered]@{}
         if ($f -le 1) {
-            $pc['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.levitate.funnel_floor' }
+            $pc['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.bearing.funnel_floor' }
             if ($f -eq 0) { $pc['minecraft:transformation'] = [ordered]@{ rotation = @(180, 0, 0) } }
         } else {
-            $pc['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.levitate.funnel_wall'; bone_visibility = $flapVis }
+            $pc['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.bearing.funnel_wall'; bone_visibility = $flapVis }
             $pc['minecraft:transformation'] = [ordered]@{ rotation = @(0, $yRot[$f], 0) }
             $pc['minecraft:selection_box'] = Box @(-8, 0, -2) @(16, 16, 10)
             $pc['minecraft:collision_box'] = Box @(-8, 0, -2) @(16, 16, 10)
         }
-        $perms += [ordered]@{ condition = "q.block_state('levitate:facing') == $f"; components = $pc }
+        $perms += [ordered]@{ condition = "q.block_state('bearing:facing') == $f"; components = $pc }
     }
-    # belt funnels (levitate:shape 1 retracted, 2 extended, 3 pushing, 4 pulling) on the four sides
+    # belt funnels (bearing:shape 1 retracted, 2 extended, 3 pushing, 4 pulling) on the four sides
     foreach ($f in 2..5) {
         foreach ($s in 1..4) {
             $geo = if ($s -eq 2) { 'funnel_belt_extended' } else { 'funnel_belt' }
             $box = if ($s -eq 2) { Box @(-8, 0, -8) @(16, 13, 16) } else { Box @(-8, 0, -2) @(16, 13, 10) }
-            $perms += [ordered]@{ condition = "q.block_state('levitate:facing') == $f && q.block_state('levitate:shape') == $s"; components = [ordered]@{
-                'minecraft:geometry' = [ordered]@{ identifier = "geometry.levitate.$geo"; bone_visibility = $flapVis }
+            $perms += [ordered]@{ condition = "q.block_state('bearing:facing') == $f && q.block_state('bearing:shape') == $s"; components = [ordered]@{
+                'minecraft:geometry' = [ordered]@{ identifier = "geometry.bearing.$geo"; bone_visibility = $flapVis }
                 'minecraft:transformation' = [ordered]@{ rotation = @(0, $yRot[$f], 0) }
                 'minecraft:selection_box' = $box; 'minecraft:collision_box' = $box } }
         }
     }
-    foreach ($v in @(@{ c = "q.block_state('levitate:extracting') == 0"; t = 'insert' }, @{ c = "q.block_state('levitate:powered') == 1"; t = 'powered' })) {
+    foreach ($v in @(@{ c = "q.block_state('bearing:extracting') == 0"; t = 'insert' }, @{ c = "q.block_state('bearing:powered') == 1"; t = 'powered' })) {
         $perms += [ordered]@{ condition = $v.c; components = [ordered]@{ 'minecraft:material_instances' = [ordered]@{
-            '*' = Mat "levitate_${n}_funnel_side"; side = Mat "levitate_${n}_funnel_side"; frame = Mat "levitate_${n}_funnel_frame"
-            flap = Mat "levitate_${n}_funnel_flap"; back = Mat "levitate_${n}_funnel_back_$($v.t)" } } }
+            '*' = Mat "bearing_${n}_funnel_side"; side = Mat "bearing_${n}_funnel_side"; frame = Mat "bearing_${n}_funnel_frame"
+            flap = Mat "bearing_${n}_funnel_flap"; back = Mat "bearing_${n}_funnel_back_$($v.t)" } } }
     }
-    Block $id ([ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:extracting' = @(0, 1); 'levitate:powered' = @(0, 1); 'levitate:flap' = @(0, 1); 'levitate:shape' = @(0, 1, 2, 3, 4) }) $comp $perms
+    Block $id ([ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:extracting' = @(0, 1); 'bearing:powered' = @(0, 1); 'bearing:flap' = @(0, 1); 'bearing:shape' = @(0, 1, 2, 3, 4) }) $comp $perms
 }
 
 # tunnels: axis (0 x / 2 z), shape (straight, window, closed, t_left, t_right, cross)
@@ -296,59 +296,59 @@ foreach ($n in 'andesite', 'brass') {
     $id = "${n}_tunnel"
     $comp = Base $id 0.8 6 ($(if ($n -eq 'brass') { '#d9a941' } else { '#93988d' }))
     $vis = [ordered]@{
-        wall_s = "q.block_state('levitate:shape') <= 2 || q.block_state('levitate:shape') == 4"
-        wall_n = "q.block_state('levitate:shape') <= 3"
-        flap_s = "q.block_state('levitate:shape') == 3 || q.block_state('levitate:shape') == 5"
-        flap_n = "q.block_state('levitate:shape') >= 4"
+        wall_s = "q.block_state('bearing:shape') <= 2 || q.block_state('bearing:shape') == 4"
+        wall_n = "q.block_state('bearing:shape') <= 3"
+        flap_s = "q.block_state('bearing:shape') == 3 || q.block_state('bearing:shape') == 5"
+        flap_n = "q.block_state('bearing:shape') >= 4"
     }
-    $comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.levitate.tunnel'; bone_visibility = $vis }
-    $mats = [ordered]@{ '*' = Mat "levitate_${n}_tunnel_wall"; wall = Mat "levitate_${n}_tunnel_wall"; top = Mat "levitate_${n}_tunnel_top"; pillar = Mat "levitate_${n}_tunnel_pillar"; flap = Mat "levitate_${n}_tunnel_flap" }
+    $comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.bearing.tunnel'; bone_visibility = $vis }
+    $mats = [ordered]@{ '*' = Mat "bearing_${n}_tunnel_wall"; wall = Mat "bearing_${n}_tunnel_wall"; top = Mat "bearing_${n}_tunnel_top"; pillar = Mat "bearing_${n}_tunnel_pillar"; flap = Mat "bearing_${n}_tunnel_flap" }
     $comp['minecraft:material_instances'] = $mats
     $comp['minecraft:selection_box'] = Box @(-8, 0, -8) @(16, 16, 16)
     $comp['minecraft:collision_box'] = Box @(-8, 0, -8) @(16, 16, 16)
-    $winMats = [ordered]@{}; foreach ($k in $mats.Keys) { $winMats[$k] = $mats[$k] }; $winMats.wall = Mat "levitate_${n}_tunnel_window"
+    $winMats = [ordered]@{}; foreach ($k in $mats.Keys) { $winMats[$k] = $mats[$k] }; $winMats.wall = Mat "bearing_${n}_tunnel_window"
     $perms = @(
-        [ordered]@{ condition = "q.block_state('levitate:axis') == 2"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, -90, 0) } } },
-        [ordered]@{ condition = "q.block_state('levitate:shape') == 1"; components = [ordered]@{ 'minecraft:material_instances' = $winMats } }
+        [ordered]@{ condition = "q.block_state('bearing:axis') == 2"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, -90, 0) } } },
+        [ordered]@{ condition = "q.block_state('bearing:shape') == 1"; components = [ordered]@{ 'minecraft:material_instances' = $winMats } }
     )
-    Block $id ([ordered]@{ 'levitate:axis' = @(0, 1, 2); 'levitate:shape' = @(0, 1, 2, 3, 4, 5) }) $comp $perms
+    Block $id ([ordered]@{ 'bearing:axis' = @(0, 1, 2); 'bearing:shape' = @(0, 1, 2, 3, 4, 5) }) $comp $perms
 }
 
 # chute: facing (0 down, 2..5 diagonal), shape (0 intersection, 1 window, 2 normal, 3 encased)
 $comp = Base 'chute' 1.0 6 '#a9adb2'
-$chuteMat = [ordered]@{ '*' = Mat 'levitate_chute_side'; side = Mat 'levitate_chute_side'; top = Mat 'levitate_chute_top' }
-$comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.levitate.chute' }
+$chuteMat = [ordered]@{ '*' = Mat 'bearing_chute_side'; side = Mat 'bearing_chute_side'; top = Mat 'bearing_chute_top' }
+$comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.bearing.chute' }
 $comp['minecraft:material_instances'] = $chuteMat
 $comp['minecraft:selection_box'] = Box @(-6, 0, -6) @(12, 16, 12)
 $comp['minecraft:collision_box'] = Box @(-6, 0, -6) @(12, 16, 12)
 $perms = @(
-    [ordered]@{ condition = "q.block_state('levitate:shape') == 1"; components = [ordered]@{ 'minecraft:material_instances' = [ordered]@{ '*' = Mat 'levitate_chute_window'; side = Mat 'levitate_chute_window'; top = Mat 'levitate_chute_top' } } },
-    [ordered]@{ condition = "q.block_state('levitate:shape') == 2"; components = [ordered]@{ 'minecraft:material_instances' = [ordered]@{ '*' = Mat 'levitate_chute_intersection'; side = Mat 'levitate_chute_intersection'; top = Mat 'levitate_chute_top' } } },
-    [ordered]@{ condition = "q.block_state('levitate:shape') == 3"; components = [ordered]@{
-        'minecraft:geometry' = [ordered]@{ identifier = 'geometry.levitate.chute_encased' }
-        'minecraft:material_instances' = [ordered]@{ '*' = Mat 'levitate_chute_encased' 'opaque'; side = Mat 'levitate_chute_encased' 'opaque'; top = Mat 'levitate_chute_top' 'opaque' }
+    [ordered]@{ condition = "q.block_state('bearing:shape') == 1"; components = [ordered]@{ 'minecraft:material_instances' = [ordered]@{ '*' = Mat 'bearing_chute_window'; side = Mat 'bearing_chute_window'; top = Mat 'bearing_chute_top' } } },
+    [ordered]@{ condition = "q.block_state('bearing:shape') == 2"; components = [ordered]@{ 'minecraft:material_instances' = [ordered]@{ '*' = Mat 'bearing_chute_intersection'; side = Mat 'bearing_chute_intersection'; top = Mat 'bearing_chute_top' } } },
+    [ordered]@{ condition = "q.block_state('bearing:shape') == 3"; components = [ordered]@{
+        'minecraft:geometry' = [ordered]@{ identifier = 'geometry.bearing.chute_encased' }
+        'minecraft:material_instances' = [ordered]@{ '*' = Mat 'bearing_chute_encased' 'opaque'; side = Mat 'bearing_chute_encased' 'opaque'; top = Mat 'bearing_chute_top' 'opaque' }
         'minecraft:selection_box' = Box @(-8, 0, -8) @(16, 16, 16); 'minecraft:collision_box' = Box @(-8, 0, -8) @(16, 16, 16) } }
 )
 foreach ($f in 2..5) {
-    $perms += [ordered]@{ condition = "q.block_state('levitate:facing') == $($f - 1) && q.block_state('levitate:shape') != 3"; components = [ordered]@{
-        'minecraft:geometry' = [ordered]@{ identifier = 'geometry.levitate.chute_diagonal' }
+    $perms += [ordered]@{ condition = "q.block_state('bearing:facing') == $($f - 1) && q.block_state('bearing:shape') != 3"; components = [ordered]@{
+        'minecraft:geometry' = [ordered]@{ identifier = 'geometry.bearing.chute_diagonal' }
         'minecraft:transformation' = [ordered]@{ rotation = @(0, $yRot[$f], 0) } } }
 }
-Block 'chute' ([ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4); 'levitate:shape' = @(0, 1, 2, 3) }) $comp $perms
+Block 'chute' ([ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4); 'bearing:shape' = @(0, 1, 2, 3) }) $comp $perms
 
 # smart chute: powered
 $comp = Base 'smart_chute' 1.0 6 '#d9a941'
-$comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.levitate.smart_chute' }
-$comp['minecraft:material_instances'] = [ordered]@{ '*' = Mat 'levitate_smart_chute_side'; side = Mat 'levitate_smart_chute_side'; top = Mat 'levitate_smart_chute_top' }
-$perms = @([ordered]@{ condition = "q.block_state('levitate:powered') == 1"; components = [ordered]@{ 'minecraft:material_instances' = [ordered]@{
-    '*' = Mat 'levitate_smart_chute_side_powered'; side = Mat 'levitate_smart_chute_side_powered'; top = Mat 'levitate_smart_chute_top' } } })
-Block 'smart_chute' ([ordered]@{ 'levitate:powered' = @(0, 1) }) $comp $perms
+$comp['minecraft:geometry'] = [ordered]@{ identifier = 'geometry.bearing.smart_chute' }
+$comp['minecraft:material_instances'] = [ordered]@{ '*' = Mat 'bearing_smart_chute_side'; side = Mat 'bearing_smart_chute_side'; top = Mat 'bearing_smart_chute_top' }
+$perms = @([ordered]@{ condition = "q.block_state('bearing:powered') == 1"; components = [ordered]@{ 'minecraft:material_instances' = [ordered]@{
+    '*' = Mat 'bearing_smart_chute_side_powered'; side = Mat 'bearing_smart_chute_side_powered'; top = Mat 'bearing_smart_chute_top' } } })
+Block 'smart_chute' ([ordered]@{ 'bearing:powered' = @(0, 1) }) $comp $perms
 
 # creative crate
 $comp = Base 'creative_crate' 2.0 6 '#a46cc0'
 $comp.Remove('minecraft:light_dampening')
 $comp['minecraft:geometry'] = 'minecraft:geometry.full_block'
-$comp['minecraft:material_instances'] = [ordered]@{ '*' = Mat 'levitate_creative_crate_side' 'opaque'; up = Mat 'levitate_creative_crate_top' 'opaque'; down = Mat 'levitate_creative_crate_top' 'opaque' }
+$comp['minecraft:material_instances'] = [ordered]@{ '*' = Mat 'bearing_creative_crate_side' 'opaque'; up = Mat 'bearing_creative_crate_top' 'opaque'; down = Mat 'bearing_creative_crate_top' 'opaque' }
 Block 'creative_crate' $null $comp $null
 
 # item vault: axis (0 x / 2 z), connected-texture position len / u / v / large (core::funnels::vaultLook)
@@ -357,7 +357,7 @@ function Flags($l, $r, $t, $b) { "$([int]$l)$([int]$r)$([int]$t)$([int]$b)" }
 $comp = Base 'item_vault' 3.0 1200 '#a0a5ab'
 $comp.Remove('minecraft:light_dampening')
 $comp['minecraft:geometry'] = 'minecraft:geometry.full_block'
-$comp['minecraft:material_instances'] = [ordered]@{ '*' = Mat 'levitate_item_vault_side_1111' 'opaque' }
+$comp['minecraft:material_instances'] = [ordered]@{ '*' = Mat 'bearing_item_vault_side_1111' 'opaque' }
 $perms = @()
 foreach ($axis in 0, 2) { foreach ($len in 0..3) {
     $combos = @(@{ u = 0; v = 0; large = 0 })
@@ -365,36 +365,36 @@ foreach ($axis in 0, 2) { foreach ($len in 0..3) {
     foreach ($u in 1..3) { foreach ($v in 1..3) { $combos += @{ u = $u; v = $v; large = 1 } } }
     foreach ($cmb in $combos) {
         $u = $cmb.u; $v = $cmb.v; $lg = $cmb.large
-        $endPrefix = if ($lg) { 'levitate_item_vault_end_large_' } else { 'levitate_item_vault_end_' }
+        $endPrefix = if ($lg) { 'bearing_item_vault_end_large_' } else { 'bearing_item_vault_end_' }
         $vt = EdgeOf $v $false; $vb = EdgeOf $v $true
         $first = EdgeOf $len $true; $last = EdgeOf $len $false
         $uLow = EdgeOf $u $true; $uHigh = EdgeOf $u $false
         $m = [ordered]@{}
         if ($axis -eq 0) {
-            $m.north = Mat ("levitate_item_vault_side_" + (Flags $last $first $vt $vb)) 'opaque'
-            $m.south = Mat ("levitate_item_vault_side_" + (Flags $first $last $vt $vb)) 'opaque'
-            $m.up = Mat ("levitate_item_vault_side_" + (Flags $first $last $uLow $uHigh)) 'opaque'
-            $m.down = Mat ("levitate_item_vault_side_" + (Flags $first $last $uLow $uHigh)) 'opaque'
+            $m.north = Mat ("bearing_item_vault_side_" + (Flags $last $first $vt $vb)) 'opaque'
+            $m.south = Mat ("bearing_item_vault_side_" + (Flags $first $last $vt $vb)) 'opaque'
+            $m.up = Mat ("bearing_item_vault_side_" + (Flags $first $last $uLow $uHigh)) 'opaque'
+            $m.down = Mat ("bearing_item_vault_side_" + (Flags $first $last $uLow $uHigh)) 'opaque'
             $m.east = Mat ($endPrefix + (Flags $uHigh $uLow $vt $vb)) 'opaque'
             $m.west = Mat ($endPrefix + (Flags $uLow $uHigh $vt $vb)) 'opaque'
         } else {
-            $m.east = Mat ("levitate_item_vault_side_" + (Flags $last $first $vt $vb)) 'opaque'
-            $m.west = Mat ("levitate_item_vault_side_" + (Flags $first $last $vt $vb)) 'opaque'
-            $m.up = Mat ("levitate_item_vault_side_" + (Flags $uLow $uHigh $first $last)) 'opaque'
-            $m.down = Mat ("levitate_item_vault_side_" + (Flags $uLow $uHigh $first $last)) 'opaque'
+            $m.east = Mat ("bearing_item_vault_side_" + (Flags $last $first $vt $vb)) 'opaque'
+            $m.west = Mat ("bearing_item_vault_side_" + (Flags $first $last $vt $vb)) 'opaque'
+            $m.up = Mat ("bearing_item_vault_side_" + (Flags $uLow $uHigh $first $last)) 'opaque'
+            $m.down = Mat ("bearing_item_vault_side_" + (Flags $uLow $uHigh $first $last)) 'opaque'
             $m.north = Mat ($endPrefix + (Flags $uHigh $uLow $vt $vb)) 'opaque'
             $m.south = Mat ($endPrefix + (Flags $uLow $uHigh $vt $vb)) 'opaque'
         }
         $m['*'] = $m.north
-        $cond = "q.block_state('levitate:axis') == $axis && q.block_state('levitate:len') == $len && q.block_state('levitate:u') == $u && q.block_state('levitate:v') == $v && q.block_state('levitate:large') == $lg"
+        $cond = "q.block_state('bearing:axis') == $axis && q.block_state('bearing:len') == $len && q.block_state('bearing:u') == $u && q.block_state('bearing:v') == $v && q.block_state('bearing:large') == $lg"
         $perms += [ordered]@{ condition = $cond; components = [ordered]@{ 'minecraft:material_instances' = $m } }
     }
 } }
-Block 'item_vault' ([ordered]@{ 'levitate:axis' = @(0, 1, 2); 'levitate:len' = @(0, 1, 2, 3); 'levitate:u' = @(0, 1, 2, 3); 'levitate:v' = @(0, 1, 2, 3); 'levitate:large' = @(0, 1) }) $comp $perms
+Block 'item_vault' ([ordered]@{ 'bearing:axis' = @(0, 1, 2); 'bearing:len' = @(0, 1, 2, 3); 'bearing:u' = @(0, 1, 2, 3); 'bearing:v' = @(0, 1, 2, 3); 'bearing:large' = @(0, 1) }) $comp $perms
 
 # --- item hatch (Create's ItemHatchBlock, U49) ----------------------------------------------------------------
-# A plate against the container (south of it for the model: levitate:facing = FacingID towards the
-# container, 2..5) with a slanted door that tips outward when something was deposited (levitate:open).
+# A plate against the container (south of it for the model: bearing:facing = FacingID towards the
+# container, 2..5) with a slanted door that tips outward when something was deposited (bearing:open).
 $hatchPal = @{ L = '#c9ced4'; M = '#9aa1a9'; D = '#737a83'; K = '#4a5058'; R = '#e8ebee'; x = '#16181b'; y = '#2b2f34'; b = '#55657f'; n = '#7586a3'; q = '#3d4a60'; h = '#f0c040'; z = '#2b2b2b' }
 $c = New-Canvas; Metal $c; Bevel $c; Rivets $c 1
 Fill $c 3 3 12 12 'K'; Fill $c 4 4 11 11 'b'; Fill $c 4 4 11 4 'n'; Fill $c 4 11 11 11 'q'
@@ -422,25 +422,25 @@ function Hatch-Bones($doorDeg) {
 Save-Geo 'item_hatch' (Hatch-Bones 45)
 Save-Geo 'item_hatch_open' (Hatch-Bones 100)
 $comp = Base 'item_hatch' 3.0 6 '#4c3e5c'
-$comp['minecraft:geometry'] = 'geometry.levitate.item_hatch'
-$hatchMats = [ordered]@{ '*' = Mat 'levitate_item_hatch_side'; front = Mat 'levitate_item_hatch_front'; back = Mat 'levitate_item_hatch_back'; side = Mat 'levitate_item_hatch_side'; door = Mat 'levitate_item_hatch_door' }
+$comp['minecraft:geometry'] = 'geometry.bearing.item_hatch'
+$hatchMats = [ordered]@{ '*' = Mat 'bearing_item_hatch_side'; front = Mat 'bearing_item_hatch_front'; back = Mat 'bearing_item_hatch_back'; side = Mat 'bearing_item_hatch_side'; door = Mat 'bearing_item_hatch_door' }
 $comp['minecraft:material_instances'] = $hatchMats
 $comp['minecraft:selection_box'] = Box @(-7, 0, 0) @(14, 16, 8)
 $comp['minecraft:collision_box'] = Box @(-7, 0, 0) @(14, 16, 8)
 $comp['minecraft:liquid_detection'] = [ordered]@{ detection_rules = @([ordered]@{ liquid_type = 'water'; can_contain_liquid = $true; on_liquid_touches = 'no_reaction' }) }
 $hatchRot = @{ 2 = 180; 3 = 0; 4 = -90; 5 = 90 }
 $perms = @()
-foreach ($f in 2..5) { $perms += [ordered]@{ condition = "q.block_state('levitate:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $hatchRot[$f], 0) } } } }
-$openMats = [ordered]@{ '*' = Mat 'levitate_item_hatch_side'; front = Mat 'levitate_item_hatch_front_open'; back = Mat 'levitate_item_hatch_back'; side = Mat 'levitate_item_hatch_side'; door = Mat 'levitate_item_hatch_door' }
-$perms += [ordered]@{ condition = "q.block_state('levitate:open') == 1"; components = [ordered]@{ 'minecraft:geometry' = 'geometry.levitate.item_hatch_open'; 'minecraft:material_instances' = $openMats } }
-Block 'item_hatch' ([ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:open' = @(0, 1) }) $comp $perms
+foreach ($f in 2..5) { $perms += [ordered]@{ condition = "q.block_state('bearing:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $hatchRot[$f], 0) } } } }
+$openMats = [ordered]@{ '*' = Mat 'bearing_item_hatch_side'; front = Mat 'bearing_item_hatch_front_open'; back = Mat 'bearing_item_hatch_back'; side = Mat 'bearing_item_hatch_side'; door = Mat 'bearing_item_hatch_door' }
+$perms += [ordered]@{ condition = "q.block_state('bearing:open') == 1"; components = [ordered]@{ 'minecraft:geometry' = 'geometry.bearing.item_hatch_open'; 'minecraft:material_instances' = $openMats } }
+Block 'item_hatch' ([ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:open' = @(0, 1) }) $comp $perms
 
 # --- RP fragments ---------------------------------------------------------------------------------------------
 Save-Json (Join-Path $root 'assets/pack/rp/terrain_texture.d/funnels.json') $terrain
 $sounds = [ordered]@{}
 foreach ($id in 'andesite_funnel', 'brass_funnel', 'andesite_tunnel', 'brass_tunnel', 'chute', 'smart_chute', 'item_vault', 'creative_crate') {
-    $sounds["levitate:$id"] = [ordered]@{ sound = $(if ($id -like '*vault*' -or $id -like '*chute*') { 'metal' } elseif ($id -eq 'creative_crate') { 'wood' } else { 'metal' }) }
+    $sounds["bearing:$id"] = [ordered]@{ sound = $(if ($id -like '*vault*' -or $id -like '*chute*') { 'metal' } elseif ($id -eq 'creative_crate') { 'wood' } else { 'metal' }) }
 }
-$sounds['levitate:item_hatch'] = [ordered]@{ sound = 'netherite' }
+$sounds['bearing:item_hatch'] = [ordered]@{ sound = 'netherite' }
 Save-Json (Join-Path $root 'assets/pack/rp/blocks.d/funnels.json') $sounds
 Write-Host "funnels textures, models and blocks written ($($terrain.Count) textures)"

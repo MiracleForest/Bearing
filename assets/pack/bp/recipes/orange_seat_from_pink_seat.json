@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:orange_seat_from_pink_seat"
+      "identifier": "bearing:orange_seat_from_pink_seat"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:pink_seat"
+        "item": "bearing:pink_seat"
       },
       {
         "item": "minecraft:orange_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:pink_seat"
+        "item": "bearing:pink_seat"
       }
     ],
     "result": {
-      "item": "levitate:orange_seat"
+      "item": "bearing:orange_seat"
     }
   }
 }

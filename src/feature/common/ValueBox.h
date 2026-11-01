@@ -4,7 +4,7 @@
 //
 // Value box (Create's scroll value / scroll option, edited on a "value settings" board):
 //
-//     valuebox::registerBox("levitate:creative_motor", {
+//     valuebox::registerBox("bearing:creative_motor", {
 //         .id       = "speed",
 //         .label    = "create.kinetics.creative_motor.rotation_speed", .labelFallback = "Generated Speed",
 //         .board    = [](Block const&) { return core::common::signedBoard(256, 32, "⟳", "⟲"); },
@@ -46,7 +46,7 @@ class Block;
 class ItemStack;
 class Player;
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 namespace valuebox {
 
@@ -166,4 +166,4 @@ void dropFiltersOf(GlobalPos const& pos, nlohmann::json const& doc);
 
 } // namespace filterslot
 
-} // namespace lv::feature::common
+} // namespace br::feature::common

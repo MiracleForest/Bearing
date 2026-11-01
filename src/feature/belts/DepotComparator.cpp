@@ -17,7 +17,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace {
 namespace rs = common::redstone;
@@ -53,6 +53,6 @@ public:
     }
 };
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts
 
-LV_REGISTER_MODULE(lv::feature::belts::DepotComparatorModule);
+BR_REGISTER_MODULE(br::feature::belts::DepotComparatorModule);

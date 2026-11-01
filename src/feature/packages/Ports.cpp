@@ -34,7 +34,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items     = common::items;
 namespace blockdata = common::blockdata;
@@ -69,7 +69,7 @@ struct StationPort {
     std::vector<ItemStack> buffer  = std::vector<ItemStack>(kPortSlots);
     bool                   primed  = false; ///< the buffer changed while unloaded: restore it on load
 };
-constexpr char const* kStationPortsKey = "lv:packages:station_ports";
+constexpr char const* kStationPortsKey = "br:packages:station_ports";
 struct StationPorts {
     std::map<GlobalPos, StationPort> ports; ///< by postbox position
     bool                             dirty  = false;
@@ -161,7 +161,7 @@ bool isPort(GlobalPos const& pos) {
 void updateFlag(GlobalPos const& pos, PortState const& s) {
     if (kindOf(idAt(pos)) != Kind::Postbox) return;
     bool any = std::any_of(s.inventory.begin(), s.inventory.end(), [](ItemStack const& i) { return !items::isEmpty(i); });
-    if (setStates(pos, {{kFlag, any ? 1 : 0}}) && any) playSound(pos.dim, centre(pos), "levitate.packages.postbox_flag", 1.f, 2.f);
+    if (setStates(pos, {{kFlag, any ? 1 : 0}}) && any) playSound(pos.dim, centre(pos), "bearing.packages.postbox_flag", 1.f, 2.f);
 }
 
 /// Inserts a package into the first empty slot. Returns false when full.
@@ -528,8 +528,8 @@ void startFrogAnimation(GlobalPos const& pos, ItemStack const& box, bool deposit
     if (!deposit) advancements::awardOwner(pos, "frogport"); // Create's FrogportBlockEntity#startAnimation
     savePort(pos);
     syncFrog(pos, s);
-    playSound(pos.dim, centre(pos), "levitate.packages.frogport_open", 1.f, 1.f);
-    playSound(pos.dim, centre(pos), deposit ? "levitate.packages.frogport_deposit" : "levitate.packages.frogport_catch", 1.f, 1.f);
+    playSound(pos.dim, centre(pos), "bearing.packages.frogport_open", 1.f, 1.f);
+    playSound(pos.dim, centre(pos), deposit ? "bearing.packages.frogport_deposit" : "bearing.packages.frogport_catch", 1.f, 1.f);
 }
 
 void anticipate(GlobalPos const& pos) {
@@ -717,7 +717,7 @@ void portForm(Player& player, Json const& ctx) {
     auto suggestions = addressSuggestions(player);
     appendAddressSuggestions(form, player, suggestions);
     form.appendToggle("accepts", trFor(player, "create.gui.package_port.send_and_receive", "Send and receive packages"), s.acceptsPackages);
-    std::vector<std::string> options{trFor(player, "lv.packages.form.keep", "(none)")};
+    std::vector<std::string> options{trFor(player, "br.packages.form.keep", "(none)")};
     std::vector<int>         slots{-1};
     std::vector<std::string> shown{""}; // what each option showed: the slot must still hold it
     for (int i = 0; i < kPortSlots; ++i) {
@@ -728,8 +728,8 @@ void portForm(Player& player, Json const& ctx) {
         slots.push_back(i);
         shown.push_back(items::toJson(b).dump());
     }
-    form.appendDropdown("take", trFor(player, "lv.packages.form.take", "Take a package"), options, 0);
-    form.appendToggle("insert", trFor(player, "lv.packages.form.insert", "Put the packages from my inventory in"), false);
+    form.appendDropdown("take", trFor(player, "br.packages.form.take", "Take a package"), options, 0);
+    form.appendToggle("insert", trFor(player, "br.packages.form.insert", "Put the packages from my inventory in"), false);
     auto at = *pos;
     setOpen(at, true);
     form.sendTo(player, [at, slots, shown, suggestions](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
@@ -763,7 +763,7 @@ void addressForm(Player& player, GlobalPos const& pos) {
     ll::form::CustomForm form(trFor(player, "create.gui.package_port.catch_packages", "Catch packages addressed to..."));
     form.appendLabel(trFor(player, "create.gui.package_port.catch_packages_wildcard", "Use * as a text wildcard"));
     form.appendLabel(trFor(player, "create.gui.package_port.catch_packages_empty", "Leave empty to match non-addressed"));
-    form.appendInput("address", trFor(player, "lv.packages.form.address", "Address"), "", s.address);
+    form.appendInput("address", trFor(player, "br.packages.form.address", "Address"), "", s.address);
     form.sendTo(player, [pos](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
         if (!result || !contextPort(p, {{"pos", posJson(pos)}})) return;
         if (auto it = result->find("address"); it != result->end())
@@ -955,7 +955,7 @@ ItemStack extractFromPort(GlobalPos const& pos, std::function<bool(ItemStack con
 
 // Create's FrogportBlockEntity.addToTooltip: a frogport whose caught packages could not go into
 // the inventory below shows the "Contains Packages" hint.
-LV_REGISTER_GOGGLE_INFO(kFrogportId, {
+BR_REGISTER_GOGGLE_INFO(kFrogportId, {
     .hover = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
         if (!port(c.pos).failedLastExport) return false;
         t.push_back(goggles::line(std::string(core::goggles::fmt::kGold) + c.tr("create.hint.blocked_frogport.title", "Contains Packages")));
@@ -1036,4 +1036,4 @@ void notifyDelivered(GlobalPos const& pos) {
     updateFlag(pos, port(pos));
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

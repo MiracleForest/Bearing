@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cut_scorchia_brick_stairs_from_layered_scorchia_stonecutting"
+      "identifier": "bearing:cut_scorchia_brick_stairs_from_layered_scorchia_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:layered_scorchia"
+        "item": "bearing:layered_scorchia"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:layered_scorchia"
+        "item": "bearing:layered_scorchia"
       }
     ],
     "result": {
-      "item": "levitate:cut_scorchia_brick_stairs",
+      "item": "bearing:cut_scorchia_brick_stairs",
       "count": 1
     }
   }

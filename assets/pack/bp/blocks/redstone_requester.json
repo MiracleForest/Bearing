@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:redstone_requester",
+      "identifier": "bearing:redstone_requester",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ]
@@ -29,119 +29,119 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_redstone_requester_side",
+          "texture": "bearing_redstone_requester_side",
           "render_method": "opaque"
         },
         "up": {
-          "texture": "levitate_redstone_requester_top",
+          "texture": "bearing_redstone_requester_top",
           "render_method": "opaque"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_requester_side",
+              "texture": "bearing_redstone_requester_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_requester_top",
+              "texture": "bearing_redstone_requester_top",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_requester_bottom",
+              "texture": "bearing_redstone_requester_bottom",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_requester_side",
+              "texture": "bearing_redstone_requester_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_requester_top_powered",
+              "texture": "bearing_redstone_requester_top_powered",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_requester_bottom",
+              "texture": "bearing_redstone_requester_bottom",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_requester_side",
+              "texture": "bearing_redstone_requester_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_requester_top",
+              "texture": "bearing_redstone_requester_top",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_requester_bottom",
+              "texture": "bearing_redstone_requester_bottom",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_redstone_requester_side",
+              "texture": "bearing_redstone_requester_side",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_redstone_requester_top_powered",
+              "texture": "bearing_redstone_requester_top_powered",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_redstone_requester_bottom",
+              "texture": "bearing_redstone_requester_bottom",
               "render_method": "opaque"
             },
             "north": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_redstone_requester_front",
+              "texture": "bearing_redstone_requester_front",
               "render_method": "opaque"
             }
           }

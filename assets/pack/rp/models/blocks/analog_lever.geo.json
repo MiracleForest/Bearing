@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_0_north",
+        "identifier": "geometry.bearing.analog_lever_0_north",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -3025,7 +3025,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_0_south",
+        "identifier": "geometry.bearing.analog_lever_0_south",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -6047,7 +6047,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_0_west",
+        "identifier": "geometry.bearing.analog_lever_0_west",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -9069,7 +9069,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_0_east",
+        "identifier": "geometry.bearing.analog_lever_0_east",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -12091,7 +12091,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_1_north",
+        "identifier": "geometry.bearing.analog_lever_1_north",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -15113,7 +15113,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_1_south",
+        "identifier": "geometry.bearing.analog_lever_1_south",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -18135,7 +18135,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_1_west",
+        "identifier": "geometry.bearing.analog_lever_1_west",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -21157,7 +21157,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_1_east",
+        "identifier": "geometry.bearing.analog_lever_1_east",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -24179,7 +24179,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_2_north",
+        "identifier": "geometry.bearing.analog_lever_2_north",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -27201,7 +27201,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_2_south",
+        "identifier": "geometry.bearing.analog_lever_2_south",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -30223,7 +30223,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_2_west",
+        "identifier": "geometry.bearing.analog_lever_2_west",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -33245,7 +33245,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.analog_lever_2_east",
+        "identifier": "geometry.bearing.analog_lever_2_east",
         "texture_width": 32,
         "texture_height": 32,
         "visible_bounds_width": 2,

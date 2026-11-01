@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:track_station"
+      "identifier": "bearing:track_station"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:railway_casing"
+        "item": "bearing:railway_casing"
       },
       {
         "item": "minecraft:compass"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:railway_casing"
+        "item": "bearing:railway_casing"
       }
     ],
     "result": {
-      "item": "levitate:track_station",
+      "item": "bearing:track_station",
       "count": 2
     }
   }

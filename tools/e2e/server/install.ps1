@@ -4,12 +4,12 @@
 
 .DESCRIPTION
   Installs github.com/LiteLDev/LeviLamina@<version> with lip into <home>\bds-base, where <home>
-  is $env:LV_E2E_HOME or %LOCALAPPDATA%\lv-e2e. lip pulls the matching bedrock-server
+  is $env:BR_E2E_HOME or %LOCALAPPDATA%\br-e2e. lip pulls the matching bedrock-server
   (github.com/LiteLDev/bds), CrashLogger, PreLoader, the runtime data, and patches
   bedrock_server.exe into bedrock_server_mod.exe.
 
   Idempotent and concurrency-safe: a run holds <home>\install.lock, installs into a temporary
-  directory and renames it to bds-base only after it succeeded. bds-base\.lv-e2e-installed
+  directory and renames it to bds-base only after it succeeded. bds-base\.br-e2e-installed
   records what was installed. A second concurrent caller waits for the lock and then finds the
   installation complete.
 
@@ -26,7 +26,7 @@ $ErrorActionPreference = 'Stop'
 
 $home_ = Get-E2EHome
 $base  = Join-Path $home_ 'bds-base'
-$stampFile = Join-Path $base '.lv-e2e-installed'
+$stampFile = Join-Path $base '.br-e2e-installed'
 $wanted = "github.com/LiteLDev/LeviLamina@$Version"
 
 function Test-Installed {
@@ -67,7 +67,7 @@ try {
     # lip's download cache is not needed at runtime.
     Remove-Item -Recurse -Force (Join-Path $tmp '.cache') -ErrorAction SilentlyContinue
 
-    Set-Content -Path (Join-Path $tmp '.lv-e2e-installed') -Value "$wanted`ninstalled=$(Get-Date -Format o)" -Encoding UTF8
+    Set-Content -Path (Join-Path $tmp '.br-e2e-installed') -Value "$wanted`ninstalled=$(Get-Date -Format o)" -Encoding UTF8
 
     if (Test-Path $base) {
         $old = Join-Path $home_ "bds-base.old-$(Get-Date -Format yyyyMMddHHmmss)"

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_deepslate_slab"
+      "identifier": "bearing:cut_deepslate_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_deepslate"
+        "item": "bearing:cut_deepslate"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_deepslate"
+        "item": "bearing:cut_deepslate"
       }
     ],
     "result": {
-      "item": "levitate:cut_deepslate_slab",
+      "item": "bearing:cut_deepslate_slab",
       "count": 6
     }
   }

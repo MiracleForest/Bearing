@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:transmitter"
+      "identifier": "bearing:transmitter"
     },
     "tags": [
       "crafting_table"
@@ -14,7 +14,7 @@
     ],
     "key": {
       "L": {
-        "item": "levitate:copper_sheet"
+        "item": "bearing:copper_sheet"
       },
       "N": {
         "item": "minecraft:lightning_rod"
@@ -25,11 +25,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:copper_sheet"
+        "item": "bearing:copper_sheet"
       }
     ],
     "result": {
-      "item": "levitate:transmitter",
+      "item": "bearing:transmitter",
       "count": 1
     }
   }

@@ -2,24 +2,24 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:copper_bars",
+      "identifier": "bearing:copper_bars",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:north": [
+        "bearing:north": [
           0,
           1
         ],
-        "levitate:south": [
+        "bearing:south": [
           0,
           1
         ],
-        "levitate:west": [
+        "bearing:west": [
           0,
           1
         ],
-        "levitate:east": [
+        "bearing:east": [
           0,
           1
         ]
@@ -37,18 +37,18 @@
       "tag:minecraft:is_pickaxe_item_destructible": {},
       "minecraft:light_dampening": 0,
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.bars",
+        "identifier": "geometry.bearing.bars",
         "bone_visibility": {
           "post": true,
-          "n": "q.block_state('levitate:north') == 1",
-          "s": "q.block_state('levitate:south') == 1",
-          "w": "q.block_state('levitate:west') == 1",
-          "e": "q.block_state('levitate:east') == 1"
+          "n": "q.block_state('bearing:north') == 1",
+          "s": "q.block_state('bearing:south') == 1",
+          "w": "q.block_state('bearing:west') == 1",
+          "e": "q.block_state('bearing:east') == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_copper_bars",
+          "texture": "bearing_copper_bars",
           "render_method": "alpha_test"
         }
       },
@@ -79,7 +79,7 @@
     },
     "permutations": [
       {
-        "condition": "(q.block_state('levitate:north') == 1 || q.block_state('levitate:south') == 1 || q.block_state('levitate:west') == 1 || q.block_state('levitate:east') == 1)",
+        "condition": "(q.block_state('bearing:north') == 1 || q.block_state('bearing:south') == 1 || q.block_state('bearing:west') == 1 || q.block_state('bearing:east') == 1)",
         "components": {
           "minecraft:selection_box": {
             "origin": [

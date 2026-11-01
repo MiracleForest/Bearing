@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:flywheel"
+      "identifier": "bearing:flywheel"
     },
     "tags": [
       "crafting_table"
@@ -14,19 +14,19 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       },
       "C": {
-        "item": "levitate:brass_ingot"
+        "item": "bearing:brass_ingot"
       }
     },
     "unlock": [
       {
-        "item": "levitate:brass_ingot"
+        "item": "bearing:brass_ingot"
       }
     ],
     "result": {
-      "item": "levitate:flywheel",
+      "item": "bearing:flywheel",
       "count": 1
     }
   }

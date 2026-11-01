@@ -16,10 +16,10 @@ $logDir = Join-Path (Get-GameDataDir) 'logs'
 $contentLog = Get-ChildItem $logDir -Filter 'ContentLog*' -ErrorAction SilentlyContinue |
     Where-Object { $_.LastWriteTime -ge $script:TracksContentLogStart } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 if ($contentLog) {
-    $errors = Select-String -Path $contentLog.FullName -Pattern 'levitate:(fake_|incomplete_)?track|levitate_(fake_|incomplete_)?track|track.geo|(fake_)?track.json' | ForEach-Object { $_.Line }
+    $errors = Select-String -Path $contentLog.FullName -Pattern 'bearing:(fake_|incomplete_)?track|bearing_(fake_|incomplete_)?track|track.geo|(fake_)?track.json' | ForEach-Object { $_.Line }
     if ($errors) {
         $errors | Set-Content (Join-Path (Join-Path $script:OutRoot $script:Unit) 'content-errors.txt')
-        throw "content log reports $(@($errors).Count) problem(s) with the Levitate packs (content-errors.txt): $($errors | Select-Object -First 3)"
+        throw "content log reports $(@($errors).Count) problem(s) with the Bearing packs (content-errors.txt): $($errors | Select-Object -First 3)"
     }
 }
 
@@ -27,9 +27,9 @@ Invoke-Chat '/gamemode creative'
 Invoke-Chat '/time set noon'
 # a clean flat area east of the player, then the two ends: east-west at +3, north-south at (+12, -9)
 Invoke-Chat '/fill ~-4 ~ ~-14 ~16 ~4 ~4 air'
-Invoke-Chat '/setblock ~3 ~ ~ levitate:track ["levitate:shape"=2]'
-Invoke-Chat '/setblock ~12 ~ ~-9 levitate:track ["levitate:shape"=1]'
-Invoke-Chat '/give @s levitate:track 64'
+Invoke-Chat '/setblock ~3 ~ ~ bearing:track ["bearing:shape"=2]'
+Invoke-Chat '/setblock ~12 ~ ~-9 bearing:track ["bearing:shape"=1]'
+Invoke-Chat '/give @s bearing:track 64'
 Press-Key 1
 # look east, 25 degrees down: the crosshair is on the first track
 Invoke-Chat '/tp @s ~ ~ ~ -90 25'
@@ -74,16 +74,16 @@ if ($withMod) { Wait-LogLine 'tracks: rendering \d+ curve' 20 -Since $mark | Out
 # flat track M at (210, -56, 40), a slope rising away east of it, one rising towards it from the west
 Invoke-Teleport '/tp @s 200 -60 44'
 Invoke-Chat '/fill 195 -60 34 225 -44 46 air'
-Invoke-Chat '/setblock 210 -56 40 levitate:track ["levitate:shape"=2]'
-Invoke-Chat '/setblock 215 -54 40 levitate:track ["levitate:shape"=7]'
-Invoke-Chat '/setblock 216 -53 40 levitate:track ["levitate:shape"=7]'
-Invoke-Chat '/setblock 205 -59 40 levitate:track ["levitate:shape"=7]'
-Invoke-Chat '/setblock 204 -60 40 levitate:track ["levitate:shape"=7]'
+Invoke-Chat '/setblock 210 -56 40 bearing:track ["bearing:shape"=2]'
+Invoke-Chat '/setblock 215 -54 40 bearing:track ["bearing:shape"=7]'
+Invoke-Chat '/setblock 216 -53 40 bearing:track ["bearing:shape"=7]'
+Invoke-Chat '/setblock 205 -59 40 bearing:track ["bearing:shape"=7]'
+Invoke-Chat '/setblock 204 -60 40 bearing:track ["bearing:shape"=7]'
 # glass to stand on at every place the player is put (it would fall otherwise)
 foreach ($g in '207 -56 42', '213 -53 43', '213 -56 42', '207 -59 43', '210 -56 47', '211 -54 43') {
     Invoke-Chat "/setblock $g glass"
 }
-Invoke-Chat '/give @s levitate:track 64'
+Invoke-Chat '/give @s bearing:track 64'
 Press-Key 1
 # (`facing` aims from the feet: the points are 1.62 below what the crosshair is on)
 # the east end of M, then the upper slope: a sloped curve

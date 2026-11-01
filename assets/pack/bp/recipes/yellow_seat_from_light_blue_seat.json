@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:yellow_seat_from_light_blue_seat"
+      "identifier": "bearing:yellow_seat_from_light_blue_seat"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:light_blue_seat"
+        "item": "bearing:light_blue_seat"
       },
       {
         "item": "minecraft:yellow_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:light_blue_seat"
+        "item": "bearing:light_blue_seat"
       }
     ],
     "result": {
-      "item": "levitate:yellow_seat"
+      "item": "bearing:yellow_seat"
     }
   }
 }

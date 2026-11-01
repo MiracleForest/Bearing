@@ -10,7 +10,7 @@
 // Holding Ctrl (Create's sprint key mapping) plans the maximised turn; the key state is sent to
 // the server ("tracks.ctrl"), which uses it for the click (vanilla clients: sprinting).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <chrono>
 #include <cmath>
@@ -53,7 +53,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::tracks {
+namespace br::client::tracks {
 
 namespace ct = core::tracks;
 
@@ -188,7 +188,7 @@ std::optional<ct::PlacementPlan> planFor(LocalPlayer& player, Selection const& s
     req.maxLength    = sel.maxLength;
     req.maximiseTurn = ctrl;
     auto const& off  = player.getOffhandSlot();
-    req.girder       = !off.isNull() && off.getTypeName() == "levitate:metal_girder";
+    req.girder       = !off.isNull() && off.getTypeName() == "bearing:metal_girder";
     req.from         = sel.end;
     auto s1          = feature::tracks::shapeAt(region, toGame(sel.end.pos));
     req.fromIsTrack  = s1.has_value();
@@ -357,8 +357,8 @@ bool hasSelection() {
     return st().selection.has_value();
 }
 
-} // namespace lv::client::tracks
+} // namespace br::client::tracks
 
-LV_REGISTER_MODULE(lv::client::tracks::TrackPreviewModule);
+BR_REGISTER_MODULE(br::client::tracks::TrackPreviewModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

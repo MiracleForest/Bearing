@@ -1,24 +1,24 @@
 # Host for the client harness's remote modes (tools/e2e/client/run.ps1 -Mode remote-mod |
 # remote-vanilla). Not a test on its own: it keeps the server running for a real game client.
 #
-# Contract with the client harness, through the folder in $env:LV_E2E_HOST_DIR:
+# Contract with the client harness, through the folder in $env:BR_E2E_HOST_DIR:
 #   ready.json      written once the server is up: {"port": <udp port>, "slot": n}
 #                   (written to a temporary name and renamed, so it is never seen half-written)
 #   cmd-*.txt       a console command to run (processed in name order, then deleted)
 #   stop            the client is done: stop the server
-# and $env:LV_E2E_HOST_OWNER_PID, the client run: the host stops as soon as it is gone (killed
+# and $env:BR_E2E_HOST_OWNER_PID, the client run: the host stops as soon as it is gone (killed
 # without running its cleanup), so the slot is not held for nothing.
-$hostDir = $env:LV_E2E_HOST_DIR
-if (-not $hostDir) { throw 'client-host needs $env:LV_E2E_HOST_DIR' }
+$hostDir = $env:BR_E2E_HOST_DIR
+if (-not $hostDir) { throw 'client-host needs $env:BR_E2E_HOST_DIR' }
 New-Item -ItemType Directory -Force $hostDir | Out-Null
 $owner = $null
 $ownerGone = $false
-if ($env:LV_E2E_HOST_OWNER_PID) {
+if ($env:BR_E2E_HOST_OWNER_PID) {
     # Reading .Handle keeps a process handle open, so a reused pid cannot be mistaken for it.
-    try { $owner = Get-Process -Id ([int]$env:LV_E2E_HOST_OWNER_PID) -ErrorAction Stop; $null = $owner.Handle } catch { $ownerGone = $true }
+    try { $owner = Get-Process -Id ([int]$env:BR_E2E_HOST_OWNER_PID) -ErrorAction Stop; $null = $owner.Handle } catch { $ownerGone = $true }
 }
 if ($ownerGone) {
-    Write-Step "the client run (pid $env:LV_E2E_HOST_OWNER_PID) is already gone; not hosting"
+    Write-Step "the client run (pid $env:BR_E2E_HOST_OWNER_PID) is already gone; not hosting"
 } else {
     $tmp = Join-Path $hostDir 'ready.json.tmp'
     @{ port = $script:ServerPort; slot = $script:Slot } | ConvertTo-Json | Set-Content $tmp -Encoding UTF8

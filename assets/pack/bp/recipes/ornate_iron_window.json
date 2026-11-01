@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:ornate_iron_window"
+      "identifier": "bearing:ornate_iron_window"
     },
     "tags": [
       "crafting_table"
@@ -25,7 +25,7 @@
       }
     ],
     "result": {
-      "item": "levitate:ornate_iron_window",
+      "item": "bearing:ornate_iron_window",
       "count": 2
     }
   }

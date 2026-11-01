@@ -43,19 +43,19 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("fluids", lv::feature::fluids::FluidsConfig);
+BR_REGISTER_CONFIG("fluids", br::feature::fluids::FluidsConfig);
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace bd    = common::blockdata;
 namespace items = common::items;
 
-FluidsConfig const& config() { return lv::config::get<FluidsConfig>(); }
+FluidsConfig const& config() { return br::config::get<FluidsConfig>(); }
 
 namespace {
 
-constexpr char kDbMachines[] = "lv:fluids:machines";
-constexpr char kDbSources[]  = "lv:fluids:sources";
+constexpr char kDbMachines[] = "br:fluids:machines";
+constexpr char kDbSources[]  = "br:fluids:sources";
 constexpr char kSyncChannel[] = "fluids.sync";
 
 struct PlaceIntent {
@@ -414,7 +414,7 @@ Json levelJson(GlobalPos const& p, Kind kind, std::pair<std::uint32_t, int> cons
 void syncLevels() {
     auto& sent = sentLevels();
     std::set<GlobalPos> seen;
-    // drains only: Levitate's spout model is an opaque box, its tank can't be seen (SPEC §8)
+    // drains only: Bearing's spout model is an opaque box, its tank can't be seen (SPEC §8)
     for (auto kind : {Kind::Drain}) {
         for (auto const& p : tracked(kind)) {
             auto* region = regionOf(p.dim);
@@ -704,6 +704,6 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids
 
-LV_REGISTER_MODULE(lv::feature::fluids::FluidsModule);
+BR_REGISTER_MODULE(br::feature::fluids::FluidsModule);

@@ -23,7 +23,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::gaps {
+namespace br::feature::gaps {
 
 namespace {
 
@@ -39,7 +39,7 @@ namespace tr = feature::tracks;
 namespace cn = feature::contraption;
 namespace ctm = core::transmission;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 GlobalPos at(GlobalPos p, int dx, int dy = 0, int dz = 0) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -67,9 +67,9 @@ ll::coro::CoroTask<BearingRig> bearingRig(Context& ctx, int dx) {
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     BearingRig r{p, at(p, 0, 1), at(p, 0, 2), at(p, 0, 3)};
     // vertical line: source, gearshift (axis y), bearing facing up, planks on its face
-    ctx.setBlock(r.source, kSource, {{"levitate:axis", 1}});
+    ctx.setBlock(r.source, kSource, {{"bearing:axis", 1}});
     ctx.setBlock(r.gearshift, tm::kSequencedGearshift, {{tm::kAxis, 1}});
-    ctx.setBlock(r.bearing, std::string(br::kMechanicalBearing), {{"levitate:facing", 1}});
+    ctx.setBlock(r.bearing, std::string(br::kMechanicalBearing), {{"bearing:facing", 1}});
     ctx.setBlock(r.front, "minecraft:oak_planks");
     br::track(r.bearing);
     co_await ctx.ticks(3);
@@ -99,7 +99,7 @@ ll::coro::CoroTask<double> runBearing(Context& ctx, BearingRig const& r, int max
 
 } // namespace
 
-LV_REGISTER_SELFTEST("gaps.gearshift_turns_bearing_90", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.gearshift_turns_bearing_90", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto r = co_await bearingRig(ctx, 3700);
     Leftovers left{{r.bearing}, {}};
     kn::setGeneratedSpeed(r.source, 16);
@@ -114,7 +114,7 @@ LV_REGISTER_SELFTEST("gaps.gearshift_turns_bearing_90", [](Context& ctx) -> ll::
     ctx.check(ps::idAt(r.front) == "minecraft:oak_planks", "the planks are back in front");
 });
 
-LV_REGISTER_SELFTEST("gaps.gearshift_two_equal_steps", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.gearshift_two_equal_steps", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto r = co_await bearingRig(ctx, 3705);
     Leftovers left{{r.bearing}, {}};
     kn::setGeneratedSpeed(r.source, 16);
@@ -129,7 +129,7 @@ LV_REGISTER_SELFTEST("gaps.gearshift_two_equal_steps", [](Context& ctx) -> ll::c
     co_await ctx.ticks(4);
 });
 
-LV_REGISTER_SELFTEST("gaps.gearshift_moves_piston_3", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.gearshift_moves_piston_3", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(3710);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -140,7 +140,7 @@ LV_REGISTER_SELFTEST("gaps.gearshift_moves_piston_3", [](Context& ctx) -> ll::co
     ctx.setBlock(o, std::string(ps::kPiston), {{ps::kFacing, int(core::contraption::Dir::South)}, {ps::kAxisFirst, 1}, {ps::kState, 0}});
     auto gear = at(o, 1), source = at(o, 2);
     ctx.setBlock(gear, tm::kSequencedGearshift, {{tm::kAxis, 0}});
-    ctx.setBlock(source, kSource, {{"levitate:axis", 0}});
+    ctx.setBlock(source, kSource, {{"bearing:axis", 0}});
     ps::trackActuator(o);
     Leftovers left{{}, {o}};
     co_await ctx.ticks(3);
@@ -164,7 +164,7 @@ LV_REGISTER_SELFTEST("gaps.gearshift_moves_piston_3", [](Context& ctx) -> ll::co
     ctx.check(ps::idAt(at(o, 0, 0, 3)) == ps::kHead, "the head stands 3 blocks out");
 });
 
-LV_REGISTER_SELFTEST("gaps.sequence_limit_gantry", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.sequence_limit_gantry", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(3720);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -189,7 +189,7 @@ LV_REGISTER_SELFTEST("gaps.sequence_limit_gantry", [](Context& ctx) -> ll::coro:
         }
     } clear{source};
     kn::setSequenceContext(source, SC{SC::Kind::MoveDistance, 2});
-    ctx.setBlock(source, kSource, {{"levitate:axis", 0}});
+    ctx.setBlock(source, kSource, {{"bearing:axis", 0}});
     kn::refresh(source);
     kn::setStressCapacity(source, 4096); // the shafts' table impact (U2) would overstress the test source
     kn::setGeneratedSpeed(source, 128);  // the carriage runs west towards the start of the line
@@ -238,7 +238,7 @@ Json keys(bool forward, bool back) { return {{"pressed", Json::array({forward, b
 
 } // namespace
 
-LV_REGISTER_SELFTEST("gaps.train_channel_input", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("gaps.train_channel_input", [](Context& ctx) -> ll::coro::CoroTask<> {
     // a 60 block line south of the other tests (dz 8), a station at x + 20
     auto base = ctx.testPos(3730, 8);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
@@ -260,9 +260,9 @@ LV_REGISTER_SELFTEST("gaps.train_channel_input", [](Context& ctx) -> ll::coro::C
     auto track0 = at(track, -1);
     tn::useCasingOnTrack(nullptr, track0, true);
     auto bogey = at(track0, 0, 1);
-    ctx.setBlock(at(bogey, 0, 1), std::string(tn::kControls), {{"levitate:facing", 4}});
+    ctx.setBlock(at(bogey, 0, 1), std::string(tn::kControls), {{"bearing:facing", 4}});
     // a steam whistle on the carriage: the train's horn
-    ctx.setBlock(at(bogey, 0, 2), "levitate:steam_whistle");
+    ctx.setBlock(at(bogey, 0, 2), "bearing:steam_whistle");
     cn::addGlue(base.dim, {{bogey.x, bogey.y, bogey.z}, {bogey.x, bogey.y + 2, bogey.z}});
     auto id = tn::assemble(*s, nullptr);
     ctx.require(id.has_value(), "the train assembles: " + s->lastError.dump());
@@ -326,4 +326,4 @@ LV_REGISTER_SELFTEST("gaps.train_channel_input", [](Context& ctx) -> ll::coro::C
     co_await ctx.ticks(2);
 });
 
-} // namespace lv::feature::gaps
+} // namespace br::feature::gaps

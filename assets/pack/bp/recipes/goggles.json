@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:goggles"
+      "identifier": "bearing:goggles"
     },
     "tags": [
       "crafting_table"
@@ -19,16 +19,16 @@
         "item": "minecraft:glass"
       },
       "P": {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       }
     ],
     "result": {
-      "item": "levitate:goggles"
+      "item": "bearing:goggles"
     }
   }
 }

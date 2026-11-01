@@ -1,7 +1,7 @@
 // Basin unit (U14): module, machine registry and ticking, world helpers, game hooks (block use,
 // placement, blaze capture), kinetic specs, the basin's filter slot.
 //
-// Every block of the unit is remembered in a per-world list (`lv:basin:machines`) as it appears in
+// Every block of the unit is remembered in a per-world list (`br:basin:machines`) as it appears in
 // the world (BlockChangedEvent: players, commands, contraptions, ...) and ticked while its chunk is
 // loaded, as Create ticks its block entities. Per-block contents live in BlockData (U3).
 
@@ -51,11 +51,11 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("basin", lv::feature::basin::BasinConfig);
+BR_REGISTER_CONFIG("basin", br::feature::basin::BasinConfig);
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
-namespace k  = lv::kinetics;
+namespace k  = br::kinetics;
 namespace bd = common::blockdata;
 namespace ia = common::interactions;
 
@@ -64,7 +64,7 @@ namespace ia = common::interactions;
 namespace {
 k::KineticSpec pressSpec() {
     // Create's MechanicalPressBlock: a horizontal shaft along its facing axis
-    auto s = k::specs::withModel(k::specs::shaft(kAxisState), "geometry.levitate.mechanical_press_rotor", "levitate_mechanical_press_shaft");
+    auto s = k::specs::withModel(k::specs::shaft(kAxisState), "geometry.bearing.mechanical_press_rotor", "bearing_mechanical_press_shaft");
     s.impact = 8;
     return s;
 }
@@ -77,12 +77,12 @@ k::KineticSpec mixerSpec() {
     s.cog             = [](k::BlockState const&) { return k::CogType::Small; };
     s.impact          = 4;
     s.rotorState      = kRotorState;
-    return k::specs::withModel(std::move(s), "geometry.levitate.mechanical_mixer_rotor", "levitate_mechanical_mixer_cog");
+    return k::specs::withModel(std::move(s), "geometry.bearing.mechanical_mixer_rotor", "bearing_mechanical_mixer_cog");
 }
 } // namespace
 
-LV_REGISTER_KINETIC_BLOCK(kPress, pressSpec());
-LV_REGISTER_KINETIC_BLOCK(kMixer, mixerSpec());
+BR_REGISTER_KINETIC_BLOCK(kPress, pressSpec());
+BR_REGISTER_KINETIC_BLOCK(kMixer, mixerSpec());
 
 // ---- small helpers ---------------------------------------------------------------------------------
 
@@ -199,7 +199,7 @@ int maxStackOf(ItemStack const& stack) {
 
 namespace {
 
-constexpr char kDbMachines[] = "lv:basin:machines";
+constexpr char kDbMachines[] = "br:basin:machines";
 
 struct Registry {
     std::map<GlobalPos, Kind>          machines;
@@ -591,6 +591,6 @@ private:
     std::vector<ia::HandlerId>          mHandlers;
 };
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin
 
-LV_REGISTER_MODULE(lv::feature::basin::BasinModule);
+BR_REGISTER_MODULE(br::feature::basin::BasinModule);

@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-namespace lv::core::funnels {
+namespace br::core::funnels {
 
 // ---- faces --------------------------------------------------------------------------------------
 // Bedrock FacingID: 0 down, 1 up, 2 north (-z), 3 south (+z), 4 west (-x), 5 east (+x).
@@ -96,7 +96,7 @@ struct DistributionPlan {
 
 // ---- tunnel shapes ------------------------------------------------------------------------------
 
-/// Create's BeltTunnelBlock.Shape (block state `levitate:shape`).
+/// Create's BeltTunnelBlock.Shape (block state `bearing:shape`).
 enum class TunnelShape { Straight = 0, Window = 1, Closed = 2, TLeft = 3, TRight = 4, Cross = 5 };
 
 [[nodiscard]] constexpr bool hasWindow(TunnelShape s) { return s == TunnelShape::Window || s == TunnelShape::Closed; }
@@ -121,7 +121,7 @@ enum class TunnelShape { Straight = 0, Window = 1, Closed = 2, TLeft = 3, TRight
 /// flow limit of the blocks below: 3 / 2 / 1 blocks at 128 / 64 / 32 RPM, less below.
 [[nodiscard]] float chutePullDistance(float speed);
 
-/// Create's ChuteBlock.Shape (block state `levitate:shape`).
+/// Create's ChuteBlock.Shape (block state `bearing:shape`).
 enum class ChuteShape { Normal = 0, Window = 1, Intersection = 2, Encased = 3 };
 
 /// Create's ChuteBlock.updateChuteState. `facing` is the chute's facing (down, or the horizontal
@@ -172,8 +172,8 @@ struct VaultStructure {
 [[nodiscard]] std::vector<VaultStructure>
 formVaults(std::vector<VaultCell> const& component, std::function<std::optional<int>(VaultCell const&)> const& axisAt);
 
-/// Connected-texture position of a vault block (block states `levitate:len`, `levitate:u`,
-/// `levitate:v`, `levitate:large`): along the axis 0 single / 1 first / 2 middle / 3 last; across
+/// Connected-texture position of a vault block (block states `bearing:len`, `bearing:u`,
+/// `bearing:v`, `bearing:large`): along the axis 0 single / 1 first / 2 middle / 3 last; across
 /// (u = the horizontal cross axis, v = y) 0 single / 1 low / 2 middle / 3 high.
 struct VaultLook {
     int  len = 0, u = 0, v = 0;
@@ -185,4 +185,4 @@ struct VaultLook {
 /// Create's ItemHelper.calcRedstoneFromInventory over (count, maxStack) of every slot.
 [[nodiscard]] int comparatorSignal(std::vector<std::pair<int, int>> const& slots, int totalSlots);
 
-} // namespace lv::core::funnels
+} // namespace br::core::funnels

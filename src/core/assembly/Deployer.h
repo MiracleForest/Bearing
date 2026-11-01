@@ -5,7 +5,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::assembly {
+namespace br::core::assembly {
 
 using kinetics::Axis;
 using kinetics::Face;
@@ -45,4 +45,4 @@ struct PlacementNeighbours {
 /// Creates's destroy progress per deployer activation: the per-tick progress times 16.
 inline constexpr float kDeployerBreakFactor = 16.f;
 
-} // namespace lv::core::assembly
+} // namespace br::core::assembly

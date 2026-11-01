@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:acacia_window_pane"
+      "identifier": "bearing:acacia_window_pane"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:acacia_window"
+        "item": "bearing:acacia_window"
       }
     },
     "unlock": [
       {
-        "item": "levitate:acacia_window"
+        "item": "bearing:acacia_window"
       }
     ],
     "result": {
-      "item": "levitate:acacia_window_pane",
+      "item": "bearing:acacia_window_pane",
       "count": 16
     }
   }

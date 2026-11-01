@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_crimsite_brick_stairs_from_layered_crimsite_stonecutting"
+      "identifier": "bearing:small_crimsite_brick_stairs_from_layered_crimsite_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:layered_crimsite"
+        "item": "bearing:layered_crimsite"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:layered_crimsite"
+        "item": "bearing:layered_crimsite"
       }
     ],
     "result": {
-      "item": "levitate:small_crimsite_brick_stairs",
+      "item": "bearing:small_crimsite_brick_stairs",
       "count": 1
     }
   }

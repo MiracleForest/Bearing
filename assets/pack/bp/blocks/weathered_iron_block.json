@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:weathered_iron_block",
+      "identifier": "bearing:weathered_iron_block",
       "menu_category": {
         "category": "construction"
       }
@@ -20,15 +20,15 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "down": {
-          "texture": "levitate_weathered_iron_block_top",
+          "texture": "bearing_weathered_iron_block_top",
           "render_method": "opaque"
         },
         "up": {
-          "texture": "levitate_weathered_iron_block_top",
+          "texture": "bearing_weathered_iron_block_top",
           "render_method": "opaque"
         },
         "*": {
-          "texture": "levitate_weathered_iron_block",
+          "texture": "bearing_weathered_iron_block",
           "render_method": "opaque"
         }
       }

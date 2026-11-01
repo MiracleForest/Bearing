@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:red_sand_paper",
+      "identifier": "bearing:red_sand_paper",
       "menu_category": {
         "category": "equipment"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_red_sand_paper",
+      "minecraft:icon": "bearing_red_sand_paper",
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.levitate:red_sand_paper.name"
+        "value": "item.bearing:red_sand_paper.name"
       },
       "minecraft:durability": {
         "max_durability": 8

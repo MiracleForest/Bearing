@@ -1,4 +1,4 @@
 {
-  "levitate:track": { "sound": "metal" },
-  "levitate:fake_track": { "sound": "metal" }
+  "bearing:track": { "sound": "metal" },
+  "bearing:fake_track": { "sound": "metal" }
 }

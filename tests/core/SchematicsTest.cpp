@@ -8,7 +8,7 @@
 #include "core/schematics/Nbt.h"
 #include "core/schematics/Schematic.h"
 
-using namespace lv::core::schematics;
+using namespace br::core::schematics;
 using nbt::Compound;
 using nbt::List;
 using nbt::Tag;
@@ -20,6 +20,7 @@ std::string textVector() {
     std::string out;
     for (int i = 0; i < 60; ++i) {
         if (i) out += '\n';
+        // The compressed vectors below were made from this exact text (the project's old name).
         out += "Levitate schematic line " + std::to_string(i) + " / ";
         for (int k = 0; k < i % 7; ++k) out += "abc";
     }
@@ -167,7 +168,7 @@ TEST(SchematicsFiles, McstructureRoundTrip) {
     s.blocks[s.index({1, 2, 3})] = c;
     s.blocks[s.index({0, 0, 0})] = b;
     s.blocks[s.index({1, 0, 0})] = kVoid;
-    s.levitateData[s.index({1, 2, 3})] = R"({"kinetics":{"speed":32}})";
+    s.bearingData[s.index({1, 2, 3})] = R"({"kinetics":{"speed":32}})";
     auto bytes = writeMcstructure(s, {10, 20, 30});
     auto back  = readMcstructure(bytes);
     ASSERT_TRUE(back);
@@ -177,7 +178,7 @@ TEST(SchematicsFiles, McstructureRoundTrip) {
     EXPECT_EQ(back->stateAt({1, 2, 3})->name, "minecraft:oak_stairs");
     EXPECT_EQ(stateInt(*back->stateAt({1, 2, 3}), "weirdo_direction"), 2);
     EXPECT_EQ(back->stateAt({1, 0, 0}), nullptr);
-    EXPECT_EQ(back->levitateData.at(s.index({1, 2, 3})), R"({"kinetics":{"speed":32}})");
+    EXPECT_EQ(back->bearingData.at(s.index({1, 2, 3})), R"({"kinetics":{"speed":32}})");
     EXPECT_EQ(back->solidCount(), 2u);
     EXPECT_EQ(back->posOf(s.index({1, 2, 3})), (Pos{1, 2, 3}));
     EXPECT_TRUE(load("house.mcstructure", bytes));
@@ -249,8 +250,8 @@ TEST(SchematicsFiles, JavaStructureWithMapping) {
     EXPECT_EQ(stateInt(*st, "upside_down_bit"), 1);
     auto const* shaft = s->stateAt({1, 0, 0});
     ASSERT_TRUE(shaft);
-    EXPECT_EQ(shaft->name, "levitate:shaft");
-    EXPECT_EQ(stateInt(*shaft, "levitate:axis"), 2);
+    EXPECT_EQ(shaft->name, "bearing:shaft");
+    EXPECT_EQ(stateInt(*shaft, "bearing:axis"), 2);
     EXPECT_EQ(s->at({2, 0, 0}), kVoid);
     // also accepted uncompressed
     EXPECT_TRUE(load("house.nbt", raw));
@@ -311,18 +312,18 @@ TEST(SchematicsMapping, VanillaFamilies) {
 
 TEST(SchematicsMapping, CreateBlocks) {
     auto st = *mapJavaState(parseJavaState("create:mechanical_piston[facing=west,state=retracted]"));
-    EXPECT_EQ(st.name, "levitate:mechanical_piston");
-    EXPECT_EQ(stateInt(st, "levitate:facing"), 4);
+    EXPECT_EQ(st.name, "bearing:mechanical_piston");
+    EXPECT_EQ(stateInt(st, "bearing:facing"), 4);
     auto glass = *mapJavaState(parseJavaState("create:encased_chain_drive[axis=y,attach_face=none,powered=true]"));
-    EXPECT_EQ(stateInt(glass, "levitate:axis"), 1);
-    EXPECT_EQ(stateInt(glass, "levitate:powered"), 1);
+    EXPECT_EQ(stateInt(glass, "bearing:axis"), 1);
+    EXPECT_EQ(stateInt(glass, "bearing:powered"), 1);
     // chute states run 0..n (facing 0 down, 1..4 north..east; shape 0 normal .. 3 encased)
     auto chute = *mapJavaState(parseJavaState("create:chute[facing=west,shape=intersection]"));
-    EXPECT_EQ(stateInt(chute, "levitate:facing"), 3);
-    EXPECT_EQ(stateInt(chute, "levitate:shape"), 2);
+    EXPECT_EQ(stateInt(chute, "bearing:facing"), 3);
+    EXPECT_EQ(stateInt(chute, "bearing:shape"), 2);
     auto down = *mapJavaState(parseJavaState("create:chute[facing=down,shape=window]"));
-    EXPECT_EQ(stateInt(down, "levitate:facing"), 0);
-    EXPECT_EQ(stateInt(down, "levitate:shape"), 1);
+    EXPECT_EQ(stateInt(down, "bearing:facing"), 0);
+    EXPECT_EQ(stateInt(down, "bearing:shape"), 1);
 }
 
 // ---- transforms -------------------------------------------------------------------------------------
@@ -374,19 +375,19 @@ TEST(SchematicsTransform, StatesFollowRotationAndMirror) {
     EXPECT_EQ(stateStr(chest, "minecraft:cardinal_direction"), "east");
 
     // chute facing: 0 down, 1..4 north / south / west / east
-    BlockState chute{"levitate:chute", {}, 0, {}};
-    chute.states.set("levitate:facing", Tag(std::int32_t(1))); // north
+    BlockState chute{"bearing:chute", {}, 0, {}};
+    chute.states.set("bearing:facing", Tag(std::int32_t(1))); // north
     auto c1 = chute;
     transformStates(c1, {1, Mirror::None});
-    EXPECT_EQ(stateInt(c1, "levitate:facing"), 4); // east
-    chute.states.set("levitate:facing", Tag(std::int32_t(3))); // west
+    EXPECT_EQ(stateInt(c1, "bearing:facing"), 4); // east
+    chute.states.set("bearing:facing", Tag(std::int32_t(3))); // west
     auto c2 = chute;
     transformStates(c2, {0, Mirror::FrontBack});
-    EXPECT_EQ(stateInt(c2, "levitate:facing"), 4); // east
-    chute.states.set("levitate:facing", Tag(std::int32_t(0))); // down
+    EXPECT_EQ(stateInt(c2, "bearing:facing"), 4); // east
+    chute.states.set("bearing:facing", Tag(std::int32_t(0))); // down
     auto c3 = chute;
     transformStates(c3, {1, Mirror::None});
-    EXPECT_EQ(stateInt(c3, "levitate:facing"), 0);
+    EXPECT_EQ(stateInt(c3, "bearing:facing"), 0);
 
     BlockState log{"minecraft:oak_log", {}, 0, {}};
     log.states.set("pillar_axis", Tag(std::string("x")));
@@ -412,10 +413,10 @@ TEST(SchematicsTransform, StatesFollowRotationAndMirror) {
     EXPECT_EQ(stateStr(wall, "wall_connection_type_east"), "tall");
     EXPECT_EQ(stateStr(wall, "wall_connection_type_south"), "short");
 
-    BlockState piston{"levitate:mechanical_piston", {}, 0, {}};
-    piston.states.set("levitate:facing", Tag(std::int32_t(2))); // north
+    BlockState piston{"bearing:mechanical_piston", {}, 0, {}};
+    piston.states.set("bearing:facing", Tag(std::int32_t(2))); // north
     transformStates(piston, {0, Mirror::LeftRight});
-    EXPECT_EQ(stateInt(piston, "levitate:facing"), 3);
+    EXPECT_EQ(stateInt(piston, "bearing:facing"), 3);
 }
 
 // ---- quill ------------------------------------------------------------------------------------------

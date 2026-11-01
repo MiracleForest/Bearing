@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:track_station",
+      "identifier": "bearing:track_station",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:assembling": [
+        "bearing:assembling": [
           0,
           1
         ]
@@ -25,34 +25,34 @@
       "minecraft:loot": "loot_tables/blocks/track_station.json",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_track_station_side",
+          "texture": "bearing_track_station_side",
           "render_method": "opaque"
         },
         "up": {
-          "texture": "levitate_track_station_top",
+          "texture": "bearing_track_station_top",
           "render_method": "opaque"
         },
         "down": {
-          "texture": "levitate_track_station_bottom",
+          "texture": "bearing_track_station_bottom",
           "render_method": "opaque"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:assembling') == 1",
+        "condition": "q.block_state('bearing:assembling') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_track_station_side_assembling",
+              "texture": "bearing_track_station_side_assembling",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_track_station_top",
+              "texture": "bearing_track_station_top",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_track_station_bottom",
+              "texture": "bearing_track_station_bottom",
               "render_method": "opaque"
             }
           }

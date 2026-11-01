@@ -5,7 +5,7 @@
 #include <deque>
 #include <set>
 
-namespace lv::core::redstone {
+namespace br::core::redstone {
 
 LampChange lampNeighbourChanged(LampState const& s, bool input) {
     if (s.powered == input) return LampChange::None;
@@ -61,4 +61,4 @@ BellPose deskBellPose(float p, float offset) {
     return out;
 }
 
-} // namespace lv::core::redstone
+} // namespace br::core::redstone

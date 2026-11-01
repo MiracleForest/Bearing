@@ -2,32 +2,32 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:refined_radiance_casing",
+      "identifier": "bearing:refined_radiance_casing",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:c_down": [
+        "bearing:c_down": [
           0,
           1
         ],
-        "levitate:c_up": [
+        "bearing:c_up": [
           0,
           1
         ],
-        "levitate:c_north": [
+        "bearing:c_north": [
           0,
           1
         ],
-        "levitate:c_south": [
+        "bearing:c_south": [
           0,
           1
         ],
-        "levitate:c_west": [
+        "bearing:c_west": [
           0,
           1
         ],
-        "levitate:c_east": [
+        "bearing:c_east": [
           0,
           1
         ]
@@ -48,2247 +48,2247 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_refined_radiance_casing_0",
+          "texture": "bearing_refined_radiance_casing_0",
           "render_method": "opaque"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_0",
-              "render_method": "opaque"
-            }
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
-        "components": {
-          "minecraft:material_instances": {
-            "north": {
-              "texture": "levitate_refined_radiance_casing_4",
-              "render_method": "opaque"
-            },
-            "south": {
-              "texture": "levitate_refined_radiance_casing_4",
-              "render_method": "opaque"
-            },
-            "east": {
-              "texture": "levitate_refined_radiance_casing_4",
-              "render_method": "opaque"
-            },
-            "west": {
-              "texture": "levitate_refined_radiance_casing_4",
-              "render_method": "opaque"
-            },
-            "up": {
-              "texture": "levitate_refined_radiance_casing_0",
-              "render_method": "opaque"
-            },
-            "down": {
-              "texture": "levitate_refined_radiance_casing_0",
-              "render_method": "opaque"
-            },
-            "*": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_0",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_4",
+              "texture": "bearing_refined_radiance_casing_0",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_1",
+              "texture": "bearing_refined_radiance_casing_4",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_5",
+              "texture": "bearing_refined_radiance_casing_1",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_5",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_8",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_2",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_12",
+              "texture": "bearing_refined_radiance_casing_8",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_6",
+              "texture": "bearing_refined_radiance_casing_2",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_9",
+              "texture": "bearing_refined_radiance_casing_12",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_3",
+              "texture": "bearing_refined_radiance_casing_6",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_13",
+              "texture": "bearing_refined_radiance_casing_9",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_7",
+              "texture": "bearing_refined_radiance_casing_3",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_13",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_7",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_10",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_14",
+              "texture": "bearing_refined_radiance_casing_10",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_11",
+              "texture": "bearing_refined_radiance_casing_14",
               "render_method": "opaque"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "south": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "east": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "west": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
               "render_method": "opaque"
             },
             "up": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "down": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             },
             "*": {
-              "texture": "levitate_refined_radiance_casing_15",
+              "texture": "bearing_refined_radiance_casing_11",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_refined_radiance_casing_15",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_refined_radiance_casing_15",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_refined_radiance_casing_15",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_refined_radiance_casing_15",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_refined_radiance_casing_15",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_refined_radiance_casing_15",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_refined_radiance_casing_15",
               "render_method": "opaque"
             }
           }

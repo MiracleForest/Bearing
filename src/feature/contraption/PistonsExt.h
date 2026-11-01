@@ -17,7 +17,7 @@
 
 class BlockSource;
 
-namespace lv::feature::contraption::ext {
+namespace br::feature::contraption::ext {
 
 /// Create's BlockMovementChecks for the block at `pos` (what the engine's assembly sees).
 [[nodiscard]] cc::BlockInfo describe(int dim, cc::Pos const& pos);
@@ -77,4 +77,4 @@ void playSound(int dim, cc::Vec3d const& pos, std::string const& sound, float vo
 /// The action bar message of a player.
 void actionBar(Player& player, std::string const& text);
 
-} // namespace lv::feature::contraption::ext
+} // namespace br::feature::contraption::ext

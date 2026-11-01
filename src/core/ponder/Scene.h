@@ -11,8 +11,8 @@
 //       "size": [5, 5],                      // base plate (x, z); optional "height" (default 5)
 //       "scale": 1.0,                        // optional view scale (Create's scaleSceneView)
 //       "blocks": [                          // the initial world; every block starts hidden
-//         {"at": [2, 1, 2], "id": "levitate:shaft", "states": {"levitate:axis": 0}},
-//         {"area": [[0, 1, 2], [4, 1, 2]], "id": "levitate:shaft"}
+//         {"at": [2, 1, 2], "id": "bearing:shaft", "states": {"bearing:axis": 0}},
+//         {"area": [[0, 1, 2], [4, 1, 2]], "id": "bearing:shaft"}
 //       ],
 //       "timeline": [                        // run in order; only "idle" takes time
 //         {"show": "base"},                  // the base plate (y = 0) fades in
@@ -77,7 +77,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::ponder {
+namespace br::core::ponder {
 
 using Json = nlohmann::json;
 
@@ -290,8 +290,8 @@ struct Tag {
 };
 
 /// The scenes and tags (`assets/ponder/index.json`):
-///     {"components": [{"id": "levitate:cogwheel", "scenes": ["cogwheel", "cog_speedup", ...]}, ...],
-///      "tags": [{"id": "kinetic_relays", "icon": "levitate:cogwheel", "index": true, "items": [...]}, ...]}
+///     {"components": [{"id": "bearing:cogwheel", "scenes": ["cogwheel", "cog_speedup", ...]}, ...],
+///      "tags": [{"id": "kinetic_relays", "icon": "bearing:cogwheel", "index": true, "items": [...]}, ...]}
 /// Components are in Create's registration order (the index order); each lists its scenes in order.
 class Library {
 public:
@@ -329,7 +329,7 @@ private:
     std::vector<Tag>             mTags;
 };
 
-/// Normalises a user-typed component id: "shaft" -> "levitate:shaft"; ids with a namespace are kept.
+/// Normalises a user-typed component id: "shaft" -> "bearing:shaft"; ids with a namespace are kept.
 [[nodiscard]] std::string normaliseId(std::string const& id);
 
 /// Create's hold-to-ponder progress, once per tick: held, `p = min(1, p + max(0.25, p) * 0.25)`
@@ -376,4 +376,4 @@ std::vector<std::string> wrapText(std::string const& text, float maxWidth, Width
     return lines;
 }
 
-} // namespace lv::core::ponder
+} // namespace br::core::ponder

@@ -6,7 +6,7 @@
 #include <map>
 #include <set>
 
-namespace lv::core::fluids {
+namespace br::core::fluids {
 
 // ---- bottles and potions -----------------------------------------------------------------------
 
@@ -164,7 +164,7 @@ std::string fluidNameKey(std::string_view fluid) {
     auto colon = fluid.find(':');
     std::string_view ns   = colon == std::string_view::npos ? std::string_view("minecraft") : fluid.substr(0, colon);
     std::string_view path = colon == std::string_view::npos ? fluid : fluid.substr(colon + 1);
-    if (ns == "levitate") return "fluid.create." + std::string(path);
+    if (ns == "bearing") return "fluid.create." + std::string(path);
     return "fluid_type." + std::string(ns) + "." + std::string(path);
 }
 
@@ -384,4 +384,4 @@ FillPlan planFill(Pos const& root, std::string_view fluid, CellQuery const& at, 
     return plan;
 }
 
-} // namespace lv::core::fluids
+} // namespace br::core::fluids

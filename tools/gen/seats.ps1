@@ -14,18 +14,18 @@ $count = 0
 foreach ($to in $colours) {
     foreach ($from in $colours) {
         if ($to -eq $from) { continue }
-        $id   = "levitate:${to}_seat_from_${from}_seat"
+        $id   = "bearing:${to}_seat_from_${from}_seat"
         $json = [ordered]@{
             format_version            = '1.20.10'
             'minecraft:recipe_shapeless' = [ordered]@{
                 description = [ordered]@{ identifier = $id }
                 tags        = @('crafting_table')
                 ingredients = @(
-                    [ordered]@{ item = "levitate:${from}_seat" },
+                    [ordered]@{ item = "bearing:${from}_seat" },
                     [ordered]@{ item = "minecraft:${to}_dye" }
                 )
-                unlock      = @([ordered]@{ item = "levitate:${from}_seat" })
-                result      = [ordered]@{ item = "levitate:${to}_seat" }
+                unlock      = @([ordered]@{ item = "bearing:${from}_seat" })
+                result      = [ordered]@{ item = "bearing:${to}_seat" }
             }
         }
         $text = ($json | ConvertTo-Json -Depth 8) -replace "`r`n", "`n"

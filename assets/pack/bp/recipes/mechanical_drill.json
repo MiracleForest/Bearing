@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:mechanical_drill"
+      "identifier": "bearing:mechanical_drill"
     },
     "tags": [
       "crafting_table"
@@ -14,10 +14,10 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "C": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "I": {
         "item": "minecraft:iron_ingot"
@@ -25,11 +25,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:mechanical_drill",
+      "item": "bearing:mechanical_drill",
       "count": 1
     }
   }

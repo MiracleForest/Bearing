@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:redstone_requester",
+          "name": "bearing:redstone_requester",
           "weight": 1
         }
       ]

@@ -6,7 +6,7 @@
 // into the box. The server sends the entries with the screen data (`suggestions`). Used by the
 // package port, package filter, stock keeper, redstone requester and factory gauge screens.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <cctype>
@@ -16,7 +16,7 @@
 #include "client/Client.h"
 #include "client/screen/Screen.h"
 
-namespace lv::client::packages {
+namespace br::client::packages {
 
 class AddressSuggestions : public screen::Widget {
 public:
@@ -86,6 +86,6 @@ private:
             "§8" + ctr("create.gui.address_box.clipboard_tip_4", "(e.g. #storage, #factory)")};
 }
 
-} // namespace lv::client::packages
+} // namespace br::client::packages
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

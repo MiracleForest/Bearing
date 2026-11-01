@@ -11,7 +11,7 @@
 #include "feature/assembly/AssemblyInternal.h"
 #include "feature/net/Net.h"
 
-namespace lv::feature::assembly::sync {
+namespace br::feature::assembly::sync {
 
 namespace {
 constexpr double kRange = 96.0;
@@ -38,4 +38,4 @@ void arm(GlobalPos const& pos, Json const& state) { broadcast(pos, "assembly.arm
 void install() {}
 void uninstall() {}
 
-} // namespace lv::feature::assembly::sync
+} // namespace br::feature::assembly::sync

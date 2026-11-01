@@ -29,7 +29,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 namespace k  = core::kinetics;
 namespace ks = core::kinetics::sync;
@@ -205,6 +205,6 @@ private:
     ll::event::ListenerPtr mDisconnect;
 };
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics
 
-LV_REGISTER_MODULE(lv::feature::kinetics::KineticsSyncModule);
+BR_REGISTER_MODULE(br::feature::kinetics::KineticsSyncModule);

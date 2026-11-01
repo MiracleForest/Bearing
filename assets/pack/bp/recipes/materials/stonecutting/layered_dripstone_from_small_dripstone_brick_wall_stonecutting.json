@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:layered_dripstone_from_small_dripstone_brick_wall_stonecutting"
+      "identifier": "bearing:layered_dripstone_from_small_dripstone_brick_wall_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:small_dripstone_brick_wall"
+        "item": "bearing:small_dripstone_brick_wall"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:small_dripstone_brick_wall"
+        "item": "bearing:small_dripstone_brick_wall"
       }
     ],
     "result": {
-      "item": "levitate:layered_dripstone",
+      "item": "bearing:layered_dripstone",
       "count": 1
     }
   }

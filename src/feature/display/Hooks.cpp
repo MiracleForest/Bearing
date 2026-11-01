@@ -19,7 +19,7 @@
 #include "feature/display/Internal.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 namespace items = common::items;
 
@@ -223,4 +223,4 @@ void uninstallHooks() {
     pendingBoardFacing().clear();
 }
 
-} // namespace lv::feature::display
+} // namespace br::feature::display

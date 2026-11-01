@@ -28,7 +28,7 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::basin::basinops {
+namespace br::feature::basin::basinops {
 
 namespace items  = common::items;
 namespace fluids = common::fluids;
@@ -128,8 +128,8 @@ Filling fillingFor(std::string const& container, std::string const& fluid) {
             {"minecraft:lava",        "minecraft:lava_bucket"       },
             {"minecraft:milk",        "minecraft:milk_bucket"       },
             {"minecraft:powder_snow", "minecraft:powder_snow_bucket"},
-            {"levitate:honey",        "levitate:honey_bucket"       },
-            {"levitate:chocolate",    "levitate:chocolate_bucket"   },
+            {"bearing:honey",        "bearing:honey_bucket"       },
+            {"bearing:chocolate",    "bearing:chocolate_bucket"   },
         };
         if (auto it = buckets.find(fluid); it != buckets.end() && items::make(it->second)) return {it->second, 0, 1000};
         return {};
@@ -156,19 +156,19 @@ std::vector<int> horizontalOrder() { return {kHorizontals.begin(), kHorizontals.
 bool directInputBlock(std::string const& id) {
     // blocks with Create's DirectBeltInputBehaviour (by id, owned by other units)
     static std::set<std::string> const ids{
-        "levitate:belt",
-        "levitate:depot",
-        "levitate:weighted_ejector",
-        "levitate:basin",
-        "levitate:item_drain",
-        "levitate:crushing_wheel_controller",
-        "levitate:andesite_tunnel",
-        "levitate:brass_tunnel",
+        "bearing:belt",
+        "bearing:depot",
+        "bearing:weighted_ejector",
+        "bearing:basin",
+        "bearing:item_drain",
+        "bearing:crushing_wheel_controller",
+        "bearing:andesite_tunnel",
+        "bearing:brass_tunnel",
     };
     return ids.contains(id);
 }
 
-bool isFunnel(std::string const& id) { return id == "levitate:andesite_funnel" || id == "levitate:brass_funnel"; }
+bool isFunnel(std::string const& id) { return id == "bearing:andesite_funnel" || id == "bearing:brass_funnel"; }
 
 } // namespace
 
@@ -689,4 +689,4 @@ void registerCapabilities() {
     fluids::registerBlock(kBasin, std::move(f));
 }
 
-} // namespace lv::feature::basin::basinops
+} // namespace br::feature::basin::basinops

@@ -35,7 +35,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 using Json = nlohmann::json;
 
@@ -193,21 +193,21 @@ void openForm(Player& player, core::GlobalPos const& pos, BoxSpec const& box, Bl
     auto board = boardOf(box, pos, block);
     auto cur   = core::common::clampSettings(board, box.get(pos));
     ll::form::CustomForm form(title(box, &player));
-    form.appendLabel(trFor(player, "lv.common.valuebox.current", "Current: {}", formatValue(box, pos, block, cur)));
+    form.appendLabel(trFor(player, "br.common.valuebox.current", "Current: {}", formatValue(box, pos, block, cur)));
     if (board.rows.size() > 1) {
-        form.appendDropdown("row", trFor(player, "lv.common.valuebox.row", "Mode"), board.rows, static_cast<std::size_t>(cur.row));
+        form.appendDropdown("row", trFor(player, "br.common.valuebox.row", "Mode"), board.rows, static_cast<std::size_t>(cur.row));
     }
     if (board.maxValue > 0) {
         std::vector<std::string> steps;
         if (board.maxValue <= 32) {
             for (int v = 0; v <= board.maxValue; ++v) steps.push_back(formatValue(box, pos, block, {cur.row, v}));
-            form.appendStepSlider("value", trFor(player, "lv.common.valuebox.value", "Value"), steps, static_cast<std::size_t>(cur.value));
+            form.appendStepSlider("value", trFor(player, "br.common.valuebox.value", "Value"), steps, static_cast<std::size_t>(cur.value));
         } else {
-            form.appendSlider("value", trFor(player, "lv.common.valuebox.value", "Value"), 0, board.maxValue, 1, cur.value);
+            form.appendSlider("value", trFor(player, "br.common.valuebox.value", "Value"), 0, board.maxValue, 1, cur.value);
         }
     }
     // Create's Ctrl + confirm on a bulk value (the chassis range of the whole group)
-    if (box.bulk) form.appendToggle("bulk", trFor(player, "lv.common.valuebox.bulk", "Apply to every connected block (Ctrl)"), false);
+    if (box.bulk) form.appendToggle("bulk", trFor(player, "br.common.valuebox.bulk", "Apply to every connected block (Ctrl)"), false);
     std::string boxId = box.id;
     form.sendTo(player, [pos, boxId, cur](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
         if (!result) return;
@@ -487,7 +487,7 @@ bool matches(GlobalPos const& pos, ItemStack const& stack, std::string const& sl
 }
 
 bool canShortInteract(std::string const& heldId) {
-    return heldId != interactions::kWrenchId && heldId != "levitate:mechanical_arm";
+    return heldId != interactions::kWrenchId && heldId != "bearing:mechanical_arm";
 }
 
 namespace {
@@ -574,7 +574,7 @@ Json hoverLines(Player& player, core::GlobalPos const& pos, int face, core::comm
         auto        f     = filterslot::get(pos, slot->id);
         std::string count = slot->countLabel ? slot->countLabel(pos) : std::string{};
         lines.push_back(slot->label.empty() ? trFor(player, "create.logistics.filter", "Filter") : trFor(player, slot->label, slot->labelFallback));
-        if (items::isEmpty(f)) lines.push_back("§7" + trFor(player, "lv.common.filter.empty", "(empty)"));
+        if (items::isEmpty(f)) lines.push_back("§7" + trFor(player, "br.common.filter.empty", "(empty)"));
         else lines.push_back("§e" + items::displayName(f) + (count.empty() ? "" : " §f" + count));
         lines.push_back(
             "§7"
@@ -661,7 +661,7 @@ private:
         auto& player = c.player;
         if (c.sneaking || player.isSpectator() || !player.canUseAbility(AbilitiesIndex::Build)) return Result::Pass;
         // Create's ValueSettingsInputHandler: the clipboard copies / pastes settings instead
-        if (c.itemId == "levitate:clipboard") return Result::Pass;
+        if (c.itemId == "bearing:clipboard") return Result::Pass;
         auto key = player.getOrCreateUniqueID().rawID;
         auto pos = c.pos;
         // the button is still held on a box / slot whose hold waits for the client's answer
@@ -686,7 +686,7 @@ private:
                 if (!p || it == filterslot::registry().end()) return;
                 // the block may have changed since the click
                 auto& region = p->getDimensionBlockSource();
-                if (static_cast<int>(p->getDimensionId()) != pos.dim || lv::game::blockIdAt(region, lv::game::blockPos(pos)) != blockId) return;
+                if (static_cast<int>(p->getDimensionId()) != pos.dim || br::game::blockIdAt(region, br::game::blockPos(pos)) != blockId) return;
                 for (auto const& s : it->second)
                     if (s.id == slotId) filterslot::interact(*p, pos, s);
             };
@@ -721,7 +721,7 @@ private:
             auto const* list = valuebox::boxesOf(blockId);
             if (!list) return;
             auto& region = p.getDimensionBlockSource();
-            if (static_cast<int>(p.getDimensionId()) != pos.dim || lv::game::blockIdAt(region, lv::game::blockPos(pos)) != blockId) return;
+            if (static_cast<int>(p.getDimensionId()) != pos.dim || br::game::blockIdAt(region, br::game::blockPos(pos)) != blockId) return;
             for (auto const& b : *list)
                 if (b.id == boxId && b.onShortClick) b.onShortClick(pos, p);
         };
@@ -752,6 +752,6 @@ private:
     std::uint64_t                                                             mTick = 0;
 };
 
-} // namespace lv::feature::common
+} // namespace br::feature::common
 
-LV_REGISTER_MODULE(lv::feature::common::ValueBoxModule);
+BR_REGISTER_MODULE(br::feature::common::ValueBoxModule);

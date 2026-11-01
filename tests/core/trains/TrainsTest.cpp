@@ -10,8 +10,8 @@
 #include "core/trains/Physics.h"
 #include "core/trains/Schedule.h"
 
-using namespace lv::core::trains;
-namespace tk = lv::core::tracks;
+using namespace br::core::trains;
+namespace tk = br::core::tracks;
 
 namespace {
 
@@ -228,12 +228,12 @@ TEST(TrainSchedule, JsonRoundTripAndDefaults) {
     s.cyclic = false;
     auto back = Schedule::fromJson(s.toJson());
     ASSERT_EQ(back.entries.size(), 2u);
-    EXPECT_EQ(back.entries[0].instruction.id, "levitate:destination");
+    EXPECT_EQ(back.entries[0].instruction.id, "bearing:destination");
     EXPECT_EQ(back.entries[0].conditions.size(), 1u);
-    EXPECT_EQ(back.entries[0].conditions[0][0].id, "levitate:delay");
-    EXPECT_EQ(back.entries[1].instruction.id, "levitate:rename");
+    EXPECT_EQ(back.entries[0].conditions[0][0].id, "bearing:delay");
+    EXPECT_EQ(back.entries[1].instruction.id, "bearing:rename");
     EXPECT_FALSE(back.cyclic);
-    EXPECT_FALSE(supportsConditions("levitate:throttle"));
+    EXPECT_FALSE(supportsConditions("bearing:throttle"));
     EXPECT_EQ(waitTicks(defaultCondition(ids::kDelay).data), 100);
 }
 

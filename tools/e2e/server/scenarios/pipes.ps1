@@ -14,14 +14,14 @@ Wait-LogLine 'pipes: drained the water of the waterlogged minecraft:oak_fence' 1
 Wait-LogLine 'pipes: waterlogged the minecraft:oak_fence' 10 -Since $mark | Out-Null
 
 # Two pipes next to the spawn: the second one makes the first turn towards it.
-Send-Console 'tickingarea add 0 -64 0 15 0 15 lv_pipes'
+Send-Console 'tickingarea add 0 -64 0 15 0 15 br_pipes'
 Wait-Seconds 3
 $mark = Get-LogMark
-Send-Console 'setblock 2 -58 4 levitate:fluid_pipe'
-Send-Console 'setblock 3 -58 4 levitate:fluid_pipe'
+Send-Console 'setblock 2 -58 4 bearing:fluid_pipe'
+Send-Console 'setblock 3 -58 4 bearing:fluid_pipe'
 Wait-Seconds 1
 Send-Console 'create pipes 2 -58 4'
-Wait-LogLine 'pipes: levitate:fluid_pipe at 2 -58 4' 15 -Since $mark | Out-Null
+Wait-LogLine 'pipes: bearing:fluid_pipe at 2 -58 4' 15 -Since $mark | Out-Null
 Send-Console 'setblock 2 -58 4 air'
 Send-Console 'setblock 3 -58 4 air'
-Send-Console 'tickingarea remove lv_pipes'
+Send-Console 'tickingarea remove br_pipes'

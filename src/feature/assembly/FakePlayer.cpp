@@ -46,7 +46,7 @@
 #include "feature/assembly/AssemblyInternal.h"
 #include "mod/Log.h"
 
-namespace lv::feature::assembly::fakeplayer {
+namespace br::feature::assembly::fakeplayer {
 
 namespace {
 struct Entry {
@@ -255,4 +255,4 @@ void uninstall() {
     gJoin = nullptr;
 }
 
-} // namespace lv::feature::assembly::fakeplayer
+} // namespace br::feature::assembly::fakeplayer

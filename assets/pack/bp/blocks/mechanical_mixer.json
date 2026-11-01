@@ -2,29 +2,29 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:mechanical_mixer",
+      "identifier": "bearing:mechanical_mixer",
       "menu_category": { "category": "items" },
       "states": {
-        "levitate:rotor": [0, 1]
+        "bearing:rotor": [0, 1]
       }
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.mechanical_mixer",
+        "identifier": "geometry.bearing.mechanical_mixer",
         "bone_visibility": {
           "casing": true,
-          "cog": "q.block_state('levitate:rotor') == 0",
-          "whisk": "q.block_state('levitate:rotor') == 0"
+          "cog": "q.block_state('bearing:rotor') == 0",
+          "whisk": "q.block_state('bearing:rotor') == 0"
         }
       },
       "minecraft:material_instances": {
-        "*": { "texture": "levitate_mechanical_mixer_side", "render_method": "alpha_test" },
-        "side": { "texture": "levitate_mechanical_mixer_side", "render_method": "alpha_test" },
-        "top": { "texture": "levitate_mechanical_mixer_top", "render_method": "alpha_test" },
-        "bottom": { "texture": "levitate_mechanical_mixer_bottom", "render_method": "alpha_test" },
-        "cog": { "texture": "levitate_mechanical_mixer_cog", "render_method": "alpha_test" },
-        "whisk": { "texture": "levitate_mechanical_mixer_whisk", "render_method": "alpha_test" },
-        "pole": { "texture": "levitate_mechanical_mixer_pole", "render_method": "alpha_test" }
+        "*": { "texture": "bearing_mechanical_mixer_side", "render_method": "alpha_test" },
+        "side": { "texture": "bearing_mechanical_mixer_side", "render_method": "alpha_test" },
+        "top": { "texture": "bearing_mechanical_mixer_top", "render_method": "alpha_test" },
+        "bottom": { "texture": "bearing_mechanical_mixer_bottom", "render_method": "alpha_test" },
+        "cog": { "texture": "bearing_mechanical_mixer_cog", "render_method": "alpha_test" },
+        "whisk": { "texture": "bearing_mechanical_mixer_whisk", "render_method": "alpha_test" },
+        "pole": { "texture": "bearing_mechanical_mixer_pole", "render_method": "alpha_test" }
       },
       "minecraft:collision_box": { "origin": [-8, 0, -8], "size": [16, 16, 16] },
       "minecraft:selection_box": { "origin": [-8, 0, -8], "size": [16, 16, 16] },

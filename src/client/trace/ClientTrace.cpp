@@ -4,7 +4,7 @@
 // them instead of fixed sleeps: the chat really opened before a command is typed, a `/tp` arrived
 // before the next click. Both are user-visible actions, never per tick.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <string>
 #include <vector>
@@ -24,7 +24,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::trace {
+namespace br::client::trace {
 
 namespace {
 std::string& lastScreen() {
@@ -79,8 +79,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::trace
+} // namespace br::client::trace
 
-LV_REGISTER_MODULE(lv::client::trace::ClientTraceModule);
+BR_REGISTER_MODULE(br::client::trace::ClientTraceModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

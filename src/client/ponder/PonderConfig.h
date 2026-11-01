@@ -2,11 +2,11 @@
 
 // `config/ponder.json` (client mod, SPEC §5): Create's Ponder client options plus the renderer's.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include "mod/Config.h"
 
-namespace lv::client::ponder {
+namespace br::client::ponder {
 
 struct PonderConfig {
     int version = 1;
@@ -23,8 +23,8 @@ struct PonderConfig {
     unsigned placeholderColour = 0xFFFF55FF;
 };
 
-[[nodiscard]] inline PonderConfig const& config() { return lv::config::get<PonderConfig>(); }
+[[nodiscard]] inline PonderConfig const& config() { return br::config::get<PonderConfig>(); }
 
-} // namespace lv::client::ponder
+} // namespace br::client::ponder
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

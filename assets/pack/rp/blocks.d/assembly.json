@@ -1,8 +1,8 @@
 {
-  "levitate:deployer": {
+  "bearing:deployer": {
     "sound": "wood"
   },
-  "levitate:mechanical_arm": {
+  "bearing:mechanical_arm": {
     "sound": "metal"
   }
 }

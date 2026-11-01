@@ -20,7 +20,7 @@
 #include "feature/net/Net.h"
 #include "feature/tracks/TracksInternal.h"
 
-namespace lv::feature::tracks {
+namespace br::feature::tracks {
 
 namespace {
 constexpr size_t kBatch = 24; ///< curves per message (keeps packets small)
@@ -90,4 +90,4 @@ void syncAllTo(Player& player) {
         net::send(player, kSyncChannel, {{"op", "tilt"}, {"dim", dim}, {"pos", {pos.x, pos.y, pos.z}}, {"angle", angle}});
 }
 
-} // namespace lv::feature::tracks
+} // namespace br::feature::tracks

@@ -1,26 +1,26 @@
 {
   "components": [
     {
-      "id": "levitate:shaft",
+      "id": "bearing:shaft",
       "scenes": [
         "shaft",
         "shaft_casing"
       ]
     },
     {
-      "id": "levitate:andesite_encased_shaft",
+      "id": "bearing:andesite_encased_shaft",
       "scenes": [
         "shaft_casing"
       ]
     },
     {
-      "id": "levitate:brass_encased_shaft",
+      "id": "bearing:brass_encased_shaft",
       "scenes": [
         "shaft_casing"
       ]
     },
     {
-      "id": "levitate:cogwheel",
+      "id": "bearing:cogwheel",
       "scenes": [
         "cogwheel",
         "cog_speedup",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "id": "levitate:large_cogwheel",
+      "id": "bearing:large_cogwheel",
       "scenes": [
         "cog_speedup",
         "large_cogwheel",
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "id": "levitate:belt_connector",
+      "id": "bearing:belt_connector",
       "scenes": [
         "belt_connector",
         "belt_directions",
@@ -45,241 +45,241 @@
       ]
     },
     {
-      "id": "levitate:andesite_casing",
+      "id": "bearing:andesite_casing",
       "scenes": [
         "shaft_casing",
         "belt_casing"
       ]
     },
     {
-      "id": "levitate:brass_casing",
+      "id": "bearing:brass_casing",
       "scenes": [
         "shaft_casing",
         "belt_casing"
       ]
     },
     {
-      "id": "levitate:gearbox",
+      "id": "bearing:gearbox",
       "scenes": [
         "gearbox"
       ]
     },
     {
-      "id": "levitate:vertical_gearbox",
+      "id": "bearing:vertical_gearbox",
       "scenes": [
         "gearbox"
       ]
     },
     {
-      "id": "levitate:clutch",
+      "id": "bearing:clutch",
       "scenes": [
         "clutch"
       ]
     },
     {
-      "id": "levitate:gearshift",
+      "id": "bearing:gearshift",
       "scenes": [
         "gearshift"
       ]
     },
     {
-      "id": "levitate:sequenced_gearshift",
+      "id": "bearing:sequenced_gearshift",
       "scenes": [
         "sequenced_gearshift"
       ]
     },
     {
-      "id": "levitate:encased_fan",
+      "id": "bearing:encased_fan",
       "scenes": [
         "fan_direction",
         "fan_processing"
       ]
     },
     {
-      "id": "levitate:creative_motor",
+      "id": "bearing:creative_motor",
       "scenes": [
         "creative_motor",
         "creative_motor_mojang"
       ]
     },
     {
-      "id": "levitate:water_wheel",
+      "id": "bearing:water_wheel",
       "scenes": [
         "water_wheel"
       ]
     },
     {
-      "id": "levitate:large_water_wheel",
+      "id": "bearing:large_water_wheel",
       "scenes": [
         "large_water_wheel"
       ]
     },
     {
-      "id": "levitate:hand_crank",
+      "id": "bearing:hand_crank",
       "scenes": [
         "hand_crank"
       ]
     },
     {
-      "id": "levitate:copper_valve_handle",
+      "id": "bearing:copper_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:white_valve_handle",
+      "id": "bearing:white_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:orange_valve_handle",
+      "id": "bearing:orange_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:magenta_valve_handle",
+      "id": "bearing:magenta_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:light_blue_valve_handle",
+      "id": "bearing:light_blue_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:yellow_valve_handle",
+      "id": "bearing:yellow_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:lime_valve_handle",
+      "id": "bearing:lime_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:pink_valve_handle",
+      "id": "bearing:pink_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:gray_valve_handle",
+      "id": "bearing:gray_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:light_gray_valve_handle",
+      "id": "bearing:light_gray_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:cyan_valve_handle",
+      "id": "bearing:cyan_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:purple_valve_handle",
+      "id": "bearing:purple_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:blue_valve_handle",
+      "id": "bearing:blue_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:brown_valve_handle",
+      "id": "bearing:brown_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:green_valve_handle",
+      "id": "bearing:green_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:red_valve_handle",
+      "id": "bearing:red_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:black_valve_handle",
+      "id": "bearing:black_valve_handle",
       "scenes": [
         "valve_handle"
       ]
     },
     {
-      "id": "levitate:encased_chain_drive",
+      "id": "bearing:encased_chain_drive",
       "scenes": [
         "chain_drive",
         "chain_gearshift"
       ]
     },
     {
-      "id": "levitate:adjustable_chain_gearshift",
+      "id": "bearing:adjustable_chain_gearshift",
       "scenes": [
         "chain_gearshift"
       ]
     },
     {
-      "id": "levitate:rotation_speed_controller",
+      "id": "bearing:rotation_speed_controller",
       "scenes": [
         "rotation_speed_controller"
       ]
     },
     {
-      "id": "levitate:speedometer",
+      "id": "bearing:speedometer",
       "scenes": [
         "speedometer"
       ]
     },
     {
-      "id": "levitate:stressometer",
+      "id": "bearing:stressometer",
       "scenes": [
         "stressometer"
       ]
     },
     {
-      "id": "levitate:millstone",
+      "id": "bearing:millstone",
       "scenes": [
         "millstone"
       ]
     },
     {
-      "id": "levitate:crushing_wheel",
+      "id": "bearing:crushing_wheel",
       "scenes": [
         "crushing_wheels"
       ]
     },
     {
-      "id": "levitate:mechanical_mixer",
+      "id": "bearing:mechanical_mixer",
       "scenes": [
         "mechanical_mixer"
       ]
     },
     {
-      "id": "levitate:mechanical_press",
+      "id": "bearing:mechanical_press",
       "scenes": [
         "mechanical_press",
         "mechanical_press_compacting"
       ]
     },
     {
-      "id": "levitate:basin",
+      "id": "bearing:basin",
       "scenes": [
         "basin",
         "mechanical_mixer",
@@ -287,25 +287,25 @@
       ]
     },
     {
-      "id": "levitate:empty_blaze_burner",
+      "id": "bearing:empty_blaze_burner",
       "scenes": [
         "empty_blaze_burner"
       ]
     },
     {
-      "id": "levitate:blaze_burner",
+      "id": "bearing:blaze_burner",
       "scenes": [
         "blaze_burner"
       ]
     },
     {
-      "id": "levitate:depot",
+      "id": "bearing:depot",
       "scenes": [
         "depot"
       ]
     },
     {
-      "id": "levitate:weighted_ejector",
+      "id": "bearing:weighted_ejector",
       "scenes": [
         "weighted_ejector",
         "weighted_ejector_tunnel",
@@ -313,7 +313,7 @@
       ]
     },
     {
-      "id": "levitate:mechanical_crafter",
+      "id": "bearing:mechanical_crafter",
       "scenes": [
         "mechanical_crafter",
         "mechanical_crafter_connect",
@@ -321,20 +321,20 @@
       ]
     },
     {
-      "id": "levitate:crafter_slot_cover",
+      "id": "bearing:crafter_slot_cover",
       "scenes": [
         "mechanical_crafter_covers"
       ]
     },
     {
-      "id": "levitate:item_vault",
+      "id": "bearing:item_vault",
       "scenes": [
         "item_vault_storage",
         "item_vault_sizes"
       ]
     },
     {
-      "id": "levitate:chute",
+      "id": "bearing:chute",
       "scenes": [
         "chute",
         "chute_upward",
@@ -342,13 +342,13 @@
       ]
     },
     {
-      "id": "levitate:smart_chute",
+      "id": "bearing:smart_chute",
       "scenes": [
         "smart_chute"
       ]
     },
     {
-      "id": "levitate:brass_funnel",
+      "id": "bearing:brass_funnel",
       "scenes": [
         "brass_funnel",
         "funnel_intro",
@@ -359,7 +359,7 @@
       ]
     },
     {
-      "id": "levitate:andesite_funnel",
+      "id": "bearing:andesite_funnel",
       "scenes": [
         "funnel_intro",
         "funnel_direction",
@@ -370,52 +370,52 @@
       ]
     },
     {
-      "id": "levitate:andesite_tunnel",
+      "id": "bearing:andesite_tunnel",
       "scenes": [
         "andesite_tunnel"
       ]
     },
     {
-      "id": "levitate:brass_tunnel",
+      "id": "bearing:brass_tunnel",
       "scenes": [
         "brass_tunnel",
         "brass_tunnel_modes"
       ]
     },
     {
-      "id": "levitate:linear_chassis",
+      "id": "bearing:linear_chassis",
       "scenes": [
         "linear_chassis_group",
         "linear_chassis_attachment"
       ]
     },
     {
-      "id": "levitate:secondary_linear_chassis",
+      "id": "bearing:secondary_linear_chassis",
       "scenes": [
         "linear_chassis_group",
         "linear_chassis_attachment"
       ]
     },
     {
-      "id": "levitate:radial_chassis",
+      "id": "bearing:radial_chassis",
       "scenes": [
         "radial_chassis"
       ]
     },
     {
-      "id": "levitate:super_glue",
+      "id": "bearing:super_glue",
       "scenes": [
         "super_glue"
       ]
     },
     {
-      "id": "levitate:sticker",
+      "id": "bearing:sticker",
       "scenes": [
         "sticker"
       ]
     },
     {
-      "id": "levitate:mechanical_arm",
+      "id": "bearing:mechanical_arm",
       "scenes": [
         "mechanical_arm",
         "mechanical_arm_filtering",
@@ -424,7 +424,7 @@
       ]
     },
     {
-      "id": "levitate:mechanical_piston",
+      "id": "bearing:mechanical_piston",
       "scenes": [
         "mechanical_piston",
         "piston_pole",
@@ -432,7 +432,7 @@
       ]
     },
     {
-      "id": "levitate:sticky_mechanical_piston",
+      "id": "bearing:sticky_mechanical_piston",
       "scenes": [
         "mechanical_piston",
         "piston_pole",
@@ -440,13 +440,13 @@
       ]
     },
     {
-      "id": "levitate:piston_extension_pole",
+      "id": "bearing:piston_extension_pole",
       "scenes": [
         "piston_pole"
       ]
     },
     {
-      "id": "levitate:rope_pulley",
+      "id": "bearing:rope_pulley",
       "scenes": [
         "rope_pulley",
         "rope_pulley_modes",
@@ -455,33 +455,33 @@
       ]
     },
     {
-      "id": "levitate:elevator_pulley",
+      "id": "bearing:elevator_pulley",
       "scenes": [
         "elevator_pulley",
         "elevator_pulley_multi_rope"
       ]
     },
     {
-      "id": "levitate:windmill_bearing",
+      "id": "bearing:windmill_bearing",
       "scenes": [
         "windmill_source",
         "windmill_structure"
       ]
     },
     {
-      "id": "levitate:white_sail",
+      "id": "bearing:white_sail",
       "scenes": [
         "sail"
       ]
     },
     {
-      "id": "levitate:sail_frame",
+      "id": "bearing:sail_frame",
       "scenes": [
         "sail_frame"
       ]
     },
     {
-      "id": "levitate:mechanical_bearing",
+      "id": "bearing:mechanical_bearing",
       "scenes": [
         "mechanical_bearing",
         "bearing_modes",
@@ -489,13 +489,13 @@
       ]
     },
     {
-      "id": "levitate:clockwork_bearing",
+      "id": "bearing:clockwork_bearing",
       "scenes": [
         "clockwork_bearing"
       ]
     },
     {
-      "id": "levitate:gantry_shaft",
+      "id": "bearing:gantry_shaft",
       "scenes": [
         "gantry_shaft",
         "gantry_redstone",
@@ -504,7 +504,7 @@
       ]
     },
     {
-      "id": "levitate:gantry_carriage",
+      "id": "bearing:gantry_carriage",
       "scenes": [
         "gantry_carriage",
         "gantry_redstone",
@@ -513,7 +513,7 @@
       ]
     },
     {
-      "id": "levitate:cart_assembler",
+      "id": "bearing:cart_assembler",
       "scenes": [
         "cart_assembler",
         "cart_assembler_modes",
@@ -522,20 +522,20 @@
       ]
     },
     {
-      "id": "levitate:portable_storage_interface",
+      "id": "bearing:portable_storage_interface",
       "scenes": [
         "portable_storage_interface",
         "portable_storage_interface_redstone"
       ]
     },
     {
-      "id": "levitate:redstone_contact",
+      "id": "bearing:redstone_contact",
       "scenes": [
         "redstone_contact"
       ]
     },
     {
-      "id": "levitate:mechanical_saw",
+      "id": "bearing:mechanical_saw",
       "scenes": [
         "mechanical_saw_processing",
         "mechanical_saw_breaker",
@@ -543,14 +543,14 @@
       ]
     },
     {
-      "id": "levitate:mechanical_drill",
+      "id": "bearing:mechanical_drill",
       "scenes": [
         "mechanical_drill",
         "mechanical_drill_contraption"
       ]
     },
     {
-      "id": "levitate:deployer",
+      "id": "bearing:deployer",
       "scenes": [
         "deployer",
         "deployer_modes",
@@ -560,32 +560,32 @@
       ]
     },
     {
-      "id": "levitate:mechanical_harvester",
+      "id": "bearing:mechanical_harvester",
       "scenes": [
         "mechanical_harvester"
       ]
     },
     {
-      "id": "levitate:mechanical_plough",
+      "id": "bearing:mechanical_plough",
       "scenes": [
         "mechanical_plough"
       ]
     },
     {
-      "id": "levitate:contraption_controls",
+      "id": "bearing:contraption_controls",
       "scenes": [
         "contraption_controls"
       ]
     },
     {
-      "id": "levitate:mechanical_roller",
+      "id": "bearing:mechanical_roller",
       "scenes": [
         "mechanical_roller_pave",
         "mechanical_roller_fill"
       ]
     },
     {
-      "id": "levitate:fluid_pipe",
+      "id": "bearing:fluid_pipe",
       "scenes": [
         "fluid_pipe_flow",
         "fluid_pipe_interaction",
@@ -593,46 +593,46 @@
       ]
     },
     {
-      "id": "levitate:copper_casing",
+      "id": "bearing:copper_casing",
       "scenes": [
         "encased_fluid_pipe"
       ]
     },
     {
-      "id": "levitate:mechanical_pump",
+      "id": "bearing:mechanical_pump",
       "scenes": [
         "mechanical_pump_flow",
         "mechanical_pump_speed"
       ]
     },
     {
-      "id": "levitate:fluid_valve",
+      "id": "bearing:fluid_valve",
       "scenes": [
         "valve_pipe"
       ]
     },
     {
-      "id": "levitate:smart_fluid_pipe",
+      "id": "bearing:smart_fluid_pipe",
       "scenes": [
         "smart_pipe"
       ]
     },
     {
-      "id": "levitate:fluid_tank",
+      "id": "bearing:fluid_tank",
       "scenes": [
         "fluid_tank_storage",
         "fluid_tank_sizes"
       ]
     },
     {
-      "id": "levitate:creative_fluid_tank",
+      "id": "bearing:creative_fluid_tank",
       "scenes": [
         "creative_fluid_tank",
         "fluid_tank_sizes"
       ]
     },
     {
-      "id": "levitate:hose_pulley",
+      "id": "bearing:hose_pulley",
       "scenes": [
         "hose_pulley",
         "hose_pulley_level",
@@ -640,346 +640,346 @@
       ]
     },
     {
-      "id": "levitate:spout",
+      "id": "bearing:spout",
       "scenes": [
         "spout_filling"
       ]
     },
     {
-      "id": "levitate:item_drain",
+      "id": "bearing:item_drain",
       "scenes": [
         "item_drain"
       ]
     },
     {
-      "id": "levitate:portable_fluid_interface",
+      "id": "bearing:portable_fluid_interface",
       "scenes": [
         "portable_fluid_interface",
         "portable_storage_interface_redstone"
       ]
     },
     {
-      "id": "levitate:pulse_extender",
+      "id": "bearing:pulse_extender",
       "scenes": [
         "pulse_extender"
       ]
     },
     {
-      "id": "levitate:pulse_repeater",
+      "id": "bearing:pulse_repeater",
       "scenes": [
         "pulse_repeater"
       ]
     },
     {
-      "id": "levitate:powered_latch",
+      "id": "bearing:powered_latch",
       "scenes": [
         "powered_latch"
       ]
     },
     {
-      "id": "levitate:powered_toggle_latch",
+      "id": "bearing:powered_toggle_latch",
       "scenes": [
         "powered_toggle_latch"
       ]
     },
     {
-      "id": "levitate:analog_lever",
+      "id": "bearing:analog_lever",
       "scenes": [
         "analog_lever"
       ]
     },
     {
-      "id": "levitate:nixie_tube",
+      "id": "bearing:nixie_tube",
       "scenes": [
         "nixie_tube"
       ]
     },
     {
-      "id": "levitate:redstone_link",
+      "id": "bearing:redstone_link",
       "scenes": [
         "redstone_link"
       ]
     },
     {
-      "id": "levitate:rose_quartz_lamp",
+      "id": "bearing:rose_quartz_lamp",
       "scenes": [
         "rose_quartz_lamp"
       ]
     },
     {
-      "id": "levitate:pulse_timer",
+      "id": "bearing:pulse_timer",
       "scenes": [
         "pulse_timer"
       ]
     },
     {
-      "id": "levitate:content_observer",
+      "id": "bearing:content_observer",
       "scenes": [
         "smart_observer"
       ]
     },
     {
-      "id": "levitate:stockpile_switch",
+      "id": "bearing:stockpile_switch",
       "scenes": [
         "threshold_switch"
       ]
     },
     {
-      "id": "levitate:chain_conveyor",
+      "id": "bearing:chain_conveyor",
       "scenes": [
         "chain_conveyor"
       ]
     },
     {
-      "id": "levitate:package_frogport",
+      "id": "bearing:package_frogport",
       "scenes": [
         "package_frogport"
       ]
     },
     {
-      "id": "levitate:white_postbox",
+      "id": "bearing:white_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:orange_postbox",
+      "id": "bearing:orange_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:magenta_postbox",
+      "id": "bearing:magenta_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:light_blue_postbox",
+      "id": "bearing:light_blue_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:yellow_postbox",
+      "id": "bearing:yellow_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:lime_postbox",
+      "id": "bearing:lime_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:pink_postbox",
+      "id": "bearing:pink_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:gray_postbox",
+      "id": "bearing:gray_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:light_gray_postbox",
+      "id": "bearing:light_gray_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:cyan_postbox",
+      "id": "bearing:cyan_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:purple_postbox",
+      "id": "bearing:purple_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:blue_postbox",
+      "id": "bearing:blue_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:brown_postbox",
+      "id": "bearing:brown_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:green_postbox",
+      "id": "bearing:green_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:red_postbox",
+      "id": "bearing:red_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:black_postbox",
+      "id": "bearing:black_postbox",
       "scenes": [
         "postbox"
       ]
     },
     {
-      "id": "levitate:packager",
+      "id": "bearing:packager",
       "scenes": [
         "packager",
         "packager_address"
       ]
     },
     {
-      "id": "levitate:stock_link",
+      "id": "bearing:stock_link",
       "scenes": [
         "stock_link"
       ]
     },
     {
-      "id": "levitate:stock_ticker",
+      "id": "bearing:stock_ticker",
       "scenes": [
         "stock_ticker",
         "stock_ticker_address"
       ]
     },
     {
-      "id": "levitate:redstone_requester",
+      "id": "bearing:redstone_requester",
       "scenes": [
         "redstone_requester"
       ]
     },
     {
-      "id": "levitate:repackager",
+      "id": "bearing:repackager",
       "scenes": [
         "repackager"
       ]
     },
     {
-      "id": "levitate:white_table_cloth",
+      "id": "bearing:white_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:orange_table_cloth",
+      "id": "bearing:orange_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:magenta_table_cloth",
+      "id": "bearing:magenta_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:light_blue_table_cloth",
+      "id": "bearing:light_blue_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:yellow_table_cloth",
+      "id": "bearing:yellow_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:lime_table_cloth",
+      "id": "bearing:lime_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:pink_table_cloth",
+      "id": "bearing:pink_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:gray_table_cloth",
+      "id": "bearing:gray_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:light_gray_table_cloth",
+      "id": "bearing:light_gray_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:cyan_table_cloth",
+      "id": "bearing:cyan_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:purple_table_cloth",
+      "id": "bearing:purple_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:blue_table_cloth",
+      "id": "bearing:blue_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:brown_table_cloth",
+      "id": "bearing:brown_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:green_table_cloth",
+      "id": "bearing:green_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:red_table_cloth",
+      "id": "bearing:red_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:black_table_cloth",
+      "id": "bearing:black_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:andesite_table_cloth",
+      "id": "bearing:andesite_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:brass_table_cloth",
+      "id": "bearing:brass_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:copper_table_cloth",
+      "id": "bearing:copper_table_cloth",
       "scenes": [
         "table_cloth"
       ]
     },
     {
-      "id": "levitate:factory_gauge",
+      "id": "bearing:factory_gauge",
       "scenes": [
         "factory_gauge_restocker",
         "factory_gauge_recipe",
@@ -988,7 +988,7 @@
       ]
     },
     {
-      "id": "levitate:track",
+      "id": "bearing:track",
       "scenes": [
         "track_placement",
         "track_portal",
@@ -996,14 +996,14 @@
       ]
     },
     {
-      "id": "levitate:track_station",
+      "id": "bearing:track_station",
       "scenes": [
         "train_assembly",
         "auto_schedule"
       ]
     },
     {
-      "id": "levitate:track_signal",
+      "id": "bearing:track_signal",
       "scenes": [
         "train_signal_placement",
         "train_signal_signaling",
@@ -1011,44 +1011,44 @@
       ]
     },
     {
-      "id": "levitate:schedule",
+      "id": "bearing:schedule",
       "scenes": [
         "train_schedule"
       ]
     },
     {
-      "id": "levitate:controls",
+      "id": "bearing:controls",
       "scenes": [
         "train_controls"
       ]
     },
     {
-      "id": "levitate:track_observer",
+      "id": "bearing:track_observer",
       "scenes": [
         "track_observer"
       ]
     },
     {
-      "id": "levitate:display_link",
+      "id": "bearing:display_link",
       "scenes": [
         "display_link",
         "display_link_redstone"
       ]
     },
     {
-      "id": "levitate:display_board",
+      "id": "bearing:display_board",
       "scenes": [
         "display_board"
       ]
     },
     {
-      "id": "levitate:steam_whistle",
+      "id": "bearing:steam_whistle",
       "scenes": [
         "steam_whistle"
       ]
     },
     {
-      "id": "levitate:steam_engine",
+      "id": "bearing:steam_engine",
       "scenes": [
         "steam_engine"
       ]
@@ -1057,81 +1057,81 @@
   "tags": [
     {
       "id": "kinetic_relays",
-      "icon": "levitate:cogwheel",
+      "icon": "bearing:cogwheel",
       "index": true,
       "items": [
-        "levitate:shaft",
-        "levitate:cogwheel",
-        "levitate:large_cogwheel",
-        "levitate:belt_connector",
-        "levitate:gearbox",
-        "levitate:vertical_gearbox",
-        "levitate:clutch",
-        "levitate:gearshift",
-        "levitate:encased_chain_drive",
-        "levitate:adjustable_chain_gearshift",
-        "levitate:chain_conveyor",
-        "levitate:sequenced_gearshift",
-        "levitate:rotation_speed_controller"
+        "bearing:shaft",
+        "bearing:cogwheel",
+        "bearing:large_cogwheel",
+        "bearing:belt_connector",
+        "bearing:gearbox",
+        "bearing:vertical_gearbox",
+        "bearing:clutch",
+        "bearing:gearshift",
+        "bearing:encased_chain_drive",
+        "bearing:adjustable_chain_gearshift",
+        "bearing:chain_conveyor",
+        "bearing:sequenced_gearshift",
+        "bearing:rotation_speed_controller"
       ]
     },
     {
       "id": "kinetic_sources",
-      "icon": "levitate:water_wheel",
+      "icon": "bearing:water_wheel",
       "index": true,
       "items": [
-        "levitate:hand_crank",
-        "levitate:copper_valve_handle",
-        "levitate:water_wheel",
-        "levitate:large_water_wheel",
-        "levitate:windmill_bearing",
-        "levitate:steam_engine",
-        "levitate:creative_motor"
+        "bearing:hand_crank",
+        "bearing:copper_valve_handle",
+        "bearing:water_wheel",
+        "bearing:large_water_wheel",
+        "bearing:windmill_bearing",
+        "bearing:steam_engine",
+        "bearing:creative_motor"
       ]
     },
     {
       "id": "kinetic_appliances",
-      "icon": "levitate:mechanical_press",
+      "icon": "bearing:mechanical_press",
       "index": true,
       "items": [
-        "levitate:millstone",
-        "levitate:turntable",
-        "levitate:encased_fan",
-        "levitate:cuckoo_clock",
-        "levitate:mechanical_press",
-        "levitate:mechanical_mixer",
-        "levitate:mechanical_crafter",
-        "levitate:mechanical_drill",
-        "levitate:mechanical_saw",
-        "levitate:deployer",
-        "levitate:mechanical_pump",
-        "levitate:mechanical_arm",
-        "levitate:mechanical_piston",
-        "levitate:rope_pulley",
-        "levitate:elevator_pulley",
-        "levitate:mechanical_bearing",
-        "levitate:gantry_shaft",
-        "levitate:gantry_carriage",
-        "levitate:clockwork_bearing",
-        "levitate:display_board",
-        "levitate:crushing_wheel"
+        "bearing:millstone",
+        "bearing:turntable",
+        "bearing:encased_fan",
+        "bearing:cuckoo_clock",
+        "bearing:mechanical_press",
+        "bearing:mechanical_mixer",
+        "bearing:mechanical_crafter",
+        "bearing:mechanical_drill",
+        "bearing:mechanical_saw",
+        "bearing:deployer",
+        "bearing:mechanical_pump",
+        "bearing:mechanical_arm",
+        "bearing:mechanical_piston",
+        "bearing:rope_pulley",
+        "bearing:elevator_pulley",
+        "bearing:mechanical_bearing",
+        "bearing:gantry_shaft",
+        "bearing:gantry_carriage",
+        "bearing:clockwork_bearing",
+        "bearing:display_board",
+        "bearing:crushing_wheel"
       ]
     },
     {
       "id": "fluids",
-      "icon": "levitate:fluid_pipe",
+      "icon": "bearing:fluid_pipe",
       "index": true,
       "items": [
-        "levitate:fluid_pipe",
-        "levitate:mechanical_pump",
-        "levitate:fluid_valve",
-        "levitate:smart_fluid_pipe",
-        "levitate:hose_pulley",
-        "levitate:item_drain",
-        "levitate:spout",
-        "levitate:portable_fluid_interface",
-        "levitate:fluid_tank",
-        "levitate:creative_fluid_tank"
+        "bearing:fluid_pipe",
+        "bearing:mechanical_pump",
+        "bearing:fluid_valve",
+        "bearing:smart_fluid_pipe",
+        "bearing:hose_pulley",
+        "bearing:item_drain",
+        "bearing:spout",
+        "bearing:portable_fluid_interface",
+        "bearing:fluid_tank",
+        "bearing:creative_fluid_tank"
       ]
     },
     {
@@ -1139,40 +1139,40 @@
       "icon": "minecraft:chest",
       "index": true,
       "items": [
-        "levitate:belt_connector",
-        "levitate:filter",
-        "levitate:attribute_filter",
-        "levitate:chute",
-        "levitate:smart_chute",
-        "levitate:item_vault",
-        "levitate:depot",
-        "levitate:weighted_ejector",
-        "levitate:mechanical_arm",
-        "levitate:andesite_funnel",
-        "levitate:brass_funnel",
-        "levitate:andesite_tunnel",
-        "levitate:brass_tunnel",
-        "levitate:content_observer",
-        "levitate:stockpile_switch",
-        "levitate:creative_crate",
-        "levitate:portable_storage_interface"
+        "bearing:belt_connector",
+        "bearing:filter",
+        "bearing:attribute_filter",
+        "bearing:chute",
+        "bearing:smart_chute",
+        "bearing:item_vault",
+        "bearing:depot",
+        "bearing:weighted_ejector",
+        "bearing:mechanical_arm",
+        "bearing:andesite_funnel",
+        "bearing:brass_funnel",
+        "bearing:andesite_tunnel",
+        "bearing:brass_tunnel",
+        "bearing:content_observer",
+        "bearing:stockpile_switch",
+        "bearing:creative_crate",
+        "bearing:portable_storage_interface"
       ]
     },
     {
       "id": "high_logistics",
-      "icon": "levitate:stock_ticker",
+      "icon": "bearing:stock_ticker",
       "index": true,
       "items": [
-        "levitate:packager",
-        "levitate:stock_link",
-        "levitate:stock_ticker",
-        "levitate:package_frogport",
-        "levitate:white_postbox",
-        "levitate:redstone_requester",
-        "levitate:red_table_cloth",
-        "levitate:factory_gauge",
-        "levitate:repackager",
-        "levitate:package_filter"
+        "bearing:packager",
+        "bearing:stock_link",
+        "bearing:stock_ticker",
+        "bearing:package_frogport",
+        "bearing:white_postbox",
+        "bearing:redstone_requester",
+        "bearing:red_table_cloth",
+        "bearing:factory_gauge",
+        "bearing:repackager",
+        "bearing:package_filter"
       ]
     },
     {
@@ -1180,18 +1180,18 @@
       "icon": "minecraft:redstone",
       "index": true,
       "items": [
-        "levitate:content_observer",
-        "levitate:stockpile_switch",
-        "levitate:nixie_tube",
-        "levitate:redstone_contact",
-        "levitate:analog_lever",
-        "levitate:redstone_link",
-        "levitate:pulse_extender",
-        "levitate:pulse_repeater",
-        "levitate:pulse_timer",
-        "levitate:powered_latch",
-        "levitate:powered_toggle_latch",
-        "levitate:rose_quartz_lamp"
+        "bearing:content_observer",
+        "bearing:stockpile_switch",
+        "bearing:nixie_tube",
+        "bearing:redstone_contact",
+        "bearing:analog_lever",
+        "bearing:redstone_link",
+        "bearing:pulse_extender",
+        "bearing:pulse_repeater",
+        "bearing:pulse_timer",
+        "bearing:powered_latch",
+        "bearing:powered_toggle_latch",
+        "bearing:rose_quartz_lamp"
       ]
     },
     {
@@ -1199,63 +1199,63 @@
       "icon": "minecraft:rose_bush",
       "index": true,
       "items": [
-        "levitate:nixie_tube",
-        "levitate:display_board",
-        "levitate:cuckoo_clock",
-        "levitate:wooden_bracket",
-        "levitate:metal_bracket",
-        "levitate:metal_girder",
-        "levitate:andesite_casing",
-        "levitate:brass_casing",
-        "levitate:copper_casing",
-        "levitate:railway_casing"
+        "bearing:nixie_tube",
+        "bearing:display_board",
+        "bearing:cuckoo_clock",
+        "bearing:wooden_bracket",
+        "bearing:metal_bracket",
+        "bearing:metal_girder",
+        "bearing:andesite_casing",
+        "bearing:brass_casing",
+        "bearing:copper_casing",
+        "bearing:railway_casing"
       ]
     },
     {
       "id": "creative",
-      "icon": "levitate:creative_crate",
+      "icon": "bearing:creative_crate",
       "index": true,
       "items": [
-        "levitate:creative_crate",
-        "levitate:creative_fluid_tank",
-        "levitate:creative_motor"
+        "bearing:creative_crate",
+        "bearing:creative_fluid_tank",
+        "bearing:creative_motor"
       ]
     },
     {
       "id": "movement_anchor",
-      "icon": "levitate:mechanical_piston",
+      "icon": "bearing:mechanical_piston",
       "index": true,
       "items": [
-        "levitate:mechanical_piston",
-        "levitate:windmill_bearing",
-        "levitate:mechanical_bearing",
-        "levitate:clockwork_bearing",
-        "levitate:rope_pulley",
-        "levitate:elevator_pulley",
-        "levitate:gantry_carriage",
-        "levitate:cart_assembler",
-        "levitate:track_station"
+        "bearing:mechanical_piston",
+        "bearing:windmill_bearing",
+        "bearing:mechanical_bearing",
+        "bearing:clockwork_bearing",
+        "bearing:rope_pulley",
+        "bearing:elevator_pulley",
+        "bearing:gantry_carriage",
+        "bearing:cart_assembler",
+        "bearing:track_station"
       ]
     },
     {
       "id": "contraption_actor",
-      "icon": "levitate:mechanical_harvester",
+      "icon": "bearing:mechanical_harvester",
       "index": true,
       "items": [
-        "levitate:mechanical_harvester",
-        "levitate:mechanical_plough",
-        "levitate:mechanical_drill",
-        "levitate:mechanical_saw",
-        "levitate:deployer",
-        "levitate:portable_storage_interface",
-        "levitate:portable_fluid_interface",
-        "levitate:mechanical_bearing",
-        "levitate:andesite_funnel",
-        "levitate:brass_funnel",
-        "levitate:white_seat",
-        "levitate:controls",
-        "levitate:contraption_controls",
-        "levitate:redstone_contact",
+        "bearing:mechanical_harvester",
+        "bearing:mechanical_plough",
+        "bearing:mechanical_drill",
+        "bearing:mechanical_saw",
+        "bearing:deployer",
+        "bearing:portable_storage_interface",
+        "bearing:portable_fluid_interface",
+        "bearing:mechanical_bearing",
+        "bearing:andesite_funnel",
+        "bearing:brass_funnel",
+        "bearing:white_seat",
+        "bearing:controls",
+        "bearing:contraption_controls",
+        "bearing:redstone_contact",
         "minecraft:bell",
         "minecraft:dispenser",
         "minecraft:dropper"
@@ -1263,48 +1263,48 @@
     },
     {
       "id": "contraption_assembly",
-      "icon": "levitate:super_glue",
+      "icon": "bearing:super_glue",
       "index": true,
       "items": [
-        "levitate:linear_chassis",
-        "levitate:secondary_linear_chassis",
-        "levitate:radial_chassis",
-        "levitate:super_glue",
-        "levitate:sticker",
+        "bearing:linear_chassis",
+        "bearing:secondary_linear_chassis",
+        "bearing:radial_chassis",
+        "bearing:super_glue",
+        "bearing:sticker",
         "minecraft:slime",
         "minecraft:honey_block"
       ]
     },
     {
       "id": "windmill_sails",
-      "icon": "levitate:windmill_bearing",
+      "icon": "bearing:windmill_bearing",
       "index": false,
       "items": [
-        "levitate:white_sail",
-        "levitate:sail_frame",
+        "bearing:white_sail",
+        "bearing:sail_frame",
         "minecraft:white_wool"
       ]
     },
     {
       "id": "arm_targets",
-      "icon": "levitate:mechanical_arm",
+      "icon": "bearing:mechanical_arm",
       "index": false,
       "items": [
-        "levitate:mechanical_arm",
-        "levitate:belt_connector",
-        "levitate:chute",
-        "levitate:depot",
-        "levitate:weighted_ejector",
-        "levitate:basin",
-        "levitate:andesite_funnel",
-        "levitate:brass_funnel",
-        "levitate:mechanical_crafter",
-        "levitate:millstone",
-        "levitate:deployer",
-        "levitate:mechanical_saw",
-        "levitate:blaze_burner",
-        "levitate:crushing_wheel",
-        "levitate:track_station",
+        "bearing:mechanical_arm",
+        "bearing:belt_connector",
+        "bearing:chute",
+        "bearing:depot",
+        "bearing:weighted_ejector",
+        "bearing:basin",
+        "bearing:andesite_funnel",
+        "bearing:brass_funnel",
+        "bearing:mechanical_crafter",
+        "bearing:millstone",
+        "bearing:deployer",
+        "bearing:mechanical_saw",
+        "bearing:blaze_burner",
+        "bearing:crushing_wheel",
+        "bearing:track_station",
         "minecraft:composter",
         "minecraft:jukebox",
         "minecraft:campfire",
@@ -1314,41 +1314,41 @@
     },
     {
       "id": "train_related",
-      "icon": "levitate:track",
+      "icon": "bearing:track",
       "index": true,
       "items": [
-        "levitate:track",
-        "levitate:track_station",
-        "levitate:track_signal",
-        "levitate:track_observer",
-        "levitate:controls",
-        "levitate:schedule",
-        "levitate:train_door",
-        "levitate:train_trapdoor",
-        "levitate:railway_casing"
+        "bearing:track",
+        "bearing:track_station",
+        "bearing:track_signal",
+        "bearing:track_observer",
+        "bearing:controls",
+        "bearing:schedule",
+        "bearing:train_door",
+        "bearing:train_trapdoor",
+        "bearing:railway_casing"
       ]
     },
     {
       "id": "display_sources",
-      "icon": "levitate:display_link",
+      "icon": "bearing:display_link",
       "index": false,
       "items": [
-        "levitate:white_seat",
-        "levitate:depot",
-        "levitate:nixie_tube",
-        "levitate:stockpile_switch",
-        "levitate:content_observer",
-        "levitate:andesite_tunnel",
-        "levitate:track_observer",
-        "levitate:track_station",
-        "levitate:display_link",
-        "levitate:brass_tunnel",
-        "levitate:cuckoo_clock",
-        "levitate:stressometer",
-        "levitate:speedometer",
-        "levitate:fluid_tank",
-        "levitate:factory_gauge",
-        "levitate:belt_connector",
+        "bearing:white_seat",
+        "bearing:depot",
+        "bearing:nixie_tube",
+        "bearing:stockpile_switch",
+        "bearing:content_observer",
+        "bearing:andesite_tunnel",
+        "bearing:track_observer",
+        "bearing:track_station",
+        "bearing:display_link",
+        "bearing:brass_tunnel",
+        "bearing:cuckoo_clock",
+        "bearing:stressometer",
+        "bearing:speedometer",
+        "bearing:fluid_tank",
+        "bearing:factory_gauge",
+        "bearing:belt_connector",
         "minecraft:enchanting_table",
         "minecraft:respawn_anchor",
         "minecraft:command_block",
@@ -1357,24 +1357,24 @@
     },
     {
       "id": "display_targets",
-      "icon": "levitate:display_link",
+      "icon": "bearing:display_link",
       "index": false,
       "items": [
-        "levitate:nixie_tube",
-        "levitate:display_board",
-        "levitate:display_link",
+        "bearing:nixie_tube",
+        "bearing:display_board",
+        "bearing:display_link",
         "minecraft:oak_sign",
         "minecraft:lectern"
       ]
     },
     {
       "id": "threshold_switch_targets",
-      "icon": "levitate:stockpile_switch",
+      "icon": "bearing:stockpile_switch",
       "index": false,
       "items": [
-        "levitate:rope_pulley",
-        "levitate:item_vault",
-        "levitate:fluid_tank",
+        "bearing:rope_pulley",
+        "bearing:item_vault",
+        "bearing:fluid_tank",
         "minecraft:chest",
         "minecraft:barrel"
       ]

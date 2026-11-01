@@ -10,7 +10,7 @@
 // straight line onto the contraption's arc and turns the block (displayPose), as Create's clients
 // draw a contraption entity at its interpolated motion.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include "client/contraption/ContraptionClient.h"
 #include "client/contraption/Display.h"
@@ -42,7 +42,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::contraption {
+namespace br::client::contraption {
 
 namespace {
 
@@ -338,8 +338,8 @@ private:
     ll::event::ListenerPtr mExit, mTick;
 };
 
-} // namespace lv::client::contraption
+} // namespace br::client::contraption
 
-LV_REGISTER_MODULE(lv::client::contraption::ContraptionClientModule);
+BR_REGISTER_MODULE(br::client::contraption::ContraptionClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

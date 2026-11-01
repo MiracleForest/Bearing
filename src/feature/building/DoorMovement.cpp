@@ -20,21 +20,21 @@
 #include "feature/trains/Trains.h"
 #include "mod/Log.h"
 
-namespace lv::feature::building::door_movement {
+namespace br::feature::building::door_movement {
 
-namespace con = ::lv::feature::contraption;
-namespace cc  = ::lv::core::contraption;
-namespace bd  = ::lv::feature::common::blockdata;
+namespace con = ::br::feature::contraption;
+namespace cc  = ::br::core::contraption;
+namespace bd  = ::br::feature::common::blockdata;
 using Json    = nlohmann::json;
 
 namespace {
 
 constexpr char const* kDoors[]{
-    "levitate:andesite_door",
-    "levitate:brass_door",
-    "levitate:copper_door",
-    "levitate:train_door",
-    "levitate:framed_glass_door",
+    "bearing:andesite_door",
+    "bearing:brass_door",
+    "bearing:copper_door",
+    "bearing:train_door",
+    "bearing:framed_glass_door",
 };
 
 // (the carried block id of the door at ctx.localPos)
@@ -72,7 +72,7 @@ std::optional<int> doorControl(con::Contraption const& c) {
 
 /// Create's getDoorFacing: the side of the contraption the door faces, in world directions.
 cc::Dir doorFacing(con::MovementContext const& ctx) {
-    auto facing = static_cast<cc::Dir>(std::clamp<std::int64_t>(intState(ctx.states, "levitate:facing"), 2, 5));
+    auto facing = static_cast<cc::Dir>(std::clamp<std::int64_t>(intState(ctx.states, "bearing:facing"), 2, 5));
     auto axis   = cc::axisOf(facing);
     auto bounds = con::bounds(ctx.contraption.id());
     // the positive direction of its axis, turned around when the door lies on the negative side
@@ -110,18 +110,18 @@ bool shouldOpen(con::MovementContext const& ctx) {
 
 void toggle(con::MovementContext& ctx, bool open) {
     int  value = open ? 1 : 0;
-    bool upper = intState(ctx.states, "levitate:upper") != 0;
-    con::setBlockStates(ctx.contraption.id(), ctx.localPos, {{"levitate:open", std::int64_t{value}}});
+    bool upper = intState(ctx.states, "bearing:upper") != 0;
+    con::setBlockStates(ctx.contraption.id(), ctx.localPos, {{"bearing:open", std::int64_t{value}}});
     cc::Pos other = ctx.localPos + cc::Pos{0, upper ? -1 : 1, 0};
     if (auto const* b = con::actors_ext::carriedAt(ctx.contraption, other); b && b->id == carriedId(ctx))
-        con::setBlockStates(ctx.contraption.id(), other, {{"levitate:open", std::int64_t{value}}});
+        con::setBlockStates(ctx.contraption.id(), other, {{"bearing:open", std::int64_t{value}}});
     if (open) con::actors_ext::playSound(ctx.contraption.dimension(), ctx.position, "open.iron_door", 0.125f, 1.f);
     log().info("contraption #{}: door at {} {} {} {}", ctx.contraption.id(), ctx.localPos.x, ctx.localPos.y, ctx.localPos.z, open ? "opened" : "closed");
 }
 
 void tick(con::MovementContext& ctx) {
     // both halves run: the lower half decides for the door (Create toggles both from either)
-    if (intState(ctx.states, "levitate:upper") != 0) return;
+    if (intState(ctx.states, "bearing:upper") != 0) return;
     bool open = shouldOpen(ctx);
     // Create's shouldUpdate: not on the first movement, then only when the wish changes
     if (!ctx.data.contains("Seen")) {
@@ -131,7 +131,7 @@ void tick(con::MovementContext& ctx) {
     bool changed = !ctx.data.contains("Open") || ctx.data["Open"].get<bool>() != open;
     ctx.data["Open"] = open;
     if (!changed) return;
-    bool current = intState(ctx.states, "levitate:open") != 0;
+    bool current = intState(ctx.states, "bearing:open") != 0;
     if (current != open) toggle(ctx, open);
 }
 
@@ -148,4 +148,4 @@ struct Registrar {
 
 } // namespace
 
-} // namespace lv::feature::building::door_movement
+} // namespace br::feature::building::door_movement

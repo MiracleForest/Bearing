@@ -26,7 +26,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::crafter {
+namespace br::feature::crafter {
 
 namespace {
 
@@ -34,7 +34,7 @@ using selftest::Context;
 namespace ci = common::items;
 namespace k  = core::kinetics;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) {
     p.x += dx;
@@ -58,7 +58,7 @@ void crafter(Context& ctx, GlobalPos const& p, cr::Pointing pointing) {
 /// A test generator behind `p` (z - 1) turning along z at `rpm`.
 void power(Context& ctx, GlobalPos const& p, float rpm) {
     auto s = at(p, 0, 0, -1);
-    ctx.require(ctx.setBlock(s, kSource, {{"levitate:axis", 2}}), "source placed");
+    ctx.require(ctx.setBlock(s, kSource, {{"bearing:axis", 2}}), "source placed");
     kinetics::refresh(s);
     kinetics::setGeneratedSpeed(s, rpm);
 }
@@ -110,14 +110,14 @@ ll::coro::CoroTask<bool> waitFor(int ticks, F cond) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("crafter.geometry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("crafter.geometry", [](Context& ctx) {
     ctx.check(cr::targetDirection(Face::South, cr::Pointing::Left) == Face::West, "left of a south-facing crafter is west");
     ctx.check(cr::pointingFromFacing(Face::Up, Face::North) == cr::Pointing::Down, "placed on top points down");
     ctx.check(cr::countDownSpeed(32) == 32 && cr::countDownSpeed(1) == 4, "countdown speed");
     ctx.check(cr::ticksToBreak(1.5f, cr::stationaryBreakSpeed(64)) == 28, "stone at 64 rpm takes 28 ticks");
 });
 
-LV_REGISTER_SELFTEST("crafter.recipes", [](Context& ctx) {
+BR_REGISTER_SELFTEST("crafter.recipes", [](Context& ctx) {
     std::map<cr::Cell, ItemStack> g;
     g[{0, 0}] = item(ctx, "minecraft:oak_planks");
     g[{0, 1}] = item(ctx, "minecraft:oak_planks");
@@ -135,7 +135,7 @@ LV_REGISTER_SELFTEST("crafter.recipes", [](Context& ctx) {
     ctx.check(!crafterlogic::tryToApplyRecipe(bad), "no recipe for scattered dirt");
 });
 
-LV_REGISTER_SELFTEST("crafter.grid_craft", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.grid_craft", [](Context& ctx) -> ll::coro::CoroTask<> {
     // 2x2 crafters facing south; arrows lead to the bottom-left one, which points down into a chest
     auto base = co_await area(ctx, 1600);
     auto bl = base, br = at(base, 1, 0, 0), tl = at(base, 0, 1, 0), tr = at(base, 1, 1, 0);
@@ -162,7 +162,7 @@ LV_REGISTER_SELFTEST("crafter.grid_craft", [](Context& ctx) -> ll::coro::CoroTas
     ctx.cleanupBlock(chest);
 });
 
-LV_REGISTER_SELFTEST("crafter.redstone_start", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.redstone_start", [](Context& ctx) -> ll::coro::CoroTask<> {
     // two crafters (right -> left), only the left one filled: redstone starts the incomplete craft
     auto a = co_await area(ctx, 1610);
     auto b = at(a, 1, 0, 0);
@@ -183,7 +183,7 @@ LV_REGISTER_SELFTEST("crafter.redstone_start", [](Context& ctx) -> ll::coro::Cor
     ctx.cleanupBlock(chest);
 });
 
-LV_REGISTER_SELFTEST("crafter.connected_inputs", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.connected_inputs", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto a = co_await area(ctx, 1620);
     auto b = at(a, 1, 0, 0), c = at(a, 0, 1, 0);
     crafter(ctx, a, cr::Pointing::Down);
@@ -212,7 +212,7 @@ LV_REGISTER_SELFTEST("crafter.connected_inputs", [](Context& ctx) -> ll::coro::C
     ctx.check(ci::slotCount(reg, game::blockPos(c), -1) == 1, "the removed crafter left its group");
 });
 
-LV_REGISTER_SELFTEST("crafter.cover", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.cover", [](Context& ctx) -> ll::coro::CoroTask<> {
     // a covered crafter counts as a present (empty) cell: the log alone completes the grid
     auto a = co_await area(ctx, 1630);
     auto b = at(a, 1, 0, 0);
@@ -233,7 +233,7 @@ LV_REGISTER_SELFTEST("crafter.cover", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.cleanupBlock(chest);
 });
 
-LV_REGISTER_SELFTEST("crafter.hand_use", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.hand_use", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto a = co_await area(ctx, 1640);
     crafter(ctx, a, cr::Pointing::Up);
     co_await ctx.ticks(1);
@@ -248,12 +248,12 @@ LV_REGISTER_SELFTEST("crafter.hand_use", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(ci::isEmpty(crafterlogic::at(a)->slot), "the slot is empty again");
 });
 
-LV_REGISTER_SELFTEST("crafter.saw_cutting", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.saw_cutting", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 1650);
     ctx.require(ctx.setBlock(p, std::string(kSaw), {{kFacing, 1}, {kAlongFirst, 0}}), "saw placed");
     // drive it with a source beside it along x (the blade axis for along_first = 0 is z: put it behind)
     auto src = at(p, 0, 0, -1);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 2}}), "source placed");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 2}}), "source placed");
     kinetics::refresh(src);
     kinetics::setGeneratedSpeed(src, 48);
     co_await ctx.ticks(3);
@@ -265,11 +265,11 @@ LV_REGISTER_SELFTEST("crafter.saw_cutting", [](Context& ctx) -> ll::coro::CoroTa
     itemsAround(ctx, p, "", 4);
 });
 
-LV_REGISTER_SELFTEST("crafter.saw_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.saw_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 1660);
     ctx.require(ctx.setBlock(p, std::string(kSaw), {{kFacing, 1}, {kAlongFirst, 1}}), "saw placed");
     auto src = at(p, -1, 0, 0);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 0}}), "source placed");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 0}}), "source placed");
     kinetics::refresh(src);
     kinetics::setGeneratedSpeed(src, 96);
     co_await ctx.ticks(3);
@@ -286,13 +286,13 @@ LV_REGISTER_SELFTEST("crafter.saw_filter", [](Context& ctx) -> ll::coro::CoroTas
     itemsAround(ctx, p, "", 4);
 });
 
-LV_REGISTER_SELFTEST("crafter.saw_fell_tree", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.saw_fell_tree", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 1670);
     p.y -= 1;
     // a saw facing east cuts the trunk in front of it, the whole tree falls
     ctx.require(ctx.setBlock(p, std::string(kSaw), {{kFacing, 5}, {kAlongFirst, 1}}), "saw placed"); // axis y
     auto src = at(p, 0, -1, 0);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 1}}), "source placed");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 1}}), "source placed");
     kinetics::refresh(src);
     kinetics::setGeneratedSpeed(src, 256);
     auto trunk = at(p, 1, 0, 0);
@@ -309,11 +309,11 @@ LV_REGISTER_SELFTEST("crafter.saw_fell_tree", [](Context& ctx) -> ll::coro::Coro
     itemsAround(ctx, trunk, "", 6);
 });
 
-LV_REGISTER_SELFTEST("crafter.drill_break", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.drill_break", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 1680);
     ctx.require(ctx.setBlock(p, std::string(kDrill), {{kFacing, 5}}), "drill placed");
     auto src = at(p, -1, 0, 0);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 0}}), "source placed");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 0}}), "source placed");
     kinetics::refresh(src);
     kinetics::setGeneratedSpeed(src, 64);
     auto target = at(p, 1, 0, 0);
@@ -330,7 +330,7 @@ LV_REGISTER_SELFTEST("crafter.drill_break", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(cr::drillDamage(64) == 2 + 2 + 1, "damage at 64 rpm");
 });
 
-LV_REGISTER_SELFTEST("crafter.drill_contraption", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.drill_contraption", [](Context& ctx) -> ll::coro::CoroTask<> {
     namespace ct = feature::contraption;
     namespace cc = core::contraption;
     auto p = co_await area(ctx, 1690);
@@ -377,17 +377,17 @@ LV_REGISTER_SELFTEST("crafter.drill_contraption", [](Context& ctx) -> ll::coro::
 
 // ---- U39 (processing gaps): dx 3990..3999 -------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("crafter.saw_direct_input", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("crafter.saw_direct_input", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R85: the saw hands its outputs to the block with Create's DirectBeltInputBehaviour next to it
     // (a depot, through the belts unit's direct input)
     auto p = co_await area(ctx, 3990);
     ctx.require(ctx.setBlock(p, std::string(kSaw), {{kFacing, 1}, {kAlongFirst, 0}}), "saw placed");
     auto src = at(p, 0, 0, -1);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 2}}), "source placed");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 2}}), "source placed");
     kinetics::refresh(src);
     kinetics::setGeneratedSpeed(src, 64);
     std::vector<GlobalPos> depots{at(p, 1, 0, 0), at(p, -1, 0, 0), at(p, 0, 0, 1)};
-    for (auto const& d : depots) ctx.require(ctx.setBlock(d, "levitate:depot"), "a depot beside the saw");
+    for (auto const& d : depots) ctx.require(ctx.setBlock(d, "bearing:depot"), "a depot beside the saw");
     co_await ctx.ticks(3);
     auto rest = ci::insert(region(ctx, p), game::blockPos(p), 0, item(ctx, "minecraft:oak_log"), false);
     ctx.require(ci::isEmpty(rest), "the saw takes the log");
@@ -405,11 +405,11 @@ LV_REGISTER_SELFTEST("crafter.saw_direct_input", [](Context& ctx) -> ll::coro::C
     itemsAround(ctx, p, "", 4);
 });
 
-LV_REGISTER_SELFTEST("crafter.saw_damage_source", [](Context& ctx) {
+BR_REGISTER_SELFTEST("crafter.saw_damage_source", [](Context& ctx) {
     // R88: Create's damage types of the saw and the drill name the death message
     ActorDamageSource saw(SharedTypes::Legacy::ActorDamageCause::Contact, kSawDeath);
     auto              msg = saw.getDeathMessage("Pig", nullptr);
     ctx.check(msg.first.find("mechanical_saw") != std::string::npos, "the saw's death message: " + msg.first);
 });
 
-} // namespace lv::feature::crafter
+} // namespace br::feature::crafter

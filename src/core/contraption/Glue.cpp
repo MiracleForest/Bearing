@@ -4,7 +4,7 @@
 #include <deque>
 #include <unordered_set>
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 GlueBox GlueBox::of(Pos const& a, Pos const& b) {
     return {
@@ -55,4 +55,4 @@ GlueBox transformBox(GlueBox const& box, std::function<Pos(Pos const&)> const& p
     return GlueBox::of(place(box.min), place(box.max));
 }
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

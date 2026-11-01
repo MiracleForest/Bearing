@@ -4,7 +4,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 using tracks::Edge;
 using tracks::Graph;
@@ -368,4 +368,4 @@ double distanceToCurve(Railways const& rail, TrackPos const& at, Path const& pat
 
 double yawOf(Vec3d const& dir) { return std::atan2(-dir.z, dir.x) * 180.0 / std::numbers::pi; }
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

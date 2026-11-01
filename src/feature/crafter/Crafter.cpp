@@ -2,9 +2,9 @@
 // RecipeGridHandler / ConnectedInputHandler), see docs/SPEC.md §3.6.16.
 //
 // Per-crafter state (phase, countdown, slot, grouped items, cover, connected input) lives in
-// BlockData["crafter"]; the in-memory copy is the working state. Block states: levitate:facing
-// (2..5, the front), levitate:pointing (0 up, 1 left, 2 down, 3 right: Create's Pointing),
-// levitate:covered (shown on the front).
+// BlockData["crafter"]; the in-memory copy is the working state. Block states: bearing:facing
+// (2..5, the front), bearing:pointing (0 up, 1 left, 2 down, 3 right: Create's Pointing),
+// bearing:covered (shown on the front).
 
 #include <algorithm>
 #include <cmath>
@@ -28,7 +28,7 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::crafter::crafterlogic {
+namespace br::feature::crafter::crafterlogic {
 
 namespace k   = core::kinetics;
 namespace ci  = common::items;
@@ -40,7 +40,7 @@ using cr::Pointing;
 
 namespace {
 
-constexpr char kDbIndex[] = "lv:crafter:crafters";
+constexpr char kDbIndex[] = "br:crafter:crafters";
 constexpr int  kLazyRate  = 20; // Create: setLazyTickRate(20)
 
 struct Info {
@@ -263,7 +263,7 @@ bool isTargetingBelt(GlobalPos const& pos) {
     auto info = infoAt(pos);
     if (!info) return false;
     auto id = world::idAt(world::offset(pos, targetOf(*info)));
-    return id == "levitate:belt";
+    return id == "bearing:belt";
 }
 
 void tryInsert(GlobalPos const& pos) {
@@ -868,4 +868,4 @@ void install() {
 
 void uninstall() { reset(); }
 
-} // namespace lv::feature::crafter::crafterlogic
+} // namespace br::feature::crafter::crafterlogic

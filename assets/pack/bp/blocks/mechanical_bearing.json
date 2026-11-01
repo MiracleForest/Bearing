@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:mechanical_bearing",
+      "identifier": "bearing:mechanical_bearing",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,7 +15,7 @@
           4,
           5
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -24,11 +24,11 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.bearing_up"
+        "identifier": "geometry.bearing.bearing_up"
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_mechanical_bearing_model",
+          "texture": "bearing_mechanical_bearing_model",
           "render_method": "opaque"
         }
       },
@@ -43,79 +43,79 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.bearing_down",
+            "identifier": "geometry.bearing.bearing_down",
             "bone_visibility": {
-              "casing": "q.block_state('levitate:rotor') != 2",
-              "top": "q.block_state('levitate:rotor') == 0",
-              "shaft": "q.block_state('levitate:rotor') == 0"
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.bearing_up",
+            "identifier": "geometry.bearing.bearing_up",
             "bone_visibility": {
-              "casing": "q.block_state('levitate:rotor') != 2",
-              "top": "q.block_state('levitate:rotor') == 0",
-              "shaft": "q.block_state('levitate:rotor') == 0"
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.bearing_north",
+            "identifier": "geometry.bearing.bearing_north",
             "bone_visibility": {
-              "casing": "q.block_state('levitate:rotor') != 2",
-              "top": "q.block_state('levitate:rotor') == 0",
-              "shaft": "q.block_state('levitate:rotor') == 0"
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.bearing_south",
+            "identifier": "geometry.bearing.bearing_south",
             "bone_visibility": {
-              "casing": "q.block_state('levitate:rotor') != 2",
-              "top": "q.block_state('levitate:rotor') == 0",
-              "shaft": "q.block_state('levitate:rotor') == 0"
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.bearing_west",
+            "identifier": "geometry.bearing.bearing_west",
             "bone_visibility": {
-              "casing": "q.block_state('levitate:rotor') != 2",
-              "top": "q.block_state('levitate:rotor') == 0",
-              "shaft": "q.block_state('levitate:rotor') == 0"
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.bearing_east",
+            "identifier": "geometry.bearing.bearing_east",
             "bone_visibility": {
-              "casing": "q.block_state('levitate:rotor') != 2",
-              "top": "q.block_state('levitate:rotor') == 0",
-              "shaft": "q.block_state('levitate:rotor') == 0"
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
             }
           }
         }

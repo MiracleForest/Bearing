@@ -16,7 +16,7 @@
 #include "feature/common/Interactions.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::assembly {
+namespace br::feature::assembly {
 
 namespace ia = common::interactions;
 
@@ -56,7 +56,7 @@ ia::Result onUseOn(ia::UseOnContext const& c) {
 
     // deployers: swap items on the front face, the wrench toggles the mode
     if (c.blockId == kDeployerId && (!c.sneaking || c.item.isNull())
-        && (f == static_cast<Face>(detail::intState(clicked, "levitate:facing").value_or(1)))) {
+        && (f == static_cast<Face>(detail::intState(clicked, "bearing:facing").value_or(1)))) {
         if (repeated(player, at)) return ia::Result::Consume;
         if (deployer::onUse(player, at, f, item)) return ia::Result::Consume;
     }
@@ -104,4 +104,4 @@ void uninstallHooks() {
     handlerIds().clear();
 }
 
-} // namespace lv::feature::assembly
+} // namespace br::feature::assembly

@@ -18,7 +18,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
 namespace {
 
@@ -40,7 +40,7 @@ cc::Dir nearestLooking(Player& player) {
 cc::Dir facingAt(BlockSource& region, GP const& p) { return facingOf(region.getBlock(bp(p))); }
 
 bool setSail(BlockSource& region, GP const& p, std::string const& id, cc::Dir facing) {
-    return placeBlock(region, p, id, {{"levitate:facing", static_cast<int>(facing)}});
+    return placeBlock(region, p, id, {{"bearing:facing", static_cast<int>(facing)}});
 }
 
 /// Create's BlockMovementChecks: a sail is attached to its neighbours in its own plane, so a sail
@@ -50,7 +50,7 @@ struct SailRules {
         contraption::MovementRules rules;
         rules.attachedTowards = [](cc::States const& s) {
             int f = 1;
-            if (auto i = s.find("levitate:facing"); i != s.end())
+            if (auto i = s.find("bearing:facing"); i != s.end())
                 if (auto const* v = std::get_if<std::int64_t>(&i->second)) f = static_cast<int>(std::clamp<std::int64_t>(*v, 0, 5));
             cc::DirMask mask = 0;
             for (auto d : cc::kAllDirs)
@@ -68,7 +68,7 @@ SailRules const sailRules;
 void orientSail(BlockSource& region, GP const& pos, Player& player, int /*clickedFace*/) {
     auto look   = nearestLooking(player);
     auto facing = player.isSneaking() ? look : cc::opposite(look);
-    setStates(region, pos, {{"levitate:facing", static_cast<int>(facing)}});
+    setStates(region, pos, {{"bearing:facing", static_cast<int>(facing)}});
 }
 
 void applyDye(BlockSource& region, GP const& pos, cc::Vec3d const& hit, std::optional<std::string> const& colour) {
@@ -152,4 +152,4 @@ bool sailUse(Player& player, GP const& pos, int /*face*/, cc::Vec3d const& hit, 
     return false;
 }
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings

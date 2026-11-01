@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:packager"
+      "identifier": "bearing:packager"
     },
     "tags": [
       "crafting_table"
@@ -14,7 +14,7 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:cardboard_block"
+        "item": "bearing:cardboard_block"
       },
       "C": {
         "item": "minecraft:iron_ingot"
@@ -24,12 +24,12 @@
       }
     },
     "result": {
-      "item": "levitate:packager",
+      "item": "bearing:packager",
       "count": 1
     },
     "unlock": [
       {
-        "item": "levitate:cardboard_block"
+        "item": "bearing:cardboard_block"
       }
     ]
   }

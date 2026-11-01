@@ -18,7 +18,7 @@
 
 #include "core/tracks/Graph.h"
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 using tracks::GraphLocation;
 using tracks::NodeLocation;
@@ -150,4 +150,4 @@ struct Path {
 /// contraption transform's rotation about +Y) of a direction.
 [[nodiscard]] double yawOf(Vec3d const& dir);
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

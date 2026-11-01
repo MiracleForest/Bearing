@@ -22,7 +22,7 @@ class BlockSource;
 class Player;
 class ItemStack;
 
-namespace lv::feature::signals {
+namespace br::feature::signals {
 
 namespace cs  = core::signals;
 namespace ct  = core::tracks;
@@ -57,7 +57,7 @@ struct BlockRec {
 };
 
 /// A selected track. As Create's TrackTargetingBlockItem it lives on the item stack (item data
-/// `lv:track_target`, see selectionOf / setHeldSelection) and travels with the item.
+/// `br:track_target`, see selectionOf / setHeldSelection) and travels with the item.
 struct Selection {
     Target      target;
     std::string item;
@@ -140,4 +140,4 @@ bool onTargetingItemUse(Player& player, ItemStack& held, std::string const& item
 void installHooks();
 void uninstallHooks();
 
-} // namespace lv::feature::signals
+} // namespace br::feature::signals

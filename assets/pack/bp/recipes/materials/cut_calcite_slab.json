@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_calcite_slab"
+      "identifier": "bearing:cut_calcite_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_calcite"
+        "item": "bearing:cut_calcite"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_calcite"
+        "item": "bearing:cut_calcite"
       }
     ],
     "result": {
-      "item": "levitate:cut_calcite_slab",
+      "item": "bearing:cut_calcite_slab",
       "count": 6
     }
   }

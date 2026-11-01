@@ -1,5 +1,5 @@
 {
-  "levitate.wrench_rotate": {
+  "bearing.wrench_rotate": {
     "category": "block",
     "sounds": [
       { "name": "sounds/block/wooden_trapdoor/close1", "volume": 0.25, "pitch": 1.25 },
@@ -7,11 +7,11 @@
       { "name": "sounds/block/wooden_trapdoor/close3", "volume": 0.25, "pitch": 1.25 }
     ]
   },
-  "levitate.wrench_remove": {
+  "bearing.wrench_remove": {
     "category": "block",
     "sounds": [{ "name": "sounds/random/pop", "volume": 0.25, "pitch": 0.75 }]
   },
-  "levitate.wrench_remove_hit": {
+  "bearing.wrench_remove_hit": {
     "category": "block",
     "sounds": [
       { "name": "sounds/step/netherite1", "volume": 1.0, "pitch": 0.75 },

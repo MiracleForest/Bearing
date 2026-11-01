@@ -6,7 +6,7 @@
         { "condition": "survives_explosion" }
       ],
       "entries": [
-        { "type": "item", "name": "levitate:fluid_tank" }
+        { "type": "item", "name": "bearing:fluid_tank" }
       ]
     }
   ]

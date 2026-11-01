@@ -2,9 +2,9 @@
   "id": "valve_handle",
   "size": [5, 5],
   "blocks": [
-    {"at": [0, 1, 2], "id": "levitate:copper_valve_handle", "states": {"levitate:facing": 5}},
-    {"at": [1, 1, 2], "id": "levitate:shaft", "states": {"levitate:axis": 0}},
-    {"at": [2, 1, 2], "id": "levitate:mechanical_bearing", "states": {"levitate:facing": 5}},
+    {"at": [0, 1, 2], "id": "bearing:copper_valve_handle", "states": {"bearing:facing": 5}},
+    {"at": [1, 1, 2], "id": "bearing:shaft", "states": {"bearing:axis": 0}},
+    {"at": [2, 1, 2], "id": "bearing:mechanical_bearing", "states": {"bearing:facing": 5}},
     {"area": [[3, 1, 2], [3, 3, 2]], "id": "minecraft:spruce_planks"}
   ],
   "timeline": [
@@ -45,7 +45,7 @@
     {"idle": 90},
     {"input": [0.0, 1.5, 2.5], "action": "right", "item": "minecraft:red_dye", "ticks": 30, "keyframe": true},
     {"idle": 10},
-    {"set": [0, 1, 2], "id": "levitate:red_valve_handle", "states": {"levitate:facing": 5}},
+    {"set": [0, 1, 2], "id": "bearing:red_valve_handle", "states": {"bearing:facing": 5}},
     {"idle": 10},
     {"text": 6, "at": [0.0, 1.5, 2.5], "ticks": 60, "keyframe": true},
     {"idle": 70}

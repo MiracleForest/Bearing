@@ -7,9 +7,9 @@
 #include "feature/kinetics/Kinetics.h"
 #include "feature/transmission/TransmissionInternal.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
-namespace k = lv::kinetics;
+namespace k = br::kinetics;
 using k::BlockState;
 using k::CogType;
 using k::KineticSpec;
@@ -19,8 +19,8 @@ using k::RotorPart;
 
 namespace {
 
-constexpr char kRotorModel[]   = "geometry.levitate.transmission_rotors";
-constexpr char kRotorTexture[] = "levitate_transmission_rotor";
+constexpr char kRotorModel[]   = "geometry.bearing.transmission_rotors";
+constexpr char kRotorTexture[] = "bearing_transmission_rotor";
 
 Axis axisValue(BlockState const& s, char const* state = kAxis) {
     return static_cast<Axis>(std::clamp(s.get(state, 1), 0, 2));
@@ -35,7 +35,7 @@ KineticSpec base(std::vector<std::string> states) {
     return spec;
 }
 
-/// A block turning about `levitate:axis` with shaft ends on both faces of it.
+/// A block turning about `bearing:axis` with shaft ends on both faces of it.
 KineticSpec axial(std::vector<std::string> states, char const* bone) {
     auto spec         = base(std::move(states));
     spec.rotationAxis = [](BlockState const& s) -> std::optional<Axis> { return axisValue(s); };
@@ -242,8 +242,8 @@ KineticSpec cuckooClock() {
 
 KineticSpec flywheel() {
     auto spec         = axial({kAxis}, "wheel");
-    spec.rotorModel   = "geometry.levitate.flywheel";
-    spec.rotorTexture = "levitate_flywheel";
+    spec.rotorModel   = "geometry.bearing.flywheel";
+    spec.rotorTexture = "bearing_flywheel";
     spec.parts        = [](RenderView const& v, std::vector<RotorPart>& out) {
         Axis axis = axisValue(*v.state);
         out.push_back(RotorPart{"wheel", axis, 1.f, 0.f, false, true}); // FlywheelRenderer: the wheel eases, the shaft does not
@@ -268,27 +268,27 @@ int horizontalFacingOf(Face face) {
     }
 }
 
-LV_REGISTER_KINETIC_BLOCK(kShaft, axial({kAxis}, "shaft"));
-LV_REGISTER_KINETIC_BLOCK(kCogwheel, cogwheel(false));
-LV_REGISTER_KINETIC_BLOCK(kLargeCogwheel, cogwheel(true));
-LV_REGISTER_KINETIC_BLOCK(kAndesiteShaft, axial({kAxis}, "shaft"));
-LV_REGISTER_KINETIC_BLOCK(kBrassShaft, axial({kAxis}, "shaft"));
-LV_REGISTER_KINETIC_BLOCK(kAndesiteCog, encasedCog(false));
-LV_REGISTER_KINETIC_BLOCK(kBrassCog, encasedCog(false));
-LV_REGISTER_KINETIC_BLOCK(kAndesiteLargeCog, encasedCog(true));
-LV_REGISTER_KINETIC_BLOCK(kBrassLargeCog, encasedCog(true));
-LV_REGISTER_KINETIC_BLOCK(kGearbox, gearbox());
-LV_REGISTER_KINETIC_BLOCK(kClutch, splitShaft(false));
-LV_REGISTER_KINETIC_BLOCK(kGearshift, splitShaft(true));
-LV_REGISTER_KINETIC_BLOCK(kChainDrive, chainDrive(false));
-LV_REGISTER_KINETIC_BLOCK(kChainGearshift, chainDrive(true));
-LV_REGISTER_KINETIC_BLOCK(kSequencedGearshift, sequencedGearshift());
-LV_REGISTER_KINETIC_BLOCK(kSpeedController, speedController());
-LV_REGISTER_KINETIC_BLOCK(kSpeedometer, gauge());
-LV_REGISTER_KINETIC_BLOCK(kStressometer, gauge());
-LV_REGISTER_KINETIC_BLOCK(kCuckooClock, cuckooClock());
-LV_REGISTER_KINETIC_BLOCK(kMysteriousCuckooClock, cuckooClock());
-LV_REGISTER_KINETIC_BLOCK(kFlywheel, flywheel());
+BR_REGISTER_KINETIC_BLOCK(kShaft, axial({kAxis}, "shaft"));
+BR_REGISTER_KINETIC_BLOCK(kCogwheel, cogwheel(false));
+BR_REGISTER_KINETIC_BLOCK(kLargeCogwheel, cogwheel(true));
+BR_REGISTER_KINETIC_BLOCK(kAndesiteShaft, axial({kAxis}, "shaft"));
+BR_REGISTER_KINETIC_BLOCK(kBrassShaft, axial({kAxis}, "shaft"));
+BR_REGISTER_KINETIC_BLOCK(kAndesiteCog, encasedCog(false));
+BR_REGISTER_KINETIC_BLOCK(kBrassCog, encasedCog(false));
+BR_REGISTER_KINETIC_BLOCK(kAndesiteLargeCog, encasedCog(true));
+BR_REGISTER_KINETIC_BLOCK(kBrassLargeCog, encasedCog(true));
+BR_REGISTER_KINETIC_BLOCK(kGearbox, gearbox());
+BR_REGISTER_KINETIC_BLOCK(kClutch, splitShaft(false));
+BR_REGISTER_KINETIC_BLOCK(kGearshift, splitShaft(true));
+BR_REGISTER_KINETIC_BLOCK(kChainDrive, chainDrive(false));
+BR_REGISTER_KINETIC_BLOCK(kChainGearshift, chainDrive(true));
+BR_REGISTER_KINETIC_BLOCK(kSequencedGearshift, sequencedGearshift());
+BR_REGISTER_KINETIC_BLOCK(kSpeedController, speedController());
+BR_REGISTER_KINETIC_BLOCK(kSpeedometer, gauge());
+BR_REGISTER_KINETIC_BLOCK(kStressometer, gauge());
+BR_REGISTER_KINETIC_BLOCK(kCuckooClock, cuckooClock());
+BR_REGISTER_KINETIC_BLOCK(kMysteriousCuckooClock, cuckooClock());
+BR_REGISTER_KINETIC_BLOCK(kFlywheel, flywheel());
 
 std::vector<std::string> const& allBlocks() {
     static std::vector<std::string> const ids{
@@ -314,4 +314,4 @@ bool readsRedstone(std::string_view id) {
 }
 bool hasComparatorOutput(std::string_view id) { return isGauge(id) || id == kSequencedGearshift; }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

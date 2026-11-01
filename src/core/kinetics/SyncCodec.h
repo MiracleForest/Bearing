@@ -19,16 +19,16 @@
 #include <string_view>
 #include <vector>
 
-namespace lv::core::kinetics::sync {
+namespace br::core::kinetics::sync {
 
 inline constexpr int kProtocolVersion = 1;
 
 // Deprecated: the wave-1 ScriptMessagePacket ids. Nothing sends them any more (the sync moved to
 // the companion protocol); kept so code that still names them compiles. Client code reads the
 // speeds through client/kinetics/KineticsClient.h.
-inline constexpr std::string_view kHelloId = "levitate:kinetics/hello";
-inline constexpr std::string_view kAckId   = "levitate:kinetics/ack";
-inline constexpr std::string_view kSyncId  = "levitate:kinetics/sync";
+inline constexpr std::string_view kHelloId = "bearing:kinetics/hello";
+inline constexpr std::string_view kAckId   = "bearing:kinetics/ack";
+inline constexpr std::string_view kSyncId  = "bearing:kinetics/sync";
 
 struct Entry {
     int   x = 0, y = 0, z = 0;
@@ -58,4 +58,4 @@ struct Batch {
 /// Floor division to a chunk coordinate.
 [[nodiscard]] constexpr int chunkOf(int block) { return block >= 0 ? block / 16 : -((-block + 15) / 16); }
 
-} // namespace lv::core::kinetics::sync
+} // namespace br::core::kinetics::sync

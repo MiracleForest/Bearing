@@ -28,7 +28,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::assembly {
+namespace br::feature::assembly {
 
 namespace {
 
@@ -36,7 +36,7 @@ using selftest::Context;
 namespace items = common::items;
 namespace sa    = sequenced;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 GlobalPos up(GlobalPos p, int dy) {
     p.y += dy;
@@ -62,9 +62,9 @@ std::string idAt(Context& ctx, GlobalPos const& p) { return game::blockIdAt(regi
 /// A deployer at `p` facing `facing` with its shaft along `shaft`, turned by a test source.
 bool poweredDeployer(Context& ctx, GlobalPos const& p, Face facing, core::kinetics::Axis shaft, float rpm = 64) {
     bool along = ca::deployerAlongFirstFor(facing, shaft);
-    if (!ctx.setBlock(p, kDeployerId, {{"levitate:facing", static_cast<int>(facing)}, {"levitate:axis_along_first", along ? 1 : 0}})) return false;
+    if (!ctx.setBlock(p, kDeployerId, {{"bearing:facing", static_cast<int>(facing)}, {"bearing:axis_along_first", along ? 1 : 0}})) return false;
     auto src = off(p, shaft == core::kinetics::Axis::X ? -1 : 0, shaft == core::kinetics::Axis::Y ? -1 : 0, shaft == core::kinetics::Axis::Z ? -1 : 0);
-    if (!ctx.setBlock(src, kSource, {{"levitate:axis", static_cast<int>(shaft)}})) return false;
+    if (!ctx.setBlock(src, kSource, {{"bearing:axis", static_cast<int>(shaft)}})) return false;
     kinetics::refresh(src);
     kinetics::refresh(p);
     kinetics::setGeneratedSpeed(src, rpm);
@@ -81,16 +81,16 @@ ll::coro::CoroTask<bool> waitFor(std::function<bool()> cond, int ticks) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("assembly.sequenced_track", [](Context& ctx) {
+BR_REGISTER_SELFTEST("assembly.sequenced_track", [](Context& ctx) {
     // U5's track recipe: sleepers -> deploy nugget, deploy nugget, press -> track
     auto slab = item(ctx, "minecraft:smooth_stone_slab");
     auto nug  = item(ctx, "minecraft:iron_nugget");
-    ctx.require(sa::byId("levitate:sequenced_assembly/track") != nullptr, "the track recipe is loaded");
+    ctx.require(sa::byId("bearing:sequenced_assembly/track") != nullptr, "the track recipe is loaded");
     ctx.check(!sa::findStep(sa::kPressing, slab), "the first step is not pressing");
     auto s1 = sa::findDeployingStep(slab, nug);
     ctx.require(s1.has_value(), "the slab accepts a nugget");
     auto a = sa::advance(*s1, slab);
-    ctx.check(items::idOf(a) == "levitate:incomplete_track", "becomes an incomplete track: " + items::idOf(a));
+    ctx.check(items::idOf(a) == "bearing:incomplete_track", "becomes an incomplete track: " + items::idOf(a));
     auto p = sa::progressOf(a);
     ctx.require(p && p->step == 1, "progress step 1");
     ctx.check(!sa::tooltip(a).empty(), "tooltip lines");
@@ -102,15 +102,15 @@ LV_REGISTER_SELFTEST("assembly.sequenced_track", [](Context& ctx) {
     auto s3 = sa::findStep(sa::kPressing, b);
     ctx.require(s3.has_value(), "third step is pressing (callable by a press)");
     auto done = sa::advance(*s3, b);
-    ctx.check(items::idOf(done) == "levitate:track", "result is a track: " + items::idOf(done));
+    ctx.check(items::idOf(done) == "bearing:track", "result is a track: " + items::idOf(done));
     // a plain incomplete track without progress is not part of a sequence
-    ctx.check(!sa::findDeployingStep(item(ctx, "levitate:incomplete_track"), nug), "an incomplete item without data is not accepted");
+    ctx.check(!sa::findDeployingStep(item(ctx, "bearing:incomplete_track"), nug), "an incomplete item without data is not accepted");
     // Create's #create:sleepers: stone slab (Bedrock normal_stone_slab), smooth stone slab, andesite slab
     for (auto const* sleeper : {"minecraft:normal_stone_slab", "minecraft:andesite_slab"})
         ctx.check(sa::findDeployingStep(item(ctx, sleeper), nug).has_value(), std::string(sleeper) + " starts a track");
 });
 
-LV_REGISTER_SELFTEST("assembly.deployer_recipe_on_item", [](Context& ctx) {
+BR_REGISTER_SELFTEST("assembly.deployer_recipe_on_item", [](Context& ctx) {
     auto slab = item(ctx, "minecraft:smooth_stone_slab");
     auto held = item(ctx, "minecraft:iron_nugget", 5);
     auto sim  = deployer::deployOnItem(slab, held, true);
@@ -118,13 +118,13 @@ LV_REGISTER_SELFTEST("assembly.deployer_recipe_on_item", [](Context& ctx) {
     ctx.check(items::countOf(held) == 5, "simulation keeps the held item");
     auto out = deployer::deployOnItem(slab, held, false);
     ctx.require(out && out->size() == 1, "one output");
-    ctx.check(items::idOf(out->front()) == "levitate:incomplete_track", "incomplete track out");
+    ctx.check(items::idOf(out->front()) == "bearing:incomplete_track", "incomplete track out");
     ctx.check(items::countOf(held) == 4, "a nugget is used up");
     auto stone = item(ctx, "minecraft:stone");
     ctx.check(!deployer::deployOnItem(stone, held, true).has_value(), "no recipe for stone");
 });
 
-LV_REGISTER_SELFTEST("assembly.deployer_places_block", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.deployer_places_block", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(1500), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto target = off(p, 2, 0, 0);
@@ -137,7 +137,7 @@ LV_REGISTER_SELFTEST("assembly.deployer_places_block", [](Context& ctx) -> ll::c
     ctx.check(items::countOf(deployer::held(p)) == 1, "one cobblestone used");
 });
 
-LV_REGISTER_SELFTEST("assembly.deployer_places_oriented", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.deployer_places_oriented", [](Context& ctx) -> ll::coro::CoroTask<> {
     // with a block to place against, the placement goes through the player's item use: a log
     // placed by a deployer facing down stands upright on the floor
     auto p = up(ctx.testPos(1525), 3);
@@ -152,7 +152,7 @@ LV_REGISTER_SELFTEST("assembly.deployer_places_oriented", [](Context& ctx) -> ll
     ctx.check(items::isEmpty(deployer::held(p)), "the log was used");
 });
 
-LV_REGISTER_SELFTEST("assembly.deployer_punch_breaks", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.deployer_punch_breaks", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(1505), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto target = off(p, 2, 0, 0);
@@ -169,7 +169,7 @@ LV_REGISTER_SELFTEST("assembly.deployer_punch_breaks", [](Context& ctx) -> ll::c
     ctx.check(got, "the drop went into the deployer");
 });
 
-LV_REGISTER_SELFTEST("assembly.deployer_redstone_lock", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.deployer_redstone_lock", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(1510), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto target = off(p, 2, 0, 0);
@@ -182,10 +182,10 @@ LV_REGISTER_SELFTEST("assembly.deployer_redstone_lock", [](Context& ctx) -> ll::
     ctx.check(deployer::state(p) == ca::DeployerState::Waiting, "it keeps waiting");
 });
 
-LV_REGISTER_SELFTEST("assembly.deployer_capability", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.deployer_capability", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(1515), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, kDeployerId, {{"levitate:facing", 1}}), "deployer");
+    ctx.require(ctx.setBlock(p, kDeployerId, {{"bearing:facing", 1}}), "deployer");
     auto& r  = region(ctx);
     auto  bp = game::blockPos(p);
     auto rest = common::items::insert(r, bp, -1, item(ctx, "minecraft:diamond", 3), false);
@@ -204,10 +204,10 @@ LV_REGISTER_SELFTEST("assembly.deployer_capability", [](Context& ctx) -> ll::cor
     ctx.check(d && d->contains("deployer") && (*d)["deployer"].value("mode", 1) == 0, "punch mode saved");
 });
 
-LV_REGISTER_SELFTEST("assembly.deployer_swap", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.deployer_swap", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(1520), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, kDeployerId, {{"levitate:facing", 5}}), "deployer facing east");
+    ctx.require(ctx.setBlock(p, kDeployerId, {{"bearing:facing", 5}}), "deployer facing east");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     sp.getInventory().setItem(0, item(ctx, "minecraft:diamond", 2));
     sp.setSelectedSlot(0);
@@ -224,7 +224,7 @@ LV_REGISTER_SELFTEST("assembly.deployer_swap", [](Context& ctx) -> ll::coro::Cor
     ctx.check(items::isEmpty(sp.getSelectedItem()), "the player's hand is empty");
 });
 
-LV_REGISTER_SELFTEST("assembly.arm_selection_and_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.arm_selection_and_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = up(ctx.testPos(1530), 1);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto composter = off(base, 2, 0, 0);
@@ -250,19 +250,19 @@ LV_REGISTER_SELFTEST("assembly.arm_selection_and_placement", [](Context& ctx) ->
     ctx.check(arm::selectionCounts(sp).first == 0, "selection cleared");
 });
 
-LV_REGISTER_SELFTEST("assembly.arm_transfers", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.arm_transfers", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto a = up(ctx.testPos(1540), 1);
     ctx.require(co_await ctx.ensureLoaded(a), "test area loaded");
     ctx.require(ctx.setBlock(a, kArmId), "arm");
     auto src = off(a, 0, -1, 0);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 1}}), "source below the arm");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 1}}), "source below the arm");
     kinetics::refresh(src);
     kinetics::refresh(a);
     kinetics::setGeneratedSpeed(src, 128);
     // input: an idle deployer holding pies; output: a composter
     auto in  = off(a, 2, 0, 0);
     auto out = off(a, -2, 0, 0);
-    ctx.require(ctx.setBlock(in, kDeployerId, {{"levitate:facing", 1}}), "deployer as input");
+    ctx.require(ctx.setBlock(in, kDeployerId, {{"bearing:facing", 1}}), "deployer as input");
     deployer::setHeld(in, item(ctx, "minecraft:pumpkin_pie", 3));
     ctx.require(ctx.setBlock(out, "minecraft:composter"), "composter as output");
     ctx.require(arm::addPoint(a, game::blockPos(in), true), "input point");
@@ -276,7 +276,7 @@ LV_REGISTER_SELFTEST("assembly.arm_transfers", [](Context& ctx) -> ll::coro::Cor
     ctx.check(composted, "the pie went into the composter");
 });
 
-LV_REGISTER_SELFTEST("assembly.arm_value_box", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.arm_value_box", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto a = up(ctx.testPos(1550), 1);
     ctx.require(co_await ctx.ensureLoaded(a), "test area loaded");
     ctx.require(ctx.setBlock(a, kArmId), "arm");
@@ -294,10 +294,10 @@ LV_REGISTER_SELFTEST("assembly.arm_value_box", [](Context& ctx) -> ll::coro::Cor
 
 namespace {
 
-constexpr char const* kPrecisionSteps[] = {"levitate:cogwheel", "levitate:large_cogwheel", "minecraft:iron_nugget"};
+constexpr char const* kPrecisionSteps[] = {"bearing:cogwheel", "bearing:large_cogwheel", "minecraft:iron_nugget"};
 
 bool isPrecisionResult(std::string const& id) {
-    auto const* r = sa::byId("levitate:sequenced_assembly/precision_mechanism");
+    auto const* r = sa::byId("bearing:sequenced_assembly/precision_mechanism");
     if (!r) return false;
     for (auto const& res : r->results)
         if (res.id == id) return true;
@@ -317,18 +317,18 @@ ItemStack onDepot(Context& ctx, GlobalPos const& depot) {
 void runServerCommand(std::string const& command) {
     auto level = ll::service::getLevel();
     if (!level) return;
-    ServerCommandOrigin origin("levitate-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
+    ServerCommandOrigin origin("bearing-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
     ll::command::CommandRegistrar::getServerInstance().executeCommand(command, origin);
 }
 
 } // namespace
 
-LV_REGISTER_SELFTEST("assembly.precision_mechanism", [](Context& ctx) {
+BR_REGISTER_SELFTEST("assembly.precision_mechanism", [](Context& ctx) {
     // R75: Create's precision mechanism: golden sheet, (cogwheel, large cogwheel, iron nugget) x 5
-    ctx.require(sa::byId("levitate:sequenced_assembly/precision_mechanism") != nullptr, "the recipe is loaded");
+    ctx.require(sa::byId("bearing:sequenced_assembly/precision_mechanism") != nullptr, "the recipe is loaded");
     int precision = 0;
     for (int run = 0; run < 12; ++run) {
-        auto stack = item(ctx, "levitate:golden_sheet");
+        auto stack = item(ctx, "bearing:golden_sheet");
         for (int step = 0; step < 15; ++step) {
             auto held = item(ctx, kPrecisionSteps[step % 3]);
             auto out  = deployer::deployOnItem(stack, held, false);
@@ -337,7 +337,7 @@ LV_REGISTER_SELFTEST("assembly.precision_mechanism", [](Context& ctx) {
             stack = out->front();
             if (step < 14) {
                 auto p = sa::progressOf(stack);
-                ctx.require(items::idOf(stack) == "levitate:incomplete_precision_mechanism" && p && p->step == step + 1,
+                ctx.require(items::idOf(stack) == "bearing:incomplete_precision_mechanism" && p && p->step == step + 1,
                             "after step " + std::to_string(step + 1) + " an incomplete precision mechanism");
                 // a wrong item doesn't apply
                 auto wrong = item(ctx, kPrecisionSteps[(step + 2) % 3]);
@@ -345,20 +345,20 @@ LV_REGISTER_SELFTEST("assembly.precision_mechanism", [](Context& ctx) {
             }
         }
         ctx.check(!sa::isTransitional(stack) && isPrecisionResult(items::idOf(stack)), "the 15th step gives a result: " + items::idOf(stack));
-        if (items::idOf(stack) == "levitate:precision_mechanism") ++precision;
+        if (items::idOf(stack) == "bearing:precision_mechanism") ++precision;
     }
     ctx.check(precision > 0, "precision mechanisms come out (" + std::to_string(precision) + " of 12)");
 });
 
-LV_REGISTER_SELFTEST("assembly.precision_mechanism_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.precision_mechanism_depot", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R75: the same sequence by a real deployer above a depot, one held item per step
     auto p = up(ctx.testPos(3935), 3);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto depot = off(p, 0, -2, 0);
-    ctx.require(ctx.setBlock(depot, "levitate:depot"), "a depot under the deployer");
+    ctx.require(ctx.setBlock(depot, "bearing:depot"), "a depot under the deployer");
     ctx.require(poweredDeployer(ctx, p, Face::Down, core::kinetics::Axis::X, 256), "powered deployer facing down");
     co_await Context::ticks(2);
-    auto rest = common::items::insert(region(ctx), game::blockPos(depot), 1, item(ctx, "levitate:golden_sheet"), false);
+    auto rest = common::items::insert(region(ctx), game::blockPos(depot), 1, item(ctx, "bearing:golden_sheet"), false);
     ctx.require(items::isEmpty(rest), "the depot takes the golden sheet");
     for (int step = 0; step < 15; ++step) {
         deployer::setHeld(p, item(ctx, kPrecisionSteps[step % 3]));
@@ -376,7 +376,7 @@ LV_REGISTER_SELFTEST("assembly.precision_mechanism_depot", [](Context& ctx) -> l
     deployer::setHeld(p, items::empty());
 });
 
-LV_REGISTER_SELFTEST("assembly.fist_bump", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.fist_bump", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R82: two punching deployers facing each other three blocks apart meet half way; what is
     // between them is not punched
     auto p = up(ctx.testPos(3940), 1);
@@ -397,7 +397,7 @@ LV_REGISTER_SELFTEST("assembly.fist_bump", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(deployer::fistBumps() > before + 1, "they keep bumping");
 });
 
-LV_REGISTER_SELFTEST("assembly.fake_player_hidden", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.fake_player_hidden", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R77: selectors don't find the deployer player (the test player, spawned first, is found)
     auto& self = ctx.player();
     co_await Context::ticks(2);
@@ -409,15 +409,15 @@ LV_REGISTER_SELFTEST("assembly.fake_player_hidden", [](Context& ctx) -> ll::coro
     ctx.require(fake != nullptr, "the deployer player exists");
     auto fakeId = fake->getOrCreateUniqueID().rawID;
     ctx.check(fakeplayer::isFakeId(fakeId), "it is known as the deployer player");
-    runServerCommand("tag @a add lv_selftest_seen");
+    runServerCommand("tag @a add br_selftest_seen");
     co_await Context::ticks(2);
     auto* again = static_cast<Player*>(nullptr);
     for (auto* pl : ll::service::getLevel()->getRuntimeActorList())
         if (pl && pl->getOrCreateUniqueID().rawID == fakeId) again = static_cast<Player*>(pl);
     ctx.require(again != nullptr, "the deployer player is still there");
-    ctx.check(!again->hasTag("lv_selftest_seen"), "@a doesn't select the deployer player");
-    ctx.check(self.hasTag("lv_selftest_seen"), "@a selects the test player");
-    runServerCommand("tag @a remove lv_selftest_seen");
+    ctx.check(!again->hasTag("br_selftest_seen"), "@a doesn't select the deployer player");
+    ctx.check(self.hasTag("br_selftest_seen"), "@a selects the test player");
+    runServerCommand("tag @a remove br_selftest_seen");
 });
 
-} // namespace lv::feature::assembly
+} // namespace br::feature::assembly

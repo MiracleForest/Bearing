@@ -1,7 +1,7 @@
 // The system clipboard (client build only). Kept apart from game headers: <windows.h> defines
 // macros (min, max, ERROR, ...) that clash with them.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include "client/integration/Clipboard.h"
 
@@ -16,7 +16,7 @@
 #include <windows.h>
 #pragma comment(lib, "user32.lib")
 
-namespace lv::client::integration {
+namespace br::client::integration {
 
 bool copyToClipboard(std::string_view utf8) {
     // CRLF line ends, as Windows text expects
@@ -49,6 +49,6 @@ bool copyToClipboard(std::string_view utf8) {
     return ok;
 }
 
-} // namespace lv::client::integration
+} // namespace br::client::integration
 
 #endif

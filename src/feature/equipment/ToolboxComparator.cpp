@@ -13,7 +13,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace {
 namespace rs = common::redstone;
@@ -49,6 +49,6 @@ public:
     }
 };
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-LV_REGISTER_MODULE(lv::feature::equipment::ToolboxComparatorModule);
+BR_REGISTER_MODULE(br::feature::equipment::ToolboxComparatorModule);

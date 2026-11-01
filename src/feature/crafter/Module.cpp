@@ -26,7 +26,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::crafter {
+namespace br::feature::crafter {
 
 namespace k  = core::kinetics;
 namespace ci = common::items;
@@ -195,6 +195,6 @@ private:
     std::vector<kinetics::ListenerId> mListeners;
 };
 
-} // namespace lv::feature::crafter
+} // namespace br::feature::crafter
 
-LV_REGISTER_MODULE(lv::feature::crafter::CrafterModule);
+BR_REGISTER_MODULE(br::feature::crafter::CrafterModule);

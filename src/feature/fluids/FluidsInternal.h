@@ -21,23 +21,23 @@ class Block;
 class ItemStack;
 class Player;
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace cf = core::fluids;
 using core::GlobalPos;
 using Json = nlohmann::json;
 
-inline constexpr char kSpout[]           = "levitate:spout";
-inline constexpr char kItemDrain[]       = "levitate:item_drain";
-inline constexpr char kHosePulley[]      = "levitate:hose_pulley";
-inline constexpr char kPfi[]             = "levitate:portable_fluid_interface";
-inline constexpr char kHoneyBlock[]      = "levitate:honey";
-inline constexpr char kChocolateBlock[]  = "levitate:chocolate";
-inline constexpr char kHoneyBucket[]     = "levitate:honey_bucket";
-inline constexpr char kChocolateBucket[] = "levitate:chocolate_bucket";
-inline constexpr char kTestDepot[]       = "levitate:fluids_test_depot";
-inline constexpr char kFacing[]          = "levitate:facing"; ///< FacingID 0..5 (hose pulley: 2..5)
-inline constexpr char kRotor[]           = "levitate:rotor";  ///< kinetic rotor state (client mod)
+inline constexpr char kSpout[]           = "bearing:spout";
+inline constexpr char kItemDrain[]       = "bearing:item_drain";
+inline constexpr char kHosePulley[]      = "bearing:hose_pulley";
+inline constexpr char kPfi[]             = "bearing:portable_fluid_interface";
+inline constexpr char kHoneyBlock[]      = "bearing:honey";
+inline constexpr char kChocolateBlock[]  = "bearing:chocolate";
+inline constexpr char kHoneyBucket[]     = "bearing:honey_bucket";
+inline constexpr char kChocolateBucket[] = "bearing:chocolate_bucket";
+inline constexpr char kTestDepot[]       = "bearing:fluids_test_depot";
+inline constexpr char kFacing[]          = "bearing:facing"; ///< FacingID 0..5 (hose pulley: 2..5)
+inline constexpr char kRotor[]           = "bearing:rotor";  ///< kinetic rotor state (client mod)
 inline constexpr char kDataKey[]         = "fluids";          ///< our key in BlockData documents
 
 /// `config/fluids.json`: Create's CFluids (and the PSI timeout of CLogistics) defaults.
@@ -136,4 +136,4 @@ void syncAllTo(Player& player);
 /// The hose state for the selftests.
 [[nodiscard]] float hoseOffset(GlobalPos const& p);
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

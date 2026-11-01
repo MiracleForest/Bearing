@@ -1,8 +1,8 @@
 {
-  "type": "levitate:deploying",
+  "type": "bearing:deploying",
   "ingredients": [
     {
-      "item": "levitate:oxidized_copper_shingles"
+      "item": "bearing:oxidized_copper_shingles"
     },
     {
       "tag": "minecraft:axes"
@@ -10,7 +10,7 @@
   ],
   "results": [
     {
-      "item": "levitate:weathered_copper_shingles"
+      "item": "bearing:weathered_copper_shingles"
     }
   ],
   "keep_held_item": true

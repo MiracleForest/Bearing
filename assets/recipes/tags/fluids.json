@@ -1,14 +1,14 @@
 {
   "c:honey": [
-    "levitate:honey"
+    "bearing:honey"
   ],
   "c:milk": [
     "minecraft:milk"
   ],
   "c:chocolate": [
-    "levitate:chocolate"
+    "bearing:chocolate"
   ],
   "c:tea": [
-    "levitate:tea"
+    "bearing:tea"
   ]
 }

@@ -1,14 +1,14 @@
 {
-  "levitate:track_station": {
+  "bearing:track_station": {
     "sound": "metal"
   },
-  "levitate:small_bogey": {
+  "bearing:small_bogey": {
     "sound": "metal"
   },
-  "levitate:large_bogey": {
+  "bearing:large_bogey": {
     "sound": "metal"
   },
-  "levitate:controls": {
+  "bearing:controls": {
     "sound": "metal"
   }
 }

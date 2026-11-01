@@ -12,11 +12,11 @@
 
 class ItemStack;
 
-namespace lv::feature::display {
-inline constexpr char const* kClipboardId = "levitate:clipboard";
-} // namespace lv::feature::display
+namespace br::feature::display {
+inline constexpr char const* kClipboardId = "bearing:clipboard";
+} // namespace br::feature::display
 
-namespace lv::feature::display::clipboard {
+namespace br::feature::display::clipboard {
 
 using Json = nlohmann::json;
 
@@ -52,4 +52,4 @@ inline constexpr int kChecklistPageEntries = 7;
 /// MaterialChecklist.createWrittenClipboard). nullopt when the item can't be made.
 [[nodiscard]] std::optional<ItemStack> makeWritten(std::vector<std::vector<Entry>> pages, std::string const& name);
 
-} // namespace lv::feature::display::clipboard
+} // namespace br::feature::display::clipboard

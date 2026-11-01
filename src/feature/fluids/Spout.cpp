@@ -4,7 +4,7 @@
 // - Belts and depots (U11) hold the item under the spout through their processing behaviour
 //   (belts/BeltApi.h registerProcessor: Create's onItemReceived / whenItemHeld), so items on a
 //   moving belt stop, are filled one at a time and move on.
-// - Other Levitate blocks that expose the item as slot 0 from the top through the item capability
+// - Other Bearing blocks that expose the item as slot 0 from the top through the item capability
 //   (the selftests' depot) are filled through the capability.
 // - Particles (Create's spawnProcessingParticles / spawnSplash) for every client; the client mod
 //   draws the stream and squeezes the nozzle (src/client/fluids/FluidsRender.cpp).
@@ -30,7 +30,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace items = common::items;
 namespace cfl   = common::fluids;
@@ -41,8 +41,8 @@ constexpr int kCapacity    = 1000; ///< Create: SpoutBlockEntity tank
 constexpr int kFillingTime = 20;   ///< Create: FILLING_TIME
 constexpr int kFillAt      = 5;    ///< the item is filled when processingTicks reaches 5
 constexpr int kSplashCount = 20;   ///< Create: SPLASH_PARTICLE_COUNT
-/// Create's AllSoundEvents.SPOUTING (an original Levitate sample, three variants).
-constexpr char kSpoutSound[] = "levitate.fluids.spout";
+/// Create's AllSoundEvents.SPOUTING (an original Bearing sample, three variants).
+constexpr char kSpoutSound[] = "bearing.fluids.spout";
 
 namespace fx = pipes::fx;
 
@@ -64,11 +64,11 @@ FluidStack spoutTank(GlobalPos const& p) {
     return d ? tankOf(*d) : FluidStack{};
 }
 
-/// The item handler of the processing position (a Levitate block: depots, belts; vanilla
+/// The item handler of the processing position (a Bearing block: depots, belts; vanilla
 /// containers have no processing behaviour in Create).
 std::optional<common::items::Handler> processingHandler(BlockSource& region, GlobalPos const& at) {
     auto id = blockIdAt(at);
-    if (!id.starts_with("levitate:")) return std::nullopt;
+    if (!id.starts_with("bearing:")) return std::nullopt;
     if (belts::isTransporter(at)) return std::nullopt; // belts and depots hold it for the processor below
     common::Access acc{region, toBlockPos(at), 1};
     auto           h = items::find(acc);
@@ -339,4 +339,4 @@ void registerSpout() {
     belts::registerProcessor(kSpout, belts::Processor{.received = onItemReceived, .held = whenItemHeld});
 }
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

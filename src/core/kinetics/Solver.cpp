@@ -6,7 +6,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::kinetics {
+namespace br::core::kinetics {
 
 namespace {
 /// Safety net against propagation that never settles (Create would overflow its stack).
@@ -966,4 +966,4 @@ float rotationAngle(double ticks, float speed, float offset) {
     return static_cast<float>(std::fmod(ticks * speed * 3.0 / 10.0 + offset, 360.0));
 }
 
-} // namespace lv::core::kinetics
+} // namespace br::core::kinetics

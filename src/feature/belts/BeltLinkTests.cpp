@@ -29,19 +29,19 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace {
 
 using selftest::Context;
 namespace citems = common::items;
 
-constexpr char const* kSource   = "levitate:kinetics_test_source";
-constexpr char const* kAndesiteFunnel = "levitate:andesite_funnel";
-constexpr char const* kBrassFunnel    = "levitate:brass_funnel";
-constexpr char const* kAndesiteTunnel = "levitate:andesite_tunnel";
-constexpr char const* kBrassTunnel    = "levitate:brass_tunnel";
-constexpr char const* kChute          = "levitate:chute";
+constexpr char const* kSource   = "bearing:kinetics_test_source";
+constexpr char const* kAndesiteFunnel = "bearing:andesite_funnel";
+constexpr char const* kBrassFunnel    = "bearing:brass_funnel";
+constexpr char const* kAndesiteTunnel = "bearing:andesite_tunnel";
+constexpr char const* kBrassTunnel    = "bearing:brass_tunnel";
+constexpr char const* kChute          = "bearing:chute";
 constexpr int         AZ = 2;
 constexpr int         kNorth = 2, kSouth = 3, kWest = 4, kEast = 5;
 
@@ -141,7 +141,7 @@ void clearEntitiesNear(GlobalPos const& pos, float radius = 4.f) {
 
 // ---- tunnels on belts (R63) ------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("belts.link_andesite_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_andesite_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4124};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 5), "a belt carrying items east");
@@ -150,7 +150,7 @@ LV_REGISTER_SELFTEST("belts.link_andesite_tunnel", [](Context& ctx) -> ll::coro:
     ctx.setBlock(a.at(2, 0, 2), kDepotId);
     ctx.setBlock(a.at(2, 1, 1), kAndesiteTunnel);
     co_await ctx.ticks(3);
-    ctx.check(stateAt(a.at(2, 1, 1), "levitate:shape") >= 3, "the tunnel has a side output (T / cross shape)");
+    ctx.check(stateAt(a.at(2, 1, 1), "bearing:shape") >= 3, "the tunnel has a side output (T / cross shape)");
     auto rest = insertOnSegment(a.at(0, 0, 1), stackOf(ctx, "minecraft:cobblestone", 3), false);
     ctx.require(citems::isEmpty(rest), "three cobblestone on the belt");
     co_await ctx.ticks(60);
@@ -158,7 +158,7 @@ LV_REGISTER_SELFTEST("belts.link_andesite_tunnel", [](Context& ctx) -> ll::coro:
     ctx.check(countOn(a.at(4, 0, 1)) == 2, "two went on to the end of the belt");
 });
 
-LV_REGISTER_SELFTEST("belts.link_brass_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_brass_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4172};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 5), "a belt carrying items east");
@@ -184,7 +184,7 @@ LV_REGISTER_SELFTEST("belts.link_brass_tunnel", [](Context& ctx) -> ll::coro::Co
     ctx.check(countIn(a.at(2, 1, 1), "minecraft:gold_ingot") == 2, "by the tunnel, not the belt");
 });
 
-LV_REGISTER_SELFTEST("belts.link_dropped_item_under_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_dropped_item_under_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4120};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 3, 0.f) || true, "a belt");
@@ -202,30 +202,30 @@ LV_REGISTER_SELFTEST("belts.link_dropped_item_under_tunnel", [](Context& ctx) ->
 
 // ---- belt funnels (R63) ----------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("belts.link_funnel_pulls", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_funnel_pulls", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4130};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 5), "a belt carrying items east");
     // a pulling belt funnel on the north side of segment 2, its chest south of it
     ctx.setBlock(a.at(2, 1, 2), "minecraft:chest");
-    ctx.setBlock(a.at(2, 1, 1), kAndesiteFunnel, {{"levitate:facing", kNorth}, {"levitate:shape", 4}});
+    ctx.setBlock(a.at(2, 1, 1), kAndesiteFunnel, {{"bearing:facing", kNorth}, {"bearing:shape", 4}});
     co_await ctx.ticks(3);
-    ctx.check(stateAt(a.at(2, 1, 1), "levitate:shape") == 4, "the funnel stays a pulling belt funnel");
+    ctx.check(stateAt(a.at(2, 1, 1), "bearing:shape") == 4, "the funnel stays a pulling belt funnel");
     auto rest = insertOnSegment(a.at(0, 0, 1), stackOf(ctx, "minecraft:cobblestone", 5), false);
     ctx.require(citems::isEmpty(rest), "five cobblestone on the belt");
     co_await ctx.ticks(40);
     ctx.check(countIn(a.at(2, 1, 2), "minecraft:cobblestone") == 5, "the funnel pulled the stack into the chest");
     ctx.check(countOnBelt(a, 5) == 0, "nothing left on the belt");
-    ctx.check(stateAt(a.at(2, 1, 1), "levitate:extracting") == 0, "the back plate shows inserting");
+    ctx.check(stateAt(a.at(2, 1, 1), "bearing:extracting") == 0, "the back plate shows inserting");
 });
 
-LV_REGISTER_SELFTEST("belts.link_funnel_pushes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_funnel_pushes", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4140};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 5), "a belt carrying items east");
     ctx.setBlock(a.at(5, 0, 1), "minecraft:stone"); // a blocked end: the items stay on the belt
     ctx.setBlock(a.at(1, 1, 2), "minecraft:chest");
-    ctx.setBlock(a.at(1, 1, 1), kAndesiteFunnel, {{"levitate:facing", kNorth}, {"levitate:shape", 3}, {"levitate:extracting", 1}});
+    ctx.setBlock(a.at(1, 1, 1), kAndesiteFunnel, {{"bearing:facing", kNorth}, {"bearing:shape", 3}, {"bearing:extracting", 1}});
     co_await ctx.ticks(2);
     ctx.require(put(ctx, a.at(1, 1, 2), "minecraft:iron_ingot", 3) == 3, "three iron in the chest");
     co_await ctx.ticks(60);
@@ -233,13 +233,13 @@ LV_REGISTER_SELFTEST("belts.link_funnel_pushes", [](Context& ctx) -> ll::coro::C
     ctx.check(countOnBelt(a, 5) == 3, "three single items ride the belt");
 });
 
-LV_REGISTER_SELFTEST("belts.link_funnel_at_belt_end", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_funnel_at_belt_end", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4150};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 4), "a belt carrying items east");
     // a retracted brass funnel on the last segment facing back along the belt, the chest beyond
     ctx.setBlock(a.at(4, 1, 1), "minecraft:chest");
-    ctx.setBlock(a.at(3, 1, 1), kBrassFunnel, {{"levitate:facing", kWest}, {"levitate:shape", 1}});
+    ctx.setBlock(a.at(3, 1, 1), kBrassFunnel, {{"bearing:facing", kWest}, {"bearing:shape", 1}});
     co_await ctx.ticks(3);
     auto rest = insertOnSegment(a.at(0, 0, 1), stackOf(ctx, "minecraft:diamond", 7), false);
     ctx.require(citems::isEmpty(rest), "seven diamonds on the belt");
@@ -248,7 +248,7 @@ LV_REGISTER_SELFTEST("belts.link_funnel_at_belt_end", [](Context& ctx) -> ll::co
     ctx.check(countOnBelt(a, 4) == 0, "nothing left on the belt");
 });
 
-LV_REGISTER_SELFTEST("belts.link_funnel_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_funnel_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     namespace fd = funnels::detail;
     Area a{ctx, 4160};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -258,35 +258,35 @@ LV_REGISTER_SELFTEST("belts.link_funnel_placement", [](Context& ctx) -> ll::coro
     ctx.setBlock(a.at(1, 1, 2), "minecraft:chest");
     ctx.setBlock(pos, kAndesiteFunnel);
     co_await ctx.ticks(2);
-    ctx.check(stateAt(pos, "levitate:shape") == 0, "a funnel placed by command stays plain");
+    ctx.check(stateAt(pos, "bearing:shape") == 0, "a funnel placed by command stays plain");
     auto* region = regionOf(pos.dim);
     ctx.require(region != nullptr, "region");
     // Create's getStateForPlacement: looking south it faces north, across the belt: pushing
     fd::placeFunnel(&p, *region, pos, false, Vec3{0, -.2f, 1});
-    ctx.check(stateAt(pos, "levitate:facing") == kNorth, "facing north");
-    ctx.check(stateAt(pos, "levitate:shape") == 3, "a pushing belt funnel");
+    ctx.check(stateAt(pos, "bearing:facing") == kNorth, "facing north");
+    ctx.check(stateAt(pos, "bearing:shape") == 3, "a pushing belt funnel");
     // looking east it faces west, along the belt: retracted
     fd::placeFunnel(&p, *region, pos, true, Vec3{1, -.2f, 0});
-    ctx.check(stateAt(pos, "levitate:shape") == 1, "a retracted belt funnel along the belt");
+    ctx.check(stateAt(pos, "bearing:shape") == 1, "a retracted belt funnel along the belt");
     // the wrench: retracted -> extended -> retracted
     fd::wrenchFunnel(p, *region, pos, *blockAt(pos));
-    ctx.check(stateAt(pos, "levitate:shape") == 2, "the wrench extends it");
+    ctx.check(stateAt(pos, "bearing:shape") == 2, "the wrench extends it");
     fd::wrenchFunnel(p, *region, pos, *blockAt(pos));
-    ctx.check(stateAt(pos, "levitate:shape") == 1, "and retracts it");
+    ctx.check(stateAt(pos, "bearing:shape") == 1, "and retracts it");
     // breaking the belt turns it back into a plain funnel (Create's BeltFunnelBlock.updateShape)
     ctx.setBlock(a.at(0, 0, 1), "minecraft:air");
     co_await ctx.ticks(4);
-    ctx.check(stateAt(pos, "levitate:shape") == 0, "without the belt it is a plain funnel again");
-    ctx.check(stateAt(pos, "levitate:extracting") == 0, "a retracted funnel reverts to inserting");
+    ctx.check(stateAt(pos, "bearing:shape") == 0, "without the belt it is a plain funnel again");
+    ctx.check(stateAt(pos, "bearing:extracting") == 0, "a retracted funnel reverts to inserting");
     clearEntitiesNear(a.at(1, 0, 1));
 });
-LV_REGISTER_SELFTEST("belts.link_depot_funnel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_depot_funnel", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4170};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto depot = a.at(0, 0, 0);
     ctx.setBlock(depot, kDepotId);
     ctx.setBlock(a.at(0, 1, 1), "minecraft:chest");
-    ctx.setBlock(a.at(0, 1, 0), kAndesiteFunnel, {{"levitate:facing", kNorth}, {"levitate:shape", 4}});
+    ctx.setBlock(a.at(0, 1, 0), kAndesiteFunnel, {{"bearing:facing", kNorth}, {"bearing:shape", 4}});
     co_await ctx.ticks(2);
     TransportedItem t;
     t.stack   = stackOf(ctx, "minecraft:apple", 6);
@@ -299,7 +299,7 @@ LV_REGISTER_SELFTEST("belts.link_depot_funnel", [](Context& ctx) -> ll::coro::Co
 
 // ---- chutes and belts (R63) --------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("belts.link_chutes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_chutes", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4180};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 3, -16), "a slow belt carrying items east");
@@ -322,7 +322,7 @@ LV_REGISTER_SELFTEST("belts.link_chutes", [](Context& ctx) -> ll::coro::CoroTask
     ctx.check(countIn(a.at(3, -1, 1), "minecraft:flint") == 2, "the belt end handed them to the chute after it");
 });
 
-LV_REGISTER_SELFTEST("belts.link_chute_onto_belt", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.link_chute_onto_belt", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4190};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 3, -16), "a slow belt");
@@ -337,7 +337,7 @@ LV_REGISTER_SELFTEST("belts.link_chute_onto_belt", [](Context& ctx) -> ll::coro:
 
 // ---- U41 belt gaps -------------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("belts.slope_collision", [](Context& ctx) {
+BR_REGISTER_SELFTEST("belts.slope_collision", [](Context& ctx) {
     cb::SegmentState up{3, cb::Slope::Upward, cb::Part::Middle, cb::Casing::None, -1}; // facing east
     auto             boxes = slopeCollision(up);
     ctx.require(boxes.size() == 8, "a sloped segment collides as 8 steps");
@@ -351,7 +351,7 @@ LV_REGISTER_SELFTEST("belts.slope_collision", [](Context& ctx) {
     ctx.check(slopeCollision(flat).empty(), "horizontal belts keep their JSON box");
 });
 
-LV_REGISTER_SELFTEST("belts.explosion_drops", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.explosion_drops", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4195};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.require(co_await eastBelt(a, 3, 0.f) || true, "a belt");
@@ -380,7 +380,7 @@ LV_REGISTER_SELFTEST("belts.explosion_drops", [](Context& ctx) -> ll::coro::Coro
     clearEntitiesNear(at);
 });
 
-LV_REGISTER_SELFTEST("belts.ejector_redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.ejector_redstone", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4197};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto pos = a.at(0, 0, 0);
@@ -400,7 +400,7 @@ LV_REGISTER_SELFTEST("belts.ejector_redstone", [](Context& ctx) -> ll::coro::Cor
     ctx.check(d && !d->powered, "and unpowers it when removed");
 });
 
-LV_REGISTER_SELFTEST("belts.connector_preview_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("belts.connector_preview_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4198};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto shaft = a.at(0, 0, 1);
@@ -425,4 +425,4 @@ LV_REGISTER_SELFTEST("belts.connector_preview_sync", [](Context& ctx) -> ll::cor
     ctx.check(line && line->step == cb::Vec3i{1, 0, 0} && line->length == 4.f, "the planned line runs along the belt");
 });
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

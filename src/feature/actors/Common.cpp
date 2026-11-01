@@ -44,25 +44,25 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-LV_REGISTER_CONFIG("actors", lv::feature::actors::Config);
+BR_REGISTER_CONFIG("actors", br::feature::actors::Config);
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
+namespace ext = ::br::feature::contraption::actors_ext;
 
 // ---- blocks -----------------------------------------------------------------------------------
 
 std::optional<int> seatColour(std::string_view id) {
     for (int i = 0; i < 16; ++i) {
-        if (id.size() == 9 + kColours[i].size() + 5 && id.starts_with("levitate:") && id.ends_with("_seat")
-            && id.substr(9, kColours[i].size()) == kColours[i]) {
+        if (id.size() == 8 + kColours[i].size() + 5 && id.starts_with("bearing:") && id.ends_with("_seat")
+            && id.substr(8, kColours[i].size()) == kColours[i]) {
             return i;
         }
     }
     return std::nullopt;
 }
 bool        isSeat(std::string_view id) { return seatColour(id).has_value(); }
-std::string seatId(int colour) { return "levitate:" + std::string(kColours[std::clamp(colour, 0, 15)]) + "_seat"; }
+std::string seatId(int colour) { return "bearing:" + std::string(kColours[std::clamp(colour, 0, 15)]) + "_seat"; }
 
 cc::Dir facingOf(cc::States const& states, cc::Dir fallback) {
     auto it = states.find(kFacing);
@@ -373,4 +373,4 @@ void tickBreaking(con::MovementContext& ctx, Breaker const& b) {
     ctx.data["TicksUntil"] = hardness <= 0 ? 0 : static_cast<int>(hardness / speed);
 }
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

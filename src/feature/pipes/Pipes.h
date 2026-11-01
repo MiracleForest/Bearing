@@ -20,7 +20,7 @@ class BlockSource;
 class Player;
 class ItemStack;
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 using core::GlobalPos;
 namespace cp = core::pipes;
@@ -28,16 +28,16 @@ using cp::Axis;
 using cp::Face;
 using cp::FaceMask;
 
-inline constexpr char kFluidPipe[]    = "levitate:fluid_pipe";
-inline constexpr char kGlassPipe[]    = "levitate:glass_fluid_pipe";
-inline constexpr char kEncasedPipe[]  = "levitate:encased_fluid_pipe";
-inline constexpr char kPump[]         = "levitate:mechanical_pump";
-inline constexpr char kValve[]        = "levitate:fluid_valve";
-inline constexpr char kSmartPipe[]    = "levitate:smart_fluid_pipe";
-inline constexpr char kWrench[]       = "levitate:wrench";
-inline constexpr char kCopperCasing[] = "levitate:copper_casing";
-inline constexpr char kMetalBracket[] = "levitate:metal_bracket";
-inline constexpr char kWoodBracket[]  = "levitate:wooden_bracket";
+inline constexpr char kFluidPipe[]    = "bearing:fluid_pipe";
+inline constexpr char kGlassPipe[]    = "bearing:glass_fluid_pipe";
+inline constexpr char kEncasedPipe[]  = "bearing:encased_fluid_pipe";
+inline constexpr char kPump[]         = "bearing:mechanical_pump";
+inline constexpr char kValve[]        = "bearing:fluid_valve";
+inline constexpr char kSmartPipe[]    = "bearing:smart_fluid_pipe";
+inline constexpr char kWrench[]       = "bearing:wrench";
+inline constexpr char kCopperCasing[] = "bearing:copper_casing";
+inline constexpr char kMetalBracket[] = "bearing:metal_bracket";
+inline constexpr char kWoodBracket[]  = "bearing:wooden_bracket";
 
 /// `config/pipes.json` (Create's CFluids keys used by pipes).
 struct PipesConfig {
@@ -118,4 +118,4 @@ void registerOpenPipeEffects();
 [[nodiscard]] BlockSource* regionOf(int dim);
 [[nodiscard]] BlockPos     toBlockPos(GlobalPos const& p);
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes

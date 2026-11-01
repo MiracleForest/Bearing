@@ -1,7 +1,7 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client mod parts of the U49 equipment rows (SPEC §3.6.31):
-// - Create's BellRenderer: peculiar / haunted bells are meshed without the bell (levitate:part = 1)
+// - Create's BellRenderer: peculiar / haunted bells are meshed without the bell (bearing:part = 1)
 //   and the bell is drawn here, swinging after the server's `equipment.bell.ring` (74 ticks,
 //   BellRenderer#getSwingAngle about the axis across the hit).
 // - Create's CardboardArmorStealthOverlay: while our own player hides in a full cardboard set, a
@@ -77,16 +77,16 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 
 namespace {
 
 namespace k  = core::kinetics;
 namespace ce = core::equipment;
 namespace net = feature::net;
-using namespace lv::client::screen;
+using namespace br::client::screen;
 
-constexpr char kModel[] = "geometry.levitate.bell_parts";
+constexpr char kModel[] = "geometry.bearing.bell_parts";
 
 struct PosHash {
     std::size_t operator()(BlockPos const& p) const noexcept { return k::GlobalPosHash{}(core::GlobalPos{0, p.x, p.y, p.z}); }
@@ -96,7 +96,7 @@ struct PosEq {
 };
 
 struct Info {
-    Block const* hidden = nullptr; ///< the levitate:part = 1 variant; nullptr: not a bell
+    Block const* hidden = nullptr; ///< the bearing:part = 1 variant; nullptr: not a bell
     std::string  texture;
 };
 
@@ -123,12 +123,12 @@ State& state() {
 Info computeInfo(Block const& block) {
     Info        info;
     std::string id = block.getTypeName();
-    if (id != "levitate:peculiar_bell" && id != "levitate:haunted_bell") return info;
-    if (game::intState(block, "levitate:part").value_or(-1) != 0) return info;
-    if (auto const* st = block.getBlockType().getBlockState(HashedString("levitate:part"))) {
+    if (id != "bearing:peculiar_bell" && id != "bearing:haunted_bell") return info;
+    if (game::intState(block, "bearing:part").value_or(-1) != 0) return info;
+    if (auto const* st = block.getBlockType().getBlockState(HashedString("bearing:part"))) {
         if (auto b = block.setState(*st, 1)) info.hidden = b.as_ptr();
     }
-    info.texture = "levitate_" + id.substr(9);
+    info.texture = "bearing_" + id.substr(8);
     return info;
 }
 
@@ -147,7 +147,7 @@ Info infoOf(Block const& block) {
 std::map<std::string, k::RotorModel> const& models() {
     static std::map<std::string, k::RotorModel> out = [] {
         std::map<std::string, k::RotorModel> m;
-        auto          dir = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto          dir = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         std::ifstream in(dir / "bell.geo.json");
         auto          j = nlohmann::json::parse(in, nullptr, false, true);
         if (!j.is_discarded())
@@ -181,7 +181,7 @@ mce::Mesh* bellMesh(Tessellator& tess, std::string const& texture) {
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_bell", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_bell", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -208,7 +208,7 @@ glm::vec3 faceVector(int face) {
 int counterClockwise(int face) { return ce::clockwise(ce::clockwise(ce::clockwise(face))); }
 
 void renderBells(BaseActorRenderContext& ctx) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     auto* level  = ci->getLevel();
     auto* player = ci->getLocalPlayer();
@@ -286,8 +286,8 @@ bool hiding(LocalPlayer& p) {
     using SharedTypes::Legacy::ArmorSlot;
     namespace items = feature::common::items;
     if (!p.isSneaking() || p.isFlying()) return false;
-    return items::idOf(p.getArmor(ArmorSlot::Head)) == "levitate:cardboard_helmet" && items::idOf(p.getArmor(ArmorSlot::Torso)) == "levitate:cardboard_chestplate"
-        && items::idOf(p.getArmor(ArmorSlot::Legs)) == "levitate:cardboard_leggings" && items::idOf(p.getArmor(ArmorSlot::Feet)) == "levitate:cardboard_boots";
+    return items::idOf(p.getArmor(ArmorSlot::Head)) == "bearing:cardboard_helmet" && items::idOf(p.getArmor(ArmorSlot::Torso)) == "bearing:cardboard_chestplate"
+        && items::idOf(p.getArmor(ArmorSlot::Legs)) == "bearing:cardboard_leggings" && items::idOf(p.getArmor(ArmorSlot::Feet)) == "bearing:cardboard_boots";
 }
 
 void drawStealth(MinecraftUIRenderContext& ctx) {
@@ -393,7 +393,7 @@ public:
         net::client::on("equipment.bell.ring", [](nlohmann::json const& msg) {
             auto const& p = msg.value("pos", nlohmann::json::array());
             if (!p.is_array() || p.size() != 3) return;
-            auto* ci    = lv::client::currentClient();
+            auto* ci    = br::client::currentClient();
             auto* level = ci ? ci->getLevel() : nullptr;
             if (!level) return;
             BlockPos pos{p[0].get<int>(), p[1].get<int>(), p[2].get<int>()};
@@ -414,8 +414,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
-LV_REGISTER_MODULE(lv::client::equipment::CuriositiesClientModule);
+BR_REGISTER_MODULE(br::client::equipment::CuriositiesClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

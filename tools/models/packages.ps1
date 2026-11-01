@@ -3,7 +3,7 @@
 # only in quarter turns (`minecraft:transformation`) and a cube only in 22.5 degree steps up to 45,
 # so the frog model exists four times (the base bones `base`, `head`, `goggles` as written by hand,
 # and copies turned by +22.5, +45 and -22.5 degrees about the block's vertical axis); the state
-# `levitate:yaw` (0..15, step k = k * 22.5 degrees, Create's yaw) shows one copy and turns the
+# `bearing:yaw` (0..15, step k = k * 22.5 degrees, Create's yaw) shows one copy and turns the
 # block by the nearest quarter: yaw = 90 * q + offset, q = floor((k + 1) / 4) mod 4.
 #
 #   pwsh tools/models/packages.ps1
@@ -22,7 +22,7 @@ function Write-Json($obj, [string]$path) {
 }
 
 $offsets = @(0, 22.5, 45, -22.5)   # variant v = k mod 4
-$stateOf = { param($k) "q.block_state('levitate:yaw') == $k" }
+$stateOf = { param($k) "q.block_state('bearing:yaw') == $k" }
 function Steps([scriptblock]$pick) { @(0..15 | Where-Object { & $pick $_ }) }
 
 # ---- geometry -------------------------------------------------------------------------------------
@@ -48,14 +48,14 @@ Write-Json $doc $geo
 # ---- block: state, bone visibility, quarter turns -------------------------------------------------------
 $b = Get-Content $block -Raw | ConvertFrom-Json
 $desc = $b.'minecraft:block'.description
-$desc.states | Add-Member -NotePropertyName 'levitate:yaw' -NotePropertyValue @(0..15) -Force
+$desc.states | Add-Member -NotePropertyName 'bearing:yaw' -NotePropertyValue @(0..15) -Force
 $vis = [ordered]@{}
 foreach ($v in 0..3) {
     $cond = (Steps { param($k) $k % 4 -eq $v } | ForEach-Object { & $stateOf $_ }) -join ' || '
     $suffix = if ($v -eq 0) { '' } else { "_r$v" }
     $vis["base$suffix"]    = $cond
     $vis["head$suffix"]    = $cond
-    $vis["goggles$suffix"] = "($cond) && q.block_state('levitate:goggles') == 1"
+    $vis["goggles$suffix"] = "($cond) && q.block_state('bearing:goggles') == 1"
 }
 $b.'minecraft:block'.components.'minecraft:geometry'.bone_visibility = $vis
 $perms = @()

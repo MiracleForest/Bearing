@@ -1,23 +1,23 @@
 {
-  "levitate:spout": {
+  "bearing:spout": {
     "sound": "copper"
   },
-  "levitate:item_drain": {
+  "bearing:item_drain": {
     "sound": "copper"
   },
-  "levitate:hose_pulley": {
+  "bearing:hose_pulley": {
     "sound": "copper"
   },
-  "levitate:portable_fluid_interface": {
+  "bearing:portable_fluid_interface": {
     "sound": "copper"
   },
-  "levitate:honey": {
+  "bearing:honey": {
     "sound": "honey_block"
   },
-  "levitate:chocolate": {
+  "bearing:chocolate": {
     "sound": "honey_block"
   },
-  "levitate:fluids_test_depot": {
+  "bearing:fluids_test_depot": {
     "sound": "stone"
   }
 }

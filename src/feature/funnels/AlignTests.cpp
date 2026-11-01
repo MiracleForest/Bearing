@@ -24,13 +24,13 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace fu     = lv::feature::funnels;
-namespace fd     = lv::feature::funnels::detail;
-namespace cf     = lv::core::funnels;
-namespace common = lv::feature::common;
-namespace items  = lv::feature::common::items;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace fu     = br::feature::funnels;
+namespace fd     = br::feature::funnels::detail;
+namespace cf     = br::core::funnels;
+namespace common = br::feature::common;
+namespace items  = br::feature::common::items;
 
 GlobalPos    at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 BlockPos     bp(GlobalPos const& p) { return BlockPos{p.x, p.y, p.z}; }
@@ -42,7 +42,7 @@ ItemStack item(Context& ctx, char const* id, int count = 1) {
     return *s;
 }
 
-std::string idAt(Context& ctx, GlobalPos const& p) { return lv::game::blockIdAt(region(ctx), bp(p)); }
+std::string idAt(Context& ctx, GlobalPos const& p) { return br::game::blockIdAt(region(ctx), bp(p)); }
 
 int stateAt(BlockSource& r, GlobalPos const& p, char const* name) {
     auto const* b = fd::loadedBlock(r, bp(p));
@@ -61,14 +61,14 @@ int entitiesNear(BlockSource& r, GlobalPos const& pos, std::string const& id, fl
 
 } // namespace
 
-LV_REGISTER_SELFTEST("funnels.chute_chain", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.chute_chain", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's ChuteItem.place: a click on a chute's side builds the diagonal chute one up
     auto base = at(ctx.testPos(5555), 0, 1, 2);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& r = region(ctx);
     ctx.setBlock(base, fu::kChute);
     co_await ctx.ticks(2);
-    auto& p = ctx.spawnPlayer("lv_u55_chute");
+    auto& p = ctx.spawnPlayer("br_u55_chute");
     p.setPlayerGameType(GameType::Creative);
     co_await ctx.ticks(1);
     p.setSelectedItem(item(ctx, fu::kChute, 4));
@@ -83,7 +83,7 @@ LV_REGISTER_SELFTEST("funnels.chute_chain", [](Context& ctx) -> ll::coro::CoroTa
     for (auto q : {diag, base}) ctx.setBlock(q, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("funnels.vault_layer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.vault_layer", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's ItemVaultItem.tryMultiPlace: a vault on the end of a 2-wide vault fills the layer
     auto base = at(ctx.testPos(5560), 0, 1, 2);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
@@ -93,7 +93,7 @@ LV_REGISTER_SELFTEST("funnels.vault_layer", [](Context& ctx) -> ll::coro::CoroTa
     co_await ctx.ticks(3);
     auto s = fd::vaultStructure(base);
     ctx.require(s && s->width == 2, "a 2x2 vault formed");
-    auto& p = ctx.spawnPlayer("lv_u55_vault");
+    auto& p = ctx.spawnPlayer("br_u55_vault");
     p.setPlayerGameType(GameType::Survival);
     co_await ctx.ticks(1);
     p.setSelectedItem(item(ctx, fu::kItemVault, 8));
@@ -113,7 +113,7 @@ LV_REGISTER_SELFTEST("funnels.vault_layer", [](Context& ctx) -> ll::coro::CoroTa
             for (int z = 0; z < 2; ++z) ctx.setBlock(at(base, x, y, z), "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("funnels.chute_goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.chute_goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's ChuteBlockEntity / BrassTunnelBlockEntity.addToGoggleTooltip
     auto base = at(ctx.testPos(5565), 0, 1, 2);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
@@ -121,10 +121,10 @@ LV_REGISTER_SELFTEST("funnels.chute_goggles", [](Context& ctx) -> ll::coro::Coro
     co_await ctx.ticks(2);
     auto rest = items::insert(region(ctx), bp(base), cf::kWest, item(ctx, "minecraft:apple", 3), false);
     ctx.check(items::isEmpty(rest), "the chute takes the stack");
-    auto& p = ctx.spawnPlayer("lv_u55_goggles");
+    auto& p = ctx.spawnPlayer("br_u55_goggles");
     co_await ctx.ticks(1);
-    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, item(ctx, "levitate:goggles"));
-    auto ov    = lv::feature::goggles::overlayFor(p, base);
+    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, item(ctx, "bearing:goggles"));
+    auto ov    = br::feature::goggles::overlayFor(p, base);
     auto has   = [&](std::string const& text) {
         return std::any_of(ov.lines.begin(), ov.lines.end(), [&](std::string const& l) { return l.find(text) != std::string::npos; });
     };
@@ -137,7 +137,7 @@ LV_REGISTER_SELFTEST("funnels.chute_goggles", [](Context& ctx) -> ll::coro::Coro
     ctx.setBlock(base, "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("funnels.amount_follows_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.amount_follows_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's FilteringBehaviour: the amount board ends at the filter's max stack size, an
     // "exactly" count is capped when the filter changes, "*" marks "up to" the full stack
     auto base = at(ctx.testPos(5570), 0, 1, 2);
@@ -159,7 +159,7 @@ LV_REGISTER_SELFTEST("funnels.amount_follows_filter", [](Context& ctx) -> ll::co
     ctx.setBlock(at(base, -1, 0, 0), "minecraft:air");
 });
 
-LV_REGISTER_SELFTEST("funnels.chute_takes_from_above", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("funnels.chute_takes_from_above", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Create's ChuteItemHandler: every side inserts (only belts / dropped items need an open top)
     auto base = at(ctx.testPos(5575), 0, 1, 2);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");

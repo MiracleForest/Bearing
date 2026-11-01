@@ -15,13 +15,13 @@
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using JsonT     = nlohmann::json;
-namespace tn    = lv::feature::trains;
-namespace ct    = lv::core::trains;
-namespace ids   = lv::core::trains::ids;
-namespace items = lv::feature::common::items;
-namespace net   = lv::feature::net;
+namespace tn    = br::feature::trains;
+namespace ct    = br::core::trains;
+namespace ids   = br::core::trains::ids;
+namespace items = br::feature::common::items;
+namespace net   = br::feature::net;
 
 constexpr char kType[] = "trains.schedule";
 
@@ -38,7 +38,7 @@ ct::Schedule held(Player& p) { return tn::scheduleOf(p.getSelectedItem()).value_
 
 } // namespace
 
-LV_REGISTER_SELFTEST("trains.schedule_editor_native", [](Context& ctx) {
+BR_REGISTER_SELFTEST("trains.schedule_editor_native", [](Context& ctx) {
     auto& p = ctx.player();
     ct::Schedule s;
     s.entries.push_back(ct::Entry::makeDefault());
@@ -59,7 +59,7 @@ LV_REGISTER_SELFTEST("trains.schedule_editor_native", [](Context& ctx) {
     ctx.check(held(p).entries[0].instruction.data.value("Text", std::string()) == "Platform *", "the typed station name is stored");
     act(p, context, {{"op", "set_instruction"}, {"entry", 0}, {"part", {{"Id", std::string(ids::kDestination)}, {"Data", {{"Text", std::string(40, 'x')}}}}}});
     ctx.check(held(p).entries[0].instruction.data.value("Text", std::string()).size() == 25, "station names are cut at 25 characters");
-    act(p, context, {{"op", "set_instruction"}, {"entry", 0}, {"part", {{"Id", "levitate:nonsense"}, {"Data", JsonT::object()}}}});
+    act(p, context, {{"op", "set_instruction"}, {"entry", 0}, {"part", {{"Id", "bearing:nonsense"}, {"Data", JsonT::object()}}}});
     ctx.check(held(p).entries[0].instruction.id == ids::kDestination, "an unknown instruction is refused");
     // the throttle scroll input: 5..100 in steps of 5
     act(p, context, {{"op", "set_instruction"}, {"entry", 0}, {"part", {{"Id", std::string(ids::kThrottle)}, {"Data", {{"Value", 37}}}}}});

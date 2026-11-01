@@ -15,7 +15,7 @@
 
 #include "core/schematics/Nbt.h"
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 struct Pos {
     int x = 0, y = 0, z = 0;
@@ -46,8 +46,8 @@ struct Schematic {
     std::vector<BlockState>    palette;
     std::vector<std::int32_t>  blocks;  ///< x-major, then y, then z (the .mcstructure order)
     std::vector<std::int32_t>  liquids; ///< second layer (waterlogging), empty or same size
-    /// Levitate BlockData documents (JSON text) per block index.
-    std::map<std::size_t, std::string> levitateData;
+    /// Bearing BlockData documents (JSON text) per block index.
+    std::map<std::size_t, std::string> bearingData;
     /// Block entity data of the source file per block index (kept, not printed).
     std::map<std::size_t, nbt::Tag> blockEntities;
     int                             entities = 0; ///< entities in the file
@@ -103,11 +103,11 @@ struct Transform {
 /// The transformed bounds relative to the anchor: {min, max} (inclusive).
 [[nodiscard]] std::array<Pos, 2> bounds(Transform const& t, Pos size);
 /// Mirrors and rotates the direction-like states of a block (facing, stairs, doors, signs, rails,
-/// axes, torches, vines, walls, Levitate facings). Returns true if anything changed.
+/// axes, torches, vines, walls, Bearing facings). Returns true if anything changed.
 bool transformStates(BlockState& state, Transform const& t);
 
 /// Create's StructureTransform for the anchor of the client placement tool: the anchor that
 /// keeps the transformed structure's footprint where it was before a rotation / mirror change.
 [[nodiscard]] Pos recenterAnchor(Pos anchor, Pos size, Transform const& from, Transform const& to);
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

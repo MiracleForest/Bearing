@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Ponder on the client mod: scene library, hold-[W]-over-an-item, `/create ponder` and the module.
 //
@@ -46,9 +46,9 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("ponder", lv::client::ponder::PonderConfig);
+BR_REGISTER_CONFIG("ponder", br::client::ponder::PonderConfig);
 
-namespace lv::client::ponder {
+namespace br::client::ponder {
 
 namespace {
 
@@ -102,7 +102,7 @@ namespace {
 
 std::unique_ptr<cp::Library> loadLibrary() {
     auto lib  = std::make_unique<cp::Library>();
-    auto dir  = lv::Mod::getInstance().getSelf().getModDir() / "ponder";
+    auto dir  = br::Mod::getInstance().getSelf().getModDir() / "ponder";
     auto read = [](std::filesystem::path const& p) {
         std::ifstream in(p);
         return nlohmann::json::parse(in, nullptr, false);
@@ -394,8 +394,8 @@ private:
                     s.rebind  = {};
                     int  key  = vk == kVkEscape ? 0 : vk;
                     if (key) {
-                        lv::config::mut<PonderConfig>().ponderKey = key;
-                        lv::config::saveAll();
+                        br::config::mut<PonderConfig>().ponderKey = key;
+                        br::config::saveAll();
                         log().info("ponder: Ponder key set to {}", keyName(key));
                     }
                     deferUi([done = std::move(done), key] { done(key); });
@@ -446,7 +446,7 @@ private:
             resetRenderCache();
         }));
 
-        namespace net = lv::feature::net;
+        namespace net = br::feature::net;
         // `/create ponder [id]` on the server (feature/ponder/PonderCommand.cpp)
         net::client::on("ponder.open", [](nlohmann::json const& msg) {
             auto id = msg.value("id", std::string{});
@@ -480,8 +480,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::ponder
+} // namespace br::client::ponder
 
-LV_REGISTER_MODULE(lv::client::ponder::PonderModule);
+BR_REGISTER_MODULE(br::client::ponder::PonderModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

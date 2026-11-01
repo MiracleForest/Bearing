@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:cut_granite",
+      "identifier": "bearing:cut_granite",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_granite_cut",
+          "texture": "bearing_granite_cut",
           "render_method": "opaque"
         }
       }

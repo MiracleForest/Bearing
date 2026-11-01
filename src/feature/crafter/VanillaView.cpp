@@ -11,7 +11,7 @@
 #include "feature/crafter/Internal.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::crafter {
+namespace br::feature::crafter {
 
 namespace {
 
@@ -25,7 +25,7 @@ void crafterItems(std::vector<vi::Shown>& out) {
         if (!s || s->covered || common::items::isEmpty(s->slot)) continue;
         auto const* block = world::blockAt(pos);
         if (!block) continue;
-        int   facing = std::clamp(world::intState(*block, "levitate:facing", 2), 2, 5);
+        int   facing = std::clamp(world::intState(*block, "bearing:facing", 2), 2, 5);
         float dx     = facing == 4 ? -1.f : facing == 5 ? 1.f : 0.f;
         float dz     = facing == 2 ? -1.f : facing == 3 ? 1.f : 0.f;
         out.push_back({pos, 0, s->slot, Vec3{pos.x + .5f + dx * .6f, pos.y + .3f, pos.z + .5f + dz * .6f}});
@@ -38,4 +38,4 @@ struct Registration {
 
 } // namespace
 
-} // namespace lv::feature::crafter
+} // namespace br::feature::crafter

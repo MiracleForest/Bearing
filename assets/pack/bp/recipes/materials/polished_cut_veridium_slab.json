@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:polished_cut_veridium_slab"
+      "identifier": "bearing:polished_cut_veridium_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:polished_cut_veridium"
+        "item": "bearing:polished_cut_veridium"
       }
     },
     "unlock": [
       {
-        "item": "levitate:polished_cut_veridium"
+        "item": "bearing:polished_cut_veridium"
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_veridium_slab",
+      "item": "bearing:polished_cut_veridium_slab",
       "count": 6
     }
   }

@@ -2,7 +2,7 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "levitate:package",
+      "identifier": "bearing:package",
       "materials": {
         "default": "entity"
       },
@@ -23,13 +23,13 @@
         "s13": "textures/entity/package/rare_vector_package"
       },
       "geometry": {
-        "s12x12": "geometry.levitate.package_12x12",
-        "s10x12": "geometry.levitate.package_10x12",
-        "s10x8": "geometry.levitate.package_10x8",
-        "s12x10": "geometry.levitate.package_12x10"
+        "s12x12": "geometry.bearing.package_12x12",
+        "s10x12": "geometry.bearing.package_10x12",
+        "s10x8": "geometry.bearing.package_10x8",
+        "s12x10": "geometry.bearing.package_12x10"
       },
       "render_controllers": [
-        "controller.render.levitate.package"
+        "controller.render.bearing.package"
       ]
     }
   }

@@ -4,7 +4,7 @@
 #include <cmath>
 #include <set>
 
-namespace lv::core::funnels {
+namespace br::core::funnels {
 
 // ---- extraction counts ----------------------------------------------------------------------------
 
@@ -300,4 +300,4 @@ int comparatorSignal(std::vector<std::pair<int, int>> const& slots, int totalSlo
     return static_cast<int>(std::floor(f * 14.f)) + (filled > 0 ? 1 : 0);
 }
 
-} // namespace lv::core::funnels
+} // namespace br::core::funnels

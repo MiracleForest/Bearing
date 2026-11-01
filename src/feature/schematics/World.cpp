@@ -46,13 +46,13 @@
 #include "mod/Config.h"
 #include "mod/I18n.h"
 
-LV_REGISTER_CONFIG("schematics", lv::feature::schematics::Config);
+BR_REGISTER_CONFIG("schematics", br::feature::schematics::Config);
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace items = common::items;
 
-Config const& config() { return lv::config::get<Config>(); }
+Config const& config() { return br::config::get<Config>(); }
 
 // ---- world ----------------------------------------------------------------------------------------
 
@@ -595,4 +595,4 @@ Actor* placeEntity(int dim, cs::nbt::Tag const& data, cs::Pos origin, cs::Transf
     return level->addEntity(*region, std::move(owner));
 }
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

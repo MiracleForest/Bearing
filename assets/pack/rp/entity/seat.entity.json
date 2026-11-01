@@ -2,7 +2,7 @@
   "format_version": "1.10.0",
   "minecraft:client_entity": {
     "description": {
-      "identifier": "levitate:seat",
+      "identifier": "bearing:seat",
       "materials": {
         "default": "entity_alphatest"
       },
@@ -10,7 +10,7 @@
         "default": "textures/blocks/seat_base"
       },
       "geometry": {
-        "default": "geometry.levitate.seat_entity"
+        "default": "geometry.bearing.seat_entity"
       },
       "render_controllers": [
         "controller.render.default"

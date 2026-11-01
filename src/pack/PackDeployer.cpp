@@ -10,7 +10,7 @@
 // - Names, BDS: the server fills in item and block names itself (command feedback such as
 //   `/replaceitem`, `ItemStack::getName` in forms) from its own localization, which has only the
 //   vanilla texts. At install we append the RP's merged `texts/<locale>.lang` to the server's
-//   current language, so those names resolve instead of showing `item.levitate:<id>.name`.
+//   current language, so those names resolve instead of showing `item.bearing:<id>.name`.
 
 #include <filesystem>
 #include <fstream>
@@ -38,11 +38,11 @@
 #include "feature/common/Items.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::pack {
+namespace br::pack {
 
 namespace fs = std::filesystem;
 
-#ifdef LV_SERVER
+#ifdef BR_SERVER
 namespace {
 std::optional<nlohmann::json> readJson(fs::path const& p) {
     std::ifstream in(p);
@@ -116,8 +116,8 @@ void appendNamesToServerLanguage(fs::path const& rpDir) {
 class PackDeployer {
 public:
     void load() {
-#ifdef LV_SERVER
-        auto rpDir    = Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP";
+#ifdef BR_SERVER
+        auto rpDir    = Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP";
         auto manifest = readJson(rpDir / "manifest.json");
         if (!manifest) {
             log().warn("resource pack manifest not found in {}", rpDir.string());
@@ -157,8 +157,8 @@ public:
     }
 
     void install() {
-#ifdef LV_SERVER
-        appendNamesToServerLanguage(Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP");
+#ifdef BR_SERVER
+        appendNamesToServerLanguage(Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP");
         if (!config::get<ModConfig>().requireResourcePack) return;
         if (auto level = ll::service::getLevel()) level->getLevelData().mTexturePacksRequired = true;
 #endif
@@ -166,21 +166,21 @@ public:
     void uninstall() {}
 };
 
-} // namespace lv::pack
+} // namespace br::pack
 
-LV_REGISTER_MODULE_ORDERED(lv::pack::PackDeployer, lv::ModuleOrder::Items);
+BR_REGISTER_MODULE_ORDERED(br::pack::PackDeployer, br::ModuleOrder::Items);
 
 // The server resolves our item / block names (BDS: from the RP texts appended at install; client:
 // from the RP on the global stack), as command feedback and forms show them.
-LV_REGISTER_SELFTEST("pack.server_names", [](lv::selftest::Context& ctx) {
-    namespace items = lv::feature::common::items;
+BR_REGISTER_SELFTEST("pack.server_names", [](br::selftest::Context& ctx) {
+    namespace items = br::feature::common::items;
     for (auto const& [id, name] : std::initializer_list<std::pair<char const*, char const*>>{
-             {"levitate:goggles",       "Engineer's Goggles"},
-             {"levitate:clipboard",     "Clipboard"         },
-             {"levitate:belt_connector", "Mechanical Belt"  },
-             {"levitate:copper_backtank", "Copper Backtank" },
-             {"levitate:display_board", "Display Board"     },
-             {"levitate:nixie_tube",    "Nixie Tube"        },
+             {"bearing:goggles",       "Engineer's Goggles"},
+             {"bearing:clipboard",     "Clipboard"         },
+             {"bearing:belt_connector", "Mechanical Belt"  },
+             {"bearing:copper_backtank", "Copper Backtank" },
+             {"bearing:display_board", "Display Board"     },
+             {"bearing:nixie_tube",    "Nixie Tube"        },
     }) {
         auto stack = items::make(id);
         ctx.require(stack.has_value(), std::string("make ") + id);

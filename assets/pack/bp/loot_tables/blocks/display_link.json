@@ -3,7 +3,7 @@
     {
       "entries": [
         {
-          "name": "levitate:display_link",
+          "name": "bearing:display_link",
           "type": "item",
           "weight": 1
         }

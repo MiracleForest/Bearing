@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:exposed_copper_tile_slab_stonecutting"
+      "identifier": "bearing:exposed_copper_tile_slab_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:exposed_copper_tiles"
+        "item": "bearing:exposed_copper_tiles"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:exposed_copper_tiles"
+        "item": "bearing:exposed_copper_tiles"
       }
     ],
     "result": {
-      "item": "levitate:exposed_copper_tile_slab",
+      "item": "bearing:exposed_copper_tile_slab",
       "count": 2
     }
   }

@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:asurine_pillar_from_asurine_stonecutting"
+      "identifier": "bearing:asurine_pillar_from_asurine_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:asurine"
+        "item": "bearing:asurine"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:asurine"
+        "item": "bearing:asurine"
       }
     ],
     "result": {
-      "item": "levitate:asurine_pillar",
+      "item": "bearing:asurine_pillar",
       "count": 1
     }
   }

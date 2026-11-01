@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:pink_postbox_from_green_postbox"
+      "identifier": "bearing:pink_postbox_from_green_postbox"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
         "item": "minecraft:pink_dye"
       },
       {
-        "item": "levitate:green_postbox"
+        "item": "bearing:green_postbox"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:green_postbox"
+        "item": "bearing:green_postbox"
       }
     ],
     "result": {
-      "item": "levitate:pink_postbox",
+      "item": "bearing:pink_postbox",
       "count": 1
     }
   }

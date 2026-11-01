@@ -6,7 +6,7 @@
     },
     {
       "type": "fluid_stack",
-      "fluid": "levitate:potion/regular/night_vision",
+      "fluid": "bearing:potion/regular/night_vision",
       "amount": 25
     }
   ],

@@ -1,7 +1,7 @@
 # Textures of the Ponder unit (U30 / U46): the particle sprites Ponder scenes draw (flames, smoke,
 # splashes, ...). Original pixel art; tinted by the renderer where a type needs it.
 #
-#   pwsh tools/textures/ponder.ps1   # writes assets/pack/rp/textures/particle/levitate_ponder_particles.png
+#   pwsh tools/textures/ponder.ps1   # writes assets/pack/rp/textures/particle/bearing_ponder_particles.png
 #
 # Layout: 8x8 cells, 8 per row (64 x 16):
 #   row 0: flame, soul flame, smoke, cloud, splash, bubble, snowflake, heart
@@ -10,7 +10,7 @@ param([switch]$Preview)
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/lib.ps1"
 $root = (Resolve-Path "$PSScriptRoot/../..").Path
-$out = Join-Path $root 'assets/pack/rp/textures/particle/levitate_ponder_particles.png'
+$out = Join-Path $root 'assets/pack/rp/textures/particle/bearing_ponder_particles.png'
 
 $cells = @(
     # flame
@@ -51,5 +51,5 @@ for ($y = 0; $y -lt 8; $y++) {
     $rows += $line
 }
 Save-PixelArt -Rows $rows -Palette $pal -Path $out
-if ($Preview) { Save-PixelArt -Rows $rows -Palette $pal -Path (Join-Path $root 'tools/textures/preview/levitate_ponder_particles.png') -Scale 8 }
+if ($Preview) { Save-PixelArt -Rows $rows -Palette $pal -Path (Join-Path $root 'tools/textures/preview/bearing_ponder_particles.png') -Scale 8 }
 Write-Host 'ponder textures written'

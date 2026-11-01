@@ -1,8 +1,8 @@
 {
-  "levitate:track_signal": {
+  "bearing:track_signal": {
     "sound": "metal"
   },
-  "levitate:track_observer": {
+  "bearing:track_observer": {
     "sound": "metal"
   }
 }

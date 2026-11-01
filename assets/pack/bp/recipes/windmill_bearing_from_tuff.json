@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:windmill_bearing_from_tuff"
+      "identifier": "bearing:windmill_bearing_from_tuff"
     },
     "tags": [
       "crafting_table"
@@ -20,16 +20,16 @@
         "item": "minecraft:tuff"
       },
       "I": {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       }
     },
     "unlock": [
       {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       }
     ],
     "result": {
-      "item": "levitate:windmill_bearing",
+      "item": "bearing:windmill_bearing",
       "count": 1
     }
   }

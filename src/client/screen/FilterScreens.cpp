@@ -6,7 +6,7 @@
 // Items: the inventory's stacks belong to the game and are only read (items::toJsonWithCount);
 // the ghost cursor is item JSON (Screen::cursorItem) with a render-only icon.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 
@@ -18,10 +18,10 @@
 #include "feature/common/Items.h"
 #include "mod/Module.h"
 
-namespace lv::client::screen {
+namespace br::client::screen {
 
 namespace {
-namespace items = lv::feature::common::items;
+namespace items = br::feature::common::items;
 using core::common::kListFilterSlots;
 
 std::shared_ptr<ItemStack> stackOf(Json const& j) {
@@ -37,7 +37,7 @@ std::string nameOf(std::shared_ptr<ItemStack> const& s) { return s ? s->getName(
 class ListFilterScreen : public Screen {
 public:
     ListFilterScreen(Json const& data, SendFn send)
-    : Screen(ctr("lv.common.filter.title", "List Filter"), 176, 92),
+    : Screen(ctr("br.common.filter.title", "List Filter"), 176, 92),
       mSend(std::move(send)),
       mData(data) {
         showInventory = true;
@@ -62,7 +62,7 @@ public:
         ignore.tooltip = {ctr("create.gui.filter.ignore_data", "Ignore Data"),
                           ctr("create.gui.filter.ignore_data.description", "Items match regardless of their attributes.")};
         auto& reset = add<IconButton>(Rect{151, 62, 18, 18}, "x", [this] { mSend({{"op", "reset"}}); });
-        reset.tooltip = {ctr("lv.common.filter.reset", "Reset")};
+        reset.tooltip = {ctr("br.common.filter.reset", "Reset")};
         mAllow = &allow, mDeny = &deny, mRespect = &respect, mIgnore = &ignore;
         mMode  = &add<Label>(Rect{96, 67, 50, 9}, "", color::kTextDark);
         onData(mData);
@@ -124,7 +124,7 @@ private:
 class AttributeFilterScreen : public Screen {
 public:
     AttributeFilterScreen(Json const& data, SendFn send)
-    : Screen(ctr("lv.common.attribute_filter.title", "Attribute Filter"), 214, 120),
+    : Screen(ctr("br.common.attribute_filter.title", "Attribute Filter"), 214, 120),
       mSend(std::move(send)),
       mData(data) {
         showInventory = true;
@@ -164,7 +164,7 @@ public:
                               ctr("create.gui.attribute_filter.deny_list.description", "Items pass if they do NOT have any of the selected attributes.")};
         mModes[2]->litColour = color::kButtonOff;
         auto& reset = add<IconButton>(Rect{188, 94, 18, 18}, "x", [this] { mSend({{"op", "reset"}}); });
-        reset.tooltip = {ctr("lv.common.filter.reset", "Reset")};
+        reset.tooltip = {ctr("br.common.filter.reset", "Reset")};
         onData(mData);
     }
 
@@ -224,13 +224,13 @@ private:
 
 class TextTestScreen : public Screen {
 public:
-    TextTestScreen(SendFn send) : Screen(ctr("lv.common.screentest.title", "Text Field Test"), 176, 46), mSend(std::move(send)) {}
+    TextTestScreen(SendFn send) : Screen(ctr("br.common.screentest.title", "Text Field Test"), 176, 46), mSend(std::move(send)) {}
 
     void init() override {
         auto& field = add<TextField>(Rect{8, 20, 160, 16}, "", [this](std::string const& text) {
             mSend({{"op", "submit"}, {"text", text}});
         });
-        field.placeholder = ctr("lv.common.screentest.label", "Text");
+        field.placeholder = ctr("br.common.screentest.label", "Text");
         field.maxLength   = 32;
     }
 
@@ -254,8 +254,8 @@ public:
     void uninstall() {}
 };
 
-} // namespace lv::client::screen
+} // namespace br::client::screen
 
-LV_REGISTER_MODULE(lv::client::screen::FilterScreensModule);
+BR_REGISTER_MODULE(br::client::screen::FilterScreensModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

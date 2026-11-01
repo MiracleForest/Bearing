@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cstdlib>
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 bool canPlaceBogey(int index, std::vector<int> const& existing) {
     // Create's StationBlockEntity.isValidBogeyOffset: the first bogey goes to the station marker
@@ -83,4 +83,4 @@ std::optional<AssemblyError> checkControls(std::vector<int> const& controls, boo
     return std::nullopt;
 }
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

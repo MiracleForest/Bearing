@@ -1,27 +1,27 @@
 {
-  "levitate.haunted_bell.use": {
+  "bearing.haunted_bell.use": {
     "category": "block",
     "min_distance": 4.0,
     "max_distance": 64.0,
-    "sounds": [{ "name": "sounds/levitate/haunted_bell_use", "volume": 1.0 }]
+    "sounds": [{ "name": "sounds/bearing/haunted_bell_use", "volume": 1.0 }]
   },
-  "levitate.haunted_bell.convert": {
+  "bearing.haunted_bell.convert": {
     "category": "block",
     "max_distance": 16.0,
-    "sounds": [{ "name": "sounds/levitate/haunted_bell_convert", "volume": 1.0 }]
+    "sounds": [{ "name": "sounds/bearing/haunted_bell_convert", "volume": 1.0 }]
   },
-  "levitate.cardboard_sword.bonk": {
+  "bearing.cardboard_sword.bonk": {
     "category": "player",
     "max_distance": 16.0,
-    "sounds": [{ "name": "sounds/levitate/cardboard_bonk", "volume": 1.0 }]
+    "sounds": [{ "name": "sounds/bearing/cardboard_bonk", "volume": 1.0 }]
   },
-  "levitate.potato_cannon.fwoomp": {
+  "bearing.potato_cannon.fwoomp": {
     "category": "player",
     "min_distance": 2.0,
     "max_distance": 24.0,
-    "sounds": [{ "name": "sounds/levitate/potato_cannon_fwoomp", "volume": 1.0 }]
+    "sounds": [{ "name": "sounds/bearing/potato_cannon_fwoomp", "volume": 1.0 }]
   },
-  "levitate.potato_cannon.hit": {
+  "bearing.potato_cannon.hit": {
     "category": "player",
     "sounds": [
       { "name": "sounds/block/itemframe/break1", "volume": 0.75, "pitch": 0.75 },
@@ -29,7 +29,7 @@
       { "name": "sounds/block/itemframe/break3", "volume": 0.75, "pitch": 0.75 }
     ]
   },
-  "levitate.potato_cannon.hit_vines": {
+  "bearing.potato_cannon.hit_vines": {
     "category": "player",
     "sounds": [
       { "name": "sounds/block/roots/break1", "volume": 0.75, "pitch": 1.25 },

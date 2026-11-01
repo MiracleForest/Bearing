@@ -1,8 +1,8 @@
 // Mechanical saw and mechanical drill, stationary (Create 6.0.10's SawBlock / SawBlockEntity,
 // DrillBlock / DrillBlockEntity and BlockBreakingKineticBlockEntity), see docs/SPEC.md §3.6.
 //
-// Block states: levitate:facing (0..5, Create's Direction order: the front), saw
-// levitate:axis_along_first (Create's AXIS_ALONG_FIRST_COORDINATE), levitate:rotor (client mod).
+// Block states: bearing:facing (0..5, Create's Direction order: the front), saw
+// bearing:axis_along_first (Create's AXIS_ALONG_FIRST_COORDINATE), bearing:rotor (client mod).
 // The saw's inventory lives in BlockData["saw"]; breaking progress is transient (as Create's).
 
 #include <algorithm>
@@ -32,7 +32,7 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::crafter::machines {
+namespace br::feature::crafter::machines {
 
 namespace k  = core::kinetics;
 namespace ci = common::items;
@@ -41,7 +41,7 @@ using Json   = nlohmann::json;
 
 namespace {
 
-constexpr char kDbIndex[]   = "lv:crafter:machines";
+constexpr char kDbIndex[]   = "br:crafter:machines";
 constexpr int  kSawSlots    = 16;
 constexpr int  kDrillLazy   = 10; // SmartBlockEntity's default lazy tick rate
 
@@ -575,13 +575,13 @@ void install() {
 
 void uninstall() { reset(); }
 
-} // namespace lv::feature::crafter::machines
+} // namespace br::feature::crafter::machines
 
 // ---- kinetic specs -----------------------------------------------------------------------------------------
 namespace {
-namespace k = lv::core::kinetics;
-using lv::feature::crafter::kAlongFirst;
-using lv::feature::crafter::kFacing;
+namespace k = br::core::kinetics;
+using br::feature::crafter::kAlongFirst;
+using br::feature::crafter::kFacing;
 
 k::Face facingOf(k::BlockState const& s, int fallback) { return static_cast<k::Face>(std::clamp(s.get(kFacing, fallback), 0, 5)); }
 
@@ -599,14 +599,14 @@ k::KineticSpec sawSpec() {
     k::KineticSpec s;
     s.states       = {kFacing, kAlongFirst};
     auto axis      = [](k::BlockState const& st) {
-        return lv::core::crafter::directionalAxis(facingOf(st, 1), st.get(kAlongFirst, 0) != 0);
+        return br::core::crafter::directionalAxis(facingOf(st, 1), st.get(kAlongFirst, 0) != 0);
     };
     s.rotationAxis    = [axis](k::BlockState const& st) { return std::optional<k::Axis>(axis(st)); };
     s.hasShaftTowards = [axis](k::BlockState const& st, k::Face f) { return k::axisOf(f) == axis(st); };
     s.impact          = 4;
-    s.rotorState      = lv::feature::crafter::kRotor;
-    s.rotorModel      = "geometry.levitate.mechanical_saw";
-    s.rotorTexture    = "levitate_mechanical_saw";
+    s.rotorState      = br::feature::crafter::kRotor;
+    s.rotorModel      = "geometry.bearing.mechanical_saw";
+    s.rotorTexture    = "bearing_mechanical_saw";
     return s;
 }
 
@@ -616,9 +616,9 @@ k::KineticSpec drillSpec() {
     s.rotationAxis    = [](k::BlockState const& st) { return std::optional<k::Axis>(k::axisOf(facingOf(st, 1))); };
     s.hasShaftTowards = [](k::BlockState const& st, k::Face f) { return f == k::opposite(facingOf(st, 1)); };
     s.impact          = 4;
-    s.rotorState      = lv::feature::crafter::kRotor;
-    s.rotorModel      = "geometry.levitate.mechanical_drill";
-    s.rotorTexture    = "levitate_mechanical_drill";
+    s.rotorState      = br::feature::crafter::kRotor;
+    s.rotorModel      = "geometry.bearing.mechanical_drill";
+    s.rotorTexture    = "bearing_mechanical_drill";
     s.parts           = [](k::RenderView const& v, std::vector<k::RotorPart>& out) {
         auto     f = facingOf(*v.state, 1);
         k::RotorPart p;
@@ -630,6 +630,6 @@ k::KineticSpec drillSpec() {
 }
 } // namespace
 
-LV_REGISTER_KINETIC_BLOCK("levitate:mechanical_crafter", crafterSpec());
-LV_REGISTER_KINETIC_BLOCK("levitate:mechanical_saw", sawSpec());
-LV_REGISTER_KINETIC_BLOCK("levitate:mechanical_drill", drillSpec());
+BR_REGISTER_KINETIC_BLOCK("bearing:mechanical_crafter", crafterSpec());
+BR_REGISTER_KINETIC_BLOCK("bearing:mechanical_saw", sawSpec());
+BR_REGISTER_KINETIC_BLOCK("bearing:mechanical_drill", drillSpec());

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:waxed_oxidized_copper_shingle_stairs"
+      "identifier": "bearing:waxed_oxidized_copper_shingle_stairs"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:waxed_oxidized_copper_shingles"
+        "item": "bearing:waxed_oxidized_copper_shingles"
       }
     },
     "unlock": [
       {
-        "item": "levitate:waxed_oxidized_copper_shingles"
+        "item": "bearing:waxed_oxidized_copper_shingles"
       }
     ],
     "result": {
-      "item": "levitate:waxed_oxidized_copper_shingle_stairs",
+      "item": "bearing:waxed_oxidized_copper_shingle_stairs",
       "count": 4
     }
   }

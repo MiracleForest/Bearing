@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:entity": {
     "description": {
-      "identifier": "levitate:package",
+      "identifier": "bearing:package",
       "is_spawnable": false,
       "is_summonable": true
     },
     "component_groups": {
-      "levitate:style_0": {
+      "bearing:style_0": {
         "minecraft:variant": {
           "value": 0
         },
@@ -16,7 +16,7 @@
           "height": 0.75
         }
       },
-      "levitate:style_1": {
+      "bearing:style_1": {
         "minecraft:variant": {
           "value": 1
         },
@@ -25,7 +25,7 @@
           "height": 0.75
         }
       },
-      "levitate:style_2": {
+      "bearing:style_2": {
         "minecraft:variant": {
           "value": 2
         },
@@ -34,7 +34,7 @@
           "height": 0.5
         }
       },
-      "levitate:style_3": {
+      "bearing:style_3": {
         "minecraft:variant": {
           "value": 3
         },
@@ -43,7 +43,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_4": {
+      "bearing:style_4": {
         "minecraft:variant": {
           "value": 4
         },
@@ -52,7 +52,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_5": {
+      "bearing:style_5": {
         "minecraft:variant": {
           "value": 5
         },
@@ -61,7 +61,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_6": {
+      "bearing:style_6": {
         "minecraft:variant": {
           "value": 6
         },
@@ -70,7 +70,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_7": {
+      "bearing:style_7": {
         "minecraft:variant": {
           "value": 7
         },
@@ -79,7 +79,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_8": {
+      "bearing:style_8": {
         "minecraft:variant": {
           "value": 8
         },
@@ -88,7 +88,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_9": {
+      "bearing:style_9": {
         "minecraft:variant": {
           "value": 9
         },
@@ -97,7 +97,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_10": {
+      "bearing:style_10": {
         "minecraft:variant": {
           "value": 10
         },
@@ -106,7 +106,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_11": {
+      "bearing:style_11": {
         "minecraft:variant": {
           "value": 11
         },
@@ -115,7 +115,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_12": {
+      "bearing:style_12": {
         "minecraft:variant": {
           "value": 12
         },
@@ -124,7 +124,7 @@
           "height": 0.625
         }
       },
-      "levitate:style_13": {
+      "bearing:style_13": {
         "minecraft:variant": {
           "value": 13
         },
@@ -137,7 +137,7 @@
     "components": {
       "minecraft:type_family": {
         "family": [
-          "levitate_package",
+          "bearing_package",
           "inanimate"
         ]
       },
@@ -184,10 +184,10 @@
                   }
                 ]
               },
-              "event": "levitate:picked_up",
+              "event": "bearing:picked_up",
               "target": "self"
             },
-            "interact_text": "action.interact.levitate.package"
+            "interact_text": "action.interact.bearing.package"
           }
         ]
       },
@@ -230,105 +230,105 @@
       }
     },
     "events": {
-      "levitate:style_0": {
+      "bearing:style_0": {
         "add": {
           "component_groups": [
-            "levitate:style_0"
+            "bearing:style_0"
           ]
         }
       },
-      "levitate:style_1": {
+      "bearing:style_1": {
         "add": {
           "component_groups": [
-            "levitate:style_1"
+            "bearing:style_1"
           ]
         }
       },
-      "levitate:style_2": {
+      "bearing:style_2": {
         "add": {
           "component_groups": [
-            "levitate:style_2"
+            "bearing:style_2"
           ]
         }
       },
-      "levitate:style_3": {
+      "bearing:style_3": {
         "add": {
           "component_groups": [
-            "levitate:style_3"
+            "bearing:style_3"
           ]
         }
       },
-      "levitate:style_4": {
+      "bearing:style_4": {
         "add": {
           "component_groups": [
-            "levitate:style_4"
+            "bearing:style_4"
           ]
         }
       },
-      "levitate:style_5": {
+      "bearing:style_5": {
         "add": {
           "component_groups": [
-            "levitate:style_5"
+            "bearing:style_5"
           ]
         }
       },
-      "levitate:style_6": {
+      "bearing:style_6": {
         "add": {
           "component_groups": [
-            "levitate:style_6"
+            "bearing:style_6"
           ]
         }
       },
-      "levitate:style_7": {
+      "bearing:style_7": {
         "add": {
           "component_groups": [
-            "levitate:style_7"
+            "bearing:style_7"
           ]
         }
       },
-      "levitate:style_8": {
+      "bearing:style_8": {
         "add": {
           "component_groups": [
-            "levitate:style_8"
+            "bearing:style_8"
           ]
         }
       },
-      "levitate:style_9": {
+      "bearing:style_9": {
         "add": {
           "component_groups": [
-            "levitate:style_9"
+            "bearing:style_9"
           ]
         }
       },
-      "levitate:style_10": {
+      "bearing:style_10": {
         "add": {
           "component_groups": [
-            "levitate:style_10"
+            "bearing:style_10"
           ]
         }
       },
-      "levitate:style_11": {
+      "bearing:style_11": {
         "add": {
           "component_groups": [
-            "levitate:style_11"
+            "bearing:style_11"
           ]
         }
       },
-      "levitate:style_12": {
+      "bearing:style_12": {
         "add": {
           "component_groups": [
-            "levitate:style_12"
+            "bearing:style_12"
           ]
         }
       },
-      "levitate:style_13": {
+      "bearing:style_13": {
         "add": {
           "component_groups": [
-            "levitate:style_13"
+            "bearing:style_13"
           ]
         }
       },
-      "levitate:picked_up": {}
+      "bearing:picked_up": {}
     }
   }
 }

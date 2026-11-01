@@ -2,21 +2,21 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:clutch",
+      "identifier": "bearing:clutch",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1,
           2
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -25,22 +25,22 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.transmission_split_shaft",
+        "identifier": "geometry.bearing.transmission_split_shaft",
         "bone_visibility": {
-          "rotor": "q.block_state('levitate:rotor') != 1"
+          "rotor": "q.block_state('bearing:rotor') != 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_transmission_rotor",
+          "texture": "bearing_transmission_rotor",
           "render_method": "alpha_test"
         },
         "side": {
-          "texture": "levitate_transmission_clutch_side",
+          "texture": "bearing_transmission_clutch_side",
           "render_method": "alpha_test"
         },
         "end": {
-          "texture": "levitate_transmission_andesite_end",
+          "texture": "bearing_transmission_andesite_end",
           "render_method": "alpha_test"
         }
       },
@@ -55,19 +55,19 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_transmission_rotor",
+              "texture": "bearing_transmission_rotor",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_transmission_clutch_side",
+              "texture": "bearing_transmission_clutch_side",
               "render_method": "alpha_test"
             },
             "end": {
-              "texture": "levitate_transmission_andesite_end",
+              "texture": "bearing_transmission_andesite_end",
               "render_method": "alpha_test"
             }
           },
@@ -81,19 +81,19 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 0 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_transmission_rotor",
+              "texture": "bearing_transmission_rotor",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_transmission_clutch_side_on",
+              "texture": "bearing_transmission_clutch_side_on",
               "render_method": "alpha_test"
             },
             "end": {
-              "texture": "levitate_transmission_andesite_end",
+              "texture": "bearing_transmission_andesite_end",
               "render_method": "alpha_test"
             }
           },
@@ -107,57 +107,57 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_transmission_rotor",
+              "texture": "bearing_transmission_rotor",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_transmission_clutch_side",
+              "texture": "bearing_transmission_clutch_side",
               "render_method": "alpha_test"
             },
             "end": {
-              "texture": "levitate_transmission_andesite_end",
+              "texture": "bearing_transmission_andesite_end",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 1 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:axis') == 1 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_transmission_rotor",
+              "texture": "bearing_transmission_rotor",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_transmission_clutch_side_on",
+              "texture": "bearing_transmission_clutch_side_on",
               "render_method": "alpha_test"
             },
             "end": {
-              "texture": "levitate_transmission_andesite_end",
+              "texture": "bearing_transmission_andesite_end",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2 && q.block_state('levitate:powered') == 0",
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:powered') == 0",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_transmission_rotor",
+              "texture": "bearing_transmission_rotor",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_transmission_clutch_side",
+              "texture": "bearing_transmission_clutch_side",
               "render_method": "alpha_test"
             },
             "end": {
-              "texture": "levitate_transmission_andesite_end",
+              "texture": "bearing_transmission_andesite_end",
               "render_method": "alpha_test"
             }
           },
@@ -171,19 +171,19 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2 && q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_transmission_rotor",
+              "texture": "bearing_transmission_rotor",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_transmission_clutch_side_on",
+              "texture": "bearing_transmission_clutch_side_on",
               "render_method": "alpha_test"
             },
             "end": {
-              "texture": "levitate_transmission_andesite_end",
+              "texture": "bearing_transmission_andesite_end",
               "render_method": "alpha_test"
             }
           },

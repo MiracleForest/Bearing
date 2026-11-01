@@ -17,10 +17,10 @@
 
 namespace {
 
-using lv::selftest::Context;
-namespace b = lv::feature::building;
-namespace net = lv::feature::net;
-using lv::core::GlobalPos;
+using br::selftest::Context;
+namespace b = br::feature::building;
+namespace net = br::feature::net;
+using br::core::GlobalPos;
 
 GlobalPos at(GlobalPos const& p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 int       st(GlobalPos const& p, char const* name) {
@@ -49,34 +49,34 @@ void stand(Player& sp, GlobalPos const& p) { sp.teleport(Vec3{p.x + .5f, float(p
 
 } // namespace
 
-LV_REGISTER_SELFTEST("building.pane_connected_textures", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("building.pane_connected_textures", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4350);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.setBlock(p, "levitate:framed_glass_pane");
-    ctx.setBlock(at(p, 1, 0, 0), "levitate:framed_glass_pane");
-    ctx.setBlock(at(p, 0, 1, 0), "levitate:framed_glass_pane");
-    ctx.setBlock(at(p, -1, 0, 0), "levitate:tiled_glass_pane");
+    ctx.setBlock(p, "bearing:framed_glass_pane");
+    ctx.setBlock(at(p, 1, 0, 0), "bearing:framed_glass_pane");
+    ctx.setBlock(at(p, 0, 1, 0), "bearing:framed_glass_pane");
+    ctx.setBlock(at(p, -1, 0, 0), "bearing:tiled_glass_pane");
     co_await ctx.ticks(4);
-    ctx.check(st(p, "levitate:c_east") == 1 && st(p, "levitate:c_up") == 1, "a pane joins the same pane beside and above");
-    ctx.check(st(p, "levitate:c_west") == 0 && st(p, "levitate:west") == 1, "another pane: an arm but no join");
-    ctx.check(st(at(p, 1, 0, 0), "levitate:c_west") == 1, "both ways");
+    ctx.check(st(p, "bearing:c_east") == 1 && st(p, "bearing:c_up") == 1, "a pane joins the same pane beside and above");
+    ctx.check(st(p, "bearing:c_west") == 0 && st(p, "bearing:west") == 1, "another pane: an arm but no join");
+    ctx.check(st(at(p, 1, 0, 0), "bearing:c_west") == 1, "both ways");
     // windows: vertical joins only for wooden panes, rectangles for industrial iron
-    ctx.setBlock(at(p, 0, 0, 3), "levitate:oak_window_pane");
-    ctx.setBlock(at(p, 0, 1, 3), "levitate:oak_window_pane");
-    ctx.setBlock(at(p, 0, 0, 5), "levitate:industrial_iron_window");
-    ctx.setBlock(at(p, 1, 0, 5), "levitate:industrial_iron_window");
+    ctx.setBlock(at(p, 0, 0, 3), "bearing:oak_window_pane");
+    ctx.setBlock(at(p, 0, 1, 3), "bearing:oak_window_pane");
+    ctx.setBlock(at(p, 0, 0, 5), "bearing:industrial_iron_window");
+    ctx.setBlock(at(p, 1, 0, 5), "bearing:industrial_iron_window");
     co_await ctx.ticks(4);
-    ctx.check(st(at(p, 0, 0, 3), "levitate:c_up") == 1, "window panes join vertically");
-    ctx.check(st(at(p, 0, 0, 5), "levitate:c_east") == 1, "industrial iron windows join sideways (Create's RECTANGLE)");
+    ctx.check(st(at(p, 0, 0, 3), "bearing:c_up") == 1, "window panes join vertically");
+    ctx.check(st(at(p, 0, 0, 5), "bearing:c_east") == 1, "industrial iron windows join sideways (Create's RECTANGLE)");
 });
 
-LV_REGISTER_SELFTEST("building.copycat_turning", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("building.copycat_turning", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4355);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = ctx.player();
     stand(sp, at(p, 2, 0, 0));
-    ctx.setBlock(p, "levitate:copycat_step", {{"levitate:facing", b::North}});
-    ctx.setBlock(at(p, 0, 0, 1), "levitate:copycat_step", {{"levitate:facing", b::North}});
+    ctx.setBlock(p, "bearing:copycat_step", {{"bearing:facing", b::North}});
+    ctx.setBlock(at(p, 0, 0, 1), "bearing:copycat_step", {{"bearing:facing", b::North}});
     co_await ctx.ticks(2);
     ctx.give(sp, b::makeItem("minecraft:oak_log", 8), 0);
     ctx.require(b::useCopycat(sp, b::makeItem("minecraft:oak_log", 1), p, b::Up), "a log applies");
@@ -88,19 +88,19 @@ LV_REGISTER_SELFTEST("building.copycat_turning", [](Context& ctx) -> ll::coro::C
     ctx.check(b::useCopycat(sp, b::makeItem("minecraft:oak_log", 1), at(p, 0, 0, 1), b::Up), "the neighbour takes a log");
     ctx.check(materialState(at(p, 0, 0, 1), "pillar_axis") == "x", "and the neighbour's orientation");
     // nothing to turn: the use passes
-    ctx.setBlock(at(p, 0, 0, 3), "levitate:copycat_panel", {{"levitate:facing", b::Up}});
+    ctx.setBlock(at(p, 0, 0, 3), "bearing:copycat_panel", {{"bearing:facing", b::Up}});
     co_await ctx.ticks(1);
     ctx.check(b::useCopycat(sp, b::makeItem("minecraft:oak_planks", 1), at(p, 0, 0, 3), b::Up), "planks apply");
     ctx.check(!b::useCopycat(sp, b::makeItem("minecraft:oak_planks", 1), at(p, 0, 0, 3), b::Up), "planks have nothing to turn");
     ctx.give(sp, ItemStack{}, 0);
 });
 
-LV_REGISTER_SELFTEST("building.girder_helper", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("building.girder_helper", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4360);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = ctx.player();
     stand(sp, at(p, 0, 0, 3));
-    ctx.setBlock(p, b::kGirderId, {{"levitate:axis", 0}, {"levitate:x", 1}});
+    ctx.setBlock(p, b::kGirderId, {{"bearing:axis", 0}, {"bearing:x", 1}});
     ctx.cleanupBlock(at(p, 1, 0, 0));
     ctx.cleanupBlock(at(p, 2, 0, 0));
     ctx.cleanupBlock(at(p, -1, 0, 0));
@@ -109,64 +109,64 @@ LV_REGISTER_SELFTEST("building.girder_helper", [](Context& ctx) -> ll::coro::Cor
     ctx.give(sp, girder, 0);
     sp.setSelectedSlot(0);
     ctx.check(b::onUse(sp, girder, p, b::South, Vec3{.95f, .5f, .5f}, true), "a girder on a girder line extends it");
-    ctx.check(b::idAt(at(p, 1, 0, 0)) == b::kGirderId && st(at(p, 1, 0, 0), "levitate:x") == 1, "at the east end, along x");
+    ctx.check(b::idAt(at(p, 1, 0, 0)) == b::kGirderId && st(at(p, 1, 0, 0), "bearing:x") == 1, "at the east end, along x");
     ctx.check(b::onUse(sp, girder, p, b::South, Vec3{.95f, .5f, .5f}, true) && b::idAt(at(p, 2, 0, 0)) == b::kGirderId, "past the girders already there");
     ctx.check(b::onUse(sp, girder, p, b::South, Vec3{.05f, .5f, .5f}, true) && b::idAt(at(p, -1, 0, 0)) == b::kGirderId, "the end nearest to the click first");
     ctx.check(b::idAt(at(p, 0, 1, 0)) != b::kGirderId, "never across the beam");
     ctx.give(sp, ItemStack{}, 0);
 });
 
-LV_REGISTER_SELFTEST("building.door_closing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("building.door_closing", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4365);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.setBlock(p, "levitate:train_door", {{"levitate:facing", b::North}});
-    ctx.setBlock(at(p, 0, 1, 0), "levitate:train_door", {{"levitate:facing", b::North}, {"levitate:upper", 1}});
+    ctx.setBlock(p, "bearing:train_door", {{"bearing:facing", b::North}});
+    ctx.setBlock(at(p, 0, 1, 0), "bearing:train_door", {{"bearing:facing", b::North}, {"bearing:upper", 1}});
     co_await ctx.ticks(2);
     ctx.require(b::useDoor(nullptr, p), "the door opens");
     co_await ctx.ticks(2);
-    ctx.check(st(p, "levitate:open") == 1 && st(p, "levitate:closing") == 0, "open");
+    ctx.check(st(p, "bearing:open") == 1 && st(p, "bearing:closing") == 0, "open");
     ctx.require(b::useDoor(nullptr, p), "the door closes");
     co_await ctx.ticks(1);
-    ctx.check(st(p, "levitate:open") == 0 && st(p, "levitate:closing") == 1, "closing: the panel is still on its way");
+    ctx.check(st(p, "bearing:open") == 0 && st(p, "bearing:closing") == 1, "closing: the panel is still on its way");
     auto const* blk   = b::blockAt(p);
     auto        boxes = blk ? b::collisionBoxes(*b::infoOf(*blk), *blk, false, false) : std::nullopt;
     ctx.check(boxes && boxes->size() == 1 && (*boxes)[0][3] - (*boxes)[0][0] < 16.f, "the open collision stays while closing");
     co_await ctx.ticks(9);
-    ctx.check(st(p, "levitate:closing") == 0 && st(at(p, 0, 1, 0), "levitate:closing") == 0, "closed once the panel is back");
+    ctx.check(st(p, "bearing:closing") == 0 && st(at(p, 0, 1, 0), "bearing:closing") == 0, "closed once the panel is back");
 });
 
-LV_REGISTER_SELFTEST("building.bracket_orientation", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("building.bracket_orientation", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4370);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    if (!lv::game::blockWith(b::kShaftId)) {
-        ctx.info("levitate:shaft not registered (U6): skipped");
+    if (!br::game::blockWith(b::kShaftId)) {
+        ctx.info("bearing:shaft not registered (U6): skipped");
         co_return;
     }
     auto& sp = ctx.player();
     stand(sp, at(p, 0, 0, 3));
-    ctx.setBlock(p, b::kShaftId, {{"levitate:axis", 0}});
+    ctx.setBlock(p, b::kShaftId, {{"bearing:axis", 0}});
     co_await ctx.ticks(2);
-    ctx.give(sp, b::makeItem("levitate:metal_bracket", 2), 0);
-    ctx.check(b::useBracket(sp, b::makeItem("levitate:metal_bracket", 1), p, b::Up), "a bracket goes on");
+    ctx.give(sp, b::makeItem("bearing:metal_bracket", 2), 0);
+    ctx.check(b::useBracket(sp, b::makeItem("bearing:metal_bracket", 1), p, b::Up), "a bracket goes on");
     auto const* d = b::bracketData(p);
     ctx.require(d != nullptr, "the bracket is stored");
     ctx.check(d->value("facing", -1) == b::Up && d->value("axis", -1) == 0 && !d->value("cog", true), "facing the clicked face, along the shaft");
-    ctx.give(sp, b::makeItem("levitate:wooden_bracket", 1), 0);
-    int metal = countOf(sp, "levitate:metal_bracket");
-    ctx.check(b::useBracket(sp, b::makeItem("levitate:wooden_bracket", 1), p, b::Down), "another bracket swaps it");
-    ctx.check(b::bracketAt(p) == std::optional<std::string>("levitate:wooden_bracket"), "the wooden one is on");
-    ctx.check(countOf(sp, "levitate:metal_bracket") == metal + 1, "the metal one is given back");
+    ctx.give(sp, b::makeItem("bearing:wooden_bracket", 1), 0);
+    int metal = countOf(sp, "bearing:metal_bracket");
+    ctx.check(b::useBracket(sp, b::makeItem("bearing:wooden_bracket", 1), p, b::Down), "another bracket swaps it");
+    ctx.check(b::bracketAt(p) == std::optional<std::string>("bearing:wooden_bracket"), "the wooden one is on");
+    ctx.check(countOf(sp, "bearing:metal_bracket") == metal + 1, "the metal one is given back");
     ctx.check(b::removeBracket(&sp, p) && !b::bracketAt(p), "the wrench takes it off");
     ctx.give(sp, ItemStack{}, 0);
 });
 
-LV_REGISTER_SELFTEST("building.visual_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("building.visual_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4375);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& sp = ctx.player();
     net::setTestCompanion(sp, true);
     (void)net::takeTestMessages(sp);
-    ctx.setBlock(p, "levitate:copycat_panel", {{"levitate:facing", b::Up}});
+    ctx.setBlock(p, "bearing:copycat_panel", {{"bearing:facing", b::Up}});
     co_await ctx.ticks(2);
     ctx.require(b::useCopycat(sp, b::makeItem("minecraft:stone", 1), p, b::Up), "stone applies");
     bool pushed = false;

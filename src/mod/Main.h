@@ -2,9 +2,9 @@
 
 #include "ll/api/mod/NativeMod.h"
 
-namespace lv {
+namespace br {
 
-/// Mod entry point. It only drives the module registry (`LV_REGISTER_MODULE`); features never
+/// Mod entry point. It only drives the module registry (`BR_REGISTER_MODULE`); features never
 /// need to edit this file.
 class Mod {
 public:
@@ -25,4 +25,4 @@ private:
     bool                mEnabled = false;
 };
 
-} // namespace lv
+} // namespace br

@@ -1,9 +1,9 @@
 // Building unit: Create's sliding doors (SlidingDoorBlock: two halves, slide or fold open,
 // double doors open together, redstone) and train / framed glass trapdoors.
 //
-// States: levitate:facing 2..5, levitate:upper, levitate:hinge (0 left, 1 right),
-// levitate:open, levitate:powered; trapdoors: levitate:facing, levitate:top, levitate:open,
-// levitate:powered. Custom blocks get no neighbour updates, so the unit polls the redstone input
+// States: bearing:facing 2..5, bearing:upper, bearing:hinge (0 left, 1 right),
+// bearing:open, bearing:powered; trapdoors: bearing:facing, bearing:top, bearing:open,
+// bearing:powered. Custom blocks get no neighbour updates, so the unit polls the redstone input
 // of the doors and trapdoors it knows every 2 ticks (SPEC §8).
 
 #include <map>
@@ -21,11 +21,11 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace {
 
-constexpr char kDbRedstone[] = "lv:building:redstone";
+constexpr char kDbRedstone[] = "br:building:redstone";
 
 std::set<GlobalPos>& tracked() {
     static std::set<GlobalPos> s;
@@ -52,18 +52,18 @@ void doorSound(GlobalPos const& p, Info const& info, bool open) {
 /// The other door of a double door (Java SlidingDoorBlock.isDoubleDoor, `state` already toggled).
 std::optional<GlobalPos> doubleDoorPartner(GlobalPos const& lower, Block const& state) {
     int  facing = hfacingOf(state);
-    int  hinge  = stateOf(state, "levitate:hinge");
+    int  hinge  = stateOf(state, "bearing:hinge");
     auto other  = offset(lower, hinge == 0 ? clockwise(facing) : counterClockwise(facing));
     auto const* o = blockAt(other);
     if (!o || o->getTypeName() != state.getTypeName()) return std::nullopt;
-    if (stateOf(*o, "levitate:hinge") == hinge || hfacingOf(*o) != facing) return std::nullopt;
-    if (stateOf(*o, "levitate:open") == stateOf(state, "levitate:open")) return std::nullopt;
-    if (stateOf(*o, "levitate:upper") != stateOf(state, "levitate:upper")) return std::nullopt;
+    if (stateOf(*o, "bearing:hinge") == hinge || hfacingOf(*o) != facing) return std::nullopt;
+    if (stateOf(*o, "bearing:open") == stateOf(state, "bearing:open")) return std::nullopt;
+    if (stateOf(*o, "bearing:upper") != stateOf(state, "bearing:upper")) return std::nullopt;
     return other;
 }
 
 /// Doors animating shut (lower half -> ticks left). Create's SlidingDoorBlockEntity chases its
-/// animation at 0.15 per tick: a closing door keeps its open collision (`levitate:closing`) until
+/// animation at 0.15 per tick: a closing door keeps its open collision (`bearing:closing`) until
 /// the panel is back, then plays the close sound once more (volume 0.5).
 std::map<GlobalPos, int>& closingDoors() {
     static std::map<GlobalPos, int> m;
@@ -74,21 +74,21 @@ constexpr int kCloseTicks = 7; // ceil(1 / 0.15)
 /// Sets open / powered on both halves of the door whose lower half is at `lower`.
 void setDoor(GlobalPos const& lower, int open, std::optional<int> powered) {
     auto const* lb      = blockAt(lower);
-    bool        closing = open == 0 && lb && isKind(lb, Kind::Door) && stateOf(*lb, "levitate:open") != 0;
+    bool        closing = open == 0 && lb && isKind(lb, Kind::Door) && stateOf(*lb, "bearing:open") != 0;
     for (auto const& p : {lower, offset(lower, Up)}) {
         auto const* b = blockAt(p);
         if (!isKind(b, Kind::Door)) continue;
-        Block const* n = withStates(*b, {{"levitate:open", open}});
-        if (powered) n = withStates(*n, {{"levitate:powered", *powered}});
-        if (closing) n = withStates(*n, {{"levitate:closing", 1}});
-        else if (open) n = withStates(*n, {{"levitate:closing", 0}});
+        Block const* n = withStates(*b, {{"bearing:open", open}});
+        if (powered) n = withStates(*n, {{"bearing:powered", *powered}});
+        if (closing) n = withStates(*n, {{"bearing:closing", 1}});
+        else if (open) n = withStates(*n, {{"bearing:closing", 0}});
         if (n && n != b) set(p, *n);
     }
     if (closing) closingDoors()[lower] = kCloseTicks;
     else if (open) closingDoors().erase(lower);
 }
 
-GlobalPos lowerHalf(GlobalPos const& p, Block const& b) { return stateOf(b, "levitate:upper") ? offset(p, Down) : p; }
+GlobalPos lowerHalf(GlobalPos const& p, Block const& b) { return stateOf(b, "bearing:upper") ? offset(p, Down) : p; }
 
 } // namespace
 
@@ -103,9 +103,9 @@ bool useDoor(Player* player, GlobalPos const& pos) {
     auto        lower = lowerHalf(pos, *b);
     auto const* lb    = blockAt(lower);
     if (!isKind(lb, Kind::Door)) return false;
-    int open = stateOf(*lb, "levitate:open") ? 0 : 1;
+    int open = stateOf(*lb, "bearing:open") ? 0 : 1;
     // Java useWithoutItem: toggle, then the double door partner (it was in the opposite state)
-    auto const* toggled = withStates(*lb, {{"levitate:open", open}});
+    auto const* toggled = withStates(*lb, {{"bearing:open", open}});
     auto        partner = doubleDoorPartner(lower, *toggled);
     setDoor(lower, open, std::nullopt);
     if (partner) setDoor(*partner, open, std::nullopt);
@@ -119,8 +119,8 @@ bool useTrapdoor(Player* player, GlobalPos const& pos) {
     auto const* b = blockAt(pos);
     if (!isKind(b, Kind::Trapdoor)) return false;
     auto const& info = *infoOf(*b);
-    int         open = stateOf(*b, "levitate:open") ? 0 : 1;
-    set(pos, *withStates(*b, {{"levitate:open", open}}));
+    int         open = stateOf(*b, "bearing:open") ? 0 : 1;
+    set(pos, *withStates(*b, {{"bearing:open", open}}));
     playSound(pos, open ? "open.iron_trapdoor" : "close.iron_trapdoor", 1.f, 0.95f);
     log().info("building: {} at {} {} {} {}{}", info.id, pos.x, pos.y, pos.z, open ? "opened" : "closed", player ? " by " + player->getRealName() : std::string());
     return true;
@@ -136,10 +136,10 @@ void doorAnimationTick() {
         GlobalPos lower = it->first;
         it              = m.erase(it);
         auto const* b   = blockAt(lower);
-        if (!isKind(b, Kind::Door) || stateOf(*b, "levitate:open") != 0 || !stateOf(*b, "levitate:closing")) continue;
+        if (!isKind(b, Kind::Door) || stateOf(*b, "bearing:open") != 0 || !stateOf(*b, "bearing:closing")) continue;
         for (auto const& p : {lower, offset(lower, Up)}) {
             auto const* h = blockAt(p);
-            if (isKind(h, Kind::Door)) set(p, *withStates(*h, {{"levitate:closing", 0}}));
+            if (isKind(h, Kind::Door)) set(p, *withStates(*h, {{"bearing:closing", 0}}));
         }
         playSound(lower, "close.iron_door", 0.5f, 1.f); // Create: the panel is back
     }
@@ -151,20 +151,20 @@ void redstoneTick() {
         auto const* b = blockAt(p);
         if (!b) continue;
         auto const* info = infoOf(*b);
-        if (info && info->kind == Kind::Door && !stateOf(*b, "levitate:upper")) {
+        if (info && info->kind == Kind::Door && !stateOf(*b, "bearing:upper")) {
             // saved while closing: finish the animation
-            if (stateOf(*b, "levitate:closing") && !closingDoors().contains(p)) closingDoors()[p] = kCloseTicks;
+            if (stateOf(*b, "bearing:closing") && !closingDoors().contains(p)) closingDoors()[p] = kCloseTicks;
             // Java isDoorPowered: either half, or either half of the double door partner
             bool powered = hasNeighborSignal(p) || hasNeighborSignal(offset(p, Up));
             int  facing  = hfacingOf(*b);
-            int  hinge   = stateOf(*b, "levitate:hinge");
+            int  hinge   = stateOf(*b, "bearing:hinge");
             auto other   = offset(p, hinge == 0 ? clockwise(facing) : counterClockwise(facing));
-            if (auto const* o = blockAt(other); o && o->getTypeName() == info->id && stateOf(*o, "levitate:hinge") != hinge
-                                                 && hfacingOf(*o) == facing && !stateOf(*o, "levitate:upper")) {
+            if (auto const* o = blockAt(other); o && o->getTypeName() == info->id && stateOf(*o, "bearing:hinge") != hinge
+                                                 && hfacingOf(*o) == facing && !stateOf(*o, "bearing:upper")) {
                 powered = powered || hasNeighborSignal(other) || hasNeighborSignal(offset(other, Up));
             }
-            if (powered == (stateOf(*b, "levitate:powered") != 0)) continue;
-            bool wasOpen = stateOf(*b, "levitate:open") != 0;
+            if (powered == (stateOf(*b, "bearing:powered") != 0)) continue;
+            bool wasOpen = stateOf(*b, "bearing:open") != 0;
             setDoor(p, powered, powered);
             if (powered != wasOpen) {
                 doorSound(p, *info, powered);
@@ -176,9 +176,9 @@ void redstoneTick() {
         }
         if (info && info->kind == Kind::Trapdoor) {
             bool powered = hasNeighborSignal(p);
-            if (powered == (stateOf(*b, "levitate:powered") != 0)) continue;
-            bool wasOpen = stateOf(*b, "levitate:open") != 0;
-            set(p, *withStates(*b, {{"levitate:powered", powered}, {"levitate:open", powered}}));
+            if (powered == (stateOf(*b, "bearing:powered") != 0)) continue;
+            bool wasOpen = stateOf(*b, "bearing:open") != 0;
+            set(p, *withStates(*b, {{"bearing:powered", powered}, {"bearing:open", powered}}));
             if (powered != wasOpen) {
                 playSound(p, powered ? "open.iron_trapdoor" : "close.iron_trapdoor", 1.f, 0.95f);
                 log().info("building: {} at {} {} {} {} by redstone", info->id, p.x, p.y, p.z, powered ? "opened" : "closed");
@@ -214,7 +214,7 @@ void placeDoor(Player& player, GlobalPos const& pos, Vec3 const& hitRel, double 
           + (full(offset(offset(pos, cw), Up)) ? 1 : 0);
     auto doorAt = [&](GlobalPos const& q) {
         auto const* d = blockAt(q);
-        return d && d->getTypeName() == info.id && !stateOf(*d, "levitate:upper");
+        return d && d->getTypeName() == info.id && !stateOf(*d, "bearing:upper");
     };
     bool ccwDoor = doorAt(offset(pos, ccw)), cwDoor = doorAt(offset(pos, cw));
     int  hinge   = 0;
@@ -230,9 +230,9 @@ void placeDoor(Player& player, GlobalPos const& pos, Vec3 const& hitRel, double 
     } else {
         hinge = 1;
     }
-    auto const* lower = withStates(*b, {{"levitate:facing", facing}, {"levitate:hinge", hinge}, {"levitate:upper", 0}, {"levitate:open", 0}, {"levitate:powered", 0}});
+    auto const* lower = withStates(*b, {{"bearing:facing", facing}, {"bearing:hinge", hinge}, {"bearing:upper", 0}, {"bearing:open", 0}, {"bearing:powered", 0}});
     set(pos, *lower);
-    set(upper, *withStates(*lower, {{"levitate:upper", 1}}));
+    set(upper, *withStates(*lower, {{"bearing:upper", 1}}));
     trackRedstone(pos);
     log().info("building: {} placed at {} {} {} (facing {}, hinge {})", info.id, pos.x, pos.y, pos.z, kDirNames[facing], hinge ? "right" : "left");
 }
@@ -243,27 +243,27 @@ void doorHalfChanged(GlobalPos const& pos, Block const& previous, Block const& n
     if (!info || info->kind != Kind::Door) return;
     if (infoOf(now) == info) {
         // a state change of one half (open, powered): mirror it onto the other half
-        int  upper = stateOf(now, "levitate:upper");
+        int  upper = stateOf(now, "bearing:upper");
         auto other = offset(pos, upper ? Down : Up);
         defer([pos, other, upper, id = info->id] {
             auto const* a = blockAt(pos);
             auto const* o = blockAt(other);
-            if (!a || !o || a->getTypeName() != id || o->getTypeName() != id || stateOf(*o, "levitate:upper") == upper) return;
-            auto const* n = withStates(*o, {{"levitate:open", stateOf(*a, "levitate:open")},
-                                            {"levitate:powered", stateOf(*a, "levitate:powered")},
-                                            {"levitate:closing", stateOf(*a, "levitate:closing")},
-                                            {"levitate:facing", hfacingOf(*a)},
-                                            {"levitate:hinge", stateOf(*a, "levitate:hinge")}});
+            if (!a || !o || a->getTypeName() != id || o->getTypeName() != id || stateOf(*o, "bearing:upper") == upper) return;
+            auto const* n = withStates(*o, {{"bearing:open", stateOf(*a, "bearing:open")},
+                                            {"bearing:powered", stateOf(*a, "bearing:powered")},
+                                            {"bearing:closing", stateOf(*a, "bearing:closing")},
+                                            {"bearing:facing", hfacingOf(*a)},
+                                            {"bearing:hinge", stateOf(*a, "bearing:hinge")}});
             if (n && n != o) set(other, *n);
         });
         return;
     }
     // the half is gone: remove the other one (the lower half carries the drop)
-    int  upper = stateOf(previous, "levitate:upper");
+    int  upper = stateOf(previous, "bearing:upper");
     auto other = offset(pos, upper ? Down : Up);
     defer([other, upper, id = info->id, creativeBreak] {
         auto const* o = blockAt(other);
-        if (!o || o->getTypeName() != id || stateOf(*o, "levitate:upper") == upper) return;
+        if (!o || o->getTypeName() != id || stateOf(*o, "bearing:upper") == upper) return;
         clear(other);
         // breaking the upper half breaks the lower one, which drops the door (Create's loot table)
         if (upper && !creativeBreak) drop(other, makeItem(id));
@@ -292,4 +292,4 @@ void clearRedstone() {
 
 } // namespace detail
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

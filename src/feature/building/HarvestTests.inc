@@ -15,10 +15,10 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace bld   = lv::feature::building;
-namespace items = lv::feature::common::items;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace bld   = br::feature::building;
+namespace items = br::feature::common::items;
 
 ItemStack u59Tool(Context& ctx, std::string const& id) {
     auto s = items::make(id, 1);
@@ -34,52 +34,52 @@ bool u59Drops(Context& ctx, char const* block, std::string const& toolId) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("building.u59_harvest_tools", [](Context& ctx) {
+BR_REGISTER_SELFTEST("building.u59_harvest_tools", [](Context& ctx) {
     // casings: axe or pickaxe
-    ctx.check(!u59Drops(ctx, "levitate:andesite_casing", ""), "a punched andesite casing drops nothing");
-    ctx.check(u59Drops(ctx, "levitate:andesite_casing", "minecraft:wooden_axe"), "an axe harvests a casing");
-    ctx.check(u59Drops(ctx, "levitate:railway_casing", "minecraft:wooden_pickaxe"), "a pickaxe harvests the railway casing");
+    ctx.check(!u59Drops(ctx, "bearing:andesite_casing", ""), "a punched andesite casing drops nothing");
+    ctx.check(u59Drops(ctx, "bearing:andesite_casing", "minecraft:wooden_axe"), "an axe harvests a casing");
+    ctx.check(u59Drops(ctx, "bearing:railway_casing", "minecraft:wooden_pickaxe"), "a pickaxe harvests the railway casing");
     // copper roofing: a stone pickaxe at least
-    ctx.check(!u59Drops(ctx, "levitate:copper_shingles", "minecraft:wooden_pickaxe"), "copper shingles need more than a wooden pickaxe");
-    ctx.check(u59Drops(ctx, "levitate:copper_shingles", "minecraft:stone_pickaxe"), "a stone pickaxe harvests copper shingles");
-    ctx.check(u59Drops(ctx, "levitate:waxed_oxidized_copper_tile_slab", "minecraft:iron_pickaxe"), "an iron pickaxe harvests copper tile slabs");
+    ctx.check(!u59Drops(ctx, "bearing:copper_shingles", "minecraft:wooden_pickaxe"), "copper shingles need more than a wooden pickaxe");
+    ctx.check(u59Drops(ctx, "bearing:copper_shingles", "minecraft:stone_pickaxe"), "a stone pickaxe harvests copper shingles");
+    ctx.check(u59Drops(ctx, "bearing:waxed_oxidized_copper_tile_slab", "minecraft:iron_pickaxe"), "an iron pickaxe harvests copper tile slabs");
     // pickaxe only
-    for (auto const* b : {"levitate:andesite_bars", "levitate:brass_door", "levitate:train_trapdoor", "levitate:metal_girder", "levitate:placard",
-                          "levitate:copper_table_cloth"}) {
+    for (auto const* b : {"bearing:andesite_bars", "bearing:brass_door", "bearing:train_trapdoor", "bearing:metal_girder", "bearing:placard",
+                          "bearing:copper_table_cloth"}) {
         ctx.check(!u59Drops(ctx, b, "minecraft:wooden_axe"), std::string(b) + " needs a pickaxe");
         ctx.check(u59Drops(ctx, b, "minecraft:wooden_pickaxe"), std::string(b) + " drops with one");
     }
     // anything goes
-    for (auto const* b : {"levitate:framed_glass", "levitate:andesite_scaffolding", "levitate:andesite_ladder", "levitate:white_table_cloth",
-                          "levitate:wooden_bracket", "levitate:oak_window"})
+    for (auto const* b : {"bearing:framed_glass", "bearing:andesite_scaffolding", "bearing:andesite_ladder", "bearing:white_table_cloth",
+                          "bearing:wooden_bracket", "bearing:oak_window"})
         ctx.check(u59Drops(ctx, b, ""), std::string(b) + " drops by hand");
     // an empty copycat is copycat_base (axe or pickaxe); with a material, the material's rule
-    auto const* panel = bld::infoOf(std::string_view("levitate:copycat_panel"));
+    auto const* panel = bld::infoOf(std::string_view("bearing:copycat_panel"));
     ctx.check(!bld::canHarvest(*panel, nullptr, ItemStack{}), "an empty copycat needs a tool");
-    auto const* planks = lv::game::blockWith("minecraft:oak_planks");
+    auto const* planks = br::game::blockWith("minecraft:oak_planks");
     ctx.require(planks != nullptr, "oak planks");
     ctx.check(bld::canHarvest(*panel, planks, ItemStack{}), "a copycat of planks drops by hand");
 });
 
-LV_REGISTER_SELFTEST("building.u59_copycat_material", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("building.u59_copycat_material", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5920);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& player = ctx.player();
     // CopycatBlockEntity.updateLight: a glowstone copycat glows at 15
-    ctx.require(ctx.setBlock(p, "levitate:copycat_panel", {{"levitate:facing", 1}}), "a copycat panel");
+    ctx.require(ctx.setBlock(p, "bearing:copycat_panel", {{"bearing:facing", 1}}), "a copycat panel");
     ctx.require(bld::useCopycat(player, u59Tool(ctx, "minecraft:glowstone"), p, 1), "glowstone goes on it");
     auto const* b = bld::blockAt(p);
-    ctx.check(b && bld::stateOf(*b, "levitate:light") == 15, "the panel gives light 15");
-    ctx.require(bld::useCopycat(player, u59Tool(ctx, "levitate:wrench"), p, 1), "the wrench resets it");
+    ctx.check(b && bld::stateOf(*b, "bearing:light") == 15, "the panel gives light 15");
+    ctx.require(bld::useCopycat(player, u59Tool(ctx, "bearing:wrench"), p, 1), "the wrench resets it");
     b = bld::blockAt(p);
-    ctx.check(b && bld::stateOf(*b, "levitate:light") == 0, "and the light goes");
+    ctx.check(b && bld::stateOf(*b, "bearing:light") == 0, "and the light goes");
     // getAcceptedBlockState: #copycat_allow (a barrel) and blocks without a block entity (a crafting
     // table); not #copycat_deny, block entities or stairs
     ctx.check(bld::useCopycat(player, u59Tool(ctx, "minecraft:crafting_table"), p, 1), "a crafting table is accepted");
-    ctx.require(bld::useCopycat(player, u59Tool(ctx, "levitate:wrench"), p, 1), "reset");
+    ctx.require(bld::useCopycat(player, u59Tool(ctx, "bearing:wrench"), p, 1), "reset");
     ctx.check(bld::useCopycat(player, u59Tool(ctx, "minecraft:barrel"), p, 1), "a barrel is accepted (copycat_allow)");
-    ctx.require(bld::useCopycat(player, u59Tool(ctx, "levitate:wrench"), p, 1), "reset");
+    ctx.require(bld::useCopycat(player, u59Tool(ctx, "bearing:wrench"), p, 1), "reset");
     ctx.check(!bld::useCopycat(player, u59Tool(ctx, "minecraft:chest"), p, 1), "a chest is not");
     ctx.check(!bld::useCopycat(player, u59Tool(ctx, "minecraft:oak_stairs"), p, 1), "stairs are not");
     // CopycatBlock.playerWillDestroy: a creative player's break keeps the material

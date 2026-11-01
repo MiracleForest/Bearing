@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_diorite_wall"
+      "identifier": "bearing:cut_diorite_wall"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_diorite"
+        "item": "bearing:cut_diorite"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_diorite"
+        "item": "bearing:cut_diorite"
       }
     ],
     "result": {
-      "item": "levitate:cut_diorite_wall",
+      "item": "bearing:cut_diorite_wall",
       "count": 6
     }
   }

@@ -22,7 +22,7 @@ Invoke-Chat '/time set noon'
 # U48: the wrench held in first person (two shots 2 s apart: the cog turns 20 degrees), then in
 # third person from the front and from behind
 Invoke-Chat '/tp @s 0.5 -60 0.5 -90 10'
-Invoke-Chat '/replaceitem entity @s slot.hotbar 0 levitate:wrench'
+Invoke-Chat '/replaceitem entity @s slot.hotbar 0 bearing:wrench'
 Press-Key '1'
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'wrench-first-person-1' | Out-Null
@@ -41,12 +41,12 @@ Invoke-Chat '/clear @s'
 Invoke-Chat '/tp @s 0.5 -60 0.5'
 Start-Sleep -Milliseconds 500
 foreach ($y in -60, -59, -58) {
-    Invoke-Chat "/setblock 4 $y 0 levitate:kinetics_test_source [`"levitate:axis`"=0]"
-    Invoke-Chat "/setblock 3 $y 0 levitate:kinetics_test_consumer [`"levitate:axis`"=0]"
+    Invoke-Chat "/setblock 4 $y 0 bearing:kinetics_test_source [`"bearing:axis`"=0]"
+    Invoke-Chat "/setblock 3 $y 0 bearing:kinetics_test_consumer [`"bearing:axis`"=0]"
 }
 $mark = Get-LogMark
 Invoke-Chat '/tp @s 0.5 -60 0.5 facing 3.5 -58.5 0.5'   # the top consumer (the camera sits higher than the feet + 1.62)
-Invoke-Chat '/replaceitem entity @s slot.armor.head 0 levitate:goggles'
+Invoke-Chat '/replaceitem entity @s slot.armor.head 0 bearing:goggles'
 Start-Sleep -Seconds 1
 
 if ($vanilla) {
@@ -84,13 +84,13 @@ Invoke-Chat '/create overlay reset'
 Wait-LogLine 'goggles: overlay offset reset' 20 -Since $mark | Out-Null
 
 # the wrench turns a consumer along z clicked on its west face (about the x axis) to y
-foreach ($y in -60, -59, -58) { Invoke-Chat "/setblock 3 $y 0 levitate:kinetics_test_consumer [`"levitate:axis`"=2]" }
-Invoke-Chat '/give @s levitate:wrench 1'
+foreach ($y in -60, -59, -58) { Invoke-Chat "/setblock 3 $y 0 bearing:kinetics_test_consumer [`"bearing:axis`"=2]" }
+Invoke-Chat '/give @s bearing:wrench 1'
 Press-Key '1'
 Start-Sleep -Milliseconds 800
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
-Wait-LogLine 'wrench: \S+ rotated levitate:kinetics_test_consumer' 20 -Since $mark | Out-Null
+Wait-LogLine 'wrench: \S+ rotated bearing:kinetics_test_consumer' 20 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 800
 Save-Screenshot 'wrenched' | Out-Null
 

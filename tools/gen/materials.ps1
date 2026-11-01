@@ -52,8 +52,8 @@ $cppBlocks = [System.Collections.Generic.List[string]]::new()
 function Add-Name([string]$id, [string]$kind) {
     $n = NameOf $id
     $prefix = if ($kind -eq 'block') { 'tile' } else { 'item' }
-    $enLang.Add("$prefix.levitate:$id.name=$($n.en)")
-    $zhLang.Add("$prefix.levitate:$id.name=$($n.zh)")
+    $enLang.Add("$prefix.bearing:$id.name=$($n.en)")
+    $zhLang.Add("$prefix.bearing:$id.name=$($n.zh)")
 }
 function Tex([string]$key, [string]$file) { if (!$terrainTextures.Contains($key)) { $terrainTextures[$key] = O textures "textures/blocks/$file" } }
 
@@ -93,10 +93,10 @@ Item 'honeyed_apple' 64 'items' (Food 8 0.8)
 Item 'builders_tea' 16 'items' (Food 1 0.6 2.1 $true 'drink' 'minecraft:glass_bottle')
 
 foreach ($it in $items) {
-    $comp = O 'minecraft:icon' "levitate_$($it.id)" 'minecraft:display_name' (O value "item.levitate:$($it.id).name") 'minecraft:max_stack_size' $it.stack
+    $comp = O 'minecraft:icon' "bearing_$($it.id)" 'minecraft:display_name' (O value "item.bearing:$($it.id).name") 'minecraft:max_stack_size' $it.stack
     if ($it.extra) { foreach ($k in $it.extra.Keys) { $comp[$k] = $it.extra[$k] } }
-    Save-Json "assets/pack/bp/items/$($it.id).json" (O format_version '1.21.70' 'minecraft:item' (O description (O identifier "levitate:$($it.id)" menu_category (O category $it.cat)) components $comp))
-    $itemTextures["levitate_$($it.id)"] = O textures "textures/items/$($it.id)"
+    Save-Json "assets/pack/bp/items/$($it.id).json" (O format_version '1.21.70' 'minecraft:item' (O description (O identifier "bearing:$($it.id)" menu_category (O category $it.cat)) components $comp))
+    $itemTextures["bearing_$($it.id)"] = O textures "textures/items/$($it.id)"
     Add-Name $it.id 'item'
 }
 
@@ -115,7 +115,7 @@ function Base-Components($b) {
 }
 function Mat([string]$tex) { O texture $tex render_method 'opaque' }
 function Block-Doc($b, $components, $states = $null, $traits = $null, $perms = $null) {
-    $desc = O identifier "levitate:$($b.id)" menu_category (O category $b.cat)
+    $desc = O identifier "bearing:$($b.id)" menu_category (O category $b.cat)
     if ($b.group) { $desc.menu_category['group'] = $b.group }
     if ($states) { $desc['states'] = $states }
     if ($traits) { $desc['traits'] = $traits }
@@ -131,12 +131,12 @@ function Save-Loot([string]$name, [string]$item, [int]$count = 1, $extra = @()) 
     Save-Json "assets/pack/bp/loot_tables/blocks/$name.json" (O pools $pools)
 }
 function Register-Block($b, [string]$shape, [string]$drop = 'self') {
-    $blockSounds["levitate:$($b.id)"] = O sound $b.sound
+    $blockSounds["bearing:$($b.id)"] = O sound $b.sound
     Add-Name $b.id 'block'
     $tool = if ($b.tool) { $b.tool } else { 'pickaxe' }
     $tier = if ($b.tier) { $b.tier } else { 'none' }
     $up = { param($s) $s.Substring(0, 1).ToUpperInvariant() + $s.Substring(1) }
-    $cppBlocks.Add("LV_MATERIALS_BLOCK(`"levitate:$($b.id)`", Tool::$(& $up $tool), Tier::$(& $up $tier), Shape::$(& $up $shape), Drop::$(& $up $drop))")
+    $cppBlocks.Add("BR_MATERIALS_BLOCK(`"bearing:$($b.id)`", Tool::$(& $up $tool), Tier::$(& $up $tier), Shape::$(& $up $shape), Drop::$(& $up $drop))")
 }
 
 # full cube: $faces = @{ '*' = tex; up = tex; ... }
@@ -146,7 +146,7 @@ function Cube-Block($b, $faces, [string]$drop = 'self', [string]$lootItem = $nul
     $mi = [ordered]@{}; foreach ($k in $faces.Keys) { $mi[$k] = Mat $faces[$k] }
     $c['minecraft:material_instances'] = $mi
     Save-Json "assets/pack/bp/blocks/$($b.id).json" (Block-Doc $b $c)
-    Save-Loot $b.id ($(if ($lootItem) { $lootItem } else { "levitate:$($b.id)" }))
+    Save-Loot $b.id ($(if ($lootItem) { $lootItem } else { "bearing:$($b.id)" }))
     Register-Block $b 'cube' $drop
 }
 # rotated pillar (Create's RotatedPillarBlock, axis from the clicked face)
@@ -160,7 +160,7 @@ function Pillar-Block($b, [string]$side, [string]$end) {
     )
     $traits = O 'minecraft:placement_position' (O enabled_states @('minecraft:block_face'))
     Save-Json "assets/pack/bp/blocks/$($b.id).json" (Block-Doc $b $c $null $traits $perms)
-    Save-Loot $b.id "levitate:$($b.id)"
+    Save-Loot $b.id "bearing:$($b.id)"
     Register-Block $b 'pillar'
 }
 # horizontal axis (Create's cardboard blocks: axis of the player's horizontal facing)
@@ -199,8 +199,8 @@ foreach ($q in $quarters.Keys) {
     $stairBones += Geo-Bone "upper_$q" @(Geo-Cube @($p[0], 8, $p[1]) @(8, 8, 8))
     $stairBones += Geo-Bone "lower_$q" @(Geo-Cube @($p[0], 0, $p[1]) @(8, 8, 8))
 }
-Save-Geo 'materials_stairs.geo.json' 'geometry.levitate.materials_stairs' $stairBones
-Save-Geo 'materials_slab.geo.json' 'geometry.levitate.materials_slab' @((Geo-Bone 'bottom' @(Geo-Cube @(0, 0, 0) @(16, 8, 16))), (Geo-Bone 'top' @(Geo-Cube @(0, 8, 0) @(16, 8, 16))))
+Save-Geo 'materials_stairs.geo.json' 'geometry.bearing.materials_stairs' $stairBones
+Save-Geo 'materials_slab.geo.json' 'geometry.bearing.materials_slab' @((Geo-Bone 'bottom' @(Geo-Cube @(0, 0, 0) @(16, 8, 16))), (Geo-Bone 'top' @(Geo-Cube @(0, 8, 0) @(16, 8, 16))))
 # Java wall: post 4..12 (16 high), sides 5..11 wide reaching the block edge, low 14 / tall 16 high.
 $wallSides = [ordered]@{ north = @(@(5, 0, 0), @(6, 14, 8)); south = @(@(5, 0, 8), @(6, 14, 8)); west = @(@(0, 0, 5), @(8, 14, 6)); east = @(@(8, 0, 5), @(8, 14, 6)) }
 $wallBones = @(Geo-Bone 'post' @(Geo-Cube @(4, 0, 4) @(8, 16, 8)))
@@ -209,7 +209,7 @@ foreach ($k in $wallSides.Keys) {
     $tall = @($wallSides[$k][1][0], 16, $wallSides[$k][1][2])
     $wallBones += Geo-Bone "${k}_tall" @(Geo-Cube $wallSides[$k][0] $tall)
 }
-Save-Geo 'materials_wall.geo.json' 'geometry.levitate.materials_wall' $wallBones
+Save-Geo 'materials_wall.geo.json' 'geometry.bearing.materials_wall' $wallBones
 
 function Box([int]$x0, [int]$y0, [int]$z0, [int]$sx, [int]$sy, [int]$sz) { O origin @(($x0 - 8), $y0, ($z0 - 8)) size @($sx, $sy, $sz) }
 $dirs = [ordered]@{ north = @(0, -1); east = @(1, 0); south = @(0, 1); west = @(-1, 0) }
@@ -227,7 +227,7 @@ function Quarter([string]$dir, [int]$back, [int]$left) {
 
 function Stairs-Block($b, [string]$tex, [string[]]$allStairs) {
     $c = Base-Components $b
-    $c['minecraft:geometry'] = 'geometry.levitate.materials_stairs'
+    $c['minecraft:geometry'] = 'geometry.bearing.materials_stairs'
     $c['minecraft:material_instances'] = O '*' (Mat $tex)
     $c['minecraft:selection_box'] = Box 0 0 0 16 16 16
     $perms = @()
@@ -246,49 +246,49 @@ function Stairs-Block($b, [string]$tex, [string[]]$allStairs) {
                     $boxes += Box $p[0] ($(if ($half -eq 'bottom') { 8 } else { 0 })) $p[1] 8 8 8
                 }
                 $perms += O condition "q.block_state('minecraft:vertical_half') == '$half' && q.block_state('minecraft:cardinal_direction') == '$dir' && q.block_state('minecraft:corner') == '$corner'" `
-                    components (O 'minecraft:geometry' (O identifier 'geometry.levitate.materials_stairs' bone_visibility $vis) 'minecraft:collision_box' $boxes)
+                    components (O 'minecraft:geometry' (O identifier 'geometry.bearing.materials_stairs' bone_visibility $vis) 'minecraft:collision_box' $boxes)
             }
         }
     }
     $traits = O 'minecraft:placement_direction' (O enabled_states @('minecraft:corner_and_cardinal_direction') blocks_to_corner_with @($allStairs)) `
         'minecraft:placement_position' (O enabled_states @('minecraft:vertical_half'))
     Save-Json "assets/pack/bp/blocks/$($b.id).json" (Block-Doc $b $c $null $traits $perms)
-    Save-Loot $b.id "levitate:$($b.id)"
+    Save-Loot $b.id "bearing:$($b.id)"
     Register-Block $b 'stairs'
 }
 
-# Slab: Create's bottom/top/double as minecraft:vertical_half + levitate:double (the mod merges a
+# Slab: Create's bottom/top/double as minecraft:vertical_half + bearing:double (the mod merges a
 # second slab into a single one and drops two).
 function Slab-Block($b, [string]$top, [string]$side, [string]$doubleTex) {
     $c = Base-Components $b
-    $c['minecraft:geometry'] = O identifier 'geometry.levitate.materials_slab' bone_visibility (O bottom "q.block_state('minecraft:vertical_half') == 'bottom'" top "q.block_state('minecraft:vertical_half') == 'top'")
+    $c['minecraft:geometry'] = O identifier 'geometry.bearing.materials_slab' bone_visibility (O bottom "q.block_state('minecraft:vertical_half') == 'bottom'" top "q.block_state('minecraft:vertical_half') == 'top'")
     $c['minecraft:material_instances'] = O '*' (Mat $side) up (Mat $top) down (Mat $top)
     $c['minecraft:collision_box'] = Box 0 0 0 16 8 16
     $c['minecraft:selection_box'] = Box 0 0 0 16 8 16
     $perms = @(
-        (O condition "q.block_state('minecraft:vertical_half') == 'top' && !q.block_state('levitate:double')" components (O 'minecraft:collision_box' (Box 0 8 0 16 8 16) 'minecraft:selection_box' (Box 0 8 0 16 8 16))),
-        (O condition "q.block_state('levitate:double')" components (O 'minecraft:geometry' 'minecraft:geometry.full_block' 'minecraft:collision_box' $true 'minecraft:selection_box' $true 'minecraft:material_instances' (O '*' (Mat $doubleTex)) 'minecraft:loot' "loot_tables/blocks/$($b.id)_double.json"))
+        (O condition "q.block_state('minecraft:vertical_half') == 'top' && !q.block_state('bearing:double')" components (O 'minecraft:collision_box' (Box 0 8 0 16 8 16) 'minecraft:selection_box' (Box 0 8 0 16 8 16))),
+        (O condition "q.block_state('bearing:double')" components (O 'minecraft:geometry' 'minecraft:geometry.full_block' 'minecraft:collision_box' $true 'minecraft:selection_box' $true 'minecraft:material_instances' (O '*' (Mat $doubleTex)) 'minecraft:loot' "loot_tables/blocks/$($b.id)_double.json"))
     )
     $traits = O 'minecraft:placement_position' (O enabled_states @('minecraft:vertical_half'))
-    Save-Json "assets/pack/bp/blocks/$($b.id).json" (Block-Doc $b $c (O 'levitate:double' @($false, $true)) $traits $perms)
-    Save-Loot $b.id "levitate:$($b.id)"
-    Save-Loot "$($b.id)_double" "levitate:$($b.id)" 2
+    Save-Json "assets/pack/bp/blocks/$($b.id).json" (Block-Doc $b $c (O 'bearing:double' @($false, $true)) $traits $perms)
+    Save-Loot $b.id "bearing:$($b.id)"
+    Save-Loot "$($b.id)_double" "bearing:$($b.id)" 2
     Register-Block $b 'slab'
 }
 
 # Wall: Bedrock's connection trait gives the four connections; the mod adds Java's WallBlock
-# rules (src/feature/materials/MaterialsConnections.cpp): levitate:up (the post: unless straight,
-# or forced by the block above) and levitate:tall_<dir> (a side covered by the block above is 16
+# rules (src/feature/materials/MaterialsConnections.cpp): bearing:up (the post: unless straight,
+# or forced by the block above) and bearing:tall_<dir> (a side covered by the block above is 16
 # high instead of 14). The collision (24 px as Java) comes from the mod's collision hook; the JSON
 # boxes are what vanilla clients predict with (Bedrock caps them at 16 px).
 function Wall-Block($b, [string]$tex) {
     $c = Base-Components $b
-    $vis = O post "q.block_state('levitate:up') == 1"
+    $vis = O post "q.block_state('bearing:up') == 1"
     foreach ($k in $wallSides.Keys) {
-        $vis[$k] = "q.block_state('minecraft:connection_$k') && q.block_state('levitate:tall_$k') == 0"
-        $vis["${k}_tall"] = "q.block_state('minecraft:connection_$k') && q.block_state('levitate:tall_$k') == 1"
+        $vis[$k] = "q.block_state('minecraft:connection_$k') && q.block_state('bearing:tall_$k') == 0"
+        $vis["${k}_tall"] = "q.block_state('minecraft:connection_$k') && q.block_state('bearing:tall_$k') == 1"
     }
-    $c['minecraft:geometry'] = O identifier 'geometry.levitate.materials_wall' bone_visibility $vis
+    $c['minecraft:geometry'] = O identifier 'geometry.bearing.materials_wall' bone_visibility $vis
     $c['minecraft:material_instances'] = O '*' (Mat $tex)
     $perms = @()
     foreach ($post in 0, 1) {
@@ -303,21 +303,21 @@ function Wall-Block($b, [string]$tex) {
                 $boxes += Box $p[0] 0 $p[1] $p[2] 16 $p[3]
                 $x0 = [Math]::Min($x0, $p[0]); $z0 = [Math]::Min($z0, $p[1]); $x1 = [Math]::Max($x1, $p[0] + $p[2]); $z1 = [Math]::Max($z1, $p[1] + $p[3])
             }
-            $cond = "q.block_state('levitate:up') == $post && q.block_state('minecraft:connection_north') == $([int]$n) && q.block_state('minecraft:connection_east') == $([int]$e) && q.block_state('minecraft:connection_south') == $([int]$s) && q.block_state('minecraft:connection_west') == $([int]$w)"
+            $cond = "q.block_state('bearing:up') == $post && q.block_state('minecraft:connection_north') == $([int]$n) && q.block_state('minecraft:connection_east') == $([int]$e) && q.block_state('minecraft:connection_south') == $([int]$s) && q.block_state('minecraft:connection_west') == $([int]$w)"
             $perms += O condition $cond components (O 'minecraft:collision_box' $boxes 'minecraft:selection_box' (Box $x0 0 $z0 ($x1 - $x0) 16 ($z1 - $z0)))
         }
     }
-    $states = O 'levitate:up' @(0, 1) 'levitate:tall_north' @(0, 1) 'levitate:tall_east' @(0, 1) 'levitate:tall_south' @(0, 1) 'levitate:tall_west' @(0, 1)
+    $states = O 'bearing:up' @(0, 1) 'bearing:tall_north' @(0, 1) 'bearing:tall_east' @(0, 1) 'bearing:tall_south' @(0, 1) 'bearing:tall_west' @(0, 1)
     $traits = O 'minecraft:connection' (O enabled_states @('minecraft:cardinal_connections'))
     $doc = Block-Doc $b $c $states $traits $perms
     $doc.format_version = '1.26.0' # the minecraft:connection trait needs 1.26.0
     Save-Json "assets/pack/bp/blocks/$($b.id).json" $doc
-    Save-Loot $b.id "levitate:$($b.id)"
+    Save-Loot $b.id "bearing:$($b.id)"
     Register-Block $b 'wall'
 }
 
 # Connected textures of the layered stone and the stone pillars (Create's HorizontalCTBehaviour /
-# RotatedPillarCTBehaviour). The mod keeps levitate:c_<dir> (the neighbour on <dir> connects,
+# RotatedPillarCTBehaviour). The mod keeps bearing:c_<dir> (the neighbour on <dir> connects,
 # MaterialsConnections.cpp); every combination picks the face textures:
 #   layered: sides `<s>_layered_<m>` (Create's HORIZONTAL_KRYPPERS: left / right only), top and
 #            bottom `<s>_cap_<m>` (OMNIDIRECTIONAL: the four edges);
@@ -337,23 +337,23 @@ function Edge-Mask([string]$face, $conn, [int[]]$edges = @(0, 1, 2, 3)) {
 function Layered-Block($b, [string]$n) {
     $c = Base-Components $b
     $c['minecraft:geometry'] = 'minecraft:geometry.full_block'
-    $c['minecraft:material_instances'] = O '*' (Mat "levitate_${n}_layered_0") up (Mat "levitate_${n}_cap_0") down (Mat "levitate_${n}_cap_0")
+    $c['minecraft:material_instances'] = O '*' (Mat "bearing_${n}_layered_0") up (Mat "bearing_${n}_cap_0") down (Mat "bearing_${n}_cap_0")
     $hd = @('north', 'south', 'west', 'east')
     $perms = @()
     foreach ($bits in 0..15) {
         $conn = @{}; $cond = @()
-        for ($i = 0; $i -lt 4; $i++) { $on = (($bits -shr $i) -band 1) -eq 1; $conn[$hd[$i]] = $on; $cond += "q.block_state('levitate:c_$($hd[$i])') == $([int]$on)" }
+        for ($i = 0; $i -lt 4; $i++) { $on = (($bits -shr $i) -band 1) -eq 1; $conn[$hd[$i]] = $on; $cond += "q.block_state('bearing:c_$($hd[$i])') == $([int]$on)" }
         $mi = O
         foreach ($f in $faceEdges.Keys) {
-            if ($f -in 'up', 'down') { $mi[$f] = Mat "levitate_${n}_cap_$(Edge-Mask $f $conn)" }
-            else { $mi[$f] = Mat "levitate_${n}_layered_$(Edge-Mask $f $conn @(1, 3))" }
+            if ($f -in 'up', 'down') { $mi[$f] = Mat "bearing_${n}_cap_$(Edge-Mask $f $conn)" }
+            else { $mi[$f] = Mat "bearing_${n}_layered_$(Edge-Mask $f $conn @(1, 3))" }
         }
         $mi['*'] = $mi['north']
         $perms += O condition ($cond -join ' && ') components (O 'minecraft:material_instances' $mi)
     }
-    $states = O; foreach ($d in $hd) { $states["levitate:c_$d"] = @(0, 1) }
+    $states = O; foreach ($d in $hd) { $states["bearing:c_$d"] = @(0, 1) }
     Save-Json "assets/pack/bp/blocks/$($b.id).json" (Block-Doc $b $c $states $null $perms)
-    Save-Loot $b.id "levitate:$($b.id)"
+    Save-Loot $b.id "bearing:$($b.id)"
     Register-Block $b 'layered'
 }
 # The pillar's model is turned onto its axis by minecraft:transformation, so a model face shows on
@@ -366,19 +366,19 @@ $axisTurns = [ordered]@{
 function StonePillar-Block($b, [string]$n) {
     $c = Base-Components $b
     $c['minecraft:geometry'] = 'minecraft:geometry.full_block'
-    $c['minecraft:material_instances'] = O '*' (Mat "levitate_${n}_pillar_0") up (Mat "levitate_${n}_cap_0") down (Mat "levitate_${n}_cap_0")
+    $c['minecraft:material_instances'] = O '*' (Mat "bearing_${n}_pillar_0") up (Mat "bearing_${n}_cap_0") down (Mat "bearing_${n}_cap_0")
     $perms = @()
     foreach ($ax in $axisTurns.Keys) {
         $t = $axisTurns[$ax]
         foreach ($bits in 0..63) {
             $world = @{}; $cond = @()
-            for ($i = 0; $i -lt 6; $i++) { $on = (($bits -shr $i) -band 1) -eq 1; $world[$ctDirs[$i]] = $on; $cond += "q.block_state('levitate:c_$($ctDirs[$i])') == $([int]$on)" }
+            for ($i = 0; $i -lt 6; $i++) { $on = (($bits -shr $i) -band 1) -eq 1; $world[$ctDirs[$i]] = $on; $cond += "q.block_state('bearing:c_$($ctDirs[$i])') == $([int]$on)" }
             # the connections seen from the model's faces
             $conn = @{}; foreach ($d in $ctDirs) { $conn[$d] = $world[$t.map[$d]] }
             $mi = O
             foreach ($f in $faceEdges.Keys) {
-                if ($f -in 'up', 'down') { $mi[$f] = Mat "levitate_${n}_cap_$(Edge-Mask $f $conn)" }
-                else { $mi[$f] = Mat "levitate_${n}_pillar_$(Edge-Mask $f $conn)" }
+                if ($f -in 'up', 'down') { $mi[$f] = Mat "bearing_${n}_cap_$(Edge-Mask $f $conn)" }
+                else { $mi[$f] = Mat "bearing_${n}_pillar_$(Edge-Mask $f $conn)" }
             }
             $mi['*'] = $mi['north']
             $comps = O 'minecraft:material_instances' $mi
@@ -386,10 +386,10 @@ function StonePillar-Block($b, [string]$n) {
             $perms += O condition "($($t.cond)) && $($cond -join ' && ')" components $comps
         }
     }
-    $states = O; foreach ($d in $ctDirs) { $states["levitate:c_$d"] = @(0, 1) }
+    $states = O; foreach ($d in $ctDirs) { $states["bearing:c_$d"] = @(0, 1) }
     $traits = O 'minecraft:placement_position' (O enabled_states @('minecraft:block_face'))
     Save-Json "assets/pack/bp/blocks/$($b.id).json" (Block-Doc $b $c $states $traits $perms)
-    Save-Loot $b.id "levitate:$($b.id)"
+    Save-Loot $b.id "bearing:$($b.id)"
     Register-Block $b 'stonePillar'
 }
 
@@ -402,29 +402,29 @@ function B([string]$id, [double]$hardness, [double]$resistance, [string]$map, [s
 # Metals, ores and other material blocks (Create's AllBlocks; properties copied from the vanilla
 # block Create starts from: gold ore 3/3, deepslate gold ore 4.5/3, raw gold block 5/6, iron
 # block 5/6, gold block 3/6, andesite 1.5/6, amethyst 1.5/1.5, deepslate 3/6, mushroom stem .2/.2).
-Tex 'levitate_zinc_ore' 'zinc_ore'; Tex 'levitate_deepslate_zinc_ore' 'deepslate_zinc_ore'
-Cube-Block (B 'zinc_ore' 3 3 '#a7a7a7' 'stone' 'nature' @{ group = 'minecraft:itemGroup.name.ore'; tier = 'iron' }) @{ '*' = 'levitate_zinc_ore' } 'zincOre' 'levitate:raw_zinc'
-Cube-Block (B 'deepslate_zinc_ore' 4.5 3 '#707070' 'deepslate' 'nature' @{ group = 'minecraft:itemGroup.name.ore'; tier = 'iron' }) @{ '*' = 'levitate_deepslate_zinc_ore' } 'zincOre' 'levitate:raw_zinc'
+Tex 'bearing_zinc_ore' 'zinc_ore'; Tex 'bearing_deepslate_zinc_ore' 'deepslate_zinc_ore'
+Cube-Block (B 'zinc_ore' 3 3 '#a7a7a7' 'stone' 'nature' @{ group = 'minecraft:itemGroup.name.ore'; tier = 'iron' }) @{ '*' = 'bearing_zinc_ore' } 'zincOre' 'bearing:raw_zinc'
+Cube-Block (B 'deepslate_zinc_ore' 4.5 3 '#707070' 'deepslate' 'nature' @{ group = 'minecraft:itemGroup.name.ore'; tier = 'iron' }) @{ '*' = 'bearing_deepslate_zinc_ore' } 'zincOre' 'bearing:raw_zinc'
 foreach ($m in @(
         @('raw_zinc_block', 5, 6, '#7fa796', 'stone', 'iron'), @('zinc_block', 5, 6, '#7fa796', 'metal', 'iron'),
         @('brass_block', 5, 6, '#ba8524', 'metal', 'iron'), @('andesite_alloy_block', 1.5, 6, '#707070', 'stone', 'none'),
         @('rose_quartz_tiles', 3, 6, '#a04d4e', 'deepslate', 'none'), @('small_rose_quartz_tiles', 3, 6, '#a04d4e', 'deepslate', 'none'))) {
-    Tex "levitate_$($m[0])" $m[0]
-    Cube-Block (B $m[0] $m[1] $m[2] $m[3] $m[4] 'construction' @{ tier = $m[5] }) @{ '*' = "levitate_$($m[0])" }
+    Tex "bearing_$($m[0])" $m[0]
+    Cube-Block (B $m[0] $m[1] $m[2] $m[3] $m[4] 'construction' @{ tier = $m[5] }) @{ '*' = "bearing_$($m[0])" }
 }
-Tex 'levitate_experience_block' 'experience_block'
-Cube-Block (B 'experience_block' 3 6 '#007c00' 'amethyst_block' 'construction' @{ light = 15 }) @{ '*' = 'levitate_experience_block' }
+Tex 'bearing_experience_block' 'experience_block'
+Cube-Block (B 'experience_block' 3 6 '#007c00' 'amethyst_block' 'construction' @{ light = 15 }) @{ '*' = 'bearing_experience_block' }
 foreach ($id in 'industrial_iron_block', 'weathered_iron_block') {
-    Tex "levitate_$id" $id; Tex "levitate_${id}_top" "${id}_top"
-    Cube-Block (B $id 3 6 '#4c4c4c' 'netherite') @{ '*' = "levitate_$id"; up = "levitate_${id}_top"; down = "levitate_${id}_top" }
+    Tex "bearing_$id" $id; Tex "bearing_${id}_top" "${id}_top"
+    Cube-Block (B $id 3 6 '#4c4c4c' 'netherite') @{ '*' = "bearing_$id"; up = "bearing_${id}_top"; down = "bearing_${id}_top" }
 }
-Tex 'levitate_rose_quartz_block' 'rose_quartz_block'; Tex 'levitate_rose_quartz_block_top' 'rose_quartz_block_top'
-Pillar-Block (B 'rose_quartz_block' 1.5 1.5 '#a04d4e' 'deepslate') 'levitate_rose_quartz_block' 'levitate_rose_quartz_block_top'
+Tex 'bearing_rose_quartz_block' 'rose_quartz_block'; Tex 'bearing_rose_quartz_block_top' 'rose_quartz_block_top'
+Pillar-Block (B 'rose_quartz_block' 1.5 1.5 '#a04d4e' 'deepslate') 'bearing_rose_quartz_block' 'bearing_rose_quartz_block_top'
 foreach ($id in 'cardboard_block', 'bound_cardboard_block') {
-    Tex "levitate_$id" $id; Tex "levitate_${id}_end" "${id}_end"
+    Tex "bearing_$id" $id; Tex "bearing_${id}_end" "${id}_end"
     $b = B $id 0.2 0.2 '#664c33' 'wood' 'construction' @{ tool = 'axe' }
-    if ($id -eq 'cardboard_block') { Save-Loot $id 'levitate:cardboard_block'; HAxis-Block $b "levitate_$id" "levitate_${id}_end" }
-    else { Save-Loot $id 'levitate:cardboard_block' 1 @('minecraft:string'); HAxis-Block $b "levitate_$id" "levitate_${id}_end" 'boundCardboard' }
+    if ($id -eq 'cardboard_block') { Save-Loot $id 'bearing:cardboard_block'; HAxis-Block $b "bearing_$id" "bearing_${id}_end" }
+    else { Save-Loot $id 'bearing:cardboard_block' 1 @('minecraft:string'); HAxis-Block $b "bearing_$id" "bearing_${id}_end" 'boundCardboard' }
 }
 
 # ---- decorative stone (Create's palettes) -------------------------------------------------------
@@ -441,44 +441,44 @@ $stones = @(
 )
 $vanillaStone = @{ granite = 'minecraft:granite'; diorite = 'minecraft:diorite'; andesite = 'minecraft:andesite'; calcite = 'minecraft:calcite'; dripstone = 'minecraft:dripstone_block'; deepslate = 'minecraft:deepslate'; tuff = 'minecraft:tuff' }
 $allStairs = @()
-foreach ($s in $stones) { foreach ($p in "cut_$($s[0])", "polished_cut_$($s[0])", "cut_$($s[0])_brick", "small_$($s[0])_brick") { $allStairs += "levitate:${p}_stairs" } }
+foreach ($s in $stones) { foreach ($p in "cut_$($s[0])", "polished_cut_$($s[0])", "cut_$($s[0])_brick", "small_$($s[0])_brick") { $allStairs += "bearing:${p}_stairs" } }
 
 $stoneTypes = [ordered]@{}   # stone -> ids of the stone_types tag (Create: every full/stairs/wall + the raw stone)
 $palette = [ordered]@{}      # stone -> list of @{ id; kind; base } for recipes
 foreach ($s in $stones) {
     $n = $s[0]
     $mk = { param($id, $more = @{}) B $id $s[1] $s[2] $s[3] $s[4] 'construction' $more }
-    foreach ($t in 'cut', 'polished', 'slab', 'brick', 'small_brick') { Tex "levitate_${n}_$t" "palettes/${n}_$t" }
-    foreach ($m in 0, 2, 8, 10) { Tex "levitate_${n}_layered_$m" "palettes/${n}_layered_$m" }
-    foreach ($m in 0..15) { Tex "levitate_${n}_cap_$m" "palettes/${n}_cap_$m"; Tex "levitate_${n}_pillar_$m" "palettes/${n}_pillar_$m" }
+    foreach ($t in 'cut', 'polished', 'slab', 'brick', 'small_brick') { Tex "bearing_${n}_$t" "palettes/${n}_$t" }
+    foreach ($m in 0, 2, 8, 10) { Tex "bearing_${n}_layered_$m" "palettes/${n}_layered_$m" }
+    foreach ($m in 0..15) { Tex "bearing_${n}_cap_$m" "palettes/${n}_cap_$m"; Tex "bearing_${n}_pillar_$m" "palettes/${n}_pillar_$m" }
     $tag = [System.Collections.Generic.List[string]]::new()
     $list = [System.Collections.Generic.List[object]]::new()
     if ($s[5]) {
         $variants = $s[6]
         if ($variants -gt 0) {
-            $terrainTextures["levitate_$n"] = O textures (O variations @(0..($variants - 1) | ForEach-Object { O path "textures/blocks/palettes/${n}_natural_$_" weight 1 }))
-        } else { Tex "levitate_$n" "palettes/$n" }
-        Cube-Block (& $mk $n) @{ '*' = "levitate_$n" }
+            $terrainTextures["bearing_$n"] = O textures (O variations @(0..($variants - 1) | ForEach-Object { O path "textures/blocks/palettes/${n}_natural_$_" weight 1 }))
+        } else { Tex "bearing_$n" "palettes/$n" }
+        Cube-Block (& $mk $n) @{ '*' = "bearing_$n" }
     }
-    $raw = if ($s[5]) { "levitate:$n" } else { $vanillaStone[$n] }
+    $raw = if ($s[5]) { "bearing:$n" } else { $vanillaStone[$n] }
     # patterns: [block id, texture, stairs/slab/wall prefix, slab side texture]
     $patterns = @(
-        @("cut_$n", "levitate_${n}_cut", "cut_$n", "levitate_${n}_cut"),
-        @("polished_cut_$n", "levitate_${n}_polished", "polished_cut_$n", "levitate_${n}_slab"),
-        @("cut_${n}_bricks", "levitate_${n}_brick", "cut_${n}_brick", "levitate_${n}_brick"),
-        @("small_${n}_bricks", "levitate_${n}_small_brick", "small_${n}_brick", "levitate_${n}_small_brick")
+        @("cut_$n", "bearing_${n}_cut", "cut_$n", "bearing_${n}_cut"),
+        @("polished_cut_$n", "bearing_${n}_polished", "polished_cut_$n", "bearing_${n}_slab"),
+        @("cut_${n}_bricks", "bearing_${n}_brick", "cut_${n}_brick", "bearing_${n}_brick"),
+        @("small_${n}_bricks", "bearing_${n}_small_brick", "small_${n}_brick", "bearing_${n}_small_brick")
     )
     foreach ($p in $patterns) {
         Cube-Block (& $mk $p[0]) @{ '*' = $p[1] }
         Stairs-Block (& $mk "$($p[2])_stairs" @{ group = 'minecraft:itemGroup.name.stairs' }) $p[1] $allStairs
         Slab-Block (& $mk "$($p[2])_slab" @{ group = 'minecraft:itemGroup.name.slab' }) $p[1] $p[3] $p[1]
         Wall-Block (& $mk "$($p[2])_wall" @{ group = 'minecraft:itemGroup.name.walls' }) $p[1]
-        $tag.Add("levitate:$($p[0])"); $tag.Add("levitate:$($p[2])_stairs"); $tag.Add("levitate:$($p[2])_wall")
-        $list.Add(@{ base = "levitate:$($p[0])"; prefix = "levitate:$($p[2])" })
+        $tag.Add("bearing:$($p[0])"); $tag.Add("bearing:$($p[2])_stairs"); $tag.Add("bearing:$($p[2])_wall")
+        $list.Add(@{ base = "bearing:$($p[0])"; prefix = "bearing:$($p[2])" })
     }
     Layered-Block (& $mk "layered_$n") $n
     StonePillar-Block (& $mk "${n}_pillar") $n
-    $tag.Add("levitate:layered_$n"); $tag.Add("levitate:${n}_pillar"); $tag.Add($raw)
+    $tag.Add("bearing:layered_$n"); $tag.Add("bearing:${n}_pillar"); $tag.Add($raw)
     $stoneTypes[$n] = $tag
     $palette[$n] = $list
 }
@@ -486,14 +486,14 @@ foreach ($s in $stones) {
 # ---- recipes (behavior pack) --------------------------------------------------------------------
 # Create's c: tags resolved to the one Bedrock item each stands for.
 $tagItem = @{
-    'c:nuggets/iron' = 'minecraft:iron_nugget'; 'c:nuggets/zinc' = 'levitate:zinc_nugget'; 'c:nuggets/brass' = 'levitate:brass_nugget'
-    'c:nuggets/copper' = 'levitate:copper_nugget'; 'c:ingots/iron' = 'minecraft:iron_ingot'; 'c:ingots/gold' = 'minecraft:gold_ingot'
-    'c:ingots/copper' = 'minecraft:copper_ingot'; 'c:ingots/zinc' = 'levitate:zinc_ingot'; 'c:ingots/brass' = 'levitate:brass_ingot'
-    'c:storage_blocks/zinc' = 'levitate:zinc_block'; 'c:storage_blocks/brass' = 'levitate:brass_block'; 'c:strings' = 'minecraft:string'
-    'c:plates/iron' = 'levitate:iron_sheet'; 'c:plates/brass' = 'levitate:brass_sheet'; 'c:plates/copper' = 'levitate:copper_sheet'
-    'c:gems/quartz' = 'minecraft:quartz'; 'c:dusts/redstone' = 'minecraft:redstone'; 'c:flours/wheat' = 'levitate:wheat_flour'
+    'c:nuggets/iron' = 'minecraft:iron_nugget'; 'c:nuggets/zinc' = 'bearing:zinc_nugget'; 'c:nuggets/brass' = 'bearing:brass_nugget'
+    'c:nuggets/copper' = 'bearing:copper_nugget'; 'c:ingots/iron' = 'minecraft:iron_ingot'; 'c:ingots/gold' = 'minecraft:gold_ingot'
+    'c:ingots/copper' = 'minecraft:copper_ingot'; 'c:ingots/zinc' = 'bearing:zinc_ingot'; 'c:ingots/brass' = 'bearing:brass_ingot'
+    'c:storage_blocks/zinc' = 'bearing:zinc_block'; 'c:storage_blocks/brass' = 'bearing:brass_block'; 'c:strings' = 'minecraft:string'
+    'c:plates/iron' = 'bearing:iron_sheet'; 'c:plates/brass' = 'bearing:brass_sheet'; 'c:plates/copper' = 'bearing:copper_sheet'
+    'c:gems/quartz' = 'minecraft:quartz'; 'c:dusts/redstone' = 'minecraft:redstone'; 'c:flours/wheat' = 'bearing:wheat_flour'
     'c:rods/wooden' = 'minecraft:stick'; 'c:dyes/black' = 'minecraft:black_dye'; 'c:dyes/lime' = 'minecraft:lime_dye'
-    'c:raw_materials/zinc' = 'levitate:raw_zinc'
+    'c:raw_materials/zinc' = 'bearing:raw_zinc'
 }
 function Ing([string]$s) {
     if ($s.StartsWith('#')) { $t = $s.Substring(1); if (!$tagItem.ContainsKey($t)) { throw "unresolved tag $t" }; return O item $tagItem[$t] }
@@ -502,78 +502,78 @@ function Ing([string]$s) {
 function Shaped([string]$name, [string[]]$pattern, [hashtable]$key, [string]$result, [int]$count = 1) {
     $k = [ordered]@{}; foreach ($c in ($key.Keys | Sort-Object)) { $k[$c] = Ing $key[$c] }
     $first = $k[($key.Keys | Sort-Object | Select-Object -First 1)]
-    Save-Json "assets/pack/bp/recipes/materials/$name.json" (O format_version '1.20.10' 'minecraft:recipe_shaped' (O description (O identifier "levitate:$name") tags @('crafting_table') pattern @($pattern) key $k unlock @((O item $first.item)) result (O item $result count $count)))
+    Save-Json "assets/pack/bp/recipes/materials/$name.json" (O format_version '1.20.10' 'minecraft:recipe_shaped' (O description (O identifier "bearing:$name") tags @('crafting_table') pattern @($pattern) key $k unlock @((O item $first.item)) result (O item $result count $count)))
 }
 function Shapeless([string]$name, [string[]]$ingredients, [string]$result, [int]$count = 1) {
     $ings = @($ingredients | ForEach-Object { Ing $_ })
-    Save-Json "assets/pack/bp/recipes/materials/$name.json" (O format_version '1.20.10' 'minecraft:recipe_shapeless' (O description (O identifier "levitate:$name") tags @('crafting_table') ingredients $ings unlock @((O item $ings[0].item)) result (O item $result count $count)))
+    Save-Json "assets/pack/bp/recipes/materials/$name.json" (O format_version '1.20.10' 'minecraft:recipe_shapeless' (O description (O identifier "bearing:$name") tags @('crafting_table') ingredients $ings unlock @((O item $ings[0].item)) result (O item $result count $count)))
 }
 function Cutting([string]$name, [string]$source, [string]$result, [int]$count = 1) {
-    Save-Json "assets/pack/bp/recipes/materials/stonecutting/$name.json" (O format_version '1.20.10' 'minecraft:recipe_shapeless' (O description (O identifier "levitate:$name") tags @('stonecutter') ingredients @((O item $source)) unlock @((O item $source)) result (O item $result count $count)))
+    Save-Json "assets/pack/bp/recipes/materials/stonecutting/$name.json" (O format_version '1.20.10' 'minecraft:recipe_shapeless' (O description (O identifier "bearing:$name") tags @('stonecutter') ingredients @((O item $source)) unlock @((O item $source)) result (O item $result count $count)))
 }
 # Bedrock furnaces cook in 10 s (furnace), 5 s (blast furnace, smoker), 30 s (campfire): Create's
 # 200 / 100 / 100 / 600 ticks.
 function Furnace([string]$name, [string]$source, [string]$output, [string[]]$tags) {
-    Save-Json "assets/pack/bp/recipes/materials/$name.json" (O format_version '1.20.10' 'minecraft:recipe_furnace' (O description (O identifier "levitate:$name") tags @($tags) input $source output $output))
+    Save-Json "assets/pack/bp/recipes/materials/$name.json" (O format_version '1.20.10' 'minecraft:recipe_furnace' (O description (O identifier "bearing:$name") tags @($tags) input $source output $output))
 }
 
 # crafting/materials, crafting/kinetics (ingredients), crafting/appliances
-Shaped 'andesite_alloy' @('BA', 'AB') @{ A = 'minecraft:andesite'; B = '#c:nuggets/iron' } 'levitate:andesite_alloy'
-Shaped 'andesite_alloy_from_zinc' @('BA', 'AB') @{ A = 'minecraft:andesite'; B = '#c:nuggets/zinc' } 'levitate:andesite_alloy'
-Shaped 'andesite_alloy_block' @('CCC', 'CCC', 'CCC') @{ C = 'levitate:andesite_alloy' } 'levitate:andesite_alloy_block'
-Shapeless 'andesite_alloy_from_block' @('levitate:andesite_alloy_block') 'levitate:andesite_alloy' 9
-Shapeless 'bound_cardboard_block' @('levitate:cardboard_block', '#c:strings') 'levitate:bound_cardboard_block'
-Shaped 'brass_block_from_compacting' @('###', '###', '###') @{ '#' = '#c:ingots/brass' } 'levitate:brass_block'
-Shaped 'brass_ingot_from_compacting' @('###', '###', '###') @{ '#' = '#c:nuggets/brass' } 'levitate:brass_ingot'
-Shapeless 'brass_ingot_from_decompacting' @('#c:storage_blocks/brass') 'levitate:brass_ingot' 9
-Shapeless 'brass_nugget_from_decompacting' @('#c:ingots/brass') 'levitate:brass_nugget' 9
-Shaped 'cardboard_block' @('CC', 'CC') @{ C = 'levitate:cardboard' } 'levitate:cardboard_block'
-Shapeless 'cardboard_from_block' @('levitate:cardboard_block') 'levitate:cardboard' 4
-Shapeless 'cardboard_from_bound_block' @('levitate:bound_cardboard_block') 'levitate:cardboard' 4
+Shaped 'andesite_alloy' @('BA', 'AB') @{ A = 'minecraft:andesite'; B = '#c:nuggets/iron' } 'bearing:andesite_alloy'
+Shaped 'andesite_alloy_from_zinc' @('BA', 'AB') @{ A = 'minecraft:andesite'; B = '#c:nuggets/zinc' } 'bearing:andesite_alloy'
+Shaped 'andesite_alloy_block' @('CCC', 'CCC', 'CCC') @{ C = 'bearing:andesite_alloy' } 'bearing:andesite_alloy_block'
+Shapeless 'andesite_alloy_from_block' @('bearing:andesite_alloy_block') 'bearing:andesite_alloy' 9
+Shapeless 'bound_cardboard_block' @('bearing:cardboard_block', '#c:strings') 'bearing:bound_cardboard_block'
+Shaped 'brass_block_from_compacting' @('###', '###', '###') @{ '#' = '#c:ingots/brass' } 'bearing:brass_block'
+Shaped 'brass_ingot_from_compacting' @('###', '###', '###') @{ '#' = '#c:nuggets/brass' } 'bearing:brass_ingot'
+Shapeless 'brass_ingot_from_decompacting' @('#c:storage_blocks/brass') 'bearing:brass_ingot' 9
+Shapeless 'brass_nugget_from_decompacting' @('#c:ingots/brass') 'bearing:brass_nugget' 9
+Shaped 'cardboard_block' @('CC', 'CC') @{ C = 'bearing:cardboard' } 'bearing:cardboard_block'
+Shapeless 'cardboard_from_block' @('bearing:cardboard_block') 'bearing:cardboard' 4
+Shapeless 'cardboard_from_bound_block' @('bearing:bound_cardboard_block') 'bearing:cardboard' 4
 Shaped 'copper_ingot' @('CCC', 'CCC', 'CCC') @{ C = '#c:nuggets/copper' } 'minecraft:copper_ingot'
-Shapeless 'copper_nugget' @('#c:ingots/copper') 'levitate:copper_nugget' 9
-Shaped 'electron_tube' @('L', 'N') @{ L = 'levitate:polished_rose_quartz'; N = '#c:plates/iron' } 'levitate:electron_tube'
-Shaped 'experience_block' @('CCC', 'CCC', 'CCC') @{ C = 'levitate:experience_nugget' } 'levitate:experience_block'
-Shapeless 'experience_nugget_from_block' @('levitate:experience_block') 'levitate:experience_nugget' 9
-Shapeless 'raw_zinc' @('levitate:raw_zinc_block') 'levitate:raw_zinc' 9
-Shaped 'raw_zinc_block' @('CCC', 'CCC', 'CCC') @{ C = 'levitate:raw_zinc' } 'levitate:raw_zinc_block'
-Shapeless 'rose_quartz' @('#c:gems/quartz', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone') 'levitate:rose_quartz'
-Shapeless 'rose_quartz_tiles_from_conversion' @('levitate:small_rose_quartz_tiles') 'levitate:rose_quartz_tiles'
-Shapeless 'small_rose_quartz_tiles_from_conversion' @('levitate:rose_quartz_tiles') 'levitate:small_rose_quartz_tiles'
-Shaped 'transmitter' @(' N ', 'LLL', ' R ') @{ L = '#c:plates/copper'; N = 'minecraft:lightning_rod'; R = '#c:dusts/redstone' } 'levitate:transmitter'
-Shaped 'zinc_block_from_compacting' @('###', '###', '###') @{ '#' = '#c:ingots/zinc' } 'levitate:zinc_block'
-Shaped 'zinc_ingot_from_compacting' @('###', '###', '###') @{ '#' = '#c:nuggets/zinc' } 'levitate:zinc_ingot'
-Shapeless 'zinc_ingot_from_decompacting' @('#c:storage_blocks/zinc') 'levitate:zinc_ingot' 9
-Shapeless 'zinc_nugget_from_decompacting' @('#c:ingots/zinc') 'levitate:zinc_nugget' 9
-Shaped 'brass_hand' @(' A ', 'BBB', ' B ') @{ A = 'levitate:andesite_alloy'; B = '#c:plates/brass' } 'levitate:brass_hand'
-Shaped 'crafter_slot_cover' @('AAA') @{ A = '#c:nuggets/brass' } 'levitate:crafter_slot_cover'
-Shaped 'propeller' @(' S ', 'SCS', ' S ') @{ C = 'levitate:andesite_alloy'; S = '#c:plates/iron' } 'levitate:propeller'
-Shaped 'whisk' @(' C ', 'SCS', 'SSS') @{ C = 'levitate:andesite_alloy'; S = '#c:plates/iron' } 'levitate:whisk'
-Shapeless 'book' @('levitate:cardboard', 'minecraft:paper', 'minecraft:paper', 'minecraft:paper') 'minecraft:book'
-Shaped 'item_frame' @('SSS', 'SPS', 'SSS') @{ P = 'levitate:cardboard'; S = '#c:rods/wooden' } 'minecraft:frame'
-Shapeless 'name_tag' @('#c:dyes/black', '#c:strings', 'levitate:cardboard') 'minecraft:name_tag'
-Shapeless 'slime_ball' @('levitate:dough', '#c:dyes/lime') 'minecraft:slime_ball'
-Shapeless 'dough' @('#c:flours/wheat', 'minecraft:water_bucket') 'levitate:dough'
-Shaped 'scorchia' @('###', '#D#', '###') @{ '#' = 'levitate:scoria'; D = '#c:dyes/black' } 'levitate:scorchia' 8
+Shapeless 'copper_nugget' @('#c:ingots/copper') 'bearing:copper_nugget' 9
+Shaped 'electron_tube' @('L', 'N') @{ L = 'bearing:polished_rose_quartz'; N = '#c:plates/iron' } 'bearing:electron_tube'
+Shaped 'experience_block' @('CCC', 'CCC', 'CCC') @{ C = 'bearing:experience_nugget' } 'bearing:experience_block'
+Shapeless 'experience_nugget_from_block' @('bearing:experience_block') 'bearing:experience_nugget' 9
+Shapeless 'raw_zinc' @('bearing:raw_zinc_block') 'bearing:raw_zinc' 9
+Shaped 'raw_zinc_block' @('CCC', 'CCC', 'CCC') @{ C = 'bearing:raw_zinc' } 'bearing:raw_zinc_block'
+Shapeless 'rose_quartz' @('#c:gems/quartz', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone', '#c:dusts/redstone') 'bearing:rose_quartz'
+Shapeless 'rose_quartz_tiles_from_conversion' @('bearing:small_rose_quartz_tiles') 'bearing:rose_quartz_tiles'
+Shapeless 'small_rose_quartz_tiles_from_conversion' @('bearing:rose_quartz_tiles') 'bearing:small_rose_quartz_tiles'
+Shaped 'transmitter' @(' N ', 'LLL', ' R ') @{ L = '#c:plates/copper'; N = 'minecraft:lightning_rod'; R = '#c:dusts/redstone' } 'bearing:transmitter'
+Shaped 'zinc_block_from_compacting' @('###', '###', '###') @{ '#' = '#c:ingots/zinc' } 'bearing:zinc_block'
+Shaped 'zinc_ingot_from_compacting' @('###', '###', '###') @{ '#' = '#c:nuggets/zinc' } 'bearing:zinc_ingot'
+Shapeless 'zinc_ingot_from_decompacting' @('#c:storage_blocks/zinc') 'bearing:zinc_ingot' 9
+Shapeless 'zinc_nugget_from_decompacting' @('#c:ingots/zinc') 'bearing:zinc_nugget' 9
+Shaped 'brass_hand' @(' A ', 'BBB', ' B ') @{ A = 'bearing:andesite_alloy'; B = '#c:plates/brass' } 'bearing:brass_hand'
+Shaped 'crafter_slot_cover' @('AAA') @{ A = '#c:nuggets/brass' } 'bearing:crafter_slot_cover'
+Shaped 'propeller' @(' S ', 'SCS', ' S ') @{ C = 'bearing:andesite_alloy'; S = '#c:plates/iron' } 'bearing:propeller'
+Shaped 'whisk' @(' C ', 'SCS', 'SSS') @{ C = 'bearing:andesite_alloy'; S = '#c:plates/iron' } 'bearing:whisk'
+Shapeless 'book' @('bearing:cardboard', 'minecraft:paper', 'minecraft:paper', 'minecraft:paper') 'minecraft:book'
+Shaped 'item_frame' @('SSS', 'SPS', 'SSS') @{ P = 'bearing:cardboard'; S = '#c:rods/wooden' } 'minecraft:frame'
+Shapeless 'name_tag' @('#c:dyes/black', '#c:strings', 'bearing:cardboard') 'minecraft:name_tag'
+Shapeless 'slime_ball' @('bearing:dough', '#c:dyes/lime') 'minecraft:slime_ball'
+Shapeless 'dough' @('#c:flours/wheat', 'minecraft:water_bucket') 'bearing:dough'
+Shaped 'scorchia' @('###', '#D#', '###') @{ '#' = 'bearing:scoria'; D = '#c:dyes/black' } 'bearing:scorchia' 8
 
 # U3's attribute filter waited for brass_nugget (SPEC §2.26): brass nugget, wool, brass nugget.
-Save-Json 'assets/pack/bp/recipes/materials/attribute_filter.json' (O format_version '1.20.10' 'minecraft:recipe_shaped' (O description (O identifier 'levitate:attribute_filter') tags @('crafting_table') pattern @('NWN') key (O N (O item 'levitate:brass_nugget') W (O tag 'minecraft:wool')) unlock @((O item 'levitate:brass_nugget')) result (O item 'levitate:attribute_filter')))
+Save-Json 'assets/pack/bp/recipes/materials/attribute_filter.json' (O format_version '1.20.10' 'minecraft:recipe_shaped' (O description (O identifier 'bearing:attribute_filter') tags @('crafting_table') pattern @('NWN') key (O N (O item 'bearing:brass_nugget') W (O tag 'minecraft:wool')) unlock @((O item 'bearing:brass_nugget')) result (O item 'bearing:attribute_filter')))
 
 # stonecutting (non-palette)
-foreach ($id in 'industrial_iron_block', 'weathered_iron_block') { Cutting "${id}_from_ingots_iron_stonecutting" 'minecraft:iron_ingot' "levitate:$id" 2 }
-Cutting 'rose_quartz_block_from_rose_quartz_stonecutting' 'levitate:rose_quartz' 'levitate:rose_quartz_block' 2
-Cutting 'rose_quartz_tiles_from_polished_rose_quartz_stonecutting' 'levitate:polished_rose_quartz' 'levitate:rose_quartz_tiles' 2
-Cutting 'small_rose_quartz_tiles_from_polished_rose_quartz_stonecutting' 'levitate:polished_rose_quartz' 'levitate:small_rose_quartz_tiles' 2
+foreach ($id in 'industrial_iron_block', 'weathered_iron_block') { Cutting "${id}_from_ingots_iron_stonecutting" 'minecraft:iron_ingot' "bearing:$id" 2 }
+Cutting 'rose_quartz_block_from_rose_quartz_stonecutting' 'bearing:rose_quartz' 'bearing:rose_quartz_block' 2
+Cutting 'rose_quartz_tiles_from_polished_rose_quartz_stonecutting' 'bearing:polished_rose_quartz' 'bearing:rose_quartz_tiles' 2
+Cutting 'small_rose_quartz_tiles_from_polished_rose_quartz_stonecutting' 'bearing:polished_rose_quartz' 'bearing:small_rose_quartz_tiles' 2
 
 # furnace recipes (smelting + blasting where Create has both)
-foreach ($m in @(@('copper', 'minecraft:copper_ingot'), @('gold', 'minecraft:gold_ingot'), @('iron', 'minecraft:iron_ingot'), @('zinc', 'levitate:zinc_ingot'))) {
-    Furnace "$($m[1].Split(':')[1])_from_crushed" "levitate:crushed_raw_$($m[0])" $m[1] @('furnace', 'blast_furnace')
+foreach ($m in @(@('copper', 'minecraft:copper_ingot'), @('gold', 'minecraft:gold_ingot'), @('iron', 'minecraft:iron_ingot'), @('zinc', 'bearing:zinc_ingot'))) {
+    Furnace "$($m[1].Split(':')[1])_from_crushed" "bearing:crushed_raw_$($m[0])" $m[1] @('furnace', 'blast_furnace')
 }
-Furnace 'zinc_ingot_from_ore' 'levitate:zinc_ore' 'levitate:zinc_ingot' @('furnace', 'blast_furnace')
-Furnace 'zinc_ingot_from_deepslate_ore' 'levitate:deepslate_zinc_ore' 'levitate:zinc_ingot' @('furnace', 'blast_furnace')
-Furnace 'zinc_ingot_from_raw_ore' 'levitate:raw_zinc' 'levitate:zinc_ingot' @('furnace', 'blast_furnace')
-Furnace 'bread' 'levitate:dough' 'minecraft:bread' @('furnace', 'smoker', 'campfire', 'soul_campfire')
-Furnace 'scoria' 'minecraft:soul_sand' 'levitate:scoria' @('furnace')
+Furnace 'zinc_ingot_from_ore' 'bearing:zinc_ore' 'bearing:zinc_ingot' @('furnace', 'blast_furnace')
+Furnace 'zinc_ingot_from_deepslate_ore' 'bearing:deepslate_zinc_ore' 'bearing:zinc_ingot' @('furnace', 'blast_furnace')
+Furnace 'zinc_ingot_from_raw_ore' 'bearing:raw_zinc' 'bearing:zinc_ingot' @('furnace', 'blast_furnace')
+Furnace 'bread' 'bearing:dough' 'minecraft:bread' @('furnace', 'smoker', 'campfire', 'soul_campfire')
+Furnace 'scoria' 'minecraft:soul_sand' 'bearing:scoria' @('furnace')
 
 # palettes: slab / stairs / wall crafting, slab recycling, stonecutting from the stone_types tag
 foreach ($n in $palette.Keys) {
@@ -586,7 +586,7 @@ foreach ($n in $palette.Keys) {
     }
     $outputs = @()
     foreach ($p in $palette[$n]) { $outputs += , @($p.base, 1); $outputs += , @("$($p.prefix)_stairs", 1); $outputs += , @("$($p.prefix)_slab", 2); $outputs += , @("$($p.prefix)_wall", 1) }
-    $outputs += , @("levitate:layered_$n", 1); $outputs += , @("levitate:${n}_pillar", 1)
+    $outputs += , @("bearing:layered_$n", 1); $outputs += , @("bearing:${n}_pillar", 1)
     $outputs += , @($stoneTypes[$n][$stoneTypes[$n].Count - 1], 1)  # the raw stone
     foreach ($o in $outputs) {
         foreach ($in in $stoneTypes[$n]) {
@@ -596,7 +596,7 @@ foreach ($n in $palette.Keys) {
     }
 }
 
-# ---- processing recipes (U3 loader, Create's 1.21 format with levitate ids) ---------------------
+# ---- processing recipes (U3 loader, Create's 1.21 format with bearing ids) ---------------------
 # ingredient strings: 'id' | '#tag' | 'F:fluid*amount' | 'FT:fluid_tag*amount' | 'a|b' (alternatives)
 # result strings: 'id' | 'id*count' | 'id@chance' | 'id*count@chance' | 'F:fluid*amount'
 function PIng([string]$s) {
@@ -622,118 +622,118 @@ function PRes([string]$s) {
 $ownedElsewhere = [System.Collections.Generic.HashSet[string]]@('crushing/asurine', 'crushing/asurine_recycling', 'crushing/coal_ore', 'crushing/copper_ore', 'crushing/crimsite', 'crushing/crimsite_recycling', 'crushing/deepslate_coal_ore', 'crushing/deepslate_copper_ore', 'crushing/deepslate_diamond_ore', 'crushing/deepslate_emerald_ore', 'crushing/deepslate_gold_ore', 'crushing/deepslate_iron_ore', 'crushing/deepslate_lapis_ore', 'crushing/deepslate_redstone_ore', 'crushing/deepslate_zinc_ore', 'crushing/diamond_ore', 'crushing/emerald_ore', 'crushing/gilded_blackstone', 'crushing/gold_ore', 'crushing/iron_ore', 'crushing/lapis_ore', 'crushing/nether_gold_ore', 'crushing/nether_quartz_ore', 'crushing/netherrack', 'crushing/obsidian', 'crushing/ochrum', 'crushing/ochrum_recycling', 'crushing/raw_copper', 'crushing/raw_copper_block', 'crushing/raw_gold', 'crushing/raw_gold_block', 'crushing/raw_iron', 'crushing/raw_iron_block', 'crushing/raw_zinc', 'crushing/raw_zinc_block', 'crushing/redstone_ore', 'crushing/tuff', 'crushing/tuff_recycling', 'crushing/veridium', 'crushing/veridium_recycling', 'crushing/zinc_ore', 'emptying/builders_tea', 'filling/blaze_cake', 'filling/builders_tea', 'filling/chocolate_glazed_berries', 'filling/glowstone', 'filling/gunpowder', 'filling/honeyed_apple', 'filling/redstone', 'filling/sweet_roll', 'milling/wheat', 'splashing/crushed_raw_copper', 'splashing/crushed_raw_gold', 'splashing/crushed_raw_iron', 'splashing/crushed_raw_zinc', 'splashing/industrial_iron_block', 'splashing/wheat_flour')
 function P([string]$type, [string]$name, [string[]]$ingredients, [string[]]$results, $extra = @{}) {
     if ($ownedElsewhere.Contains("$type/$name")) { return }
-    $doc = O type "levitate:$type" ingredients @($ingredients | ForEach-Object { , (PIng $_) }) results @($results | ForEach-Object { PRes $_ })
+    $doc = O type "bearing:$type" ingredients @($ingredients | ForEach-Object { , (PIng $_) }) results @($results | ForEach-Object { PRes $_ })
     foreach ($k in ($extra.Keys | Sort-Object)) { $doc[$k] = $extra[$k] }
     Save-Json "assets/recipes/$type/$name.json" $doc
 }
 $t250 = @{ processing_time = 250 }; $t350 = @{ processing_time = 350 }; $t400 = @{ processing_time = 400 }
 # crushing: ores, raw ores, Create's stones (+ their palette recycling), netherrack, obsidian, tuff
-P crushing zinc_ore @('levitate:zinc_ore') @('levitate:crushed_raw_zinc', 'levitate:crushed_raw_zinc@0.75', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
-P crushing deepslate_zinc_ore @('levitate:deepslate_zinc_ore') @('levitate:crushed_raw_zinc*2', 'levitate:crushed_raw_zinc@0.25', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
-P crushing iron_ore @('minecraft:iron_ore') @('levitate:crushed_raw_iron', 'levitate:crushed_raw_iron@0.75', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
-P crushing deepslate_iron_ore @('minecraft:deepslate_iron_ore') @('levitate:crushed_raw_iron*2', 'levitate:crushed_raw_iron@0.25', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
-P crushing gold_ore @('minecraft:gold_ore') @('levitate:crushed_raw_gold', 'levitate:crushed_raw_gold@0.75', 'levitate:experience_nugget*2@0.75', 'minecraft:cobblestone@0.125') $t250
-P crushing deepslate_gold_ore @('minecraft:deepslate_gold_ore') @('levitate:crushed_raw_gold*2', 'levitate:crushed_raw_gold@0.25', 'levitate:experience_nugget*2@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
-P crushing copper_ore @('minecraft:copper_ore') @('levitate:crushed_raw_copper*5', 'levitate:crushed_raw_copper@0.25', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
-P crushing deepslate_copper_ore @('minecraft:deepslate_copper_ore') @('levitate:crushed_raw_copper*7', 'levitate:crushed_raw_copper@0.25', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
-P crushing coal_ore @('minecraft:coal_ore') @('minecraft:coal', 'minecraft:coal@0.75', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') @{ processing_time = 150 }
-P crushing deepslate_coal_ore @('minecraft:deepslate_coal_ore') @('minecraft:coal*2', 'minecraft:coal@0.25', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') @{ processing_time = 300 }
-P crushing diamond_ore @('minecraft:diamond_ore') @('minecraft:diamond', 'minecraft:diamond@0.75', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') @{ processing_time = 350 }
-P crushing deepslate_diamond_ore @('minecraft:deepslate_diamond_ore') @('minecraft:diamond*2', 'minecraft:diamond@0.25', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') @{ processing_time = 450 }
-P crushing emerald_ore @('minecraft:emerald_ore') @('minecraft:emerald', 'minecraft:emerald@0.75', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') @{ processing_time = 350 }
-P crushing deepslate_emerald_ore @('minecraft:deepslate_emerald_ore') @('minecraft:emerald*2', 'minecraft:emerald@0.25', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') @{ processing_time = 450 }
-P crushing lapis_ore @('minecraft:lapis_ore') @('minecraft:lapis_lazuli*10', 'minecraft:lapis_lazuli@0.5', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
-P crushing deepslate_lapis_ore @('minecraft:deepslate_lapis_ore') @('minecraft:lapis_lazuli*12', 'minecraft:lapis_lazuli@0.5', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
-P crushing redstone_ore @('minecraft:redstone_ore') @('minecraft:redstone*6', 'minecraft:redstone@0.5', 'levitate:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
-P crushing deepslate_redstone_ore @('minecraft:deepslate_redstone_ore') @('minecraft:redstone*7', 'minecraft:redstone@0.5', 'levitate:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
-P crushing nether_gold_ore @('minecraft:nether_gold_ore') @('minecraft:gold_nugget*18', 'levitate:experience_nugget@0.75', 'minecraft:netherrack@0.125') $t350
-P crushing nether_quartz_ore @('minecraft:quartz_ore') @('minecraft:quartz*2', 'minecraft:quartz@0.25', 'levitate:experience_nugget@0.75', 'minecraft:netherrack@0.125') $t350
-P crushing gilded_blackstone @('minecraft:gilded_blackstone') @('minecraft:gold_nugget*18', 'levitate:experience_nugget@0.75', 'minecraft:blackstone@0.125') $t400
+P crushing zinc_ore @('bearing:zinc_ore') @('bearing:crushed_raw_zinc', 'bearing:crushed_raw_zinc@0.75', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
+P crushing deepslate_zinc_ore @('bearing:deepslate_zinc_ore') @('bearing:crushed_raw_zinc*2', 'bearing:crushed_raw_zinc@0.25', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
+P crushing iron_ore @('minecraft:iron_ore') @('bearing:crushed_raw_iron', 'bearing:crushed_raw_iron@0.75', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
+P crushing deepslate_iron_ore @('minecraft:deepslate_iron_ore') @('bearing:crushed_raw_iron*2', 'bearing:crushed_raw_iron@0.25', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
+P crushing gold_ore @('minecraft:gold_ore') @('bearing:crushed_raw_gold', 'bearing:crushed_raw_gold@0.75', 'bearing:experience_nugget*2@0.75', 'minecraft:cobblestone@0.125') $t250
+P crushing deepslate_gold_ore @('minecraft:deepslate_gold_ore') @('bearing:crushed_raw_gold*2', 'bearing:crushed_raw_gold@0.25', 'bearing:experience_nugget*2@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
+P crushing copper_ore @('minecraft:copper_ore') @('bearing:crushed_raw_copper*5', 'bearing:crushed_raw_copper@0.25', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
+P crushing deepslate_copper_ore @('minecraft:deepslate_copper_ore') @('bearing:crushed_raw_copper*7', 'bearing:crushed_raw_copper@0.25', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
+P crushing coal_ore @('minecraft:coal_ore') @('minecraft:coal', 'minecraft:coal@0.75', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') @{ processing_time = 150 }
+P crushing deepslate_coal_ore @('minecraft:deepslate_coal_ore') @('minecraft:coal*2', 'minecraft:coal@0.25', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') @{ processing_time = 300 }
+P crushing diamond_ore @('minecraft:diamond_ore') @('minecraft:diamond', 'minecraft:diamond@0.75', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') @{ processing_time = 350 }
+P crushing deepslate_diamond_ore @('minecraft:deepslate_diamond_ore') @('minecraft:diamond*2', 'minecraft:diamond@0.25', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') @{ processing_time = 450 }
+P crushing emerald_ore @('minecraft:emerald_ore') @('minecraft:emerald', 'minecraft:emerald@0.75', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') @{ processing_time = 350 }
+P crushing deepslate_emerald_ore @('minecraft:deepslate_emerald_ore') @('minecraft:emerald*2', 'minecraft:emerald@0.25', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') @{ processing_time = 450 }
+P crushing lapis_ore @('minecraft:lapis_ore') @('minecraft:lapis_lazuli*10', 'minecraft:lapis_lazuli@0.5', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
+P crushing deepslate_lapis_ore @('minecraft:deepslate_lapis_ore') @('minecraft:lapis_lazuli*12', 'minecraft:lapis_lazuli@0.5', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
+P crushing redstone_ore @('minecraft:redstone_ore') @('minecraft:redstone*6', 'minecraft:redstone@0.5', 'bearing:experience_nugget@0.75', 'minecraft:cobblestone@0.125') $t250
+P crushing deepslate_redstone_ore @('minecraft:deepslate_redstone_ore') @('minecraft:redstone*7', 'minecraft:redstone@0.5', 'bearing:experience_nugget@0.75', 'minecraft:cobbled_deepslate@0.125') $t350
+P crushing nether_gold_ore @('minecraft:nether_gold_ore') @('minecraft:gold_nugget*18', 'bearing:experience_nugget@0.75', 'minecraft:netherrack@0.125') $t350
+P crushing nether_quartz_ore @('minecraft:quartz_ore') @('minecraft:quartz*2', 'minecraft:quartz@0.25', 'bearing:experience_nugget@0.75', 'minecraft:netherrack@0.125') $t350
+P crushing gilded_blackstone @('minecraft:gilded_blackstone') @('minecraft:gold_nugget*18', 'bearing:experience_nugget@0.75', 'minecraft:blackstone@0.125') $t400
 foreach ($m in 'iron', 'gold', 'copper', 'zinc') {
     $xp = if ($m -eq 'gold') { 2 } else { 1 }
-    $rawItem = if ($m -eq 'zinc') { 'levitate:raw_zinc' } else { "minecraft:raw_$m" }
-    $rawBlock = if ($m -eq 'zinc') { 'levitate:raw_zinc_block' } else { "minecraft:raw_${m}_block" }
+    $rawItem = if ($m -eq 'zinc') { 'bearing:raw_zinc' } else { "minecraft:raw_$m" }
+    $rawBlock = if ($m -eq 'zinc') { 'bearing:raw_zinc_block' } else { "minecraft:raw_${m}_block" }
     $xpStr = if ($xp -eq 1) { '' } else { "*$xp" }
-    P crushing "raw_$m" @($rawItem) @("levitate:crushed_raw_$m", "levitate:experience_nugget$xpStr@0.75") $t400
-    P crushing "raw_${m}_block" @($rawBlock) @("levitate:crushed_raw_$m*9", "levitate:experience_nugget*$(9 * $xp)@0.75") $t400
+    P crushing "raw_$m" @($rawItem) @("bearing:crushed_raw_$m", "bearing:experience_nugget$xpStr@0.75") $t400
+    P crushing "raw_${m}_block" @($rawBlock) @("bearing:crushed_raw_$m*9", "bearing:experience_nugget*$(9 * $xp)@0.75") $t400
 }
 $stoneOres = [ordered]@{
-    asurine = @('levitate:crushed_raw_zinc@0.3', 'levitate:zinc_nugget@0.3'); crimsite = @('levitate:crushed_raw_iron@0.4', 'minecraft:iron_nugget@0.4')
-    ochrum = @('levitate:crushed_raw_gold@0.2', 'minecraft:gold_nugget@0.2'); veridium = @('levitate:crushed_raw_copper@0.8', 'levitate:copper_nugget@0.8')
+    asurine = @('bearing:crushed_raw_zinc@0.3', 'bearing:zinc_nugget@0.3'); crimsite = @('bearing:crushed_raw_iron@0.4', 'minecraft:iron_nugget@0.4')
+    ochrum = @('bearing:crushed_raw_gold@0.2', 'minecraft:gold_nugget@0.2'); veridium = @('bearing:crushed_raw_copper@0.8', 'bearing:copper_nugget@0.8')
 }
 foreach ($k in $stoneOres.Keys) {
-    P crushing $k @("levitate:$k") $stoneOres[$k] $t250
-    P crushing "${k}_recycling" @("#levitate:stone_types/$k") $stoneOres[$k] $t250
+    P crushing $k @("bearing:$k") $stoneOres[$k] $t250
+    P crushing "${k}_recycling" @("#bearing:stone_types/$k") $stoneOres[$k] $t250
 }
-$tuffOut = @('minecraft:flint@0.25', 'minecraft:gold_nugget@0.1', 'levitate:copper_nugget@0.1', 'levitate:zinc_nugget@0.1', 'minecraft:iron_nugget@0.1')
+$tuffOut = @('minecraft:flint@0.25', 'minecraft:gold_nugget@0.1', 'bearing:copper_nugget@0.1', 'bearing:zinc_nugget@0.1', 'minecraft:iron_nugget@0.1')
 P crushing tuff @('minecraft:tuff') $tuffOut $t350
-P crushing tuff_recycling @('#levitate:stone_types/tuff') $tuffOut $t350
-P crushing netherrack @('minecraft:netherrack') @('levitate:cinder_flour', 'levitate:cinder_flour@0.5') $t250
-P crushing obsidian @('minecraft:obsidian') @('levitate:powdered_obsidian', 'minecraft:obsidian@0.75') @{ processing_time = 500 }
-P milling wheat @('minecraft:wheat') @('levitate:wheat_flour', 'levitate:wheat_flour*2@0.25', 'minecraft:wheat_seeds@0.25') @{ processing_time = 150 }
-P mixing andesite_alloy @('minecraft:andesite', '#c:nuggets/iron') @('levitate:andesite_alloy')
-P mixing andesite_alloy_from_zinc @('minecraft:andesite', '#c:nuggets/zinc') @('levitate:andesite_alloy')
-P mixing brass_ingot @('#c:ingots/copper', '#c:ingots/zinc') @('levitate:brass_ingot*2') @{ heat_requirement = 'heated' }
-P mixing cardboard_pulp @('#levitate:pulpifiable', '#levitate:pulpifiable', '#levitate:pulpifiable', '#levitate:pulpifiable', 'F:minecraft:water*250') @('levitate:pulp')
-P mixing chocolate_melting @('levitate:bar_of_chocolate') @('F:levitate:chocolate*250') @{ heat_requirement = 'heated' }
-P mixing dough_by_mixing @('#c:flours/wheat', 'F:minecraft:water*1000') @('levitate:dough')
-P compacting blaze_cake @('#c:eggs', 'minecraft:sugar', 'levitate:cinder_flour') @('levitate:blaze_cake_base')
-P compacting chocolate @('F:levitate:chocolate*250') @('levitate:bar_of_chocolate')
-P pressing brass_ingot @('#c:ingots/brass') @('levitate:brass_sheet')
-P pressing copper_ingot @('#c:ingots/copper') @('levitate:copper_sheet')
-P pressing gold_ingot @('#c:ingots/gold') @('levitate:golden_sheet')
-P pressing iron_ingot @('#c:ingots/iron') @('levitate:iron_sheet')
-P pressing cardboard @('levitate:pulp') @('levitate:cardboard')
-P sandpaper_polishing rose_quartz @('levitate:rose_quartz') @('levitate:polished_rose_quartz')
-P splashing crushed_raw_copper @('levitate:crushed_raw_copper') @('levitate:copper_nugget*9', 'minecraft:clay_ball@0.5')
-P splashing crushed_raw_gold @('levitate:crushed_raw_gold') @('minecraft:gold_nugget*9', 'minecraft:quartz@0.5')
-P splashing crushed_raw_iron @('levitate:crushed_raw_iron') @('minecraft:iron_nugget*9', 'minecraft:redstone@0.75')
-P splashing crushed_raw_zinc @('levitate:crushed_raw_zinc') @('levitate:zinc_nugget*9', 'minecraft:gunpowder@0.25')
-P splashing industrial_iron_block @('levitate:industrial_iron_block') @('levitate:weathered_iron_block')
-P splashing wheat_flour @('#c:flours/wheat') @('levitate:dough')
-P filling blaze_cake @('levitate:blaze_cake_base', 'F:minecraft:lava*250') @('levitate:blaze_cake')
-P filling builders_tea @('minecraft:glass_bottle', 'F:levitate:tea*250') @('levitate:builders_tea')
-P filling chocolate_glazed_berries @('minecraft:sweet_berries', 'F:levitate:chocolate*250') @('levitate:chocolate_glazed_berries')
-P filling honeyed_apple @('minecraft:apple', 'FT:c:honey*250') @('levitate:honeyed_apple')
-P filling sweet_roll @('minecraft:bread', 'FT:c:milk*250') @('levitate:sweet_roll')
+P crushing tuff_recycling @('#bearing:stone_types/tuff') $tuffOut $t350
+P crushing netherrack @('minecraft:netherrack') @('bearing:cinder_flour', 'bearing:cinder_flour@0.5') $t250
+P crushing obsidian @('minecraft:obsidian') @('bearing:powdered_obsidian', 'minecraft:obsidian@0.75') @{ processing_time = 500 }
+P milling wheat @('minecraft:wheat') @('bearing:wheat_flour', 'bearing:wheat_flour*2@0.25', 'minecraft:wheat_seeds@0.25') @{ processing_time = 150 }
+P mixing andesite_alloy @('minecraft:andesite', '#c:nuggets/iron') @('bearing:andesite_alloy')
+P mixing andesite_alloy_from_zinc @('minecraft:andesite', '#c:nuggets/zinc') @('bearing:andesite_alloy')
+P mixing brass_ingot @('#c:ingots/copper', '#c:ingots/zinc') @('bearing:brass_ingot*2') @{ heat_requirement = 'heated' }
+P mixing cardboard_pulp @('#bearing:pulpifiable', '#bearing:pulpifiable', '#bearing:pulpifiable', '#bearing:pulpifiable', 'F:minecraft:water*250') @('bearing:pulp')
+P mixing chocolate_melting @('bearing:bar_of_chocolate') @('F:bearing:chocolate*250') @{ heat_requirement = 'heated' }
+P mixing dough_by_mixing @('#c:flours/wheat', 'F:minecraft:water*1000') @('bearing:dough')
+P compacting blaze_cake @('#c:eggs', 'minecraft:sugar', 'bearing:cinder_flour') @('bearing:blaze_cake_base')
+P compacting chocolate @('F:bearing:chocolate*250') @('bearing:bar_of_chocolate')
+P pressing brass_ingot @('#c:ingots/brass') @('bearing:brass_sheet')
+P pressing copper_ingot @('#c:ingots/copper') @('bearing:copper_sheet')
+P pressing gold_ingot @('#c:ingots/gold') @('bearing:golden_sheet')
+P pressing iron_ingot @('#c:ingots/iron') @('bearing:iron_sheet')
+P pressing cardboard @('bearing:pulp') @('bearing:cardboard')
+P sandpaper_polishing rose_quartz @('bearing:rose_quartz') @('bearing:polished_rose_quartz')
+P splashing crushed_raw_copper @('bearing:crushed_raw_copper') @('bearing:copper_nugget*9', 'minecraft:clay_ball@0.5')
+P splashing crushed_raw_gold @('bearing:crushed_raw_gold') @('minecraft:gold_nugget*9', 'minecraft:quartz@0.5')
+P splashing crushed_raw_iron @('bearing:crushed_raw_iron') @('minecraft:iron_nugget*9', 'minecraft:redstone@0.75')
+P splashing crushed_raw_zinc @('bearing:crushed_raw_zinc') @('bearing:zinc_nugget*9', 'minecraft:gunpowder@0.25')
+P splashing industrial_iron_block @('bearing:industrial_iron_block') @('bearing:weathered_iron_block')
+P splashing wheat_flour @('#c:flours/wheat') @('bearing:dough')
+P filling blaze_cake @('bearing:blaze_cake_base', 'F:minecraft:lava*250') @('bearing:blaze_cake')
+P filling builders_tea @('minecraft:glass_bottle', 'F:bearing:tea*250') @('bearing:builders_tea')
+P filling chocolate_glazed_berries @('minecraft:sweet_berries', 'F:bearing:chocolate*250') @('bearing:chocolate_glazed_berries')
+P filling honeyed_apple @('minecraft:apple', 'FT:c:honey*250') @('bearing:honeyed_apple')
+P filling sweet_roll @('minecraft:bread', 'FT:c:milk*250') @('bearing:sweet_roll')
 # Potion fluid fillings of cinder flour (night vision -> glowstone, harming -> gunpowder, strength -> redstone)
 foreach ($pf in @(@('glowstone', 'minecraft:night_vision', 'minecraft:glowstone_dust'), @('gunpowder', 'minecraft:harming', 'minecraft:gunpowder'), @('redstone', 'minecraft:strength', 'minecraft:redstone'))) {
-    $doc = O type 'levitate:filling' ingredients @((O item 'levitate:cinder_flour'), (O fluid 'levitate:potion' amount 25 potion $pf[1] bottle 'regular')) results @((O id $pf[2]))
+    $doc = O type 'bearing:filling' ingredients @((O item 'bearing:cinder_flour'), (O fluid 'bearing:potion' amount 25 potion $pf[1] bottle 'regular')) results @((O id $pf[2]))
     if (-not $ownedElsewhere.Contains("filling/$($pf[0])")) { Save-Json "assets/recipes/filling/$($pf[0]).json" $doc }
 }
-P emptying builders_tea @('levitate:builders_tea') @('minecraft:glass_bottle', 'F:levitate:tea*250')
+P emptying builders_tea @('bearing:builders_tea') @('minecraft:glass_bottle', 'F:bearing:tea*250')
 # item_application/bound_cardboard_inworld ships with U15 (assembly), which owns Create's manual application recipes.
 
 # sequenced assembly: precision mechanism (5 loops) and sturdy sheet
-$deploy = { param($with) O type 'levitate:deploying' ingredients @((O item 'levitate:incomplete_precision_mechanism'), (PIng $with)) results @((O id 'levitate:incomplete_precision_mechanism')) }
-Save-Json 'assets/recipes/sequenced_assembly/precision_mechanism.json' (O type 'levitate:sequenced_assembly' ingredient (O tag 'c:plates/gold') loops 5 `
-        results @((O id 'levitate:precision_mechanism' chance 120.0), (O id 'levitate:golden_sheet' chance 8.0), (O id 'levitate:andesite_alloy' chance 8.0), (O id 'levitate:cogwheel' chance 5.0), (O id 'minecraft:gold_nugget' chance 3.0), (O id 'levitate:shaft' chance 2.0), (O id 'levitate:crushed_raw_gold' chance 2.0), (O id 'minecraft:iron_ingot'), (O id 'minecraft:clock')) `
-        sequence @((& $deploy 'levitate:cogwheel'), (& $deploy 'levitate:large_cogwheel'), (& $deploy '#c:nuggets/iron')) `
-        transitional_item (O id 'levitate:incomplete_precision_mechanism'))
-Save-Json 'assets/recipes/sequenced_assembly/sturdy_sheet.json' (O type 'levitate:sequenced_assembly' ingredient (O tag 'c:dusts/obsidian') results @((O id 'levitate:sturdy_sheet')) `
-        sequence @((O type 'levitate:filling' ingredients @((O item 'levitate:unprocessed_obsidian_sheet'), (O fluid 'minecraft:lava' amount 500)) results @((O id 'levitate:unprocessed_obsidian_sheet'))),
-        (O type 'levitate:pressing' ingredients @((O item 'levitate:unprocessed_obsidian_sheet')) results @((O id 'levitate:unprocessed_obsidian_sheet'))),
-        (O type 'levitate:pressing' ingredients @((O item 'levitate:unprocessed_obsidian_sheet')) results @((O id 'levitate:unprocessed_obsidian_sheet')))) `
-        transitional_item (O id 'levitate:unprocessed_obsidian_sheet'))
+$deploy = { param($with) O type 'bearing:deploying' ingredients @((O item 'bearing:incomplete_precision_mechanism'), (PIng $with)) results @((O id 'bearing:incomplete_precision_mechanism')) }
+Save-Json 'assets/recipes/sequenced_assembly/precision_mechanism.json' (O type 'bearing:sequenced_assembly' ingredient (O tag 'c:plates/gold') loops 5 `
+        results @((O id 'bearing:precision_mechanism' chance 120.0), (O id 'bearing:golden_sheet' chance 8.0), (O id 'bearing:andesite_alloy' chance 8.0), (O id 'bearing:cogwheel' chance 5.0), (O id 'minecraft:gold_nugget' chance 3.0), (O id 'bearing:shaft' chance 2.0), (O id 'bearing:crushed_raw_gold' chance 2.0), (O id 'minecraft:iron_ingot'), (O id 'minecraft:clock')) `
+        sequence @((& $deploy 'bearing:cogwheel'), (& $deploy 'bearing:large_cogwheel'), (& $deploy '#c:nuggets/iron')) `
+        transitional_item (O id 'bearing:incomplete_precision_mechanism'))
+Save-Json 'assets/recipes/sequenced_assembly/sturdy_sheet.json' (O type 'bearing:sequenced_assembly' ingredient (O tag 'c:dusts/obsidian') results @((O id 'bearing:sturdy_sheet')) `
+        sequence @((O type 'bearing:filling' ingredients @((O item 'bearing:unprocessed_obsidian_sheet'), (O fluid 'minecraft:lava' amount 500)) results @((O id 'bearing:unprocessed_obsidian_sheet'))),
+        (O type 'bearing:pressing' ingredients @((O item 'bearing:unprocessed_obsidian_sheet')) results @((O id 'bearing:unprocessed_obsidian_sheet'))),
+        (O type 'bearing:pressing' ingredients @((O item 'bearing:unprocessed_obsidian_sheet')) results @((O id 'bearing:unprocessed_obsidian_sheet')))) `
+        transitional_item (O id 'bearing:unprocessed_obsidian_sheet'))
 
 # tags for the loader (Create's c: / create: tags of the materials)
 $tags = [ordered]@{
-    'c:nuggets/zinc' = @('levitate:zinc_nugget'); 'c:nuggets/brass' = @('levitate:brass_nugget'); 'c:nuggets/copper' = @('levitate:copper_nugget')
-    'c:ingots/zinc' = @('levitate:zinc_ingot'); 'c:ingots/brass' = @('levitate:brass_ingot')
-    'c:storage_blocks/zinc' = @('levitate:zinc_block'); 'c:storage_blocks/brass' = @('levitate:brass_block'); 'c:storage_blocks/raw_zinc' = @('levitate:raw_zinc_block')
+    'c:nuggets/zinc' = @('bearing:zinc_nugget'); 'c:nuggets/brass' = @('bearing:brass_nugget'); 'c:nuggets/copper' = @('bearing:copper_nugget')
+    'c:ingots/zinc' = @('bearing:zinc_ingot'); 'c:ingots/brass' = @('bearing:brass_ingot')
+    'c:storage_blocks/zinc' = @('bearing:zinc_block'); 'c:storage_blocks/brass' = @('bearing:brass_block'); 'c:storage_blocks/raw_zinc' = @('bearing:raw_zinc_block')
     'c:storage_blocks/raw_iron' = @('minecraft:raw_iron_block'); 'c:storage_blocks/raw_gold' = @('minecraft:raw_gold_block'); 'c:storage_blocks/raw_copper' = @('minecraft:raw_copper_block')
-    'c:raw_materials/zinc' = @('levitate:raw_zinc'); 'c:raw_materials/iron' = @('minecraft:raw_iron'); 'c:raw_materials/gold' = @('minecraft:raw_gold'); 'c:raw_materials/copper' = @('minecraft:raw_copper')
-    'c:ores/zinc' = @('levitate:zinc_ore', 'levitate:deepslate_zinc_ore')
-    'c:plates/iron' = @('levitate:iron_sheet'); 'c:plates/gold' = @('levitate:golden_sheet'); 'c:plates/copper' = @('levitate:copper_sheet'); 'c:plates/brass' = @('levitate:brass_sheet'); 'c:plates/obsidian' = @('levitate:sturdy_sheet')
-    'levitate:plates' = @('levitate:iron_sheet', 'levitate:golden_sheet', 'levitate:copper_sheet', 'levitate:brass_sheet', 'levitate:sturdy_sheet', 'levitate:cardboard')
-    'c:dusts/obsidian' = @('levitate:powdered_obsidian'); 'c:flours/wheat' = @('levitate:wheat_flour'); 'levitate:flours' = @('levitate:wheat_flour')
+    'c:raw_materials/zinc' = @('bearing:raw_zinc'); 'c:raw_materials/iron' = @('minecraft:raw_iron'); 'c:raw_materials/gold' = @('minecraft:raw_gold'); 'c:raw_materials/copper' = @('minecraft:raw_copper')
+    'c:ores/zinc' = @('bearing:zinc_ore', 'bearing:deepslate_zinc_ore')
+    'c:plates/iron' = @('bearing:iron_sheet'); 'c:plates/gold' = @('bearing:golden_sheet'); 'c:plates/copper' = @('bearing:copper_sheet'); 'c:plates/brass' = @('bearing:brass_sheet'); 'c:plates/obsidian' = @('bearing:sturdy_sheet')
+    'bearing:plates' = @('bearing:iron_sheet', 'bearing:golden_sheet', 'bearing:copper_sheet', 'bearing:brass_sheet', 'bearing:sturdy_sheet', 'bearing:cardboard')
+    'c:dusts/obsidian' = @('bearing:powdered_obsidian'); 'c:flours/wheat' = @('bearing:wheat_flour'); 'bearing:flours' = @('bearing:wheat_flour')
     'c:eggs' = @('minecraft:egg'); 'c:strings' = @('minecraft:string'); 'c:gems/quartz' = @('minecraft:quartz'); 'c:dusts/redstone' = @('minecraft:redstone')
-    'levitate:crushed_raw_materials' = @('levitate:crushed_raw_iron', 'levitate:crushed_raw_gold', 'levitate:crushed_raw_copper', 'levitate:crushed_raw_zinc')
-    'levitate:create_ingots' = @('levitate:andesite_alloy', 'levitate:zinc_ingot', 'levitate:brass_ingot')
-    'levitate:pulpifiable' = @('minecraft:bamboo', 'minecraft:sugar_cane', 'minecraft:oak_sapling', 'minecraft:spruce_sapling', 'minecraft:birch_sapling', 'minecraft:jungle_sapling', 'minecraft:acacia_sapling', 'minecraft:dark_oak_sapling', 'minecraft:cherry_sapling', 'minecraft:mangrove_propagule', 'minecraft:pale_oak_sapling')
-    'levitate:upright_on_belt' = @('levitate:blaze_cake_base', 'levitate:blaze_cake', 'levitate:creative_blaze_cake', 'levitate:builders_tea')
+    'bearing:crushed_raw_materials' = @('bearing:crushed_raw_iron', 'bearing:crushed_raw_gold', 'bearing:crushed_raw_copper', 'bearing:crushed_raw_zinc')
+    'bearing:create_ingots' = @('bearing:andesite_alloy', 'bearing:zinc_ingot', 'bearing:brass_ingot')
+    'bearing:pulpifiable' = @('minecraft:bamboo', 'minecraft:sugar_cane', 'minecraft:oak_sapling', 'minecraft:spruce_sapling', 'minecraft:birch_sapling', 'minecraft:jungle_sapling', 'minecraft:acacia_sapling', 'minecraft:dark_oak_sapling', 'minecraft:cherry_sapling', 'minecraft:mangrove_propagule', 'minecraft:pale_oak_sapling')
+    'bearing:upright_on_belt' = @('bearing:blaze_cake_base', 'bearing:blaze_cake', 'bearing:creative_blaze_cake', 'bearing:builders_tea')
 }
-foreach ($n in $stoneTypes.Keys) { $tags["levitate:stone_types/$n"] = @($stoneTypes[$n]) }
+foreach ($n in $stoneTypes.Keys) { $tags["bearing:stone_types/$n"] = @($stoneTypes[$n]) }
 Save-Json 'assets/recipes/tags/materials.json' $tags
 
 # ---- RP fragments and the C++ table ---------------------------------------------------------------
@@ -742,7 +742,7 @@ Save-Json 'assets/pack/rp/terrain_texture.d/materials.json' $terrainTextures
 Save-Json 'assets/pack/rp/blocks.d/materials.json' $blockSounds
 Save-Text 'assets/pack/rp/texts.d/en_US/materials.lang' (($enLang -join "`n") + "`n")
 Save-Text 'assets/pack/rp/texts.d/zh_CN/materials.lang' (($zhLang -join "`n") + "`n")
-Save-Text 'src/feature/materials/MaterialsBlocks.inc' ("// Generated by tools/gen/materials.ps1 - do not edit.`n// LV_MATERIALS_BLOCK(id, tool, tier, shape, drop)`n" + ($cppBlocks -join "`n") + "`n")
+Save-Text 'src/feature/materials/MaterialsBlocks.inc' ("// Generated by tools/gen/materials.ps1 - do not edit.`n// BR_MATERIALS_BLOCK(id, tool, tier, shape, drop)`n" + ($cppBlocks -join "`n") + "`n")
 
 $script:files.Sort()
 [IO.File]::WriteAllText($manifest, (($script:files -join "`n") + "`n"), $utf8)

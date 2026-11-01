@@ -1,12 +1,12 @@
-# Levitate
+# Bearing
 
-[![Build](https://github.com/MiracleForest/Levitate/actions/workflows/build.yml/badge.svg)](https://github.com/MiracleForest/Levitate/actions/workflows/build.yml)
-[![License](https://img.shields.io/github/license/MiracleForest/Levitate)](COPYING.LESSER)
+[![Build](https://github.com/MiracleForest/Bearing/actions/workflows/build.yml/badge.svg)](https://github.com/MiracleForest/Bearing/actions/workflows/build.yml)
+[![License](https://img.shields.io/github/license/MiracleForest/Bearing)](COPYING.LESSER)
 
-Rotational power, gears, machines and moving contraptions. Levitate brings simibubi and the Creators of Create's Java mod [Create](https://modrinth.com/mod/create) to Bedrock, for dedicated servers and single-player worlds.
+Rotational power, gears, machines and moving contraptions. Bearing brings simibubi and the Creators of Create's Java mod [Create](https://modrinth.com/mod/create) to Bedrock, for dedicated servers and single-player worlds.
 
 > [!NOTE]
-> Levitate is in early development. Bedrock limits are listed in [docs/SPEC.md](docs/SPEC.md) §8.
+> Bearing is in early development. Bedrock limits are listed in [docs/SPEC.md](docs/SPEC.md) §8.
 
 ## Install
 
@@ -15,16 +15,16 @@ You need Minecraft Bedrock Edition **1.26.51** for Windows (x64) with LeviLamina
 With [lip](https://github.com/LiteLDev/lip):
 
 ```sh
-lip install github.com/MiracleForest/Levitate      # dedicated server
-lip install github.com/MiracleForest/Levitate#client  # client
+lip install github.com/MiracleForest/Bearing      # dedicated server
+lip install github.com/MiracleForest/Bearing#client  # client
 ```
 
-Or download the zip from the [latest release](https://github.com/MiracleForest/Levitate/releases/latest) and extract it next to `LeviLamina/`:
+Or download the zip from the [latest release](https://github.com/MiracleForest/Bearing/releases/latest) and extract it next to `LeviLamina/`:
 
 | Where | Zip | Folder |
 | --- | --- | --- |
-| Dedicated server | `levitate-server-windows-x64.zip` | `plugins/Levitate/` |
-| Client (LeviLauncher) | `levitate-client-windows-x64.zip` | `mods/Levitate/` |
+| Dedicated server | `bearing-server-windows-x64.zip` | `plugins/Bearing/` |
+| Client (LeviLauncher) | `bearing-client-windows-x64.zip` | `mods/Bearing/` |
 
 ## Commands
 
@@ -38,11 +38,11 @@ Or download the zip from the [latest release](https://github.com/MiracleForest/L
 
 All commands are listed in [docs/SPEC.md](docs/SPEC.md) §6.
 
-`/levitate` is an alias of `/create`.
+`/bearing` is an alias of `/create`.
 
 ## Configuration
 
-Settings live in `config/*.json` inside the mod folder (`plugins/Levitate/` or `mods/Levitate/`). Each file is created with defaults on first start.
+Settings live in `config/*.json` inside the mod folder (`plugins/Bearing/` or `mods/Bearing/`). Each file is created with defaults on first start.
 
 | File | Setting | Default | Meaning |
 | --- | --- | --- | --- |
@@ -56,7 +56,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). [AGENTS.md](AGENTS.md) is the developer 
 
 ## Credits
 
-Levitate reproduces the behaviour of [Create](https://github.com/Creators-of-Create/Create) by simibubi and the Creators of Create. It copies no code or assets from it.
+Bearing reproduces the behaviour of [Create](https://github.com/Creators-of-Create/Create) by simibubi and the Creators of Create. It copies no code or assets from it.
 
 ## License
 

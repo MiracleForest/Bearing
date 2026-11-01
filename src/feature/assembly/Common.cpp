@@ -35,11 +35,11 @@
 #include "game/WorldDb.h"
 #include "mod/Config.h"
 
-namespace lv::feature::assembly {
+namespace br::feature::assembly {
 
-LV_REGISTER_CONFIG("assembly", AssemblyConfig);
+BR_REGISTER_CONFIG("assembly", AssemblyConfig);
 
-AssemblyConfig const& config() { return lv::config::get<AssemblyConfig>(); }
+AssemblyConfig const& config() { return br::config::get<AssemblyConfig>(); }
 
 namespace detail {
 
@@ -183,4 +183,4 @@ std::optional<GlobalPos> posFrom(Json const& j) {
 
 } // namespace detail
 
-} // namespace lv::feature::assembly
+} // namespace br::feature::assembly

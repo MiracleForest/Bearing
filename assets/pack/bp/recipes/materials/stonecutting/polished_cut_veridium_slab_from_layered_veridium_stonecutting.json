@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:polished_cut_veridium_slab_from_layered_veridium_stonecutting"
+      "identifier": "bearing:polished_cut_veridium_slab_from_layered_veridium_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:layered_veridium"
+        "item": "bearing:layered_veridium"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:layered_veridium"
+        "item": "bearing:layered_veridium"
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_veridium_slab",
+      "item": "bearing:polished_cut_veridium_slab",
       "count": 2
     }
   }

@@ -2,12 +2,12 @@
   "format_version": "1.21.120",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:placard",
+      "identifier": "bearing:placard",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,7 +15,7 @@
           4,
           5
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ]
@@ -33,26 +33,26 @@
       "tag:minecraft:is_pickaxe_item_destructible": {},
       "minecraft:light_dampening": 0,
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.placard",
+        "identifier": "geometry.bearing.placard",
         "bone_visibility": {
-          "f0": "q.block_state('levitate:facing') == 0",
-          "f1": "q.block_state('levitate:facing') == 1",
-          "f2": "q.block_state('levitate:facing') == 2",
-          "f3": "q.block_state('levitate:facing') == 3",
-          "f4": "q.block_state('levitate:facing') == 4",
-          "f5": "q.block_state('levitate:facing') == 5"
+          "f0": "q.block_state('bearing:facing') == 0",
+          "f1": "q.block_state('bearing:facing') == 1",
+          "f2": "q.block_state('bearing:facing') == 2",
+          "f3": "q.block_state('bearing:facing') == 3",
+          "f4": "q.block_state('bearing:facing') == 4",
+          "f5": "q.block_state('bearing:facing') == 5"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_placard",
+          "texture": "bearing_placard",
           "render_method": "alpha_test"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:collision_box": {
             "origin": [
@@ -81,7 +81,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:collision_box": {
             "origin": [
@@ -110,7 +110,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:collision_box": {
             "origin": [
@@ -139,7 +139,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:collision_box": {
             "origin": [
@@ -168,7 +168,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:collision_box": {
             "origin": [
@@ -197,7 +197,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:collision_box": {
             "origin": [
@@ -226,18 +226,18 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1",
+        "condition": "q.block_state('bearing:powered') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_placard_powered",
+              "texture": "bearing_placard_powered",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1 && q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:powered') == 1 && q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -255,7 +255,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1 && q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:powered') == 1 && q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -273,7 +273,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1 && q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:powered') == 1 && q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -291,7 +291,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1 && q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:powered') == 1 && q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -309,7 +309,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1 && q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:powered') == 1 && q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -327,7 +327,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:powered') == 1 && q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:powered') == 1 && q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,

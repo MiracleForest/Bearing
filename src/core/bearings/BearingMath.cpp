@@ -4,7 +4,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::bearings {
+namespace br::core::bearings {
 
 namespace {
 double sign(double v) { return v > 0 ? 1.0 : v < 0 ? -1.0 : 0.0; }
@@ -118,4 +118,4 @@ std::vector<cc::Dir> orderedByDistanceExceptAxis(cc::Vec3d const& hit, cc::Axis 
     return out;
 }
 
-} // namespace lv::core::bearings
+} // namespace br::core::bearings

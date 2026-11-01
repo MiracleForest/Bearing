@@ -15,7 +15,7 @@
 #include <string_view>
 #include <vector>
 
-namespace lv::core::advancements {
+namespace br::core::advancements {
 
 /// Create's CreateAdvancement.TaskType.
 enum class Type { Silent, Normal, Noisy, Expert, Secret };
@@ -57,4 +57,4 @@ struct Placement {
 /// Parent index of an entry (-1 for the root).
 [[nodiscard]] int parentOf(std::size_t index);
 
-} // namespace lv::core::advancements
+} // namespace br::core::advancements

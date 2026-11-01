@@ -24,7 +24,7 @@
 class Block;
 class BlockSource;
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 namespace airflow {
 
@@ -92,4 +92,4 @@ sideInputAbove(BlockSource& region, BlockPos const& beltPos, ItemStack const& st
 
 } // namespace beltlink
 
-} // namespace lv::feature::common
+} // namespace br::feature::common

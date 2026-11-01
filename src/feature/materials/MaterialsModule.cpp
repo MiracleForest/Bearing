@@ -49,18 +49,18 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("materials", lv::feature::materials::MaterialsConfig);
+BR_REGISTER_CONFIG("materials", br::feature::materials::MaterialsConfig);
 
-namespace lv::feature::materials {
+namespace br::feature::materials {
 
 // ---- block table ---------------------------------------------------------------------------------
 
 std::vector<BlockInfo> const& allBlocks() {
     static std::vector<BlockInfo> const table = [] {
         std::vector<BlockInfo> v;
-#define LV_MATERIALS_BLOCK(id, tool, tier, shape, drop) v.push_back({id, tool, tier, shape, drop});
+#define BR_MATERIALS_BLOCK(id, tool, tier, shape, drop) v.push_back({id, tool, tier, shape, drop});
 #include "feature/materials/MaterialsBlocks.inc"
-#undef LV_MATERIALS_BLOCK
+#undef BR_MATERIALS_BLOCK
         return v;
     }();
     return table;
@@ -147,7 +147,7 @@ dropsFor(BlockInfo const& info, Block const& block, bool silkTouch, int fortune,
         } else {
             // ApplyBonusCount.addOreBonusCount: count * (max(0, rand(fortune + 2) - 1) + 1)
             int bonus = fortune > 0 ? std::max(0, nextInt(fortune + 2) - 1) : 0;
-            out.emplace_back("levitate:raw_zinc", bonus + 1);
+            out.emplace_back("bearing:raw_zinc", bonus + 1);
         }
         break;
     case Drop::BoundCardboard:
@@ -155,7 +155,7 @@ dropsFor(BlockInfo const& info, Block const& block, bool silkTouch, int fortune,
             out.emplace_back(std::string(info.id), 1);
         } else {
             out.emplace_back("minecraft:string", 1);
-            out.emplace_back("levitate:cardboard_block", 1);
+            out.emplace_back("bearing:cardboard_block", 1);
         }
         break;
     case Drop::Self: // the pack's loot tables (double slabs: their permutation's table drops two)
@@ -170,14 +170,14 @@ dropsFor(BlockInfo const& info, Block const& block, bool silkTouch, int fortune,
 std::optional<bool> singleSlabHalf(Block const& block) {
     auto const* info = infoOf(block.getBlockType());
     if (!info || info->shape != Shape::Slab) return std::nullopt;
-    if (strState(block, "levitate:double") == "1") return std::nullopt;
+    if (strState(block, "bearing:double") == "1") return std::nullopt;
     return strState(block, "minecraft:vertical_half") == "top";
 }
 
 bool mergeSlab(BlockSource& region, BlockPos const& pos) {
     auto const& block = region.getBlock(pos);
     if (!singleSlabHalf(block)) return false;
-    auto const* merged = withByteState(block, "levitate:double", 1);
+    auto const* merged = withByteState(block, "bearing:double", 1);
     return merged && game::setBlock(region, pos, *merged);
 }
 
@@ -243,7 +243,7 @@ int useExperienceNuggets(Player& player, ItemStack& stack, bool sneaking) {
     }
     stack.set(count - used);
     if (count - used <= 0) stack = ItemStack::EMPTY_ITEM();
-    lv::log().info("materials: {} used {} experience nugget(s) for {} xp", player.getRealName(), used, total);
+    br::log().info("materials: {} used {} experience nugget(s) for {} xp", player.getRealName(), used, total);
     return total;
 }
 
@@ -262,8 +262,8 @@ void applyBuildersTea(Player& player) {
 
 namespace {
 
-std::string const kExperienceNugget = "levitate:experience_nugget";
-std::string const kBuildersTea      = "levitate:builders_tea";
+std::string const kExperienceNugget = "bearing:experience_nugget";
+std::string const kBuildersTea      = "bearing:builders_tea";
 
 double unit(std::mt19937& rng) { return std::uniform_real_distribution<double>(0, 1)(rng); }
 
@@ -347,7 +347,7 @@ ia::Result slabUseOn(ia::UseOnContext const& c) {
         if (item.mCount <= 0) item = ItemStack::EMPTY_ITEM();
     }
     player.sendInventory(false);
-    lv::log().info("materials: {} merged {} into a double slab", player.getRealName(), info->id);
+    br::log().info("materials: {} merged {} into a double slab", player.getRealName(), info->id);
     return ia::Result::Consume;
 }
 
@@ -378,7 +378,7 @@ LL_TYPE_INSTANCE_HOOK(MaterialsCompleteUsingItemHook, ll::memory::HookPriority::
     origin();
     if (tea) {
         applyBuildersTea(*this);
-        lv::log().info("materials: {} drank builder's tea", getRealName());
+        br::log().info("materials: {} drank builder's tea", getRealName());
     }
 }
 
@@ -404,8 +404,8 @@ void rebuildTypeTable() {
     }
     resetWorldGenCache();
     if (t.empty()) return; // no world yet (client at game start)
-    if (missing) lv::log().warn("materials: {} block(s) of the behavior pack are not loaded", missing);
-    lv::log().info("materials: {} blocks ready", t.size());
+    if (missing) br::log().warn("materials: {} block(s) of the behavior pack are not loaded", missing);
+    br::log().info("materials: {} blocks ready", t.size());
 }
 
 struct MaterialsModule {
@@ -436,6 +436,6 @@ struct MaterialsModule {
     }
 };
 
-} // namespace lv::feature::materials
+} // namespace br::feature::materials
 
-LV_REGISTER_MODULE(lv::feature::materials::MaterialsModule);
+BR_REGISTER_MODULE(br::feature::materials::MaterialsModule);

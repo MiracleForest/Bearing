@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstdlib>
 
-namespace lv::core::belts {
+namespace br::core::belts {
 
 // ---- geometry ---------------------------------------------------------------------------------------
 
@@ -553,4 +553,4 @@ std::optional<int> ejectorTargetFacing(Vec3i const& ejector, Vec3i const& target
     return std::nullopt;
 }
 
-} // namespace lv::core::belts
+} // namespace br::core::belts

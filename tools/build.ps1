@@ -1,11 +1,11 @@
-# Builds Levitate for the server (BDS), the client, or both.
+# Builds Bearing for the server (BDS), the client, or both.
 #
 #   pwsh tools/build.ps1                    # both platforms, release
 #   pwsh tools/build.ps1 -Target server     # one platform
-#   pwsh tools/build.ps1 -Tests             # also build and run the unit tests (lv-tests)
+#   pwsh tools/build.ps1 -Tests             # also build and run the unit tests (br-tests)
 #
 # Each platform has its own build dir (build/<target>); outputs land in
-#   bin/<target>/Levitate/  (dll, pdb, manifest.json, lang/, behavior_packs/, resource_packs/)
+#   bin/<target>/Bearing/  (dll, pdb, manifest.json, lang/, behavior_packs/, resource_packs/)
 # Copy that folder to `plugins/` (BDS) or `mods/` (LeviLauncher client).
 param(
     [ValidateSet('server', 'client', 'all')][string]$Target = 'all',
@@ -48,17 +48,17 @@ try {
         xmake f -P $root -a x64 -m $Mode -p windows --target_type=$t -o "build/$t" @vsArgs -y
         if ($LASTEXITCODE) { throw "xmake config failed for $t" }
         Write-Host "==> building $t"
-        xmake build -P $root -y Levitate
+        xmake build -P $root -y Bearing
         if ($LASTEXITCODE) { throw "build failed for $t" }
-        $out = Join-Path $root "bin/$t/Levitate"
-        if (-not (Test-Path (Join-Path $out 'Levitate.dll'))) { throw "missing output $out" }
+        $out = Join-Path $root "bin/$t/Bearing"
+        if (-not (Test-Path (Join-Path $out 'Bearing.dll'))) { throw "missing output $out" }
         Write-Host "==> $t ready: $out"
     }
     if ($Tests) {
         Write-Host '==> unit tests'
-        xmake build -P $root -y lv-tests
-        if ($LASTEXITCODE) { throw 'lv-tests build failed' }
-        xmake run -P $root lv-tests
+        xmake build -P $root -y br-tests
+        if ($LASTEXITCODE) { throw 'br-tests build failed' }
+        xmake run -P $root br-tests
         if ($LASTEXITCODE) { throw 'unit tests failed' }
     }
 } finally {

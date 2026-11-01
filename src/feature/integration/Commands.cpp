@@ -1,6 +1,6 @@
 // Create's general commands (AllCommands, SPEC §6):
 //   /create clone <begin> <end> <destination> [skipBlocks]   (op) CloneCommand: blocks, their block
-//       entities and Levitate's per-block data, plus the super glue of the area
+//       entities and Bearing's per-block data, plus the super glue of the area
 //   /create debuginfo                                         DebugInfoCommand: version report
 //   /create util replaceInCommandBlocks <begin> <end> <toReplace> <replaceWith>   (op)
 //   /create u ...                                             Create's redirect of /create util
@@ -59,14 +59,14 @@
 #include "mod/Main.h"
 #include "selftest/SelfTest.h"
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 #include "mc/client/player/LocalPlayer.h"
 
 #include "client/Client.h"
 #include "client/integration/Clipboard.h"
 #endif
 
-namespace lv::feature::integration {
+namespace br::feature::integration {
 
 // Command parameter types need external linkage.
 struct CloneParams {
@@ -138,7 +138,7 @@ struct Snapshot {
     BlockPos                     target;
     Block const*                 block = nullptr;
     std::unique_ptr<CompoundTag> blockEntity;
-    std::optional<bd::Json>      data; ///< Levitate's BlockData document (our blocks' "block entity")
+    std::optional<bd::Json>      data; ///< Bearing's BlockData document (our blocks' "block entity")
 };
 
 /// Puts the copied items into the placed container when the new block entity didn't take them
@@ -250,9 +250,9 @@ CloneResult cloneArea(BlockSource& region, int dim, Area const& src, BlockPos co
 
 void runClone(CommandOrigin const& origin, CommandOutput& output, CloneParams const& params, bool withBlocks) {
     if (!commands::isAdmin(origin))
-        return output.error(text(origin, "lv.integration.need_op", "You need operator permission."));
+        return output.error(text(origin, "br.integration.need_op", "You need operator permission."));
     auto* dimension = origin.getDimension();
-    if (!dimension) return output.error(text(origin, "lv.integration.not_loaded", "That position is not loaded"));
+    if (!dimension) return output.error(text(origin, "br.integration.not_loaded", "That position is not loaded"));
     auto& region = dimension->getBlockSourceFromMainChunkSource();
     int   dim    = static_cast<int>(dimension->getDimensionId());
     auto  src    = areaOf(posOf(params.begin, origin), posOf(params.end, origin));
@@ -261,22 +261,22 @@ void runClone(CommandOrigin const& origin, CommandOutput& output, CloneParams co
     if (src.volume() > kModificationBlockLimit) {
         return output.error(text(
             origin,
-            "lv.integration.clone.too_big",
+            "br.integration.clone.too_big",
             "Too many blocks in the specified area (maximum {0}, specified {1})",
             kModificationBlockLimit,
             src.volume()
         ));
     }
     if (!loaded(region, src) || !loaded(region, target))
-        return output.error(text(origin, "lv.integration.not_loaded", "That position is not loaded"));
+        return output.error(text(origin, "br.integration.not_loaded", "That position is not loaded"));
     auto r = cloneArea(region, dim, src, dest, withBlocks);
     log().info(
         "clone: {} {} {}..{} {} {} to {} {} {}: {} blocks, glue applied {} times",
         src.min.x, src.min.y, src.min.z, src.max.x, src.max.y, src.max.z, dest.x, dest.y, dest.z, r.blocks, r.glue
     );
     std::string msg;
-    if (withBlocks) msg = text(origin, "lv.integration.clone.blocks", "Successfully cloned {0} Blocks", r.blocks) + "\n";
-    msg += text(origin, "lv.integration.clone.glue", "Successfully applied glue {0} times", r.glue);
+    if (withBlocks) msg = text(origin, "br.integration.clone.blocks", "Successfully cloned {0} Blocks", r.blocks) + "\n";
+    msg += text(origin, "br.integration.clone.glue", "Successfully applied glue {0} times", r.glue);
     output.success(msg);
 }
 
@@ -314,27 +314,27 @@ int replaceInCommandBlocks(
 
 void runReplace(CommandOrigin const& origin, CommandOutput& output, ReplaceInCommandBlocksParams const& params) {
     if (!commands::isAdmin(origin))
-        return output.error(text(origin, "lv.integration.need_op", "You need operator permission."));
+        return output.error(text(origin, "br.integration.need_op", "You need operator permission."));
     auto* dimension = origin.getDimension();
-    if (!dimension) return output.error(text(origin, "lv.integration.not_loaded", "That position is not loaded"));
+    if (!dimension) return output.error(text(origin, "br.integration.not_loaded", "That position is not loaded"));
     auto& region = dimension->getBlockSourceFromMainChunkSource();
     auto  begin  = posOf(params.begin, origin);
     auto  end    = posOf(params.end, origin);
     if (!loaded(region, areaOf(begin, begin)) || !loaded(region, areaOf(end, end)))
-        return output.error(text(origin, "lv.integration.not_loaded", "That position is not loaded"));
+        return output.error(text(origin, "br.integration.not_loaded", "That position is not loaded"));
     int count = 0;
     try {
         count = replaceInCommandBlocks(region, areaOf(begin, end), params.toReplace, params.replaceWith);
     } catch (std::regex_error const& e) {
-        return output.error(text(origin, "lv.integration.replace.bad_pattern", "Invalid pattern: {0}", e.what()));
+        return output.error(text(origin, "br.integration.replace.bad_pattern", "Invalid pattern: {0}", e.what()));
     }
     log().info("replaceInCommandBlocks \"{}\" -> \"{}\": {} blocks", params.toReplace, params.replaceWith, count);
     if (count == 0) {
         return output.success(
-            text(origin, "lv.integration.replace.none", "Couldn't find \"{0}\" anywhere.", params.toReplace)
+            text(origin, "br.integration.replace.none", "Couldn't find \"{0}\" anywhere.", params.toReplace)
         );
     }
-    output.success(text(origin, "lv.integration.replace.done", "Replaced occurrences in {0} blocks.", count));
+    output.success(text(origin, "br.integration.replace.done", "Replaced occurrences in {0} blocks.", count));
 }
 
 // ---- debuginfo (Create's DebugInfoCommand / DebugInformation) ---------------------------------
@@ -347,7 +347,7 @@ std::string debugReport(std::string_view side) {
 
     auto const& self = Mod::getInstance().getSelf();
     sections.push_back(
-        {"Levitate",
+        {"Bearing",
          {
              {"Mod Version", versionOf(self.getManifest().version)},
              {"LeviLamina Version", ll::getLoaderVersion().to_string()},
@@ -384,7 +384,7 @@ void runDebugInfo(CommandOrigin const& origin, CommandOutput& output) {
     auto report = debugReport(ll::isClient() ? "Client" : "Server");
     log().info("debuginfo:\n{}", report);
     std::string msg = report;
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
     // Create's client copies the report to the clipboard: here only for the host of the local world
     if (auto* local = client::currentPlayer(); player && local
         && local->getOrCreateUniqueID().rawID == player->getOrCreateUniqueID().rawID
@@ -397,14 +397,14 @@ void runDebugInfo(CommandOrigin const& origin, CommandOutput& output) {
 
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     // /create clone: usage line without arguments (Create's executes on the literal)
     cmd.overload().text("clone").execute([](CommandOrigin const& origin, CommandOutput& output) {
         if (!commands::isAdmin(origin))
-            return output.error(text(origin, "lv.integration.need_op", "You need operator permission."));
+            return output.error(text(origin, "br.integration.need_op", "You need operator permission."));
         output.success(text(
             origin,
-            "lv.integration.clone.usage",
+            "br.integration.clone.usage",
             "Clones all blocks as well as super glue from the specified area to the target destination"
         ));
     });
@@ -446,7 +446,7 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 
 BlockSource& regionOf(Context& ctx) { return ctx.player().getDimensionBlockSource(); }
 
@@ -462,7 +462,7 @@ ItemStack makeItem(std::string const& id, int count) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("integration.clone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.clone", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5850);
     p.y += 1;
     auto q = at(p, 6, 0, 0); // the destination
@@ -509,7 +509,7 @@ LV_REGISTER_SELFTEST("integration.clone", [](Context& ctx) -> ll::coro::CoroTask
     ct::clearGlue(p.dim, {p.x + 3, p.y, p.z}, 6);
 });
 
-LV_REGISTER_SELFTEST("integration.replace_in_command_blocks", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("integration.replace_in_command_blocks", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5860);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -535,8 +535,8 @@ LV_REGISTER_SELFTEST("integration.replace_in_command_blocks", [](Context& ctx) -
 });
 
 // CKinetics.minecartContraptionInContainers (MinecartContraptionItem.canFitInsideContainerItems)
-LV_REGISTER_SELFTEST("integration.minecart_contraption_in_containers", [](Context& ctx) {
-    auto& cfg  = lv::config::mut<bearings::Config>();
+BR_REGISTER_SELFTEST("integration.minecart_contraption_in_containers", [](Context& ctx) {
+    auto& cfg  = br::config::mut<bearings::Config>();
     bool  prev = cfg.minecartContraptionInContainers;
     cfg.minecartContraptionInContainers = false;
     ctx.check(!bearings::fitsInsideContainerItems(bearings::kMinecartContraption), "a minecart contraption doesn't fit by default");
@@ -547,4 +547,4 @@ LV_REGISTER_SELFTEST("integration.minecart_contraption_in_containers", [](Contex
     cfg.minecartContraptionInContainers = prev;
 });
 
-} // namespace lv::feature::integration
+} // namespace br::feature::integration

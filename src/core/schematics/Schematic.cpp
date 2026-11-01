@@ -9,7 +9,7 @@
 #include "core/schematics/Inflate.h"
 #include "core/schematics/JavaMapping.h"
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 using nbt::Compound;
 using nbt::List;
@@ -181,7 +181,7 @@ std::optional<Schematic> readMcstructure(std::string_view bytes, std::string* er
                 auto const* entry = c.values[i].asCompound();
                 if (!entry) continue;
                 if (auto const* be = entry->find("block_entity_data")) s.blockEntities[idx] = *be;
-                if (auto const* lv = entry->find("levitate_data"); lv && lv->asString()) s.levitateData[idx] = *lv->asString();
+                if (auto const* br = entry->find("bearing_data"); br && br->asString()) s.bearingData[idx] = *br->asString();
             }
         }
     }
@@ -225,12 +225,12 @@ std::string writeMcstructure(Schematic const& s, Pos origin) {
     }
     Compound positionData;
     std::set<std::size_t> keys;
-    for (auto const& [i, _] : s.levitateData) keys.insert(i);
+    for (auto const& [i, _] : s.bearingData) keys.insert(i);
     for (auto const& [i, _] : s.blockEntities) keys.insert(i);
     for (auto i : keys) {
         Compound e;
         if (auto it = s.blockEntities.find(i); it != s.blockEntities.end()) e.set("block_entity_data", it->second);
-        if (auto it = s.levitateData.find(i); it != s.levitateData.end()) e.set("levitate_data", Tag(it->second));
+        if (auto it = s.bearingData.find(i); it != s.bearingData.end()) e.set("bearing_data", Tag(it->second));
         positionData.set(std::to_string(i), Tag(std::move(e)));
     }
     Compound def;
@@ -453,11 +453,11 @@ bool transformStates(BlockState& st, Transform const& t) {
     bool  odd     = (((t.rotation % 4) + 4) % 4) % 2 == 1;
 
     // the chute's facing runs 0 down, 1..4 north / south / west / east (U35, SPEC §3.6.35)
-    bool chute = name == "levitate:chute";
-    for (auto const* key : {"facing_direction", "levitate:facing"}) {
+    bool chute = name == "bearing:chute";
+    for (auto const* key : {"facing_direction", "bearing:facing"}) {
         if (auto* tag = s.find(key)) {
             auto v = tag->asInt();
-            if (chute && std::string_view(key) == "levitate:facing") {
+            if (chute && std::string_view(key) == "bearing:facing") {
                 if (v && *v >= 1 && *v <= 4) changed |= setInt(*tag, dirIndex(tv(t, kDir[static_cast<std::size_t>(*v + 1)])) - 1);
                 continue;
             }
@@ -482,7 +482,7 @@ bool transformStates(BlockState& st, Transform const& t) {
             else if (v == "z") changed |= setStr(*tag, "x");
         }
     }
-    if (auto* tag = s.find("levitate:axis"); tag && odd) {
+    if (auto* tag = s.find("bearing:axis"); tag && odd) {
         auto v = tag->asInt();
         if (v == 0) changed |= setInt(*tag, 2);
         else if (v == 2) changed |= setInt(*tag, 0);
@@ -574,4 +574,4 @@ bool transformStates(BlockState& st, Transform const& t) {
     return changed;
 }
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

@@ -9,7 +9,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::crafter::trees {
+namespace br::feature::crafter::trees {
 
 namespace {
 
@@ -118,4 +118,4 @@ void fell(GlobalPos const& cut, std::string const& brokenId, std::function<void(
                tree.attachments.size());
 }
 
-} // namespace lv::feature::crafter::trees
+} // namespace br::feature::crafter::trees

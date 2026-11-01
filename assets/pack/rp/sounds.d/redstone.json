@@ -1,8 +1,8 @@
 {
-  "levitate.desk_bell": {
+  "bearing.desk_bell": {
     "category": "block",
     "min_distance": 4.0,
     "max_distance": 64.0,
-    "sounds": [{ "name": "sounds/levitate/desk_bell", "volume": 1.0 }]
+    "sounds": [{ "name": "sounds/bearing/desk_bell", "volume": 1.0 }]
   }
 }

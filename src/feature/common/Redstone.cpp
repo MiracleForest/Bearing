@@ -31,7 +31,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common::redstone {
+namespace br::feature::common::redstone {
 
 namespace {
 
@@ -382,6 +382,6 @@ private:
     ll::event::ListenerPtr mTick;
 };
 
-} // namespace lv::feature::common::redstone
+} // namespace br::feature::common::redstone
 
-LV_REGISTER_MODULE_ORDERED(lv::feature::common::redstone::RedstoneModule, lv::ModuleOrder::Services);
+BR_REGISTER_MODULE_ORDERED(br::feature::common::redstone::RedstoneModule, br::ModuleOrder::Services);

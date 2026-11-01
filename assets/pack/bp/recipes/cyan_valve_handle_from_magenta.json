@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cyan_valve_handle_from_magenta"
+      "identifier": "bearing:cyan_valve_handle_from_magenta"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:magenta_valve_handle"
+        "item": "bearing:magenta_valve_handle"
       },
       {
         "item": "minecraft:cyan_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:magenta_valve_handle"
+        "item": "bearing:magenta_valve_handle"
       }
     ],
     "result": {
-      "item": "levitate:cyan_valve_handle",
+      "item": "bearing:cyan_valve_handle",
       "count": 1
     }
   }

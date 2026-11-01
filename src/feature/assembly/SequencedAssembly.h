@@ -8,7 +8,7 @@
 // item:
 //
 //     #include "feature/assembly/SequencedAssembly.h"
-//     namespace sa = lv::feature::assembly::sequenced;
+//     namespace sa = br::feature::assembly::sequenced;
 //
 //     // a press (U14) pressing `stack` on a depot / belt / in the world:
 //     if (auto step = sa::findStep(sa::kPressing, stack)) {
@@ -39,7 +39,7 @@
 
 class ItemStack;
 
-namespace lv::feature::assembly::sequenced {
+namespace br::feature::assembly::sequenced {
 
 using core::assembly::SequencedRecipe;
 using core::assembly::SequenceStep;
@@ -63,7 +63,7 @@ struct StepMatch {
 
 /// Every loaded sequenced assembly recipe (sorted by id).
 [[nodiscard]] std::vector<SequencedRecipe> const& all();
-/// A recipe by id ("levitate:sequenced_assembly/track").
+/// A recipe by id ("bearing:sequenced_assembly/track").
 [[nodiscard]] SequencedRecipe const* byId(std::string const& id);
 
 /// Whether `stack` is the start item of `recipe` or its transitional item carrying its progress
@@ -107,4 +107,4 @@ struct Progress {
 /// Drops the loaded recipes (next use reloads). `/create reload` calls it.
 void reload();
 
-} // namespace lv::feature::assembly::sequenced
+} // namespace br::feature::assembly::sequenced

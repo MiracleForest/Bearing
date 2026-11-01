@@ -46,7 +46,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace blockdata = common::blockdata;
 namespace items     = common::items;
@@ -164,7 +164,7 @@ void spawnParticles(GlobalPos const& pos, ItemStack const& stack) {
 /// input yet: chutes and item drains, handed items through their item capability.
 bool capabilityDirectInput(BlockSource& region, BlockPos const& p) {
     auto id = idAt(region, p);
-    if (id != "levitate:chute" && id != "levitate:smart_chute" && id != "levitate:item_drain") return false;
+    if (id != "bearing:chute" && id != "bearing:smart_chute" && id != "bearing:item_drain") return false;
     return common::items::has(region, p, -1);
 }
 
@@ -193,11 +193,11 @@ ControllerView controllerAt(GlobalPos const& pos) { return load(pos); }
 float crushingSpeedAt(BlockSource& region, GlobalPos const& pos) {
     auto bp = toBlockPos(pos);
     if (idAt(region, bp) != kController) return 0;
-    if (!stateOf(region.getBlock(bp), "levitate:valid")) return 0;
+    if (!stateOf(region.getBlock(bp), "bearing:valid")) return 0;
     for (auto f : kFaces) {
         auto n = offset(bp, f);
         if (idAt(region, n) != kWheel) continue;
-        if (stateOf(region.getBlock(n), "levitate:axis", 1) == int(axisOf(f))) continue;
+        if (stateOf(region.getBlock(n), "bearing:axis", 1) == int(axisOf(f))) continue;
         return cb::crushingSpeedOf(kinetics::speedAt(toGlobal(pos.dim, n)));
     }
     return 0;
@@ -207,8 +207,8 @@ void tickController(BlockSource& region, GlobalPos const& pos) {
     gServerThread.store(std::this_thread::get_id(), std::memory_order_relaxed);
     auto        bp     = toBlockPos(pos);
     auto const& block  = region.getBlock(bp);
-    bool        valid  = stateOf(block, "levitate:valid") != 0;
-    auto        facing = faceOf(stateOf(block, "levitate:facing"));
+    bool        valid  = stateOf(block, "bearing:valid") != 0;
+    auto        facing = faceOf(stateOf(block, "bearing:facing"));
     if (!valid) return; // crushing speed 0: Create's controller does nothing
     float cs = crushingSpeedAt(region, pos);
     if (cs == 0) return;
@@ -348,15 +348,15 @@ void tickController(BlockSource& region, GlobalPos const& pos) {
 void fixControllers(BlockSource& region, GlobalPos const& pos) {
     auto bp = toBlockPos(pos);
     if (idAt(region, bp) != kWheel) return;
-    int  axis  = stateOf(region.getBlock(bp), "levitate:axis", 1);
+    int  axis  = stateOf(region.getBlock(bp), "bearing:axis", 1);
     for (auto side : kFaces) {
         if (int(axisOf(side)) == axis) continue;
         auto ctrl  = offset(bp, side);
         auto other = offset(bp, side, 2);
         if (!loaded(region, ctrl) || !loaded(region, other)) continue;
         bool exists     = idAt(region, ctrl) == kController;
-        bool wasValid   = exists && stateOf(region.getBlock(ctrl), "levitate:valid");
-        int  oldFacing  = exists ? stateOf(region.getBlock(ctrl), "levitate:facing") : -1;
+        bool wasValid   = exists && stateOf(region.getBlock(ctrl), "bearing:valid");
+        int  oldFacing  = exists ? stateOf(region.getBlock(ctrl), "bearing:facing") : -1;
         bool shouldExist = false, shouldBeValid = false;
         auto newFacing   = cb::Face::Down;
         if (idAt(region, other) == kWheel) {
@@ -367,7 +367,7 @@ void fixControllers(BlockSource& region, GlobalPos const& pos) {
                 newFacing     = cb::controllerFacing(static_cast<cb::Axis>(axis), side, s1);
                 shouldBeValid = true;
             }
-            if (stateOf(region.getBlock(other), "levitate:axis", 1) != axis) shouldExist = false;
+            if (stateOf(region.getBlock(other), "bearing:axis", 1) != axis) shouldExist = false;
         }
         if (!shouldExist) {
             if (exists) game::clearBlock(region, ctrl);
@@ -375,11 +375,11 @@ void fixControllers(BlockSource& region, GlobalPos const& pos) {
         }
         if (!exists) {
             if (!game::replaceable(region, ctrl)) continue;
-            auto const* b = game::blockWith(kController, {{"levitate:valid", shouldBeValid ? 1 : 0}, {"levitate:facing", int(newFacing)}});
+            auto const* b = game::blockWith(kController, {{"bearing:valid", shouldBeValid ? 1 : 0}, {"bearing:facing", int(newFacing)}});
             if (b) game::setBlock(region, ctrl, *b);
             track(toGlobal(pos.dim, ctrl), Kind::Controller);
         } else if (wasValid != shouldBeValid || oldFacing != int(newFacing)) {
-            setStates(region, ctrl, {{"levitate:valid", shouldBeValid ? 1 : 0}, {"levitate:facing", int(newFacing)}});
+            setStates(region, ctrl, {{"bearing:valid", shouldBeValid ? 1 : 0}, {"bearing:facing", int(newFacing)}});
         }
     }
 }
@@ -395,14 +395,14 @@ void removeControllersAround(BlockSource& region, GlobalPos const& pos, int /*ax
             if (!core::kinetics::isPositive(g)) continue;
             auto a = offset(c, g), b = offset(c, core::kinetics::opposite(g));
             if (idAt(region, a) != kWheel || idAt(region, b) != kWheel) continue;
-            int ax = stateOf(region.getBlock(a), "levitate:axis", 1);
-            if (ax == stateOf(region.getBlock(b), "levitate:axis", 1) && ax != int(axisOf(g))) supported = true;
+            int ax = stateOf(region.getBlock(a), "bearing:axis", 1);
+            if (ax == stateOf(region.getBlock(b), "bearing:axis", 1) && ax != int(axisOf(g))) supported = true;
         }
         if (!supported) game::clearBlock(region, c);
     }
 }
 
-bool wheelCanSurvive(BlockSource& region, BlockPos const& p) { return wheelCanSurvive(region, p, stateOf(region.getBlock(p), "levitate:axis", 1)); }
+bool wheelCanSurvive(BlockSource& region, BlockPos const& p) { return wheelCanSurvive(region, p, stateOf(region.getBlock(p), "bearing:axis", 1)); }
 
 bool wheelCanSurvive(BlockSource& region, BlockPos const& p, int axis) {
     for (auto d : kFaces) {
@@ -410,7 +410,7 @@ bool wheelCanSurvive(BlockSource& region, BlockPos const& p, int axis) {
         auto id = idAt(region, n);
         if (id == kController && int(axisOf(d)) != axis) return false;
         if (id != kWheel) continue;
-        if (stateOf(region.getBlock(n), "levitate:axis", 1) != axis || axis != int(axisOf(d))) return false;
+        if (stateOf(region.getBlock(n), "bearing:axis", 1) != axis || axis != int(axisOf(d))) return false;
     }
     return true;
 }
@@ -478,8 +478,8 @@ LL_TYPE_INSTANCE_HOOK(
 ) {
     // server thread only (the client of a local world queries its own level on another thread)
     if (entity && std::this_thread::get_id() == gServerThread.load(std::memory_order_relaxed)
-        && (!processing().empty() || !bypass().empty()) && this == controllerType() && stateOf(block, "levitate:valid")
-        && passesThrough(pos, stateOf(block, "levitate:facing"), entity->getAABB()))
+        && (!processing().empty() || !bypass().empty()) && this == controllerType() && stateOf(block, "bearing:valid")
+        && passesThrough(pos, stateOf(block, "bearing:facing"), entity->getAABB()))
         return false;
     return origin(block, region, pos, intersectTestBox, inoutBoxes, entity);
 }
@@ -518,4 +518,4 @@ ItemStack insert(GlobalPos const& pos, ItemStack const& stack, bool simulate) {
 
 } // namespace controller_cap
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

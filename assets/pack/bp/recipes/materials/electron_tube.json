@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:electron_tube"
+      "identifier": "bearing:electron_tube"
     },
     "tags": [
       "crafting_table"
@@ -13,19 +13,19 @@
     ],
     "key": {
       "L": {
-        "item": "levitate:polished_rose_quartz"
+        "item": "bearing:polished_rose_quartz"
       },
       "N": {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:polished_rose_quartz"
+        "item": "bearing:polished_rose_quartz"
       }
     ],
     "result": {
-      "item": "levitate:electron_tube",
+      "item": "bearing:electron_tube",
       "count": 1
     }
   }

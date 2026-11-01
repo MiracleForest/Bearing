@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:crimson_window"
+      "identifier": "bearing:crimson_window"
     },
     "tags": [
       "crafting_table"
@@ -25,7 +25,7 @@
       }
     ],
     "result": {
-      "item": "levitate:crimson_window",
+      "item": "bearing:crimson_window",
       "count": 2
     }
   }

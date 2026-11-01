@@ -28,7 +28,7 @@
 
 class Player;
 
-namespace lv::feature::common::screens {
+namespace br::feature::common::screens {
 
 using Json = nlohmann::json;
 
@@ -56,4 +56,4 @@ void refresh(Player& player, std::string const& type, Json const& context);
 /// Closes the player's native screen of `type`.
 void close(Player& player, std::string const& type);
 
-} // namespace lv::feature::common::screens
+} // namespace br::feature::common::screens

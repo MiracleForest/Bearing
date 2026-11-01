@@ -1,9 +1,9 @@
 // Package entities (U46, SPEC §3.6.25): Create's PackageEntity. Thrown, put down and dropped
-// packages are `levitate:package` entities (BP entities/package.json, one RP model per style chosen
+// packages are `bearing:package` entities (BP entities/package.json, one RP model per style chosen
 // by the variant its spawn event sets), so vanilla clients see them too.
 //
 // - The package item (contents, address, order data) is kept in the world DB under
-//   `lv:packages:entity:<unique id>`; entities loaded with their chunk find it again there.
+//   `br:packages:entity:<unique id>`; entities loaded with their chunk find it again there.
 // - Every package item entity that joins the world becomes a package entity on the next tick with
 //   1.5 times its motion (Create's PackageItem.createEntity / PackageEntity.fromDroppedItem).
 // - Right-click with an empty hand: the package goes into the hand (Create's interact). A hit, an
@@ -68,14 +68,14 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items = common::items;
 namespace ia    = common::interactions;
 
 namespace {
 
-constexpr char const* kKeyPrefix = "lv:packages:entity:";
+constexpr char const* kKeyPrefix = "br:packages:entity:";
 /// Create's PackageEntity.insertionDelay (starts full, +1 per tick, -3 per centering tick).
 constexpr int kInsertionDelay = 30;
 /// A funnel hand-off (see tickEntity) that nobody took turns back into an entity after this long,
@@ -83,8 +83,8 @@ constexpr int kInsertionDelay = 30;
 constexpr int kHandoffTicks    = 20;
 constexpr int kHandoffCooldown = 100;
 
-constexpr char const* kFunnels[] = {"levitate:andesite_funnel", "levitate:brass_funnel"};
-constexpr char const* kChutes[]  = {"levitate:chute", "levitate:smart_chute"};
+constexpr char const* kFunnels[] = {"bearing:andesite_funnel", "bearing:brass_funnel"};
+constexpr char const* kChutes[]  = {"bearing:chute", "bearing:smart_chute"};
 
 struct Tracked {
     ItemStack box;
@@ -493,7 +493,7 @@ std::int64_t spawnPackageEntity(int dim, cp::V3 at, ItemStack const& box, cp::V3
     if (!region->hasChunksAt(bp, 0, false)) return 0;
     int style = std::max(packageStyle(items::idOf(box)), 0);
     // the spawn event adds the style's component group (variant = model, collision box = size)
-    ActorDefinitionIdentifier ident("levitate", "package", "levitate:style_" + std::to_string(style));
+    ActorDefinitionIdentifier ident("bearing", "package", "bearing:style_" + std::to_string(style));
     float yaw   = std::uniform_real_distribution<float>(0.f, 360.f)(E().rng) - 180.f; // Create: a random yaw
     auto  owner = level->getActorFactory().createSpawnedActor(ident, nullptr, Vec3{float(at.x), float(at.y), float(at.z)}, Vec2{0, yaw});
     if (!owner) return 0;
@@ -552,7 +552,7 @@ void destroyPackageEntity(Actor& entity) {
         }
         iconParticle(dim, mid, box);
     }
-    playSound(dim, at, "levitate.packages.package_pop");
+    playSound(dim, at, "bearing.packages.package_pop");
     log().info("packages: a package entity broke open ({} stacks)", stacks);
     forget(id);
     removeLater(id);
@@ -573,10 +573,10 @@ bool pickUpPackageEntity(Player& player, Actor& entity) {
     return true;
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages
 
 namespace {
-namespace pk = lv::feature::packages;
+namespace pk = br::feature::packages;
 } // namespace
 
 LL_TYPE_INSTANCE_HOOK(
@@ -599,7 +599,7 @@ LL_TYPE_INSTANCE_HOOK(
     return item;
 }
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace {
 std::vector<ll::event::ListenerPtr>& listeners() {
@@ -662,4 +662,4 @@ void uninstallPackageEntities() {
     PackagesItemSpawnHook::unhook();
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

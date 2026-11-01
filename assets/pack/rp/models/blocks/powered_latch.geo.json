@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.powered_latch_north",
+        "identifier": "geometry.bearing.powered_latch_north",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -775,7 +775,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.powered_latch_south",
+        "identifier": "geometry.bearing.powered_latch_south",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -1547,7 +1547,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.powered_latch_west",
+        "identifier": "geometry.bearing.powered_latch_west",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -2319,7 +2319,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.powered_latch_east",
+        "identifier": "geometry.bearing.powered_latch_east",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,

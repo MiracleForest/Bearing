@@ -16,11 +16,11 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP = core::GlobalPos;
 
 GP      at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
@@ -80,7 +80,7 @@ struct Cleanup {
 } // namespace
 
 // Companions get the transform with the displays and every change of it, once per tick.
-LV_REGISTER_SELFTEST("contraptionmotion.sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraptionmotion.sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3400);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -125,7 +125,7 @@ LV_REGISTER_SELFTEST("contraptionmotion.sync", [](Context& ctx) -> ll::coro::Cor
 
 // Display entities stand at their block's place from the moment they are spawned: a vanilla
 // client shows each one where it was spawned (respawn steps), the client mod moves it from there.
-LV_REGISTER_SELFTEST("contraptionmotion.spawn_height", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraptionmotion.spawn_height", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3410);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -148,7 +148,7 @@ LV_REGISTER_SELFTEST("contraptionmotion.spawn_height", [](Context& ctx) -> ll::c
 
 // With a vanilla viewer, moving displays are spawned again as they go (half a block at a
 // time, at most every 4 ticks), and end exactly where the structure stops.
-LV_REGISTER_SELFTEST("contraptionmotion.vanilla_steps", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("contraptionmotion.vanilla_steps", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(3420);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -197,4 +197,4 @@ LV_REGISTER_SELFTEST("contraptionmotion.vanilla_steps", [](Context& ctx) -> ll::
     ctx.check(game::blockIdAt(ctx.player().getDimensionBlockSource(), game::blockPos(at(p, 0, 4, 0))) == "minecraft:stone", "placed 4 up");
 });
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

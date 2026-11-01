@@ -12,7 +12,7 @@
 #include <string_view>
 #include <vector>
 
-namespace lv::core::fluids {
+namespace br::core::fluids {
 
 // ---- amounts and ids ---------------------------------------------------------------------------
 
@@ -22,11 +22,11 @@ inline constexpr int kBottle = 250;  ///< mB in a bottle (Create's PotionFluidHa
 inline constexpr std::string_view kWater     = "minecraft:water";
 inline constexpr std::string_view kLava      = "minecraft:lava";
 inline constexpr std::string_view kMilk      = "minecraft:milk";
-inline constexpr std::string_view kHoney     = "levitate:honey";
-inline constexpr std::string_view kChocolate = "levitate:chocolate";
-inline constexpr std::string_view kTea       = "levitate:tea";
-/// Prefix of every potion fluid: "levitate:potion/<bottle>/<potion>".
-inline constexpr std::string_view kPotionPrefix = "levitate:potion/";
+inline constexpr std::string_view kHoney     = "bearing:honey";
+inline constexpr std::string_view kChocolate = "bearing:chocolate";
+inline constexpr std::string_view kTea       = "bearing:tea";
+/// Prefix of every potion fluid: "bearing:potion/<bottle>/<potion>".
+inline constexpr std::string_view kPotionPrefix = "bearing:potion/";
 
 /// Create's PotionFluid.BottleType.
 enum class Bottle : int { Regular = 0, Splash = 1, Lingering = 2 };
@@ -47,7 +47,7 @@ struct PotionType {
 [[nodiscard]] PotionType const* potionByAux(int aux);
 [[nodiscard]] PotionType const* potionByName(std::string_view name);
 
-/// "levitate:potion/regular/harming".
+/// "bearing:potion/regular/harming".
 [[nodiscard]] std::string potionFluid(Bottle bottle, std::string_view potion);
 struct PotionFluid {
     Bottle      bottle = Bottle::Regular;
@@ -192,4 +192,4 @@ struct FillPlan {
 };
 [[nodiscard]] FillPlan planFill(Pos const& root, std::string_view fluid, CellQuery const& at, int range, int threshold);
 
-} // namespace lv::core::fluids
+} // namespace br::core::fluids

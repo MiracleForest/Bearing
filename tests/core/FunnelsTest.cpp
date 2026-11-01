@@ -5,7 +5,7 @@
 
 #include "core/funnels/Logistics.h"
 
-using namespace lv::core::funnels;
+using namespace br::core::funnels;
 
 namespace {
 /// Outputs with a capacity each (-1: not an output).

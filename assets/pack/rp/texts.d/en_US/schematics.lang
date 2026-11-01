@@ -1,7 +1,7 @@
-tile.levitate:schematic_table.name=Schematic Table
-tile.levitate:schematicannon.name=Schematicannon
-tile.levitate:placed_crafting_blueprint.name=Crafting Blueprint
-item.levitate:empty_schematic.name=Empty Schematic
-item.levitate:schematic.name=Schematic
-item.levitate:schematic_and_quill.name=Schematic And Quill
-item.levitate:crafting_blueprint.name=Crafting Blueprint
+tile.bearing:schematic_table.name=Schematic Table
+tile.bearing:schematicannon.name=Schematicannon
+tile.bearing:placed_crafting_blueprint.name=Crafting Blueprint
+item.bearing:empty_schematic.name=Empty Schematic
+item.bearing:schematic.name=Schematic
+item.bearing:schematic_and_quill.name=Schematic And Quill
+item.bearing:crafting_blueprint.name=Crafting Blueprint

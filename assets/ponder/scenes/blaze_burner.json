@@ -2,10 +2,10 @@
   "id": "blaze_burner",
   "size": [7, 5],
   "blocks": [
-    {"at": [3, 1, 2], "id": "levitate:blaze_burner", "states": {"levitate:blaze": 1, "levitate:facing": 3}},
-    {"at": [3, 2, 2], "id": "levitate:basin", "states": {"levitate:facing": 0}},
-    {"at": [5, 1, 2], "id": "levitate:deployer", "states": {"levitate:facing": 4, "levitate:axis_along_first": 0}},
-    {"at": [5, 1, 3], "id": "levitate:creative_motor", "states": {"levitate:facing": 2}}
+    {"at": [3, 1, 2], "id": "bearing:blaze_burner", "states": {"bearing:blaze": 1, "bearing:facing": 3}},
+    {"at": [3, 2, 2], "id": "bearing:basin", "states": {"bearing:facing": 0}},
+    {"at": [5, 1, 2], "id": "bearing:deployer", "states": {"bearing:facing": 4, "bearing:axis_along_first": 0}},
+    {"at": [5, 1, 3], "id": "bearing:creative_motor", "states": {"bearing:facing": 2}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},
@@ -18,13 +18,13 @@
     {"idle": 80},
     {"input": [3.5, 1.5, 2.5], "action": "right", "item": "minecraft:oak_planks", "ticks": 40, "keyframe": true},
     {"idle": 20},
-    {"modify": [3, 1, 2], "states": {"levitate:blaze": 3}},
+    {"modify": [3, 1, 2], "states": {"bearing:blaze": 3}},
     {"particles": "flame", "at": [3.5, 1.7, 2.5], "ticks": 100, "rate": 0.3, "spread": [0.25, 0.1, 0.25]},
     {"text": 2, "at": [3.5, 1.5, 2.5], "ticks": 70, "keyframe": true},
     {"idle": 80},
-    {"input": [3.5, 1.5, 2.5], "action": "right", "item": "levitate:blaze_cake", "ticks": 40, "keyframe": true},
+    {"input": [3.5, 1.5, 2.5], "action": "right", "item": "bearing:blaze_cake", "ticks": 40, "keyframe": true},
     {"idle": 20},
-    {"modify": [3, 1, 2], "states": {"levitate:blaze": 4}},
+    {"modify": [3, 1, 2], "states": {"bearing:blaze": 4}},
     {"particles": "soul_flame", "at": [3.5, 1.7, 2.5], "ticks": 195, "rate": 0.5, "spread": [0.25, 0.1, 0.25]},
     {"outline": [3, 1, 2], "color": "fast", "ticks": 70},
     {"text": 3, "at": [3.5, 1.5, 2.5], "ticks": 70, "keyframe": true},

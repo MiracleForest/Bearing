@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.metal_girder",
+        "identifier": "geometry.bearing.metal_girder",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 3,

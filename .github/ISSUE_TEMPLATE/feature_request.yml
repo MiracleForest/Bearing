@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest an idea for Levitate
+description: Suggest an idea for Bearing
 labels: [enhancement]
 body:
   - type: textarea

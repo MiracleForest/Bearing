@@ -20,7 +20,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::basin {
+namespace br::feature::basin {
 
 namespace {
 
@@ -48,15 +48,15 @@ std::string joined(std::vector<std::string> const& lines) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("basin.goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = off(ctx.testPos(5460), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.require(ctx.setBlock(p, kBasin), "basin");
     auto burner = off(p, 2, 0, 0);
-    ctx.require(ctx.setBlock(burner, kLitBurner, {{"levitate:facing", 2}}), "lit blaze burner");
+    ctx.require(ctx.setBlock(burner, kLitBurner, {{"bearing:facing", 2}}), "lit blaze burner");
     co_await ctx.ticks(1);
     auto& pl = ctx.player();
-    auto  g  = items::make("levitate:goggles");
+    auto  g  = items::make("bearing:goggles");
     ctx.require(g.has_value(), "goggles");
     pl.setArmor(SharedTypes::Legacy::ArmorSlot::Head, *g);
     ctx.check(goggles::overlayFor(pl, p).lines.empty(), "an empty basin shows nothing: " + joined(goggles::overlayFor(pl, p).lines));
@@ -78,7 +78,7 @@ LV_REGISTER_SELFTEST("basin.goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
 });
 
 // Vanilla hoppers use the basin's item capability (NeoForge), from above into its inputs.
-LV_REGISTER_SELFTEST("basin.hopper", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("basin.hopper", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = off(ctx.testPos(5465), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.require(ctx.setBlock(p, kBasin), "basin");
@@ -108,4 +108,4 @@ LV_REGISTER_SELFTEST("basin.hopper", [](Context& ctx) -> ll::coro::CoroTask<> {
     basinops::save(p, *b);
 });
 
-} // namespace lv::feature::basin
+} // namespace br::feature::basin

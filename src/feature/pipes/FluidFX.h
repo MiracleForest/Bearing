@@ -2,8 +2,8 @@
 
 // Fluid particles (Create's FluidFX, PipeConnection.spawnParticles and the spout's particles) for
 // every client, mod or not: the server spawns the resource pack particles
-//   levitate:fluid_particle  Create's FLUID_PARTICLE (a bit of the fluid, falling and landing)
-//   levitate:fluid_drip      Create's dripping particles (water / lava drips and FLUID_DRIP)
+//   bearing:fluid_particle  Create's FLUID_PARTICLE (a bit of the fluid, falling and landing)
+//   bearing:fluid_drip      Create's dripping particles (water / lava drips and FLUID_DRIP)
 // tinted with the fluid's colour, for the players within `range` blocks of the particle (Create
 // spawns them on the client within MAX_PARTICLE_RENDER_DISTANCE = 20 blocks of the camera).
 //
@@ -16,7 +16,7 @@
 #include "core/GlobalPos.h"
 #include "core/pipes/Types.h"
 
-namespace lv::feature::pipes::fx {
+namespace br::feature::pipes::fx {
 
 struct V3 {
     double x = 0, y = 0, z = 0;
@@ -50,4 +50,4 @@ struct Stats {
 [[nodiscard]] Stats const& stats();
 void                       resetStats();
 
-} // namespace lv::feature::pipes::fx
+} // namespace br::feature::pipes::fx

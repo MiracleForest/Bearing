@@ -5,7 +5,7 @@
 
 #include "core/belts/Belt.h"
 
-using namespace lv::core::belts;
+using namespace br::core::belts;
 
 namespace {
 

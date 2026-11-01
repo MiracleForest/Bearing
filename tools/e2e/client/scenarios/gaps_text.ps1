@@ -31,7 +31,7 @@ Invoke-Chat '/tp @s 0 -60 0'
 Start-Sleep -Milliseconds 800
 
 # --- frogport address (U25) ----------------------------------------------------------------------
-Invoke-Chat '/setblock 5 -60 -3 levitate:package_frogport'
+Invoke-Chat '/setblock 5 -60 -3 bearing:package_frogport'
 Invoke-Chat '/tp @s 5.5 -60 0.5 180 25'
 Press-Key '9'
 Start-Sleep -Milliseconds 800
@@ -57,10 +57,10 @@ Invoke-Chat '/setblock 5 -60 -3 air'
 # --- stock keeper search and address (U26) ---------------------------------------------------------
 Invoke-Chat '/tp @s 0 -60 0 facing 3 -59 0'
 Start-Sleep -Milliseconds 500
-Invoke-Chat '/setblock ~3 ~ ~ levitate:stock_ticker ["levitate:facing"=1]'
+Invoke-Chat '/setblock ~3 ~ ~ bearing:stock_ticker ["bearing:facing"=1]'
 Invoke-Chat '/kill @e[type=pig]'                 # only our keeper (no stray mob for c=1 below)
 Invoke-Chat '/kill @e[type=boat]'
-Invoke-Chat '/setblock ~3 ~ ~1 levitate:white_seat'   # U56: Create's keeper rides a seat
+Invoke-Chat '/setblock ~3 ~ ~1 bearing:white_seat'   # U56: Create's keeper rides a seat
 Invoke-Chat '/summon pig ~3 ~ ~1'
 Start-Sleep -Milliseconds 500
 Start-Sleep -Milliseconds 1000   # the pig sits down on the seat
@@ -99,7 +99,7 @@ Invoke-Chat '/setblock ~3 ~ ~1 air'
 
 # --- clipboard entry (U24; last: closing it may leave the inventory open) ---------------------------
 Invoke-Chat '/clear @s'
-Invoke-Chat '/give @s levitate:clipboard 1'
+Invoke-Chat '/give @s bearing:clipboard 1'
 Invoke-Chat '/tp @s ~ ~ ~ 0 -90'
 Press-Key '1'
 Start-Sleep -Milliseconds 600

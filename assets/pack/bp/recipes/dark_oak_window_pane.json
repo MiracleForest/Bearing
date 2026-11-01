@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:dark_oak_window_pane"
+      "identifier": "bearing:dark_oak_window_pane"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:dark_oak_window"
+        "item": "bearing:dark_oak_window"
       }
     },
     "unlock": [
       {
-        "item": "levitate:dark_oak_window"
+        "item": "bearing:dark_oak_window"
       }
     ],
     "result": {
-      "item": "levitate:dark_oak_window_pane",
+      "item": "bearing:dark_oak_window_pane",
       "count": 16
     }
   }

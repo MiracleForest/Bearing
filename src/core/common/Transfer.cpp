@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <charconv>
 
-namespace lv::core::common {
+namespace br::core::common {
 
 std::vector<std::pair<int, int>> planInsert(std::span<SlotView const> slots, int amount) {
     std::vector<std::pair<int, int>> plan;
@@ -30,7 +30,7 @@ int plannedTotal(std::vector<std::pair<int, int>> const& plan) {
 }
 
 std::string blockDataChunkKey(int dim, int cx, int cz) {
-    return "lv:common:bd:" + std::to_string(dim) + ":" + std::to_string(cx) + ":" + std::to_string(cz);
+    return "br:common:bd:" + std::to_string(dim) + ":" + std::to_string(cx) + ":" + std::to_string(cz);
 }
 
 namespace {
@@ -65,4 +65,4 @@ bool parsePosKey(std::string_view key, int& x, int& y, int& z) {
     return true;
 }
 
-} // namespace lv::core::common
+} // namespace br::core::common

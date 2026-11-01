@@ -2,29 +2,29 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:metal_girder",
+      "identifier": "bearing:metal_girder",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1,
           2
         ],
-        "levitate:x": [
+        "bearing:x": [
           0,
           1
         ],
-        "levitate:z": [
+        "bearing:z": [
           0,
           1
         ],
-        "levitate:top": [
+        "bearing:top": [
           0,
           1
         ],
-        "levitate:bottom": [
+        "bearing:bottom": [
           0,
           1
         ]
@@ -42,18 +42,18 @@
       "tag:minecraft:is_pickaxe_item_destructible": {},
       "minecraft:light_dampening": 0,
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.metal_girder",
+        "identifier": "geometry.bearing.metal_girder",
         "bone_visibility": {
-          "pole": "q.block_state('levitate:axis') == 1 || (q.block_state('levitate:x') == 0 && q.block_state('levitate:z') == 0)",
-          "x": "q.block_state('levitate:x') == 1",
-          "z": "q.block_state('levitate:z') == 1",
-          "top": "q.block_state('levitate:axis') != 1 && q.block_state('levitate:top') == 1",
-          "bottom": "q.block_state('levitate:axis') != 1 && q.block_state('levitate:bottom') == 1"
+          "pole": "q.block_state('bearing:axis') == 1 || (q.block_state('bearing:x') == 0 && q.block_state('bearing:z') == 0)",
+          "x": "q.block_state('bearing:x') == 1",
+          "z": "q.block_state('bearing:z') == 1",
+          "top": "q.block_state('bearing:axis') != 1 && q.block_state('bearing:top') == 1",
+          "bottom": "q.block_state('bearing:axis') != 1 && q.block_state('bearing:bottom') == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_metal_girder",
+          "texture": "bearing_metal_girder",
           "render_method": "alpha_test"
         }
       },
@@ -72,7 +72,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:x') == 1 || q.block_state('levitate:z') == 1",
+        "condition": "q.block_state('bearing:x') == 1 || q.block_state('bearing:z') == 1",
         "components": {
           "minecraft:collision_box": {
             "origin": [

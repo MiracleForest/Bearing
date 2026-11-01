@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:powered_toggle_latch"
+      "identifier": "bearing:powered_toggle_latch"
     },
     "tags": [
       "crafting_table"
@@ -29,7 +29,7 @@
       }
     ],
     "result": {
-      "item": "levitate:powered_toggle_latch",
+      "item": "bearing:powered_toggle_latch",
       "count": 1
     }
   }

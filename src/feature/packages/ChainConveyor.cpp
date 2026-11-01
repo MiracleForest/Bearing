@@ -27,11 +27,11 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items     = common::items;
 namespace blockdata = common::blockdata;
-namespace k         = lv::kinetics;
+namespace k         = br::kinetics;
 
 namespace {
 
@@ -567,7 +567,7 @@ bool useConveyorWithChain(Player& player, GlobalPos const& pos) {
     auto fail = [&](char const* keySuffix, char const* fallback) {
         actionBar(player, "§c" + trFor(player, std::string("create.chain_conveyor.") + keySuffix, fallback));
         log().info("packages: chain connection refused for {}: {}", player.getRealName(), keySuffix);
-        playSound(pos.dim, centre(pos), "levitate.packages.deny");
+        playSound(pos.dim, centre(pos), "bearing.packages.deny");
         return false;
     };
     if (int(conveyor(pos).connections.size()) >= config().maxChainConveyorConnections)
@@ -740,7 +740,7 @@ void startRiding(Player& player, ChainPick const& pick) {
     r.connection    = pick.connection;
     r.flipped       = speedOf(pick.conveyor) < 0;
     riders()[player.getOrCreateUniqueID().rawID] = r;
-    actionBar(player, trFor(player, "lv.packages.chain_riding", "Sneak to dismount"));
+    actionBar(player, trFor(player, "br.packages.chain_riding", "Sneak to dismount"));
     auto feet = player.getFeetPos();
     playSound(player.getDimensionId(), {feet.x, feet.y, feet.z}, "hit.chain", 1.f, 0.5f);
     log().info("packages: {} started riding the chain conveyor at {}", player.getRealName(), pick.conveyor.key());
@@ -862,9 +862,9 @@ void installConveyorKinetics() {
         return hasConveyor(self.pos) && conveyor(self.pos).connections.contains(diff(self.pos, other.pos));
     };
     spec.rotorState   = kRotor;
-    spec.rotorModel   = "geometry.levitate.chain_conveyor";
-    spec.rotorTexture = "levitate_chain_conveyor";
+    spec.rotorModel   = "geometry.bearing.chain_conveyor";
+    spec.rotorTexture = "bearing_chain_conveyor";
     k::registerBlock(kChainConveyorId, std::move(spec));
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

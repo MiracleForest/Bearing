@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:pulse_repeater",
+          "name": "bearing:pulse_repeater",
           "weight": 1
         }
       ]

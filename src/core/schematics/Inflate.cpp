@@ -3,7 +3,7 @@
 #include <array>
 #include <vector>
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 namespace {
 
@@ -311,4 +311,4 @@ std::string gzipStored(std::string_view data) {
     return out;
 }
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

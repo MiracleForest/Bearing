@@ -19,14 +19,14 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace {
 
 using selftest::Context;
 namespace items = common::items;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 GlobalPos off(GlobalPos p, int dx, int dy, int dz) {
     p.x += dx;
@@ -45,7 +45,7 @@ int countIn(Container& c, std::string const& id) {
 } // namespace
 
 // RuntimeDataGenerator: planks -> 9 shapes (50 ticks) for every wood, concrete powder -> concrete.
-LV_REGISTER_SELFTEST("bulk.runtime_recipes", [](Context& ctx) {
+BR_REGISTER_SELFTEST("bulk.runtime_recipes", [](Context& ctx) {
     int planks = 0;
     for (auto const& r : common::recipes::ofType("cutting")) {
         if (r.ingredients.empty() || r.ingredients[0].items.empty() || !r.ingredients[0].items[0].ends_with("_planks")) continue;
@@ -73,15 +73,15 @@ LV_REGISTER_SELFTEST("bulk.runtime_recipes", [](Context& ctx) {
 });
 
 // NeoForge hoppers use the item capability: a hopper above feeds the millstone, one below empties it.
-LV_REGISTER_SELFTEST("bulk.hopper_millstone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.hopper_millstone", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = off(ctx.testPos(5430), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& region = ctx.player().getDimensionBlockSource();
     auto  below  = base, mill = off(base, 0, 1, 0), above = off(base, 0, 2, 0);
     // a cogwheel beside the millstone drives it (Create's millstone is a small cog)
     auto cog = off(mill, 1, 0, 0), src = off(base, 1, 0, 0);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 1}}), "source");
-    ctx.require(ctx.setBlock(cog, "levitate:cogwheel", {{"levitate:axis", 1}}), "cogwheel");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 1}}), "source");
+    ctx.require(ctx.setBlock(cog, "bearing:cogwheel", {{"bearing:axis", 1}}), "cogwheel");
     ctx.require(ctx.setBlock(mill, std::string(kMillstone)), "millstone");
     ctx.require(ctx.setBlock(below, "minecraft:hopper", {{"facing_direction", 4}}), "hopper below, pointing west");
     ctx.require(ctx.setBlock(above, "minecraft:hopper", {{"facing_direction", 0}}), "hopper above, pointing down");
@@ -103,10 +103,10 @@ LV_REGISTER_SELFTEST("bulk.hopper_millstone", [](Context& ctx) -> ll::coro::Coro
     ctx.check(countIn(*top, "minecraft:bone") == 0, "the top hopper fed both bones into the millstone");
     ctx.check(done, "the bottom hopper took bone meal out: " + std::to_string(countIn(*bot, "minecraft:bone_meal")));
     // funnels have no item capability in Create: a hopper doesn't feed one
-    ctx.check(!common::hoppers::reaches("levitate:andesite_funnel") && common::hoppers::reaches(std::string(kMillstone)), "hopper reach rules");
+    ctx.check(!common::hoppers::reaches("bearing:andesite_funnel") && common::hoppers::reaches(std::string(kMillstone)), "hopper reach rules");
     kinetics::setGeneratedSpeed(src, 0);
     for (auto* c : {top, bot})
         for (int i = 0; i < c->getContainerSize(); ++i) c->setItem(i, ItemStack{});
 });
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

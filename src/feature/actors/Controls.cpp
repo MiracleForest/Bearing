@@ -33,17 +33,17 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
-namespace bd  = ::lv::feature::common::blockdata;
-namespace fs  = ::lv::feature::common::filterslot;
-namespace it  = ::lv::feature::common::items;
+namespace ext = ::br::feature::contraption::actors_ext;
+namespace bd  = ::br::feature::common::blockdata;
+namespace fs  = ::br::feature::common::filterslot;
+namespace it  = ::br::feature::common::items;
 
 namespace {
 
-constexpr char kDbKey[]    = "lv:actors:controls";
-constexpr char kDbPosKey[] = "lv:actors:controls_pos";
+constexpr char kDbKey[]    = "br:actors:controls";
+constexpr char kDbPosKey[] = "br:actors:controls_pos";
 
 /// Disabled actor types per contraption: item ids, "" = every actor (Create's disabledActors).
 std::unordered_map<con::Id, std::vector<std::string>>& disabled() {
@@ -192,8 +192,8 @@ void elevatorControls(Player& player, con::Contraption& c, cc::Pos const& local)
     if (!floors.is_array() || floors.empty()) return;
     int  target  = e.value("target", INT32_MIN);
     auto id      = c.id();
-    auto content = trFor(player, "lv.actors.elevator_floors.content", "Send the elevator to:");
-    ll::form::SimpleForm form(trFor(player, "lv.actors.elevator_floors", "Elevator Floors"), content);
+    auto content = trFor(player, "br.actors.elevator_floors.content", "Send the elevator to:");
+    ll::form::SimpleForm form(trFor(player, "br.actors.elevator_floors", "Elevator Floors"), content);
     for (auto const& f : floors) {
         if (!f.is_array() || f.size() < 3) continue;
         int         y     = f[0].get<int>();
@@ -261,7 +261,7 @@ void controlsClickStationary(Player& player, GlobalPos const& pos) {
     doc["actors"]["disabled"] = nowDisabled;
     stationaryControls().insert(pos);
     dirty() = true;
-    if (auto* region = regionOf(pos.dim)) setIntState(*region, toBlockPos(pos), "levitate:disabled", nowDisabled ? 1 : 0);
+    if (auto* region = regionOf(pos.dim)) setIntState(*region, toBlockPos(pos), "bearing:disabled", nowDisabled ? 1 : 0);
     sendStatus(player, filterIdOf(bd::get(pos)), !nowDisabled);
     click(pos.dim, cc::Vec3d::center(cc::Pos{pos.x, pos.y, pos.z}), !nowDisabled);
     logAction(
@@ -309,7 +309,7 @@ void controlsTick(std::uint64_t tick) {
                 auto& d                 = bd::edit(pos);
                 d["actors"]["powered"]  = powered;
                 d["actors"]["disabled"] = powered;
-                setIntState(*region, bp, "levitate:disabled", powered ? 1 : 0);
+                setIntState(*region, bp, "bearing:disabled", powered ? 1 : 0);
                 logAction(
                     "controls at " + std::to_string(pos.x) + " " + std::to_string(pos.y) + " " + std::to_string(pos.z) + " "
                     + (powered ? "powered" : "unpowered")
@@ -381,11 +381,11 @@ void controlsInstall() {
             // items of blocks controls can switch ("Cannot use this item here." otherwise)
             .accepts = [](GlobalPos const&, ItemStack const& s) {
                 static constexpr std::string_view kControlled[] = {
-                    "levitate:portable_fluid_interface", "levitate:mechanical_drill", "levitate:mechanical_saw", "levitate:deployer",
-                    "levitate:portable_storage_interface", "levitate:redstone_contact", "levitate:mechanical_harvester",
-                    "levitate:mechanical_plough", "levitate:mechanical_roller", "levitate:andesite_funnel", "levitate:brass_funnel",
-                    "levitate:peculiar_bell", "levitate:haunted_bell", "levitate:andesite_door", "levitate:brass_door",
-                    "levitate:copper_door", "levitate:train_door", "levitate:framed_glass_door", "minecraft:bell", "minecraft:campfire",
+                    "bearing:portable_fluid_interface", "bearing:mechanical_drill", "bearing:mechanical_saw", "bearing:deployer",
+                    "bearing:portable_storage_interface", "bearing:redstone_contact", "bearing:mechanical_harvester",
+                    "bearing:mechanical_plough", "bearing:mechanical_roller", "bearing:andesite_funnel", "bearing:brass_funnel",
+                    "bearing:peculiar_bell", "bearing:haunted_bell", "bearing:andesite_door", "bearing:brass_door",
+                    "bearing:copper_door", "bearing:train_door", "bearing:framed_glass_door", "minecraft:bell", "minecraft:campfire",
                     "minecraft:soul_campfire", "minecraft:dispenser", "minecraft:dropper",
                 };
                 auto id = it::idOf(s);
@@ -415,4 +415,4 @@ Registrar const gRegistrar;
 
 } // namespace
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

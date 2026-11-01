@@ -1,7 +1,7 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.levitate.cardboard_disguise.bob": {
+    "animation.bearing.cardboard_disguise.bob": {
       "loop": true,
       "bones": {
         "box": {

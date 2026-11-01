@@ -9,9 +9,9 @@
 #include <optional>
 #include <vector>
 
-namespace lv::core::transmission {
+namespace br::core::transmission {
 
-/// Create's CuckooClockBlockEntity.Animation (state values of `levitate:cuckoo` use 1 / 2 for the
+/// Create's CuckooClockBlockEntity.Animation (state values of `bearing:cuckoo` use 1 / 2 for the
 /// pig / creeper figure; the surprise shows the creeper).
 enum class CuckooAnimation : int { None = 0, Pig = 1, Creeper = 2, Surprise = 3 };
 
@@ -53,7 +53,7 @@ inline constexpr float kCuckooSurprisePower = 3.f;
 [[nodiscard]] float cuckooDoorAngle(CuckooAnimation type, float value);
 /// How far the figure slides out (blocks, Create's `-(angle / 135) / 2 + 10 / 16`; 10 / 16 is in).
 [[nodiscard]] float cuckooFigureOffset(float doorAngle);
-/// The `levitate:cuckoo` state of the static model at `value`: 0 doors closed, 1 open with the
+/// The `bearing:cuckoo` state of the static model at `value`: 0 doors closed, 1 open with the
 /// pig out, 2 open with the creeper out (doors at least half open).
 [[nodiscard]] int cuckooModelState(CuckooAnimation type, float value);
 
@@ -73,4 +73,4 @@ struct ClockSound {
 /// The surprise smokes from progress 31 on.
 [[nodiscard]] bool cuckooSmokes(CuckooAnimation type, int value);
 
-} // namespace lv::core::transmission
+} // namespace br::core::transmission

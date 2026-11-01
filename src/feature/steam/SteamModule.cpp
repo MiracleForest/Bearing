@@ -45,19 +45,19 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 namespace ia = common::interactions;
 
 // The powered shaft is a generator shaft; its speed and capacity come from its engine.
-LV_REGISTER_KINETIC_BLOCK(
+BR_REGISTER_KINETIC_BLOCK(
     kPoweredShaft,
-    kinetics::specs::withModel(kinetics::specs::generatorShaft(0, "levitate:axis"), "geometry.levitate.powered_shaft", "levitate_powered_shaft")
+    kinetics::specs::withModel(kinetics::specs::generatorShaft(0, "bearing:axis"), "geometry.bearing.powered_shaft", "bearing_powered_shaft")
 );
 
 namespace {
 
-constexpr char kDbTanks[] = "lv:steam:tanks";
+constexpr char kDbTanks[] = "br:steam:tanks";
 
 bool relevant(std::string_view id) {
     return isTankId(id) || id == kEngine || id == kWhistle || id == kExtension || id == kPoweredShaft;
@@ -125,7 +125,7 @@ Json enginesPayload() {
         auto  shape    = engineShape(region->getBlock(game::blockPos(e)));
         auto  shaftPos = offset(e, shape.facing, 2);
         float speed    = idAt(*region, shaftPos) == kPoweredShaft ? kinetics::speedAt(shaftPos) : 0.f;
-        int   axis     = idAt(*region, shaftPos) == kPoweredShaft ? intState(region->getBlock(game::blockPos(shaftPos)), "levitate:axis").value_or(0) : 0;
+        int   axis     = idAt(*region, shaftPos) == kPoweredShaft ? intState(region->getBlock(game::blockPos(shaftPos)), "bearing:axis").value_or(0) : 0;
         list.push_back({
             {"d",  e.dim                              },
             {"p",  posJson(e)                         },
@@ -270,7 +270,7 @@ void addAsGoggleLines(std::vector<std::string> const& lines, goggles::Tooltip& t
 }
 
 // FluidTankBlockEntity.addToGoggleTooltip: the boiler status of a boiler, else the fluid container
-LV_REGISTER_GOGGLE_INFO(
+BR_REGISTER_GOGGLE_INFO(
     kTank,
     {
         .goggle =
@@ -288,11 +288,11 @@ LV_REGISTER_GOGGLE_INFO(
 );
 
 // CreativeFluidTankBlockEntity.addToGoggleTooltip: nothing
-LV_REGISTER_GOGGLE_INFO(kCreativeTank, {.replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kCreativeTank, {.replaceDefaults = true});
 
 // SteamEngineBlockEntity.addToGoggleTooltip: the generator stats of its powered shaft
 // (PoweredShaftBlockEntity.addToEngineTooltip)
-LV_REGISTER_GOGGLE_INFO(
+BR_REGISTER_GOGGLE_INFO(
     kEngine,
     {
         .goggle =
@@ -307,10 +307,10 @@ LV_REGISTER_GOGGLE_INFO(
 );
 
 // PoweredShaftBlockEntity.addToGoggleTooltip: nothing (the engine shows it); the kinetic hints stay
-LV_REGISTER_GOGGLE_INFO(kPoweredShaft, {.hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
+BR_REGISTER_GOGGLE_INFO(kPoweredShaft, {.hover = goggles::kineticHoverTooltip, .replaceDefaults = true});
 
 // WhistleBlockEntity.addToGoggleTooltip: "Pitch: <note>"
-LV_REGISTER_GOGGLE_INFO(
+BR_REGISTER_GOGGLE_INFO(
     kWhistle,
     {
         .goggle =
@@ -389,7 +389,7 @@ bool placeEngineShaft(Player& player, GlobalPos const& engine, ItemStack& item) 
         axis = static_cast<int>(cs::axisOf(d));
         break;
     }
-    auto const* block = game::blockWith(kPoweredShaft, {{"levitate:axis", axis}});
+    auto const* block = game::blockWith(kPoweredShaft, {{"bearing:axis", axis}});
     if (!block || !game::setBlock(*region, game::blockPos(shaftPos), *block)) return false;
     playSound(shaftPos.dim, shaftPos.x + .5, shaftPos.y + .5, shaftPos.z + .5, "use.stone", 1.f, .8f);
     if (!player.isCreative()) {
@@ -489,7 +489,7 @@ public:
             registerTankCapabilities();
             registerEngineValueBox();
             common::heat::registerBlock(kTestHeater, [](BlockSource&, BlockPos const&, Block const& block) {
-                return static_cast<common::heat::HeatLevel>(std::clamp(intState(block, "levitate:heat").value_or(0), 0, 4));
+                return static_cast<common::heat::HeatLevel>(std::clamp(intState(block, "bearing:heat").value_or(0), 0, 4));
             });
             common::blockdata::onErase([](GlobalPos const& pos, Json const& doc, std::string const& prevId) {
                 if (isTankId(prevId)) stashErasedDoc(pos, doc);
@@ -579,36 +579,36 @@ GlobalPos commandPos(CommandOrigin const& origin, CommandPosition const& p) {
 }
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload<SteamCommandParams>().text("steam").required("pos").execute(
         [](CommandOrigin const& origin, CommandOutput& output, SteamCommandParams const& params) {
             if (!commands::isAdmin(origin)) return output.error("You need operator permission.");
             auto  pos    = commandPos(origin, params.pos);
             auto* viewer = commands::playerOf(origin);
             auto  lines  = describe(pos, viewer);
-            if (lines.empty()) return output.error(tr("lv.steam.cmd.none", "No fluid tank, steam engine or steam whistle at {0} {1} {2}.", pos.x, pos.y, pos.z));
+            if (lines.empty()) return output.error(tr("br.steam.cmd.none", "No fluid tank, steam engine or steam whistle at {0} {1} {2}.", pos.x, pos.y, pos.z));
             for (auto const& line : lines) output.success(line);
             if (!viewer)
                 for (auto const& line : lines) log().info("steam: {}", line);
         }
     );
-    // Levitate debug: pours fluid into a tank through its fluid capability (as a pump would)
+    // Bearing debug: pours fluid into a tank through its fluid capability (as a pump would)
     cmd.overload<SteamFillParams>().text("steam").required("pos").text("fill").required("fluid").required("amount").execute(
         [](CommandOrigin const& origin, CommandOutput& output, SteamFillParams const& params) {
             if (!commands::isAdmin(origin)) return output.error("You need operator permission.");
             auto  pos    = commandPos(origin, params.pos);
             auto* region = regionOf(pos.dim);
-            if (!region || !tankAt(pos)) return output.error(tr("lv.steam.cmd.none", "No fluid tank, steam engine or steam whistle at {0} {1} {2}.", pos.x, pos.y, pos.z));
+            if (!region || !tankAt(pos)) return output.error(tr("br.steam.cmd.none", "No fluid tank, steam engine or steam whistle at {0} {1} {2}.", pos.x, pos.y, pos.z));
             std::string fluid = params.fluid.find(':') == std::string::npos ? "minecraft:" + params.fluid : params.fluid;
             int accepted = params.amount >= 0 ? common::fluids::fill(*region, game::blockPos(pos), -1, {fluid, params.amount}, false)
                                               : common::fluids::drain(*region, game::blockPos(pos), -1, {fluid, -params.amount}, false).amount;
-            auto line = tr("lv.steam.cmd.filled", "{0} mB of {1} moved at {2} {3} {4}.", accepted, fluid, pos.x, pos.y, pos.z);
+            auto line = tr("br.steam.cmd.filled", "{0} mB of {1} moved at {2} {3} {4}.", accepted, fluid, pos.x, pos.y, pos.z);
             log().info("steam: {}", line);
             output.success(line);
         }
     );
 });
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam
 
-LV_REGISTER_MODULE(lv::feature::steam::SteamModule);
+BR_REGISTER_MODULE(br::feature::steam::SteamModule);

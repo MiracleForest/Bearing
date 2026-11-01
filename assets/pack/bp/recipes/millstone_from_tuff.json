@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:millstone_from_tuff"
+      "identifier": "bearing:millstone_from_tuff"
     },
     "tags": [
       "crafting_table"
@@ -14,10 +14,10 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       },
       "S": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "I": {
         "item": "minecraft:tuff"
@@ -25,11 +25,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:millstone",
+      "item": "bearing:millstone",
       "count": 1
     }
   }

@@ -4,7 +4,7 @@
 
 #include "mod/Log.h"
 
-namespace lv::config {
+namespace br::config {
 
 namespace {
 std::filesystem::path              gDir;
@@ -49,4 +49,4 @@ bool saveAll() {
 
 void onReload(std::function<void()> fn) { gReloadCallbacks.push_back(std::move(fn)); }
 
-} // namespace lv::config
+} // namespace br::config

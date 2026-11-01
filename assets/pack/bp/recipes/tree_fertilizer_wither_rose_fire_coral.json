@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:tree_fertilizer_wither_rose_fire_coral"
+      "identifier": "bearing:tree_fertilizer_wither_rose_fire_coral"
     },
     "tags": [
       "crafting_table"
@@ -25,7 +25,7 @@
       }
     ],
     "result": {
-      "item": "levitate:tree_fertilizer",
+      "item": "bearing:tree_fertilizer",
       "count": 2
     }
   }

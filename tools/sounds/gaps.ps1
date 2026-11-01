@@ -7,7 +7,7 @@
 #                      encased cogs, gearboxes). Played again every 10 ticks at the soundscape's pitch.
 # kinetics_rumble.wav  0.5 s of a soft low mechanical rumble that loops seamlessly (the period
 #                      fits the sample): Create's KINETIC soundscape (every rotating block, very quiet).
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

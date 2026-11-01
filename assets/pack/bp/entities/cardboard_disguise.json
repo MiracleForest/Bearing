@@ -2,28 +2,28 @@
   "format_version": "1.21.70",
   "minecraft:entity": {
     "description": {
-      "identifier": "levitate:cardboard_disguise",
+      "identifier": "bearing:cardboard_disguise",
       "is_spawnable": false,
       "is_summonable": true,
       "is_experimental": false
     },
     "component_groups": {
-      "levitate:style_0": {
+      "bearing:style_0": {
         "minecraft:variant": {
           "value": 0
         }
       },
-      "levitate:style_1": {
+      "bearing:style_1": {
         "minecraft:variant": {
           "value": 1
         }
       },
-      "levitate:style_2": {
+      "bearing:style_2": {
         "minecraft:variant": {
           "value": 2
         }
       },
-      "levitate:style_3": {
+      "bearing:style_3": {
         "minecraft:variant": {
           "value": 3
         }
@@ -56,7 +56,7 @@
       },
       "minecraft:type_family": {
         "family": [
-          "levitate_cardboard_disguise",
+          "bearing_cardboard_disguise",
           "inanimate"
         ]
       },
@@ -73,31 +73,31 @@
       }
     },
     "events": {
-      "levitate:style_0": {
+      "bearing:style_0": {
         "add": {
           "component_groups": [
-            "levitate:style_0"
+            "bearing:style_0"
           ]
         }
       },
-      "levitate:style_1": {
+      "bearing:style_1": {
         "add": {
           "component_groups": [
-            "levitate:style_1"
+            "bearing:style_1"
           ]
         }
       },
-      "levitate:style_2": {
+      "bearing:style_2": {
         "add": {
           "component_groups": [
-            "levitate:style_2"
+            "bearing:style_2"
           ]
         }
       },
-      "levitate:style_3": {
+      "bearing:style_3": {
         "add": {
           "component_groups": [
-            "levitate:style_3"
+            "bearing:style_3"
           ]
         }
       }

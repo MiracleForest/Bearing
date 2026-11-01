@@ -6,7 +6,7 @@
         { "condition": "survives_explosion" }
       ],
       "entries": [
-        { "type": "item", "name": "levitate:steam_whistle" }
+        { "type": "item", "name": "bearing:steam_whistle" }
       ]
     }
   ]

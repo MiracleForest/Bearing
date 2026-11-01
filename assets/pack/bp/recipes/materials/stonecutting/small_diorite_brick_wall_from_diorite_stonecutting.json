@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_diorite_brick_wall_from_diorite_stonecutting"
+      "identifier": "bearing:small_diorite_brick_wall_from_diorite_stonecutting"
     },
     "tags": [
       "stonecutter"
@@ -18,7 +18,7 @@
       }
     ],
     "result": {
-      "item": "levitate:small_diorite_brick_wall",
+      "item": "bearing:small_diorite_brick_wall",
       "count": 1
     }
   }

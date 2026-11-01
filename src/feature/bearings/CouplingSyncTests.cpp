@@ -11,12 +11,12 @@
 #include "feature/net/Net.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
 namespace {
 
-using lv::selftest::Context;
-namespace net = ::lv::feature::net;
+using br::selftest::Context;
+namespace net = ::br::feature::net;
 
 GP at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -35,8 +35,8 @@ std::optional<bool> lists(std::vector<core::common::Envelope> const& msgs, std::
 
 } // namespace
 
-LV_REGISTER_SELFTEST("bearings.coupling_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
-    auto p = ctx.testPos(3890, ::lv::feature::contraption::kU38Dz);
+BR_REGISTER_SELFTEST("bearings.coupling_sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto p = ctx.testPos(3890, ::br::feature::contraption::kU38Dz);
     p.y += 2;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = ctx.player().getDimensionBlockSource();
@@ -70,4 +70,4 @@ LV_REGISTER_SELFTEST("bearings.coupling_sync", [](Context& ctx) -> ll::coro::Cor
     net::setTestCompanion(player, false);
 });
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings

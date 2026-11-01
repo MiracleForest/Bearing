@@ -3,36 +3,36 @@
 #include <array>
 #include <string>
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 namespace {
 
-/// Create 6.0.10's blocks tagged `create:safe_nbt` (AllBlocks) that Levitate has.
+/// Create 6.0.10's blocks tagged `create:safe_nbt` (AllBlocks) that Bearing has.
 constexpr std::array<std::string_view, 24> kSafeNbtBlocks{
-    "levitate:creative_motor",
-    "levitate:creative_fluid_tank",
-    "levitate:mechanical_piston",
-    "levitate:sticky_mechanical_piston",
-    "levitate:windmill_bearing",
-    "levitate:mechanical_bearing",
-    "levitate:clockwork_bearing",
-    "levitate:rope_pulley",
-    "levitate:cart_assembler",
-    "levitate:minecart_anchor",
-    "levitate:linear_chassis",
-    "levitate:secondary_linear_chassis",
-    "levitate:radial_chassis",
-    "levitate:sequenced_gearshift",
-    "levitate:rotation_speed_controller",
-    "levitate:andesite_funnel",
-    "levitate:brass_funnel",
-    "levitate:redstone_link",
-    "levitate:analog_lever",
-    "levitate:placard",
-    "levitate:pulse_repeater",
-    "levitate:pulse_extender",
-    "levitate:pulse_timer",
-    "levitate:clipboard",
+    "bearing:creative_motor",
+    "bearing:creative_fluid_tank",
+    "bearing:mechanical_piston",
+    "bearing:sticky_mechanical_piston",
+    "bearing:windmill_bearing",
+    "bearing:mechanical_bearing",
+    "bearing:clockwork_bearing",
+    "bearing:rope_pulley",
+    "bearing:cart_assembler",
+    "bearing:minecart_anchor",
+    "bearing:linear_chassis",
+    "bearing:secondary_linear_chassis",
+    "bearing:radial_chassis",
+    "bearing:sequenced_gearshift",
+    "bearing:rotation_speed_controller",
+    "bearing:andesite_funnel",
+    "bearing:brass_funnel",
+    "bearing:redstone_link",
+    "bearing:analog_lever",
+    "bearing:placard",
+    "bearing:pulse_repeater",
+    "bearing:pulse_extender",
+    "bearing:pulse_timer",
+    "bearing:clipboard",
 };
 
 /// Top-level BlockData keys that are never printed: the kinetic network's record (rebuilt when the
@@ -77,7 +77,7 @@ nlohmann::json safeBlockData(std::string_view blockId, nlohmann::json const& doc
         // PartialSafeNBT.writeSafe: FilteringBehaviour (every block's filter slots) ...
         if (auto it = doc.find("filter"); it != doc.end()) out["filter"] = *it;
         // ... and ThresholdSwitchBlockEntity's thresholds, inversion and unit
-        if (blockId == "levitate:stockpile_switch") {
+        if (blockId == "bearing:stockpile_switch") {
             if (auto it = doc.find("redstone"); it != doc.end() && it->is_object()) {
                 nlohmann::json r = nlohmann::json::object();
                 for (auto const* key : {"onAbove", "offBelow", "inverted", "inStacks"})
@@ -86,11 +86,11 @@ nlohmann::json safeBlockData(std::string_view blockId, nlohmann::json const& doc
             }
         }
         // CopycatBlockEntity.writeSafe: the material (U10 keeps it in data["building"])
-        if (blockId.starts_with("levitate:copycat_")) {
+        if (blockId.starts_with("bearing:copycat_")) {
             if (auto it = doc.find("building"); it != doc.end()) out["building"] = *it;
         }
         // TrackBlockEntity.writeSafe: the curves leaving the track (U5's data["tracks"])
-        if (blockId == "levitate:track") {
+        if (blockId == "bearing:track") {
             if (auto it = doc.find("tracks"); it != doc.end()) out["tracks"] = *it;
         }
     }
@@ -109,4 +109,4 @@ std::string entityIdOf(nbt::Tag const& tag) {
     return id && id->asString() ? *id->asString() : std::string();
 }
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

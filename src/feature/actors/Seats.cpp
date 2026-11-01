@@ -1,6 +1,6 @@
 // Seats (Create's SeatBlock / SeatEntity / SeatMovementBehaviour), 16 colours.
 //
-// Stationary: right-click sits the player (an invisible rideable `levitate:seat` entity, as
+// Stationary: right-click sits the player (an invisible rideable `bearing:seat` entity, as
 // Create's SeatEntity; sneak to leave), or seats a mob the player leads on a leash within 10
 // blocks; a mob sitting there is replaced by the player. Dye of another colour recolours it (the
 // dye is not used). Mobs that stand on a free seat sit down (hostile ones when seatHostileMobs).
@@ -47,9 +47,9 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
-namespace ext = ::lv::feature::contraption::actors_ext;
+namespace ext = ::br::feature::contraption::actors_ext;
 
 namespace {
 
@@ -338,7 +338,7 @@ struct Registrar {
             [](BlockSource& region, core::GlobalPos const& pos, Json const& data) {
                 if (data.value("controls", false)) {
                     trackStationaryControls(pos);
-                    if (data.contains("disabled")) setIntState(region, toBlockPos(pos), "levitate:disabled", data.value("disabled", false) ? 1 : 0);
+                    if (data.contains("disabled")) setIntState(region, toBlockPos(pos), "bearing:disabled", data.value("disabled", false) ? 1 : 0);
                 }
                 if (!data.value("seat", false)) return;
                 // Create's addPassengersToWorld: the riders sit on the placed seat
@@ -428,4 +428,4 @@ void seatsInstall() { SeatFallHook::hook(); }
 void seatsUninstall() { SeatFallHook::unhook(); }
 
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

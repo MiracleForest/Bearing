@@ -1,62 +1,62 @@
 {
-  "levitate:packager": {
+  "bearing:packager": {
     "sound": "metal"
   },
-  "levitate:repackager": {
+  "bearing:repackager": {
     "sound": "metal"
   },
-  "levitate:chain_conveyor": {
+  "bearing:chain_conveyor": {
     "sound": "metal"
   },
-  "levitate:package_frogport": {
+  "bearing:package_frogport": {
     "sound": "wood"
   },
-  "levitate:white_postbox": {
+  "bearing:white_postbox": {
     "sound": "wood"
   },
-  "levitate:orange_postbox": {
+  "bearing:orange_postbox": {
     "sound": "wood"
   },
-  "levitate:magenta_postbox": {
+  "bearing:magenta_postbox": {
     "sound": "wood"
   },
-  "levitate:light_blue_postbox": {
+  "bearing:light_blue_postbox": {
     "sound": "wood"
   },
-  "levitate:yellow_postbox": {
+  "bearing:yellow_postbox": {
     "sound": "wood"
   },
-  "levitate:lime_postbox": {
+  "bearing:lime_postbox": {
     "sound": "wood"
   },
-  "levitate:pink_postbox": {
+  "bearing:pink_postbox": {
     "sound": "wood"
   },
-  "levitate:gray_postbox": {
+  "bearing:gray_postbox": {
     "sound": "wood"
   },
-  "levitate:light_gray_postbox": {
+  "bearing:light_gray_postbox": {
     "sound": "wood"
   },
-  "levitate:cyan_postbox": {
+  "bearing:cyan_postbox": {
     "sound": "wood"
   },
-  "levitate:purple_postbox": {
+  "bearing:purple_postbox": {
     "sound": "wood"
   },
-  "levitate:blue_postbox": {
+  "bearing:blue_postbox": {
     "sound": "wood"
   },
-  "levitate:brown_postbox": {
+  "bearing:brown_postbox": {
     "sound": "wood"
   },
-  "levitate:green_postbox": {
+  "bearing:green_postbox": {
     "sound": "wood"
   },
-  "levitate:red_postbox": {
+  "bearing:red_postbox": {
     "sound": "wood"
   },
-  "levitate:black_postbox": {
+  "bearing:black_postbox": {
     "sound": "wood"
   }
 }

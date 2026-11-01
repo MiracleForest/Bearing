@@ -14,7 +14,7 @@
 #include "feature/net/Net.h"
 #include "feature/packages/PackagesInternal.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items = common::items;
 
@@ -108,7 +108,7 @@ void syncConveyors() {
                 double yaw = std::atan2(d.x, d.z) * 180.0 / 3.14159265358979 - 90;
                 for (auto const& b : list2) addBox(b, yaw);
             }
-            list.push_back({{"pos", posJson(pos)}, {"speed", lv::kinetics::speedAt(pos)}, {"chains", conns}, {"boxes", boxes}});
+            list.push_back({{"pos", posJson(pos)}, {"speed", br::kinetics::speedAt(pos)}, {"chains", conns}, {"boxes", boxes}});
         }
         if (!list.empty()) net::send(p, "packages.conveyors", {{"dim", dim}, {"list", list}});
         return true;
@@ -147,4 +147,4 @@ void resetState() {
     resetConveyors();
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

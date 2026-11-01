@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:goggles_light_gray_stained_glass_light_gray_stained_glass"
+      "identifier": "bearing:goggles_light_gray_stained_glass_light_gray_stained_glass"
     },
     "tags": [
       "crafting_table"
@@ -19,16 +19,16 @@
         "item": "minecraft:light_gray_stained_glass"
       },
       "P": {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       }
     ],
     "result": {
-      "item": "levitate:goggles"
+      "item": "bearing:goggles"
     }
   }
 }

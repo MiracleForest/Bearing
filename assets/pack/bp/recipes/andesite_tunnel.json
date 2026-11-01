@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:andesite_tunnel"
+      "identifier": "bearing:andesite_tunnel"
     },
     "tags": [
       "crafting_table"
@@ -13,7 +13,7 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "K": {
         "item": "minecraft:dried_kelp"
@@ -21,11 +21,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:andesite_tunnel",
+      "item": "bearing:andesite_tunnel",
       "count": 2
     }
   }

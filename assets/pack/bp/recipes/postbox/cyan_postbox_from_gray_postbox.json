@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cyan_postbox_from_gray_postbox"
+      "identifier": "bearing:cyan_postbox_from_gray_postbox"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
         "item": "minecraft:cyan_dye"
       },
       {
-        "item": "levitate:gray_postbox"
+        "item": "bearing:gray_postbox"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:gray_postbox"
+        "item": "bearing:gray_postbox"
       }
     ],
     "result": {
-      "item": "levitate:cyan_postbox",
+      "item": "bearing:cyan_postbox",
       "count": 1
     }
   }

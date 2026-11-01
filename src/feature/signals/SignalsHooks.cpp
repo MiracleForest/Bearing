@@ -22,7 +22,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::signals {
+namespace br::feature::signals {
 
 namespace {
 
@@ -31,7 +31,7 @@ constexpr double kMaxDistance = 16;
 
 void deny(Player& player, std::string const& key, std::string const& fallback) {
     actionbar(player, key, fallback, 'c');
-    playSound(player, "levitate.tracks.deny", 1, 1);
+    playSound(player, "bearing.tracks.deny", 1, 1);
     log().info("signals: {} was refused: {}", player.getRealName(), key);
 }
 
@@ -162,9 +162,9 @@ bool onTargetingItemUse(Player& player, ItemStack& held, std::string const& item
     return false; // vanilla places the block; SignalsModule binds it (and clears the selection)
 }
 
-} // namespace lv::feature::signals
+} // namespace br::feature::signals
 
-namespace lv::feature::signals {
+namespace br::feature::signals {
 
 namespace ia = common::interactions;
 
@@ -175,7 +175,7 @@ std::vector<ia::HandlerId> gHandlers;
 namespace wrench = goggles::wrench;
 
 // Create's SignalBlock.onWrenched (U8's wrench contract; sneak-wrenching picks the block up)
-LV_REGISTER_WRENCHABLE(
+BR_REGISTER_WRENCHABLE(
     std::string(api::kSignalId),
     {.onWrenched = [](wrench::Context& c) {
         if (cycleType(c.pos)) {
@@ -190,7 +190,7 @@ LV_REGISTER_WRENCHABLE(
     }}
 );
 // Create's TrackObserverBlock is IWrenchable with the defaults (nothing to rotate; sneak: pick up)
-LV_REGISTER_WRENCHABLE(std::string{api::kObserverId});
+BR_REGISTER_WRENCHABLE(std::string{api::kObserverId});
 
 // U36: the targeting items go through the shared interaction dispatch
 void installHooks() {
@@ -209,4 +209,4 @@ void uninstallHooks() {
     gHandlers.clear();
 }
 
-} // namespace lv::feature::signals
+} // namespace br::feature::signals

@@ -3,7 +3,7 @@
 // connector between the rings, following both carts' interpolated positions every frame). The
 // server sends the coupled pairs on "bearings.couplings" (Carts.cpp).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cmath>
@@ -35,7 +35,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::bearings {
+namespace br::client::bearings {
 
 namespace {
 
@@ -191,8 +191,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::bearings
+} // namespace br::client::bearings
 
-LV_REGISTER_MODULE(lv::client::bearings::CouplingRendererModule);
+BR_REGISTER_MODULE(br::client::bearings::CouplingRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

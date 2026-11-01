@@ -13,7 +13,7 @@
 #include "feature/contraption/Internal.h"
 #include "mod/Config.h"
 
-namespace lv::feature::contraption::ext {
+namespace br::feature::contraption::ext {
 
 namespace {
 std::map<std::string, PassThrough, std::less<>>& passThroughs() {
@@ -156,4 +156,4 @@ void playSound(int dim, cc::Vec3d const& pos, std::string const& sound, float vo
 
 void actionBar(Player& player, std::string const& text) { detail::actionBar(player, text); }
 
-} // namespace lv::feature::contraption::ext
+} // namespace br::feature::contraption::ext

@@ -10,7 +10,7 @@
 
 #include "core/tracks/Math.h"
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 using tracks::Vec3d;
 
@@ -84,4 +84,4 @@ struct EntityHit {
 /// Navigation prediction of the ticks to travel `distance` (Create's submitPredictions).
 [[nodiscard]] int predictTransitTicks(double distance, Stats const& stats, double throttle);
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

@@ -7,14 +7,14 @@
 // see the click). One hook per GameMode action calls the matching handlers by priority (higher
 // first, then registration order) until one returns something other than `Pass`.
 //
-//     namespace ia = lv::feature::common::interactions;
-//     ia::onUseOn({.block = "levitate:chassis"}, [](ia::UseOnContext const& c) {
+//     namespace ia = br::feature::common::interactions;
+//     ia::onUseOn({.block = "bearing:chassis"}, [](ia::UseOnContext const& c) {
 //         if (!c.sneaking) return ia::Result::Pass;
 //         ...;
 //         return ia::Result::Consume;
 //     });
-//     ia::onWrench("levitate:belt", [](ia::UseOnContext const& c) { ...; return ia::Result::Consume; });
-//     ia::onUse("levitate:filter", [](ia::UseContext const& c) { ...; return ia::Result::Consume; });
+//     ia::onWrench("bearing:belt", [](ia::UseOnContext const& c) { ...; return ia::Result::Consume; });
+//     ia::onUse("bearing:filter", [](ia::UseContext const& c) { ...; return ia::Result::Consume; });
 //
 // - Server thread only; called for server players (network players and SimulatedPlayers alike),
 //   never for the client's own prediction.
@@ -60,12 +60,12 @@ class Block;
 class ItemStack;
 class Player;
 
-namespace lv::feature::common::interactions {
+namespace br::feature::common::interactions {
 
 using core::GlobalPos;
 using core::common::Vec;
 
-inline constexpr char const* kWrenchId = "levitate:wrench";
+inline constexpr char const* kWrenchId = "bearing:wrench";
 
 enum class Result { Pass, Consume, Deny };
 
@@ -79,8 +79,8 @@ inline constexpr int Fallback = -1000; ///< generic behaviour (e.g. the wrench's
 
 /// Which interactions a handler wants; an empty id matches anything ("" item = also an empty hand).
 struct Match {
-    std::string block; ///< block id ("levitate:chassis")
-    std::string item;  ///< held item id ("levitate:wrench"); use `emptyHand` for an empty hand only
+    std::string block; ///< block id ("bearing:chassis")
+    std::string item;  ///< held item id ("bearing:wrench"); use `emptyHand` for an empty hand only
     bool        emptyHand = false; ///< only when the hand is empty
 };
 
@@ -198,4 +198,4 @@ Result dispatchStartDestroy(DestroyContext const& ctx);
 Result dispatchInteract(EntityContext const& ctx);
 Result dispatchAttack(EntityContext const& ctx);
 
-} // namespace lv::feature::common::interactions
+} // namespace br::feature::common::interactions

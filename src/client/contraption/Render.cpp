@@ -8,7 +8,7 @@
 // display entities); a display the client doesn't know yet falls back to the angle the server
 // encodes in the entity's own rotation (see feature/contraption/Internal.h).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <cmath>
 
@@ -29,7 +29,7 @@
 #include "feature/contraption/Internal.h"
 #include "mod/Module.h"
 
-namespace lv::client::contraption {
+namespace br::client::contraption {
 
 namespace {
 
@@ -106,8 +106,8 @@ public:
     void uninstall() { ContraptionDisplayRenderHook::unhook(); }
 };
 
-} // namespace lv::client::contraption
+} // namespace br::client::contraption
 
-LV_REGISTER_MODULE(lv::client::contraption::RenderModule);
+BR_REGISTER_MODULE(br::client::contraption::RenderModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -28,9 +28,9 @@ Invoke-Chat '/gamemode creative'
 Invoke-Chat '/time set noon'
 Invoke-Chat '/fill ~-4 ~ ~-34 ~34 ~5 ~5 air'
 # the two curve ends first (the player must not stand on track to click), the runs afterwards
-Invoke-Chat '/setblock ~20 ~ ~ levitate:track ["levitate:shape"=2]'
-Invoke-Chat '/setblock ~29 ~ ~-9 levitate:track ["levitate:shape"=1]'
-Invoke-Chat '/give @s levitate:track 64'
+Invoke-Chat '/setblock ~20 ~ ~ bearing:track ["bearing:shape"=2]'
+Invoke-Chat '/setblock ~29 ~ ~-9 bearing:track ["bearing:shape"=1]'
+Invoke-Chat '/give @s bearing:track 64'
 Press-Key 1
 # select the east end of the line (x + 20), then click the north branch's south end (x + 29, z - 9)
 Invoke-Teleport '/tp @s ~17 ~ ~ -90 25'
@@ -39,8 +39,8 @@ Wait-LogLine 'tracks: \S+ selected the track at' 20 -Since $mark | Out-Null
 Invoke-Teleport '/tp @s ~12 ~ ~-6 180 28'
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'tracks: \S+ connected .* with a curve of length' 20 -Since $mark | Out-Null
-Invoke-Chat '/fill ~-26 ~ ~6 ~-10 ~ ~6 levitate:track ["levitate:shape"=2]'
-Invoke-Chat '/fill ~ ~ ~-4 ~ ~ ~-26 levitate:track ["levitate:shape"=1]'
+Invoke-Chat '/fill ~-26 ~ ~6 ~-10 ~ ~6 bearing:track ["bearing:shape"=2]'
+Invoke-Chat '/fill ~ ~ ~-4 ~ ~ ~-26 bearing:track ["bearing:shape"=1]'
 Start-Sleep -Milliseconds 500
 
 # back to the start and build the stations and the train
@@ -85,7 +85,7 @@ Save-Screenshot 'station-screen' | Out-Null
 if ($script:Mode -eq 'remote-vanilla') { Close-Screen } else { Press-Key E; Start-Sleep -Milliseconds 800 }
 
 # the schedule editor: right-click in the air with a schedule
-Invoke-Chat '/give @s levitate:schedule 1'
+Invoke-Chat '/give @s bearing:schedule 1'
 Press-Key 2
 Invoke-Teleport '/tp @s ~ ~ ~ 0 -60'
 Click 0.5 0.5 -Relative -Right

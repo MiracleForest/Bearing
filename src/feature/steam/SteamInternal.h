@@ -24,20 +24,20 @@ class BlockSource;
 class ItemStack;
 class Player;
 
-namespace lv::feature::steam {
+namespace br::feature::steam {
 
 namespace cs = core::steam;
 using core::GlobalPos;
 using Json = nlohmann::json;
 
-inline constexpr char kTank[]         = "levitate:fluid_tank";
-inline constexpr char kCreativeTank[] = "levitate:creative_fluid_tank";
-inline constexpr char kEngine[]       = "levitate:steam_engine";
-inline constexpr char kWhistle[]      = "levitate:steam_whistle";
-inline constexpr char kExtension[]    = "levitate:steam_whistle_extension";
-inline constexpr char kPoweredShaft[] = "levitate:powered_shaft";
-inline constexpr char kShaft[]        = "levitate:shaft"; // U6
-inline constexpr char kWrench[]       = "levitate:wrench"; // U8
+inline constexpr char kTank[]         = "bearing:fluid_tank";
+inline constexpr char kCreativeTank[] = "bearing:creative_fluid_tank";
+inline constexpr char kEngine[]       = "bearing:steam_engine";
+inline constexpr char kWhistle[]      = "bearing:steam_whistle";
+inline constexpr char kExtension[]    = "bearing:steam_whistle_extension";
+inline constexpr char kPoweredShaft[] = "bearing:powered_shaft";
+inline constexpr char kShaft[]        = "bearing:shaft"; // U6
+inline constexpr char kWrench[]       = "bearing:wrench"; // U8
 inline constexpr char kDataKey[]      = "steam";
 
 // ---- config ----------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ inline constexpr cs::Dir kDirs[]{cs::Dir::Down, cs::Dir::Up, cs::Dir::North, cs:
 
 void playSound(int dim, double x, double y, double z, std::string const& sound, float volume, float pitch);
 void particle(int dim, double x, double y, double z, std::string const& effect);
-/// Create's SteamJetParticle (`levitate:steam_jet`) at (x, y, z) moving by (mx, my, mz) blocks per
+/// Create's SteamJetParticle (`bearing:steam_jet`) at (x, y, z) moving by (mx, my, mz) blocks per
 /// tick, sent to the players within 64 blocks.
 void steamJet(int dim, double x, double y, double z, double mx, double my, double mz);
 void giveOrDrop(Player& player, ItemStack const& stack);
@@ -170,8 +170,8 @@ void onPoweredShaftRemoved(GlobalPos const& pos);
 void onPoweredShaftAdded(GlobalPos const& pos);
 /// Whether the whistle at `pos` is sounding (powered on a boiler with heat).
 [[nodiscard]] bool whistleSounding(GlobalPos const& pos);
-/// Test block of the unit: a heater whose `levitate:heat` state is a Create heat level (blaze burners are U14).
-inline constexpr char kTestHeater[] = "levitate:steam_test_heater";
+/// Test block of the unit: a heater whose `bearing:heat` state is a Create heat level (blaze burners are U14).
+inline constexpr char kTestHeater[] = "bearing:steam_test_heater";
 /// Attached engines / whistles of the tank at `removed` lose their support.
 void dropAttachmentsOf(GlobalPos const& removedTank);
 
@@ -219,4 +219,4 @@ void sendFullSync(Player& player);
 
 [[nodiscard]] std::uint64_t currentTick();
 
-} // namespace lv::feature::steam
+} // namespace br::feature::steam

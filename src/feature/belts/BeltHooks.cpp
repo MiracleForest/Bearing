@@ -28,7 +28,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace ia = common::interactions;
 
@@ -233,4 +233,4 @@ void uninstallHooks() {
     handlerIds().clear();
 }
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

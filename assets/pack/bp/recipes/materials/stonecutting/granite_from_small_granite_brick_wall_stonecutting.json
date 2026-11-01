@@ -2,19 +2,19 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:granite_from_small_granite_brick_wall_stonecutting"
+      "identifier": "bearing:granite_from_small_granite_brick_wall_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:small_granite_brick_wall"
+        "item": "bearing:small_granite_brick_wall"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:small_granite_brick_wall"
+        "item": "bearing:small_granite_brick_wall"
       }
     ],
     "result": {

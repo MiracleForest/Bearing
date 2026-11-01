@@ -10,16 +10,16 @@
 
 #include "mod/Registry.h"
 
-namespace lv::config {
+namespace br::config {
 
-/// Per-section JSON configs under `mods/Levitate/config/<section>.json`.
+/// Per-section JSON configs under `mods/Bearing/config/<section>.json`.
 ///
 /// Declare a reflectable aggregate with an integral `version` member and register it once:
 ///
 ///     struct TeleportsConfig { int version = 1; bool enableCosts = true; };
-///     LV_REGISTER_CONFIG("teleports", TeleportsConfig);       // in a .cpp file
+///     BR_REGISTER_CONFIG("teleports", TeleportsConfig);       // in a .cpp file
 ///
-///     bool c = lv::config::get<TeleportsConfig>().enableCosts;    // anywhere
+///     bool c = br::config::get<TeleportsConfig>().enableCosts;    // anywhere
 ///
 /// Files are created with defaults on first load, merged with new defaults when `version`
 /// changes, and reloaded by `/create reload`. Configs are global (not per world).
@@ -86,8 +86,8 @@ struct ConfigRegistrar {
 };
 } // namespace detail
 
-} // namespace lv::config
+} // namespace br::config
 
 /// Registers config struct `T` under `<configDir>/<section>.json`. `section` is a string literal.
-#define LV_REGISTER_CONFIG(section, T)                                                                                \
-    static ::lv::config::detail::ConfigRegistrar<T> LV_UNIQUE(lv_config_registrar_)(section)
+#define BR_REGISTER_CONFIG(section, T)                                                                                \
+    static ::br::config::detail::ConfigRegistrar<T> BR_UNIQUE(br_config_registrar_)(section)

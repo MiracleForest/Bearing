@@ -35,13 +35,13 @@
 #include "mod/Config.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::actors {
+namespace br::feature::actors {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP = core::GlobalPos;
-namespace fs = ::lv::feature::common::filterslot;
+namespace fs = ::br::feature::common::filterslot;
 
 GP at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 cc::Pos ccp(GP const& p) { return {p.x, p.y, p.z}; }
@@ -135,7 +135,7 @@ struct Rig {
 };
 Rig buildRig(Context& ctx, GP const& actorPos, std::string const& actorId) {
     Rig r{actorPos, at(actorPos, 0, 1, 0), at(actorPos, -1, 1, 0)};
-    ctx.setBlock(r.actor, actorId, {{"levitate:facing", 5}});
+    ctx.setBlock(r.actor, actorId, {{"bearing:facing", 5}});
     ctx.setBlock(r.anchor, "minecraft:stone");
     ctx.setBlock(r.chest, "minecraft:chest");
     con::addGlue(actorPos.dim, cc::GlueBox::of(ccp(at(r.actor, -1, 0, 0)), ccp(r.anchor)));
@@ -144,7 +144,7 @@ Rig buildRig(Context& ctx, GP const& actorPos, std::string const& actorId) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("actors.harvester", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.harvester", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2200);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 7, 4, 1));
@@ -178,7 +178,7 @@ LV_REGISTER_SELFTEST("actors.harvester", [](Context& ctx) -> ll::coro::CoroTask<
     emptyChest(ctx, at(g0, 4, 2, 0));
 });
 
-LV_REGISTER_SELFTEST("actors.harvester_backwards", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.harvester_backwards", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2210);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -3, 1, -1), at(g0, 3, 4, 1));
@@ -201,7 +201,7 @@ LV_REGISTER_SELFTEST("actors.harvester_backwards", [](Context& ctx) -> ll::coro:
     guard.id.reset();
 });
 
-LV_REGISTER_SELFTEST("actors.plough", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.plough", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2220);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 7, 4, 1));
@@ -237,7 +237,7 @@ LV_REGISTER_SELFTEST("actors.plough", [](Context& ctx) -> ll::coro::CoroTask<> {
     emptyChest(ctx, at(g0, 4, 2, 0));
 });
 
-LV_REGISTER_SELFTEST("actors.roller_fill", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.roller_fill", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2230);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 7, 5, 1));
@@ -271,7 +271,7 @@ LV_REGISTER_SELFTEST("actors.roller_fill", [](Context& ctx) -> ll::coro::CoroTas
     emptyChest(ctx, at(g0, 4, 3, 0));
 });
 
-LV_REGISTER_SELFTEST("actors.roller_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.roller_tunnel", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2240);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 7, 5, 1));
@@ -300,14 +300,14 @@ LV_REGISTER_SELFTEST("actors.roller_tunnel", [](Context& ctx) -> ll::coro::CoroT
     emptyChest(ctx, at(g0, 4, 3, 0));
 });
 
-LV_REGISTER_SELFTEST("actors.roller_settings", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.roller_settings", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2250);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     auto a = at(g0, 0, 1, 0), b = at(g0, 1, 1, 0), c = at(g0, 2, 1, 0);
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 3, 2, 1));
-    ctx.setBlock(a, std::string(kRoller), {{"levitate:facing", 2}});
-    ctx.setBlock(b, std::string(kRoller), {{"levitate:facing", 2}});
-    ctx.setBlock(c, std::string(kRoller), {{"levitate:facing", 2}});
+    ctx.setBlock(a, std::string(kRoller), {{"bearing:facing", 2}});
+    ctx.setBlock(b, std::string(kRoller), {{"bearing:facing", 2}});
+    ctx.setBlock(c, std::string(kRoller), {{"bearing:facing", 2}});
     setRollerMode(a, RollingMode::WideFill);
     ctx.check(rollerMode(b) == RollingMode::WideFill && rollerMode(c) == RollingMode::WideFill, "the mode is shared along the row");
     auto const* box = common::valuebox::boxAt(region(ctx).getBlock(toBlockPos(a)), 1, {0.5 - 3 / 16.0, 1.0, 0.5 + 3 / 16.0});
@@ -317,12 +317,12 @@ LV_REGISTER_SELFTEST("actors.roller_settings", [](Context& ctx) -> ll::coro::Cor
     common::blockdata::erase(c);
 });
 
-LV_REGISTER_SELFTEST("actors.psi", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.psi", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2260);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 6, 3, 1));
     auto station = at(g0, 4, 1, 0);
-    ctx.setBlock(station, std::string(kPsi), {{"levitate:facing", 4}});
+    ctx.setBlock(station, std::string(kPsi), {{"bearing:facing", 4}});
     auto  rig = buildRig(ctx, at(g0, 1, 1, 0), std::string(kPsi));
     Guard guard;
     auto  r = assembleAt(rig.anchor);
@@ -332,7 +332,7 @@ LV_REGISTER_SELFTEST("actors.psi", [](Context& ctx) -> ll::coro::CoroTask<> {
     // the connection cycles while no items move (Create: 14 ticks, then it reconnects)
     for (int i = 0; i < 20 && !psiConnected(station); ++i) co_await ctx.ticks(1);
     ctx.check(psiConnected(station), "the interfaces connected");
-    ctx.check(stateAt(ctx, station, "levitate:extended") == 1, "the stationary interface shows it");
+    ctx.check(stateAt(ctx, station, "bearing:extended") == 1, "the stationary interface shows it");
     auto& reg  = region(ctx);
     auto  rest = common::items::insert(reg, toBlockPos(station), 4, makeItem("minecraft:diamond", 5), false);
     ctx.check(rest.isNull() || rest.mCount == 0, "items inserted through the interface");
@@ -360,12 +360,12 @@ LV_REGISTER_SELFTEST("actors.psi", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(!psiConnected(station), "disconnected once the contraption is gone");
 });
 
-LV_REGISTER_SELFTEST("actors.psi_holds", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.psi_holds", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2270);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 8, 3, 1));
     auto station = at(g0, 5, 1, 0);
-    ctx.setBlock(station, std::string(kPsi), {{"levitate:facing", 4}});
+    ctx.setBlock(station, std::string(kPsi), {{"bearing:facing", 4}});
     auto  rig = buildRig(ctx, at(g0, 1, 1, 0), std::string(kPsi));
     Guard guard;
     auto  r = assembleAt(rig.anchor);
@@ -405,7 +405,7 @@ LV_REGISTER_SELFTEST("actors.psi_holds", [](Context& ctx) -> ll::coro::CoroTask<
     emptyChest(ctx, at(g0, 3, 2, 0));
 });
 
-LV_REGISTER_SELFTEST("actors.controls", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.controls", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2280);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 7, 4, 1));
@@ -414,11 +414,11 @@ LV_REGISTER_SELFTEST("actors.controls", [](Context& ctx) -> ll::coro::CoroTask<>
     ctx.setBlock(at(g0, 4, 1, 0), "minecraft:wheat", {{"growth", 7}});
     auto rig      = buildRig(ctx, at(g0, 1, 1, 0), std::string(kHarvester));
     auto controls = at(g0, 1, 3, 0); // on top of the anchor
-    ctx.setBlock(controls, std::string(kControls), {{"levitate:facing", 5}});
+    ctx.setBlock(controls, std::string(kControls), {{"bearing:facing", 5}});
     con::addGlue(g0.dim, cc::GlueBox::of(ccp(rig.anchor), ccp(controls)));
     auto& player = ctx.player();
     controlsClickStationary(player, controls);
-    ctx.check(stateAt(ctx, controls, "levitate:disabled") == 1, "stationary controls toggled off");
+    ctx.check(stateAt(ctx, controls, "bearing:disabled") == 1, "stationary controls toggled off");
     Guard guard;
     auto  r = assembleAt(rig.anchor);
     ctx.require(r.ok(), "assembled: " + r.errorText);
@@ -438,20 +438,20 @@ LV_REGISTER_SELFTEST("actors.controls", [](Context& ctx) -> ll::coro::CoroTask<>
         for (int y = 1; y <= 3; ++y) ctx.cleanupBlock(at(g0, x, y, 0));
     ctx.require(con::disassemble(*r.id), "disassembled");
     guard.id.reset();
-    ctx.check(stateAt(ctx, at(g0, 5, 3, 0), "levitate:disabled") == 0, "placed controls remember: enabled");
+    ctx.check(stateAt(ctx, at(g0, 5, 3, 0), "bearing:disabled") == 0, "placed controls remember: enabled");
     emptyChest(ctx, at(g0, 4, 2, 0));
 });
 
-LV_REGISTER_SELFTEST("actors.seat", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.seat", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2290);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 4, 3, 2));
     auto seat = at(g0, 0, 1, 0);
-    ctx.setBlock(seat, "levitate:white_seat");
+    ctx.setBlock(seat, "bearing:white_seat");
     auto& player = ctx.player();
     auto  dye    = makeItem("minecraft:red_dye");
     ctx.check(seatUse(player, seat, dye), "dye used on the seat");
-    ctx.check(idAt(ctx, seat) == "levitate:red_seat", "the seat was dyed red: " + idAt(ctx, seat));
+    ctx.check(idAt(ctx, seat) == "bearing:red_seat", "the seat was dyed red: " + idAt(ctx, seat));
     ctx.check(seatUse(player, seat, ItemStack::EMPTY_ITEM()), "sat down");
     co_await ctx.ticks(2);
     auto* vehicle = player.getVehicle();
@@ -464,7 +464,7 @@ LV_REGISTER_SELFTEST("actors.seat", [](Context& ctx) -> ll::coro::CoroTask<> {
 
     // a mob that stands on a free seat sits down
     auto seat2 = at(g0, 2, 1, 1);
-    ctx.setBlock(seat2, "levitate:blue_seat");
+    ctx.setBlock(seat2, "bearing:blue_seat");
     auto* pig = spawnMob(ctx, "minecraft:pig", at(seat2, 0, 1, 0));
     ctx.require(pig != nullptr, "pig spawned");
     auto pigId = pig->getOrCreateUniqueID();
@@ -475,14 +475,14 @@ LV_REGISTER_SELFTEST("actors.seat", [](Context& ctx) -> ll::coro::CoroTask<> {
     co_await ctx.ticks(4);
 });
 
-LV_REGISTER_SELFTEST("actors.seat_contraption", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("actors.seat_contraption", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g0 = ctx.testPos(2295);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 4, 4, 1));
     auto stone = at(g0, 0, 1, 0);
     auto seat  = at(g0, 0, 2, 0);
     ctx.setBlock(stone, "minecraft:stone");
-    ctx.setBlock(seat, "levitate:white_seat");
+    ctx.setBlock(seat, "bearing:white_seat");
     con::addGlue(g0.dim, cc::GlueBox::of(ccp(stone), ccp(seat)));
     auto* pig = spawnMob(ctx, "minecraft:pig", seat);
     ctx.require(pig != nullptr, "pig spawned");
@@ -511,14 +511,14 @@ LV_REGISTER_SELFTEST("actors.seat_contraption", [](Context& ctx) -> ll::coro::Co
 });
 
 // U38 (R113): a harvester whose block behind it goes drops (Create's AttachedActorBlock#canSurvive)
-LV_REGISTER_SELFTEST("actors.attached_support", [](Context& ctx) -> ll::coro::CoroTask<> {
-    auto g0 = ctx.testPos(3820, ::lv::feature::contraption::kU38Dz);
+BR_REGISTER_SELFTEST("actors.attached_support", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto g0 = ctx.testPos(3820, ::br::feature::contraption::kU38Dz);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 2, 2, 1));
     auto support   = at(g0, 0, 1, 0);
     auto harvester = at(g0, 1, 1, 0);
     ctx.setBlock(support, "minecraft:stone");
-    ctx.setBlock(harvester, std::string(kHarvester), {{"levitate:facing", 5}}); // faces east, hangs on the stone
+    ctx.setBlock(harvester, std::string(kHarvester), {{"bearing:facing", 5}}); // faces east, hangs on the stone
     co_await ctx.ticks(2);
     ctx.check(idAt(ctx, harvester) == kHarvester, "the harvester stays while its support is there");
     ctx.setBlock(support, "minecraft:air");
@@ -536,13 +536,13 @@ LV_REGISTER_SELFTEST("actors.attached_support", [](Context& ctx) -> ll::coro::Co
 });
 
 // U38 (R114): seats halve the fall distance (Create's SeatBlock#fallOn)
-LV_REGISTER_SELFTEST("actors.seat_fall", [](Context& ctx) -> ll::coro::CoroTask<> {
-    auto g0 = ctx.testPos(3825, ::lv::feature::contraption::kU38Dz);
+BR_REGISTER_SELFTEST("actors.seat_fall", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto g0 = ctx.testPos(3825, ::br::feature::contraption::kU38Dz);
     ctx.require(co_await ctx.ensureLoaded(g0), "test area loaded");
     clearBox(ctx, at(g0, -1, 1, -1), at(g0, 3, 12, 1));
     auto seat  = at(g0, 0, 1, 0);
     auto stone = at(g0, 2, 1, 0);
-    ctx.setBlock(seat, "levitate:white_seat");
+    ctx.setBlock(seat, "bearing:white_seat");
     ctx.setBlock(stone, "minecraft:stone");
     auto* onSeat  = spawnMob(ctx, "minecraft:pig", at(seat, 0, 9, 0));
     auto* onStone = spawnMob(ctx, "minecraft:pig", at(stone, 0, 9, 0));
@@ -561,4 +561,4 @@ LV_REGISTER_SELFTEST("actors.seat_fall", [](Context& ctx) -> ll::coro::CoroTask<
     eb->remove();
 });
 
-} // namespace lv::feature::actors
+} // namespace br::feature::actors

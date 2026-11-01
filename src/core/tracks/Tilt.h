@@ -18,7 +18,7 @@
 #include "core/tracks/Curve.h"
 #include "core/tracks/Shape.h"
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 /// Create's TrackBlockEntityTilt.compareHandles: same node location ignoring height.
 [[nodiscard]] bool compareHandles(Vec3d const& a, Vec3d const& b);
@@ -48,4 +48,4 @@ trySmoothing(BlockPos3 const& pos, Shape shape, bool portalBound, std::vector<st
 /// flat shape (XO, ZO, PD, ND), `angle` the smoothing angle.
 [[nodiscard]] Vec3d tiltModelPoint(Vec3d const& v, Shape shape, double angle);
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

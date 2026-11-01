@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:purple_table_cloth_from_red_table_cloth"
+      "identifier": "bearing:purple_table_cloth_from_red_table_cloth"
     },
     "tags": [
       "crafting_table"
@@ -12,7 +12,7 @@
         "item": "minecraft:purple_dye"
       },
       {
-        "item": "levitate:red_table_cloth"
+        "item": "bearing:red_table_cloth"
       }
     ],
     "unlock": [
@@ -21,7 +21,7 @@
       }
     ],
     "result": {
-      "item": "levitate:purple_table_cloth",
+      "item": "bearing:purple_table_cloth",
       "count": 1
     }
   }

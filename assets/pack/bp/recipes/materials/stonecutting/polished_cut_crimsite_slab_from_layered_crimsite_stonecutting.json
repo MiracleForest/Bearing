@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:polished_cut_crimsite_slab_from_layered_crimsite_stonecutting"
+      "identifier": "bearing:polished_cut_crimsite_slab_from_layered_crimsite_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:layered_crimsite"
+        "item": "bearing:layered_crimsite"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:layered_crimsite"
+        "item": "bearing:layered_crimsite"
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_crimsite_slab",
+      "item": "bearing:polished_cut_crimsite_slab",
       "count": 2
     }
   }

@@ -23,7 +23,7 @@ class BlockSource;
 class ItemStack;
 class Player;
 
-namespace lv::feature::tracks {
+namespace br::feature::tracks {
 
 namespace ct = core::tracks;
 
@@ -172,4 +172,4 @@ void syncSelection(Player& player);
 [[nodiscard]] bool maximiseTurn(Player const& player);
 void fireGraphChanged();
 
-} // namespace lv::feature::tracks
+} // namespace br::feature::tracks

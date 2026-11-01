@@ -1,6 +1,6 @@
 #include "core/common/Protocol.h"
 
-namespace lv::core::common {
+namespace br::core::common {
 
 std::string encodePayload(nlohmann::json const& payload) {
     if (payload.is_null()) return "{}";
@@ -22,4 +22,4 @@ bool validChannel(std::string_view channel) {
     return channel.front() != '.' && channel.back() != '.';
 }
 
-} // namespace lv::core::common
+} // namespace br::core::common

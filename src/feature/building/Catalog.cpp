@@ -9,7 +9,7 @@
 #include "feature/building/Building.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace {
 
@@ -25,7 +25,7 @@ struct Catalog {
 
     void add(std::string path, Kind kind, Ct ct = Ct::None) {
         Info i;
-        i.id   = "levitate:" + path;
+        i.id   = "bearing:" + path;
         i.kind = kind;
         i.ct   = ct;
         byId[i.id] = std::move(i);
@@ -66,7 +66,7 @@ struct Catalog {
                                                std::pair{"copper_" + single + "_stairs", Kind::CopperStairs},
                                                std::pair{"copper_" + single + "_slab", Kind::CopperSlab}}) {
                         add(prefix + shape, kind);
-                        auto& i       = byId["levitate:" + prefix + shape];
+                        auto& i       = byId["bearing:" + prefix + shape];
                         i.age         = age;
                         i.waxed       = waxed;
                         i.copperShape = shape;
@@ -77,12 +77,12 @@ struct Catalog {
         for (auto [door, folds] : {std::pair{"andesite_door", true}, std::pair{"brass_door", false}, std::pair{"copper_door", true},
                                    std::pair{"train_door", false}, std::pair{"framed_glass_door", false}}) {
             add(door, Kind::Door);
-            byId[std::string("levitate:") + door].folds = folds;
+            byId[std::string("bearing:") + door].folds = folds;
         }
-        byId["levitate:framed_glass_door"].glass = true;
+        byId["bearing:framed_glass_door"].glass = true;
         add("train_trapdoor", Kind::Trapdoor);
         add("framed_glass_trapdoor", Kind::Trapdoor);
-        byId["levitate:framed_glass_trapdoor"].glass = true;
+        byId["bearing:framed_glass_trapdoor"].glass = true;
         add("metal_girder", Kind::Girder);
         add("metal_girder_encased_shaft", Kind::GirderShaft);
         add("metal_bracket", Kind::Bracket);
@@ -109,14 +109,14 @@ Info const* infoOf(std::string_view id) {
 
 Info const* infoOf(Block const& block) {
     auto const& name = block.getTypeName();
-    if (name.size() < 9 || name.compare(0, 9, "levitate:") != 0) return nullptr;
+    if (name.size() < 8 || name.compare(0, 8, "bearing:") != 0) return nullptr;
     return infoOf(std::string_view(name));
 }
 
 std::vector<Info const*> const& allBlocks() { return catalog().all; }
 
 std::string copperId(std::string const& shape, int age, bool waxed) {
-    return std::string("levitate:") + (waxed ? "waxed_" : "") + kStages[std::clamp(age, 0, 3)] + shape;
+    return std::string("bearing:") + (waxed ? "waxed_" : "") + kStages[std::clamp(age, 0, 3)] + shape;
 }
 
 GlobalPos offset(GlobalPos const& p, int dir, int n) {
@@ -144,7 +144,7 @@ int stateOf(Block const& block, std::string_view name, int fallback) {
 }
 
 int hfacingOf(Block const& block) {
-    int f = stateOf(block, "levitate:facing", North);
+    int f = stateOf(block, "bearing:facing", North);
     return f < 2 || f > 5 ? North : f;
 }
 
@@ -172,10 +172,10 @@ Block const* convertKeepingStates(Block const& from, std::string const& id) {
     auto const* to = game::blockWith(id);
     if (!to) return nullptr;
     std::vector<std::pair<std::string, int>> keep;
-    for (auto const* name : {"levitate:facing", "levitate:upside", "levitate:shape", "levitate:top", "levitate:double"}) {
+    for (auto const* name : {"bearing:facing", "bearing:upside", "bearing:shape", "bearing:top", "bearing:double"}) {
         if (auto v = game::intState(from, name)) keep.emplace_back(name, *v);
     }
     return withStates(*to, keep);
 }
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

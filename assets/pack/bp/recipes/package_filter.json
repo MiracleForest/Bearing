@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:package_filter"
+      "identifier": "bearing:package_filter"
     },
     "tags": [
       "crafting_table"
@@ -12,19 +12,19 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:zinc_nugget"
+        "item": "bearing:zinc_nugget"
       },
       "S": {
         "tag": "minecraft:wool"
       }
     },
     "result": {
-      "item": "levitate:package_filter",
+      "item": "bearing:package_filter",
       "count": 1
     },
     "unlock": [
       {
-        "item": "levitate:zinc_nugget"
+        "item": "bearing:zinc_nugget"
       }
     ]
   }

@@ -1,29 +1,29 @@
 {
-  "levitate:andesite_funnel": {
+  "bearing:andesite_funnel": {
     "sound": "metal"
   },
-  "levitate:brass_funnel": {
+  "bearing:brass_funnel": {
     "sound": "metal"
   },
-  "levitate:andesite_tunnel": {
+  "bearing:andesite_tunnel": {
     "sound": "metal"
   },
-  "levitate:brass_tunnel": {
+  "bearing:brass_tunnel": {
     "sound": "metal"
   },
-  "levitate:chute": {
+  "bearing:chute": {
     "sound": "metal"
   },
-  "levitate:smart_chute": {
+  "bearing:smart_chute": {
     "sound": "metal"
   },
-  "levitate:item_vault": {
+  "bearing:item_vault": {
     "sound": "metal"
   },
-  "levitate:creative_crate": {
+  "bearing:creative_crate": {
     "sound": "wood"
   },
-  "levitate:item_hatch": {
+  "bearing:item_hatch": {
     "sound": "netherite"
   }
 }

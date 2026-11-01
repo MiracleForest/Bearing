@@ -2,12 +2,12 @@
   "format_version": "1.26.0",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:redstone_link",
+      "identifier": "bearing:redstone_link",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,15 +15,15 @@
           4,
           5
         ],
-        "levitate:receiver": [
+        "bearing:receiver": [
           0,
           1
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ],
-        "levitate:power": {
+        "bearing:power": {
           "values": {
             "min": 0,
             "max": 15
@@ -47,20 +47,20 @@
       "minecraft:redstone_producer": {
         "power": 0
       },
-      "minecraft:geometry": "geometry.levitate.redstone_link_up",
+      "minecraft:geometry": "geometry.bearing.redstone_link_up",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_redstone_link",
+          "texture": "bearing_redstone_link",
           "render_method": "alpha_test",
           "ambient_occlusion": false
         }
       },
       "minecraft:light_dampening": 0,
       "minecraft:item_visual": {
-        "geometry": "geometry.levitate.redstone_link_up",
+        "geometry": "geometry.bearing.redstone_link_up",
         "material_instances": {
           "*": {
-            "texture": "levitate_redstone_link",
+            "texture": "bearing_redstone_link",
             "render_method": "alpha_test"
           }
         }
@@ -68,15 +68,15 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.redstone_link_down",
+            "identifier": "geometry.bearing.redstone_link_down",
             "bone_visibility": {
-              "tx_off": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 0",
-              "tx_on": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 1",
-              "rx_off": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 0",
-              "rx_on": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 1"
+              "tx_off": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 0",
+              "tx_on": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 1",
+              "rx_off": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 0",
+              "rx_on": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 1"
             }
           },
           "minecraft:collision_box": {
@@ -106,15 +106,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.redstone_link_up",
+            "identifier": "geometry.bearing.redstone_link_up",
             "bone_visibility": {
-              "tx_off": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 0",
-              "tx_on": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 1",
-              "rx_off": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 0",
-              "rx_on": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 1"
+              "tx_off": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 0",
+              "tx_on": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 1",
+              "rx_off": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 0",
+              "rx_on": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 1"
             }
           },
           "minecraft:collision_box": {
@@ -144,15 +144,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.redstone_link_north",
+            "identifier": "geometry.bearing.redstone_link_north",
             "bone_visibility": {
-              "tx_off": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 0",
-              "tx_on": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 1",
-              "rx_off": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 0",
-              "rx_on": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 1"
+              "tx_off": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 0",
+              "tx_on": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 1",
+              "rx_off": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 0",
+              "rx_on": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 1"
             }
           },
           "minecraft:collision_box": {
@@ -182,15 +182,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.redstone_link_south",
+            "identifier": "geometry.bearing.redstone_link_south",
             "bone_visibility": {
-              "tx_off": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 0",
-              "tx_on": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 1",
-              "rx_off": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 0",
-              "rx_on": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 1"
+              "tx_off": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 0",
+              "tx_on": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 1",
+              "rx_off": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 0",
+              "rx_on": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 1"
             }
           },
           "minecraft:collision_box": {
@@ -220,15 +220,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.redstone_link_west",
+            "identifier": "geometry.bearing.redstone_link_west",
             "bone_visibility": {
-              "tx_off": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 0",
-              "tx_on": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 1",
-              "rx_off": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 0",
-              "rx_on": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 1"
+              "tx_off": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 0",
+              "tx_on": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 1",
+              "rx_off": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 0",
+              "rx_on": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 1"
             }
           },
           "minecraft:collision_box": {
@@ -258,15 +258,15 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.redstone_link_east",
+            "identifier": "geometry.bearing.redstone_link_east",
             "bone_visibility": {
-              "tx_off": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 0",
-              "tx_on": "q.block_state('levitate:receiver') == 0 && q.block_state('levitate:powered') == 1",
-              "rx_off": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 0",
-              "rx_on": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:powered') == 1"
+              "tx_off": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 0",
+              "tx_on": "q.block_state('bearing:receiver') == 0 && q.block_state('bearing:powered') == 1",
+              "rx_off": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 0",
+              "rx_on": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:powered') == 1"
             }
           },
           "minecraft:collision_box": {
@@ -296,7 +296,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 1",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 1,
@@ -305,7 +305,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 2",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 2",
         "components": {
           "minecraft:redstone_producer": {
             "power": 2,
@@ -314,7 +314,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 3",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 3",
         "components": {
           "minecraft:redstone_producer": {
             "power": 3,
@@ -323,7 +323,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 4",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 4",
         "components": {
           "minecraft:redstone_producer": {
             "power": 4,
@@ -332,7 +332,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 5",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 5",
         "components": {
           "minecraft:redstone_producer": {
             "power": 5,
@@ -341,7 +341,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 6",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 6",
         "components": {
           "minecraft:redstone_producer": {
             "power": 6,
@@ -350,7 +350,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 7",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 7",
         "components": {
           "minecraft:redstone_producer": {
             "power": 7,
@@ -359,7 +359,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 8",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 8",
         "components": {
           "minecraft:redstone_producer": {
             "power": 8,
@@ -368,7 +368,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 9",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 9",
         "components": {
           "minecraft:redstone_producer": {
             "power": 9,
@@ -377,7 +377,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 10",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 10",
         "components": {
           "minecraft:redstone_producer": {
             "power": 10,
@@ -386,7 +386,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 11",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 11",
         "components": {
           "minecraft:redstone_producer": {
             "power": 11,
@@ -395,7 +395,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 12",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 12",
         "components": {
           "minecraft:redstone_producer": {
             "power": 12,
@@ -404,7 +404,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 13",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 13",
         "components": {
           "minecraft:redstone_producer": {
             "power": 13,
@@ -413,7 +413,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 14",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 14",
         "components": {
           "minecraft:redstone_producer": {
             "power": 14,
@@ -422,7 +422,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 0 && q.block_state('levitate:power') == 15",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 0 && q.block_state('bearing:power') == 15",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -431,7 +431,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 1",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 1,
@@ -440,7 +440,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 2",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 2",
         "components": {
           "minecraft:redstone_producer": {
             "power": 2,
@@ -449,7 +449,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 3",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 3",
         "components": {
           "minecraft:redstone_producer": {
             "power": 3,
@@ -458,7 +458,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 4",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 4",
         "components": {
           "minecraft:redstone_producer": {
             "power": 4,
@@ -467,7 +467,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 5",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 5",
         "components": {
           "minecraft:redstone_producer": {
             "power": 5,
@@ -476,7 +476,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 6",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 6",
         "components": {
           "minecraft:redstone_producer": {
             "power": 6,
@@ -485,7 +485,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 7",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 7",
         "components": {
           "minecraft:redstone_producer": {
             "power": 7,
@@ -494,7 +494,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 8",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 8",
         "components": {
           "minecraft:redstone_producer": {
             "power": 8,
@@ -503,7 +503,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 9",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 9",
         "components": {
           "minecraft:redstone_producer": {
             "power": 9,
@@ -512,7 +512,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 10",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 10",
         "components": {
           "minecraft:redstone_producer": {
             "power": 10,
@@ -521,7 +521,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 11",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 11",
         "components": {
           "minecraft:redstone_producer": {
             "power": 11,
@@ -530,7 +530,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 12",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 12",
         "components": {
           "minecraft:redstone_producer": {
             "power": 12,
@@ -539,7 +539,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 13",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 13",
         "components": {
           "minecraft:redstone_producer": {
             "power": 13,
@@ -548,7 +548,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 14",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 14",
         "components": {
           "minecraft:redstone_producer": {
             "power": 14,
@@ -557,7 +557,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 1 && q.block_state('levitate:power') == 15",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 1 && q.block_state('bearing:power') == 15",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -566,7 +566,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 1",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 1,
@@ -575,7 +575,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 2",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 2",
         "components": {
           "minecraft:redstone_producer": {
             "power": 2,
@@ -584,7 +584,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 3",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 3",
         "components": {
           "minecraft:redstone_producer": {
             "power": 3,
@@ -593,7 +593,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 4",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 4",
         "components": {
           "minecraft:redstone_producer": {
             "power": 4,
@@ -602,7 +602,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 5",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 5",
         "components": {
           "minecraft:redstone_producer": {
             "power": 5,
@@ -611,7 +611,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 6",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 6",
         "components": {
           "minecraft:redstone_producer": {
             "power": 6,
@@ -620,7 +620,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 7",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 7",
         "components": {
           "minecraft:redstone_producer": {
             "power": 7,
@@ -629,7 +629,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 8",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 8",
         "components": {
           "minecraft:redstone_producer": {
             "power": 8,
@@ -638,7 +638,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 9",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 9",
         "components": {
           "minecraft:redstone_producer": {
             "power": 9,
@@ -647,7 +647,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 10",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 10",
         "components": {
           "minecraft:redstone_producer": {
             "power": 10,
@@ -656,7 +656,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 11",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 11",
         "components": {
           "minecraft:redstone_producer": {
             "power": 11,
@@ -665,7 +665,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 12",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 12",
         "components": {
           "minecraft:redstone_producer": {
             "power": 12,
@@ -674,7 +674,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 13",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 13",
         "components": {
           "minecraft:redstone_producer": {
             "power": 13,
@@ -683,7 +683,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 14",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 14",
         "components": {
           "minecraft:redstone_producer": {
             "power": 14,
@@ -692,7 +692,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 2 && q.block_state('levitate:power') == 15",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 2 && q.block_state('bearing:power') == 15",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -701,7 +701,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 1",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 1,
@@ -710,7 +710,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 2",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 2",
         "components": {
           "minecraft:redstone_producer": {
             "power": 2,
@@ -719,7 +719,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 3",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 3",
         "components": {
           "minecraft:redstone_producer": {
             "power": 3,
@@ -728,7 +728,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 4",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 4",
         "components": {
           "minecraft:redstone_producer": {
             "power": 4,
@@ -737,7 +737,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 5",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 5",
         "components": {
           "minecraft:redstone_producer": {
             "power": 5,
@@ -746,7 +746,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 6",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 6",
         "components": {
           "minecraft:redstone_producer": {
             "power": 6,
@@ -755,7 +755,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 7",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 7",
         "components": {
           "minecraft:redstone_producer": {
             "power": 7,
@@ -764,7 +764,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 8",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 8",
         "components": {
           "minecraft:redstone_producer": {
             "power": 8,
@@ -773,7 +773,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 9",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 9",
         "components": {
           "minecraft:redstone_producer": {
             "power": 9,
@@ -782,7 +782,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 10",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 10",
         "components": {
           "minecraft:redstone_producer": {
             "power": 10,
@@ -791,7 +791,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 11",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 11",
         "components": {
           "minecraft:redstone_producer": {
             "power": 11,
@@ -800,7 +800,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 12",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 12",
         "components": {
           "minecraft:redstone_producer": {
             "power": 12,
@@ -809,7 +809,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 13",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 13",
         "components": {
           "minecraft:redstone_producer": {
             "power": 13,
@@ -818,7 +818,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 14",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 14",
         "components": {
           "minecraft:redstone_producer": {
             "power": 14,
@@ -827,7 +827,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 3 && q.block_state('levitate:power') == 15",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 3 && q.block_state('bearing:power') == 15",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -836,7 +836,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 1",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 1,
@@ -845,7 +845,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 2",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 2",
         "components": {
           "minecraft:redstone_producer": {
             "power": 2,
@@ -854,7 +854,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 3",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 3",
         "components": {
           "minecraft:redstone_producer": {
             "power": 3,
@@ -863,7 +863,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 4",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 4",
         "components": {
           "minecraft:redstone_producer": {
             "power": 4,
@@ -872,7 +872,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 5",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 5",
         "components": {
           "minecraft:redstone_producer": {
             "power": 5,
@@ -881,7 +881,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 6",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 6",
         "components": {
           "minecraft:redstone_producer": {
             "power": 6,
@@ -890,7 +890,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 7",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 7",
         "components": {
           "minecraft:redstone_producer": {
             "power": 7,
@@ -899,7 +899,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 8",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 8",
         "components": {
           "minecraft:redstone_producer": {
             "power": 8,
@@ -908,7 +908,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 9",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 9",
         "components": {
           "minecraft:redstone_producer": {
             "power": 9,
@@ -917,7 +917,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 10",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 10",
         "components": {
           "minecraft:redstone_producer": {
             "power": 10,
@@ -926,7 +926,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 11",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 11",
         "components": {
           "minecraft:redstone_producer": {
             "power": 11,
@@ -935,7 +935,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 12",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 12",
         "components": {
           "minecraft:redstone_producer": {
             "power": 12,
@@ -944,7 +944,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 13",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 13",
         "components": {
           "minecraft:redstone_producer": {
             "power": 13,
@@ -953,7 +953,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 14",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 14",
         "components": {
           "minecraft:redstone_producer": {
             "power": 14,
@@ -962,7 +962,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 4 && q.block_state('levitate:power') == 15",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 4 && q.block_state('bearing:power') == 15",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -971,7 +971,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 1",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 1,
@@ -980,7 +980,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 2",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 2",
         "components": {
           "minecraft:redstone_producer": {
             "power": 2,
@@ -989,7 +989,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 3",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 3",
         "components": {
           "minecraft:redstone_producer": {
             "power": 3,
@@ -998,7 +998,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 4",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 4",
         "components": {
           "minecraft:redstone_producer": {
             "power": 4,
@@ -1007,7 +1007,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 5",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 5",
         "components": {
           "minecraft:redstone_producer": {
             "power": 5,
@@ -1016,7 +1016,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 6",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 6",
         "components": {
           "minecraft:redstone_producer": {
             "power": 6,
@@ -1025,7 +1025,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 7",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 7",
         "components": {
           "minecraft:redstone_producer": {
             "power": 7,
@@ -1034,7 +1034,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 8",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 8",
         "components": {
           "minecraft:redstone_producer": {
             "power": 8,
@@ -1043,7 +1043,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 9",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 9",
         "components": {
           "minecraft:redstone_producer": {
             "power": 9,
@@ -1052,7 +1052,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 10",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 10",
         "components": {
           "minecraft:redstone_producer": {
             "power": 10,
@@ -1061,7 +1061,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 11",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 11",
         "components": {
           "minecraft:redstone_producer": {
             "power": 11,
@@ -1070,7 +1070,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 12",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 12",
         "components": {
           "minecraft:redstone_producer": {
             "power": 12,
@@ -1079,7 +1079,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 13",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 13",
         "components": {
           "minecraft:redstone_producer": {
             "power": 13,
@@ -1088,7 +1088,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 14",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 14",
         "components": {
           "minecraft:redstone_producer": {
             "power": 14,
@@ -1097,7 +1097,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:receiver') == 1 && q.block_state('levitate:facing') == 5 && q.block_state('levitate:power') == 15",
+        "condition": "q.block_state('bearing:receiver') == 1 && q.block_state('bearing:facing') == 5 && q.block_state('bearing:power') == 15",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,

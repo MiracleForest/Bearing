@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:mechanical_piston_head",
+      "identifier": "bearing:mechanical_piston_head",
       "menu_category": {
         "category": "none"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,7 +15,7 @@
           4,
           5
         ],
-        "levitate:sticky": [
+        "bearing:sticky": [
           0,
           1
         ]
@@ -23,31 +23,31 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.mechanical_piston_head"
+        "identifier": "geometry.bearing.mechanical_piston_head"
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_piston_head_side",
+          "texture": "bearing_piston_head_side",
           "render_method": "alpha_test"
         },
         "head_side": {
-          "texture": "levitate_piston_head_side",
+          "texture": "bearing_piston_head_side",
           "render_method": "alpha_test"
         },
         "inner": {
-          "texture": "levitate_piston_inner",
+          "texture": "bearing_piston_inner",
           "render_method": "alpha_test"
         },
         "front": {
-          "texture": "levitate_piston_front",
+          "texture": "bearing_piston_front",
           "render_method": "alpha_test"
         },
         "pole": {
-          "texture": "levitate_piston_pole",
+          "texture": "bearing_piston_pole",
           "render_method": "alpha_test"
         },
         "pole_end": {
-          "texture": "levitate_piston_pole_end",
+          "texture": "bearing_piston_pole_end",
           "render_method": "alpha_test"
         }
       },
@@ -63,7 +63,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -75,7 +75,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -87,7 +87,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -99,7 +99,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -111,7 +111,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -123,7 +123,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -135,31 +135,31 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:sticky') == 1",
+        "condition": "q.block_state('bearing:sticky') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_piston_head_side",
+              "texture": "bearing_piston_head_side",
               "render_method": "alpha_test"
             },
             "head_side": {
-              "texture": "levitate_piston_head_side",
+              "texture": "bearing_piston_head_side",
               "render_method": "alpha_test"
             },
             "inner": {
-              "texture": "levitate_piston_inner",
+              "texture": "bearing_piston_inner",
               "render_method": "alpha_test"
             },
             "front": {
-              "texture": "levitate_piston_front_sticky",
+              "texture": "bearing_piston_front_sticky",
               "render_method": "alpha_test"
             },
             "pole": {
-              "texture": "levitate_piston_pole",
+              "texture": "bearing_piston_pole",
               "render_method": "alpha_test"
             },
             "pole_end": {
-              "texture": "levitate_piston_pole_end",
+              "texture": "bearing_piston_pole_end",
               "render_method": "alpha_test"
             }
           }

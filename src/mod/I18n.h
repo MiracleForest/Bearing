@@ -8,7 +8,7 @@
 
 class Player;
 
-namespace lv {
+namespace br {
 
 /// Loads `<dir>/<locale>.json` files (flat {"key": "text"} maps merged at build time from
 /// `assets/lang/<locale>/*.json`).
@@ -21,7 +21,7 @@ void loadTranslations(std::filesystem::path const& dir);
 [[nodiscard]] std::string localeOf(Player const& player);
 
 /// Translates and formats with `{}` / `{0}` placeholders, in the default locale.
-///     lv::tr("lv.menu.page", "Page {} of {}", page, pages)
+///     br::tr("br.menu.page", "Page {} of {}", page, pages)
 template <class... Args>
 [[nodiscard]] std::string tr(std::string_view key, std::string_view fallback, Args const&... args) {
     return core::formatMessageArgs(translate(key, fallback), args...);
@@ -33,4 +33,4 @@ template <class... Args>
     return core::formatMessageArgs(translate(key, fallback, localeOf(player)), args...);
 }
 
-} // namespace lv
+} // namespace br

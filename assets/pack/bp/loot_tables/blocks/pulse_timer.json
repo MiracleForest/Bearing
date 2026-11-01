@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:pulse_timer",
+          "name": "bearing:pulse_timer",
           "weight": 1
         }
       ]

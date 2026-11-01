@@ -5,7 +5,7 @@
 
 #include "core/bulk/Bulk.h"
 
-using namespace lv::core::bulk;
+using namespace br::core::bulk;
 
 TEST(Bulk, FanMaxDistance) {
     FanConfig c;

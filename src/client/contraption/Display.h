@@ -2,7 +2,7 @@
 
 // Client mod internals of the contraption unit (not a contract): how a display entity is drawn.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <string>
 #include <utility>
@@ -12,7 +12,7 @@
 
 class Actor;
 
-namespace lv::client::contraption {
+namespace br::client::contraption {
 
 /// How a display entity is drawn at `partialTick` (0..1), from the contraption motion the server
 /// sent. The game draws it on the straight line between its old and new place; `shift` moves it
@@ -34,6 +34,6 @@ struct DisplayPose {
 /// blocks in dimension `dim` that intersect `query`: the local player collides with them.
 void appendCollision(int dim, core::contraption::Box const& query, std::vector<std::pair<core::contraption::Box, std::string>>& out);
 
-} // namespace lv::client::contraption
+} // namespace br::client::contraption
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

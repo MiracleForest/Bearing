@@ -14,7 +14,7 @@
 #include <string>
 #include <string_view>
 
-namespace lv::core::packages {
+namespace br::core::packages {
 
 /// Longer addresses / patterns never glob-match (they still match themselves exactly).
 inline constexpr std::size_t kMaxAddressLength = 256;
@@ -44,4 +44,4 @@ private:
 /// - otherwise either string, used as a glob, must match the other one.
 [[nodiscard]] bool matchAddress(std::string_view boxAddress, std::string_view address);
 
-} // namespace lv::core::packages
+} // namespace br::core::packages

@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:dough",
+      "identifier": "bearing:dough",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_dough",
+      "minecraft:icon": "bearing_dough",
       "minecraft:display_name": {
-        "value": "item.levitate:dough.name"
+        "value": "item.bearing:dough.name"
       },
       "minecraft:max_stack_size": 64
     }

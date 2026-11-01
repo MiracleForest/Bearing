@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:polished_cut_asurine_slab"
+      "identifier": "bearing:polished_cut_asurine_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:polished_cut_asurine"
+        "item": "bearing:polished_cut_asurine"
       }
     },
     "unlock": [
       {
-        "item": "levitate:polished_cut_asurine"
+        "item": "bearing:polished_cut_asurine"
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_asurine_slab",
+      "item": "bearing:polished_cut_asurine_slab",
       "count": 6
     }
   }

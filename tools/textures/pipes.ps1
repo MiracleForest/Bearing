@@ -8,8 +8,8 @@
 #       mechanical_pump_cog,fluid_valve,fluid_valve_shaft,smart_fluid_pipe}.geo.json
 #   assets/pack/bp/blocks/<id>.json for the six blocks and the test tank (the bone visibility
 #   expressions are generated together with the bones).
-#   assets/pack/rp/textures/particle/levitate_fluid.png (the fluid particles, tinted per fluid: four
-#   4x4 bits of a light, mottled surface; levitate:fluid_particle picks one, levitate:fluid_drip the
+#   assets/pack/rp/textures/particle/bearing_fluid.png (the fluid particles, tinted per fluid: four
+#   4x4 bits of a light, mottled surface; bearing:fluid_particle picks one, bearing:fluid_drip the
 #   first).
 #
 # Texture layout (16x16, four 8x8 quarters): TL body side, TR end / ring, BL casing / housing,
@@ -98,7 +98,7 @@ $particleRows = @(
     'abccbabbbccbbabb',
     'bbbaacabbbbaacab'
 )
-Save-PixelArt -Rows $particleRows -Palette @{ a = '#d8d8d8'; b = '#f4f4f4'; c = '#ffffff' } -Path (Join-Path $root 'assets/pack/rp/textures/particle/levitate_fluid.png')
+Save-PixelArt -Rows $particleRows -Palette @{ a = '#d8d8d8'; b = '#f4f4f4'; c = '#ffffff' } -Path (Join-Path $root 'assets/pack/rp/textures/particle/bearing_fluid.png')
 
 # encased pipe: copper casing face (whole texture)
 $encased = @(
@@ -252,7 +252,7 @@ $Faces = @(
     @{ i = 4; n = 'west'; v = @(-1, 0, 0) }, @{ i = 5; n = 'east'; v = @(1, 0, 0) }
 )
 $AxisVec = @(@(1, 0, 0), @(0, 1, 0), @(0, 0, 1))
-function S([string]$n) { return "q.block_state('levitate:$n')" }
+function S([string]$n) { return "q.block_state('bearing:$n')" }
 
 # ---- fluid pipe -------------------------------------------------------------------------------------
 # canonical arm towards +y: from the core (y 12) to the face (y 16)
@@ -292,7 +292,7 @@ function Bracket-Bones([string]$prefix, $straightFor, $vis) {
     return , $out
 }
 $bones += Bracket-Bones '' $straight $vis
-Save-Geo 'geometry.levitate.fluid_pipe' 'fluid_pipe.geo.json' $bones
+Save-Geo 'geometry.bearing.fluid_pipe' 'fluid_pipe.geo.json' $bones
 $pipeVis = $vis
 
 # ---- glass fluid pipe --------------------------------------------------------------------------------
@@ -316,7 +316,7 @@ foreach ($ax in 0, 1, 2) {
     }
 }
 $bones += Bracket-Bones '' $glassAxis $vis
-Save-Geo 'geometry.levitate.glass_fluid_pipe' 'glass_fluid_pipe.geo.json' $bones
+Save-Geo 'geometry.bearing.glass_fluid_pipe' 'glass_fluid_pipe.geo.json' $bones
 $glassVis = $vis
 
 # ---- encased fluid pipe ------------------------------------------------------------------------------
@@ -327,7 +327,7 @@ foreach ($f in $Faces) {
     $bones += Bone "port_$($f.n)" @(Rot (Cube @(-4, 16, -4) @(8, 0.5, 8) 'tr' 'port') $m)
     $vis["port_$($f.n)"] = "$(S $f.n) == 1"
 }
-Save-Geo 'geometry.levitate.encased_fluid_pipe' 'encased_fluid_pipe.geo.json' $bones
+Save-Geo 'geometry.bearing.encased_fluid_pipe' 'encased_fluid_pipe.geo.json' $bones
 $encasedVis = $vis
 
 # ---- mechanical pump ----------------------------------------------------------------------------------
@@ -356,7 +356,7 @@ foreach ($f in $Faces) {
     $vis["pump_$($f.n)"] = "$(S facing) == $($f.i)"
     $vis["cog_$($f.n)"]  = "$(S facing) == $($f.i) && $(S rotor) != 1"
 }
-Save-Geo 'geometry.levitate.mechanical_pump' 'mechanical_pump.geo.json' $bones
+Save-Geo 'geometry.bearing.mechanical_pump' 'mechanical_pump.geo.json' $bones
 $pumpVis = $vis
 # the rotating part for the client mod: the cog around y through the block centre
 $rotorCog = @(
@@ -364,7 +364,7 @@ $rotorCog = @(
     (Cube @(-7, 7, -1.5) @(14, 2, 3) 'br'),
     (Cube @(-1.5, 7, -7) @(3, 2, 14) 'br')
 )
-Save-Geo 'geometry.levitate.mechanical_pump_cog' 'mechanical_pump_cog.geo.json' @(Bone 'rotor' $rotorCog)
+Save-Geo 'geometry.bearing.mechanical_pump_cog' 'mechanical_pump_cog.geo.json' @(Bone 'rotor' $rotorCog)
 
 # ---- fluid valve ----------------------------------------------------------------------------------------
 # canonical: facing +y (handle on top), pipe along x, shaft along z
@@ -398,9 +398,9 @@ foreach ($f in $Faces) {
         $vis["shaft_$tag"]         = "$cond && $(S rotor) != 1"
     }
 }
-Save-Geo 'geometry.levitate.fluid_valve' 'fluid_valve.geo.json' $bones
+Save-Geo 'geometry.bearing.fluid_valve' 'fluid_valve.geo.json' $bones
 $valveVis = $vis
-Save-Geo 'geometry.levitate.fluid_valve_shaft' 'fluid_valve_shaft.geo.json' @(Bone 'rotor' @(Cube @(-2, 0, -2) @(4, 16, 4) 'bl'))
+Save-Geo 'geometry.bearing.fluid_valve_shaft' 'fluid_valve_shaft.geo.json' @(Bone 'rotor' @(Cube @(-2, 0, -2) @(4, 16, 4) 'bl'))
 
 # ---- smart fluid pipe --------------------------------------------------------------------------------
 # filter slot position as Create's SmartPipeFilterSlot (voxels), turned by the facing's angle
@@ -437,7 +437,7 @@ foreach ($face in 0, 1, 2) {
         $vis["smart_$tag"] = "$(S face) == $face && $(S facing) == $fs"
     }
 }
-Save-Geo 'geometry.levitate.smart_fluid_pipe' 'smart_fluid_pipe.geo.json' $bones
+Save-Geo 'geometry.bearing.smart_fluid_pipe' 'smart_fluid_pipe.geo.json' $bones
 $smartVis = $vis
 
 # ---- block definitions ------------------------------------------------------------------------------
@@ -445,7 +445,7 @@ function Box([double[]]$o, [double[]]$s) { return [ordered]@{ origin = $o; size 
 function Range([int]$n) { return @(0..($n - 1)) }
 
 function Save-Block([string]$path, $states, [string]$geo, $vis, $materials, $box, [double]$seconds, [string]$category = 'items', $permutations = @(), [switch]$Hidden, [switch]$Waterlogged) {
-    $desc = [ordered]@{ identifier = "levitate:$path"; menu_category = [ordered]@{ category = $(if ($Hidden) { 'none' } else { $category }) }; states = $states }
+    $desc = [ordered]@{ identifier = "bearing:$path"; menu_category = [ordered]@{ category = $(if ($Hidden) { 'none' } else { $category }) }; states = $states }
     $components = [ordered]@{
         'minecraft:geometry'                = [ordered]@{ identifier = $geo; bone_visibility = $vis }
         'minecraft:material_instances'      = $materials
@@ -469,58 +469,58 @@ function Save-Block([string]$path, $states, [string]$geo, $vis, $materials, $box
 }
 
 function Mat([string]$tex, [string]$method = 'alpha_test') { return [ordered]@{ texture = $tex; render_method = $method } }
-$brackets = [ordered]@{ bracket_wood = (Mat 'levitate_pipe_bracket_wood'); bracket_metal = (Mat 'levitate_pipe_bracket_metal') }
+$brackets = [ordered]@{ bracket_wood = (Mat 'bearing_pipe_bracket_wood'); bracket_metal = (Mat 'bearing_pipe_bracket_metal') }
 $core = Box @(-4, 4, -4) @(8, 8, 8)
 $axisBox = @{ 0 = (Box @(-8, 4, -4) @(16, 8, 8)); 1 = (Box @(-4, 0, -4) @(8, 16, 8)); 2 = (Box @(-4, 4, -8) @(8, 8, 16)) }
 
 # fluid pipe: six connections, rims and the bracket
 $states = [ordered]@{}
-foreach ($f in $Faces) { $states["levitate:$($f.n)"] = @(0, 1) }
-$states['levitate:rim_a'] = Range 8
-$states['levitate:rim_b'] = Range 8
-$states['levitate:bracket'] = Range 3
-$mats = Merge ([ordered]@{ '*' = (Mat 'levitate_fluid_pipe') }) $brackets
+foreach ($f in $Faces) { $states["bearing:$($f.n)"] = @(0, 1) }
+$states['bearing:rim_a'] = Range 8
+$states['bearing:rim_b'] = Range 8
+$states['bearing:bracket'] = Range 3
+$mats = Merge ([ordered]@{ '*' = (Mat 'bearing_fluid_pipe') }) $brackets
 $perms = @()
 foreach ($ax in 0, 1, 2) { $perms += [ordered]@{ condition = $straight[$ax]; components = [ordered]@{ 'minecraft:collision_box' = $axisBox[$ax]; 'minecraft:selection_box' = $axisBox[$ax] } } }
-Save-Block 'fluid_pipe' $states 'geometry.levitate.fluid_pipe' $pipeVis $mats $core 0.5 'items' $perms -Waterlogged
+Save-Block 'fluid_pipe' $states 'geometry.bearing.fluid_pipe' $pipeVis $mats $core 0.5 'items' $perms -Waterlogged
 
 # glass fluid pipe (no item of its own: it drops a fluid pipe)
-$states = [ordered]@{ 'levitate:axis' = (Range 3); 'levitate:fluid' = (Range 8); 'levitate:bracket' = (Range 3) }
-$mats = [ordered]@{ '*' = (Mat 'levitate_glass_fluid_pipe' 'blend'); copper = (Mat 'levitate_fluid_pipe' 'blend'); bracket_wood = (Mat 'levitate_pipe_bracket_wood' 'blend'); bracket_metal = (Mat 'levitate_pipe_bracket_metal' 'blend') }
-for ($s = 1; $s -lt $slots.Count; $s++) { $mats["fluid_$($slots[$s])"] = Mat "levitate_pipe_fluid_$($slots[$s])" 'blend' }
+$states = [ordered]@{ 'bearing:axis' = (Range 3); 'bearing:fluid' = (Range 8); 'bearing:bracket' = (Range 3) }
+$mats = [ordered]@{ '*' = (Mat 'bearing_glass_fluid_pipe' 'blend'); copper = (Mat 'bearing_fluid_pipe' 'blend'); bracket_wood = (Mat 'bearing_pipe_bracket_wood' 'blend'); bracket_metal = (Mat 'bearing_pipe_bracket_metal' 'blend') }
+for ($s = 1; $s -lt $slots.Count; $s++) { $mats["fluid_$($slots[$s])"] = Mat "bearing_pipe_fluid_$($slots[$s])" 'blend' }
 $perms = @()
 foreach ($ax in 0, 1, 2) { $perms += [ordered]@{ condition = $glassAxis[$ax]; components = [ordered]@{ 'minecraft:collision_box' = $axisBox[$ax]; 'minecraft:selection_box' = $axisBox[$ax] } } }
-Save-Block 'glass_fluid_pipe' $states 'geometry.levitate.glass_fluid_pipe' $glassVis $mats $axisBox[1] 0.5 'items' $perms -Hidden -Waterlogged
+Save-Block 'glass_fluid_pipe' $states 'geometry.bearing.glass_fluid_pipe' $glassVis $mats $axisBox[1] 0.5 'items' $perms -Hidden -Waterlogged
 
 # encased fluid pipe
 $states = [ordered]@{}
-foreach ($f in $Faces) { $states["levitate:$($f.n)"] = @(0, 1) }
-$mats = [ordered]@{ '*' = (Mat 'levitate_encased_fluid_pipe' 'opaque'); port = (Mat 'levitate_fluid_pipe' 'opaque') }
-Save-Block 'encased_fluid_pipe' $states 'geometry.levitate.encased_fluid_pipe' $encasedVis $mats (Box @(-8, 0, -8) @(16, 16, 16)) 1.5 'items' @() -Hidden
+foreach ($f in $Faces) { $states["bearing:$($f.n)"] = @(0, 1) }
+$mats = [ordered]@{ '*' = (Mat 'bearing_encased_fluid_pipe' 'opaque'); port = (Mat 'bearing_fluid_pipe' 'opaque') }
+Save-Block 'encased_fluid_pipe' $states 'geometry.bearing.encased_fluid_pipe' $encasedVis $mats (Box @(-8, 0, -8) @(16, 16, 16)) 1.5 'items' @() -Hidden
 
 # mechanical pump
-$states = [ordered]@{ 'levitate:facing' = (Range 6); 'levitate:rotor' = (Range 3) }
-$mats = [ordered]@{ '*' = (Mat 'levitate_mechanical_pump') }
-Save-Block 'mechanical_pump' $states 'geometry.levitate.mechanical_pump' $pumpVis $mats (Box @(-6, 2, -6) @(12, 12, 12)) 1.5 -Waterlogged
+$states = [ordered]@{ 'bearing:facing' = (Range 6); 'bearing:rotor' = (Range 3) }
+$mats = [ordered]@{ '*' = (Mat 'bearing_mechanical_pump') }
+Save-Block 'mechanical_pump' $states 'geometry.bearing.mechanical_pump' $pumpVis $mats (Box @(-6, 2, -6) @(12, 12, 12)) 1.5 -Waterlogged
 
 # fluid valve
-$states = [ordered]@{ 'levitate:facing' = (Range 6); 'levitate:along_first' = @(0, 1); 'levitate:enabled' = @(0, 1); 'levitate:rotor' = (Range 3) }
-$mats = [ordered]@{ '*' = (Mat 'levitate_fluid_valve') }
-Save-Block 'fluid_valve' $states 'geometry.levitate.fluid_valve' $valveVis $mats (Box @(-5, 3, -5) @(10, 10, 10)) 1.5 -Waterlogged
+$states = [ordered]@{ 'bearing:facing' = (Range 6); 'bearing:along_first' = @(0, 1); 'bearing:enabled' = @(0, 1); 'bearing:rotor' = (Range 3) }
+$mats = [ordered]@{ '*' = (Mat 'bearing_fluid_valve') }
+Save-Block 'fluid_valve' $states 'geometry.bearing.fluid_valve' $valveVis $mats (Box @(-5, 3, -5) @(10, 10, 10)) 1.5 -Waterlogged
 
 # smart fluid pipe
-$states = [ordered]@{ 'levitate:face' = (Range 3); 'levitate:facing' = (Range 4) }
-$mats = [ordered]@{ '*' = (Mat 'levitate_smart_fluid_pipe') }
-Save-Block 'smart_fluid_pipe' $states 'geometry.levitate.smart_fluid_pipe' $smartVis $mats (Box @(-5, 3, -5) @(10, 10, 10)) 1.5 -Waterlogged
+$states = [ordered]@{ 'bearing:face' = (Range 3); 'bearing:facing' = (Range 4) }
+$mats = [ordered]@{ '*' = (Mat 'bearing_smart_fluid_pipe') }
+Save-Block 'smart_fluid_pipe' $states 'geometry.bearing.smart_fluid_pipe' $smartVis $mats (Box @(-5, 3, -5) @(10, 10, 10)) 1.5 -Waterlogged
 
 # the selftests' tank (full cube, not in the creative menu)
 $tank = [ordered]@{
     format_version    = '1.21.70'
     'minecraft:block' = [ordered]@{
-        description = [ordered]@{ identifier = 'levitate:pipes_test_tank'; menu_category = [ordered]@{ category = 'none' } }
+        description = [ordered]@{ identifier = 'bearing:pipes_test_tank'; menu_category = [ordered]@{ category = 'none' } }
         components  = [ordered]@{
             'minecraft:geometry'                  = 'minecraft:geometry.full_block'
-            'minecraft:material_instances'        = [ordered]@{ '*' = (Mat 'levitate_pipes_test_tank' 'opaque') }
+            'minecraft:material_instances'        = [ordered]@{ '*' = (Mat 'bearing_pipes_test_tank' 'opaque') }
             'minecraft:destructible_by_mining'    = [ordered]@{ seconds_to_destroy = 1 }
             'minecraft:destructible_by_explosion' = [ordered]@{ explosion_resistance = 6 }
             'minecraft:loot'                      = 'loot_tables/blocks/pipes_test_tank.json'

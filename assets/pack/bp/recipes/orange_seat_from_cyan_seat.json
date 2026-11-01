@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:orange_seat_from_cyan_seat"
+      "identifier": "bearing:orange_seat_from_cyan_seat"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:cyan_seat"
+        "item": "bearing:cyan_seat"
       },
       {
         "item": "minecraft:orange_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:cyan_seat"
+        "item": "bearing:cyan_seat"
       }
     ],
     "result": {
-      "item": "levitate:orange_seat"
+      "item": "bearing:orange_seat"
     }
   }
 }

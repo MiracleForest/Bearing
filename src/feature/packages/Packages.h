@@ -9,9 +9,9 @@
 //     if (packages::matchAddress(packages::addressOf(box), "Stor*")) ...
 //     for (auto const& port : packages::postboxesForStation(stationPos)) { ... }   // U27
 //
-// Packages are the Create box items (`levitate:cardboard_package_<w>x<h>`, the ten rare
+// Packages are the Create box items (`bearing:cardboard_package_<w>x<h>`, the ten rare
 // styles); their address, 9 content slots and order data live in the item's user data
-// (`lv:package`). Everything here mirrors Create 6.0.10's PackageItem / PackagerBlockEntity /
+// (`br:package`). Everything here mirrors Create 6.0.10's PackageItem / PackagerBlockEntity /
 // PackagePortBlockEntity behaviour.
 
 #include <array>
@@ -33,19 +33,19 @@ class BlockSource;
 class Player;
 class BlockPos;
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 using Json = nlohmann::json;
 using core::GlobalPos;
 
 // ---- ids -------------------------------------------------------------------------------------------
-inline constexpr char const* kPackagerId      = "levitate:packager";
-inline constexpr char const* kRepackagerId    = "levitate:repackager";
-inline constexpr char const* kFrogportId      = "levitate:package_frogport";
-inline constexpr char const* kChainConveyorId = "levitate:chain_conveyor";
-inline constexpr char const* kPackageFilterId = "levitate:package_filter";
+inline constexpr char const* kPackagerId      = "bearing:packager";
+inline constexpr char const* kRepackagerId    = "bearing:repackager";
+inline constexpr char const* kFrogportId      = "bearing:package_frogport";
+inline constexpr char const* kChainConveyorId = "bearing:chain_conveyor";
+inline constexpr char const* kPackageFilterId = "bearing:package_filter";
 /// The train station a postbox can target (U27's block, referenced by id).
-inline constexpr char const* kStationId = "levitate:track_station";
+inline constexpr char const* kStationId = "bearing:track_station";
 /// Slots of a package (Create's PackageItem.SLOTS) and of a frogport / postbox.
 inline constexpr int kPackageSlots = 9;
 inline constexpr int kPortSlots    = 18;
@@ -55,7 +55,7 @@ inline constexpr int kAddressMaxLength = 25;
 
 /// Every package item id (4 cardboard sizes, then the 10 rare styles).
 [[nodiscard]] std::vector<std::string> const& packageIds();
-/// The 16 postbox ids (`levitate:<colour>_postbox`).
+/// The 16 postbox ids (`bearing:<colour>_postbox`).
 [[nodiscard]] std::vector<std::string> const& postboxIds();
 [[nodiscard]] bool isPostboxId(std::string_view id);
 
@@ -76,7 +76,7 @@ void                      clearAddress(ItemStack& stack);
 /// Create's PackageItem.containing: a random box style (1 in 7500 rare) holding `stacks`
 /// (inserted stacked into 9 slots; what does not fit is lost, callers pass at most 9 slots).
 [[nodiscard]] ItemStack containing(std::vector<ItemStack> const& stacks);
-/// The first box style (`levitate:cardboard_package_12x12`), empty.
+/// The first box style (`bearing:cardboard_package_12x12`), empty.
 [[nodiscard]] ItemStack defaultBox();
 /// Whether an item may go into a package (Create's canFitInsideContainerItems: not a package,
 /// a shulker box, a bundle, a toolbox, or a minecart contraption unless `minecartContraptionInContainers`).
@@ -184,4 +184,4 @@ void hideVanillaItems(std::string const& prefix, std::set<std::string> const& ke
 /// Items with keys starting with `prefix` (selftests).
 [[nodiscard]] std::size_t vanillaItemCount(std::string const& prefix);
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

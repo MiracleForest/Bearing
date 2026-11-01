@@ -4,7 +4,7 @@
 #
 # desk_bell.wav  1.2 s: a reception bell struck once: a short metallic click, then a bright bell
 #                tone (inharmonic partials of a small dome bell) ringing out.
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

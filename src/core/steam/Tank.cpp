@@ -5,7 +5,7 @@
 #include <cmath>
 #include <deque>
 
-namespace lv::core::steam {
+namespace br::core::steam {
 
 namespace {
 
@@ -345,4 +345,4 @@ double fillState(std::int64_t amount, std::int64_t capacity) {
     return std::clamp(static_cast<double>(amount) / static_cast<double>(capacity), 0.0, 1.0);
 }
 
-} // namespace lv::core::steam
+} // namespace br::core::steam

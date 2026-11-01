@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace lv::core::steam {
+namespace br::core::steam {
 
 int whistlePitch(std::function<std::optional<ExtensionShape>(int)> const& above) {
     int newPitch = 0;
@@ -55,4 +55,4 @@ ExtensionShape connectedShape(ExtensionShape current, bool extensionAbove) {
     return current;
 }
 
-} // namespace lv::core::steam
+} // namespace br::core::steam

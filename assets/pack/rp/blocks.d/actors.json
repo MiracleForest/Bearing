@@ -1,65 +1,65 @@
 {
-  "levitate:mechanical_harvester": {
+  "bearing:mechanical_harvester": {
     "sound": "metal"
   },
-  "levitate:mechanical_plough": {
+  "bearing:mechanical_plough": {
     "sound": "metal"
   },
-  "levitate:mechanical_roller": {
+  "bearing:mechanical_roller": {
     "sound": "metal"
   },
-  "levitate:portable_storage_interface": {
+  "bearing:portable_storage_interface": {
     "sound": "metal"
   },
-  "levitate:contraption_controls": {
+  "bearing:contraption_controls": {
     "sound": "metal"
   },
-  "levitate:white_seat": {
+  "bearing:white_seat": {
     "sound": "cloth"
   },
-  "levitate:orange_seat": {
+  "bearing:orange_seat": {
     "sound": "cloth"
   },
-  "levitate:magenta_seat": {
+  "bearing:magenta_seat": {
     "sound": "cloth"
   },
-  "levitate:light_blue_seat": {
+  "bearing:light_blue_seat": {
     "sound": "cloth"
   },
-  "levitate:yellow_seat": {
+  "bearing:yellow_seat": {
     "sound": "cloth"
   },
-  "levitate:lime_seat": {
+  "bearing:lime_seat": {
     "sound": "cloth"
   },
-  "levitate:pink_seat": {
+  "bearing:pink_seat": {
     "sound": "cloth"
   },
-  "levitate:gray_seat": {
+  "bearing:gray_seat": {
     "sound": "cloth"
   },
-  "levitate:light_gray_seat": {
+  "bearing:light_gray_seat": {
     "sound": "cloth"
   },
-  "levitate:cyan_seat": {
+  "bearing:cyan_seat": {
     "sound": "cloth"
   },
-  "levitate:purple_seat": {
+  "bearing:purple_seat": {
     "sound": "cloth"
   },
-  "levitate:blue_seat": {
+  "bearing:blue_seat": {
     "sound": "cloth"
   },
-  "levitate:brown_seat": {
+  "bearing:brown_seat": {
     "sound": "cloth"
   },
-  "levitate:green_seat": {
+  "bearing:green_seat": {
     "sound": "cloth"
   },
-  "levitate:red_seat": {
+  "bearing:red_seat": {
     "sound": "cloth"
   },
-  "levitate:black_seat": {
+  "bearing:black_seat": {
     "sound": "cloth"
   }
 }

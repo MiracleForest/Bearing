@@ -1,38 +1,38 @@
 {
-  "levitate:redstone_link": {
+  "bearing:redstone_link": {
     "sound": "wood"
   },
-  "levitate:analog_lever": {
+  "bearing:analog_lever": {
     "sound": "wood"
   },
-  "levitate:pulse_repeater": {
+  "bearing:pulse_repeater": {
     "sound": "stone"
   },
-  "levitate:pulse_extender": {
+  "bearing:pulse_extender": {
     "sound": "stone"
   },
-  "levitate:pulse_timer": {
+  "bearing:pulse_timer": {
     "sound": "stone"
   },
-  "levitate:powered_latch": {
+  "bearing:powered_latch": {
     "sound": "stone"
   },
-  "levitate:powered_toggle_latch": {
+  "bearing:powered_toggle_latch": {
     "sound": "stone"
   },
-  "levitate:content_observer": {
+  "bearing:content_observer": {
     "sound": "stone"
   },
-  "levitate:stockpile_switch": {
+  "bearing:stockpile_switch": {
     "sound": "stone"
   },
-  "levitate:redstone_contact": {
+  "bearing:redstone_contact": {
     "sound": "stone"
   },
-  "levitate:desk_bell": {
+  "bearing:desk_bell": {
     "sound": "stone"
   },
-  "levitate:rose_quartz_lamp": {
+  "bearing:rose_quartz_lamp": {
     "sound": "glass"
   }
 }

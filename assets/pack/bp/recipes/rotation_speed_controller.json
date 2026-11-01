@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:rotation_speed_controller"
+      "identifier": "bearing:rotation_speed_controller"
     },
     "tags": [
       "crafting_table"
@@ -13,19 +13,19 @@
     ],
     "key": {
       "B": {
-        "item": "levitate:precision_mechanism"
+        "item": "bearing:precision_mechanism"
       },
       "C": {
-        "item": "levitate:brass_casing"
+        "item": "bearing:brass_casing"
       }
     },
     "unlock": [
       {
-        "item": "levitate:precision_mechanism"
+        "item": "bearing:precision_mechanism"
       }
     ],
     "result": {
-      "item": "levitate:rotation_speed_controller",
+      "item": "bearing:rotation_speed_controller",
       "count": 1
     }
   }

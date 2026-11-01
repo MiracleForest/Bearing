@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.pulse_extender_north",
+        "identifier": "geometry.bearing.pulse_extender_north",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -439,7 +439,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.pulse_extender_south",
+        "identifier": "geometry.bearing.pulse_extender_south",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -875,7 +875,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.pulse_extender_west",
+        "identifier": "geometry.bearing.pulse_extender_west",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,
@@ -1311,7 +1311,7 @@
     },
     {
       "description": {
-        "identifier": "geometry.levitate.pulse_extender_east",
+        "identifier": "geometry.bearing.pulse_extender_east",
         "texture_width": 64,
         "texture_height": 32,
         "visible_bounds_width": 2,

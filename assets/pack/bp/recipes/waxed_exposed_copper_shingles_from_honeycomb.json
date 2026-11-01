@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:waxed_exposed_copper_shingles_from_honeycomb"
+      "identifier": "bearing:waxed_exposed_copper_shingles_from_honeycomb"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:exposed_copper_shingles"
+        "item": "bearing:exposed_copper_shingles"
       },
       {
         "item": "minecraft:honeycomb"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:exposed_copper_shingles"
+        "item": "bearing:exposed_copper_shingles"
       }
     ],
     "result": {
-      "item": "levitate:waxed_exposed_copper_shingles",
+      "item": "bearing:waxed_exposed_copper_shingles",
       "count": 1
     }
   }

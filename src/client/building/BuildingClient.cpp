@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the building unit (client mod only):
 //
@@ -75,7 +75,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::building {
+namespace br::client::building {
 
 namespace fb = feature::building;
 using Json   = nlohmann::json;
@@ -345,7 +345,7 @@ std::vector<Quad> barsQuads(int f, glm::vec4 uv) {
 /// ceiling panels, a side otherwise, as CopycatBarsModel).
 glm::vec4 barsUv(Block const& material, bool vertical) {
     std::string const& id = material.getTypeName();
-    if (id.starts_with("levitate:")) return atlasUv("levitate_" + id.substr(9));
+    if (id.starts_with("bearing:")) return atlasUv("bearing_" + id.substr(8));
     if (auto uv = faceUv(material, vertical ? 1 : 2)) return *uv;
     return atlasUv("iron_bars");
 }
@@ -359,9 +359,9 @@ void drawCopycat(Drawer& d, BlockSource& region, BlockPos const& p, Block const&
     if (!material) {
         mesh = cachedMesh("own|" + ptrKey(&block), [&] { return quadsOf(tess, block); }, tess);
     } else {
-        int  f     = std::clamp(game::intState(block, "levitate:facing").value_or(1), 0, 5);
+        int  f     = std::clamp(game::intState(block, "bearing:facing").value_or(1), 0, 5);
         bool panel = info.kind == fb::Kind::CopycatPanel;
-        bool upper = game::intState(block, "levitate:top").value_or(0) != 0;
+        bool upper = game::intState(block, "bearing:top").value_or(0) != 0;
         if (!panel && f < 2) f = 2;
         // faces that may be occluded (Create's canFaceBeOccluded): the panel's back, the step's own
         // half side and its facing
@@ -392,11 +392,11 @@ void drawCopycat(Drawer& d, BlockSource& region, BlockPos const& p, Block const&
 }
 
 void drawBracket(Drawer& d, BlockSource& region, BlockPos const& p, Json const& br) {
-    auto        id     = br.value("id", std::string("levitate:metal_bracket"));
+    auto        id     = br.value("id", std::string("bearing:metal_bracket"));
     int         facing = std::clamp(br.value("facing", 1), 0, 5);
     int         axis   = std::clamp(br.value("axis", 1), 0, 2);
     bool        cog    = br.value("cog", false);
-    auto const* block  = game::blockWith(id, {{"levitate:mounted", 1}, {"levitate:facing", facing}, {"levitate:axis", axis}, {"levitate:cog", cog ? 1 : 0}});
+    auto const* block  = game::blockWith(id, {{"bearing:mounted", 1}, {"bearing:facing", facing}, {"bearing:axis", axis}, {"bearing:cog", cog ? 1 : 0}});
     if (!block) return;
     auto& tess = d.tessellator();
     auto* mesh = cachedMesh("br|" + ptrKey(block), [&] { return quadsOf(tess, *block); }, tess);
@@ -426,13 +426,13 @@ float doorValue(BlockPos const& p, bool open, double now) {
 int quarterOf(int f) { return f == 2 ? 0 : f == 5 ? 1 : f == 3 ? 2 : 3; }
 
 void drawDoor(Drawer& d, BlockSource& region, BlockPos const& p, Block const& block, fb::Info const& info, double now) {
-    int  facing = game::intState(block, "levitate:facing").value_or(2);
+    int  facing = game::intState(block, "bearing:facing").value_or(2);
     if (facing < 2) facing = 2;
-    int  hinge  = game::intState(block, "levitate:hinge").value_or(0);
-    int  upper  = game::intState(block, "levitate:upper").value_or(0);
-    bool open   = game::intState(block, "levitate:open").value_or(0) != 0;
+    int  hinge  = game::intState(block, "bearing:hinge").value_or(0);
+    int  upper  = game::intState(block, "bearing:upper").value_or(0);
+    bool open   = game::intState(block, "bearing:open").value_or(0) != 0;
     // the closed panel as seen facing north; turned onto the facing below
-    auto const* closed = game::blockWith(info.id, {{"levitate:facing", 2}, {"levitate:upper", upper}, {"levitate:hinge", hinge}});
+    auto const* closed = game::blockWith(info.id, {{"bearing:facing", 2}, {"bearing:upper", upper}, {"bearing:hinge", hinge}});
     if (!closed) return;
     float value = doorValue(p, open, now);
     float eased = value * value;
@@ -492,23 +492,23 @@ std::optional<CtSpec> ctSpecOf(Block const& b) {
     std::string const& id = b.getTypeName();
     if (auto const* info = fb::infoOf(b)) {
         switch (info->kind) {
-        case fb::Kind::Casing: return CtSpec{0x3f, "levitate_" + id.substr(9) + "_0", 2.f, false};
+        case fb::Kind::Casing: return CtSpec{0x3f, "bearing_" + id.substr(8) + "_0", 2.f, false};
         case fb::Kind::CtGlass:
-            if (info->ct == fb::Ct::Omni) return CtSpec{0x3f, "levitate_framed_glass_0", 1.f, false};
-            if (info->ct == fb::Ct::Horizontal) return CtSpec{0x03, "levitate_framed_glass_0", 1.f, false};
+            if (info->ct == fb::Ct::Omni) return CtSpec{0x3f, "bearing_framed_glass_0", 1.f, false};
+            if (info->ct == fb::Ct::Horizontal) return CtSpec{0x03, "bearing_framed_glass_0", 1.f, false};
             return std::nullopt;
         case fb::Kind::Pane:
-            if (info->ct == fb::Ct::Omni) return CtSpec{0x3c, "levitate_framed_glass_0", 1.f, true};
+            if (info->ct == fb::Ct::Omni) return CtSpec{0x3c, "bearing_framed_glass_0", 1.f, true};
             return std::nullopt;
         default: return std::nullopt;
         }
     }
-    if (id.rfind("levitate:layered_", 0) == 0) return CtSpec{0x03, "levitate_" + id.substr(17) + "_cap_0", 1.f, false};
-    if (id.rfind("levitate:", 0) == 0 && id.ends_with("_pillar") && game::intState(b, "levitate:c_up")) {
+    if (id.rfind("bearing:layered_", 0) == 0) return CtSpec{0x03, "bearing_" + id.substr(16) + "_cap_0", 1.f, false};
+    if (id.rfind("bearing:", 0) == 0 && id.ends_with("_pillar") && game::intState(b, "bearing:c_up")) {
         auto const& nbt = *b.mSerializationId;
         auto face = nbt.contains("states") && nbt["states"].contains("minecraft:block_face") ? std::string(nbt["states"]["minecraft:block_face"].get<StringTag>()) : std::string("up");
         int  mask = (face == "north" || face == "south") ? 0x0c : (face == "east" || face == "west") ? 0x30 : 0x03;
-        return CtSpec{mask, "levitate_" + id.substr(9, id.size() - 9 - 7) + "_cap_0", 1.f, false};
+        return CtSpec{mask, "bearing_" + id.substr(8, id.size() - 8 - 7) + "_cap_0", 1.f, false};
     }
     return std::nullopt;
 }
@@ -517,7 +517,7 @@ std::optional<CtSpec> ctSpecOf(Block const& b) {
 std::vector<Quad> notchQuads(BlockSource& region, BlockPos const& p, Block const& block, CtSpec const& spec, int face) {
     std::vector<Quad> out;
     int const* e = kFaceEdges[face];
-    auto conn = [&](int dir) { return game::intState(block, std::string("levitate:c_") + kDirNames[dir]).value_or(0) != 0; };
+    auto conn = [&](int dir) { return game::intState(block, std::string("bearing:c_") + kDirNames[dir]).value_or(0) != 0; };
     glm::vec3 n = dirVec(face), up = dirVec(e[0]), right = dirVec(e[1]);
     float     plane = .5f + .001f;
     if (spec.pane) plane = 1.f / 16.f + .001f; // the pane's faces are 2 px apart
@@ -584,7 +584,7 @@ void renderHelperGhost(BaseActorRenderContext& ctx, LocalPlayer& player, double 
     ItemStack const& held = player.getSelectedItem();
     if (held.isNull()) return;
     std::string heldId = held.getTypeName();
-    if (heldId != "levitate:copycat_panel" && heldId != "levitate:copycat_step") return;
+    if (heldId != "bearing:copycat_panel" && heldId != "bearing:copycat_step") return;
     auto const& hit = player.getLevel().getHitResult();
     if (hit.mType != HitResultType::Tile) return;
     auto&        region = player.getDimensionBlockSource();
@@ -593,7 +593,7 @@ void renderHelperGhost(BaseActorRenderContext& ctx, LocalPlayer& player, double 
     core::GlobalPos at{static_cast<int>(player.getDimensionId()), hit.mBlock.x, hit.mBlock.y, hit.mBlock.z};
     // CEquipment.placementAssistRange, +4 with the extendo grip (as the server)
     auto const& off0  = player.getOffhandSlot();
-    int         range = feature::equipment::placementAssistRange() + (!off0.isNull() && off0.getTypeName() == "levitate:extendo_grip" ? 4 : 0);
+    int         range = feature::equipment::placementAssistRange() + (!off0.isNull() && off0.getTypeName() == "bearing:extendo_grip" ? 4 : 0);
     auto off = fb::copycatHelperOffset(region, at, b, heldId, hit.mPos.x - hit.mBlock.x, hit.mPos.y - hit.mBlock.y, hit.mPos.z - hit.mBlock.z, range);
     if (!off || !off->block) return;
     Drawer d(ctx);
@@ -708,7 +708,7 @@ void renderBuilding(BaseActorRenderContext& ctx) {
     for (auto const& [p, v] : s.visuals) {
         if (v.bracket.is_null() || !region.hasChunksAt(p, 0, false)) continue;
         std::string const& id = region.getBlock(p).getTypeName();
-        if (id != "levitate:shaft" && id != "levitate:cogwheel" && id != "levitate:large_cogwheel") continue;
+        if (id != "bearing:shaft" && id != "bearing:cogwheel" && id != "bearing:large_cogwheel") continue;
         drawBracket(d, region, p, v.bracket);
         ++drawn;
     }
@@ -726,7 +726,7 @@ void renderBuilding(BaseActorRenderContext& ctx) {
 
 } // namespace
 
-// Chunk meshes: copycats and sliding doors are drawn by us while the server runs Levitate; the
+// Chunk meshes: copycats and sliding doors are drawn by us while the server runs Bearing; the
 // positions of connected-texture blocks and of bracketable shafts are noted.
 LL_STATIC_HOOK(
     BuildingExtractHook,
@@ -746,7 +746,7 @@ LL_STATIC_HOOK(
 ) {
     if (visualReference == ClientBlockPipeline::VisualReference::Block && feature::net::client::connected()) {
         std::string const& id = block.getTypeName();
-        if (id.size() > 9 && id.compare(0, 9, "levitate:") == 0) {
+        if (id.size() > 8 && id.compare(0, 8, "bearing:") == 0) {
             BlockPos const& rel = iterData.relativePos;
             BlockPos        pos{chunkMinPos.x + rel.x, chunkMinPos.y + rel.y, chunkMinPos.z + rel.z};
             auto&           s    = state();
@@ -760,7 +760,7 @@ LL_STATIC_HOOK(
                 }
                 return std::nullopt;
             }
-            if (id == "levitate:shaft" || id == "levitate:cogwheel" || id == "levitate:large_cogwheel") {
+            if (id == "bearing:shaft" || id == "bearing:cogwheel" || id == "bearing:large_cogwheel") {
                 std::lock_guard lock(s.mutex);
                 s.wanted.insert({pos.x >> 4, pos.z >> 4});
             } else if (ctSpecOf(block)) {
@@ -829,8 +829,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::building
+} // namespace br::client::building
 
-LV_REGISTER_MODULE(lv::client::building::BuildingClientModule);
+BR_REGISTER_MODULE(br::client::building::BuildingClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

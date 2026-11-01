@@ -2,10 +2,10 @@
   "id": "belt_transport",
   "size": [5, 5],
   "blocks": [
-    {"at": [0, 1, 1], "id": "levitate:creative_motor", "states": {"levitate:facing": 3}},
-    {"at": [0, 1, 2], "id": "levitate:belt", "states": {"levitate:part": 0, "levitate:facing": 3, "levitate:slope": 0}},
-    {"area": [[1, 1, 2], [3, 1, 2]], "id": "levitate:belt", "states": {"levitate:part": 1, "levitate:facing": 3, "levitate:slope": 0}},
-    {"at": [4, 1, 2], "id": "levitate:belt", "states": {"levitate:part": 2, "levitate:facing": 3, "levitate:slope": 0}}
+    {"at": [0, 1, 1], "id": "bearing:creative_motor", "states": {"bearing:facing": 3}},
+    {"at": [0, 1, 2], "id": "bearing:belt", "states": {"bearing:part": 0, "bearing:facing": 3, "bearing:slope": 0}},
+    {"area": [[1, 1, 2], [3, 1, 2]], "id": "bearing:belt", "states": {"bearing:part": 1, "bearing:facing": 3, "bearing:slope": 0}},
+    {"at": [4, 1, 2], "id": "bearing:belt", "states": {"bearing:part": 2, "bearing:facing": 3, "bearing:slope": 0}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

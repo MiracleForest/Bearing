@@ -207,7 +207,7 @@ $basin = @(
     (Bone 'spout_west' @((Cube @(8, 9, -2) @(2, 3, 4) @{ up = $in }))),
     (Bone 'spout_east' @((Cube @(-10, 9, -2) @(2, 3, 4) @{ up = $in })))
 )
-Save-Geo 'geometry.levitate.basin' $basin 'basin.geo.json'
+Save-Geo 'geometry.bearing.basin' $basin 'basin.geo.json'
 
 # mechanical press (shaft along model x): casing, shaft, head
 $press = @(
@@ -221,9 +221,9 @@ $press = @(
         (Cube @(-6, 0, -6) @(12, 2, 12) @{ north = 'head'; south = 'head'; east = 'head'; west = 'head'; up = 'head'; down = 'head' })
     ))
 )
-Save-Geo 'geometry.levitate.mechanical_press' $press 'mechanical_press.geo.json'
+Save-Geo 'geometry.bearing.mechanical_press' $press 'mechanical_press.geo.json'
 # the rotating shaft for the client mod, modelled around Y
-Save-Geo 'geometry.levitate.mechanical_press_rotor' @(
+Save-Geo 'geometry.bearing.mechanical_press_rotor' @(
     (Bone 'rotor' @((Cube @(-2, -0.5, -2) @(4, 17, 4) @{ north = 'shaft'; south = 'shaft'; east = 'shaft'; west = 'shaft'; up = 'shaft'; down = 'shaft' })))
 ) 'mechanical_press_rotor.geo.json'
 
@@ -245,10 +245,10 @@ $mixer = @(
     (Bone 'cog' $cogCubes),
     (Bone 'whisk' $whiskCubes)
 )
-Save-Geo 'geometry.levitate.mechanical_mixer' $mixer 'mechanical_mixer.geo.json'
-Save-Geo 'geometry.levitate.mechanical_mixer_rotor' @((Bone 'rotor' $cogCubes)) 'mechanical_mixer_rotor.geo.json'
+Save-Geo 'geometry.bearing.mechanical_mixer' $mixer 'mechanical_mixer.geo.json'
+Save-Geo 'geometry.bearing.mechanical_mixer_rotor' @((Bone 'rotor' $cogCubes)) 'mechanical_mixer_rotor.geo.json'
 # the moving parts drawn by the client mod (one texture per bone)
-Save-Geo 'geometry.levitate.mechanical_mixer_whisk' @((Bone 'pole' @($whiskCubes[0])), (Bone 'whisk' @($whiskCubes[1]))) 'mechanical_mixer_whisk.geo.json'
+Save-Geo 'geometry.bearing.mechanical_mixer_whisk' @((Bone 'pole' @($whiskCubes[0])), (Bone 'whisk' @($whiskCubes[1]))) 'mechanical_mixer_whisk.geo.json'
 
 # blaze burner: base plate, cage, blaze head (face towards model north = the block's facing), flames
 $headFaces = @{ north = 'face'; south = 'head'; east = 'head'; west = 'head'; up = 'head'; down = 'head' }
@@ -267,8 +267,8 @@ $burner = @(
         [ordered]@{ origin = @(0, 2, -6); size = @(0, 12, 12); uv = [ordered]@{ east = [ordered]@{ uv = @(2, 2); uv_size = @(12, 12); material_instance = 'flame' }; west = [ordered]@{ uv = @(2, 2); uv_size = @(12, 12); material_instance = 'flame' } } }
     ))
 )
-Save-Geo 'geometry.levitate.blaze_burner' $burner 'blaze_burner.geo.json'
-Save-Geo 'geometry.levitate.blaze_burner_head' @(
+Save-Geo 'geometry.bearing.blaze_burner' $burner 'blaze_burner.geo.json'
+Save-Geo 'geometry.bearing.blaze_burner_head' @(
     (Bone 'head' @((Cube @(-4, 4, -4) @(8, 8, 8) $headFaces @('north')))),
     (Bone 'face' @([ordered]@{ origin = @(-4, 4, -4); size = @(8, 8, 0); uv = [ordered]@{ north = [ordered]@{ uv = @(4, 4); uv_size = @(8, 8); material_instance = 'face' } } }))
 ) 'blaze_burner_head.geo.json'

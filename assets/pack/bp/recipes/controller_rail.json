@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:controller_rail"
+      "identifier": "bearing:controller_rail"
     },
     "tags": [
       "crafting_table"
@@ -20,16 +20,16 @@
         "item": "minecraft:stick"
       },
       "E": {
-        "item": "levitate:electron_tube"
+        "item": "bearing:electron_tube"
       }
     },
     "result": {
-      "item": "levitate:controller_rail",
+      "item": "bearing:controller_rail",
       "count": 6
     },
     "unlock": [
       {
-        "item": "levitate:electron_tube"
+        "item": "bearing:electron_tube"
       }
     ]
   }

@@ -9,7 +9,7 @@
 #include "feature/common/FluidRegistry.h"
 #include "feature/pipes/Pipes.h"
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 /// A fluid block in the world.
 struct WorldFluid {
@@ -37,4 +37,4 @@ cp::Fluid openEndDrain(BlockSource& region, cp::BlockFace const& at, cp::OpenEnd
 /// Create's `FluidReactions.handlePipeFlowCollision`.
 void flowCollision(BlockSource& region, BlockPos const& pos, cp::Fluid const& a, cp::Fluid const& b);
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes

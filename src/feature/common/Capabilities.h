@@ -8,7 +8,7 @@
 // the side of the target block being accessed (Bedrock FacingID: 0 down, 1 up, 2 north,
 // 3 south, 4 west, 5 east; -1 = no particular side), like Create's `Direction side`.
 //
-//     items::registerBlock("levitate:depot", items::Handler{...});
+//     items::registerBlock("bearing:depot", items::Handler{...});
 //     auto rest = items::insert(region, pos, 1, stack, /*simulate*/ false);
 //     auto got  = items::extract(region, pos, 0, filterPredicate, 64, /*simulate*/ true);
 
@@ -25,7 +25,7 @@
 class Block;
 class BlockSource;
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 /// Where a capability is accessed.
 struct Access {
@@ -71,7 +71,7 @@ extract(BlockSource& region, BlockPos const& pos, int face, ItemPredicate const&
 // ---- fluids ------------------------------------------------------------------------------------
 namespace fluids {
 
-/// A fluid amount: `fluid` is an id ("minecraft:water", "minecraft:lava", "levitate:honey",
+/// A fluid amount: `fluid` is an id ("minecraft:water", "minecraft:lava", "bearing:honey",
 /// "minecraft:powder_snow", ...), `amount` in mB (1 bucket = 1000 mB).
 struct FluidStack {
     std::string fluid;
@@ -128,4 +128,4 @@ void registerBlock(std::string const& blockId, Provider provider);
 
 } // namespace heat
 
-} // namespace lv::feature::common
+} // namespace br::feature::common

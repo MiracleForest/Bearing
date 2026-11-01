@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:pulse_repeater_from_diorite"
+      "identifier": "bearing:pulse_repeater_from_diorite"
     },
     "tags": [
       "crafting_table"
@@ -19,7 +19,7 @@
         "item": "minecraft:redstone"
       },
       "C": {
-        "item": "levitate:brass_sheet"
+        "item": "bearing:brass_sheet"
       },
       "S": {
         "item": "minecraft:diorite"
@@ -31,7 +31,7 @@
       }
     ],
     "result": {
-      "item": "levitate:pulse_repeater",
+      "item": "bearing:pulse_repeater",
       "count": 1
     }
   }

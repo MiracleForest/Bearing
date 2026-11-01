@@ -17,7 +17,7 @@
 #include "feature/crafter/Internal.h"
 #include "mod/Log.h"
 
-namespace lv::feature::crafter {
+namespace br::feature::crafter {
 
 namespace {
 
@@ -72,7 +72,7 @@ bool canBreak(std::string const& kind, GlobalPos const& pos) {
     if (isSawActor(kind)) return trees::sawable(*b);
     // drills: no blocks without collision, no tracks (Create's DrillMovementBehaviour.canBreak)
     std::string_view id = b->getTypeName();
-    if (id == "levitate:track" || id == "levitate:fake_track") return false;
+    if (id == "bearing:track" || id == "bearing:fake_track") return false;
     return world::hasCollision(pos);
 }
 
@@ -280,7 +280,7 @@ struct ActorRegistration {
         };
         ct::registerMovementRules(std::string(kDrill), rules);
         ct::registerMovementRules(std::string(kSaw), rules);
-        // the saw's blade axis follows a rotation (levitate:facing is rotated by the engine first)
+        // the saw's blade axis follows a rotation (bearing:facing is rotated by the engine first)
         ct::registerRotationHandler(std::string(kSaw), [](cc::States& states, cc::Axis axis, int quarter) {
             auto get = [&](char const* key, std::int64_t fallback) {
                 auto it = states.find(key);
@@ -301,4 +301,4 @@ ActorRegistration const gActors;
 
 } // namespace
 
-} // namespace lv::feature::crafter
+} // namespace br::feature::crafter

@@ -29,14 +29,14 @@
 
 #include "core/GlobalPos.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 using core::GlobalPos;
 
-inline constexpr char const* kBeltId          = "levitate:belt";
-inline constexpr char const* kBeltConnectorId = "levitate:belt_connector";
-inline constexpr char const* kDepotId         = "levitate:depot";
-inline constexpr char const* kEjectorId       = "levitate:weighted_ejector";
+inline constexpr char const* kBeltId          = "bearing:belt";
+inline constexpr char const* kBeltConnectorId = "bearing:belt_connector";
+inline constexpr char const* kDepotId         = "bearing:depot";
+inline constexpr char const* kEjectorId       = "bearing:weighted_ejector";
 
 /// Create's TransportedItemStack.
 struct TransportedItem {
@@ -143,7 +143,7 @@ struct BeltInfo {
     int       length = 0;
     float     speed  = 0;     ///< RPM (effective, signed)
     int       movementFace = 2; ///< horizontal FacingID items move towards
-    int       facing = 0;     ///< `levitate:facing` (0 south, 1 west, 2 north, 3 east)
+    int       facing = 0;     ///< `bearing:facing` (0 south, 1 west, 2 north, 3 east)
     int       slope  = 0;     ///< 0 horizontal, 1 upward, 2 downward, 3 vertical, 4 sideways
     int       casing = 0;     ///< 0 none, 1 andesite, 2 brass
     int       color  = -1;    ///< -1 undyed, 0..15
@@ -153,4 +153,4 @@ struct BeltInfo {
 /// a tunnel placed on an uncased segment cases it. Returns false when `pos` is no belt segment.
 bool setCasing(GlobalPos const& pos, int casing);
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

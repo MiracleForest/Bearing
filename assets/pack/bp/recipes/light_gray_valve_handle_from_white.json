@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:light_gray_valve_handle_from_white"
+      "identifier": "bearing:light_gray_valve_handle_from_white"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:white_valve_handle"
+        "item": "bearing:white_valve_handle"
       },
       {
         "item": "minecraft:light_gray_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:white_valve_handle"
+        "item": "bearing:white_valve_handle"
       }
     ],
     "result": {
-      "item": "levitate:light_gray_valve_handle",
+      "item": "bearing:light_gray_valve_handle",
       "count": 1
     }
   }

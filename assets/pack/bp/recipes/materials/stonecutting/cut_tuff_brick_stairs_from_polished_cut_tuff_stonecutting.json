@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cut_tuff_brick_stairs_from_polished_cut_tuff_stonecutting"
+      "identifier": "bearing:cut_tuff_brick_stairs_from_polished_cut_tuff_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:polished_cut_tuff"
+        "item": "bearing:polished_cut_tuff"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:polished_cut_tuff"
+        "item": "bearing:polished_cut_tuff"
       }
     ],
     "result": {
-      "item": "levitate:cut_tuff_brick_stairs",
+      "item": "bearing:cut_tuff_brick_stairs",
       "count": 1
     }
   }

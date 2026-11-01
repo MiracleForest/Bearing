@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 nlohmann::json Mirror::toJson() const {
     return {{"type", static_cast<int>(type)}, {"orientation", orientation}, {"pos", {x, y, z}}, {"enabled", enabled}, {"placed", placed}, {"dim", dimension}};
@@ -101,4 +101,4 @@ std::string orientationKey(MirrorType t, int orientation) {
     return {};
 }
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

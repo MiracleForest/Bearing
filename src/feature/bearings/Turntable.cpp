@@ -19,10 +19,10 @@
 #include "feature/bearings/Bearings.h"
 #include "feature/kinetics/Kinetics.h"
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
-namespace k  = ::lv::feature::kinetics;
-namespace ck = ::lv::core::kinetics;
+namespace k  = ::br::feature::kinetics;
+namespace ck = ::br::core::kinetics;
 
 namespace {
 
@@ -30,13 +30,13 @@ ck::KineticSpec turntableSpec() {
     ck::KineticSpec s;
     s.rotationAxis    = [](ck::BlockState const&) -> std::optional<ck::Axis> { return ck::Axis::Y; };
     s.hasShaftTowards = [](ck::BlockState const&, ck::Face f) { return f == ck::Face::Down; };
-    s.rotorState      = "levitate:rotor";
-    s.rotorModel      = "geometry.levitate.turntable";
-    s.rotorTexture    = "levitate_turntable_model";
+    s.rotorState      = "bearing:rotor";
+    s.rotorModel      = "geometry.bearing.turntable";
+    s.rotorTexture    = "bearing_turntable_model";
     return s;
 }
 
-LV_REGISTER_KINETIC_BLOCK("levitate:turntable", turntableSpec());
+BR_REGISTER_KINETIC_BLOCK("bearing:turntable", turntableSpec());
 
 } // namespace
 
@@ -86,4 +86,4 @@ void tickTurntable(BlockSource& region, GP const& pos) {
     }
 }
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings

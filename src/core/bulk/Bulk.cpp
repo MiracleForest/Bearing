@@ -4,7 +4,7 @@
 #include <cmath>
 #include <limits>
 
-namespace lv::core::bulk {
+namespace br::core::bulk {
 
 double Vec3d::length() const { return std::sqrt(x * x + y * y + z * z); }
 
@@ -295,4 +295,4 @@ bool crusherIntakeReached(Face facing, Vec3d const& entityPos, int bx, int by, i
     return entityPos.get(axis) * -offset < (centre - .25) * -offset;
 }
 
-} // namespace lv::core::bulk
+} // namespace br::core::bulk

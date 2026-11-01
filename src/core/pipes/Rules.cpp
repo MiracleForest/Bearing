@@ -3,7 +3,7 @@
 #include <cmath>
 #include <limits>
 
-namespace lv::core::pipes {
+namespace br::core::pipes {
 
 int count(FaceMask m) {
     int n = 0;
@@ -251,4 +251,4 @@ SmartPipeState smartPipePlacement(Face nearestLook, Face horizontalLook, double 
     return s;
 }
 
-} // namespace lv::core::pipes
+} // namespace br::core::pipes

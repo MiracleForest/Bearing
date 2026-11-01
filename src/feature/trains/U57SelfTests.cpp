@@ -45,13 +45,13 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace tn = lv::feature::trains;
-namespace tr = lv::feature::tracks;
-namespace cn = lv::feature::contraption;
-namespace ct = lv::core::trains;
-namespace ck = lv::core::tracks;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace tn = br::feature::trains;
+namespace tr = br::feature::tracks;
+namespace cn = br::feature::contraption;
+namespace ct = br::core::trains;
+namespace ck = br::core::tracks;
 
 GlobalPos at(GlobalPos b, int dx, int dy = 0, int dz = 0) { return {b.dim, b.x + dx, b.y + dy, b.z + dz}; }
 
@@ -62,13 +62,13 @@ std::vector<std::pair<std::string, int>> shapeStates(ck::Shape shape, bool turn 
 
 void clearBox(GlobalPos a, GlobalPos b) {
     auto*       region = tn::regionOf(a.dim);
-    auto const* air    = lv::game::blockWith("minecraft:air");
+    auto const* air    = br::game::blockWith("minecraft:air");
     if (!region || !air) return;
     for (int x = std::min(a.x, b.x); x <= std::max(a.x, b.x); ++x)
         for (int y = std::min(a.y, b.y); y <= std::max(a.y, b.y); ++y)
             for (int z = std::min(a.z, b.z); z <= std::max(a.z, b.z); ++z) {
                 BlockPos bp{x, y, z};
-                if (region->hasChunksAt(bp, 0, false) && !region->getBlock(bp).isAir()) lv::game::setBlock(*region, bp, *air);
+                if (region->hasChunksAt(bp, 0, false) && !region->getBlock(bp).isAir()) br::game::setBlock(*region, bp, *air);
             }
 }
 
@@ -77,14 +77,14 @@ bool place(GlobalPos const& p, std::string const& id, std::vector<std::pair<std:
     if (!region) return false;
     std::vector<std::pair<std::string_view, int>> s;
     for (auto const& [k, v] : states) s.emplace_back(k, v);
-    auto const* b = lv::game::blockWith(id, s);
-    return b && lv::game::setBlock(*region, lv::game::blockPos(p), *b);
+    auto const* b = br::game::blockWith(id, s);
+    return b && br::game::setBlock(*region, br::game::blockPos(p), *b);
 }
 
 void command(std::string const& text, int dim = 0) {
     auto level = ll::service::getLevel();
     if (!level) return;
-    ServerCommandOrigin origin("levitate-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(dim));
+    ServerCommandOrigin origin("bearing-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(dim));
     ll::command::CommandRegistrar::getServerInstance().executeCommand(text, origin);
 }
 
@@ -150,8 +150,8 @@ std::optional<std::uint64_t> assembleAt(Context& ctx, Line const& l, bool double
     auto msg    = tn::useCasingOnTrack(nullptr, track0, true);
     ctx.check(msg.starts_with("+"), "train casing creates a bogey (" + msg + ")");
     auto bogey = at(track0, 0, 1);
-    ctx.setBlock(at(bogey, 0, 1), std::string(tn::kControls), {{"levitate:facing", 4}});
-    if (doubleEnded) ctx.setBlock(at(bogey, 0, 2), std::string(tn::kControls), {{"levitate:facing", 5}});
+    ctx.setBlock(at(bogey, 0, 1), std::string(tn::kControls), {{"bearing:facing", 4}});
+    if (doubleEnded) ctx.setBlock(at(bogey, 0, 2), std::string(tn::kControls), {{"bearing:facing", 5}});
     extra(bogey);
     if (glueTop > 0 || glueWest > 0) cn::addGlue(l.base.dim, {{bogey.x - glueWest, bogey.y, bogey.z}, {bogey.x, bogey.y + std::max(1, glueTop), bogey.z}});
     auto id = tn::assemble(*s, nullptr);
@@ -188,23 +188,23 @@ void removeActor(std::int64_t uid) {
 } // namespace
 
 // T9: Create's conductors are seated non-player passengers in a seat behind controls facing them
-LV_REGISTER_SELFTEST("trains.u57_conductors", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.u57_conductors", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, " cond"), "line and stations built");
     // a seat west of the controls (they face west, towards it), glued to the carriage
-    auto id = assembleAt(ctx, l, false, 1, 1, [&](GlobalPos const& bogey) { ctx.setBlock(at(bogey, -1, 1), "levitate:white_seat"); });
+    auto id = assembleAt(ctx, l, false, 1, 1, [&](GlobalPos const& bogey) { ctx.setBlock(at(bogey, -1, 1), "bearing:white_seat"); });
     ctx.require(id.has_value(), "the train assembles");
     auto* t = tn::findTrain(*id);
     ctx.require(t && !t->carriages.empty(), "train with a carriage");
     auto* con = cn::find(t->carriages[0].contraption);
     ctx.require(con != nullptr, "carriage contraption");
-    std::optional<lv::core::contraption::Pos> seat;
+    std::optional<br::core::contraption::Pos> seat;
     for (auto const& b : con->blocks())
-        if (b.id == "levitate:white_seat") seat = b.local;
+        if (b.id == "bearing:white_seat") seat = b.local;
     ctx.require(seat.has_value(), "the seat is part of the carriage");
     ctx.check(!tn::hasConductor(*t, true), "an empty seat is no conductor");
     // a mob standing next to the controls, not seated: still none (Create: checkConductors)
-    auto  w    = con->toWorld(lv::core::contraption::Vec3d::center(*seat));
+    auto  w    = con->toWorld(br::core::contraption::Vec3d::center(*seat));
     auto* pig  = spawnMob(*tn::regionOf(l.base.dim), "minecraft:pig", {l.base.dim, int(std::floor(w.x)), int(std::floor(w.y)), int(std::floor(w.z))});
     ctx.require(pig != nullptr, "a pig spawned");
     auto pigId = pig->getOrCreateUniqueID().rawID;
@@ -232,7 +232,7 @@ LV_REGISTER_SELFTEST("trains.u57_conductors", [](Context& ctx) -> ll::coro::Coro
 });
 
 // T5: Create's control(): driving backwards runs at a quarter of the speed, double ended too
-LV_REGISTER_SELFTEST("trains.u57_reverse_speed", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.u57_reverse_speed", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, " rev"), "line and stations built");
     auto id = assembleAt(ctx, l, true, 2, 0, [](GlobalPos const&) {});
@@ -261,11 +261,11 @@ LV_REGISTER_SELFTEST("trains.u57_reverse_speed", [](Context& ctx) -> ll::coro::C
 });
 
 // T6: Create's Train.tick: a drill breaking a block stalls its carriage and the whole train
-LV_REGISTER_SELFTEST("trains.u57_stall", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.u57_stall", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, " stall"), "line and stations built");
     auto id = assembleAt(ctx, l, false, 2, 0, [&](GlobalPos const& bogey) {
-        ctx.setBlock(at(bogey, 0, 2), "levitate:mechanical_drill", {{"levitate:facing", 5}});
+        ctx.setBlock(at(bogey, 0, 2), "bearing:mechanical_drill", {{"bearing:facing", 5}});
     });
     ctx.require(id.has_value(), "the train with a drill assembles");
     // a block of dirt in the drill's way, 10 blocks east
@@ -297,7 +297,7 @@ LV_REGISTER_SELFTEST("trains.u57_stall", [](Context& ctx) -> ll::coro::CoroTask<
 
 // T7 / T8: the station's auto-schedule takes schedules from automation and thrown items, shows it
 // and replaces the schedule of every train arriving
-LV_REGISTER_SELFTEST("trains.u57_auto_schedule", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.u57_auto_schedule", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, " auto"), "line and stations built");
     auto* sb     = tn::stationAt(l.stationB);
@@ -308,14 +308,14 @@ LV_REGISTER_SELFTEST("trains.u57_auto_schedule", [](Context& ctx) -> ll::coro::C
     e.instruction.data["Text"]  = "U57 A auto";
     back.entries.push_back(e);
     auto item = tn::makeScheduleItem(back);
-    auto rest = lv::feature::common::items::insert(*region, lv::game::blockPos(l.stationB), 1, item, false);
+    auto rest = br::feature::common::items::insert(*region, br::game::blockPos(l.stationB), 1, item, false);
     ctx.check(rest.isNull(), "the station takes one schedule");
     ctx.check(!sb->autoSchedule.is_null(), "it is the station's auto-schedule");
-    auto again = lv::feature::common::items::insert(*region, lv::game::blockPos(l.stationB), 1, item, true);
+    auto again = br::feature::common::items::insert(*region, br::game::blockPos(l.stationB), 1, item, true);
     ctx.check(!again.isNull(), "a second one doesn't fit");
-    auto stone = lv::feature::common::items::make("minecraft:stone");
-    ctx.check(stone && !lv::feature::common::items::insert(*region, lv::game::blockPos(l.stationB), 1, *stone, true).isNull(), "other items don't go in");
-    ctx.check(lv::feature::itemrender::find(l.stationB, 0) != nullptr, "the schedule is drawn on the station (client mod)");
+    auto stone = br::feature::common::items::make("minecraft:stone");
+    ctx.check(stone && !br::feature::common::items::insert(*region, br::game::blockPos(l.stationB), 1, *stone, true).isNull(), "other items don't go in");
+    ctx.check(br::feature::itemrender::find(l.stationB, 0) != nullptr, "the schedule is drawn on the station (client mod)");
     // a train with its own schedule to B gets B's auto-schedule on arrival
     auto id = assembleAt(ctx, l, false, 0, 0, [](GlobalPos const&) {});
     ctx.require(id.has_value(), "the train assembles");
@@ -357,7 +357,7 @@ LV_REGISTER_SELFTEST("trains.u57_auto_schedule", [](Context& ctx) -> ll::coro::C
 });
 
 // T31: Create's TrainRelocator refuses a place where the train would overlap another
-LV_REGISTER_SELFTEST("trains.u57_relocate_overlap", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.u57_relocate_overlap", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, " reloc"), "line and stations built");
     auto first = assembleAt(ctx, l, false, 0, 0, [](GlobalPos const&) {});
@@ -382,7 +382,7 @@ LV_REGISTER_SELFTEST("trains.u57_relocate_overlap", [](Context& ctx) -> ll::coro
 });
 
 // T17 / T18: the station summary lists every upcoming destination; the status shows the condition
-LV_REGISTER_SELFTEST("trains.u57_display_sources", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.u57_display_sources", [](Context& ctx) -> ll::coro::CoroTask<> {
     Line l;
     ctx.require(co_await buildLine(ctx, l, " disp"), "line and stations built");
     auto id = assembleAt(ctx, l, false, 0, 0, [](GlobalPos const&) {});
@@ -425,7 +425,7 @@ LV_REGISTER_SELFTEST("trains.u57_display_sources", [](Context& ctx) -> ll::coro:
 });
 
 // T1: Create's carriages pass portal tracks into the other dimension; stations there are reachable
-LV_REGISTER_SELFTEST("trains.u57_portal", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("trains.u57_portal", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(5700, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     // keep both ends loaded: a ticking area in the overworld and one in the nether
@@ -433,15 +433,15 @@ LV_REGISTER_SELFTEST("trains.u57_portal", [](Context& ctx) -> ll::coro::CoroTask
     auto      area = [](GlobalPos const& p, int len) {
         return std::to_string(p.x - 4) + " 0 " + std::to_string(p.z - 4) + " " + std::to_string(p.x + len) + " 0 " + std::to_string(p.z + 4);
     };
-    command("tickingarea add " + area(base, 34) + " lv_u57_ow true", 0);
-    command("tickingarea add " + area(nb, 34) + " lv_u57_nether true", 1);
+    command("tickingarea add " + area(base, 34) + " br_u57_ow true", 0);
+    command("tickingarea add " + area(nb, 34) + " br_u57_nether true", 1);
     bool loaded = false;
     for (int i = 0; i < 200 && !loaded; ++i) {
         co_await ctx.ticks(1);
         auto* n = tn::regionOf(1);
         auto* o = tn::regionOf(0);
-        loaded  = n && o && n->hasChunksAt(lv::game::blockPos(nb), 0, false) && n->hasChunksAt(lv::game::blockPos(at(nb, 30)), 0, false)
-              && o->hasChunksAt(lv::game::blockPos(at(base, 30)), 0, false);
+        loaded  = n && o && n->hasChunksAt(br::game::blockPos(nb), 0, false) && n->hasChunksAt(br::game::blockPos(at(nb, 30)), 0, false)
+              && o->hasChunksAt(br::game::blockPos(at(base, 30)), 0, false);
     }
     auto cleanup = [&] {
         removeTrainsNear(base);
@@ -454,8 +454,8 @@ LV_REGISTER_SELFTEST("trains.u57_portal", [](Context& ctx) -> ll::coro::CoroTask
         tr::state().portalsDirty = true;
         clearBox(at(base, -1, 0, -2), at(base, 22, 4, 2));
         clearBox(at(nb, -1, -1, -2), at(nb, 30, 4, 2));
-        command("tickingarea remove lv_u57_ow", 0);
-        command("tickingarea remove lv_u57_nether", 1);
+        command("tickingarea remove br_u57_ow", 0);
+        command("tickingarea remove br_u57_nether", 1);
     };
     if (!loaded) {
         cleanup();
@@ -498,7 +498,7 @@ LV_REGISTER_SELFTEST("trains.u57_portal", [](Context& ctx) -> ll::coro::CoroTask
     auto* sa = tn::stationAt(at(base, 10, 0, 1));
     tn::setAssembling(*sa, true, nullptr);
     tn::useCasingOnTrack(nullptr, at(base, 9), true);
-    ctx.setBlock(at(base, 9, 2), std::string(tn::kControls), {{"levitate:facing", 4}});
+    ctx.setBlock(at(base, 9, 2), std::string(tn::kControls), {{"bearing:facing", 4}});
     auto id = tn::assemble(*sa, nullptr);
     if (!id) {
         cleanup();

@@ -21,7 +21,7 @@
 // half size upright cube standing in front of that plane (centre at +Z 0.25). `Style::Lying` (belts, depots):
 // flat items lie face up (+Y) centred on the origin; block items stand on it (centre at +Y 0.5).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 
@@ -32,7 +32,7 @@
 class BaseActorRenderContext;
 class ItemStack;
 
-namespace lv::client::render {
+namespace br::client::render {
 
 using core::itemrender::Style;
 
@@ -50,6 +50,6 @@ void drawItem(BaseActorRenderContext& ctx, ItemStack const& stack, glm::mat4 con
 /// Display items currently received (selftests / scenarios).
 [[nodiscard]] std::size_t displayItemCount();
 
-} // namespace lv::client::render
+} // namespace br::client::render
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:schematic_and_quill"
+      "identifier": "bearing:schematic_and_quill"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:empty_schematic"
+        "item": "bearing:empty_schematic"
       },
       {
         "item": "minecraft:feather"
@@ -17,12 +17,12 @@
     ],
     "unlock": [
       {
-        "item": "levitate:empty_schematic"
+        "item": "bearing:empty_schematic"
       }
     ],
     "result": {
       "count": 1,
-      "item": "levitate:schematic_and_quill"
+      "item": "bearing:schematic_and_quill"
     }
   }
 }

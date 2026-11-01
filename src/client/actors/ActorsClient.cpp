@@ -2,12 +2,12 @@
 // - actor animations on moving contraptions: the harvester's blades and the roller's drum turn
 //   with the distance the block travels (Create: angle = animation speed x time). A carried
 //   block is shown by a display entity (a falling block, U4); while it is drawn, its block is
-//   swapped for the animation step (`levitate:anim` 0..3, a quarter turn of the 90-degree
+//   swapped for the animation step (`bearing:anim` 0..3, a quarter turn of the 90-degree
 //   symmetric part in 22.5-degree steps) and put back afterwards.
 // - empty-hand right-click into the air: the server can't see it, so it is sent as
 //   `actors.use` and the server casts the player's look against contraption controls / seats.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <atomic>
 #include <cmath>
@@ -45,13 +45,13 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::actors {
+namespace br::client::actors {
 
 namespace {
 
-namespace fa  = ::lv::feature::actors;
-namespace ext = ::lv::feature::contraption::actors_ext;
-namespace net = ::lv::feature::net;
+namespace fa  = ::br::feature::actors;
+namespace ext = ::br::feature::contraption::actors_ext;
+namespace net = ::br::feature::net;
 
 struct Spin {
     Vec3   last{};
@@ -79,7 +79,7 @@ Block const* animated(Block const& base, int step) {
     static std::unordered_map<Block const*, std::array<Block const*, 4>> cache;
     auto [it, fresh] = cache.try_emplace(&base);
     if (fresh) {
-        for (int i = 0; i < 4; ++i) it->second[i] = ext::withStates(base, {{"levitate:anim", std::int64_t{i}}});
+        for (int i = 0; i < 4; ++i) it->second[i] = ext::withStates(base, {{"bearing:anim", std::int64_t{i}}});
     }
     return it->second[step & 3];
 }
@@ -173,7 +173,7 @@ public:
     void load() {
         auto& bus = ll::event::EventBus::getInstance();
         mListeners.push_back(bus.emplaceListener<ll::event::MouseInputEvent>([](ll::event::MouseInputEvent& ev) {
-            if (ev.actionButtonId() == 2 && ev.buttonData() == 1 && !lv::client::screen::current()) state().useRequested = true;
+            if (ev.actionButtonId() == 2 && ev.buttonData() == 1 && !br::client::screen::current()) state().useRequested = true;
         }));
         mListeners.push_back(bus.emplaceListener<ll::event::ClientLevelTickEvent>([](auto&) { onTick(); }));
         mListeners.push_back(bus.emplaceListener<ll::event::ClientExitLevelEvent>([](auto&) { state().spins.clear(); }));
@@ -197,8 +197,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::actors
+} // namespace br::client::actors
 
-LV_REGISTER_MODULE(lv::client::actors::ActorsClientModule);
+BR_REGISTER_MODULE(br::client::actors::ActorsClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

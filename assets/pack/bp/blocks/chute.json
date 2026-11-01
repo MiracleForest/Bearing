@@ -2,19 +2,19 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:chute",
+      "identifier": "bearing:chute",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
           3,
           4
         ],
-        "levitate:shape": [
+        "bearing:shape": [
           0,
           1,
           2,
@@ -33,19 +33,19 @@
       "minecraft:loot": "loot_tables/blocks/chute.json",
       "minecraft:light_dampening": 0,
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.chute"
+        "identifier": "geometry.bearing.chute"
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_chute_side",
+          "texture": "bearing_chute_side",
           "render_method": "alpha_test"
         },
         "side": {
-          "texture": "levitate_chute_side",
+          "texture": "bearing_chute_side",
           "render_method": "alpha_test"
         },
         "top": {
-          "texture": "levitate_chute_top",
+          "texture": "bearing_chute_top",
           "render_method": "alpha_test"
         }
       },
@@ -76,60 +76,60 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:shape') == 1",
+        "condition": "q.block_state('bearing:shape') == 1",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_chute_window",
+              "texture": "bearing_chute_window",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_chute_window",
+              "texture": "bearing_chute_window",
               "render_method": "alpha_test"
             },
             "top": {
-              "texture": "levitate_chute_top",
+              "texture": "bearing_chute_top",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:shape') == 2",
+        "condition": "q.block_state('bearing:shape') == 2",
         "components": {
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_chute_intersection",
+              "texture": "bearing_chute_intersection",
               "render_method": "alpha_test"
             },
             "side": {
-              "texture": "levitate_chute_intersection",
+              "texture": "bearing_chute_intersection",
               "render_method": "alpha_test"
             },
             "top": {
-              "texture": "levitate_chute_top",
+              "texture": "bearing_chute_top",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:shape') == 3",
+        "condition": "q.block_state('bearing:shape') == 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.chute_encased"
+            "identifier": "geometry.bearing.chute_encased"
           },
           "minecraft:material_instances": {
             "*": {
-              "texture": "levitate_chute_encased",
+              "texture": "bearing_chute_encased",
               "render_method": "opaque"
             },
             "side": {
-              "texture": "levitate_chute_encased",
+              "texture": "bearing_chute_encased",
               "render_method": "opaque"
             },
             "top": {
-              "texture": "levitate_chute_top",
+              "texture": "bearing_chute_top",
               "render_method": "opaque"
             }
           },
@@ -160,10 +160,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1 && q.block_state('levitate:shape') != 3",
+        "condition": "q.block_state('bearing:facing') == 1 && q.block_state('bearing:shape') != 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.chute_diagonal"
+            "identifier": "geometry.bearing.chute_diagonal"
           },
           "minecraft:transformation": {
             "rotation": [
@@ -175,10 +175,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2 && q.block_state('levitate:shape') != 3",
+        "condition": "q.block_state('bearing:facing') == 2 && q.block_state('bearing:shape') != 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.chute_diagonal"
+            "identifier": "geometry.bearing.chute_diagonal"
           },
           "minecraft:transformation": {
             "rotation": [
@@ -190,10 +190,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3 && q.block_state('levitate:shape') != 3",
+        "condition": "q.block_state('bearing:facing') == 3 && q.block_state('bearing:shape') != 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.chute_diagonal"
+            "identifier": "geometry.bearing.chute_diagonal"
           },
           "minecraft:transformation": {
             "rotation": [
@@ -205,10 +205,10 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4 && q.block_state('levitate:shape') != 3",
+        "condition": "q.block_state('bearing:facing') == 4 && q.block_state('bearing:shape') != 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.chute_diagonal"
+            "identifier": "geometry.bearing.chute_diagonal"
           },
           "minecraft:transformation": {
             "rotation": [

@@ -6,7 +6,7 @@
     },
     {
       "type": "fluid_stack",
-      "fluid": "levitate:potion/regular/strength",
+      "fluid": "bearing:potion/regular/strength",
       "amount": 25
     }
   ],

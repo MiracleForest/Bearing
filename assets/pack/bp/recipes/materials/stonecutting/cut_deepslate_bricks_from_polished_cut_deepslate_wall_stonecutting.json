@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cut_deepslate_bricks_from_polished_cut_deepslate_wall_stonecutting"
+      "identifier": "bearing:cut_deepslate_bricks_from_polished_cut_deepslate_wall_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:polished_cut_deepslate_wall"
+        "item": "bearing:polished_cut_deepslate_wall"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:polished_cut_deepslate_wall"
+        "item": "bearing:polished_cut_deepslate_wall"
       }
     ],
     "result": {
-      "item": "levitate:cut_deepslate_bricks",
+      "item": "bearing:cut_deepslate_bricks",
       "count": 1
     }
   }

@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:copper_valve_handle_from_white"
+      "identifier": "bearing:copper_valve_handle_from_white"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:white_valve_handle"
+        "item": "bearing:white_valve_handle"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:white_valve_handle"
+        "item": "bearing:white_valve_handle"
       }
     ],
     "result": {
-      "item": "levitate:copper_valve_handle",
+      "item": "bearing:copper_valve_handle",
       "count": 1
     }
   }

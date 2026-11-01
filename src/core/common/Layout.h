@@ -3,7 +3,7 @@
 // Screen geometry for the native screen framework (U3, SPEC §3.3), independent of the game.
 // Units are GUI pixels (the game's scaled UI coordinates).
 
-namespace lv::core::common {
+namespace br::core::common {
 
 struct Rect {
     float x = 0, y = 0, w = 0, h = 0;
@@ -35,4 +35,4 @@ struct Rect {
     return i < count ? i : -1;
 }
 
-} // namespace lv::core::common
+} // namespace br::core::common

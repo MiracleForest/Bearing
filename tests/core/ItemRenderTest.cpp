@@ -2,7 +2,7 @@
 
 #include "core/itemrender/DisplayItem.h"
 
-using namespace lv::core::itemrender;
+using namespace br::core::itemrender;
 
 TEST(ItemRender, LerpAngleTakesTheShortWay) {
     EXPECT_FLOAT_EQ(lerpAngle(350.f, 10.f, .5f), 360.f);

@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:spout",
+      "identifier": "bearing:spout",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:nozzle": [
+        "bearing:nozzle": [
           0,
           1
         ]
@@ -15,16 +15,16 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.spout",
+        "identifier": "geometry.bearing.spout",
         "bone_visibility": {
-          "nozzle_top": "q.block_state('levitate:nozzle') == 0",
-          "nozzle_middle": "q.block_state('levitate:nozzle') == 0",
-          "nozzle_bottom": "q.block_state('levitate:nozzle') == 0"
+          "nozzle_top": "q.block_state('bearing:nozzle') == 0",
+          "nozzle_middle": "q.block_state('bearing:nozzle') == 0",
+          "nozzle_bottom": "q.block_state('bearing:nozzle') == 0"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_spout",
+          "texture": "bearing_spout",
           "render_method": "alpha_test"
         }
       },

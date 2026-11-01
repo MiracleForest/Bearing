@@ -2,8 +2,8 @@
   "id": "shaft_casing",
   "size": [5, 5],
   "blocks": [
-    {"at": [4, 1, 2], "id": "levitate:creative_motor", "states": {"levitate:facing": 4}},
-    {"area": [[0, 1, 2], [3, 1, 2]], "id": "levitate:shaft", "states": {"levitate:axis": 0}}
+    {"at": [4, 1, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 4}},
+    {"area": [[0, 1, 2], [3, 1, 2]], "id": "bearing:shaft", "states": {"bearing:axis": 0}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},
@@ -14,14 +14,14 @@
     {"idle": 10},
     {"rotate": [[0, 1, 2], [4, 1, 2]], "rpm": 32},
     {"idle": 15},
-    {"input": [2.5, 1.5, 3.0], "action": "right", "item": "levitate:andesite_casing", "ticks": 30},
+    {"input": [2.5, 1.5, 3.0], "action": "right", "item": "bearing:andesite_casing", "ticks": 30},
     {"idle": 10},
-    {"set": [2, 1, 2], "id": "levitate:andesite_encased_shaft", "states": {"levitate:axis": 0}},
+    {"set": [2, 1, 2], "id": "bearing:andesite_encased_shaft", "states": {"bearing:axis": 0}},
     {"rotate": [2, 1, 2], "rpm": 32},
     {"idle": 15},
-    {"input": [1.5, 1.5, 3.0], "action": "right", "item": "levitate:brass_casing", "ticks": 30},
+    {"input": [1.5, 1.5, 3.0], "action": "right", "item": "bearing:brass_casing", "ticks": 30},
     {"idle": 10},
-    {"set": [1, 1, 2], "id": "levitate:brass_encased_shaft", "states": {"levitate:axis": 0}},
+    {"set": [1, 1, 2], "id": "bearing:brass_encased_shaft", "states": {"bearing:axis": 0}},
     {"rotate": [1, 1, 2], "rpm": 32},
     {"idle": 15},
     {"text": 1, "at": [2.0, 1.5, 2.5], "ticks": 90, "keyframe": true},

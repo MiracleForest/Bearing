@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:metal_girder"
+      "identifier": "bearing:metal_girder"
     },
     "tags": [
       "crafting_table"
@@ -13,19 +13,19 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "P": {
-        "item": "levitate:iron_sheet"
+        "item": "bearing:iron_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:metal_girder",
+      "item": "bearing:metal_girder",
       "count": 8
     }
   }

@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_scorchia_brick_wall_from_cut_scorchia_stonecutting"
+      "identifier": "bearing:small_scorchia_brick_wall_from_cut_scorchia_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:cut_scorchia"
+        "item": "bearing:cut_scorchia"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:cut_scorchia"
+        "item": "bearing:cut_scorchia"
       }
     ],
     "result": {
-      "item": "levitate:small_scorchia_brick_wall",
+      "item": "bearing:small_scorchia_brick_wall",
       "count": 1
     }
   }

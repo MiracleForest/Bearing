@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:zinc_block",
+      "identifier": "bearing:zinc_block",
       "menu_category": {
         "category": "construction"
       }
@@ -21,7 +21,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_zinc_block",
+          "texture": "bearing_zinc_block",
           "render_method": "opaque"
         }
       }

@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:metal_girder",
+          "name": "bearing:metal_girder",
           "weight": 1
         }
       ]
@@ -15,7 +15,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:shaft",
+          "name": "bearing:shaft",
           "weight": 1
         }
       ]

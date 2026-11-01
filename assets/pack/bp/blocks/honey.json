@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:honey",
+      "identifier": "bearing:honey",
       "menu_category": {
         "category": "none"
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.fluid_source",
+      "minecraft:geometry": "geometry.bearing.fluid_source",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_honey_still",
+          "texture": "bearing_honey_still",
           "render_method": "blend",
           "ambient_occlusion": false,
           "face_dimming": false

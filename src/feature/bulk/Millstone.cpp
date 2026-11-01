@@ -19,7 +19,7 @@
 #include "feature/kinetics/Kinetics.h"
 #include "mod/Log.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace blockdata = common::blockdata;
 namespace items     = common::items;
@@ -201,4 +201,4 @@ ItemStack extract(GlobalPos const& pos, std::function<bool(ItemStack const&)> co
 
 } // namespace millstone_cap
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

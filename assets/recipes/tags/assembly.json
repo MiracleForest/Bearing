@@ -27,7 +27,7 @@
     "minecraft:stripped_warped_hyphae"
   ],
   "c:ingots/brass": [
-    "levitate:brass_ingot"
+    "bearing:brass_ingot"
   ],
   "c:strings": [
     "minecraft:string"

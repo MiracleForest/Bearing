@@ -1,6 +1,6 @@
 // Speedometer and stressometer (U6): Create's SpeedGaugeBlockEntity / StressGaugeBlockEntity.
 // The dial target follows the speed (speed levels) or the network's stress / capacity; it drives
-// the comparator output, the static needle of vanilla clients (`levitate:dial`, 9 positions) and
+// the comparator output, the static needle of vanilla clients (`bearing:dial`, 9 positions) and
 // the smooth needle the client mod draws (`transmission.gauge` messages to companions).
 
 #include <algorithm>
@@ -33,7 +33,7 @@
 // storage) construct themselves empty (the same inline definition as in feature/kinetics/Feedback.cpp).
 inline MolangVariableMap::MolangVariableMap() {}
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
@@ -71,7 +71,7 @@ void gaugeHeader(goggles::InfoContext const& c, goggles::Tooltip& t) { t.push_ba
 
 // SpeedGaugeBlockEntity.addToGoggleTooltip: the speed level and RPM (struck through while
 // overstressed, drawn by the client mod)
-LV_REGISTER_GOGGLE_INFO(
+BR_REGISTER_GOGGLE_INFO(
     kSpeedometer,
     {
         .goggle =
@@ -87,7 +87,7 @@ LV_REGISTER_GOGGLE_INFO(
 );
 
 // StressGaugeBlockEntity.addToGoggleTooltip: the stress level and the remaining capacity
-LV_REGISTER_GOGGLE_INFO(
+BR_REGISTER_GOGGLE_INFO(
     kStressometer,
     {
         .goggle =
@@ -128,7 +128,7 @@ float dialTarget(GlobalPos const& pos) {
 
 namespace {
 
-constexpr char kDustEffect[] = "levitate:gauge_dust";
+constexpr char kDustEffect[] = "bearing:gauge_dust";
 std::size_t    gDustSent     = 0;
 bool           gForceAnimate = false;
 
@@ -243,4 +243,4 @@ void gaugeSyncTo(Player& player) {
 
 void clearGauges() { dials().clear(); }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

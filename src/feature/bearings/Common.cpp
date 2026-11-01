@@ -31,7 +31,7 @@
 #include "feature/common/Redstone.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
 std::optional<Kind> kindOf(std::string_view id) {
     if (id == kMechanicalBearing) return Kind::Mechanical;
@@ -53,14 +53,14 @@ std::vector<std::string> const& dyeColours() {
     return colours;
 }
 
-std::string sailIdOf(std::string_view colour) { return "levitate:" + std::string(colour) + "_sail"; }
+std::string sailIdOf(std::string_view colour) { return "bearing:" + std::string(colour) + "_sail"; }
 
 bool isSailFrame(std::string_view id) { return id == kSailFrame; }
 
 bool isSail(std::string_view id) {
     if (isSailFrame(id)) return true;
-    if (!id.starts_with("levitate:") || !id.ends_with("_sail")) return false;
-    auto colour = id.substr(9, id.size() - 9 - 5);
+    if (!id.starts_with("bearing:") || !id.ends_with("_sail")) return false;
+    auto colour = id.substr(8, id.size() - 8 - 5);
     auto const& all = dyeColours();
     return std::find(all.begin(), all.end(), colour) != all.end();
 }
@@ -132,7 +132,7 @@ bool placeBlock(BlockSource& region, GP const& p, std::string_view id, std::vect
 }
 
 cc::Dir facingOf(Block const& block) {
-    return static_cast<cc::Dir>(std::clamp(game::intState(block, "levitate:facing").value_or(1), 0, 5));
+    return static_cast<cc::Dir>(std::clamp(game::intState(block, "bearing:facing").value_or(1), 0, 5));
 }
 
 int redstoneSignal(BlockSource& region, cc::Pos const& p) { return common::redstone::power(region, bp(p)); }
@@ -199,4 +199,4 @@ void consumeSelected(Player& player) {
     player.sendInventory(false);
 }
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings

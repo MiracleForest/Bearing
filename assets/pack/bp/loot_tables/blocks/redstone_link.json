@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:redstone_link",
+          "name": "bearing:redstone_link",
           "weight": 1
         }
       ]

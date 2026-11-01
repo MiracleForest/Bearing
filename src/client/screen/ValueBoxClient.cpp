@@ -2,7 +2,7 @@
 // (opened by the server on a right-click with the wrench / an empty hand) and the hover label
 // shown while looking at a value box or a filter slot.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <atomic>
@@ -38,10 +38,10 @@
 
 #include <windows.h>
 
-namespace lv::client::screen {
+namespace br::client::screen {
 
 namespace {
-namespace net = lv::feature::net;
+namespace net = br::feature::net;
 using core::common::BoardSpec;
 using core::common::ValueSettings;
 
@@ -235,14 +235,14 @@ void updateOutlines(LocalPlayer* player, bool sneaking) {
                 list.push_back(b);
             };
             auto const& held   = player->getSelectedItem();
-            bool        wrench = !held.isNull() && held.getTypeName() == lv::feature::common::interactions::kWrenchId;
-            if (auto const* boxes = lv::feature::common::valuebox::boxesOf(id)) {
+            bool        wrench = !held.isNull() && held.getTypeName() == br::feature::common::interactions::kWrenchId;
+            if (auto const* boxes = br::feature::common::valuebox::boxesOf(id)) {
                 for (auto const& b : *boxes) {
                     if (!b.centre || (b.requiresWrench && !wrench)) continue;
                     if (auto c = b.centre(block, face)) add(*c, b.scale);
                 }
             }
-            if (auto const* slots = lv::feature::common::filterslot::slotsOf(id)) {
+            if (auto const* slots = br::feature::common::filterslot::slotsOf(id)) {
                 for (auto const& s : *slots) {
                     if (!s.centre) continue;
                     if (auto c = s.centre(block, face)) add(*c, s.scale);
@@ -298,13 +298,13 @@ void pollHover() {
     auto& region = player->getDimensionBlockSource();
     auto const& block = region.getBlock(hit.mBlock);
     auto id = block.getTypeName();
-    if (!lv::feature::common::valuebox::boxesOf(id) && !lv::feature::common::filterslot::hasSlots(id)) {
+    if (!br::feature::common::valuebox::boxesOf(id) && !br::feature::common::filterslot::hasSlots(id)) {
         h.has = false;
         return;
     }
     double lx = hit.mPos.x - hit.mBlock.x, ly = hit.mPos.y - hit.mBlock.y, lz = hit.mPos.z - hit.mBlock.z;
     core::common::Vec local{lx, ly, lz};
-    bool onBox = lv::feature::common::valuebox::boxAt(block, hit.mFacing, local) || lv::feature::common::filterslot::slotAt(block, hit.mFacing, local);
+    bool onBox = br::feature::common::valuebox::boxAt(block, hit.mFacing, local) || br::feature::common::filterslot::slotAt(block, hit.mFacing, local);
     if (!onBox) {
         h.has = false;
         h.face = -1;
@@ -412,8 +412,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::screen
+} // namespace br::client::screen
 
-LV_REGISTER_MODULE(lv::client::screen::ValueBoxClientModule);
+BR_REGISTER_MODULE(br::client::screen::ValueBoxClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

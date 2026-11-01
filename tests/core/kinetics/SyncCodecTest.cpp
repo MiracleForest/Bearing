@@ -2,7 +2,7 @@
 
 #include "core/kinetics/SyncCodec.h"
 
-using namespace lv::core::kinetics::sync;
+using namespace br::core::kinetics::sync;
 
 TEST(KineticsSync, RoundTrip) {
     Batch b;

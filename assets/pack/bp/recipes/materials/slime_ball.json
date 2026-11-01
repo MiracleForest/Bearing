@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:slime_ball"
+      "identifier": "bearing:slime_ball"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:dough"
+        "item": "bearing:dough"
       },
       {
         "item": "minecraft:lime_dye"
@@ -17,7 +17,7 @@
     ],
     "unlock": [
       {
-        "item": "levitate:dough"
+        "item": "bearing:dough"
       }
     ],
     "result": {

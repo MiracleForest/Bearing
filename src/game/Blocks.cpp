@@ -15,7 +15,7 @@
 #include "mc/world/level/Level.h"
 #include "mc/world/level/dimension/Dimension.h"
 
-namespace lv::game {
+namespace br::game {
 
 namespace {
 constexpr int kUpdateAll = 3; ///< neighbours + clients
@@ -101,4 +101,4 @@ BlockPos blockPosOf(Vec3 const& pos) {
     };
 }
 
-} // namespace lv::game
+} // namespace br::game

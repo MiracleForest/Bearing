@@ -23,11 +23,11 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::materials {
+namespace br::feature::materials {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 using GP = core::GlobalPos;
 
 /// Every item / block id SPEC §2.4 names (other units' recipes rely on them).
@@ -69,10 +69,10 @@ void clearItemsNear(BlockSource& region, BlockPos const& p) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("materials.ids_registered", [](Context& ctx) {
+BR_REGISTER_SELFTEST("materials.ids_registered", [](Context& ctx) {
     int missing = 0;
     for (auto const* id : kIds) {
-        std::string full = std::string("levitate:") + id;
+        std::string full = std::string("bearing:") + id;
         if (makeStack(full, 1).isNull()) {
             ++missing;
             ctx.check(false, "item not registered: " + full);
@@ -87,10 +87,10 @@ LV_REGISTER_SELFTEST("materials.ids_registered", [](Context& ctx) {
     ctx.info(std::to_string(allBlocks().size()) + " blocks, " + std::to_string(std::size(kIds)) + " ids, missing " + std::to_string(missing));
 });
 
-LV_REGISTER_SELFTEST("materials.tool_rules", [](Context& ctx) {
-    auto const* ore   = blockInfo("levitate:zinc_ore");
-    auto const* stone = blockInfo("levitate:cut_granite");
-    auto const* box   = blockInfo("levitate:cardboard_block");
+BR_REGISTER_SELFTEST("materials.tool_rules", [](Context& ctx) {
+    auto const* ore   = blockInfo("bearing:zinc_ore");
+    auto const* stone = blockInfo("bearing:cut_granite");
+    auto const* box   = blockInfo("bearing:cardboard_block");
     ctx.require(ore && stone && box, "block table");
     auto iron   = makeStack("minecraft:iron_pickaxe", 1);
     auto wood   = makeStack("minecraft:wooden_pickaxe", 1);
@@ -103,53 +103,53 @@ LV_REGISTER_SELFTEST("materials.tool_rules", [](Context& ctx) {
     ctx.check(toolCanHarvest(*box, ItemStack{}), "cardboard drops by hand");
 });
 
-LV_REGISTER_SELFTEST("materials.loot_rules", [](Context& ctx) {
-    auto const* ore     = blockInfo("levitate:zinc_ore");
-    auto const* bound   = blockInfo("levitate:bound_cardboard_block");
-    auto const* oreB    = defaultBlock("levitate:zinc_ore");
-    auto const* boundB  = defaultBlock("levitate:bound_cardboard_block");
+BR_REGISTER_SELFTEST("materials.loot_rules", [](Context& ctx) {
+    auto const* ore     = blockInfo("bearing:zinc_ore");
+    auto const* bound   = blockInfo("bearing:bound_cardboard_block");
+    auto const* oreB    = defaultBlock("bearing:zinc_ore");
+    auto const* boundB  = defaultBlock("bearing:bound_cardboard_block");
     ctx.require(ore && bound && oreB && boundB, "blocks loaded");
     auto plain = dropsFor(*ore, *oreB, false, 0, [](int) { return 0; });
-    ctx.check(plain.size() == 1 && plain[0].first == "levitate:raw_zinc" && plain[0].second == 1, "zinc ore drops one raw zinc");
+    ctx.check(plain.size() == 1 && plain[0].first == "bearing:raw_zinc" && plain[0].second == 1, "zinc ore drops one raw zinc");
     auto silk = dropsFor(*ore, *oreB, true, 0, [](int) { return 0; });
-    ctx.check(silk.size() == 1 && silk[0].first == "levitate:zinc_ore", "silk touch drops the ore");
+    ctx.check(silk.size() == 1 && silk[0].first == "bearing:zinc_ore", "silk touch drops the ore");
     auto lucky = dropsFor(*ore, *oreB, false, 3, [](int n) { return n - 1; });
     ctx.check(lucky.size() == 1 && lucky[0].second == 4, "fortune III: up to 4 raw zinc");
     auto b = dropsFor(*bound, *boundB, false, 0, [](int) { return 0; });
     ctx.check(b.size() == 2, "bound cardboard drops cardboard block + string");
 });
 
-LV_REGISTER_SELFTEST("materials.slab_merge", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("materials.slab_merge", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(900);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& region = ctx.player().getDimensionBlockSource();
-    ctx.require(ctx.setBlock(p, "levitate:cut_asurine_slab"), "place slab");
+    ctx.require(ctx.setBlock(p, "bearing:cut_asurine_slab"), "place slab");
     auto const& before = region.getBlock(game::blockPos(p));
     ctx.require(singleSlabHalf(before).has_value(), "a single slab");
     ctx.require(mergeSlab(region, game::blockPos(p)), "merged");
     auto const& after = region.getBlock(game::blockPos(p));
-    ctx.check(game::blockId(after) == "levitate:cut_asurine_slab", "still the slab block");
+    ctx.check(game::blockId(after) == "bearing:cut_asurine_slab", "still the slab block");
     ctx.check(!singleSlabHalf(after).has_value(), "now double");
     ctx.check(!mergeSlab(region, game::blockPos(p)), "a double slab can't merge again");
 });
 
-LV_REGISTER_SELFTEST("materials.slab_merge_by_player", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("materials.slab_merge_by_player", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(902);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& player = ctx.player();
     auto& region = player.getDimensionBlockSource();
-    ctx.require(ctx.setBlock(p, "levitate:polished_cut_ochrum_slab"), "place slab");
+    ctx.require(ctx.setBlock(p, "bearing:polished_cut_ochrum_slab"), "place slab");
     ctx.cleanupBlock({p.dim, p.x, p.y + 1, p.z});
-    auto slab = makeStack("levitate:polished_cut_ochrum_slab", 4);
+    auto slab = makeStack("bearing:polished_cut_ochrum_slab", 4);
     ctx.require(!slab.isNull(), "slab item");
     player.mGameMode->useItemOn(slab, game::blockPos(p), 1, Vec3{p.x + 0.5f, p.y + 1.0f, p.z + 0.5f}, HandSlot::Mainhand, nullptr, true);
     ctx.check(player.isCreative() || slab.mCount == 3, "one slab used");
     co_await ctx.ticks(2);
     ctx.check(!singleSlabHalf(region.getBlock(game::blockPos(p))).has_value(), "the slab became double");
-    ctx.check(game::blockIdAt(region, BlockPos{p.x, p.y + 1, p.z}) != "levitate:polished_cut_ochrum_slab", "no slab placed above");
+    ctx.check(game::blockIdAt(region, BlockPos{p.x, p.y + 1, p.z}) != "bearing:polished_cut_ochrum_slab", "no slab placed above");
 });
 
-LV_REGISTER_SELFTEST("materials.player_mining_drops", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("materials.player_mining_drops", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(904, 2);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& player = ctx.player();
@@ -157,7 +157,7 @@ LV_REGISTER_SELFTEST("materials.player_mining_drops", [](Context& ctx) -> ll::co
     auto  bp     = game::blockPos(p);
     clearItemsNear(region, bp);
     // iron pickaxe: raw zinc
-    ctx.require(ctx.setBlock(p, "levitate:zinc_ore"), "place ore");
+    ctx.require(ctx.setBlock(p, "bearing:zinc_ore"), "place ore");
     ctx.give(player, makeStack("minecraft:iron_pickaxe", 1), player.getSelectedItemSlot());
     {   // what GameMode does when a survival player finishes mining: drops with the held tool, then air
         Block const& b = region.getBlock(bp);
@@ -165,11 +165,11 @@ LV_REGISTER_SELFTEST("materials.player_mining_drops", [](Context& ctx) -> ll::co
         game::clearBlock(region, bp);
     }
     co_await ctx.ticks(3);
-    ctx.check(game::blockIdAt(region, bp) != "levitate:zinc_ore", "ore broken");
-    ctx.check(countItemsNear(region, bp, "levitate:raw_zinc") >= 1, "raw zinc dropped");
+    ctx.check(game::blockIdAt(region, bp) != "bearing:zinc_ore", "ore broken");
+    ctx.check(countItemsNear(region, bp, "bearing:raw_zinc") >= 1, "raw zinc dropped");
     clearItemsNear(region, bp);
     // wooden pickaxe: nothing (needs iron)
-    ctx.require(ctx.setBlock(p, "levitate:zinc_ore"), "place ore again");
+    ctx.require(ctx.setBlock(p, "bearing:zinc_ore"), "place ore again");
     ctx.give(player, makeStack("minecraft:wooden_pickaxe", 1), player.getSelectedItemSlot());
     {   // what GameMode does when a survival player finishes mining: drops with the held tool, then air
         Block const& b = region.getBlock(bp);
@@ -177,29 +177,29 @@ LV_REGISTER_SELFTEST("materials.player_mining_drops", [](Context& ctx) -> ll::co
         game::clearBlock(region, bp);
     }
     co_await ctx.ticks(3);
-    ctx.check(countItemsNear(region, bp, "levitate:raw_zinc") == 0 && countItemsNear(region, bp, "levitate:zinc_ore") == 0,
+    ctx.check(countItemsNear(region, bp, "bearing:raw_zinc") == 0 && countItemsNear(region, bp, "bearing:zinc_ore") == 0,
               "nothing dropped with a wooden pickaxe");
     clearItemsNear(region, bp);
 });
 
-LV_REGISTER_SELFTEST("materials.experience_nuggets", [](Context& ctx) {
+BR_REGISTER_SELFTEST("materials.experience_nuggets", [](Context& ctx) {
     auto one = experienceOrbValues(1);
     ctx.check(one.size() == 1 && one[0] == 3, "one nugget: one orb of 3");
     int sum = 0;
     for (int v : experienceOrbValues(64)) sum += v;
     ctx.check(sum == 192 && experienceOrbValues(64).size() == 5, "64 nuggets: 192 xp in 5 orbs");
     auto& player = ctx.player();
-    auto  stack  = makeStack("levitate:experience_nugget", 10);
+    auto  stack  = makeStack("bearing:experience_nugget", 10);
     ctx.require(!stack.isNull(), "nugget item");
     int xp = useExperienceNuggets(player, stack, false);
     ctx.check(xp == 30, "10 nuggets give 30 xp, got " + std::to_string(xp));
     ctx.check(stack.isNull() || stack.mCount == 0, "the whole stack is used");
-    auto two = makeStack("levitate:experience_nugget", 2);
+    auto two = makeStack("bearing:experience_nugget", 2);
     useExperienceNuggets(player, two, true);
     ctx.check(two.mCount == 1, "sneaking uses one");
 });
 
-LV_REGISTER_SELFTEST("materials.builders_tea", [](Context& ctx) {
+BR_REGISTER_SELFTEST("materials.builders_tea", [](Context& ctx) {
     auto& player = ctx.player();
     applyBuildersTea(player);
     auto const* e = player.getEffect(3u);
@@ -209,8 +209,8 @@ LV_REGISTER_SELFTEST("materials.builders_tea", [](Context& ctx) {
     ctx.check(!e->mEffectVisible, "no particles");
 });
 
-LV_REGISTER_SELFTEST("materials.chromatic_light", [](Context& ctx) {
-    auto s = makeStack("levitate:chromatic_compound", 1);
+BR_REGISTER_SELFTEST("materials.chromatic_light", [](Context& ctx) {
+    auto s = makeStack("bearing:chromatic_compound", 1);
     ctx.require(!s.isNull(), "item");
     ctx.check(chromaticLight(s) == 0, "uncharged");
     setChromaticLight(s, 7);
@@ -219,7 +219,7 @@ LV_REGISTER_SELFTEST("materials.chromatic_light", [](Context& ctx) {
     ctx.check(chromaticLight(s) == 0, "charge cleared");
 });
 
-LV_REGISTER_SELFTEST("materials.worldgen", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("materials.worldgen", [](Context& ctx) -> ll::coro::CoroTask<> {
     // Fresh chunks far from the spawn (the spawn area may predate the mod on BDS).
     auto base = ctx.testPos(906);
     GP   far{0, base.x + 30000, 64, base.z + 30000};
@@ -241,7 +241,7 @@ LV_REGISTER_SELFTEST("materials.worldgen", [](Context& ctx) -> ll::coro::CoroTas
                 for (int z = z0; z < z0 + 16; ++z)
                     for (int y = -63; y <= 70; ++y) {
                         auto id = region.getBlock(BlockPos{x, y, z}).getTypeName();
-                        if (id.starts_with("levitate:")) {
+                        if (id.starts_with("bearing:")) {
                             if (id.ends_with("zinc_ore")) ++zinc;
                             else ++layers;
                         }
@@ -254,4 +254,4 @@ LV_REGISTER_SELFTEST("materials.worldgen", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(zinc > 0, "zinc ore generated");
 });
 
-} // namespace lv::feature::materials
+} // namespace br::feature::materials

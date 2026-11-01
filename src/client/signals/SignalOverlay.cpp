@@ -5,14 +5,14 @@
 // companions whenever the markers change. Every frame, after the opaque block entities, a flat
 // arrow in the signal's colour is drawn on the track where each signal side is bound (pointing
 // the way the trains it controls travel) and a square where an observer is bound. Vanilla
-// clients see the signal state on the block itself (block state `levitate:signal_state`).
+// clients see the signal state on the block itself (block state `bearing:signal_state`).
 //
 // While the player holds a signal / observer item that carries a track selection (item data
-// `lv:track_target`, Create's TrackTargetingBlockItem), the selected track is outlined (Create's
+// `br:track_target`, Create's TrackTargetingBlockItem), the selected track is outlined (Create's
 // TrackTargetingClient). Create also makes the item glint (isFoil); Bedrock draws no glint on items
 // shown with their block's model, as ours are, even when isGlint says so (tried: SPEC §8).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cmath>
@@ -43,7 +43,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::signals {
+namespace br::client::signals {
 
 namespace {
 
@@ -77,10 +77,10 @@ mce::MaterialPtr& material() {
     return m;
 }
 
-/// Whether a stack carries a track selection (item data lv:track_target).
+/// Whether a stack carries a track selection (item data br:track_target).
 bool hasTrackTarget(ItemStack const& stack) {
     auto const* tag = stack.mUserData.get();
-    return tag && tag->contains("lv:track_target", Tag::Type::String);
+    return tag && tag->contains("br:track_target", Tag::Type::String);
 }
 
 /// Create's TrackTargetingClient: the outline of the track the held item has selected.
@@ -248,8 +248,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::signals
+} // namespace br::client::signals
 
-LV_REGISTER_MODULE(lv::client::signals::SignalOverlayModule);
+BR_REGISTER_MODULE(br::client::signals::SignalOverlayModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

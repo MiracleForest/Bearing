@@ -63,17 +63,17 @@
 #include "mc/world/level/dimension/Dimension.h"
 #include "mod/Module.h"
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
-namespace ct = ::lv::feature::contraption;
-namespace bd = ::lv::feature::common::blockdata;
-namespace vb = ::lv::feature::common::valuebox;
-namespace it = ::lv::feature::common::items;
+namespace ct = ::br::feature::contraption;
+namespace bd = ::br::feature::common::blockdata;
+namespace vb = ::br::feature::common::valuebox;
+namespace it = ::br::feature::common::items;
 
 namespace {
 
-constexpr char   kDbKey[]          = "lv:bearings:carts";
-constexpr char   kItemData[]       = "lv:minecart_contraption";
+constexpr char   kDbKey[]          = "br:bearings:carts";
+constexpr char   kItemData[]       = "br:minecart_contraption";
 constexpr double kMaxCartSpeed     = 0.4;  ///< blocks per tick on a rail (vanilla)
 constexpr int    kAssemblyCooldown = 8;    ///< Create's CartAssemblerBlockEntity cooldown (ticks)
 constexpr std::size_t kMaxItemData = 512 * 1024; ///< largest contraption an item may carry (bytes of JSON)
@@ -164,7 +164,7 @@ std::optional<bool> railAxisX(BlockSource& region, BlockPos const& p) {
     if (!region.hasChunksAt(p, 0, false)) return std::nullopt;
     auto const&        block = region.getBlock(p);
     std::string const& id    = block.getTypeName();
-    if (id == kCartAssembler || id == kControllerRail) return game::intState(block, "levitate:rail_axis").value_or(0) == 1;
+    if (id == kCartAssembler || id == kControllerRail) return game::intState(block, "bearing:rail_axis").value_or(0) == 1;
     if (id == "minecraft:rail" || id == "minecraft:golden_rail" || id == "minecraft:detector_rail" || id == "minecraft:activator_rail") {
         int d = game::intState(block, "rail_direction").value_or(0);
         if (d == 1 || d == 2 || d == 3) return true;
@@ -223,8 +223,8 @@ Actor* spawnMinecart(BlockSource& region, cc::Vec3d const& at, std::string const
 }
 
 cc::Dir horizontalDirection(Block const& assembler) {
-    bool axisX     = game::intState(assembler, "levitate:rail_axis").value_or(0) == 1;
-    bool backwards = game::intState(assembler, "levitate:backwards").value_or(0) != 0;
+    bool axisX     = game::intState(assembler, "bearing:rail_axis").value_or(0) == 1;
+    bool backwards = game::intState(assembler, "bearing:backwards").value_or(0) != 0;
     return cb::railDirection(axisX, backwards);
 }
 
@@ -399,8 +399,8 @@ void disassembleOn(BlockSource& region, GP const& pos, Actor& cart) {
         GP op = game::globalPos(pos.dim, game::blockPosOf(other->getPosition()));
         if (idAt(region, op) != kCartAssembler) return;
         auto const& ob = region.getBlock(bp(op));
-        auto        t  = static_cast<cb::RailType>(game::intState(ob, "levitate:rail_type").value_or(0));
-        if (!cb::shouldDisassemble(cb::actionFor(t, game::intState(ob, "levitate:powered").value_or(0) != 0, true))) return;
+        auto        t  = static_cast<cb::RailType>(game::intState(ob, "bearing:rail_type").value_or(0));
+        if (!cb::shouldDisassemble(cb::actionFor(t, game::intState(ob, "bearing:powered").value_or(0) != 0, true))) return;
         std::erase_if(state().couplings, [&](Coupling const& c) {
             return (c.a == rec.cart && c.b == rec.coupled) || (c.b == rec.cart && c.a == rec.coupled);
         });
@@ -487,7 +487,7 @@ void syncCouplings() {
 void tickRail(BlockSource& region, GP const& pos, Kind kind) {
     auto&       st    = state();
     auto const& block = region.getBlock(bp(pos));
-    bool        axisX = game::intState(block, "levitate:rail_axis").value_or(0) == 1;
+    bool        axisX = game::intState(block, "bearing:rail_axis").value_or(0) == 1;
 
     // redstone: Create's neighborChanged (common::redstone watch, set up once per rail)
     if (!st.railWatches.contains(pos)) {
@@ -498,14 +498,14 @@ void tickRail(BlockSource& region, GP const& pos, Kind kind) {
             auto const& id = b.getTypeName();
             if (id == kCartAssembler) {
                 int powered = signal > 0 ? 1 : 0;
-                if (game::intState(b, "levitate:powered").value_or(0) != powered) setStates(*r, at, {{"levitate:powered", powered}});
+                if (game::intState(b, "bearing:powered").value_or(0) != powered) setStates(*r, at, {{"bearing:powered", powered}});
             } else if (id == kControllerRail) {
-                if (game::intState(b, "levitate:power").value_or(0) != signal) setStates(*r, at, {{"levitate:power", signal}});
+                if (game::intState(b, "bearing:power").value_or(0) != signal) setStates(*r, at, {{"bearing:power", signal}});
             }
         });
     }
     auto const& now = region.getBlock(bp(pos));
-    if (kind == Kind::CartAssembler) st.railTypes[pos] = game::intState(now, "levitate:rail_type").value_or(0);
+    if (kind == Kind::CartAssembler) st.railTypes[pos] = game::intState(now, "bearing:rail_type").value_or(0);
 
     for (auto* cart : cartsAt(region, pos)) {
         auto      uid    = uidOf(*cart);
@@ -521,15 +521,15 @@ void tickRail(BlockSource& region, GP const& pos, Kind kind) {
         cc::Vec3d offset = centre - ccv(cart->getPosition());
 
         if (kind == Kind::ControllerRail) {
-            bool      backwards = game::intState(now, "levitate:backwards").value_or(0) != 0;
-            int       power     = game::intState(now, "levitate:power").value_or(0);
+            bool      backwards = game::intState(now, "bearing:backwards").value_or(0) != 0;
+            int       power     = game::intState(now, "bearing:power").value_or(0);
             cc::Vec3d m         = axisX ? cc::Vec3d{along, 0, 0} : cc::Vec3d{0, 0, along};
             auto      v         = cb::controllerVelocity(m, cb::railDirection(axisX, backwards), power, kMaxCartSpeed);
             auto      b         = cb::brakeVelocity(offset);
             speed               = v ? (axisX ? v->x : v->z) : (axisX ? b.x : b.z);
         } else {
-            auto type    = static_cast<cb::RailType>(game::intState(now, "levitate:rail_type").value_or(0));
-            bool powered = game::intState(now, "levitate:powered").value_or(0) != 0;
+            auto type    = static_cast<cb::RailType>(game::intState(now, "bearing:rail_type").value_or(0));
+            bool powered = game::intState(now, "bearing:powered").value_or(0) != 0;
             auto action  = cb::actionFor(type, powered, hasPassengers(*cart));
             auto& last   = st.cooldown[pos];
             if (currentTick() >= last + kAssemblyCooldown && (cb::shouldAssemble(action) || cb::shouldDisassemble(action))) {
@@ -566,7 +566,7 @@ void railRemoved(GP const& pos, Kind kind) {
         if (t != st.railTypes.end()) {
             // Create's cart assembler drops the rail it was placed on
             if (!st.creativeBroken.contains(pos)) {
-                static char const* rails[]{"minecraft:rail", "minecraft:golden_rail", "minecraft:detector_rail", "minecraft:activator_rail", "levitate:controller_rail"};
+                static char const* rails[]{"minecraft:rail", "minecraft:golden_rail", "minecraft:detector_rail", "minecraft:activator_rail", "bearing:controller_rail"};
                 auto* region = regionOf(pos.dim);
                 auto  item   = it::make(rails[std::clamp(t->second, 0, 4)]);
                 auto  level  = ll::service::getLevel();
@@ -738,7 +738,7 @@ std::string coupleCarts(Player* player, std::int64_t a, std::int64_t b) {
     int distance = static_cast<int>((ccv(ca->getPosition()) - ccv(cb_->getPosition())).length());
     bool contraption = player == nullptr;
     if (distance < 2) {
-        if (contraption) return "lv.bearings.coupling_too_close"; // Create: no two-cart contraptions below 2 blocks
+        if (contraption) return "br.bearings.coupling_too_close"; // Create: no two-cart contraptions below 2 blocks
         distance = 2;
     }
     if (distance > config::get<Config>().maxCartCouplingLength) return "create.minecart_coupling.too_far";
@@ -945,7 +945,7 @@ bool placeAssembler(Player& player, GP const& clicked, bool consume) {
     if (!axisX || dir > 1) return true; // only straight, flat rails (Create: NORTH_SOUTH / EAST_WEST)
     int backwards;
     if (id == kControllerRail) {
-        backwards = stateAt(*region, clicked, "levitate:backwards", 0);
+        backwards = stateAt(*region, clicked, "bearing:backwards", 0);
     } else {
         auto [fx, fz] = game::facingOffset(game::playerFacing(player));
         backwards     = (fx > 0 || fz > 0) ? 1 : 0; // Create: the player's motion direction is positive
@@ -955,7 +955,7 @@ bool placeAssembler(Player& player, GP const& clicked, bool consume) {
         *region,
         clicked,
         kCartAssembler,
-        {{"levitate:rail_axis", *axisX ? 1 : 0}, {"levitate:rail_type", static_cast<int>(*type)}, {"levitate:powered", powered}, {"levitate:backwards", backwards}}
+        {{"bearing:rail_axis", *axisX ? 1 : 0}, {"bearing:rail_type", static_cast<int>(*type)}, {"bearing:powered", powered}, {"bearing:backwards", backwards}}
     );
     track(clicked);
     if (consume) consumeSelected(player);
@@ -969,7 +969,7 @@ void orientControllerRail(BlockSource& region, GP const& pos, Player& player) {
     int  facing = game::playerFacing(player); // 0 S, 1 W, 2 N, 3 E
     bool axisX  = facing == 1 || facing == 3;
     bool back   = facing == 0 || facing == 3;
-    setStates(region, pos, {{"levitate:rail_axis", axisX ? 1 : 0}, {"levitate:backwards", back ? 1 : 0}});
+    setStates(region, pos, {{"bearing:rail_axis", axisX ? 1 : 0}, {"bearing:backwards", back ? 1 : 0}});
 }
 
 bool cartInteract(Player& player, Actor& target) {
@@ -1037,7 +1037,7 @@ void registerCartBoxes() {
         return core::common::optionBoard(3, tr("create.contraptions.cart_movement_mode", "Cart Movement Mode"));
     };
     box.centre = [](Block const& block, int face) -> std::optional<core::common::Vec> {
-        bool    axisX = game::intState(block, "levitate:rail_axis").value_or(0) == 1;
+        bool    axisX = game::intState(block, "bearing:rail_axis").value_or(0) == 1;
         auto    f     = static_cast<cc::Dir>(std::clamp(face, 0, 5));
         if (cc::axisOf(f) == cc::Axis::Y || (cc::axisOf(f) == cc::Axis::X) == axisX) return std::nullopt;
         auto n = cc::Vec3d::of(cc::offset(f));
@@ -1091,12 +1091,12 @@ void forgetCarts() {
     state().railY = railY;
 }
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings
 
 // Minecart contraption items (Create's MinecartContraptionItem): dispensers place them onto the
 // rail in front, and `minecartContraptionInContainers` (false) keeps them out of shulker boxes
 // (Create: canFitInsideContainerItems).
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 namespace cart_items {
 
 
@@ -1212,6 +1212,6 @@ public:
 } // namespace
 
 } // namespace cart_items
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings
 
-LV_REGISTER_MODULE(lv::feature::bearings::cart_items::CartItemHooks);
+BR_REGISTER_MODULE(br::feature::bearings::cart_items::CartItemHooks);

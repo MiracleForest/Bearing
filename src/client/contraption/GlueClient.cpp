@@ -11,7 +11,7 @@
 //   otherwise.
 // Players without the client mod get particles along the edges from the server instead.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cmath>
@@ -48,13 +48,13 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::contraption {
+namespace br::client::contraption {
 
 namespace {
 
 namespace cc = core::contraption;
 
-constexpr char   kSuperGlue[] = "levitate:super_glue";
+constexpr char   kSuperGlue[] = "bearing:super_glue";
 constexpr double kReach       = 5.0;
 
 struct GlueState {
@@ -261,8 +261,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::contraption
+} // namespace br::client::contraption
 
-LV_REGISTER_MODULE(lv::client::contraption::GlueClientModule);
+BR_REGISTER_MODULE(br::client::contraption::GlueClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -13,7 +13,7 @@ $r = Invoke-SelfTest 'contraptionmotion.*'
 if ($r.Pass -lt 3) { throw "expected 3 contraptionmotion selftests to pass, got $($r.Pass)" }
 
 # The test anchor through the console: a single stone near the world origin.
-Send-Console 'tickingarea add 0 -64 0 15 -40 15 lv_contraption_e2e true'
+Send-Console 'tickingarea add 0 -64 0 15 -40 15 br_contraption_e2e true'
 Wait-Seconds 3
 Send-Console 'setblock 4 -58 4 stone'
 Send-Console 'setblock 4 -57 4 gold_block'
@@ -36,4 +36,4 @@ Wait-LogLine 'super glue added by command: 4 -58 4 \.\. 5 -58 4' 20 -Since $mark
 Send-Console 'create glue clear 100'
 Send-Console 'setblock 4 -55 4 air'
 Send-Console 'setblock 4 -57 4 air'
-Send-Console 'tickingarea remove lv_contraption_e2e'
+Send-Console 'tickingarea remove br_contraption_e2e'

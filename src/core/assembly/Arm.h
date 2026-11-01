@@ -7,7 +7,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::assembly {
+namespace br::core::assembly {
 
 /// Create's ArmBlockEntity.SelectionMode, in its order (the value box columns).
 enum class ArmSelectionMode : int { RoundRobin = 0, ForcedRoundRobin = 1, PreferFirst = 2 };
@@ -54,4 +54,4 @@ using Vec3f = std::array<double, 3>;
 inline constexpr double kArmLowerLength = 18 / 16.0;
 inline constexpr double kArmUpperLength = 17 / 16.0;
 
-} // namespace lv::core::assembly
+} // namespace br::core::assembly

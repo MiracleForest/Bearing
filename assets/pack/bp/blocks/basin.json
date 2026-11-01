@@ -2,29 +2,29 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:basin",
+      "identifier": "bearing:basin",
       "menu_category": { "category": "items" },
       "states": {
-        "levitate:facing": [0, 1, 2, 3, 4, 5]
+        "bearing:facing": [0, 1, 2, 3, 4, 5]
       }
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.basin",
+        "identifier": "geometry.bearing.basin",
         "bone_visibility": {
           "body": true,
-          "spout_north": "q.block_state('levitate:facing') == 2",
-          "spout_south": "q.block_state('levitate:facing') == 3",
-          "spout_west": "q.block_state('levitate:facing') == 4",
-          "spout_east": "q.block_state('levitate:facing') == 5"
+          "spout_north": "q.block_state('bearing:facing') == 2",
+          "spout_south": "q.block_state('bearing:facing') == 3",
+          "spout_west": "q.block_state('bearing:facing') == 4",
+          "spout_east": "q.block_state('bearing:facing') == 5"
         }
       },
       "minecraft:material_instances": {
-        "*": { "texture": "levitate_basin_side", "render_method": "opaque" },
-        "side": { "texture": "levitate_basin_side", "render_method": "opaque" },
-        "top": { "texture": "levitate_basin_top", "render_method": "opaque" },
-        "bottom": { "texture": "levitate_basin_bottom", "render_method": "opaque" },
-        "inner": { "texture": "levitate_basin_inner", "render_method": "opaque" }
+        "*": { "texture": "bearing_basin_side", "render_method": "opaque" },
+        "side": { "texture": "bearing_basin_side", "render_method": "opaque" },
+        "top": { "texture": "bearing_basin_top", "render_method": "opaque" },
+        "bottom": { "texture": "bearing_basin_bottom", "render_method": "opaque" },
+        "inner": { "texture": "bearing_basin_inner", "render_method": "opaque" }
       },
       "minecraft:collision_box": [
         { "origin": [-6, 0, -6], "size": [12, 2, 12] },

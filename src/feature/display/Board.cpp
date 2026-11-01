@@ -28,11 +28,11 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::display::board {
+namespace br::feature::display::board {
 
 namespace blockdata = common::blockdata;
 namespace items     = common::items;
-namespace k         = lv::kinetics;
+namespace k         = br::kinetics;
 
 std::string flapText(std::string const& text);
 
@@ -45,11 +45,11 @@ std::set<GlobalPos>& forcedRunning() {
 } // namespace
 
 namespace {
-constexpr char kDbBoards[] = "lv:display:boards";
+constexpr char kDbBoards[] = "br:display:boards";
 constexpr char kDataKey[]  = "display_board";
-constexpr char kFacing[]   = "levitate:facing";
-constexpr char kUp[]       = "levitate:up";
-constexpr char kDown[]     = "levitate:down";
+constexpr char kFacing[]   = "bearing:facing";
+constexpr char kUp[]       = "bearing:up";
+constexpr char kDown[]     = "bearing:down";
 constexpr int  kMaxSize    = 32;
 constexpr unsigned kDefaultColour = 0xD3C6BA; // Create's getLineColor default
 
@@ -347,7 +347,7 @@ k::KineticSpec boardSpec() {
     spec.impact    = 0;
     return spec;
 }
-LV_REGISTER_KINETIC_BLOCK(kBoardId, boardSpec());
+BR_REGISTER_KINETIC_BLOCK(kBoardId, boardSpec());
 
 } // namespace
 
@@ -717,4 +717,4 @@ struct TargetRegistration {
 TargetRegistration const gTarget;
 } // namespace
 
-} // namespace lv::feature::display::board
+} // namespace br::feature::display::board

@@ -60,14 +60,14 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("contraption", lv::feature::contraption::Config);
+BR_REGISTER_CONFIG("contraption", br::feature::contraption::Config);
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
-constexpr char kDbPrefix[]  = "lv:contraption:c:";
-constexpr char kDbNextId[]  = "lv:contraption:next_id";
+constexpr char kDbPrefix[]  = "br:contraption:c:";
+constexpr char kDbNextId[]  = "br:contraption:next_id";
 constexpr int  kNoUpdates   = 2; ///< clients only (no neighbour updates)
 
 using json = nlohmann::json;
@@ -1030,7 +1030,7 @@ public:
 
     // -- stabilized sub-contraptions (Create's StabilizedContraption) --
     static constexpr char kStabilizedKind[]   = "stabilized";
-    static constexpr char kMechanicalBearing[] = "levitate:mechanical_bearing";
+    static constexpr char kMechanicalBearing[] = "bearing:mechanical_bearing";
 
     /// Create's canBeStabilized: bearing contraptions stabilize bearings on their own axis (not one
     /// facing back into the anchor), clockwork hands not next to the anchor, cart contraptions
@@ -1100,7 +1100,7 @@ public:
             if (p == anchor && !includeAnchor) info.anchor = true;
             if (info.id == kMechanicalBearing && !info.anchor) {
                 auto states = detail::statesOf(region->getBlock(detail::toBlockPos(p)));
-                auto it     = states.find("levitate:facing");
+                auto it     = states.find("bearing:facing");
                 auto const* v = it == states.end() ? nullptr : std::get_if<std::int64_t>(&it->second);
                 auto facing = static_cast<cc::Dir>(std::clamp<std::int64_t>(v ? *v : 1, 0, 5));
                 if (canBeStabilized(o, anchor, p, facing)) {
@@ -1180,7 +1180,7 @@ public:
                 if (be->save(tag, *saveCtx)) {
                     if (tag.contains("pairx") && tag.contains("pairz")) {
                         cc::Pos pair{tag["pairx"].get<IntTag>().data, p.y, tag["pairz"].get<IntTag>().data};
-                        b.data["lv:pair"] = pos(pair - anchor);
+                        b.data["br:pair"] = pos(pair - anchor);
                     }
                     b.blockEntity = tag.toSnbt(SnbtFormat::Minimize, 0);
                 }
@@ -1353,7 +1353,7 @@ public:
             // break where they land (a door drops once, from its lower half)
             bool door = (p.b->id.ends_with("_door") && p.b->id.find("trapdoor") == std::string::npos) || p.b->id == "minecraft:wooden_door";
             if (cc::normQuarter(quarter) != 0 && axis != cc::Axis::Y
-                && (door || p.b->id == "levitate:rope" || p.b->id == "levitate:pulley_magnet")) {
+                && (door || p.b->id == "bearing:rope" || p.b->id == "bearing:pulley_magnet")) {
                 auto upper = p.b->states.find("upper_block_bit");
                 bool lower = upper == p.b->states.end() || std::get_if<std::int64_t>(&upper->second) == nullptr
                           || *std::get_if<std::int64_t>(&upper->second) == 0;
@@ -1366,8 +1366,8 @@ public:
                 (*tag)["x"] = p.target.x;
                 (*tag)["y"] = p.target.y;
                 (*tag)["z"] = p.target.z;
-                if (p.b->data.contains("lv:pair")) {
-                    auto pair  = c.mTransform.placeBlock(posOf(p.b->data["lv:pair"]));
+                if (p.b->data.contains("br:pair")) {
+                    auto pair  = c.mTransform.placeBlock(posOf(p.b->data["br:pair"]));
                     (*tag)["pairx"] = pair.x;
                     (*tag)["pairz"] = pair.z;
                 }
@@ -1725,7 +1725,7 @@ LL_TYPE_STATIC_HOOK(
 // Crash safety: display entities are never written to the world. Contraptions are saved in our
 // own DB and their displays are spawned again after a load, so a world saved while blocks were
 // moving (autosave, or the last save before a crash) holds no falling blocks that could land in a
-// world opened without Levitate. (Displays in a chunk that unloads simply vanish with it.)
+// world opened without Bearing. (Displays in a chunk that unloads simply vanish with it.)
 LL_TYPE_INSTANCE_HOOK(
     DisplaySaveHook,
     ll::memory::HookPriority::Normal,
@@ -1756,6 +1756,6 @@ public:
     }
 };
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption
 
-LV_REGISTER_MODULE(lv::feature::contraption::EngineModule);
+BR_REGISTER_MODULE(br::feature::contraption::EngineModule);

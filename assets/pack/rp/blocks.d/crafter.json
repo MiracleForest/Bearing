@@ -1,11 +1,11 @@
 {
-  "levitate:mechanical_crafter": {
+  "bearing:mechanical_crafter": {
     "sound": "metal"
   },
-  "levitate:mechanical_saw": {
+  "bearing:mechanical_saw": {
     "sound": "metal"
   },
-  "levitate:mechanical_drill": {
+  "bearing:mechanical_drill": {
     "sound": "metal"
   }
 }

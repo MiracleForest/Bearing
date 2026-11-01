@@ -21,7 +21,7 @@ class BlockPos;
 class Player;
 class ItemStack;
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace ct = core::transmission;
 namespace ck = core::kinetics;
@@ -30,56 +30,56 @@ using ck::Axis;
 using ck::Face;
 
 // ---- ids --------------------------------------------------------------------------------------------
-inline constexpr char kShaft[]               = "levitate:shaft";
-inline constexpr char kCogwheel[]            = "levitate:cogwheel";
-inline constexpr char kLargeCogwheel[]       = "levitate:large_cogwheel";
-inline constexpr char kGearbox[]             = "levitate:gearbox";
-inline constexpr char kVerticalGearbox[]     = "levitate:vertical_gearbox"; ///< item only
-inline constexpr char kClutch[]              = "levitate:clutch";
-inline constexpr char kGearshift[]           = "levitate:gearshift";
-inline constexpr char kChainDrive[]          = "levitate:encased_chain_drive";
-inline constexpr char kChainGearshift[]      = "levitate:adjustable_chain_gearshift";
-inline constexpr char kAndesiteShaft[]       = "levitate:andesite_encased_shaft";
-inline constexpr char kBrassShaft[]          = "levitate:brass_encased_shaft";
-inline constexpr char kAndesiteCog[]         = "levitate:andesite_encased_cogwheel";
-inline constexpr char kBrassCog[]            = "levitate:brass_encased_cogwheel";
-inline constexpr char kAndesiteLargeCog[]    = "levitate:andesite_encased_large_cogwheel";
-inline constexpr char kBrassLargeCog[]       = "levitate:brass_encased_large_cogwheel";
-inline constexpr char kSequencedGearshift[]  = "levitate:sequenced_gearshift";
-inline constexpr char kSpeedController[]     = "levitate:rotation_speed_controller";
-inline constexpr char kSpeedometer[]         = "levitate:speedometer";
-inline constexpr char kStressometer[]        = "levitate:stressometer";
-inline constexpr char kCuckooClock[]         = "levitate:cuckoo_clock";            ///< U49
-inline constexpr char kMysteriousCuckooClock[] = "levitate:mysterious_cuckoo_clock"; ///< U49
-inline constexpr char kFlywheel[]            = "levitate:flywheel";                ///< U49
+inline constexpr char kShaft[]               = "bearing:shaft";
+inline constexpr char kCogwheel[]            = "bearing:cogwheel";
+inline constexpr char kLargeCogwheel[]       = "bearing:large_cogwheel";
+inline constexpr char kGearbox[]             = "bearing:gearbox";
+inline constexpr char kVerticalGearbox[]     = "bearing:vertical_gearbox"; ///< item only
+inline constexpr char kClutch[]              = "bearing:clutch";
+inline constexpr char kGearshift[]           = "bearing:gearshift";
+inline constexpr char kChainDrive[]          = "bearing:encased_chain_drive";
+inline constexpr char kChainGearshift[]      = "bearing:adjustable_chain_gearshift";
+inline constexpr char kAndesiteShaft[]       = "bearing:andesite_encased_shaft";
+inline constexpr char kBrassShaft[]          = "bearing:brass_encased_shaft";
+inline constexpr char kAndesiteCog[]         = "bearing:andesite_encased_cogwheel";
+inline constexpr char kBrassCog[]            = "bearing:brass_encased_cogwheel";
+inline constexpr char kAndesiteLargeCog[]    = "bearing:andesite_encased_large_cogwheel";
+inline constexpr char kBrassLargeCog[]       = "bearing:brass_encased_large_cogwheel";
+inline constexpr char kSequencedGearshift[]  = "bearing:sequenced_gearshift";
+inline constexpr char kSpeedController[]     = "bearing:rotation_speed_controller";
+inline constexpr char kSpeedometer[]         = "bearing:speedometer";
+inline constexpr char kStressometer[]        = "bearing:stressometer";
+inline constexpr char kCuckooClock[]         = "bearing:cuckoo_clock";            ///< U49
+inline constexpr char kMysteriousCuckooClock[] = "bearing:mysterious_cuckoo_clock"; ///< U49
+inline constexpr char kFlywheel[]            = "bearing:flywheel";                ///< U49
 // other units' ids (referenced by id only)
-inline constexpr char kAndesiteCasing[] = "levitate:andesite_casing";
-inline constexpr char kBrassCasing[]    = "levitate:brass_casing";
-inline constexpr char kWrench[]         = "levitate:wrench";
-inline constexpr char kGoggles[]        = "levitate:goggles";
-inline constexpr char kPoweredShaft[]   = "levitate:powered_shaft"; ///< U18
-inline constexpr char kExtendoGrip[]    = "levitate:extendo_grip";  ///< U31
+inline constexpr char kAndesiteCasing[] = "bearing:andesite_casing";
+inline constexpr char kBrassCasing[]    = "bearing:brass_casing";
+inline constexpr char kWrench[]         = "bearing:wrench";
+inline constexpr char kGoggles[]        = "bearing:goggles";
+inline constexpr char kPoweredShaft[]   = "bearing:powered_shaft"; ///< U18
+inline constexpr char kExtendoGrip[]    = "bearing:extendo_grip";  ///< U31
 
 // ---- state names ----------------------------------------------------------------------------------
-inline constexpr char kAxis[]       = "levitate:axis";
-inline constexpr char kRotor[]      = "levitate:rotor";
-inline constexpr char kPowered[]    = "levitate:powered";
-inline constexpr char kTopShaft[]   = "levitate:top_shaft";
-inline constexpr char kBottomShaft[] = "levitate:bottom_shaft";
-inline constexpr char kPart[]       = "levitate:part";
-inline constexpr char kAlongFirst[] = "levitate:along_first";
-inline constexpr char kSignal[]     = "levitate:signal";
-inline constexpr char kSeqState[]   = "levitate:state";
-inline constexpr char kSeqMod[]     = "levitate:mod";
-inline constexpr char kFacing[]     = "levitate:facing";
-inline constexpr char kDial[]       = "levitate:dial";
-inline constexpr char kRevision[]   = "levitate:revision";
-inline constexpr char kBracket[]    = "levitate:bracket";
+inline constexpr char kAxis[]       = "bearing:axis";
+inline constexpr char kRotor[]      = "bearing:rotor";
+inline constexpr char kPowered[]    = "bearing:powered";
+inline constexpr char kTopShaft[]   = "bearing:top_shaft";
+inline constexpr char kBottomShaft[] = "bearing:bottom_shaft";
+inline constexpr char kPart[]       = "bearing:part";
+inline constexpr char kAlongFirst[] = "bearing:along_first";
+inline constexpr char kSignal[]     = "bearing:signal";
+inline constexpr char kSeqState[]   = "bearing:state";
+inline constexpr char kSeqMod[]     = "bearing:mod";
+inline constexpr char kFacing[]     = "bearing:facing";
+inline constexpr char kDial[]       = "bearing:dial";
+inline constexpr char kRevision[]   = "bearing:revision";
+inline constexpr char kBracket[]    = "bearing:bracket";
 // cuckoo clocks (U49)
-inline constexpr char kHorizontalFacing[] = "levitate:horizontal_facing"; ///< 0 south, 1 west, 2 north, 3 east
-inline constexpr char kHour[]              = "levitate:hour";               ///< static hour hand 0..11
-inline constexpr char kMinute[]            = "levitate:minute";             ///< static minute hand 0..11 (5 minutes)
-inline constexpr char kCuckoo[]            = "levitate:cuckoo";             ///< 0 doors shut, 1 pig out, 2 creeper out
+inline constexpr char kHorizontalFacing[] = "bearing:horizontal_facing"; ///< 0 south, 1 west, 2 north, 3 east
+inline constexpr char kHour[]              = "bearing:hour";               ///< static hour hand 0..11
+inline constexpr char kMinute[]            = "bearing:minute";             ///< static minute hand 0..11 (5 minutes)
+inline constexpr char kCuckoo[]            = "bearing:cuckoo";             ///< 0 doors shut, 1 pig out, 2 creeper out
 
 /// Every block id of the unit (for listeners and selftests).
 [[nodiscard]] std::vector<std::string> const& allBlocks();
@@ -204,7 +204,7 @@ void gaugeSyncTo(Player& player);
 void clearGauges();
 
 // ---- cuckoo clocks (Clock.cpp, U49) -------------------------------------------------------------------------
-/// The front of a clock from its levitate:horizontal_facing value.
+/// The front of a clock from its bearing:horizontal_facing value.
 [[nodiscard]] Face clockFacing(int horizontalFacing);
 [[nodiscard]] int  horizontalFacingOf(Face face);
 /// One server tick of a cuckoo clock (Create's CuckooClockBlockEntity.tick).
@@ -225,4 +225,4 @@ void uninstallClockHooks();
 [[nodiscard]] std::string surpriseDeathMessage(std::string const& name);
 void                      markSurpriseForTest();
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

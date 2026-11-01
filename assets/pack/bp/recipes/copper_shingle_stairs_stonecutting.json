@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:copper_shingle_stairs_stonecutting"
+      "identifier": "bearing:copper_shingle_stairs_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:copper_shingles"
+        "item": "bearing:copper_shingles"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:copper_shingles"
+        "item": "bearing:copper_shingles"
       }
     ],
     "result": {
-      "item": "levitate:copper_shingle_stairs",
+      "item": "bearing:copper_shingle_stairs",
       "count": 1
     }
   }

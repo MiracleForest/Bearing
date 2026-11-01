@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:cut_asurine",
+      "identifier": "bearing:cut_asurine",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_asurine_cut",
+          "texture": "bearing_asurine_cut",
           "render_method": "opaque"
         }
       }

@@ -4,7 +4,7 @@
     "entries": [
       {
         "type": "item",
-        "name": "levitate:gantry_carriage",
+        "name": "bearing:gantry_carriage",
         "weight": 1
       }
     ]

@@ -1,13 +1,13 @@
 #pragma once
 
-// Companion protocol (U3, SPEC §3.3): typed JSON messages between the Levitate client mod and
-// the Levitate server mod (BDS or the integrated server of a local world).
+// Companion protocol (U3, SPEC §3.3): typed JSON messages between the Bearing client mod and
+// the Bearing server mod (BDS or the integrated server of a local world).
 //
 // Handshake: the client mod sends "net.hello" {protocol, mod} when it joins a level (and repeats
 // it until answered); the server answers "net.welcome" {protocol, accepted} and, when accepted,
 // marks the player as a *companion*. The server never sends to non-companions, so vanilla
 // clients never receive our packets. Wire format: two LeviLamina custom packets
-// (`LevitateC2SPacket`, `LevitateS2CPacket`) carrying a channel name and a JSON payload.
+// (`BearingC2SPacket`, `BearingS2CPacket`) carrying a channel name and a JSON payload.
 //
 // Server side (server thread):
 //     net::on("filter.set", [](Player& p, nlohmann::json const& msg) { ... });   // from companions only
@@ -29,7 +29,7 @@
 
 class Player;
 
-namespace lv::feature::net {
+namespace br::feature::net {
 
 using Json          = nlohmann::json;
 using ServerHandler = std::function<void(Player& sender, Json const& payload)>;
@@ -40,7 +40,7 @@ void on(std::string const& channel, ServerHandler handler);
 /// Removes the handler of `channel`.
 void off(std::string const& channel);
 
-/// The player runs the Levitate client mod and completed the handshake.
+/// The player runs the Bearing client mod and completed the handshake.
 [[nodiscard]] bool isCompanion(Player const& player);
 /// The player's protocol version (0 when not a companion).
 [[nodiscard]] int companionProtocol(Player const& player);
@@ -60,18 +60,18 @@ void injectFromClient(Player& player, std::string_view channel, Json const& payl
 /// as if the player had completed the handshake (selftests of units that sync on join).
 void joinTestCompanion(Player& player);
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 namespace client {
 using Handler = std::function<void(Json const& payload)>;
 /// Handles messages from the server on `channel` (client thread).
 void on(std::string const& channel, Handler handler);
 /// Sends a message to the server. Returns false when not in a level.
 bool send(std::string_view channel, Json const& payload);
-/// The server accepted our handshake (it runs Levitate with a compatible protocol).
+/// The server accepted our handshake (it runs Bearing with a compatible protocol).
 [[nodiscard]] bool connected();
 /// Called on the client thread when the server accepts the handshake.
 void onConnected(std::function<void()> fn);
 } // namespace client
 #endif
 
-} // namespace lv::feature::net
+} // namespace br::feature::net

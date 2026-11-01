@@ -35,7 +35,7 @@ function Assert-TrainSeated {
     Invoke-Chat '/tp @s 0.5 -60 20.5'
     Start-Sleep -Milliseconds 600
     Invoke-Chat '/fill -2 -60 15 64 -54 26 air'
-    Invoke-Chat '/fill 2 -60 20 60 -60 20 levitate:track ["levitate:shape"=2]'
+    Invoke-Chat '/fill 2 -60 20 60 -60 20 bearing:track ["bearing:shape"=2]'
     Invoke-Chat '/fill 0 -60 16 16 -52 16 minecraft:blue_concrete'
     Start-Sleep -Milliseconds 800
     Invoke-Chat '/create trains demo_manual'

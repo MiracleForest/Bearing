@@ -41,9 +41,9 @@
 #include "mc/deps/nbt/IntTag.h"
 #include "feature/goggles/GoggleInfo.h"
 
-LV_REGISTER_CONFIG("pistons", lv::feature::pistons::Config);
+BR_REGISTER_CONFIG("pistons", br::feature::pistons::Config);
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace detail {
 void runDeferred();
@@ -76,8 +76,8 @@ k::KineticSpec directionalAxisSpec() {
         return k::axisOf(f) == toK(cp::directionalAxis(dirOf(b), b.get(kAxisFirst, 0) != 0));
     };
     s.rotorState   = kRotor;
-    s.rotorModel   = "geometry.levitate.pistons_shaft_rotor";
-    s.rotorTexture = "levitate_pistons_shaft";
+    s.rotorModel   = "geometry.bearing.pistons_shaft_rotor";
+    s.rotorTexture = "bearing_pistons_shaft";
     return s;
 }
 
@@ -89,7 +89,7 @@ k::KineticSpec pistonSpec() {
 }
 
 k::KineticSpec ropePulleySpec() {
-    auto s         = k::specs::withModel(k::specs::shaft(kAxis), "geometry.levitate.pistons_shaft_rotor", "levitate_pistons_shaft");
+    auto s         = k::specs::withModel(k::specs::shaft(kAxis), "geometry.bearing.pistons_shaft_rotor", "bearing_pistons_shaft");
     s.impact       = 4;
     return s;
 }
@@ -106,8 +106,8 @@ k::KineticSpec elevatorPulleySpec() {
     s.hasShaftTowards = [axisOf](k::BlockState const& b, k::Face f) { return k::axisOf(f) == axisOf(b); };
     s.impact          = 4;
     s.rotorState      = kRotor;
-    s.rotorModel      = "geometry.levitate.pistons_shaft_rotor";
-    s.rotorTexture    = "levitate_pistons_shaft";
+    s.rotorModel      = "geometry.bearing.pistons_shaft_rotor";
+    s.rotorTexture    = "bearing_pistons_shaft";
     return s;
 }
 
@@ -134,8 +134,8 @@ k::KineticSpec gantryShaftSpec() {
     s.stressKey    = "gantry_shaft";
     s.impact       = 0;
     s.rotorState   = kRotor;
-    s.rotorModel   = "geometry.levitate.gantry_shaft_rotor";
-    s.rotorTexture = "levitate_gantry_shaft";
+    s.rotorModel   = "geometry.bearing.gantry_shaft_rotor";
+    s.rotorTexture = "bearing_gantry_shaft";
     return s;
 }
 
@@ -154,17 +154,17 @@ k::KineticSpec gantryCarriageSpec() {
         return self.state->get(kFacing, 1) == int(k::opposite(k::nearestFace(d.x, d.y, d.z)));
     };
     s.impact       = 0;
-    s.rotorModel   = "geometry.levitate.gantry_pinion_rotor";
-    s.rotorTexture = "levitate_gantry_pinion";
+    s.rotorModel   = "geometry.bearing.gantry_pinion_rotor";
+    s.rotorTexture = "bearing_gantry_pinion";
     return s;
 }
 
-LV_REGISTER_KINETIC_BLOCK(std::string(kPiston), pistonSpec());
-LV_REGISTER_KINETIC_BLOCK(std::string(kStickyPiston), pistonSpec());
-LV_REGISTER_KINETIC_BLOCK(std::string(kRopePulley), ropePulleySpec());
-LV_REGISTER_KINETIC_BLOCK(std::string(kElevatorPulley), elevatorPulleySpec());
-LV_REGISTER_KINETIC_BLOCK(std::string(kGantryShaft), gantryShaftSpec());
-LV_REGISTER_KINETIC_BLOCK(std::string(kGantryCarriage), gantryCarriageSpec());
+BR_REGISTER_KINETIC_BLOCK(std::string(kPiston), pistonSpec());
+BR_REGISTER_KINETIC_BLOCK(std::string(kStickyPiston), pistonSpec());
+BR_REGISTER_KINETIC_BLOCK(std::string(kRopePulley), ropePulleySpec());
+BR_REGISTER_KINETIC_BLOCK(std::string(kElevatorPulley), elevatorPulleySpec());
+BR_REGISTER_KINETIC_BLOCK(std::string(kGantryShaft), gantryShaftSpec());
+BR_REGISTER_KINETIC_BLOCK(std::string(kGantryCarriage), gantryCarriageSpec());
 
 // ---- movement rules / rotation / carried data -------------------------------------------------
 
@@ -565,7 +565,7 @@ std::int64_t  gLastUser    = 0;
 /// Right-clicks on the unit's blocks (one action per 4 ticks per player while the button is held).
 ia::Result pistonsUseOn(ia::UseOnContext const& c) {
     std::string const& tid = c.blockId;
-    if (!tid.starts_with("levitate:")) return ia::Result::Pass;
+    if (!tid.starts_with("bearing:")) return ia::Result::Pass;
     bool ours = isPiston(tid) || isPulley(tid) || tid == kGantryCarriage || tid == kElevatorContact || tid == kPole
              || tid == kGantryShaft;
     if (!ours) return ia::Result::Pass;
@@ -750,19 +750,19 @@ std::vector<std::string> movementModeNames(Player const* viewer) {
     return out;
 }
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons
 
-LV_REGISTER_MODULE(lv::feature::pistons::PistonsModule);
+BR_REGISTER_MODULE(br::feature::pistons::PistonsModule);
 
 // Goggle line of piston extension poles (Create's GoggleOverlayRenderer: "Pole Length: N" while
 // wearing goggles and looking at a pole line that ends at a mechanical piston).
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 namespace pole_goggles {
 
 
 namespace {
 
-namespace goggles = ::lv::feature::goggles;
+namespace goggles = ::br::feature::goggles;
 
 int facingState(Block const& block) {
     auto const& nbt = *block.mSerializationId;
@@ -773,7 +773,7 @@ int facingState(Block const& block) {
     return 1;
 }
 
-LV_REGISTER_GOGGLE_INFO(std::string(kPole), {
+BR_REGISTER_GOGGLE_INFO(std::string(kPole), {
     .goggle = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
         auto axis  = cc::axisOf(static_cast<cc::Dir>(facingState(c.block)));
         int  poles = 1;
@@ -803,4 +803,4 @@ LV_REGISTER_GOGGLE_INFO(std::string(kPole), {
 } // namespace
 
 } // namespace pole_goggles
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

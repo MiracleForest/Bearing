@@ -20,7 +20,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
@@ -28,8 +28,8 @@ using selftest::Context;
 namespace items  = feature::common::items;
 namespace wrench = goggles::wrench;
 
-constexpr char kSource[]   = "levitate:kinetics_test_source";
-constexpr char kConsumer[] = "levitate:kinetics_test_consumer";
+constexpr char kSource[]   = "bearing:kinetics_test_source";
+constexpr char kConsumer[] = "bearing:kinetics_test_consumer";
 constexpr int  X = 0, Y = 1, Z = 2;
 
 GlobalPos at(Context& ctx, int dx, int dy = 0, int dz = 0) {
@@ -54,7 +54,7 @@ bool wrenchClick(Context& ctx, GlobalPos const& p, int face) {
 } // namespace
 
 // K1: SpeedGaugeBlockEntity formats its theoretical speed (struck through while overstressed)
-LV_REGISTER_SELFTEST("transmission.speedometer_overstressed", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.speedometer_overstressed", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.require(co_await ctx.ensureLoaded(at(ctx, 5200)), "test area loaded");
     ctx.setBlock(at(ctx, 5200), kSource, {{kAxis, X}});
     ctx.setBlock(at(ctx, 5201), kSpeedometer, {{kFacing, 2}, {kAlongFirst, 1}}); // facing north, axis x
@@ -62,7 +62,7 @@ LV_REGISTER_SELFTEST("transmission.speedometer_overstressed", [](Context& ctx) -
     co_await ctx.ticks(3);
     ctx.require(kinetics::isOverstressed(at(ctx, 5201)), "the network is overstressed");
     auto& p = ctx.player();
-    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, items::make("levitate:goggles").value_or(ItemStack{}));
+    p.setArmor(SharedTypes::Legacy::ArmorSlot::Head, items::make("bearing:goggles").value_or(ItemStack{}));
     auto        lines = goggles::overlayFor(p, at(ctx, 5201)).lines;
     std::string all;
     for (auto const& l : lines) all += "[" + core::goggles::stripFormatting(l) + "]";
@@ -72,7 +72,7 @@ LV_REGISTER_SELFTEST("transmission.speedometer_overstressed", [](Context& ctx) -
 });
 
 // K2: the wrench toggles a gauge's shaft axis on its dial axis and on top / bottom turns
-LV_REGISTER_SELFTEST("transmission.wrench_gauge", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.wrench_gauge", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto g = at(ctx, 5206, 1);
     ctx.require(co_await ctx.ensureLoaded(g), "test area loaded");
     ctx.setBlock(g, kSpeedometer, {{kFacing, 2}, {kAlongFirst, 0}}); // facing north, shaft along y
@@ -87,7 +87,7 @@ LV_REGISTER_SELFTEST("transmission.wrench_gauge", [](Context& ctx) -> ll::coro::
 });
 
 // K3: a connected chain drive turns about its connection axis and works out its part again
-LV_REGISTER_SELFTEST("transmission.wrench_chain_drive", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.wrench_chain_drive", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto lo = at(ctx, 5210, 1), hi = at(ctx, 5210, 2), single = at(ctx, 5213, 1);
     ctx.require(co_await ctx.ensureLoaded(lo), "test area loaded");
     ctx.setBlock(lo, kChainDrive, {{kAxis, X}});
@@ -107,7 +107,7 @@ LV_REGISTER_SELFTEST("transmission.wrench_chain_drive", [](Context& ctx) -> ll::
 });
 
 // K4: the speed controller (HorizontalAxisKineticBlock) only turns on its top and bottom
-LV_REGISTER_SELFTEST("transmission.wrench_speed_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.wrench_speed_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto c = at(ctx, 5216, 1);
     ctx.require(co_await ctx.ensureLoaded(c), "test area loaded");
     ctx.setBlock(c, kSpeedController, {{kAxis, X}});
@@ -120,7 +120,7 @@ LV_REGISTER_SELFTEST("transmission.wrench_speed_controller", [](Context& ctx) ->
 });
 
 // K5: EncasedCogwheelBlock.swapShaftsForRotation on a wrench turn
-LV_REGISTER_SELFTEST("transmission.wrench_encased_cog_turn", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.wrench_encased_cog_turn", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto c = at(ctx, 5220, 1);
     ctx.require(co_await ctx.ensureLoaded(c), "test area loaded");
     ctx.setBlock(c, kAndesiteCog, {{kAxis, X}, {kTopShaft, 1}, {kBottomShaft, 0}}); // shaft end east
@@ -133,7 +133,7 @@ LV_REGISTER_SELFTEST("transmission.wrench_encased_cog_turn", [](Context& ctx) ->
 });
 
 // K17: ShaftBlock.PlacementHelper counts cogs, takes cog items, +4 with the extendo grip
-LV_REGISTER_SELFTEST("transmission.shaft_helper", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.shaft_helper", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.require(co_await ctx.ensureLoaded(at(ctx, 5224, 1)), "test area loaded");
     auto& player = ctx.player();
     ctx.setBlock(at(ctx, 5223, 1), "minecraft:stone");
@@ -162,4 +162,4 @@ LV_REGISTER_SELFTEST("transmission.shaft_helper", [](Context& ctx) -> ll::coro::
     ctx.check(placed && idAt(world(), at(ctx, 5237, 1)) == kShaft, "with the extendo grip in the other hand the range is 16");
 });
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

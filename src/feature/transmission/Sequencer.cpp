@@ -1,7 +1,7 @@
 // Sequenced gearshift (U6): Create's SequencedGearshiftBlockEntity. Up to 5 instructions (turn by
 // angle, turn for a piston distance, delay, await a redstone pulse, end) run one after another
-// when the block gets powered. The current instruction is the block state `levitate:state`
-// (index + 1, also the comparator output) and its speed modifier `levitate:mod`, so a step
+// when the block gets powered. The current instruction is the block state `bearing:state`
+// (index + 1, also the comparator output) and its speed modifier `bearing:mod`, so a step
 // re-propagates the network as Create's detachKinetics does. The rest lives in BlockData.
 
 #include <algorithm>
@@ -21,7 +21,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace blockdata = feature::common::blockdata;
 namespace screens   = feature::common::screens;
@@ -292,7 +292,7 @@ void openForm(Player& player, Json const& ctx) {
         form.appendDropdown("type" + row, trFor(player, "create.gui.sequenced_gearshift.instruction", "Instruction"), types, static_cast<std::size_t>(cur.type));
         form.appendSlider(
             "value" + row,
-            trFor(player, "lv.transmission.sequencer.form.value", "Value (Turn: degrees, Piston: meters, Delay: ticks)"),
+            trFor(player, "br.transmission.sequencer.form.value", "Value (Turn: degrees, Piston: meters, Delay: ticks)"),
             1,
             600,
             1,
@@ -351,4 +351,4 @@ void registerSequencerScreen() {
     });
 }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

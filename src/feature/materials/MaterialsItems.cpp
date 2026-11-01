@@ -41,16 +41,16 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::materials {
+namespace br::feature::materials {
 
 namespace belts = feature::belts;
 using core::GlobalPos;
 
 namespace {
 
-std::string const kChromatic = "levitate:chromatic_compound";
-std::string const kShadow    = "levitate:shadow_steel";
-std::string const kRadiance  = "levitate:refined_radiance";
+std::string const kChromatic = "bearing:chromatic_compound";
+std::string const kShadow    = "bearing:shadow_steel";
+std::string const kRadiance  = "bearing:refined_radiance";
 constexpr float   kGravity   = 0.04f; // Bedrock item entity gravity per tick
 
 std::mt19937& rng() {
@@ -188,7 +188,7 @@ bool tryAbsorbLight(ItemActor& a, ItemStack& stack, BlockPos const& target) {
     int         light = chromaticLight(stack) + 1;
     if (!charge(a, stack)) return false;
     game::clearBlock(region, target);
-    lv::log().info("materials: chromatic compound absorbed {} ({} light)", id, light);
+    br::log().info("materials: chromatic compound absorbed {} ({} light)", id, light);
     return true;
 }
 
@@ -212,10 +212,10 @@ bool tryAbsorbFromBelt(ItemActor& a, ItemStack& stack, BlockPos const& target) {
     if (eaten.empty()) return false;
     int light = chromaticLight(stack) + 1;
     if (!charge(a, stack)) {
-        lv::log().warn("materials: chromatic compound could not take the light of {}", eaten);
+        br::log().warn("materials: chromatic compound could not take the light of {}", eaten);
         return false;
     }
-    lv::log().info("materials: chromatic compound absorbed {} from a belt ({} light)", eaten, light);
+    br::log().info("materials: chromatic compound absorbed {} from a belt ({} light)", eaten, light);
     return true;
 }
 
@@ -227,12 +227,12 @@ bool absorbFromTransporter(Actor& itemActor, BlockPos const& target) {
 }
 
 int chromaticLight(ItemStack const& stack) {
-    auto d = common::items::getData(stack, "lv:chromatic_compound");
+    auto d = common::items::getData(stack, "br:chromatic_compound");
     return d.is_object() ? d.value("light", 0) : 0;
 }
 
 void setChromaticLight(ItemStack& stack, int light) {
-    common::items::setData(stack, "lv:chromatic_compound", light > 0 ? nlohmann::json{{"light", light}} : nlohmann::json());
+    common::items::setData(stack, "br:chromatic_compound", light > 0 ? nlohmann::json{{"light", light}} : nlohmann::json());
     // the charge also goes into the aux value: the client's item renderer only sees id and aux
     // (client mod: the charge bar)
     stack.mAuxValue = static_cast<short>(std::max(0, light));
@@ -268,7 +268,7 @@ void tickMagicalItem(Actor& actor) {
         auto steel = makeStack(kShadow, stack.mCount);
         if (!steel.isNull()) {
             if (auto* s = replaceStack(a, steel)) onCreated(*s, true);
-            lv::log().info("materials: chromatic compound turned into shadow steel");
+            br::log().info("materials: chromatic compound turned into shadow steel");
         }
         return;
     }
@@ -284,7 +284,7 @@ void tickMagicalItem(Actor& actor) {
         rest.set(stack.mCount - 1);
         setChromaticLight(rest, 0);
         replaceStack(a, rest.mCount > 0 ? rest : ItemStack{});
-        lv::log().info("materials: chromatic compound turned into refined radiance");
+        br::log().info("materials: chromatic compound turned into refined radiance");
         return;
     }
     // over an active beacon: the whole stack
@@ -292,7 +292,7 @@ void tickMagicalItem(Actor& actor) {
         auto radiance = makeStack(kRadiance, stack.mCount);
         if (!radiance.isNull()) {
             if (auto* r = replaceStack(a, radiance)) onCreated(*r, false);
-            lv::log().info("materials: chromatic compound turned into refined radiance over a beacon");
+            br::log().info("materials: chromatic compound turned into refined radiance over a beacon");
         }
         return;
     }
@@ -343,8 +343,8 @@ int maxStackSize(ItemStackBase const& stack, int vanilla) {
     // Create's ChromaticCompoundItem.getMaxStackSize: 1 while the charge bar shows
     if (!isChromatic(stack.mItem.get())) return vanilla;
     auto const* tag = stack.mUserData.get();
-    // the item data of common::items::setData(stack, "lv:chromatic_compound", ...)
-    static std::string const key = "lv:lv:chromatic_compound";
+    // the item data of common::items::setData(stack, "br:chromatic_compound", ...)
+    static std::string const key = "br:br:chromatic_compound";
     if (!tag || !tag->contains(key, Tag::Type::String)) return vanilla;
     auto j = nlohmann::json::parse(std::string((*tag)[key].get<StringTag>()), nullptr, false);
     return j.is_object() && j.value("light", 0) > 0 ? 1 : vanilla;
@@ -364,4 +364,4 @@ void uninstallMagicalItemHook() {
     MaterialsItemTickHook::unhook();
 }
 
-} // namespace lv::feature::materials
+} // namespace br::feature::materials

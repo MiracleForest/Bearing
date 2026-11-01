@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 // ---- selection ------------------------------------------------------------------------------------
 
@@ -189,4 +189,4 @@ std::vector<Pos> blueprintCells(Pos at, int face, int horizontal, int size) {
     return out;
 }
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

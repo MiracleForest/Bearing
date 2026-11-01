@@ -1,6 +1,6 @@
 #include "core/tracks/CurveStore.h"
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 void CurveStore::index(DimData& d, Key const& key, CurvePtr const& c) {
     d.primaries[key]          = c;
@@ -125,4 +125,4 @@ std::vector<CurveStore::CurvePtr> CurveStore::inChunk(int dim, int cx, int cz) c
     return out;
 }
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

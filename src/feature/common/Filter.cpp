@@ -27,7 +27,7 @@
 #include "feature/common/Recipes.h"
 #include "mod/I18n.h"
 
-namespace lv::feature::common::filter {
+namespace br::feature::common::filter {
 
 using core::common::AttributeMode;
 using core::common::kListFilterSlots;
@@ -572,4 +572,4 @@ void updateLore(ItemStack& filter) {
     else filter.setCustomLore(lines);
 }
 
-} // namespace lv::feature::common::filter
+} // namespace br::feature::common::filter

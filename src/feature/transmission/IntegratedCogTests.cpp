@@ -2,7 +2,7 @@
 // 5000..5099): Create's CogwheelBlockItem.onItemUseFirst on a mechanical mixer, a mechanical
 // crafter and a mechanical arm, through the shared interaction dispatch (so the helper's order
 // before the clicked block's own use is tested too), and the network speed of the new cog.
-// Rotation comes from U2's test generator (levitate:kinetics_test_source, 16 RPM).
+// Rotation comes from U2's test generator (bearing:kinetics_test_source, 16 RPM).
 
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/item/ItemStack.h"
@@ -17,7 +17,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
@@ -25,10 +25,10 @@ using selftest::Context;
 namespace items = feature::common::items;
 namespace ia    = feature::common::interactions;
 
-constexpr char kSource[]  = "levitate:kinetics_test_source";
-constexpr char kMixer[]   = "levitate:mechanical_mixer";   // U14
-constexpr char kCrafter[] = "levitate:mechanical_crafter"; // U16
-constexpr char kArm[]     = "levitate:mechanical_arm";     // U15
+constexpr char kSource[]  = "bearing:kinetics_test_source";
+constexpr char kMixer[]   = "bearing:mechanical_mixer";   // U14
+constexpr char kCrafter[] = "bearing:mechanical_crafter"; // U16
+constexpr char kArm[]     = "bearing:mechanical_arm";     // U15
 constexpr int  X = 0, Y = 1, Z = 2;
 
 BlockSource& world() { return *regionOf(0); }
@@ -54,7 +54,7 @@ int   axisAt(GlobalPos const& p) { return stateAt(world(), p, kAxis, -1); }
 
 } // namespace
 
-LV_REGISTER_SELFTEST("transmission.integrated_cog_mixer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.integrated_cog_mixer", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.require(game::blockWith(kMixer) != nullptr, "the mechanical mixer is registered");
     ctx.require(co_await ctx.ensureLoaded(at(ctx, 0, 0, 0)), "test area loaded");
     ctx.player().setPlayerGameType(GameType::Creative);
@@ -98,7 +98,7 @@ LV_REGISTER_SELFTEST("transmission.integrated_cog_mixer", [](Context& ctx) -> ll
     ctx.player().setPlayerGameType(GameType::Survival);
 });
 
-LV_REGISTER_SELFTEST("transmission.integrated_cog_crafter", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.integrated_cog_crafter", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.require(game::blockWith(kCrafter) != nullptr, "the mechanical crafter is registered");
     ctx.require(co_await ctx.ensureLoaded(at(ctx, 20, 0, 0)), "test area loaded");
     ctx.player().setPlayerGameType(GameType::Survival);
@@ -143,7 +143,7 @@ LV_REGISTER_SELFTEST("transmission.integrated_cog_crafter", [](Context& ctx) -> 
               "and no cogwheel was placed");
 });
 
-LV_REGISTER_SELFTEST("transmission.integrated_cog_arm", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.integrated_cog_arm", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.require(game::blockWith(kArm) != nullptr, "the mechanical arm is registered");
     ctx.require(co_await ctx.ensureLoaded(at(ctx, 40, 0, 0)), "test area loaded");
     ctx.player().setPlayerGameType(GameType::Creative);
@@ -164,4 +164,4 @@ LV_REGISTER_SELFTEST("transmission.integrated_cog_arm", [](Context& ctx) -> ll::
     ctx.player().setPlayerGameType(GameType::Survival);
 });
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

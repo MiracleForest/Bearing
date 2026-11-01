@@ -1,5 +1,5 @@
 // Selftests of the transmission unit (U6) on a real world. testPos dx 600..699, dz -2..2.
-// Rotation comes from U2's test generator (levitate:kinetics_test_source, 16 RPM, 8 SU/RPM).
+// Rotation comes from U2's test generator (bearing:kinetics_test_source, 16 RPM, 8 SU/RPM).
 
 #include <algorithm>
 
@@ -21,15 +21,15 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
 using selftest::Context;
 namespace items = feature::common::items;
 
-constexpr char kSource[]   = "levitate:kinetics_test_source";
-constexpr char kConsumer[] = "levitate:kinetics_test_consumer";
+constexpr char kSource[]   = "bearing:kinetics_test_source";
+constexpr char kConsumer[] = "bearing:kinetics_test_consumer";
 constexpr int  X = 0, Y = 1, Z = 2;
 
 struct Area {
@@ -51,7 +51,7 @@ int           st(GlobalPos const& p, char const* s) { return stateAt(world(), p,
 
 } // namespace
 
-LV_REGISTER_SELFTEST("transmission.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("transmission.registry", [](Context& ctx) {
     for (auto const& id : allBlocks()) {
         ctx.check(kinetics::specOf(id) != nullptr, id + " is a kinetic block");
         ctx.check(game::blockWith(id) != nullptr, id + " is in the behavior pack");
@@ -62,7 +62,7 @@ LV_REGISTER_SELFTEST("transmission.registry", [](Context& ctx) {
     ctx.check(items::make(kShaft).has_value(), "blocks have items");
 });
 
-LV_REGISTER_SELFTEST("transmission.shafts_and_cogs", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.shafts_and_cogs", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 600};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.put(a.at(0), kSource, {{kAxis, X}});
@@ -80,7 +80,7 @@ LV_REGISTER_SELFTEST("transmission.shafts_and_cogs", [](Context& ctx) -> ll::cor
     ctx.check(kinetics::speedAt(a.at(4)) == 16, "encased large cog with its bottom shaft: 16, got " + speed(a.at(4)));
 });
 
-LV_REGISTER_SELFTEST("transmission.gearbox", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.gearbox", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 610};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.put(a.at(0), kSource, {{kAxis, X}});
@@ -97,7 +97,7 @@ LV_REGISTER_SELFTEST("transmission.gearbox", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(kinetics::speedAt(a.at(1, 1)) == 0, "no output along the gearbox axis, got " + speed(a.at(1, 1)));
 });
 
-LV_REGISTER_SELFTEST("transmission.clutch_gearshift", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.clutch_gearshift", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 620};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     for (int row : {0, 2}) {
@@ -119,7 +119,7 @@ LV_REGISTER_SELFTEST("transmission.clutch_gearshift", [](Context& ctx) -> ll::co
     ctx.check(kinetics::speedAt(a.at(2, 0, -1)) == 16, "unpowered again it reconnects, got " + speed(a.at(2, 0, -1)));
 });
 
-LV_REGISTER_SELFTEST("transmission.chain_drives", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.chain_drives", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 630};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     // three chain drives (axis y) side by side along x, driven from below the first one
@@ -145,7 +145,7 @@ LV_REGISTER_SELFTEST("transmission.chain_drives", [](Context& ctx) -> ll::coro::
     ctx.check(kinetics::speedAt(a.at(2, 2)) == 0, "the chain is broken, got " + speed(a.at(2, 2)));
 });
 
-LV_REGISTER_SELFTEST("transmission.speed_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.speed_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 640};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.put(a.at(0), kSource, {{kAxis, X}});
@@ -163,7 +163,7 @@ LV_REGISTER_SELFTEST("transmission.speed_controller", [](Context& ctx) -> ll::co
     ctx.check(st(a.at(1), kBracket) == 1, "the bracket shows under the large cog");
 });
 
-LV_REGISTER_SELFTEST("transmission.sequencer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.sequencer", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 650};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.put(a.at(0), kSource, {{kAxis, X}});
@@ -191,7 +191,7 @@ LV_REGISTER_SELFTEST("transmission.sequencer", [](Context& ctx) -> ll::coro::Cor
     ctx.check(st(a.at(1), kSeqState) == 0, "unpowered: back to 0");
 });
 
-LV_REGISTER_SELFTEST("transmission.gauges", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.gauges", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 660};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.put(a.at(0), kSource, {{kAxis, X}});
@@ -232,7 +232,7 @@ LV_REGISTER_SELFTEST("transmission.gauges", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(gaugeDustSent() > puffs, "gauge dust particles are sent to players near a turning gauge");
 });
 
-LV_REGISTER_SELFTEST("transmission.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 670};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto& sim = static_cast<SimulatedPlayer&>(ctx.player());
@@ -302,7 +302,7 @@ LV_REGISTER_SELFTEST("transmission.placement", [](Context& ctx) -> ll::coro::Cor
     sim.setPlayerGameType(GameType::Survival);
 });
 
-LV_REGISTER_SELFTEST("transmission.sequencer_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.sequencer_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 680};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     a.put(a.at(0), kSequencedGearshift, {{kAxis, X}});
@@ -327,7 +327,7 @@ LV_REGISTER_SELFTEST("transmission.sequencer_screen", [](Context& ctx) -> ll::co
 });
 
 
-LV_REGISTER_SELFTEST("transmission.wrench_encased", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.wrench_encased", [](Context& ctx) -> ll::coro::CoroTask<> {
     namespace wrench = goggles::wrench;
     Area a{ctx, 4220};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
@@ -358,4 +358,4 @@ LV_REGISTER_SELFTEST("transmission.wrench_encased", [](Context& ctx) -> ll::coro
     for (int dx : {0, 2, 4}) ctx.cleanupBlock(a.at(dx, 1));
 });
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

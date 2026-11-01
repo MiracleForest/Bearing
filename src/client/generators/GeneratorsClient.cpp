@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the generators unit (U7), client mod only.
 //
@@ -84,7 +84,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::generators {
+namespace br::client::generators {
 
 namespace k  = core::kinetics;
 namespace ks = core::kinetics::sync;
@@ -148,14 +148,14 @@ State& state() {
 Info computeInfo(Block const& block) {
     Info        info;
     std::string id = block.getTypeName();
-    if (!id.starts_with("levitate:")) return info;
-    if (id == "levitate:hand_crank") {
+    if (!id.starts_with("bearing:")) return info;
+    if (id == "bearing:hand_crank") {
         info.kind = Kind::Crank;
     } else if (id.ends_with("_valve_handle")) {
         info.kind = Kind::Valve;
-    } else if (id == "levitate:water_wheel_structure") {
-        if (game::intState(block, "levitate:rotor").value_or(-1) == 0) {
-            if (auto const* st = block.getBlockType().getBlockState(HashedString("levitate:rotor"))) {
+    } else if (id == "bearing:water_wheel_structure") {
+        if (game::intState(block, "bearing:rotor").value_or(-1) == 0) {
+            if (auto const* st = block.getBlockType().getBlockState(HashedString("bearing:rotor"))) {
                 if (auto b = block.setState(*st, 1)) {
                     info.kind   = Kind::Structure;
                     info.hidden = b.as_ptr();
@@ -166,7 +166,7 @@ Info computeInfo(Block const& block) {
     } else {
         return info;
     }
-    int f       = game::intState(block, "levitate:facing").value_or(1);
+    int f       = game::intState(block, "bearing:facing").value_or(1);
     info.facing = f >= 0 && f <= 5 ? f : 1;
     return info;
 }
@@ -186,7 +186,7 @@ Info infoOf(Block const& block) {
 /// The rotor geometry and terrain texture of a handle block.
 std::pair<std::string, std::string> handleModel(Block const& block, Kind kind) {
     std::string id = block.getTypeName();
-    return {kind == Kind::Crank ? "geometry.levitate.hand_crank.rotor" : "geometry.levitate.valve_handle.rotor", "levitate_" + id.substr(9)};
+    return {kind == Kind::Crank ? "geometry.bearing.hand_crank.rotor" : "geometry.bearing.valve_handle.rotor", "bearing_" + id.substr(8)};
 }
 
 // ---- meshes (as the kinetics renderer builds its rotor meshes) -------------------------------------------
@@ -194,7 +194,7 @@ std::pair<std::string, std::string> handleModel(Block const& block, Kind kind) {
 std::map<std::string, k::RotorModel> const& models() {
     static std::map<std::string, k::RotorModel> out = [] {
         std::map<std::string, k::RotorModel> m;
-        auto dir = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto dir = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         for (auto const* file : {"hand_crank.geo.json", "valve_handle.geo.json"}) {
             std::ifstream in(dir / file);
             auto          j = nlohmann::json::parse(in, nullptr, false, true);
@@ -231,7 +231,7 @@ mce::Mesh* handleMesh(Tessellator& tess, std::string const& model, std::string c
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_handle", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_handle", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -292,7 +292,7 @@ struct DrawItem {
 };
 
 void renderHandles(BaseActorRenderContext& ctx) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     auto* level  = ci->getLevel();
     auto* player = ci->getLocalPlayer();
@@ -493,7 +493,7 @@ public:
         feature::net::client::on("generators.valve", [](nlohmann::json const& msg) {
             auto pos = msg.value("pos", nlohmann::json::array());
             if (!pos.is_array() || pos.size() != 4) return;
-            auto* ci    = lv::client::currentClient();
+            auto* ci    = br::client::currentClient();
             auto* level = ci ? ci->getLevel() : nullptr;
             if (!level) return;
             ValveTurn t;
@@ -522,8 +522,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::generators
+} // namespace br::client::generators
 
-LV_REGISTER_MODULE(lv::client::generators::GeneratorsClientModule);
+BR_REGISTER_MODULE(br::client::generators::GeneratorsClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:weighted_ejector"
+      "identifier": "bearing:weighted_ejector"
     },
     "tags": [
       "crafting_table"
@@ -14,22 +14,22 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:golden_sheet"
+        "item": "bearing:golden_sheet"
       },
       "D": {
-        "item": "levitate:depot"
+        "item": "bearing:depot"
       },
       "I": {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       }
     },
     "unlock": [
       {
-        "item": "levitate:depot"
+        "item": "bearing:depot"
       }
     ],
     "result": {
-      "item": "levitate:weighted_ejector"
+      "item": "bearing:weighted_ejector"
     }
   }
 }

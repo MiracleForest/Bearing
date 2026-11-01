@@ -7,7 +7,7 @@
 // Per-position data: value box settings in BlockData (`data["generators"]`), the turning state
 // of cranks / valves and the flow score of wheels in memory (cranks that were turning when the
 // world was saved are stopped when it loads again), the positions of the wheels in the world DB
-// (`lv:generators:wheels`) so they are re-checked every 60 ticks as Create's lazy tick does.
+// (`br:generators:wheels`) so they are re-checked every 60 ticks as Create's lazy tick does.
 
 #include <cstdint>
 #include <optional>
@@ -22,29 +22,29 @@ class BlockSource;
 class ItemStack;
 class Player;
 
-namespace lv::feature::generators {
+namespace br::feature::generators {
 
 namespace cg = core::generators;
 using core::GlobalPos;
 using cg::Axis;
 using cg::Face;
 
-inline constexpr char kHandCrank[]   = "levitate:hand_crank";
-inline constexpr char kCopperValve[] = "levitate:copper_valve_handle";
-inline constexpr char kWaterWheel[]  = "levitate:water_wheel";
-inline constexpr char kLargeWheel[]  = "levitate:large_water_wheel";
-inline constexpr char kStructure[]   = "levitate:water_wheel_structure";
-inline constexpr char kMotor[]       = "levitate:creative_motor";
+inline constexpr char kHandCrank[]   = "bearing:hand_crank";
+inline constexpr char kCopperValve[] = "bearing:copper_valve_handle";
+inline constexpr char kWaterWheel[]  = "bearing:water_wheel";
+inline constexpr char kLargeWheel[]  = "bearing:large_water_wheel";
+inline constexpr char kStructure[]   = "bearing:water_wheel_structure";
+inline constexpr char kMotor[]       = "bearing:creative_motor";
 
-inline constexpr char kFacing[]    = "levitate:facing";    ///< 0..5 (down, up, north, south, west, east)
-inline constexpr char kAxisState[] = "levitate:axis";      ///< 0..2 (x, y, z)
-inline constexpr char kWood[]      = "levitate:wood";      ///< 0..11 (core::generators::kWoods)
-inline constexpr char kRotor[]     = "levitate:rotor";     ///< kinetics renderer: 0 full, 1 static parts
-inline constexpr char kSegment[]   = "levitate:segment";   ///< structure cell 0..7
-inline constexpr char kExtension[] = "levitate:extension"; ///< large wheel behind another one
+inline constexpr char kFacing[]    = "bearing:facing";    ///< 0..5 (down, up, north, south, west, east)
+inline constexpr char kAxisState[] = "bearing:axis";      ///< 0..2 (x, y, z)
+inline constexpr char kWood[]      = "bearing:wood";      ///< 0..11 (core::generators::kWoods)
+inline constexpr char kRotor[]     = "bearing:rotor";     ///< kinetics renderer: 0 full, 1 static parts
+inline constexpr char kSegment[]   = "bearing:segment";   ///< structure cell 0..7
+inline constexpr char kExtension[] = "bearing:extension"; ///< large wheel behind another one
 
-inline constexpr char kWrench[]      = "levitate:wrench";
-inline constexpr char kExtendoGrip[] = "levitate:extendo_grip";
+inline constexpr char kWrench[]      = "bearing:wrench";
+inline constexpr char kExtendoGrip[] = "bearing:extendo_grip";
 
 /// `config/generators.json` (Create's CKinetics keys of this unit).
 struct Config {
@@ -56,7 +56,7 @@ struct Config {
 enum class Kind : std::uint8_t { None, Crank, Valve, WaterWheel, LargeWheel, Structure, Motor };
 [[nodiscard]] Kind kindOf(std::string_view id);
 [[nodiscard]] Kind kindOf(Block const& block);
-/// "levitate:copper_valve_handle" for -1, "levitate:<colour>_valve_handle" for 0..15.
+/// "bearing:copper_valve_handle" for -1, "bearing:<colour>_valve_handle" for 0..15.
 [[nodiscard]] std::string valveId(int colour);
 /// -1 copper, 0..15 dyed, -2 not a valve handle.
 [[nodiscard]] int valveColour(std::string_view id);
@@ -116,4 +116,4 @@ void uninstallHooks();
 void registerValueBoxes();
 } // namespace detail
 
-} // namespace lv::feature::generators
+} // namespace br::feature::generators

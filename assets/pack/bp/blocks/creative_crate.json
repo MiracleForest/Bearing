@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:creative_crate",
+      "identifier": "bearing:creative_crate",
       "menu_category": {
         "category": "items"
       }
@@ -19,15 +19,15 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_creative_crate_side",
+          "texture": "bearing_creative_crate_side",
           "render_method": "opaque"
         },
         "up": {
-          "texture": "levitate_creative_crate_top",
+          "texture": "bearing_creative_crate_top",
           "render_method": "opaque"
         },
         "down": {
-          "texture": "levitate_creative_crate_top",
+          "texture": "bearing_creative_crate_top",
           "render_method": "opaque"
         }
       }

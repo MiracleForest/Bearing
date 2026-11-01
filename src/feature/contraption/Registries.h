@@ -8,7 +8,7 @@
 
 #include "feature/contraption/Contraption.h"
 
-namespace lv::feature::contraption::detail {
+namespace br::feature::contraption::detail {
 
 [[nodiscard]] MovementRules const*       movementRules(std::string const& id);
 [[nodiscard]] RotationHandler const*     rotationHandler(std::string const& id);
@@ -21,4 +21,4 @@ namespace lv::feature::contraption::detail {
 [[nodiscard]] ItemStorageAdapter const*  itemAdapter(std::string const& id);
 [[nodiscard]] std::vector<DataCarrier> const& carriers();
 
-} // namespace lv::feature::contraption::detail
+} // namespace br::feature::contraption::detail

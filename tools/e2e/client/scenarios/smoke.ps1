@@ -1,5 +1,5 @@
-# Smoke: the mod is enabled (run.ps1 waited for "Levitate enabled"), the player is in the
-# LV-Test world and the foundation selftests pass on the integrated server.
+# Smoke: the mod is enabled (run.ps1 waited for "Bearing enabled"), the player is in the
+# BR-Test world and the foundation selftests pass on the integrated server.
 # Screenshots: out/smoke/{hud,selftest}.png
 Save-Screenshot 'hud' | Out-Null
 $r = Invoke-SelfTest 'foundation.*'

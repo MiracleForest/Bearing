@@ -26,27 +26,27 @@ class BlockSource;
 class Player;
 class Vec3;
 
-namespace lv::feature::crafter {
+namespace br::feature::crafter {
 
 using core::GlobalPos;
 using core::kinetics::Face;
 namespace cr = core::crafter;
 
-inline constexpr std::string_view kCrafter   = "levitate:mechanical_crafter";
-inline constexpr std::string_view kSaw       = "levitate:mechanical_saw";
-inline constexpr std::string_view kDrill     = "levitate:mechanical_drill";
+inline constexpr std::string_view kCrafter   = "bearing:mechanical_crafter";
+inline constexpr std::string_view kSaw       = "bearing:mechanical_saw";
+inline constexpr std::string_view kDrill     = "bearing:mechanical_drill";
 /// Create's damage types of the saw and the drill (death messages "death.attack.<id>").
 inline constexpr char const* kSawDeath   = "death.attack.create.mechanical_saw";
 inline constexpr char const* kDrillDeath = "death.attack.create.mechanical_drill";
-inline constexpr std::string_view kWrench    = "levitate:wrench";
-inline constexpr std::string_view kSlotCover = "levitate:crafter_slot_cover";
-inline constexpr std::string_view kArm       = "levitate:mechanical_arm";
+inline constexpr std::string_view kWrench    = "bearing:wrench";
+inline constexpr std::string_view kSlotCover = "bearing:crafter_slot_cover";
+inline constexpr std::string_view kArm       = "bearing:mechanical_arm";
 
-inline constexpr char kFacing[]     = "levitate:facing";
-inline constexpr char kPointing[]   = "levitate:pointing";
-inline constexpr char kCovered[]    = "levitate:covered";
-inline constexpr char kAlongFirst[] = "levitate:axis_along_first";
-inline constexpr char kRotor[]      = "levitate:rotor";
+inline constexpr char kFacing[]     = "bearing:facing";
+inline constexpr char kPointing[]   = "bearing:pointing";
+inline constexpr char kCovered[]    = "bearing:covered";
+inline constexpr char kAlongFirst[] = "bearing:axis_along_first";
+inline constexpr char kRotor[]      = "bearing:rotor";
 
 /// `config/crafter.json` (Create's CRecipes / CKinetics keys used by this unit, same defaults).
 struct Config {
@@ -104,8 +104,8 @@ void                    push(Actor& a, double vx, double vy, double vz);
 void                    forEachCompanionNear(GlobalPos const& pos, double radius, std::function<void(Player&)> const& fn);
 /// Gives the item to the player (inventory, else dropped at their feet).
 void                    give(Player& player, ItemStack const& stack);
-/// Whether `id` (a Levitate block) accepts items from a belt/saw/crafter output like Create's
-/// DirectBeltInputBehaviour (Levitate machines with an item capability, except vaults).
+/// Whether `id` (a Bearing block) accepts items from a belt/saw/crafter output like Create's
+/// DirectBeltInputBehaviour (Bearing machines with an item capability, except vaults).
 /// Blocks of other units with Create's DirectBeltInputBehaviour that don't register a belts direct
 /// input yet (chutes, item drains): handed items through their item capability.
 [[nodiscard]] bool      acceptsDirectInput(std::string const& id);
@@ -207,4 +207,4 @@ void          installHooks();
 void          uninstallHooks();
 [[nodiscard]] std::uint64_t currentTick();
 
-} // namespace lv::feature::crafter
+} // namespace br::feature::crafter

@@ -1,13 +1,13 @@
 {
-  "type": "levitate:mixing",
+  "type": "bearing:mixing",
   "ingredients": [
     {
-      "item": "levitate:bar_of_chocolate"
+      "item": "bearing:bar_of_chocolate"
     }
   ],
   "results": [
     {
-      "fluid": "levitate:chocolate",
+      "fluid": "bearing:chocolate",
       "amount": 250
     }
   ],

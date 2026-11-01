@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:redstone_link"
+      "identifier": "bearing:redstone_link"
     },
     "tags": [
       "crafting_table"
@@ -13,19 +13,19 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:transmitter"
+        "item": "bearing:transmitter"
       },
       "S": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     },
     "result": {
-      "item": "levitate:redstone_link",
+      "item": "bearing:redstone_link",
       "count": 2
     },
     "unlock": [
       {
-        "item": "levitate:transmitter"
+        "item": "bearing:transmitter"
       }
     ]
   }

@@ -17,7 +17,7 @@ Wait-LogLine 'companion: server accepted the handshake' 90 | Out-Null
 
 Invoke-Chat '/gamemode survival'
 Invoke-Chat '/clear @s'
-foreach ($i in 0..8) { Invoke-Chat "/replaceitem entity @s slot.hotbar $i levitate:mechanical_piston 1" }
+foreach ($i in 0..8) { Invoke-Chat "/replaceitem entity @s slot.hotbar $i bearing:mechanical_piston 1" }
 Invoke-Chat '/tp @s ~ ~ ~ 0 0'
 Start-Sleep -Milliseconds 500
 
@@ -31,7 +31,7 @@ $found = $false
     foreach ($i in 0..8) {
         Move-Mouse (0.506 + 0.0336 * $i) $y -Relative
         Start-Sleep -Milliseconds 200
-        if (Get-LeviLog -Since $mark | Where-Object { $_ -match 'ponder: hovering levitate:mechanical_piston' }) { $found = $true; break scan }
+        if (Get-LeviLog -Since $mark | Where-Object { $_ -match 'ponder: hovering bearing:mechanical_piston' }) { $found = $true; break scan }
     }
 }
 if (-not $found) { Save-Screenshot 'hover-failed' | Out-Null; throw 'no inventory slot with the piston was hovered' }
@@ -45,7 +45,7 @@ Save-Screenshot 'hold-progress' | Out-Null
 Start-Sleep -Milliseconds 1200
 Press-Key W 1600
 $holdFailed = $null
-try { Wait-LogLine 'ponder: held W over levitate:mechanical_piston' 15 -Since $mark | Out-Null }
+try { Wait-LogLine 'ponder: held W over bearing:mechanical_piston' 15 -Since $mark | Out-Null }
 catch {
     # keep going (the scene player is checked below either way); the run fails at the end
     $holdFailed = $_.Exception.Message
@@ -53,7 +53,7 @@ catch {
     Close-Screen
     Invoke-Chat '/create ponder mechanical_piston'
 }
-Wait-LogLine 'ponder: scene mechanical_piston \(1/3\) of levitate:mechanical_piston' 15 -Since $mark | Out-Null
+Wait-LogLine 'ponder: scene mechanical_piston \(1/3\) of bearing:mechanical_piston' 15 -Since $mark | Out-Null
 Wait-LogLine 'ponder: scene mechanical_piston drawn' 15 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 2500
 Save-Screenshot 'piston-start' | Out-Null
@@ -81,7 +81,7 @@ foreach ($i in 1..10) { Move-Mouse (0.45 + $i * 0.02) 0.5 -Relative; Start-Sleep
 Start-Sleep -Seconds 2
 Save-Screenshot 'dragged' | Out-Null
 Close-Screen
-Wait-LogLine 'ponder: closed levitate:mechanical_piston' 10 -Since $mark | Out-Null
+Wait-LogLine 'ponder: closed bearing:mechanical_piston' 10 -Since $mark | Out-Null
 if (-not $holdFailed) { Close-Screen }   # the inventory below
 
 # ---- 3. index and tags -------------------------------------------------------------------------
@@ -102,7 +102,7 @@ Close-Screen
 foreach ($entry in 'shaft', 'hand_crank', 'track_station') {
     $mark = Get-LogMark
     Invoke-Chat "/create ponder $entry"
-    Wait-LogLine "ponder: opened levitate:$entry" 15 -Since $mark | Out-Null
+    Wait-LogLine "ponder: opened bearing:$entry" 15 -Since $mark | Out-Null
     Wait-LogLine 'ponder: scene \w+ drawn' 15 -Since $mark | Out-Null
     Start-Sleep -Seconds 5
     Save-Screenshot "entry-$entry" | Out-Null
@@ -113,7 +113,7 @@ foreach ($entry in 'shaft', 'hand_crank', 'track_station') {
 # the cart assembler's minecart, the empty blaze burner's blaze, the fan's air and processing particles
 $mark = Get-LogMark
 Invoke-Chat '/create ponder cart_assembler'
-Wait-LogLine 'ponder: opened levitate:cart_assembler' 15 -Since $mark | Out-Null
+Wait-LogLine 'ponder: opened bearing:cart_assembler' 15 -Since $mark | Out-Null
 Wait-LogLine 'ponder: scene cart_assembler shows [1-9]\d* entities' 30 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'entity-minecart' | Out-Null

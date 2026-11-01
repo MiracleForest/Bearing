@@ -20,7 +20,7 @@
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/level/Level.h"
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 #include "ll/api/event/client/ClientExitLevelEvent.h"
 #include "ll/api/event/client/ClientJoinLevelEvent.h"
 #include "ll/api/event/world/ClientLevelTickEvent.h"
@@ -30,7 +30,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::net {
+namespace br::feature::net {
 
 using core::common::decodePayload;
 using core::common::encodePayload;
@@ -63,7 +63,7 @@ Bedrock::Result<void> readEnvelope(ReadOnlyBinaryStream& s, std::string& channel
 } // namespace
 
 /// Client -> server.
-class LevitateC2SPacket : public ll::network::PacketBase<LevitateC2SPacket> {
+class BearingC2SPacket : public ll::network::PacketBase<BearingC2SPacket> {
 public:
     std::string channel;
     std::string payload;
@@ -73,7 +73,7 @@ public:
 };
 
 /// Server -> client.
-class LevitateS2CPacket : public ll::network::PacketBase<LevitateS2CPacket> {
+class BearingS2CPacket : public ll::network::PacketBase<BearingS2CPacket> {
 public:
     std::string channel;
     std::string payload;
@@ -120,7 +120,7 @@ void handleHello(Player& player, Json const& payload) {
     if (accepted) s.companions[keyOf(player)] = protocol;
     else s.companions.erase(keyOf(player));
 
-    LevitateS2CPacket pkt;
+    BearingS2CPacket pkt;
     pkt.channel = "net.welcome";
     pkt.payload = encodePayload({
         {"protocol", core::common::kProtocolVersion},
@@ -143,9 +143,9 @@ void handleHello(Player& player, Json const& payload) {
 }
 } // namespace
 
-class LevitateC2SHandler : public ll::network::PacketHandlerBase<LevitateC2SHandler, LevitateC2SPacket> {
+class BearingC2SHandler : public ll::network::PacketHandlerBase<BearingC2SHandler, BearingC2SPacket> {
 public:
-    void handlePacket(NetworkIdentifier const& id, NetEventCallback& callback, LevitateC2SPacket const& packet) const {
+    void handlePacket(NetworkIdentifier const& id, NetEventCallback& callback, BearingC2SPacket const& packet) const {
         auto* player = static_cast<ServerNetworkHandler&>(callback)._getServerPlayer(id, packet.mSenderSubId);
         if (!player) return;
         if (!core::common::validChannel(packet.channel)) return;
@@ -177,7 +177,7 @@ bool send(Player& player, std::string_view channel, Json const& payload) {
         it->second.push_back({std::string(channel), payload});
         return true;
     }
-    LevitateS2CPacket pkt;
+    BearingS2CPacket pkt;
     pkt.channel = std::string(channel);
     pkt.payload = encodePayload(payload);
     pkt.sendTo(player);
@@ -217,7 +217,7 @@ void injectFromClient(Player& player, std::string_view channel, Json const& payl
 
 // ---- client side -------------------------------------------------------------------------------
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 namespace client {
 namespace {
 struct ClientState {
@@ -236,11 +236,11 @@ constexpr int kHelloInterval = 40; ///< ticks between hello retries
 constexpr int kHelloAttempts = 15;
 
 void sendHello() {
-    LevitateC2SPacket pkt;
+    BearingC2SPacket pkt;
     pkt.channel = "net.hello";
     pkt.payload = encodePayload({
         {"protocol", core::common::kProtocolVersion},
-        {"mod",      "Levitate"                    },
+        {"mod",      "Bearing"                    },
     });
     pkt.sendToServer();
     ++state().helloSent;
@@ -251,7 +251,7 @@ void on(std::string const& channel, Handler handler) { state().handlers[channel]
 
 bool send(std::string_view channel, Json const& payload) {
     if (!state().inLevel) return false;
-    LevitateC2SPacket pkt;
+    BearingC2SPacket pkt;
     pkt.channel = std::string(channel);
     pkt.payload = encodePayload(payload);
     pkt.sendToServer();
@@ -264,9 +264,9 @@ void onConnected(std::function<void()> fn) { state().connectedListeners.push_bac
 
 } // namespace client
 
-class LevitateS2CHandler : public ll::network::PacketHandlerBase<LevitateS2CHandler, LevitateS2CPacket> {
+class BearingS2CHandler : public ll::network::PacketHandlerBase<BearingS2CHandler, BearingS2CPacket> {
 public:
-    void handlePacket(NetworkIdentifier const&, NetEventCallback&, LevitateS2CPacket const& packet) const {
+    void handlePacket(NetworkIdentifier const&, NetEventCallback&, BearingS2CPacket const& packet) const {
         auto payload = decodePayload(packet.payload);
         if (!payload) return;
         auto& s = client::state();
@@ -309,7 +309,7 @@ public:
             server().testInbox.clear();
         });
     }
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
     // client listeners at mod load, before the game's threads run (see ScreenModule)
     void load() {
         auto& bus = ll::event::EventBus::getInstance();
@@ -343,6 +343,6 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::feature::net
+} // namespace br::feature::net
 
-LV_REGISTER_MODULE_ORDERED(lv::feature::net::NetModule, lv::ModuleOrder::Net);
+BR_REGISTER_MODULE_ORDERED(br::feature::net::NetModule, br::ModuleOrder::Net);

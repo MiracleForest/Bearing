@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:millstone",
+      "identifier": "bearing:millstone",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -16,15 +16,15 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.millstone",
+        "identifier": "geometry.bearing.millstone",
         "bone_visibility": {
-          "casing": "q.block_state('levitate:rotor') != 2",
-          "rotor": "q.block_state('levitate:rotor') != 1"
+          "casing": "q.block_state('bearing:rotor') != 2",
+          "rotor": "q.block_state('bearing:rotor') != 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_millstone",
+          "texture": "bearing_millstone",
           "render_method": "alpha_test"
         }
       },

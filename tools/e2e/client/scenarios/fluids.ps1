@@ -27,10 +27,10 @@ $logDir = Join-Path (Get-GameDataDir) 'logs'
 $contentLog = Get-ChildItem $logDir -Filter 'ContentLog*' -ErrorAction SilentlyContinue |
     Where-Object { $_.LastWriteTime -ge $script:FluidsContentLogStart } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 if ($contentLog) {
-    $errors = Select-String -Path $contentLog.FullName -Pattern 'levitate:(spout|item_drain|hose_pulley|portable_fluid_interface|honey|chocolate|fluids_test_depot)|spout.geo|item_drain.geo|hose_pulley.geo|fluid_source.geo|honey_bucket|chocolate_bucket' | ForEach-Object { $_.Line }
+    $errors = Select-String -Path $contentLog.FullName -Pattern 'bearing:(spout|item_drain|hose_pulley|portable_fluid_interface|honey|chocolate|fluids_test_depot)|spout.geo|item_drain.geo|hose_pulley.geo|fluid_source.geo|honey_bucket|chocolate_bucket' | ForEach-Object { $_.Line }
     if ($errors) {
         $errors | Set-Content (Join-Path (Join-Path $script:OutRoot $script:Unit) 'content-errors.txt')
-        throw "content log reports $(@($errors).Count) problem(s) with the Levitate packs (content-errors.txt): $($errors | Select-Object -First 3)"
+        throw "content log reports $(@($errors).Count) problem(s) with the Bearing packs (content-errors.txt): $($errors | Select-Object -First 3)"
     }
 }
 
@@ -38,15 +38,15 @@ Invoke-Chat '/gamemode creative'
 Invoke-Chat '/time set noon'
 Invoke-Chat '/fill ~-4 ~ ~1 ~4 ~8 ~8 air'
 # a row of blocks 4 blocks south of the player
-Invoke-Chat '/setblock ~-2 ~ ~4 levitate:spout'
-Invoke-Chat '/setblock ~-1 ~ ~4 levitate:item_drain'
-Invoke-Chat '/setblock ~ ~ ~4 levitate:portable_fluid_interface ["levitate:facing"=2]'
-Invoke-Chat '/setblock ~1 ~ ~4 levitate:honey'
-Invoke-Chat '/setblock ~2 ~ ~4 levitate:chocolate'
+Invoke-Chat '/setblock ~-2 ~ ~4 bearing:spout'
+Invoke-Chat '/setblock ~-1 ~ ~4 bearing:item_drain'
+Invoke-Chat '/setblock ~ ~ ~4 bearing:portable_fluid_interface ["bearing:facing"=2]'
+Invoke-Chat '/setblock ~1 ~ ~4 bearing:honey'
+Invoke-Chat '/setblock ~2 ~ ~4 bearing:chocolate'
 # a hose pulley facing the player, turned by a kinetics test source (16 RPM)
-Invoke-Chat '/setblock ~ ~5 ~6 levitate:hose_pulley ["levitate:facing"=2]'
-Invoke-Chat '/setblock ~-1 ~5 ~6 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/give @s levitate:honey_bucket 1'
+Invoke-Chat '/setblock ~ ~5 ~6 bearing:hose_pulley ["bearing:facing"=2]'
+Invoke-Chat '/setblock ~-1 ~5 ~6 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/give @s bearing:honey_bucket 1'
 Invoke-Chat '/tp @s ~ ~1 ~ 0 20'
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'blocks' | Out-Null
@@ -60,16 +60,16 @@ if ($withMod) { Wait-LogLine 'fluids: rendering \d+ quads' 20 -Since $mark | Out
 
 # a spout over a depot north of the player, fed from a cauldron of water by a pump (U17) east of it
 Invoke-Chat '/fill ~-1 ~ ~-7 ~9 ~4 ~-2 air'
-Invoke-Chat '/setblock ~3 ~ ~-4 levitate:depot'
-Invoke-Chat '/setblock ~3 ~2 ~-4 levitate:spout'
-Invoke-Chat '/setblock ~4 ~2 ~-4 levitate:fluid_pipe ["levitate:east"=1,"levitate:west"=1]'
-Invoke-Chat '/setblock ~6 ~2 ~-4 levitate:fluid_pipe ["levitate:east"=1,"levitate:west"=1]'
+Invoke-Chat '/setblock ~3 ~ ~-4 bearing:depot'
+Invoke-Chat '/setblock ~3 ~2 ~-4 bearing:spout'
+Invoke-Chat '/setblock ~4 ~2 ~-4 bearing:fluid_pipe ["bearing:east"=1,"bearing:west"=1]'
+Invoke-Chat '/setblock ~6 ~2 ~-4 bearing:fluid_pipe ["bearing:east"=1,"bearing:west"=1]'
 Invoke-Chat '/setblock ~7 ~2 ~-4 cauldron ["fill_level"=6,"cauldron_liquid"="water"]'
-Invoke-Chat '/setblock ~6 ~2 ~-3 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~5 ~2 ~-3 levitate:kinetics_test_cog ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~6 ~2 ~-3 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~5 ~2 ~-3 bearing:kinetics_test_cog ["bearing:axis"=0]'
 if ($withMod) { Set-TestSpeed '/create kinetics ~6 ~2 ~-3 speed 64' }
 Start-Sleep -Milliseconds 500
-Invoke-Chat '/setblock ~5 ~2 ~-4 levitate:mechanical_pump ["levitate:facing"=4]'
+Invoke-Chat '/setblock ~5 ~2 ~-4 bearing:mechanical_pump ["bearing:facing"=4]'
 # the cauldron's bucket goes into the spout (1000 mB: four bottles); facing coordinates count from
 # the eyes: aim at the depot's top (U55: Create's depot only takes a click on its top face)
 Start-Sleep -Seconds 4
@@ -91,7 +91,7 @@ if ($withMod) { Wait-LogLine 'fluids: spout nozzle squeezes while filling' 20 -S
 # item for companions, a client-only item entity for vanilla clients)
 $drainMark = Get-LogMark
 Invoke-Chat '/fill ~-5 ~ ~2 ~-1 ~3 ~6 air'
-Invoke-Chat '/setblock ~-3 ~ ~4 levitate:item_drain'
+Invoke-Chat '/setblock ~-3 ~ ~4 bearing:item_drain'
 Invoke-Chat '/setblock ~-2 ~ ~4 stone'
 Invoke-Chat '/tp @s ~ ~ ~ facing ~-3 ~-1.2 ~4'
 Start-Sleep -Milliseconds 800

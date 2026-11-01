@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_furnace": {
     "description": {
-      "identifier": "levitate:bread"
+      "identifier": "bearing:bread"
     },
     "tags": [
       "furnace",
@@ -10,7 +10,7 @@
       "campfire",
       "soul_campfire"
     ],
-    "input": "levitate:dough",
+    "input": "bearing:dough",
     "output": "minecraft:bread"
   }
 }

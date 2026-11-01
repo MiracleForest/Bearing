@@ -2,17 +2,17 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:flywheel",
+      "identifier": "bearing:flywheel",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1,
           2
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1
         ]
@@ -20,15 +20,15 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.flywheel",
+        "identifier": "geometry.bearing.flywheel",
         "bone_visibility": {
-          "wheel": "q.block_state('levitate:rotor') != 1",
-          "shaft": "q.block_state('levitate:rotor') != 1"
+          "wheel": "q.block_state('bearing:rotor') != 1",
+          "shaft": "q.block_state('bearing:rotor') != 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_flywheel",
+          "texture": "bearing_flywheel",
           "render_method": "alpha_test"
         }
       },
@@ -68,7 +68,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:axis') == 0",
+        "condition": "q.block_state('bearing:axis') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -80,7 +80,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:axis') == 2",
+        "condition": "q.block_state('bearing:axis') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [

@@ -19,11 +19,11 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace {
 
-using lv::selftest::Context;
+using br::selftest::Context;
 
 GP           at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 BlockSource& regionOf(Context& ctx) { return ctx.player().getDimensionBlockSource(); }
@@ -46,10 +46,10 @@ bool placeComparator(Context& ctx, GP pos, std::string const& towards) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("redstone.desk_bell", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.desk_bell", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4945, -1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(game::blockWith(kDeskBell) != nullptr, "levitate:desk_bell is registered");
+    ctx.require(game::blockWith(kDeskBell) != nullptr, "bearing:desk_bell is registered");
     ctx.setBlock(at(p, 0, -1, 0), "minecraft:stone");
     ctx.require(ctx.setBlock(p, kDeskBell, {{sFacing, kUp}}), "bell placed");
     ctx.setBlock(at(p, 1, 0, 0), "minecraft:redstone_wire");
@@ -75,11 +75,11 @@ LV_REGISTER_SELFTEST("redstone.desk_bell", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(h != nullptr, "the bell is wrenchable");
 });
 
-LV_REGISTER_SELFTEST("redstone.rose_quartz_lamp", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("redstone.rose_quartz_lamp", [](Context& ctx) -> ll::coro::CoroTask<> {
     // three lamps in a row along x (a, b, c)
     auto a = ctx.testPos(4948, -1);
     ctx.require(co_await ctx.ensureLoaded(a), "test area loaded");
-    ctx.require(game::blockWith(kRoseQuartzLamp) != nullptr, "levitate:rose_quartz_lamp is registered");
+    ctx.require(game::blockWith(kRoseQuartzLamp) != nullptr, "bearing:rose_quartz_lamp is registered");
     auto b = at(a, 1, 0, 0), c = at(a, 2, 0, 0);
     for (auto const& q : {a, b, c}) ctx.setBlock(q, kRoseQuartzLamp);
     co_await ctx.ticks(3);
@@ -117,4 +117,4 @@ LV_REGISTER_SELFTEST("redstone.rose_quartz_lamp", [](Context& ctx) -> ll::coro::
     ctx.check(lit && state(*lit, sPowering) == 1, "wrenching a dark lamp lights it");
 });
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

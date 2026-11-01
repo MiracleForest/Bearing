@@ -31,7 +31,7 @@
 #include "mod/Log.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace {
 
@@ -97,7 +97,7 @@ void buildSample(Context& ctx, GlobalPos const& o) {
     put(ctx, at(o, 2, 1, 2), "minecraft:torch");
 }
 
-std::string tmpName(Context const& ctx) { return "lv_selftest_" + ctx.name().substr(ctx.name().find('.') + 1); }
+std::string tmpName(Context const& ctx) { return "br_selftest_" + ctx.name().substr(ctx.name().find('.') + 1); }
 
 struct FileCleanup {
     std::filesystem::path path;
@@ -122,24 +122,24 @@ void fillChest(GlobalPos const& chest, std::vector<std::pair<std::string, int>> 
 
 } // namespace
 
-LV_REGISTER_SELFTEST("schematics.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("schematics.registry", [](Context& ctx) {
     for (auto id : {kTable, kCannon, kBlueprintBlock}) ctx.require(game::blockWith(id) != nullptr, std::string(id) + " is in the behavior pack");
     for (auto id : {kEmptySchematic, kSchematic, kQuill, kBlueprintItem}) ctx.require(makeItem(id).has_value(), std::string(id) + " is an item");
     ctx.check(config().maxSchematics == 10 && config().maxTotalSchematicSize == 256 && config().schematicannonShotsPerGunpowder == 400,
               "Create's CSchematics defaults");
 });
 
-LV_REGISTER_SELFTEST("schematics.save_load", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.save_load", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2900);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     buildSample(ctx, o);
-    auto dir  = playerDir("lv_selftest");
+    auto dir  = playerDir("br_selftest");
     auto file = saveArea(dir, tmpName(ctx), true, o.dim, cp(o), cp(at(o, 2, 1, 2)));
     ctx.require(file.has_value(), "the area is saved");
     FileCleanup cleanup{dir / upath(*file)};
     std::string err;
-    auto        loaded = loadSchematic("lv_selftest", *file, &err);
+    auto        loaded = loadSchematic("br_selftest", *file, &err);
     ctx.require(loaded != nullptr, "the file loads: " + err);
     auto const& s = loaded->schematic;
     ctx.check(s.size == cs::Pos{3, 2, 3}, "size 3x2x3");
@@ -151,7 +151,7 @@ LV_REGISTER_SELFTEST("schematics.save_load", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(st && resolve(*st) == stairs(0), "stairs keep their state");
 });
 
-LV_REGISTER_SELFTEST("schematics.quill", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.quill", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2910);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -183,7 +183,7 @@ LV_REGISTER_SELFTEST("schematics.quill", [](Context& ctx) -> ll::coro::CoroTask<
     player.getInventory().setItem(player.getSelectedItemSlot(), items::empty());
 });
 
-LV_REGISTER_SELFTEST("schematics.print_compare", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.print_compare", [](Context& ctx) -> ll::coro::CoroTask<> {
     // save an area, print it elsewhere with a schematicannon, compare
     auto o = ctx.testPos(2920);
     o.y += 1;
@@ -231,10 +231,10 @@ LV_REGISTER_SELFTEST("schematics.print_compare", [](Context& ctx) -> ll::coro::C
             }
     ctx.check(isItem(cannonSlot(cannon, 1), kEmptySchematic), "the used schematic comes back empty");
     ctx.check(cannonView(cannon).fuel == 400 - 13, "one gunpowder gave 400 shots");
-    lv::log().info("schematics: print compare ok ({} blocks)", 13);
+    br::log().info("schematics: print compare ok ({} blocks)", 13);
 });
 
-LV_REGISTER_SELFTEST("schematics.missing_items", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.missing_items", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2940);
     o.y += 1;
     auto target = at(o, 6, 0, 0);
@@ -275,7 +275,7 @@ LV_REGISTER_SELFTEST("schematics.missing_items", [](Context& ctx) -> ll::coro::C
     ctx.check(co_await waitFor(ctx, [&] { return cannonView(c2).status == "noGunpowder"; }, 40), "no gunpowder: " + cannonView(c2).status);
 });
 
-LV_REGISTER_SELFTEST("schematics.rotated_print", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.rotated_print", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2950);
     o.y += 1;
     auto target = at(o, 10, 0, 4);
@@ -305,7 +305,7 @@ LV_REGISTER_SELFTEST("schematics.rotated_print", [](Context& ctx) -> ll::coro::C
     ctx.check(st && st == stairs(2), "the stairs turned from east to south");
 });
 
-LV_REGISTER_SELFTEST("schematics.java_import", [](Context& ctx) {
+BR_REGISTER_SELFTEST("schematics.java_import", [](Context& ctx) {
     // a Create .nbt: oak stairs facing east, an unknown mod block
     using namespace cs::nbt;
     Compound root;
@@ -332,19 +332,19 @@ LV_REGISTER_SELFTEST("schematics.java_import", [](Context& ctx) {
     }
     root.set("blocks", Tag(blocks));
     auto bytes = cs::gzipStored(write(Tag(root), "", Endian::Big));
-    auto dir   = playerDir("lv_selftest");
-    auto path  = dir / "lv_selftest_import.nbt";
+    auto dir   = playerDir("br_selftest");
+    auto path  = dir / "br_selftest_import.nbt";
     ctx.require(writeFile(path, bytes), "file written");
     FileCleanup cleanup{path};
     clearSchematicCache();
     std::string err;
-    auto        loaded = loadSchematic("lv_selftest", "lv_selftest_import.nbt", &err);
+    auto        loaded = loadSchematic("br_selftest", "br_selftest_import.nbt", &err);
     ctx.require(loaded != nullptr, "Create .nbt loads: " + err);
     ctx.check(loaded->blocks[0] == stairs(0), "oak stairs facing east -> weirdo_direction 0");
     ctx.check(loaded->unmapped.size() == 1 && loaded->unmapped[0] == "othermod:widget", "the unknown block is reported");
 });
 
-LV_REGISTER_SELFTEST("schematics.table_upload", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.table_upload", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2960);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -389,7 +389,7 @@ LV_REGISTER_SELFTEST("schematics.table_upload", [](Context& ctx) -> ll::coro::Co
     ctx.check(refused, "an oversized upload is refused");
 });
 
-LV_REGISTER_SELFTEST("schematics.checklist", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.checklist", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2970);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -412,7 +412,7 @@ LV_REGISTER_SELFTEST("schematics.checklist", [](Context& ctx) -> ll::coro::CoroT
 });
 
 // U44 (dx 4400..4409): a clipboard in the paper slot comes out as a read-only checklist clipboard
-LV_REGISTER_SELFTEST("schematics.checklist_clipboard", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.checklist_clipboard", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(4400, kRowDz);
     o.y += 1;
     ctx.require(co_await loadFar(ctx, o), "test area loaded");
@@ -449,7 +449,7 @@ LV_REGISTER_SELFTEST("schematics.checklist_clipboard", [](Context& ctx) -> ll::c
 
 // U44 (dx 4430..4449): schematics keep block entity data and entities (Create's StructureTemplate
 // with entities); the creative print restores both, turned with the schematic
-LV_REGISTER_SELFTEST("schematics.entities", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.entities", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(4430, kRowDz);
     o.y += 1;
     auto target = at(o, 8, 0, 0);
@@ -511,7 +511,7 @@ LV_REGISTER_SELFTEST("schematics.entities", [](Context& ctx) -> ll::coro::CoroTa
     clearStands();
 });
 
-LV_REGISTER_SELFTEST("schematics.blueprint", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.blueprint", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2980);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -563,4 +563,4 @@ LV_REGISTER_SELFTEST("schematics.blueprint", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(left == 0, "the whole blueprint is removed, " + std::to_string(left) + " left");
 });
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

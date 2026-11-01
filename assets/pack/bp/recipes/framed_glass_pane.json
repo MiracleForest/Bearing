@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:framed_glass_pane"
+      "identifier": "bearing:framed_glass_pane"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:framed_glass"
+        "item": "bearing:framed_glass"
       }
     },
     "unlock": [
       {
-        "item": "levitate:framed_glass"
+        "item": "bearing:framed_glass"
       }
     ],
     "result": {
-      "item": "levitate:framed_glass_pane",
+      "item": "bearing:framed_glass_pane",
       "count": 16
     }
   }

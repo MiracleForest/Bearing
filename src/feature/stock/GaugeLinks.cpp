@@ -38,7 +38,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace items = common::items;
 namespace ia    = common::interactions;
@@ -87,7 +87,7 @@ std::optional<int> linkFacing(GlobalPos const& link) {
     auto const* b = blockAt(link);
     if (!b) return std::nullopt;
     auto id = game::blockId(*b);
-    if (id == kRedstoneLinkId) return game::intState(*b, "levitate:facing").value_or(1);
+    if (id == kRedstoneLinkId) return game::intState(*b, "bearing:facing").value_or(1);
     if (id == kDisplayLinkId) {
         static constexpr char const* names[6]{"down", "up", "north", "south", "west", "east"};
         auto face = stringState(*b, "minecraft:block_face").value_or("up");
@@ -329,7 +329,7 @@ bool connectPanelToLink(Player* player, GlobalPos const& gauge, int slot, Global
     auto fail  = [&](char const* key, char const* fallback) {
         if (player) {
             status(*player, "§c" + trFor(*player, key, fallback));
-            playSound(game::globalPos(player->getDimensionBlockSource(), BlockPos{player->getPosition()}), "levitate.stock.deny", 1.0f, 1.0f);
+            playSound(game::globalPos(player->getDimensionBlockSource(), BlockPos{player->getPosition()}), "bearing.stock.deny", 1.0f, 1.0f);
         }
         log().info("stock: gauge to link connection refused: {}", key);
         return false;
@@ -370,7 +370,7 @@ bool connectPanelToLink(Player* player, GlobalPos const& gauge, int slot, Global
     setLinkList(link, list);
     auto id = idAt(link);
     if (player) status(*player, "§a" + trFor(*player, "create.factory_panel.link_connected", "Gauge connected to {}", blockName(id)));
-    playSound(gauge, "levitate.stock.connect", 0.5f, 0.5f);
+    playSound(gauge, "bearing.stock.connect", 0.5f, 0.5f);
     if (id == kDisplayLinkId) display::refreshLink(link);
     log().info("stock: gauge at {} {} {} slot {} connected to the {} at {} {} {}", gauge.x, gauge.y, gauge.z, slot, id, link.x, link.y, link.z);
     return true;
@@ -394,7 +394,7 @@ void checkPanelRedstoneInput(GlobalPos const& gauge, int slot, Json& panel, bool
         if (!blockAt(*link)) return; // not loaded: keep the state (Create returns)
         if (idAt(*link) != kRedstoneLinkId) continue;
         // FactoryPanelSupportBehaviour.shouldPanelBePowered: a receiver with a signal
-        if (stateOr(*link, "levitate:receiver", 0) != 0 && stateOr(*link, "levitate:power", 0) > 0) power = true;
+        if (stateOr(*link, "bearing:receiver", 0) != 0 && stateOr(*link, "bearing:power", 0) > 0) power = true;
     }
     if (power == panel.value("paused", false)) return;
     panel["paused"] = power;
@@ -495,4 +495,4 @@ void uninstallGaugeLinks() {
     redstone::link::setBlockTransmitSource({});
 }
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

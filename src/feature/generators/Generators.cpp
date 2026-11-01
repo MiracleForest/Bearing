@@ -50,17 +50,17 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("generators", lv::feature::generators::Config);
+BR_REGISTER_CONFIG("generators", br::feature::generators::Config);
 
-namespace lv::feature::generators {
+namespace br::feature::generators {
 
 namespace k = core::kinetics;
 using Json  = nlohmann::json;
 
 namespace {
 
-constexpr char kDbWheels[] = "lv:generators:wheels";
-constexpr char kDbActive[] = "lv:generators:active";
+constexpr char kDbWheels[] = "br:generators:wheels";
+constexpr char kDbActive[] = "br:generators:active";
 
 /// Turning state of a hand crank / valve handle (Create's HandCrankBlockEntity fields).
 struct Handle {
@@ -480,12 +480,12 @@ void onTick() {
 
 std::string valveId(int colour) {
     if (colour < 0 || colour > 15) return kCopperValve;
-    return "levitate:" + std::string(cg::kDyeColours[static_cast<std::size_t>(colour)]) + "_valve_handle";
+    return "bearing:" + std::string(cg::kDyeColours[static_cast<std::size_t>(colour)]) + "_valve_handle";
 }
 
 int valveColour(std::string_view id) {
     if (id == kCopperValve) return -1;
-    constexpr std::string_view prefix = "levitate:";
+    constexpr std::string_view prefix = "bearing:";
     constexpr std::string_view suffix = "_valve_handle";
     if (!id.starts_with(prefix) || !id.ends_with(suffix)) return -2;
     auto colour = id.substr(prefix.size(), id.size() - prefix.size() - suffix.size());
@@ -495,7 +495,7 @@ int valveColour(std::string_view id) {
 }
 
 Kind kindOf(std::string_view id) {
-    if (!id.starts_with("levitate:")) return Kind::None;
+    if (!id.starts_with("bearing:")) return Kind::None;
     if (id == kHandCrank) return Kind::Crank;
     if (id == kWaterWheel) return Kind::WaterWheel;
     if (id == kLargeWheel) return Kind::LargeWheel;
@@ -704,7 +704,7 @@ void roomParticles(Player& player, int dim, double const (&lo)[3], double const 
                 p[axis] = lo[axis] + t;
                 SpawnParticleEffectPacket pkt(SpawnParticleEffectPacketPayload(
                     Vec3{static_cast<float>(p[0]), static_cast<float>(p[1]), static_cast<float>(p[2])},
-                    "levitate:water_wheel_room",
+                    "bearing:water_wheel_room",
                     static_cast<uchar>(dim),
                     std::nullopt
                 ));
@@ -914,6 +914,6 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::feature::generators
+} // namespace br::feature::generators
 
-LV_REGISTER_MODULE(lv::feature::generators::GeneratorsModule);
+BR_REGISTER_MODULE(br::feature::generators::GeneratorsModule);

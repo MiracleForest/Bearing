@@ -1,4 +1,4 @@
-// Trains unit: what the Levitate client mod sends while a player controls a train (Create's
+// Trains unit: what the Bearing client mod sends while a player controls a train (Create's
 // ControlsInputPacket, ControlsStopControllingPacket, TrainHUDUpdatePacket and HonkPacket), the
 // train horn and the HUD data sent back. Vanilla clients drive with the PlayerAuthInputPacket
 // (Hooks.cpp); companions send their keys on "trains.interact" and their throttle / horn on
@@ -21,14 +21,14 @@
 #include "feature/trains/Trains.h"
 #include "mod/Log.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace cs = core::steam;
 
 namespace {
 
-constexpr char kWhistle[]   = "levitate:steam_whistle";
-constexpr char kExtension[] = "levitate:steam_whistle_extension";
+constexpr char kWhistle[]   = "bearing:steam_whistle";
+constexpr char kExtension[] = "bearing:steam_whistle_extension";
 
 /// Create's Train.honkTicks / lowHonk / honkPitch (the first whistle of the train).
 struct Honk {
@@ -38,7 +38,7 @@ struct Honk {
     bool    found    = false; ///< the train has a whistle
     int     carriage = 0;
     cc::Pos local;
-    int     size  = 0; ///< steam's `levitate:size`: 0 medium, 1 small, 2 large
+    int     size  = 0; ///< steam's `bearing:size`: 0 medium, 1 small, 2 large
     int     pitch = 0; ///< semitones of extension
 };
 std::map<std::uint64_t, Honk>& honks() {
@@ -73,11 +73,11 @@ void determineHonk(Train const& t, Honk& h) {
             h.found    = true;
             h.carriage = static_cast<int>(c);
             h.local    = local;
-            h.size     = static_cast<int>(contraption::detail::intStateOf(*block, "levitate:size").value_or(0));
+            h.size     = static_cast<int>(contraption::detail::intStateOf(*block, "bearing:size").value_or(0));
             h.pitch    = cs::whistlePitch([&](int i) -> std::optional<cs::ExtensionShape> {
                 auto it = blocks.find(local + cc::Pos{0, i, 0});
                 if (it == blocks.end() || !it->second || it->second->getTypeName() != kExtension) return std::nullopt;
-                auto shape = contraption::detail::intStateOf(*it->second, "levitate:shape").value_or(0);
+                auto shape = contraption::detail::intStateOf(*it->second, "bearing:shape").value_or(0);
                 return static_cast<cs::ExtensionShape>(std::clamp<std::int64_t>(shape, 0, 2));
             });
             return;
@@ -186,10 +186,10 @@ void tickControls() {
                 // the horn sample lasts a second at pitch 1 (the low horn plays it at half speed):
                 // restarted just before it ends it sounds continuous
                 h.nextTone = std::max(4, int(18 / (pitch * (low ? 0.5f : 1.f))));
-                playSound(t->dim, *at, low ? "levitate.trains.horn_low" : "levitate.trains.horn", 2.f, pitch);
+                playSound(t->dim, *at, low ? "bearing.trains.horn_low" : "bearing.trains.horn", 2.f, pitch);
             }
             if (at && (h.ticks == 19 || h.ticks == 5))
-                playSound(t->dim, *at, low ? "levitate.trains.horn_low_end" : "levitate.trains.horn_end", h.ticks == 5 ? 2.f : 1.f, pitch);
+                playSound(t->dim, *at, low ? "bearing.trains.horn_low_end" : "bearing.trains.horn_end", h.ticks == 5 ? 2.f : 1.f, pitch);
             --h.nextTone;
             --h.ticks;
             if (h.ticks == 0) h.nextTone = 0;
@@ -209,4 +209,4 @@ void resetControls() {
     channelDrivers().clear();
 }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains

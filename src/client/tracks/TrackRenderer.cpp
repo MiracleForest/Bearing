@@ -7,7 +7,7 @@
 // is left out of the chunk mesh and drawn every frame from its own block model turned onto the
 // ramp (core/tracks/Tilt.h tiltModelPoint); its chunk is meshed again when the tilt changes.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cmath>
@@ -52,7 +52,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::tracks {
+namespace br::client::tracks {
 
 namespace ct = core::tracks;
 
@@ -294,7 +294,7 @@ void renderCurves(BaseActorRenderContext& ctx) {
 
 } // namespace
 
-// The chunk mesh leaves out tilted tracks (drawn above) while the server runs Levitate.
+// The chunk mesh leaves out tilted tracks (drawn above) while the server runs Bearing.
 LL_STATIC_HOOK(
     TracksExtractHook,
     ll::memory::HookPriority::Normal,
@@ -397,8 +397,8 @@ size_t knownCurves() {
     return gCurves.size();
 }
 
-} // namespace lv::client::tracks
+} // namespace br::client::tracks
 
-LV_REGISTER_MODULE(lv::client::tracks::TrackRendererModule);
+BR_REGISTER_MODULE(br::client::tracks::TrackRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

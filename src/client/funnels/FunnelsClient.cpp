@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the item logistics unit: funnel flaps that swing smoothly (client mod only).
 //
@@ -6,12 +6,12 @@
 // their top edge after every transfer, each with its own frequency, damped by a value chasing 0
 // (Create's FunnelBlockEntity.flap: LerpedFloat, exponential chaser at .05 per tick).
 // - Chunk meshes: a horizontal funnel (wall or belt funnel) is left out of the chunk mesh while the
-//   server runs Levitate (the companion handshake is done); its position is remembered.
+//   server runs Bearing (the companion handshake is done); its position is remembered.
 // - Every frame each remembered funnel is drawn from its static model (RP models/blocks/
 //   funnel_wall / funnel_belt / funnel_belt_extended .geo.json: plate, hood and the strips
 //   flap_0..3), the strips turned by the flap angle.
 // - The server sends "funnels.flap" {dim, pos, inward} on every transfer (feature/funnels/Funnel.cpp).
-// Vanilla clients (no mod) see the state-driven flap (`levitate:flap` for 4 ticks).
+// Vanilla clients (no mod) see the state-driven flap (`bearing:flap` for 4 ticks).
 
 #include <cmath>
 #include <filesystem>
@@ -73,15 +73,15 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::funnels {
+namespace br::client::funnels {
 
 namespace k = core::kinetics;
 using Json  = nlohmann::json;
 
 namespace {
 
-constexpr char const* kAndesite = "levitate:andesite_funnel";
-constexpr char const* kBrass    = "levitate:brass_funnel";
+constexpr char const* kAndesite = "bearing:andesite_funnel";
+constexpr char const* kBrass    = "bearing:brass_funnel";
 constexpr char const* kMaterials[] = {"frame", "back", "side", "flap"};
 constexpr char const* kBones[]     = {"plate", "hood", "flap_0", "flap_1", "flap_2", "flap_3"};
 
@@ -124,7 +124,7 @@ using Models = std::map<std::string, std::map<std::string, k::RotorModel>>; // m
 Models const* funnelModels() {
     static std::optional<Models> models = []() -> std::optional<Models> {
         Models out;
-        auto   dir = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks";
+        auto   dir = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks";
         for (char const* file : {"funnel_wall", "funnel_belt", "funnel_belt_extended"}) {
             std::ifstream in(dir / (std::string(file) + ".geo.json"));
             auto          j = Json::parse(in, nullptr, false, true);
@@ -154,15 +154,15 @@ int stateOf(Block const& b, char const* name, int fallback = 0) { return game::i
 
 std::string textureOf(Block const& b, std::string const& material) {
     std::string n = b.getTypeName() == kBrass ? "brass" : "andesite";
-    if (material != "back") return "levitate_" + n + "_funnel_" + material;
-    char const* back = stateOf(b, "levitate:powered") ? "powered" : stateOf(b, "levitate:extracting", 1) ? "extract" : "insert";
-    return "levitate_" + n + "_funnel_back_" + back;
+    if (material != "back") return "bearing_" + n + "_funnel_" + material;
+    char const* back = stateOf(b, "bearing:powered") ? "powered" : stateOf(b, "bearing:extracting", 1) ? "extract" : "insert";
+    return "bearing_" + n + "_funnel_back_" + back;
 }
 
 std::string geometryOf(Block const& b) {
-    int shape = stateOf(b, "levitate:shape");
-    if (shape == 0) return "geometry.levitate.funnel_wall";
-    return shape == 2 ? "geometry.levitate.funnel_belt_extended" : "geometry.levitate.funnel_belt";
+    int shape = stateOf(b, "bearing:shape");
+    if (shape == 0) return "geometry.bearing.funnel_wall";
+    return shape == 2 ? "geometry.bearing.funnel_belt_extended" : "geometry.bearing.funnel_belt";
 }
 
 /// The BP's `minecraft:transformation` Y rotation per facing (the models face north).
@@ -211,7 +211,7 @@ mce::Mesh* meshFor(Tessellator& tess, std::string const& geo, std::vector<std::s
         tess.clear();
         return nullptr;
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_funnel", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_funnel", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 /// Create's FunnelRenderer: the angle (degrees) of flap strip `segment` for flap value `f`.
@@ -262,7 +262,7 @@ void onFlap(Json const& msg) {
 }
 
 void renderFunnels(BaseActorRenderContext& ctx) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     auto* level  = ci->getLevel();
     auto* player = ci->getLocalPlayer();
@@ -304,7 +304,7 @@ void renderFunnels(BaseActorRenderContext& ctx) {
             continue;
         }
         auto const& block  = region.getBlock(p);
-        int         facing = stateOf(block, "levitate:facing", 1);
+        int         facing = stateOf(block, "bearing:facing", 1);
         if (!isFunnelId(block.getTypeName()) || facing < 2 || facing > 5) {
             stale.push_back(p);
             continue;
@@ -314,7 +314,7 @@ void renderFunnels(BaseActorRenderContext& ctx) {
         auto  geo   = geometryOf(block);
         float yRot  = yRotation(facing);
         // the strips turn around their top edge (the flap bones' pivot): model (0, 13 + dy, z)
-        int   shape = stateOf(block, "levitate:shape");
+        int   shape = stateOf(block, "bearing:shape");
         float dy    = shape == 0 ? 0.f : -3.f;
         float pz    = (shape == 2 ? -8.f : -2.f) + .5f;
         glm::vec3 pivot{.5f, (13.f + dy) / 16.f, (pz + 8.f) / 16.f};
@@ -351,7 +351,7 @@ void renderFunnels(BaseActorRenderContext& ctx) {
 
 } // namespace
 
-// Chunk meshes: horizontal funnels are drawn by us while the server runs Levitate.
+// Chunk meshes: horizontal funnels are drawn by us while the server runs Bearing.
 LL_STATIC_HOOK(
     FunnelsExtractHook,
     ll::memory::HookPriority::Normal,
@@ -370,7 +370,7 @@ LL_STATIC_HOOK(
 ) {
     if (visualReference == ClientBlockPipeline::VisualReference::Block && isFunnelId(block.getTypeName())
         && feature::net::client::connected()) {
-        int facing = game::intState(block, "levitate:facing").value_or(1);
+        int facing = game::intState(block, "bearing:facing").value_or(1);
         if (facing >= 2 && facing <= 5 && funnelModels()) {
             BlockPos const& rel = iterData.relativePos;
             BlockPos        pos{chunkMinPos.x + rel.x, chunkMinPos.y + rel.y, chunkMinPos.z + rel.z};
@@ -432,8 +432,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::funnels
+} // namespace br::client::funnels
 
-LV_REGISTER_MODULE(lv::client::funnels::FunnelsClientModule);
+BR_REGISTER_MODULE(br::client::funnels::FunnelsClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

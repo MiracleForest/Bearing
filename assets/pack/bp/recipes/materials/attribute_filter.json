@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:attribute_filter"
+      "identifier": "bearing:attribute_filter"
     },
     "tags": [
       "crafting_table"
@@ -12,7 +12,7 @@
     ],
     "key": {
       "N": {
-        "item": "levitate:brass_nugget"
+        "item": "bearing:brass_nugget"
       },
       "W": {
         "tag": "minecraft:wool"
@@ -20,11 +20,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:brass_nugget"
+        "item": "bearing:brass_nugget"
       }
     ],
     "result": {
-      "item": "levitate:attribute_filter"
+      "item": "bearing:attribute_filter"
     }
   }
 }

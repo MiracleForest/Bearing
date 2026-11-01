@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:copper_tile_stairs"
+      "identifier": "bearing:copper_tile_stairs"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:copper_tiles"
+        "item": "bearing:copper_tiles"
       }
     },
     "unlock": [
       {
-        "item": "levitate:copper_tiles"
+        "item": "bearing:copper_tiles"
       }
     ],
     "result": {
-      "item": "levitate:copper_tile_stairs",
+      "item": "bearing:copper_tile_stairs",
       "count": 4
     }
   }

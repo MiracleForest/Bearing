@@ -29,7 +29,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -127,7 +127,7 @@ void reportUnmapped(Player& player, std::string const& owner, std::string const&
     std::string list;
     for (std::size_t i = 0; i < loaded->unmapped.size() && i < 12; ++i) list += (i ? ", " : "") + loaded->unmapped[i];
     if (loaded->unmapped.size() > 12) list += ", ...";
-    message(player, "§e" + trFor(player, "lv.schematics.unmapped", "{0} block type(s) of {1} have no Bedrock equivalent and will be skipped: {2}", loaded->unmapped.size(), file, list));
+    message(player, "§e" + trFor(player, "br.schematics.unmapped", "{0} block type(s) of {1} have no Bedrock equivalent and will be skipped: {2}", loaded->unmapped.size(), file, list));
 }
 
 void schematicUse(Player& player, std::optional<std::pair<cs::Pos, int>> hit) {
@@ -181,7 +181,7 @@ int printInstantly(Player* player, int dim, SchematicData const& d, bool include
         if (!cur || unbreakable(*cur)) continue;
         place(at, *block, 2);
         // BlockHelper.prepareBlockEntityData: SAFE_NBT blocks whole, the rest only their safe part
-        if (auto it = s.levitateData.find(i); it != s.levitateData.end()) {
+        if (auto it = s.bearingData.find(i); it != s.bearingData.end()) {
             auto doc = Json::parse(it->second, nullptr, false);
             if (!doc.is_discarded()) {
                 if (auto safe = cs::safeBlockData(block->getTypeName(), doc); !safe.is_null()) common::blockdata::set(at, std::move(safe));
@@ -352,4 +352,4 @@ void registerPlacement() {
 
 } // namespace detail
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

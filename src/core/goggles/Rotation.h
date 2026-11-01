@@ -1,16 +1,16 @@
 #pragma once
 
-// Create's wrench rotation (IWrenchable.getRotatedBlockState) on Levitate's block state
+// Create's wrench rotation (IWrenchable.getRotatedBlockState) on Bearing's block state
 // conventions (pure C++, unit-tested). See docs/SPEC.md §3.6.8 (U8).
 //
 // State conventions (integer block states):
-//   levitate:facing / minecraft:facing_direction  0..5 in Create's Direction order
+//   bearing:facing / minecraft:facing_direction  0..5 in Create's Direction order
 //                                                  (down, up, north, south, west, east)
-//   levitate:axis                                  0 x, 1 y, 2 z   (RotatedPillarKineticBlock.AXIS)
-//   levitate:horizontal_facing                     0 south, 1 west, 2 north, 3 east (Java 2D value)
-//   levitate:horizontal_axis                       0 x, 2 z        (HorizontalAxisKineticBlock)
-//   levitate:axis_along_first                      0 / 1           (DirectionalAxisKineticBlock)
-//   levitate:along_first                           0 / 1           the same flag on the gauges and the
+//   bearing:axis                                  0 x, 1 y, 2 z   (RotatedPillarKineticBlock.AXIS)
+//   bearing:horizontal_facing                     0 south, 1 west, 2 north, 3 east (Java 2D value)
+//   bearing:horizontal_axis                       0 x, 2 z        (HorizontalAxisKineticBlock)
+//   bearing:axis_along_first                      0 / 1           (DirectionalAxisKineticBlock)
+//   bearing:along_first                           0 / 1           the same flag on the gauges and the
 //                                                                  fluid valve (a block with an axis
 //                                                                  state, the chain drives, never reads it)
 
@@ -18,18 +18,18 @@
 #include <map>
 #include <string>
 
-namespace lv::core::goggles {
+namespace br::core::goggles {
 
 /// The rotation-relevant states of a block: name -> integer value.
 using States = std::map<std::string, int>;
 
-inline constexpr char const* kFacing           = "levitate:facing";
+inline constexpr char const* kFacing           = "bearing:facing";
 inline constexpr char const* kVanillaFacing    = "minecraft:facing_direction";
-inline constexpr char const* kAxis             = "levitate:axis";
-inline constexpr char const* kHorizontalFacing = "levitate:horizontal_facing";
-inline constexpr char const* kHorizontalAxis   = "levitate:horizontal_axis";
-inline constexpr char const* kAxisAlongFirst   = "levitate:axis_along_first";
-inline constexpr char const* kAlongFirst       = "levitate:along_first";
+inline constexpr char const* kAxis             = "bearing:axis";
+inline constexpr char const* kHorizontalFacing = "bearing:horizontal_facing";
+inline constexpr char const* kHorizontalAxis   = "bearing:horizontal_axis";
+inline constexpr char const* kAxisAlongFirst   = "bearing:axis_along_first";
+inline constexpr char const* kAlongFirst       = "bearing:along_first";
 
 /// The state names `rotatedStates` reads.
 inline constexpr std::array<char const*, 7> kRotationStates{
@@ -51,4 +51,4 @@ inline constexpr std::array<char const*, 7> kRotationStates{
 /// (0..5). Only the states listed above change; a block without any of them is returned as is.
 [[nodiscard]] States rotatedStates(States const& states, int face);
 
-} // namespace lv::core::goggles
+} // namespace br::core::goggles

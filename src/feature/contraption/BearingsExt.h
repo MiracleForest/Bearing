@@ -15,7 +15,7 @@
 #include "core/GlobalPos.h"
 #include "feature/contraption/Contraption.h"
 
-namespace lv::feature::contraption::ext {
+namespace br::feature::contraption::ext {
 
 /// The persisted record of a live contraption (blocks, block entities, carried data, glue,
 /// anchor data). nullopt if unknown.
@@ -26,4 +26,4 @@ namespace lv::feature::contraption::ext {
 /// the new id.
 std::optional<Id> restore(nlohmann::json record, core::GlobalPos const& anchor, std::string const& kind, cc::Transform const& transform);
 
-} // namespace lv::feature::contraption::ext
+} // namespace br::feature::contraption::ext

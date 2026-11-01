@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:speedometer_from_conversion"
+      "identifier": "bearing:speedometer_from_conversion"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:stressometer"
+        "item": "bearing:stressometer"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:stressometer"
+        "item": "bearing:stressometer"
       }
     ],
     "result": {
-      "item": "levitate:speedometer",
+      "item": "bearing:speedometer",
       "count": 1
     }
   }

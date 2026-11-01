@@ -2,22 +2,22 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:rope",
+      "identifier": "bearing:rope",
       "menu_category": {
         "category": "none"
       }
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.rope"
+        "identifier": "geometry.bearing.rope"
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_rope",
+          "texture": "bearing_rope",
           "render_method": "alpha_test"
         },
         "rope": {
-          "texture": "levitate_rope",
+          "texture": "bearing_rope",
           "render_method": "alpha_test"
         }
       },

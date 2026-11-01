@@ -13,7 +13,7 @@
 #include "core/kinetics/Solver.h"
 #include "core/kinetics/Spec.h"
 
-namespace lv::core::kinetics::feedback {
+namespace br::core::kinetics::feedback {
 
 // ---- rotation indicators ---------------------------------------------------------------------------
 /// Ticks between a generator's speed level change and its particles (queueRotationIndicators).
@@ -75,7 +75,7 @@ enum class PitchGroup : std::uint8_t { VeryLow, Low, Normal, High, VeryHigh };
 inline constexpr int kMaxAmbientDistance = 16;
 /// SoundScapes.SOUND_VOLUME_ARG_MAX.
 inline constexpr int kSoundVolumeArgMax = 15;
-/// Ticks between two plays of the 0.5 s ambient samples (Levitate: Create's sound loops).
+/// Ticks between two plays of the 0.5 s ambient samples (Bearing: Create's sound loops).
 inline constexpr int kAmbientInterval = 10;
 
 /// KineticBlockEntity.tickAudio: clamp(|speed| / 256 + .45, .85, 1).
@@ -105,4 +105,4 @@ struct Scape {
 /// kinetic before cogs, then pitch group; a scape's pitch is its first source's.
 [[nodiscard]] std::vector<Scape> groupSources(std::vector<Source> const& sources);
 
-} // namespace lv::core::kinetics::feedback
+} // namespace br::core::kinetics::feedback

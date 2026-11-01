@@ -31,7 +31,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace items = feature::common::items;
 namespace ia    = feature::common::interactions;
@@ -71,7 +71,7 @@ Axis pillarAxis(BlockSource& region, PlaceContext const& ctx, Player const& play
 }
 
 /// Create's CogWheelBlock.isValidCogwheelPosition. A neighbour is skipped only when it has the
-/// AXIS block property (`levitate:axis`: cogwheels, encased cogwheels) along the facing; blocks
+/// AXIS block property (`bearing:axis`: cogwheels, encased cogwheels) along the facing; blocks
 /// with an integrated cog (mixer, crafter, pump, ...) have no AXIS property and always count.
 bool validCogPosition(BlockSource& region, bool large, GlobalPos const& pos, Axis cogAxis) {
     for (Face f : ck::kFaces) {
@@ -599,4 +599,4 @@ void uninstallPlacementHooks() {
     lastUse().clear();
 }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

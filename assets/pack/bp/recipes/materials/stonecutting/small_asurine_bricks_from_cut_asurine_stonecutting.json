@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_asurine_bricks_from_cut_asurine_stonecutting"
+      "identifier": "bearing:small_asurine_bricks_from_cut_asurine_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:cut_asurine"
+        "item": "bearing:cut_asurine"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:cut_asurine"
+        "item": "bearing:cut_asurine"
       }
     ],
     "result": {
-      "item": "levitate:small_asurine_bricks",
+      "item": "bearing:small_asurine_bricks",
       "count": 1
     }
   }

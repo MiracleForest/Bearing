@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:white_postbox_from_black_postbox"
+      "identifier": "bearing:white_postbox_from_black_postbox"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
         "item": "minecraft:white_dye"
       },
       {
-        "item": "levitate:black_postbox"
+        "item": "bearing:black_postbox"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:black_postbox"
+        "item": "bearing:black_postbox"
       }
     ],
     "result": {
-      "item": "levitate:white_postbox",
+      "item": "bearing:white_postbox",
       "count": 1
     }
   }

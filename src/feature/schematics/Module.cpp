@@ -32,7 +32,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 struct SchematicGiveParams {
     std::string file;
@@ -70,9 +70,9 @@ bool isOurItem(std::string const& id) { return id == kQuill || id == kSchematic 
 
 } // namespace
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics
 
-using namespace lv::feature::schematics;
+using namespace br::feature::schematics;
 
 // ---- interactions (U36: on the shared dispatch) --------------------------------------------------
 
@@ -113,7 +113,7 @@ ia::Result schematicsUseOn(ia::UseOnContext const& c) {
             return ia::Result::Consume;
         }
     } catch (std::exception const& e) {
-        lv::log().error("schematics: use failed: {}", e.what());
+        br::log().error("schematics: use failed: {}", e.what());
         return ia::Result::Consume;
     }
     return ia::Result::Pass;
@@ -126,7 +126,7 @@ void schematicsPlaced(ia::PlaceContext const& c) {
         return;
     }
     if (c.itemId != kTable) return;
-    placeId(c.pos, kTable, {{kFacing, lv::game::opposite(lv::game::playerFacing(c.player))}});
+    placeId(c.pos, kTable, {{kFacing, br::game::opposite(br::game::playerFacing(c.player))}});
 }
 
 /// Quill and schematic used in the air.
@@ -138,7 +138,7 @@ ia::Result schematicsUse(ia::UseContext const& c) {
         if (held == kQuill) quillUse(c.player, std::nullopt);
         else schematicUse(c.player, std::nullopt);
     } catch (std::exception const& e) {
-        lv::log().error("schematics: use failed: {}", e.what());
+        br::log().error("schematics: use failed: {}", e.what());
     }
     return ia::Result::Consume;
 }
@@ -160,7 +160,7 @@ ia::Result schematicsDestroy(ia::DestroyContext const& c) {
 
 } // namespace
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace {
 
@@ -240,35 +240,35 @@ private:
 
 } // namespace
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics
 
-LV_REGISTER_MODULE(lv::feature::schematics::SchematicsModule);
+BR_REGISTER_MODULE(br::feature::schematics::SchematicsModule);
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
-    using namespace lv::feature::schematics;
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+    using namespace br::feature::schematics;
     using Origin = CommandOrigin const;
     // `/create schematic list`: the caller's stored schematics
     cmd.overload().text("schematic").text("list").execute([](Origin& origin, CommandOutput& output) {
-        auto* p = lv::commands::playerOf(origin);
-        if (!p) return output.error(lv::tr("lv.schematics.need_player", "Only players can use this."));
+        auto* p = br::commands::playerOf(origin);
+        if (!p) return output.error(br::tr("br.schematics.need_player", "Only players can use this."));
         auto files = listFiles(playerDir(p->getRealName()));
-        if (files.empty()) return output.success(lv::trFor(*p, "create.gui.schematicTable.noSchematics", "No Schematics Saved"));
+        if (files.empty()) return output.success(br::trFor(*p, "create.gui.schematicTable.noSchematics", "No Schematics Saved"));
         std::string list;
         for (auto const& f : files) list += (list.empty() ? "" : ", ") + f;
-        output.success(lv::trFor(*p, "create.gui.schematicTable.availableSchematics", "Available Schematics") + ": " + list);
+        output.success(br::trFor(*p, "create.gui.schematicTable.availableSchematics", "Available Schematics") + ": " + list);
     });
     // `/create schematic give <file>` (op): a written schematic of one of the caller's files
     cmd.overload<SchematicGiveParams>().text("schematic").text("give").required("file").execute([](Origin& origin, CommandOutput& output, SchematicGiveParams const& params) {
-        auto* p = lv::commands::playerOf(origin);
-        if (!p) return output.error(lv::tr("lv.schematics.need_player", "Only players can use this."));
-        if (!lv::commands::isAdmin(origin)) return output.error(lv::tr("lv.contraption.need_op", "You need operator permission."));
+        auto* p = br::commands::playerOf(origin);
+        if (!p) return output.error(br::tr("br.schematics.need_player", "Only players can use this."));
+        if (!br::commands::isAdmin(origin)) return output.error(br::tr("br.contraption.need_op", "You need operator permission."));
         std::string err;
-        if (!loadSchematic(p->getRealName(), params.file, &err)) return output.error(lv::trFor(*p, "create.schematic.error", "Schematic failed to Load - Check Game Logs") + " (" + err + ")");
+        if (!loadSchematic(p->getRealName(), params.file, &err)) return output.error(br::trFor(*p, "create.schematic.error", "Schematic failed to Load - Check Game Logs") + " (" + err + ")");
         auto item = makeSchematic(params.file, p->getRealName());
         if (!item) return output.error("?");
         give(*p, *item);
         reportUnmapped(*p, p->getRealName(), params.file);
-        lv::log().info("schematics: gave {} a schematic of {}", p->getRealName(), params.file);
-        output.success(lv::trFor(*p, "lv.schematics.given", "Gave a schematic of {0}", params.file));
+        br::log().info("schematics: gave {} a schematic of {}", p->getRealName(), params.file);
+        output.success(br::trFor(*p, "br.schematics.given", "Gave a schematic of {0}", params.file));
     });
 });

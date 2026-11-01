@@ -2,25 +2,25 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:rotation_speed_controller",
+      "identifier": "bearing:rotation_speed_controller",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1,
           2
         ],
-        "levitate:revision": [
+        "bearing:revision": [
           0,
           1
         ],
-        "levitate:bracket": [
+        "bearing:bracket": [
           0,
           1
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -29,31 +29,31 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.transmission_speed_controller",
+        "identifier": "geometry.bearing.transmission_speed_controller",
         "bone_visibility": {
-          "rotor": "q.block_state('levitate:rotor') != 1",
-          "bracket": "q.block_state('levitate:bracket') == 1"
+          "rotor": "q.block_state('bearing:rotor') != 1",
+          "bracket": "q.block_state('bearing:bracket') == 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_transmission_rotor",
+          "texture": "bearing_transmission_rotor",
           "render_method": "alpha_test"
         },
         "base": {
-          "texture": "levitate_transmission_brass_casing",
+          "texture": "bearing_transmission_brass_casing",
           "render_method": "alpha_test"
         },
         "side": {
-          "texture": "levitate_transmission_controller_side",
+          "texture": "bearing_transmission_controller_side",
           "render_method": "alpha_test"
         },
         "top": {
-          "texture": "levitate_transmission_controller_top",
+          "texture": "bearing_transmission_controller_top",
           "render_method": "alpha_test"
         },
         "end": {
-          "texture": "levitate_transmission_brass_end",
+          "texture": "bearing_transmission_brass_end",
           "render_method": "alpha_test"
         }
       },
@@ -92,7 +92,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:axis') == 2",
+        "condition": "q.block_state('bearing:axis') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [

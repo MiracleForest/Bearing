@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:pulp",
+      "identifier": "bearing:pulp",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_pulp",
+      "minecraft:icon": "bearing_pulp",
       "minecraft:display_name": {
-        "value": "item.levitate:pulp.name"
+        "value": "item.bearing:pulp.name"
       },
       "minecraft:max_stack_size": 64
     }

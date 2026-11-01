@@ -1,5 +1,5 @@
 {
-  "type": "levitate:mixing",
+  "type": "bearing:mixing",
   "ingredients": [
     {
       "item": "minecraft:andesite"
@@ -10,7 +10,7 @@
   ],
   "results": [
     {
-      "id": "levitate:andesite_alloy"
+      "id": "bearing:andesite_alloy"
     }
   ]
 }

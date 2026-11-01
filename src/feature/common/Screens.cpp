@@ -8,7 +8,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common::screens {
+namespace br::feature::common::screens {
 
 namespace {
 std::unordered_map<std::string, ScreenType>& types() {
@@ -109,6 +109,6 @@ public:
     }
 };
 
-} // namespace lv::feature::common::screens
+} // namespace br::feature::common::screens
 
-LV_REGISTER_MODULE_ORDERED(lv::feature::common::screens::ScreensModule, lv::ModuleOrder::Services);
+BR_REGISTER_MODULE_ORDERED(br::feature::common::screens::ScreensModule, br::ModuleOrder::Services);

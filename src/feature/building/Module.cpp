@@ -20,7 +20,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace detail {
 void processDirty();
@@ -54,9 +54,9 @@ std::uint64_t& ticks() {
 bool mine(Block const& b) { return infoOf(b) != nullptr; }
 
 // the encased girder turns like a shaft along its axis (x or z); the beam is the static part
-LV_REGISTER_KINETIC_BLOCK(
+BR_REGISTER_KINETIC_BLOCK(
     kGirderShaftId,
-    lv::kinetics::specs::withModel(lv::kinetics::specs::shaft("levitate:axis"), "geometry.levitate.girder_shaft_rotor", "levitate_girder_shaft")
+    br::kinetics::specs::withModel(br::kinetics::specs::shaft("bearing:axis"), "geometry.bearing.girder_shaft_rotor", "bearing_girder_shaft")
 );
 
 struct Lifecycle {
@@ -68,7 +68,7 @@ struct Lifecycle {
         // girders: a quarter turn about Y swaps the X and Z beams
         contraption::registerRotationHandler(kGirderId, [](contraption::cc::States& s, contraption::cc::Axis axis, int quarters) {
             if (axis != contraption::cc::Axis::Y || (quarters & 1) == 0) return;
-            auto x = s.find("levitate:x"), z = s.find("levitate:z");
+            auto x = s.find("bearing:x"), z = s.find("bearing:z");
             if (x != s.end() && z != s.end()) std::swap(x->second, z->second);
         });
     }
@@ -91,7 +91,7 @@ void onBlockChanged(GlobalPos const& pos, Block const& previous, Block const& no
     if (isMine) {
         auto const* info = infoOf(now);
         if (!info->copperShape.empty() && !info->waxed && info->age < 3) trackCopper(pos);
-        if ((info->kind == Kind::Door && !stateOf(now, "levitate:upper")) || info->kind == Kind::Trapdoor) trackRedstone(pos);
+        if ((info->kind == Kind::Door && !stateOf(now, "bearing:upper")) || info->kind == Kind::Trapdoor) trackRedstone(pos);
     }
     if (wasMine) {
         auto it       = playerBreaks().find(pos);
@@ -183,6 +183,6 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::feature::building
+} // namespace br::feature::building
 
-LV_REGISTER_MODULE(lv::feature::building::BuildingModule);
+BR_REGISTER_MODULE(br::feature::building::BuildingModule);

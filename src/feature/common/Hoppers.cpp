@@ -18,7 +18,7 @@
 #include "feature/common/Items.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common::hoppers {
+namespace br::feature::common::hoppers {
 
 namespace {
 
@@ -26,10 +26,10 @@ std::set<std::string, std::less<>>& excluded() {
     // Create: funnels and blaze burners have no item capability; the portable storage interface
     // moves items to and from its hoppers itself (feature/actors/Psi.cpp)
     static std::set<std::string, std::less<>> s{
-        "levitate:andesite_funnel",
-        "levitate:brass_funnel",
-        "levitate:blaze_burner",
-        "levitate:portable_storage_interface",
+        "bearing:andesite_funnel",
+        "bearing:brass_funnel",
+        "bearing:blaze_burner",
+        "bearing:portable_storage_interface",
     };
     return s;
 }
@@ -108,7 +108,7 @@ std::optional<bool> pull(BlockSource& region, Container& to, Vec3 const& hopper)
 
 void exclude(std::string blockId) { excluded().insert(std::move(blockId)); }
 
-bool reaches(std::string_view blockId) { return blockId.starts_with("levitate:") && !excluded().contains(blockId); }
+bool reaches(std::string_view blockId) { return blockId.starts_with("bearing:") && !excluded().contains(blockId); }
 
 LL_TYPE_INSTANCE_HOOK(
     HopperPushOutHook,
@@ -153,6 +153,6 @@ public:
     }
 };
 
-} // namespace lv::feature::common::hoppers
+} // namespace br::feature::common::hoppers
 
-LV_REGISTER_MODULE_ORDERED(lv::feature::common::hoppers::HoppersModule, lv::ModuleOrder::Services);
+BR_REGISTER_MODULE_ORDERED(br::feature::common::hoppers::HoppersModule, br::ModuleOrder::Services);

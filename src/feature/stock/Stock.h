@@ -32,19 +32,19 @@ class BlockPos;
 class BlockSource;
 class Player;
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 using Json = nlohmann::json;
 using core::GlobalPos;
 using core::stock::RequestType;
 
-inline constexpr char kStockLink[]         = "levitate:stock_link";
-inline constexpr char kStockTicker[]       = "levitate:stock_ticker";
-inline constexpr char kFactoryGauge[]      = "levitate:factory_gauge";
-inline constexpr char kRedstoneRequester[] = "levitate:redstone_requester";
-inline constexpr char kShoppingList[]      = "levitate:shopping_list";
-inline constexpr char kPackager[]          = "levitate:packager";  ///< U25
-inline constexpr char kRepackager[]        = "levitate:repackager"; ///< U25
+inline constexpr char kStockLink[]         = "bearing:stock_link";
+inline constexpr char kStockTicker[]       = "bearing:stock_ticker";
+inline constexpr char kFactoryGauge[]      = "bearing:factory_gauge";
+inline constexpr char kRedstoneRequester[] = "bearing:redstone_requester";
+inline constexpr char kShoppingList[]      = "bearing:shopping_list";
+inline constexpr char kPackager[]          = "bearing:packager";  ///< U25
+inline constexpr char kRepackager[]        = "bearing:repackager"; ///< U25
 
 /// An item with a count beyond stack sizes (Create's BigItemStack). `count` >= kInfinite is
 /// infinite (creative crates).
@@ -155,4 +155,4 @@ struct PanelState {
 /// connected to the panel every tick (U56, Create's checkForRedstoneInput), so it lasts until then.
 void setPanelPaused(GlobalPos const& gauge, int slot, bool paused);
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

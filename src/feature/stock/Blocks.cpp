@@ -35,13 +35,13 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace items = common::items;
 namespace ia    = common::interactions;
 
 namespace {
-constexpr char kDbBlocks[] = "lv:stock:blocks";
+constexpr char kDbBlocks[] = "br:stock:blocks";
 
 /// Bedrock FacingID (0 down, 1 up, 2 north, 3 south, 4 west, 5 east) to Java 2D facing.
 int facing2dOf(int face) {
@@ -182,7 +182,7 @@ bool useOnBlock(Player& player, ItemStack const& held, GlobalPos const& p, int f
             if (hid != kFactoryGauge) return false;
             auto network = networkOfItem(held);
             if (network.empty()) {
-                playSound(p, "levitate.stock.deny", 0.5f, 1.0f);
+                playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
                 statusKey(player, "create.factory_panel.tune_before_placing", "Tune to a stock link before placing");
                 return true;
             }
@@ -224,7 +224,7 @@ bool useOnBlock(Player& player, ItemStack const& held, GlobalPos const& p, int f
     }
     if (tid == kBlazeBurner) {
         // Create's BlazeBurnerBlock.useItemOn: a burner beside a stock ticker is its keeper
-        if (hid == "levitate:goggles" || stateOr(p, "levitate:blaze", 0) == 0) return false;
+        if (hid == "bearing:goggles" || stateOr(p, "bearing:blaze", 0) == 0) return false;
         auto ticker = tickerOfKeeper(p, true);
         if (!ticker) return false;
         if (hid == kShoppingList) checkout(player, *ticker, held);
@@ -370,7 +370,7 @@ ia::Result stockUseOn(ia::UseOnContext const& c) {
     if (!ourItem) return ia::Result::Pass;
     if (hid == kFactoryGauge && networkOfItem(c.item).empty()) {
         // Create's FactoryPanelBlockItem.place: an untuned gauge can't be placed
-        playSound(clicked, "levitate.stock.deny", 0.5f, 1.0f);
+        playSound(clicked, "bearing.stock.deny", 0.5f, 1.0f);
         statusKey(player, "create.factory_panel.tune_before_placing", "Tune to a stock link before placing");
         player.sendInventory(false);
         return ia::Result::Deny;
@@ -411,7 +411,7 @@ ia::Result stockUse(ia::UseContext const& c) {
         player.setSelectedItem(item);
         player.sendInventory(false);
         statusKey(player, "create.logistically_linked.cleared", "Cleared connection to network");
-        playSound(game::globalPos(player.getDimensionBlockSource(), BlockPos{player.getPosition()}), "levitate.stock.clear", 0.75f, 1.0f);
+        playSound(game::globalPos(player.getDimensionBlockSource(), BlockPos{player.getPosition()}), "bearing.stock.clear", 0.75f, 1.0f);
         log().info("stock: {} cleared the tuning of {}", player.getRealName(), hid);
         return ia::Result::Consume;
     }
@@ -432,7 +432,7 @@ ia::Result stockInteract(ia::EntityContext const& c) {
     Actor&  entity = c.entity;
     // Create's getStockTickerPosition: a living entity whose (root) vehicle is a seat
     auto const* seat = entity.getVehicle();
-    if (player.isSpectator() || entity.isPlayer() || !seat || !actors::isSeatEntityId(seat->getTypeName()) || entity.getTypeName() == "levitate:package") return ia::Result::Pass;
+    if (player.isSpectator() || entity.isPlayer() || !seat || !actors::isSeatEntityId(seat->getTypeName()) || entity.getTypeName() == "bearing:package") return ia::Result::Pass;
     auto const& pos = entity.getPosition();
     GlobalPos   at{static_cast<int>(entity.getDimensionId()), static_cast<int>(std::floor(pos.x)), static_cast<int>(std::floor(pos.y + 0.01)), static_cast<int>(std::floor(pos.z))};
     auto        ticker = tickerOfKeeper(at, false);
@@ -605,6 +605,6 @@ private:
 };
 } // namespace
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock
 
-LV_REGISTER_MODULE(lv::feature::stock::StockModule);
+BR_REGISTER_MODULE(br::feature::stock::StockModule);

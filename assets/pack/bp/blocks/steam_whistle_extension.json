@@ -2,17 +2,17 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:steam_whistle_extension",
+      "identifier": "bearing:steam_whistle_extension",
       "menu_category": {
         "category": "none"
       },
       "states": {
-        "levitate:size": [
+        "bearing:size": [
           0,
           1,
           2
         ],
-        "levitate:shape": [
+        "bearing:shape": [
           0,
           1,
           2
@@ -21,19 +21,19 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.steam_whistle_extension",
+        "identifier": "geometry.bearing.steam_whistle_extension",
         "bone_visibility": {
-          "small_full": "q.block_state('levitate:size') == 1 && q.block_state('levitate:shape') != 0",
-          "small_half": "q.block_state('levitate:size') == 1 && q.block_state('levitate:shape') == 0",
-          "medium_full": "q.block_state('levitate:size') == 0 && q.block_state('levitate:shape') != 0",
-          "medium_half": "q.block_state('levitate:size') == 0 && q.block_state('levitate:shape') == 0",
-          "large_full": "q.block_state('levitate:size') == 2 && q.block_state('levitate:shape') != 0",
-          "large_half": "q.block_state('levitate:size') == 2 && q.block_state('levitate:shape') == 0"
+          "small_full": "q.block_state('bearing:size') == 1 && q.block_state('bearing:shape') != 0",
+          "small_half": "q.block_state('bearing:size') == 1 && q.block_state('bearing:shape') == 0",
+          "medium_full": "q.block_state('bearing:size') == 0 && q.block_state('bearing:shape') != 0",
+          "medium_half": "q.block_state('bearing:size') == 0 && q.block_state('bearing:shape') == 0",
+          "large_full": "q.block_state('bearing:size') == 2 && q.block_state('bearing:shape') != 0",
+          "large_half": "q.block_state('bearing:size') == 2 && q.block_state('bearing:shape') == 0"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_steam_whistle",
+          "texture": "bearing_steam_whistle",
           "render_method": "alpha_test"
         }
       },

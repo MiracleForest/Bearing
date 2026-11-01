@@ -14,7 +14,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 inline constexpr int kCompartments           = 8;
 inline constexpr int kStacksPerCompartment    = 4;
@@ -69,4 +69,4 @@ struct ToolboxInv {
 /// Create's toolbox range check: squared distance from the player to (x+0.5, y, z+0.5) < range².
 [[nodiscard]] bool inToolboxRange(double px, double py, double pz, int bx, int by, int bz, double range);
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

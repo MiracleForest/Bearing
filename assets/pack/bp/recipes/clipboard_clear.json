@@ -1,10 +1,10 @@
 {
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
-    "description": { "identifier": "levitate:clipboard_clear" },
+    "description": { "identifier": "bearing:clipboard_clear" },
     "tags": ["crafting_table"],
-    "ingredients": [{ "item": "levitate:clipboard" }],
-    "unlock": [{ "item": "levitate:clipboard" }],
-    "result": { "item": "levitate:clipboard" }
+    "ingredients": [{ "item": "bearing:clipboard" }],
+    "unlock": [{ "item": "bearing:clipboard" }],
+    "result": { "item": "bearing:clipboard" }
   }
 }

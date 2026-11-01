@@ -3,12 +3,12 @@
   "size": [7, 5],
   "scale": 0.9,
   "blocks": [
-    {"at": [0, 5, 2], "id": "levitate:gantry_shaft", "states": {"levitate:facing": 4, "levitate:part": 2, "levitate:powered": 0}},
-    {"area": [[1, 5, 2], [4, 5, 2]], "id": "levitate:gantry_shaft", "states": {"levitate:facing": 4, "levitate:part": 1, "levitate:powered": 0}},
-    {"at": [5, 5, 2], "id": "levitate:gantry_shaft", "states": {"levitate:facing": 4, "levitate:part": 0, "levitate:powered": 0}},
-    {"at": [6, 5, 2], "id": "levitate:creative_motor", "states": {"levitate:facing": 4}},
-    {"at": [5, 4, 2], "id": "levitate:gantry_carriage", "states": {"levitate:facing": 0, "levitate:axis_first": 1}},
-    {"at": [5, 3, 2], "id": "levitate:deployer", "states": {"levitate:facing": 0, "levitate:axis_along_first": 1}},
+    {"at": [0, 5, 2], "id": "bearing:gantry_shaft", "states": {"bearing:facing": 4, "bearing:part": 2, "bearing:powered": 0}},
+    {"area": [[1, 5, 2], [4, 5, 2]], "id": "bearing:gantry_shaft", "states": {"bearing:facing": 4, "bearing:part": 1, "bearing:powered": 0}},
+    {"at": [5, 5, 2], "id": "bearing:gantry_shaft", "states": {"bearing:facing": 4, "bearing:part": 0, "bearing:powered": 0}},
+    {"at": [6, 5, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 4}},
+    {"at": [5, 4, 2], "id": "bearing:gantry_carriage", "states": {"bearing:facing": 0, "bearing:axis_first": 1}},
+    {"at": [5, 3, 2], "id": "bearing:deployer", "states": {"bearing:facing": 0, "bearing:axis_along_first": 1}},
     {"at": [6, 3, 2], "id": "minecraft:chest"},
     {"area": [[1, 1, 2], [5, 1, 2]], "id": "minecraft:dirt"}
   ],

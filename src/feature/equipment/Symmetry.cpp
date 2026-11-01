@@ -31,7 +31,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -59,7 +59,7 @@ void writeMirror(Player& player, int slot, ce::Mirror const& m) {
 }
 
 /// The block transformed by a mirror copy (vanilla blocks through Bedrock's structure transform,
-/// Levitate blocks through their `levitate:facing` state).
+/// Bearing blocks through their `bearing:facing` state).
 Block const& transformed(Block const& block, ce::Mat2 const& t) {
     // find (rotation, mirror) with R(rotation) * M(mirror) == t; Bedrock's Mirror::Z negates x (checked by
     // the equipment.symmetry_wand selftest)
@@ -81,7 +81,7 @@ Block const& transformed(Block const& block, ce::Mat2 const& t) {
                 auto const* b = game::blockWith(id, {{kFacing, fromDir[d]}});
                 return b ? *b : block;
             }
-            if (id.starts_with("levitate:")) {
+            if (id.starts_with("bearing:")) {
                 auto f = game::intState(block, kFacing);
                 if (!f) return block;
                 // 6-value facing: 2 north, 3 south, 4 west, 5 east -> Create's 0 N, 1 S, 2 W, 3 E
@@ -163,7 +163,7 @@ void openForm(Player& player, int slot) {
         auto k = ce::orientationKey(m.type, std::min(o, ce::orientationCount(m.type) - 1));
         orients.push_back(trFor(player, k, k));
     }
-    ll::form::CustomForm form(trFor(player, "item.levitate:wand_of_symmetry.name", "Wand Of Symmetry"));
+    ll::form::CustomForm form(trFor(player, "item.bearing:wand_of_symmetry.name", "Wand Of Symmetry"));
     form.appendDropdown("type", trFor(player, "create.gui.symmetryWand.mirrorType", "Mirror"), types, static_cast<std::size_t>(m.type));
     form.appendDropdown("orientation", trFor(player, "create.gui.symmetryWand.orientation", "Orientation"), orients, static_cast<std::size_t>(m.orientation));
     form.sendTo(player, [slot](Player& p, ll::form::CustomFormResult const& r, ll::form::FormCancelReason) {
@@ -198,7 +198,7 @@ void registerScreen() {
             types.push_back(trFor(p, "create.symmetry.mirror.doublePlane", "Rectangular"));
             types.push_back(trFor(p, "create.symmetry.mirror.triplePlane", "Octagonal"));
             return Json{
-                {"title", trFor(p, "item.levitate:wand_of_symmetry.name", "Wand Of Symmetry")},
+                {"title", trFor(p, "item.bearing:wand_of_symmetry.name", "Wand Of Symmetry")},
                 {"type", static_cast<int>(m.type)},
                 {"orientation", m.orientation},
                 {"types", types},
@@ -366,4 +366,4 @@ bool mirroringNow() { return gMirroring > 0; }
 
 Block const& mirroredBlock(Block const& block, ce::Mat2 const& t) { return transformed(block, t); }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

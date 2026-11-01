@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Native screen of the sequenced gearshift (U6, SPEC §4): Create's SequencedGearshiftScreen. Five
 // rows; each row picks the instruction, its value (scroll; Shift scrolls by the instruction's
@@ -13,11 +13,11 @@
 #include "core/transmission/Transmission.h"
 #include "mod/Module.h"
 
-namespace lv::client::transmission {
+namespace br::client::transmission {
 
 namespace {
 
-using namespace lv::client::screen;
+using namespace br::client::screen;
 
 namespace ct = core::transmission;
 
@@ -147,8 +147,8 @@ public:
 
 } // namespace
 
-} // namespace lv::client::transmission
+} // namespace br::client::transmission
 
-LV_REGISTER_MODULE(lv::client::transmission::SequencerScreenModule);
+BR_REGISTER_MODULE(br::client::transmission::SequencerScreenModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

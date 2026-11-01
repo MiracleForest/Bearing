@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:schematic_table",
+      "identifier": "bearing:schematic_table",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -17,19 +17,19 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.schematic_table"
+        "identifier": "geometry.bearing.schematic_table"
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_schematic_table_side",
+          "texture": "bearing_schematic_table_side",
           "render_method": "alpha_test"
         },
         "top": {
-          "texture": "levitate_schematic_table_top",
+          "texture": "bearing_schematic_table_top",
           "render_method": "alpha_test"
         },
         "side": {
-          "texture": "levitate_schematic_table_side",
+          "texture": "bearing_schematic_table_side",
           "render_method": "alpha_test"
         }
       },
@@ -69,7 +69,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -81,7 +81,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -93,7 +93,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -105,7 +105,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [

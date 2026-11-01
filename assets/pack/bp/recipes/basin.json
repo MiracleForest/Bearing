@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:basin"
+      "identifier": "bearing:basin"
     },
     "tags": ["crafting_table"],
     "pattern": ["A A", "AAA"],
     "key": {
-      "A": { "item": "levitate:andesite_alloy" }
+      "A": { "item": "bearing:andesite_alloy" }
     },
-    "unlock": [{ "item": "levitate:andesite_alloy" }],
-    "result": { "item": "levitate:basin" }
+    "unlock": [{ "item": "bearing:andesite_alloy" }],
+    "result": { "item": "bearing:basin" }
   }
 }

@@ -11,15 +11,15 @@ Wait-LogLine 'stock: factory gauge at -?\d+ -?\d+ -?\d+ restocks minecraft:coal 
 Wait-LogLine 'stock: factory gauge at -?\d+ -?\d+ -?\d+ panel 0 requested its ingredients' 10 -Since $mark | Out-Null
 
 # The blocks exist and keep their states (placed from the console).
-Send-Console 'tickingarea add 0 -64 0 15 -40 15 lv_stock_e2e true'
+Send-Console 'tickingarea add 0 -64 0 15 -40 15 br_stock_e2e true'
 Wait-Seconds 3
-Send-Console 'setblock 3 -60 3 levitate:stock_ticker ["levitate:facing"=2]'
-Send-Console 'setblock 5 -60 3 levitate:redstone_requester ["levitate:axis"=1]'
-Send-Console 'setblock 7 -60 3 levitate:stock_link ["levitate:face"=1,"levitate:facing"=3]'
-Send-Console 'setblock 9 -60 3 levitate:factory_gauge ["levitate:face"=0,"levitate:facing"=2,"levitate:panels"=5]'
+Send-Console 'setblock 3 -60 3 bearing:stock_ticker ["bearing:facing"=2]'
+Send-Console 'setblock 5 -60 3 bearing:redstone_requester ["bearing:axis"=1]'
+Send-Console 'setblock 7 -60 3 bearing:stock_link ["bearing:face"=1,"bearing:facing"=3]'
+Send-Console 'setblock 9 -60 3 bearing:factory_gauge ["bearing:face"=0,"bearing:facing"=2,"bearing:panels"=5]'
 Wait-Seconds 1
 $mark = Get-LogMark
-Send-Console 'testforblock 9 -60 3 levitate:factory_gauge ["levitate:panels"=5]'
+Send-Console 'testforblock 9 -60 3 bearing:factory_gauge ["bearing:panels"=5]'
 Wait-LogLine 'Successfully found the block' 10 -Since $mark | Out-Null
 foreach ($x in 3, 5, 7, 9) { Send-Console "setblock $x -60 3 air" }
-Send-Console 'tickingarea remove lv_stock_e2e'
+Send-Console 'tickingarea remove br_stock_e2e'

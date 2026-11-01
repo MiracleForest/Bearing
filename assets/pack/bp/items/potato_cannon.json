@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:potato_cannon",
+      "identifier": "bearing:potato_cannon",
       "menu_category": {
         "category": "equipment"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_potato_cannon",
+      "minecraft:icon": "bearing_potato_cannon",
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.levitate:potato_cannon.name"
+        "value": "item.bearing:potato_cannon.name"
       },
       "minecraft:durability": {
         "max_durability": 100

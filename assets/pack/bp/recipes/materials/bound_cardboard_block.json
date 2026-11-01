@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:bound_cardboard_block"
+      "identifier": "bearing:bound_cardboard_block"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:cardboard_block"
+        "item": "bearing:cardboard_block"
       },
       {
         "item": "minecraft:string"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:cardboard_block"
+        "item": "bearing:cardboard_block"
       }
     ],
     "result": {
-      "item": "levitate:bound_cardboard_block",
+      "item": "bearing:bound_cardboard_block",
       "count": 1
     }
   }

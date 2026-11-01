@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:oak_window"
+      "identifier": "bearing:oak_window"
     },
     "tags": [
       "crafting_table"
@@ -25,7 +25,7 @@
       }
     ],
     "result": {
-      "item": "levitate:oak_window",
+      "item": "bearing:oak_window",
       "count": 2
     }
   }

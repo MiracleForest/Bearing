@@ -20,7 +20,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::assembly {
+namespace br::feature::assembly {
 
 namespace {
 
@@ -28,7 +28,7 @@ using selftest::Context;
 namespace items = common::items;
 namespace sa    = sequenced;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 GlobalPos off(GlobalPos p, int dx, int dy, int dz) {
     p.x += dx;
@@ -53,29 +53,29 @@ std::string joined(std::vector<std::string> const& lines) {
 
 // Create's AllArmInteractionPointTypes: packagers and repackagers are points; extracting funnels,
 // funnels pushing onto their belt and saws that don't turn are not.
-LV_REGISTER_SELFTEST("assembly.arm_points_create", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.arm_points_create", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = off(ctx.testPos(5400), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& region = ctx.player().getDimensionBlockSource();
     auto  pk     = base;
-    ctx.require(ctx.setBlock(pk, "levitate:packager"), "packager");
+    ctx.require(ctx.setBlock(pk, "bearing:packager"), "packager");
     ctx.check(arm::isPoint(region, game::blockPos(pk)), "a packager is an arm point");
     auto rp = off(base, 2, 0, 0);
-    ctx.require(ctx.setBlock(rp, "levitate:repackager"), "repackager");
+    ctx.require(ctx.setBlock(rp, "bearing:repackager"), "repackager");
     ctx.check(arm::isPoint(region, game::blockPos(rp)), "a repackager is an arm point");
     auto fn = off(base, 4, 0, 0);
-    ctx.require(ctx.setBlock(fn, "levitate:andesite_funnel", {{"levitate:facing", 1}}), "funnel");
+    ctx.require(ctx.setBlock(fn, "bearing:andesite_funnel", {{"bearing:facing", 1}}), "funnel");
     ctx.check(arm::isPoint(region, game::blockPos(fn)), "an inserting funnel is a point");
-    ctx.require(ctx.setBlock(fn, "levitate:andesite_funnel", {{"levitate:facing", 1}, {"levitate:extracting", 1}}), "extracting funnel");
+    ctx.require(ctx.setBlock(fn, "bearing:andesite_funnel", {{"bearing:facing", 1}, {"bearing:extracting", 1}}), "extracting funnel");
     ctx.check(!arm::isPoint(region, game::blockPos(fn)), "an extracting funnel is no point");
-    ctx.require(ctx.setBlock(fn, "levitate:brass_funnel", {{"levitate:facing", 2}, {"levitate:shape", 3}}), "pushing belt funnel");
+    ctx.require(ctx.setBlock(fn, "bearing:brass_funnel", {{"bearing:facing", 2}, {"bearing:shape", 3}}), "pushing belt funnel");
     ctx.check(!arm::isPoint(region, game::blockPos(fn)), "a belt funnel pushing onto its belt is no point");
     auto saw = off(base, 6, 0, 0);
-    ctx.require(ctx.setBlock(saw, "levitate:mechanical_saw", {{"levitate:facing", 1}, {"levitate:axis_along_first", 0}}), "saw facing up");
+    ctx.require(ctx.setBlock(saw, "bearing:mechanical_saw", {{"bearing:facing", 1}, {"bearing:axis_along_first", 0}}), "saw facing up");
     co_await ctx.ticks(2);
     ctx.check(!arm::isPoint(region, game::blockPos(saw)), "a saw that does not turn is no point");
     auto src = off(saw, 0, 0, -1);
-    ctx.require(ctx.setBlock(src, kSource, {{"levitate:axis", 2}}), "source behind the saw");
+    ctx.require(ctx.setBlock(src, kSource, {{"bearing:axis", 2}}), "source behind the saw");
     kinetics::refresh(src);
     kinetics::setGeneratedSpeed(src, 32);
     co_await ctx.ticks(3);
@@ -86,7 +86,7 @@ LV_REGISTER_SELFTEST("assembly.arm_points_create", [](Context& ctx) -> ll::coro:
 
 // Create's generated deploying recipes for vanilla copper (DeployingRecipeGen): honeycomb blocks
 // wax, axes scrape wax and oxidation; honeycomb items have no deploying recipe.
-LV_REGISTER_SELFTEST("assembly.copper_wax", [](Context& ctx) {
+BR_REGISTER_SELFTEST("assembly.copper_wax", [](Context& ctx) {
     auto deploy = [&](char const* on, char const* with) -> std::string {
         auto held = item(ctx, with);
         auto out  = deployer::deployOnItem(item(ctx, on), held, false); // a simulation returns no outputs
@@ -98,15 +98,15 @@ LV_REGISTER_SELFTEST("assembly.copper_wax", [](Context& ctx) {
     ctx.check(deploy("minecraft:oxidized_copper_bulb", "minecraft:stone_axe") == "minecraft:weathered_copper_bulb", "bulb deoxidised");
     ctx.check(deploy("minecraft:exposed_copper", "minecraft:diamond_axe") == "minecraft:copper_block", "exposed copper scraped");
     ctx.check(deploy("minecraft:copper_block", "minecraft:iron_axe") == "-", "fresh copper can't be scraped");
-    ctx.check(deploy("levitate:copper_shingles", "minecraft:honeycomb_block") == "levitate:waxed_copper_shingles", "shingles waxed");
-    ctx.check(deploy("levitate:copper_shingles", "minecraft:honeycomb") == "-", "a honeycomb item is no deploying recipe (Create)");
+    ctx.check(deploy("bearing:copper_shingles", "minecraft:honeycomb_block") == "bearing:waxed_copper_shingles", "shingles waxed");
+    ctx.check(deploy("bearing:copper_shingles", "minecraft:honeycomb") == "-", "a honeycomb item is no deploying recipe (Create)");
     auto held = item(ctx, "minecraft:honeycomb_block", 2);
     auto out  = deployer::deployOnItem(item(ctx, "minecraft:copper_grate"), held, false);
     ctx.check(out && items::countOf(held) == 2, "keep_held_item: the honeycomb block stays");
 });
 
 // The progress of a transitional item in percent, mirrored into the aux value for the client mod.
-LV_REGISTER_SELFTEST("assembly.transitional_progress", [](Context& ctx) {
+BR_REGISTER_SELFTEST("assembly.transitional_progress", [](Context& ctx) {
     auto slab = item(ctx, "minecraft:smooth_stone_slab");
     auto nug  = item(ctx, "minecraft:iron_nugget");
     auto s1   = sa::findDeployingStep(slab, nug);
@@ -123,15 +123,15 @@ LV_REGISTER_SELFTEST("assembly.transitional_progress", [](Context& ctx) {
 });
 
 // Create's DeployerBlockEntity.addToGoggleTooltip.
-LV_REGISTER_SELFTEST("assembly.deployer_goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.deployer_goggles", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = off(ctx.testPos(5410), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, kDeployerId, {{"levitate:facing", 1}}), "deployer");
+    ctx.require(ctx.setBlock(p, kDeployerId, {{"bearing:facing", 1}}), "deployer");
     co_await ctx.ticks(1);
     deployer::setHeld(p, item(ctx, "minecraft:iron_nugget", 3));
     deployer::setMode(p, ca::DeployerMode::Use);
     auto& pl = ctx.player();
-    auto  ok = items::make("levitate:goggles");
+    auto  ok = items::make("bearing:goggles");
     ctx.require(ok.has_value(), "goggles");
     pl.setArmor(SharedTypes::Legacy::ArmorSlot::Head, *ok);
     auto lines = goggles::overlayFor(pl, p).lines;
@@ -147,10 +147,10 @@ LV_REGISTER_SELFTEST("assembly.deployer_goggles", [](Context& ctx) -> ll::coro::
 });
 
 // Vanilla clients see the deployer's held item as a client-only item entity in front of it.
-LV_REGISTER_SELFTEST("assembly.vanilla_items", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("assembly.vanilla_items", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = off(ctx.testPos(5420), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
-    ctx.require(ctx.setBlock(p, kDeployerId, {{"levitate:facing", 5}}), "deployer facing east");
+    ctx.require(ctx.setBlock(p, kDeployerId, {{"bearing:facing", 5}}), "deployer facing east");
     co_await ctx.ticks(1);
     deployer::setHeld(p, item(ctx, "minecraft:cobblestone", 4));
     auto find = [&]() -> std::optional<common::vanillaitems::Shown> {
@@ -166,4 +166,4 @@ LV_REGISTER_SELFTEST("assembly.vanilla_items", [](Context& ctx) -> ll::coro::Cor
     ctx.check(!find().has_value(), "nothing shown once the hand is empty");
 });
 
-} // namespace lv::feature::assembly
+} // namespace br::feature::assembly

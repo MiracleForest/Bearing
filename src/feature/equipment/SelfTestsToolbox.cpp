@@ -28,12 +28,12 @@ namespace {
 /// U45's tests move 240 blocks north, to rows no unit uses (z -62..-58), so entities there tick.
 constexpr int kU45Shift = -240;
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
-namespace eq    = lv::feature::equipment;
-namespace ce    = lv::core::equipment;
-namespace items = lv::feature::common::items;
-namespace net   = lv::feature::net;
+using br::core::GlobalPos;
+using br::selftest::Context;
+namespace eq    = br::feature::equipment;
+namespace ce    = br::core::equipment;
+namespace items = br::feature::common::items;
+namespace net   = br::feature::net;
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -75,7 +75,7 @@ int countIn(GlobalPos const& c, std::string const& suffix) {
 
 // Create's TreesDreamWorld: the tree grows without room; logs never replace unbreakable blocks,
 // leaves never replace solid blocks.
-LV_REGISTER_SELFTEST("equipment.tree_fertilizer_no_room", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.tree_fertilizer_no_room", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto sap = at(ctx.testPos(4575, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(sap), "test area loaded");
     auto& p = ctx.player();
@@ -86,7 +86,7 @@ LV_REGISTER_SELFTEST("equipment.tree_fertilizer_no_room", [](Context& ctx) -> ll
     // no room: bedrock right above the sapling (Bedrock's own growth fails), stone in the crown
     ctx.require(ctx.setBlock(at(sap, 0, 1, 0), "minecraft:bedrock"), "bedrock above");
     ctx.require(ctx.setBlock(at(sap, 1, 4, 0), "minecraft:stone"), "stone in the crown");
-    auto fert = item(ctx, "levitate:tree_fertilizer", 2);
+    auto fert = item(ctx, "bearing:tree_fertilizer", 2);
     ctx.check(eq::useTreeFertilizer(p, fert, sap), "fertilizer used on the sapling");
     ctx.check(eq::idAt(sap) == "minecraft:oak_log", "the sapling became the trunk (" + eq::idAt(sap) + ")");
     ctx.check(eq::idAt(at(sap, 0, 1, 0)) == "minecraft:bedrock", "the bedrock is untouched");
@@ -100,7 +100,7 @@ LV_REGISTER_SELFTEST("equipment.tree_fertilizer_no_room", [](Context& ctx) -> ll
 });
 
 // A 2x2 of dark oak saplings grows Bedrock's dark oak (its quadruple feature) from any of them.
-LV_REGISTER_SELFTEST("equipment.tree_fertilizer_dark_oak", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.tree_fertilizer_dark_oak", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto sap = at(ctx.testPos(4582, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(sap), "test area loaded");
     auto& p = ctx.player();
@@ -111,7 +111,7 @@ LV_REGISTER_SELFTEST("equipment.tree_fertilizer_dark_oak", [](Context& ctx) -> l
             ctx.require(ctx.setBlock(at(sap, x, -1, z), "minecraft:dirt"), "dirt");
             ctx.require(ctx.setBlock(at(sap, x, 0, z), "minecraft:dark_oak_sapling"), "dark oak sapling");
         }
-    auto fert = item(ctx, "levitate:tree_fertilizer", 2);
+    auto fert = item(ctx, "bearing:tree_fertilizer", 2);
     ctx.check(eq::useTreeFertilizer(p, fert, at(sap, 1, 0, 1)), "fertilizer used on a sapling of the 2x2");
     for (int x = 0; x < 2; ++x)
         for (int z = 0; z < 2; ++z)
@@ -129,7 +129,7 @@ LV_REGISTER_SELFTEST("equipment.tree_fertilizer_dark_oak", [](Context& ctx) -> l
 
 // Create: a hanging mangrove propagule does nothing (the item is not used); a standing one and an
 // azalea grow their trees.
-LV_REGISTER_SELFTEST("equipment.tree_fertilizer_propagule", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.tree_fertilizer_propagule", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto sap = at(ctx.testPos(4588, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(sap), "test area loaded");
     auto& p = ctx.player();
@@ -137,7 +137,7 @@ LV_REGISTER_SELFTEST("equipment.tree_fertilizer_propagule", [](Context& ctx) -> 
     clearTreeSpace(p, sap);
     ctx.require(ctx.setBlock(at(sap, 0, 1, 0), "minecraft:mangrove_leaves"), "leaves");
     ctx.require(ctx.setBlock(sap, "minecraft:mangrove_propagule", {{"hanging", 1}}), "hanging propagule");
-    auto fert = item(ctx, "levitate:tree_fertilizer", 3);
+    auto fert = item(ctx, "bearing:tree_fertilizer", 3);
     eq::useTreeFertilizer(p, fert, sap);
     ctx.check(eq::idAt(sap) == "minecraft:mangrove_propagule", "the hanging propagule stays");
     ctx.check(items::countOf(fert) == 3, "no fertilizer was used");
@@ -158,15 +158,15 @@ LV_REGISTER_SELFTEST("equipment.tree_fertilizer_propagule", [](Context& ctx) -> 
 });
 
 // Create's ToolboxBlockEntity openTracker: the lid is open while anyone has the screen open (the
-// block state `levitate:toolbox_lid` = 1, which vanilla clients show as the open model).
-LV_REGISTER_SELFTEST("equipment.toolbox_lid", [](Context& ctx) -> ll::coro::CoroTask<> {
+// block state `bearing:toolbox_lid` = 1, which vanilla clients show as the open model).
+BR_REGISTER_SELFTEST("equipment.toolbox_lid", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4570, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
-    ctx.require(ctx.setBlock(base, "levitate:cyan_toolbox", {{"levitate:facing", 3}}), "toolbox placed");
+    ctx.require(ctx.setBlock(base, "bearing:cyan_toolbox", {{"bearing:facing", 3}}), "toolbox placed");
     p.teleport(Vec3{base.x + 2.5f, float(base.y), base.z + .5f}, DimensionType(0));
     co_await ctx.ticks(12);
-    auto lid = [&] { return eq::stateAt(base, "levitate:toolbox_lid").value_or(-1); };
+    auto lid = [&] { return eq::stateAt(base, "bearing:toolbox_lid").value_or(-1); };
     ctx.check(lid() == 0, "a closed toolbox shows its closed lid");
     // the form (vanilla players): open while the form is up
     eq::openToolbox(p, base);
@@ -204,21 +204,21 @@ LV_REGISTER_SELFTEST("equipment.toolbox_lid", [](Context& ctx) -> ll::coro::Coro
     eq::openToolbox(p, base);
     auto dye = item(ctx, "minecraft:orange_dye");
     eq::useToolbox(p, dye, base);
-    ctx.check(eq::idAt(base) == "levitate:orange_toolbox" && lid() == 1, "dyed while open, the lid stays open");
+    ctx.check(eq::idAt(base) == "bearing:orange_toolbox" && lid() == 1, "dyed while open, the lid stays open");
     eq::toolboxScreenClosed(p, base);
     ctx.check(lid() == 0, "and closes");
 });
 
 // Create's ToolboxDyeingRecipe keeps the toolbox's data: the crafted toolbox gets the user data of
 // the toolbox in the grid (the craft hook calls keepDyedToolboxData; the client e2e crafts it).
-LV_REGISTER_SELFTEST("equipment.toolbox_dye_craft", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.toolbox_dye_craft", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(4572, kU45Shift), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     clearInventory(p);
     ce::ToolboxInv inv;
     inv.insert(ce::TStack{"minecraft:apple", items::toJson(item(ctx, "minecraft:apple")).dump(), 9, 64}, false, false);
-    auto box = item(ctx, "levitate:brown_toolbox");
+    auto box = item(ctx, "bearing:brown_toolbox");
     items::setData(box, eq::kToolboxData, {{"inv", inv.toJson()}});
     auto setGrid = [&](int first, std::vector<ItemStack> const& stacks) {
         for (int i = 28; i <= 40; ++i) p.setPlayerUIItem(static_cast<PlayerUISlot>(i), items::empty(), false);
@@ -227,18 +227,18 @@ LV_REGISTER_SELFTEST("equipment.toolbox_dye_craft", [](Context& ctx) -> ll::coro
     };
     // crafting table grid: toolbox + red dye
     setGrid(32, {items::empty(), box, items::empty(), item(ctx, "minecraft:red_dye")});
-    auto result = item(ctx, "levitate:red_toolbox");
+    auto result = item(ctx, "bearing:red_toolbox");
     ctx.check(eq::keepDyedToolboxData(p, result), "the dyed toolbox keeps the data (crafting table)");
     auto data   = items::getData(result, eq::kToolboxData);
     auto copied = ce::ToolboxInv::fromJson(data.is_object() ? data.value("inv", nlohmann::json::object()) : nlohmann::json::object());
     ctx.check(copied.count(0) == 9, "with the 9 apples");
     // the inventory's 2x2 grid
     setGrid(28, {item(ctx, "minecraft:blue_dye"), box});
-    auto blue = item(ctx, "levitate:blue_toolbox");
+    auto blue = item(ctx, "bearing:blue_toolbox");
     ctx.check(eq::keepDyedToolboxData(p, blue), "the dyed toolbox keeps the data (2x2 grid)");
     // anything else in the grid: not Create's dyeing recipe
     setGrid(32, {box, item(ctx, "minecraft:red_dye"), item(ctx, "minecraft:stick")});
-    auto other = item(ctx, "levitate:red_toolbox");
+    auto other = item(ctx, "bearing:red_toolbox");
     ctx.check(!eq::keepDyedToolboxData(p, other), "no data with a third ingredient");
     setGrid(28, {});
     clearInventory(p);

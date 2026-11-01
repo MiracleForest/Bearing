@@ -41,10 +41,10 @@
 #include "game/Blocks.h"
 #include "mod/Config.h"
 
-namespace lv::feature::crafter {
+namespace br::feature::crafter {
 
-LV_REGISTER_CONFIG("crafter", Config);
-Config const& config() { return lv::config::get<Config>(); }
+BR_REGISTER_CONFIG("crafter", Config);
+Config const& config() { return br::config::get<Config>(); }
 
 namespace world {
 
@@ -311,8 +311,8 @@ void give(Player& player, ItemStack const& stack) {
 }
 
 bool acceptsDirectInput(std::string const& id) {
-    return id == "levitate:chute" || id == "levitate:smart_chute" || id == "levitate:item_drain";
+    return id == "bearing:chute" || id == "bearing:smart_chute" || id == "bearing:item_drain";
 }
 
 } // namespace world
-} // namespace lv::feature::crafter
+} // namespace br::feature::crafter

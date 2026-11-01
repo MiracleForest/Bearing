@@ -7,11 +7,11 @@
 # assets/pack/rp/texts.d/<locale>/building.lang (hand written, Create's wording).
 #
 # Conventions shared with src/feature/building (keep them in sync):
-#   levitate:facing      0..5 = down, up, north, south, west, east (Java Direction order)
+#   bearing:facing      0..5 = down, up, north, south, west, east (Java Direction order)
 #   horizontal "facing"  2..5 of a 0..5 state (Bedrock stores list states by index: lists must
 #                        be 0..n); a model is drawn for facing north and turned clockwise
-#   levitate:c_<dir>     connected-texture neighbours (casings, framed glass, windows)
-#   levitate:north/..    pane / bars arms
+#   bearing:c_<dir>     connected-texture neighbours (casings, framed glass, windows)
+#   bearing:north/..    pane / bars arms
 #   Block-space boxes are [x0,y0,z0,x1,y1,z1] in pixels (0..16), as Create's VoxelShapes.
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path "$PSScriptRoot/../..").Path
@@ -70,11 +70,11 @@ function Write-Json([string]$rel, $obj) {
     $script:Generated.Add($rel.Replace('\', '/'))
 }
 function Tex([string]$name, [string]$file) {
-    $key = "levitate_$name"
+    $key = "bearing_$name"
     if (-not $script:TerrainTextures.Contains($key)) { $script:TerrainTextures[$key] = [ordered]@{ textures = "textures/blocks/building/$file" } }
     return $key
 }
-function Q([string]$state) { "q.block_state('levitate:$state')" }
+function Q([string]$state) { "q.block_state('bearing:$state')" }
 # a horizontal facing condition; down / up (the default 0) count as north
 function HF([int]$f) { if ($f -eq 2) { return "$(Q facing) <= 2" } return "$(Q facing) == $f" }
 function Mat([string]$tex, [string]$method = 'opaque', [bool]$ao = $true) {
@@ -137,7 +137,7 @@ function Write-Geo([string]$name, $bones, [int]$tw = 16, [int]$th = 16, [string]
         format_version      = '1.16.0'
         'minecraft:geometry' = @([ordered]@{
                 description = [ordered]@{
-                    identifier = "geometry.levitate.$name"; texture_width = $tw; texture_height = $th
+                    identifier = "geometry.bearing.$name"; texture_width = $tw; texture_height = $th
                     visible_bounds_width = 3; visible_bounds_height = 3; visible_bounds_offset = @(0, 0.5, 0)
                 }
                 bones       = @($bones)
@@ -146,11 +146,11 @@ function Write-Geo([string]$name, $bones, [int]$tw = 16, [int]$th = 16, [string]
     # rotor models are read by the kinetics client from models/blocks/ (not recursive)
     if (-not $file) { $file = "building/$name" }
     Write-Json "assets/pack/rp/models/blocks/$file.geo.json" $geo
-    return "geometry.levitate.$name"
+    return "geometry.bearing.$name"
 }
 
 function Block-Json([string]$id, $states, $components, $permutations) {
-    $desc = [ordered]@{ identifier = "levitate:$id"; menu_category = [ordered]@{ category = 'construction' } }
+    $desc = [ordered]@{ identifier = "bearing:$id"; menu_category = [ordered]@{ category = 'construction' } }
     if ($states -and $states.Count -gt 0) { $desc.states = $states }
     $block = [ordered]@{ description = $desc; components = $components }
     if ($permutations -and @($permutations).Count -gt 0) { $block.permutations = @($permutations) }
@@ -167,17 +167,17 @@ function Base-Components([string]$id, [double]$hard, [double]$blast, [string]$ma
     return $c
 }
 function Loot([string]$id, [string]$item = $null, [int]$count = 1, [string]$suffix = '') {
-    if (-not $item) { $item = "levitate:$id" }
+    if (-not $item) { $item = "bearing:$id" }
     $entry = [ordered]@{ type = 'item'; name = $item; weight = 1 }
     if ($count -ne 1) { $entry.functions = @([ordered]@{ function = 'set_count'; count = $count }) }
     Write-Json "assets/pack/bp/loot_tables/blocks/$id$suffix.json" ([ordered]@{ pools = @([ordered]@{ rolls = 1; entries = @($entry) }) })
 }
 function Loot-Silk([string]$id) {
     $pool = [ordered]@{ rolls = 1; conditions = @([ordered]@{ condition = 'match_tool'; enchantments = @([ordered]@{ enchantment = 'silk_touch'; levels = [ordered]@{ range_min = 1 } }) })
-        entries = @([ordered]@{ type = 'item'; name = "levitate:$id"; weight = 1 }) }
+        entries = @([ordered]@{ type = 'item'; name = "bearing:$id"; weight = 1 }) }
     Write-Json "assets/pack/bp/loot_tables/blocks/$id.json" ([ordered]@{ pools = @($pool) })
 }
-function Bool-States([string[]]$names) { $s = [ordered]@{}; foreach ($n in $names) { $s["levitate:$n"] = @(0, 1) }; return $s }
+function Bool-States([string[]]$names) { $s = [ordered]@{}; foreach ($n in $names) { $s["bearing:$n"] = @(0, 1) }; return $s }
 function Sel([double[]]$b) { return Box6 $b }
 
 # ---- connected textures -------------------------------------------------------------------------
@@ -248,7 +248,7 @@ foreach ($id in $Casings.Keys) {
     if ($c.light -gt 0) { $comps['minecraft:light_emission'] = $c.light }
     Ct-Block $id 'omni' $id 'opaque' $comps $Dirs
     Loot $id
-    $BlockSounds["levitate:$id"] = $c.sound
+    $BlockSounds["bearing:$id"] = $c.sound
 }
 
 # ---- connected glass ---------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ foreach ($id in $GlassKinds.Keys) {
         }
     }
     Loot-Silk $id # Create: connected glass drops only with silk touch
-    $BlockSounds["levitate:$id"] = 'glass'
+    $BlockSounds["bearing:$id"] = 'glass'
 }
 Write-Json 'assets/pack/bp/loot_tables/blocks/building_empty.json' ([ordered]@{ pools = @() })
 
@@ -279,7 +279,7 @@ foreach ($w in $WindowTypes) {
     if ($w -in 'industrial_iron', 'weathered_iron') { Ct-Block $id 'rect' $id 'alpha_test' $comps $Dirs (Tex "${id}_end" "${id}_end") }
     else { Ct-Block $id 'vertical' $id 'alpha_test' $comps @('down', 'up') (Tex "${id}_end" "${id}_end") }
     Loot-Silk $id
-    $BlockSounds["levitate:$id"] = 'glass'
+    $BlockSounds["bearing:$id"] = 'glass'
 }
 
 # ---- panes and bars ---------------------------------------------------------------------------------------
@@ -314,9 +314,9 @@ function Pane-Block([string]$id, [string]$geo, [string]$tex, [double]$hard, [str
         $perms = @([ordered]@{ condition = $anyArm; components = $selFull })
         Block-Json $id $states $comps $perms
     } else {
-        # levitate:c_<dir>: the neighbour on <dir> is the same pane (kept by the mod)
+        # bearing:c_<dir>: the neighbour on <dir> is the same pane (kept by the mod)
         $ctDirs = if ($ctKind -eq 'vertical') { @('down', 'up') } else { $Dirs }
-        foreach ($d in $ctDirs) { $states["levitate:c_$d"] = @(0, 1) }
+        foreach ($d in $ctDirs) { $states["bearing:c_$d"] = @(0, 1) }
         $perms = [System.Collections.Generic.List[object]]::new()
         $n = $ctDirs.Count
         for ($bits = 0; $bits -lt (1 -shl $n); $bits++) {
@@ -345,7 +345,7 @@ function Pane-Block([string]$id, [string]$geo, [string]$tex, [double]$hard, [str
         Block-Json $id $states $comps $perms
     }
     if ($drops) { Loot $id } else { Loot-Silk $id }
-    $script:BlockSounds["levitate:$id"] = $sound
+    $script:BlockSounds["bearing:$id"] = $sound
 }
 foreach ($id in $GlassKinds.Keys) {
     $k = $GlassKinds[$id]
@@ -359,7 +359,7 @@ foreach ($w in $WindowTypes) {
 foreach ($m in $Metals) { Pane-Block "${m}_bars" $BarsGeo (Tex "${m}_bars" "${m}_bars") 5 '#8d8f86' @('pickaxe') 'metal' $true }
 
 # ---- copper shingles and tiles ------------------------------------------------------------------------------
-# stairs: 8 octant bones; facing 2..5, levitate:upside, levitate:shape 0 straight, 1 inner_left,
+# stairs: 8 octant bones; facing 2..5, bearing:upside, bearing:shape 0 straight, 1 inner_left,
 # 2 inner_right, 3 outer_left, 4 outer_right (Java StairsShape order). Quadrants of the step half
 # for facing north: nw ne sw se.
 $StairGeo = Write-Geo 'stairs' @(
@@ -409,7 +409,7 @@ foreach ($type in @('shingles', 'tiles')) {
             $comps = Base-Components $sid 3 6 $map @('pickaxe')
             $comps['minecraft:geometry'] = [ordered]@{ identifier = $StairGeo; bone_visibility = $StairBones }
             $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat $tex) }
-            $states = [ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:upside' = @(0, 1); 'levitate:shape' = @(0, 1, 2, 3, 4) }
+            $states = [ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:upside' = @(0, 1); 'bearing:shape' = @(0, 1, 2, 3, 4) }
             Block-Json $sid $states $comps $null
             Loot $sid; $CopperIds.Add($sid)
             # slab
@@ -425,7 +425,7 @@ foreach ($type in @('shingles', 'tiles')) {
             )
             Block-Json $lid (Bool-States @('top', 'double')) $comps $perms
             Loot $lid; Loot $lid $null 2 '_double'; $CopperIds.Add($lid)
-            foreach ($x in @($id, $sid, $lid)) { $BlockSounds["levitate:$x"] = 'copper' }
+            foreach ($x in @($id, $sid, $lid)) { $BlockSounds["bearing:$x"] = 'copper' }
         }
     }
 }
@@ -443,10 +443,10 @@ foreach ($m in $Metals) {
     $comps['minecraft:geometry'] = [ordered]@{ identifier = $ScaffoldGeo; bone_visibility = [ordered]@{ top = $true; legs = "$(Q bottom) == 0"; half = "$(Q bottom) == 1" } }
     $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat (Tex "${m}_scaffolding" "${m}_scaffolding") 'alpha_test') }
     $comps['minecraft:collision_box'] = Box6 @(0, 14, 0, 16, 16, 16)
-    $states = [ordered]@{ 'levitate:bottom' = @(0, 1); 'levitate:distance' = @(0, 1, 2, 3, 4, 5, 6, 7) }
+    $states = [ordered]@{ 'bearing:bottom' = @(0, 1); 'bearing:distance' = @(0, 1, 2, 3, 4, 5, 6, 7) }
     Block-Json $id $states $comps $null
     Loot $id
-    $BlockSounds["levitate:$id"] = 'scaffolding'
+    $BlockSounds["bearing:$id"] = 'scaffolding'
 }
 $LadderBones = @()
 $LadderVis = [ordered]@{}
@@ -471,9 +471,9 @@ foreach ($m in $Metals) {
         $b = Rot-Y @(0, 0, 13, 16, 16, 16) $Quarter[$f]
         [ordered]@{ condition = "$(HF $f)"; components = [ordered]@{ 'minecraft:collision_box' = (Box6 $b); 'minecraft:selection_box' = (Box6 $b) } }
     }
-    Block-Json $id ([ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5) }) $comps $perms
+    Block-Json $id ([ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5) }) $comps $perms
     Loot $id
-    $BlockSounds["levitate:$id"] = 'metal'
+    $BlockSounds["bearing:$id"] = 'metal'
 }
 
 # ---- doors and trapdoors ------------------------------------------------------------------------------------------
@@ -516,10 +516,10 @@ foreach ($id in $Doors.Keys) {
     $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat (Tex $id $id) 'alpha_test') }
     $comps['minecraft:collision_box'] = Box6 @(0, 0, 0, 16, 16, 16)
     $perms = @([ordered]@{ condition = "$(Q upper) == 1"; components = [ordered]@{ 'minecraft:loot' = 'loot_tables/blocks/building_empty.json' } })
-    $states = [ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:upper' = @(0, 1); 'levitate:hinge' = @(0, 1); 'levitate:open' = @(0, 1); 'levitate:powered' = @(0, 1); 'levitate:closing' = @(0, 1) }
+    $states = [ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:upper' = @(0, 1); 'bearing:hinge' = @(0, 1); 'bearing:open' = @(0, 1); 'bearing:powered' = @(0, 1); 'bearing:closing' = @(0, 1) }
     Block-Json $id $states $comps $perms
     Loot $id
-    $BlockSounds["levitate:$id"] = $d.sound
+    $BlockSounds["bearing:$id"] = $d.sound
 }
 $tdBones = @(); $tdVis = [ordered]@{}
 foreach ($f in 2, 3, 4, 5) {
@@ -545,10 +545,10 @@ foreach ($id in $Trapdoors.Keys) {
     foreach ($f in 2, 3, 4, 5) {
         $perms += [ordered]@{ condition = "$(Q open) == 1 && $(HF $f)"; components = [ordered]@{ 'minecraft:collision_box' = (Box6 (Rot-Y @(0, 0, 13, 16, 16, 16) $Quarter[$f])) } }
     }
-    $states = [ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:top' = @(0, 1); 'levitate:open' = @(0, 1); 'levitate:powered' = @(0, 1); 'levitate:closing' = @(0, 1) }
+    $states = [ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:top' = @(0, 1); 'bearing:open' = @(0, 1); 'bearing:powered' = @(0, 1); 'bearing:closing' = @(0, 1) }
     Block-Json $id $states $comps $perms
     Loot $id
-    $BlockSounds["levitate:$id"] = $d.sound
+    $BlockSounds["bearing:$id"] = $d.sound
 }
 
 # ---- girders ------------------------------------------------------------------------------------------------------------
@@ -571,15 +571,15 @@ $comps['minecraft:geometry'] = [ordered]@{
 }
 $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat (Tex 'metal_girder' 'metal_girder') 'alpha_test') }
 $comps['minecraft:collision_box'] = Box6 @(4, 0, 4, 12, 16, 12)
-$states = [ordered]@{ 'levitate:axis' = @(0, 1, 2); 'levitate:x' = @(0, 1); 'levitate:z' = @(0, 1); 'levitate:top' = @(0, 1); 'levitate:bottom' = @(0, 1) }
+$states = [ordered]@{ 'bearing:axis' = @(0, 1, 2); 'bearing:x' = @(0, 1); 'bearing:z' = @(0, 1); 'bearing:top' = @(0, 1); 'bearing:bottom' = @(0, 1) }
 $perms = @(
     [ordered]@{ condition = "$(Q x) == 1 || $(Q z) == 1"; components = [ordered]@{ 'minecraft:collision_box' = (Box6 @(0, 2, 0, 16, 14, 16)) } }
 )
 Block-Json 'metal_girder' $states $comps $perms
 Loot 'metal_girder'
-$BlockSounds['levitate:metal_girder'] = 'netherite'
+$BlockSounds['bearing:metal_girder'] = 'netherite'
 
-# encased shaft: levitate:axis is the shaft axis (0 x, 2 z); the beam runs across it
+# encased shaft: bearing:axis is the shaft axis (0 x, 2 z); the beam runs across it
 $GirderShaftGeo = Write-Geo 'metal_girder_encased_shaft' @(
     (Bone 'beam_x' @((Cube @(0, 2, 4, 16, 4, 12)), (Cube @(0, 12, 4, 16, 14, 12)), (Cube @(0, 4, 4, 16, 12, 5) @(0, 0) @('north', 'south')), (Cube @(0, 4, 11, 16, 12, 12) @(0, 0) @('north', 'south'))))
     (Bone 'beam_z' @((Cube @(4, 2, 0, 12, 4, 16)), (Cube @(4, 12, 0, 12, 14, 16)), (Cube @(4, 4, 0, 5, 12, 16) @(0, 0) @('east', 'west')), (Cube @(11, 4, 0, 12, 12, 16) @(0, 0) @('east', 'west'))))
@@ -601,22 +601,22 @@ $comps['minecraft:geometry'] = [ordered]@{
 }
 $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat (Tex 'metal_girder' 'metal_girder') 'alpha_test') }
 $comps['minecraft:collision_box'] = Box6 @(0, 2, 0, 16, 14, 16)
-$states = [ordered]@{ 'levitate:axis' = @(0, 1, 2); 'levitate:top' = @(0, 1); 'levitate:bottom' = @(0, 1); 'levitate:rotor' = @(0, 1) }
+$states = [ordered]@{ 'bearing:axis' = @(0, 1, 2); 'bearing:top' = @(0, 1); 'bearing:bottom' = @(0, 1); 'bearing:rotor' = @(0, 1) }
 Block-Json 'metal_girder_encased_shaft' $states $comps $null
 # Create: the encased girder drops the girder and the shaft
 Write-Json 'assets/pack/bp/loot_tables/blocks/metal_girder_encased_shaft.json' ([ordered]@{ pools = @(
-            [ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = 'levitate:metal_girder'; weight = 1 }) }
-            [ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = 'levitate:shaft'; weight = 1 }) }
+            [ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = 'bearing:metal_girder'; weight = 1 }) }
+            [ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = 'bearing:shaft'; weight = 1 }) }
         )
     })
-$BlockSounds['levitate:metal_girder_encased_shaft'] = 'netherite'
+$BlockSounds['bearing:metal_girder_encased_shaft'] = 'netherite'
 $null = Tex 'girder_shaft' 'girder_shaft'
 
 # ---- brackets (item icons; applied to shafts, cogs and pipes) -------------------------------------------------
-# levitate:mounted 0: the item's own model. Mounted (1): Create's bracket models as the client mod
+# bearing:mounted 0: the item's own model. Mounted (1): Create's bracket models as the client mod
 # draws them on a bracketed shaft / cogwheel (feature/building: BlockData["building"]["bracket"],
-# client/building): levitate:facing = the bracket's facing (the plate sits on the opposite side),
-# levitate:axis = the shaft's axis, levitate:cog = the cogwheel variant (two clamps beside the cog).
+# client/building): bearing:facing = the bracket's facing (the plate sits on the opposite side),
+# bearing:axis = the shaft's axis, bearing:cog = the cogwheel variant (two clamps beside the cog).
 # Shapes from Create's bracket/shaft and bracket/cog ground models (pixels), turned onto every
 # facing / axis; the ring faces use the `ring` instance (a texture with a hole for the shaft).
 function Rot-Box([double[]]$b, [string]$axis) {
@@ -698,10 +698,10 @@ foreach ($b in @('metal_bracket', 'wooden_bracket')) {
     $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat (Tex $b $b) 'alpha_test'); ring = (Mat (Tex "${b}_ring" "${b}_ring") 'alpha_test') }
     $comps['minecraft:collision_box'] = Box6 @(3, 0, 3, 13, 12, 13)
     $comps['minecraft:selection_box'] = Box6 @(3, 0, 3, 13, 12, 13)
-    $states = [ordered]@{ 'levitate:mounted' = @(0, 1); 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:axis' = @(0, 1, 2); 'levitate:cog' = @(0, 1) }
+    $states = [ordered]@{ 'bearing:mounted' = @(0, 1); 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:axis' = @(0, 1, 2); 'bearing:cog' = @(0, 1) }
     Block-Json $b $states $comps $null
     Loot $b
-    $BlockSounds["levitate:$b"] = $(if ($b -eq 'wooden_bracket') { 'scaffolding' } else { 'netherite' })
+    $BlockSounds["bearing:$b"] = $(if ($b -eq 'wooden_bracket') { 'scaffolding' } else { 'netherite' })
 }
 
 # ---- table cloths --------------------------------------------------------------------------------------------------------
@@ -721,7 +721,7 @@ foreach ($c in ($Colours + $Metals)) {
     $comps['minecraft:selection_box'] = Box6 @(0, 0, 0, 16, 1, 16)
     Block-Json $id $null $comps $null
     Loot $id
-    $BlockSounds["levitate:$id"] = $(if ($c -in $Metals) { 'metal' } else { 'cloth' })
+    $BlockSounds["bearing:$id"] = $(if ($c -in $Metals) { 'metal' } else { 'cloth' })
 }
 
 # ---- placard ---------------------------------------------------------------------------------------------------------------
@@ -747,10 +747,10 @@ foreach ($f in 0..5) {
     }
 }
 $FormatVersion = '1.21.120' # minecraft:redstone_producer needs it
-Block-Json 'placard' ([ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:powered' = @(0, 1) }) $comps $plPerms
+Block-Json 'placard' ([ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:powered' = @(0, 1) }) $comps $plPerms
 $FormatVersion = '1.21.90'
 Loot 'placard'
-$BlockSounds['levitate:placard'] = 'copper'
+$BlockSounds['bearing:placard'] = 'copper'
 
 # ---- copycats -------------------------------------------------------------------------------------------------------------
 $cpBones = @(); $cpVis = [ordered]@{}; $cpPerms = @()
@@ -760,7 +760,7 @@ foreach ($f in 0..5) {
     $cpVis["f$f"] = "$(Q facing) == $f"
     $cpPerms += [ordered]@{ condition = "$(Q facing) == $f"; components = [ordered]@{ 'minecraft:collision_box' = (Box6 $b); 'minecraft:selection_box' = (Box6 $b) } }
 }
-# Create's CopycatBlockEntity.updateLight: levitate:light (0..15) is the material's light
+# Create's CopycatBlockEntity.updateLight: bearing:light (0..15) is the material's light
 $cpLight = 0..15
 foreach ($l in 1..15) { $cpPerms += [ordered]@{ condition = "$(Q light) == $l"; components = [ordered]@{ 'minecraft:light_emission' = $l } } }
 $CopyPanelGeo = Write-Geo 'copycat_panel' $cpBones
@@ -769,9 +769,9 @@ $comps = Base-Components 'copycat_panel' 3 6 '#8a8d84' @('pickaxe', 'axe')
 $comps['minecraft:light_dampening'] = 0
 $comps['minecraft:geometry'] = [ordered]@{ identifier = $CopyPanelGeo; bone_visibility = $cpVis }
 $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat (Tex 'copycat_base' 'copycat_base') 'alpha_test') }
-Block-Json 'copycat_panel' ([ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:light' = $cpLight }) $comps $cpPerms
+Block-Json 'copycat_panel' ([ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:light' = $cpLight }) $comps $cpPerms
 Loot 'copycat_panel'
-$BlockSounds['levitate:copycat_panel'] = 'metal'
+$BlockSounds['bearing:copycat_panel'] = 'metal'
 
 $csBones = @(); $csVis = [ordered]@{}; $csPerms = @()
 foreach ($f in 2, 3, 4, 5) {
@@ -789,9 +789,9 @@ $comps = Base-Components 'copycat_step' 3 6 '#8a8d84' @('pickaxe', 'axe')
 $comps['minecraft:light_dampening'] = 0
 $comps['minecraft:geometry'] = [ordered]@{ identifier = $CopyStepGeo; bone_visibility = $csVis }
 $comps['minecraft:material_instances'] = [ordered]@{ '*' = (Mat (Tex 'copycat_base' 'copycat_base') 'alpha_test') }
-Block-Json 'copycat_step' ([ordered]@{ 'levitate:facing' = @(0, 1, 2, 3, 4, 5); 'levitate:top' = @(0, 1); 'levitate:light' = $cpLight }) $comps $csPerms
+Block-Json 'copycat_step' ([ordered]@{ 'bearing:facing' = @(0, 1, 2, 3, 4, 5); 'bearing:top' = @(0, 1); 'bearing:light' = $cpLight }) $comps $csPerms
 Loot 'copycat_step'
-$BlockSounds['levitate:copycat_step'] = 'metal'
+$BlockSounds['bearing:copycat_step'] = 'metal'
 
 # ---- resource pack fragments ------------------------------------------------------------------------------------------
 $blocksD = [ordered]@{}
@@ -805,14 +805,14 @@ function Shaped([string]$name, [string[]]$pattern, $key, [string]$result, [int]$
     foreach ($e in $key.GetEnumerator()) { $k[$e.Key] = [ordered]@{ item = $e.Value } }
     $first = @($key.Values)[0]
     Write-Json "$dir/$name.json" ([ordered]@{ format_version = '1.20.10'; 'minecraft:recipe_shaped' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$name" }; tags = @('crafting_table'); pattern = $pattern; key = $k
+                description = [ordered]@{ identifier = "bearing:$name" }; tags = @('crafting_table'); pattern = $pattern; key = $k
                 unlock = @([ordered]@{ item = $first }); result = [ordered]@{ item = $result; count = $count }
             }
         })
 }
 function Shapeless([string]$name, [string[]]$items, [string]$result, [int]$count, [string]$dir = 'assets/pack/bp/recipes', [string]$tag = 'crafting_table') {
     Write-Json "$dir/$name.json" ([ordered]@{ format_version = '1.20.10'; 'minecraft:recipe_shapeless' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$name" }; tags = @($tag)
+                description = [ordered]@{ identifier = "bearing:$name" }; tags = @($tag)
                 ingredients = @($items | ForEach-Object { [ordered]@{ item = $_ } })
                 unlock = @([ordered]@{ item = $items[0] }); result = [ordered]@{ item = $result; count = $count }
             }
@@ -823,102 +823,102 @@ function Stonecut([string]$name, [string]$from, [string]$result, [int]$count, [s
 }
 function Smelt([string]$name, [string]$from, [string]$result) {
     Write-Json "assets/pack/bp/recipes/$name.json" ([ordered]@{ format_version = '1.20.10'; 'minecraft:recipe_furnace' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$name" }; tags = @('furnace'); input = $from; output = $result
+                description = [ordered]@{ identifier = "bearing:$name" }; tags = @('furnace'); input = $from; output = $result
             }
         })
 }
 $Pending = 'assets/pending_recipes/building'
-$IronWindowBlock = @{ industrial_iron = 'levitate:industrial_iron_block'; weathered_iron = 'levitate:weathered_iron_block' }
+$IronWindowBlock = @{ industrial_iron = 'bearing:industrial_iron_block'; weathered_iron = 'bearing:weathered_iron_block' }
 foreach ($w in $WindowTypes) {
     $frame = if ($w -in $Woods) { "minecraft:${w}_planks" } elseif ($w -eq 'ornate_iron') { 'minecraft:iron_nugget' } else { $IronWindowBlock[$w] }
     $dir = if ($w -in @('industrial_iron', 'weathered_iron')) { $Pending } else { 'assets/pack/bp/recipes' }
-    Shaped "${w}_window" @(' # ', '#X#') @{ '#' = $frame; X = 'minecraft:glass' } "levitate:${w}_window" 2 $dir
-    Shaped "${w}_window_pane" @('###', '###') @{ '#' = "levitate:${w}_window" } "levitate:${w}_window_pane" 16
+    Shaped "${w}_window" @(' # ', '#X#') @{ '#' = $frame; X = 'minecraft:glass' } "bearing:${w}_window" 2 $dir
+    Shaped "${w}_window_pane" @('###', '###') @{ '#' = "bearing:${w}_window" } "bearing:${w}_window_pane" 16
 }
 foreach ($g in $GlassKinds.Keys) {
-    Stonecut "${g}_from_glass_stonecutting" 'minecraft:glass' "levitate:$g" 1
-    Stonecut "${g}_pane_from_glass_pane_stonecutting" 'minecraft:glass_pane' "levitate:${g}_pane" 1
-    Shaped "${g}_pane" @('###', '###') @{ '#' = "levitate:$g" } "levitate:${g}_pane" 16
-    Smelt "glass_from_$g" "levitate:$g" 'minecraft:glass'
-    Smelt "glass_pane_from_${g}_pane" "levitate:${g}_pane" 'minecraft:glass_pane'
+    Stonecut "${g}_from_glass_stonecutting" 'minecraft:glass' "bearing:$g" 1
+    Stonecut "${g}_pane_from_glass_pane_stonecutting" 'minecraft:glass_pane' "bearing:${g}_pane" 1
+    Shaped "${g}_pane" @('###', '###') @{ '#' = "bearing:$g" } "bearing:${g}_pane" 16
+    Smelt "glass_from_$g" "bearing:$g" 'minecraft:glass'
+    Smelt "glass_pane_from_${g}_pane" "bearing:${g}_pane" 'minecraft:glass_pane'
 }
 foreach ($type in @('shingles', 'tiles')) {
     $single = $type.TrimEnd('s')
-    Stonecut "copper_${type}_from_copper_ingot_stonecutting" 'minecraft:copper_ingot' "levitate:copper_$type" 2
+    Stonecut "copper_${type}_from_copper_ingot_stonecutting" 'minecraft:copper_ingot' "bearing:copper_$type" 2
     foreach ($waxed in @('', 'waxed_')) {
         foreach ($stage in $Stages) {
-            $full = "levitate:${waxed}${stage}copper_$type"
+            $full = "bearing:${waxed}${stage}copper_$type"
             $stairs = "${waxed}${stage}copper_${single}_stairs"; $slab = "${waxed}${stage}copper_${single}_slab"
-            Shaped $stairs @('X  ', 'XX ', 'XXX') @{ X = $full } "levitate:$stairs" 4
-            Shaped $slab @('XXX') @{ X = $full } "levitate:$slab" 6
-            Stonecut "${stairs}_stonecutting" $full "levitate:$stairs" 1
-            Stonecut "${slab}_stonecutting" $full "levitate:$slab" 2
+            Shaped $stairs @('X  ', 'XX ', 'XXX') @{ X = $full } "bearing:$stairs" 4
+            Shaped $slab @('XXX') @{ X = $full } "bearing:$slab" 6
+            Stonecut "${stairs}_stonecutting" $full "bearing:$stairs" 1
+            Stonecut "${slab}_stonecutting" $full "bearing:$slab" 2
         }
     }
     foreach ($stage in $Stages) {
         foreach ($shape in @("copper_$type", "copper_${single}_stairs", "copper_${single}_slab")) {
-            Shapeless "waxed_${stage}${shape}_from_honeycomb" @("levitate:${stage}$shape", 'minecraft:honeycomb') "levitate:waxed_${stage}$shape" 1
+            Shapeless "waxed_${stage}${shape}_from_honeycomb" @("bearing:${stage}$shape", 'minecraft:honeycomb') "bearing:waxed_${stage}$shape" 1
         }
     }
 }
-Stonecut 'copper_scaffolding_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'levitate:copper_scaffolding' 2
-Stonecut 'copper_ladder_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'levitate:copper_ladder' 2
-Stonecut 'copper_bars_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'levitate:copper_bars' 4
-Stonecut 'copper_table_cloth_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'levitate:copper_table_cloth' 2
-foreach ($pair in @(@('andesite', 'levitate:andesite_alloy'), @('brass', 'levitate:brass_ingot'))) {
+Stonecut 'copper_scaffolding_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'bearing:copper_scaffolding' 2
+Stonecut 'copper_ladder_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'bearing:copper_ladder' 2
+Stonecut 'copper_bars_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'bearing:copper_bars' 4
+Stonecut 'copper_table_cloth_from_copper_ingot_stonecutting' 'minecraft:copper_ingot' 'bearing:copper_table_cloth' 2
+foreach ($pair in @(@('andesite', 'bearing:andesite_alloy'), @('brass', 'bearing:brass_ingot'))) {
     $m = $pair[0]; $src = $pair[1]
-    Stonecut "${m}_scaffolding_from_${m}_stonecutting" $src "levitate:${m}_scaffolding" 2 $Pending
-    Stonecut "${m}_ladder_from_${m}_stonecutting" $src "levitate:${m}_ladder" 2 $Pending
-    Stonecut "${m}_bars_from_${m}_stonecutting" $src "levitate:${m}_bars" 4 $Pending
-    Stonecut "${m}_table_cloth_from_${m}_stonecutting" $src "levitate:${m}_table_cloth" 2 $Pending
+    Stonecut "${m}_scaffolding_from_${m}_stonecutting" $src "bearing:${m}_scaffolding" 2 $Pending
+    Stonecut "${m}_ladder_from_${m}_stonecutting" $src "bearing:${m}_ladder" 2 $Pending
+    Stonecut "${m}_bars_from_${m}_stonecutting" $src "bearing:${m}_bars" 4 $Pending
+    Stonecut "${m}_table_cloth_from_${m}_stonecutting" $src "bearing:${m}_table_cloth" 2 $Pending
 }
 foreach ($c in $Colours) {
-    Shapeless "${c}_table_cloth" @("minecraft:${c}_wool", 'levitate:andesite_alloy') "levitate:${c}_table_cloth" 2 $Pending
+    Shapeless "${c}_table_cloth" @("minecraft:${c}_wool", 'bearing:andesite_alloy') "bearing:${c}_table_cloth" 2 $Pending
     foreach ($o in $Colours) {
         if ($o -eq $c) { continue }
-        Shapeless "${c}_table_cloth_from_${o}_table_cloth" @("minecraft:${c}_dye", "levitate:${o}_table_cloth") "levitate:${c}_table_cloth" 1
+        Shapeless "${c}_table_cloth_from_${o}_table_cloth" @("minecraft:${c}_dye", "bearing:${o}_table_cloth") "bearing:${c}_table_cloth" 1
     }
 }
-Stonecut 'copycat_panel_from_zinc_ingot_stonecutting' 'levitate:zinc_ingot' 'levitate:copycat_panel' 4 $Pending
-Stonecut 'copycat_step_from_zinc_ingot_stonecutting' 'levitate:zinc_ingot' 'levitate:copycat_step' 4 $Pending
-Shaped 'metal_girder' @('PPP', 'CCC') @{ P = 'levitate:iron_sheet'; C = 'levitate:andesite_alloy' } 'levitate:metal_girder' 8 $Pending
-Shaped 'metal_bracket' @('SSS', 'PCP') @{ S = 'minecraft:iron_nugget'; P = 'minecraft:iron_ingot'; C = 'levitate:andesite_alloy' } 'levitate:metal_bracket' 4 $Pending
-Shaped 'wooden_bracket' @('SSS', 'PCP') @{ S = 'minecraft:stick'; P = 'minecraft:oak_planks'; C = 'levitate:andesite_alloy' } 'levitate:wooden_bracket' 4 $Pending
-Shapeless 'placard' @('minecraft:frame', 'levitate:brass_sheet') 'levitate:placard' 1 $Pending
+Stonecut 'copycat_panel_from_zinc_ingot_stonecutting' 'bearing:zinc_ingot' 'bearing:copycat_panel' 4 $Pending
+Stonecut 'copycat_step_from_zinc_ingot_stonecutting' 'bearing:zinc_ingot' 'bearing:copycat_step' 4 $Pending
+Shaped 'metal_girder' @('PPP', 'CCC') @{ P = 'bearing:iron_sheet'; C = 'bearing:andesite_alloy' } 'bearing:metal_girder' 8 $Pending
+Shaped 'metal_bracket' @('SSS', 'PCP') @{ S = 'minecraft:iron_nugget'; P = 'minecraft:iron_ingot'; C = 'bearing:andesite_alloy' } 'bearing:metal_bracket' 4 $Pending
+Shaped 'wooden_bracket' @('SSS', 'PCP') @{ S = 'minecraft:stick'; P = 'minecraft:oak_planks'; C = 'bearing:andesite_alloy' } 'bearing:wooden_bracket' 4 $Pending
+Shapeless 'placard' @('minecraft:frame', 'bearing:brass_sheet') 'bearing:placard' 1 $Pending
 foreach ($id in $Doors.Keys) {
     $i = 0
     foreach ($door in $WoodenDoors) {
-        Shapeless "${id}_$i" @($door, "levitate:$($Doors[$id].casing)") "levitate:$id" 1
+        Shapeless "${id}_$i" @($door, "bearing:$($Doors[$id].casing)") "bearing:$id" 1
         $i++
     }
 }
 foreach ($id in $Trapdoors.Keys) {
     $i = 0
     foreach ($td in $WoodenTrapdoors) {
-        Shapeless "${id}_$i" @($td, "levitate:$($Trapdoors[$id].casing)") "levitate:$id" 1
+        Shapeless "${id}_$i" @($td, "bearing:$($Trapdoors[$id].casing)") "bearing:$id" 1
         $i++
     }
 }
 
 # processing recipes (Create's recipe types, read by U3's loader)
 function Proc([string]$type, [string]$name, $obj) { Write-Json "assets/recipes/$type/$name.json" $obj }
-foreach ($pair in @(@('andesite_casing', @{ item = 'levitate:andesite_alloy' }), @('brass_casing', @{ tag = 'c:ingots/brass' }), @('copper_casing', @{ tag = 'c:ingots/copper' }))) {
+foreach ($pair in @(@('andesite_casing', @{ item = 'bearing:andesite_alloy' }), @('brass_casing', @{ tag = 'c:ingots/brass' }), @('copper_casing', @{ tag = 'c:ingots/copper' }))) {
     foreach ($src in @('log', 'wood')) {
         Proc 'item_application' "$($pair[0])_from_$src" ([ordered]@{
-                type        = 'levitate:item_application'
+                type        = 'bearing:item_application'
                 ingredients = @([ordered]@{ tag = "c:stripped_${src}s" }, $pair[1])
-                results     = @([ordered]@{ item = "levitate:$($pair[0])" })
+                results     = @([ordered]@{ item = "bearing:$($pair[0])" })
             })
     }
 }
 Proc 'item_application' 'railway_casing' ([ordered]@{
-        type = 'levitate:item_application'; ingredients = @([ordered]@{ item = 'levitate:brass_casing' }, [ordered]@{ tag = 'c:plates/obsidian' })
-        results = @([ordered]@{ item = 'levitate:railway_casing' })
+        type = 'bearing:item_application'; ingredients = @([ordered]@{ item = 'bearing:brass_casing' }, [ordered]@{ tag = 'c:plates/obsidian' })
+        results = @([ordered]@{ item = 'bearing:railway_casing' })
     })
 foreach ($w in @('', '_pane')) {
     Proc 'splashing' "industrial_iron_window$w" ([ordered]@{
-            type = 'levitate:splashing'; ingredients = @([ordered]@{ item = "levitate:industrial_iron_window$w" })
-            results = @([ordered]@{ item = "levitate:weathered_iron_window$w" })
+            type = 'bearing:splashing'; ingredients = @([ordered]@{ item = "bearing:industrial_iron_window$w" })
+            results = @([ordered]@{ item = "bearing:weathered_iron_window$w" })
         })
 }
 foreach ($type in @('shingles', 'tiles')) {
@@ -928,17 +928,17 @@ foreach ($type in @('shingles', 'tiles')) {
             $s = $Stages[$si]
             if ($si -gt 0) {
                 Proc 'deploying' "$($Stages[$si-1])${shape}_from_deoxidising" ([ordered]@{
-                        type = 'levitate:deploying'; ingredients = @([ordered]@{ item = "levitate:$s$shape" }, [ordered]@{ tag = 'minecraft:axes' })
-                        results = @([ordered]@{ item = "levitate:$($Stages[$si-1])$shape" }); keep_held_item = $true
+                        type = 'bearing:deploying'; ingredients = @([ordered]@{ item = "bearing:$s$shape" }, [ordered]@{ tag = 'minecraft:axes' })
+                        results = @([ordered]@{ item = "bearing:$($Stages[$si-1])$shape" }); keep_held_item = $true
                     })
             }
             Proc 'deploying' "${s}${shape}_from_removing_wax" ([ordered]@{
-                    type = 'levitate:deploying'; ingredients = @([ordered]@{ item = "levitate:waxed_$s$shape" }, [ordered]@{ tag = 'minecraft:axes' })
-                    results = @([ordered]@{ item = "levitate:$s$shape" }); keep_held_item = $true
+                    type = 'bearing:deploying'; ingredients = @([ordered]@{ item = "bearing:waxed_$s$shape" }, [ordered]@{ tag = 'minecraft:axes' })
+                    results = @([ordered]@{ item = "bearing:$s$shape" }); keep_held_item = $true
                 })
             Proc 'deploying' "waxed_${s}${shape}_from_adding_wax" ([ordered]@{
-                    type = 'levitate:deploying'; ingredients = @([ordered]@{ item = "levitate:$s$shape" }, [ordered]@{ item = 'minecraft:honeycomb_block' })
-                    results = @([ordered]@{ item = "levitate:waxed_$s$shape" }); keep_held_item = $true
+                    type = 'bearing:deploying'; ingredients = @([ordered]@{ item = "bearing:$s$shape" }, [ordered]@{ item = 'minecraft:honeycomb_block' })
+                    results = @([ordered]@{ item = "bearing:waxed_$s$shape" }); keep_held_item = $true
                 })
         }
     }

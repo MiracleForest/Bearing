@@ -8,7 +8,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::crafter {
+namespace br::core::crafter {
 
 using kinetics::Axis;
 using kinetics::Face;
@@ -49,4 +49,4 @@ using kinetics::Face;
 /// the sign follows the speed.
 [[nodiscard]] kinetics::Offset sawItemMovement(bool alongFirst, float rpm);
 
-} // namespace lv::core::crafter
+} // namespace br::core::crafter

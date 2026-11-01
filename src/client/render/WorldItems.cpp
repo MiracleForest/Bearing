@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // World item renderer of the client mod (U33, see WorldItems.h).
 //
@@ -64,7 +64,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::render {
+namespace br::client::render {
 
 namespace ci    = core::itemrender;
 namespace items = feature::common::items;
@@ -470,9 +470,9 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::render
+} // namespace br::client::render
 
-LV_REGISTER_MODULE(lv::client::render::WorldItemsModule);
+BR_REGISTER_MODULE(br::client::render::WorldItemsModule);
 
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

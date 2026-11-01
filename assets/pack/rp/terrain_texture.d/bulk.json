@@ -1,17 +1,17 @@
 {
-  "levitate_millstone": {
+  "bearing_millstone": {
     "textures": "textures/blocks/millstone"
   },
-  "levitate_crushing_wheel": {
+  "bearing_crushing_wheel": {
     "textures": "textures/blocks/crushing_wheel"
   },
-  "levitate_crushing_wheel_controller": {
+  "bearing_crushing_wheel_controller": {
     "textures": "textures/blocks/crushing_wheel_controller"
   },
-  "levitate_encased_fan": {
+  "bearing_encased_fan": {
     "textures": "textures/blocks/encased_fan"
   },
-  "levitate_nozzle": {
+  "bearing_nozzle": {
     "textures": "textures/blocks/nozzle"
   }
 }

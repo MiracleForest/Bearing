@@ -14,7 +14,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::generators {
+namespace br::core::generators {
 
 using kinetics::Axis;
 using kinetics::Face;
@@ -44,7 +44,7 @@ inline constexpr std::array<std::string_view, 16> kDyeColours{
 /// cocoa beans and bone meal are *not* dyes for Create), -1 when it is not a dye.
 [[nodiscard]] int dyeColourOf(std::string_view itemId);
 
-/// Wood types a water wheel can take (block state `levitate:wood`), with their planks ids.
+/// Wood types a water wheel can take (block state `bearing:wood`), with their planks ids.
 /// Index 1 (spruce) is Create's default material.
 inline constexpr std::array<std::string_view, 12> kWoods{
     "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped", "pale_oak",
@@ -120,7 +120,7 @@ struct Vec3d {
 struct StructureCell {
     Offset offset;  ///< from the wheel
     Face   facing;  ///< Create's WaterWheelStructuralBlock.FACING: towards its parent cell
-    int    segment; ///< `levitate:segment` of the structure block (0..7)
+    int    segment; ///< `bearing:segment` of the structure block (0..7)
 };
 [[nodiscard]] std::array<StructureCell, 8> structureCells(Axis axis);
 /// The plane offset of a segment in the canonical model (wheel in the XZ plane): (a, b) in -1..1.
@@ -128,4 +128,4 @@ struct StructureCell {
 /// Offset from the wheel to the structure block of `segment` for `axis`.
 [[nodiscard]] Offset segmentOffset(int segment, Axis axis);
 
-} // namespace lv::core::generators
+} // namespace br::core::generators

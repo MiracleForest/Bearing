@@ -23,18 +23,18 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 std::string signText(BlockSource& region, GlobalPos const& pos);
 }
 
 namespace {
-using lv::selftest::Context;
-using lv::core::GlobalPos;
+using br::selftest::Context;
+using br::core::GlobalPos;
 using JsonT          = nlohmann::json;
-namespace dsp        = lv::feature::display;
-namespace items      = lv::feature::common::items;
-namespace blockdata  = lv::feature::common::blockdata;
-namespace net        = lv::feature::net;
+namespace dsp        = br::feature::display;
+namespace items      = br::feature::common::items;
+namespace blockdata  = br::feature::common::blockdata;
+namespace net        = br::feature::net;
 
 GlobalPos up(GlobalPos p, int dy) {
     p.y += dy;
@@ -52,8 +52,8 @@ BlockSource& region(Context& ctx) { return ctx.player().getDimensionBlockSource(
 bool placeLink(Context& ctx, GlobalPos const& pos, std::string const& face, GlobalPos const& target) {
     if (!ctx.setBlock(pos, dsp::kLinkId)) return false;
     auto&       r = region(ctx);
-    auto const& b = r.getBlock(lv::game::blockPos(pos));
-    if (auto const* next = dsp::withStates(b, {{"minecraft:block_face", face}})) lv::game::setBlock(r, lv::game::blockPos(pos), *next);
+    auto const& b = r.getBlock(br::game::blockPos(pos));
+    if (auto const* next = dsp::withStates(b, {{"minecraft:block_face", face}})) br::game::setBlock(r, br::game::blockPos(pos), *next);
     dsp::link::LinkData d;
     d.targetOffset = {target.x - pos.x, target.y - pos.y, target.z - pos.z};
     dsp::link::write(pos, d);
@@ -63,14 +63,14 @@ bool placeLink(Context& ctx, GlobalPos const& pos, std::string const& face, Glob
 
 void placeBoards(Context& ctx, GlobalPos const& origin, int w, int h, int facing) {
     for (int x = 0; x < w; ++x)
-        for (int y = 0; y < h; ++y) ctx.setBlock(at(origin, x, y, 0), dsp::kBoardId, {{"levitate:facing", facing}});
+        for (int y = 0; y < h; ++y) ctx.setBlock(at(origin, x, y, 0), dsp::kBoardId, {{"bearing:facing", facing}});
     for (int x = 0; x < w; ++x)
         for (int y = 0; y < h; ++y) dsp::board::updateColumns(region(ctx), at(origin, x, y, 0));
 }
 
 ItemStack clipboardWith(Context& ctx, std::vector<std::string> const& texts) {
     auto s = items::make(dsp::kClipboardId);
-    ctx.require(s.has_value(), "levitate:clipboard exists");
+    ctx.require(s.has_value(), "bearing:clipboard exists");
     dsp::clipboard::Contents c;
     c.type = 2;
     c.pages.emplace_back();
@@ -80,7 +80,7 @@ ItemStack clipboardWith(Context& ctx, std::vector<std::string> const& texts) {
 }
 } // namespace
 
-LV_REGISTER_SELFTEST("display.format", [](Context& ctx) {
+BR_REGISTER_SELFTEST("display.format", [](Context& ctx) {
     ctx.check(dsp::formatValue(999, true) == "999", "999 stays");
     // Create's ValueListDisplaySource.shorten: integer division
     ctx.check(dsp::formatValue(1234, true) == "1k", "1234 -> 1k, got " + dsp::formatValue(1234, true));
@@ -91,12 +91,12 @@ LV_REGISTER_SELFTEST("display.format", [](Context& ctx) {
     ctx.check(dsp::progressBar(0.99, 4) == "\xE2\x96\x88\xE2\x96\x88\xE2\x96\x88\xE2\x96\x92", "the bar truncates (Create: (int) level * length)");
     ctx.check(dsp::board::maxChars(1) == 4 && dsp::board::maxChars(2) == 8 && dsp::board::maxChars(3) == 13 && dsp::board::maxChars(32) == 145,
               "Create's character counts per width");
-    ctx.check(dsp::nixie::idFor(1) == "levitate:nixie_tube" && dsp::nixie::idFor(14) == "levitate:red_nixie_tube", "nixie ids");
-    ctx.check(dsp::nixie::isNixie("levitate:light_blue_nixie_tube") && !dsp::nixie::isNixie("levitate:orange_nixie_tube"), "nixie id check");
+    ctx.check(dsp::nixie::idFor(1) == "bearing:nixie_tube" && dsp::nixie::idFor(14) == "bearing:red_nixie_tube", "nixie ids");
+    ctx.check(dsp::nixie::isNixie("bearing:light_blue_nixie_tube") && !dsp::nixie::isNixie("bearing:orange_nixie_tube"), "nixie id check");
     ctx.check(dsp::dyeOf("minecraft:red_dye") == 14 && !dsp::dyeOf("minecraft:ink_sac"), "dyes");
 });
 
-LV_REGISTER_SELFTEST("display.registry", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.registry", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2400), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
@@ -107,7 +107,7 @@ LV_REGISTER_SELFTEST("display.registry", [](Context& ctx) -> ll::coro::CoroTask<
     int i = 0;
     for (auto c : {Case{"minecraft:target", "redstone_power"}, Case{"minecraft:enchanting_table", "enchant_power"},
                    Case{"minecraft:command_block", "scoreboard"}, Case{"minecraft:respawn_anchor", "death_count"},
-                   Case{"levitate:nixie_tube", "nixie_tube"}}) {
+                   Case{"bearing:nixie_tube", "nixie_tube"}}) {
         auto q = at(p, 0, 0, 2 * i++);
         ctx.require(ctx.setBlock(q, c.block), std::string("place ") + c.block);
         auto list  = dsp::sourcesAt(r, q);
@@ -125,7 +125,7 @@ LV_REGISTER_SELFTEST("display.registry", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(dsp::targetAt(r, at(p, 3, 0, 4)) == nullptr, "air is no target");
 });
 
-LV_REGISTER_SELFTEST("display.board_structure", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.board_structure", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2410), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
@@ -134,17 +134,17 @@ LV_REGISTER_SELFTEST("display.board_structure", [](Context& ctx) -> ll::coro::Co
     ctx.require(s.has_value(), "structure found");
     ctx.check(s->controller == at(p, 0, 1, 0), "controller at the top west end, got " + s->controller.key());
     ctx.check(s->width == 3 && s->height == 2, "3x2, got " + std::to_string(s->width) + "x" + std::to_string(s->height));
-    auto const& top = r.getBlock(lv::game::blockPos(at(p, 1, 1, 0)));
-    ctx.check(dsp::intState(top, "levitate:down").value_or(0) == 1 && dsp::intState(top, "levitate:up").value_or(0) == 0, "top row connects down");
+    auto const& top = r.getBlock(br::game::blockPos(at(p, 1, 1, 0)));
+    ctx.check(dsp::intState(top, "bearing:down").value_or(0) == 1 && dsp::intState(top, "bearing:up").value_or(0) == 0, "top row connects down");
     // a fourth block on one row only splits the rows
-    ctx.setBlock(at(p, 3, 0, 0), dsp::kBoardId, {{"levitate:facing", 0}});
+    ctx.setBlock(at(p, 3, 0, 0), dsp::kBoardId, {{"bearing:facing", 0}});
     dsp::board::updateColumns(r, at(p, 3, 0, 0));
     auto s2 = dsp::board::structureOf(r, at(p, 0, 0, 0));
     ctx.check(s2 && s2->height == 1 && s2->width == 4, "uneven rows don't connect");
     co_return;
 });
 
-LV_REGISTER_SELFTEST("display.board_lines", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.board_lines", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2420), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
@@ -170,13 +170,13 @@ LV_REGISTER_SELFTEST("display.board_lines", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(dsp::board::flapText("\xC2\xA7" "a\xC3\xA9t\xC3\xA9") == "\xC2\xA7" "a\xC3\x89T\xC3\x89", "accents up, codes kept");
 });
 
-LV_REGISTER_SELFTEST("display.nixie_row", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.nixie_row", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2430), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
     // floor tubes facing south: the row runs north (left) to south
     for (int z = 0; z < 3; ++z) {
-        ctx.setBlock(at(p, 0, 0, z), dsp::kNixieId, {{"levitate:facing", 0}, {"levitate:face", 0}});
+        ctx.setBlock(at(p, 0, 0, z), dsp::kNixieId, {{"bearing:facing", 0}, {"bearing:face", 0}});
         dsp::nixie::track(at(p, 0, 0, z));
     }
     auto row = dsp::nixie::row(r, at(p, 0, 0, 1));
@@ -189,11 +189,11 @@ LV_REGISTER_SELFTEST("display.nixie_row", [](Context& ctx) -> ll::coro::CoroTask
     // dye recolours the whole row and keeps the text
     auto dye = items::make("minecraft:lime_dye");
     ctx.check(dsp::nixie::use(ctx.player(), r, at(p, 0, 0, 1), *dye), "dye used");
-    ctx.check(lv::game::blockIdAt(r, lv::game::blockPos(at(p, 0, 0, 2))) == "levitate:lime_nixie_tube", "row dyed lime");
+    ctx.check(br::game::blockIdAt(r, br::game::blockPos(at(p, 0, 0, 2))) == "bearing:lime_nixie_tube", "row dyed lime");
     ctx.check(dsp::nixie::displayed(r, at(p, 0, 0, 2)) == "E ", "text kept");
     // redstone: a tube without text shows the signal strength
     auto q = at(p, 3, 0, 0);
-    ctx.setBlock(q, dsp::kNixieId, {{"levitate:facing", 0}, {"levitate:face", 0}});
+    ctx.setBlock(q, dsp::kNixieId, {{"bearing:facing", 0}, {"bearing:face", 0}});
     dsp::nixie::track(q);
     dsp::nixie::updateRedstone(r, q, true);
     ctx.check(dsp::nixie::displayed(r, q) == "00", "no power: 00");
@@ -205,12 +205,12 @@ LV_REGISTER_SELFTEST("display.nixie_row", [](Context& ctx) -> ll::coro::CoroTask
     ctx.check(dsp::nixie::displayed(r, q) == "00", "power gone: 00");
 });
 
-LV_REGISTER_SELFTEST("display.link_transfer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.link_transfer", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2440), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
     // source: a nixie tube showing "42"; link on top of it; target: a 2-wide board
-    ctx.setBlock(p, dsp::kNixieId, {{"levitate:facing", 0}, {"levitate:face", 0}});
+    ctx.setBlock(p, dsp::kNixieId, {{"bearing:facing", 0}, {"bearing:face", 0}});
     dsp::nixie::track(p);
     dsp::nixie::displayCustomText(r, p, "42");
     auto boardAt = at(p, 3, 0, 0);
@@ -233,8 +233,8 @@ LV_REGISTER_SELFTEST("display.link_transfer", [](Context& ctx) -> ll::coro::Coro
     // redstone: a powered link sends nothing, unpowering sends at once
     ctx.setBlock(at(link, 1, 0, 0), "minecraft:redstone_block");
     co_await ctx.ticks(4);
-    auto const& lb = r.getBlock(lv::game::blockPos(link));
-    ctx.check(dsp::intState(lb, "levitate:powered").value_or(0) == 1, "link powered");
+    auto const& lb = r.getBlock(br::game::blockPos(link));
+    ctx.check(dsp::intState(lb, "bearing:powered").value_or(0) == 1, "link powered");
     dsp::nixie::displayCustomText(r, p, "13");
     ctx.check(dsp::board::lineText(ctrl, 0) == "77", "a powered link sends nothing");
     ctx.setBlock(at(link, 1, 0, 0), "minecraft:air");
@@ -249,11 +249,11 @@ LV_REGISTER_SELFTEST("display.link_transfer", [](Context& ctx) -> ll::coro::Coro
     dsp::board::forceRunning(ctrl, false);
 });
 
-LV_REGISTER_SELFTEST("display.sign_target", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.sign_target", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2450), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
-    ctx.setBlock(p, dsp::kNixieId, {{"levitate:facing", 0}, {"levitate:face", 0}});
+    ctx.setBlock(p, dsp::kNixieId, {{"bearing:facing", 0}, {"bearing:face", 0}});
     dsp::nixie::track(p);
     dsp::nixie::displayCustomText(r, p, "HELLO");
     auto sign = at(p, 2, 0, 0);
@@ -270,12 +270,12 @@ LV_REGISTER_SELFTEST("display.sign_target", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(text == "\nHELLO", "sign line 2 written, got '" + text + "'");
 });
 
-LV_REGISTER_SELFTEST("display.link_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.link_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2460), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
     auto& pl = ctx.player();
-    ctx.setBlock(p, dsp::kNixieId, {{"levitate:facing", 0}, {"levitate:face", 0}});
+    ctx.setBlock(p, dsp::kNixieId, {{"bearing:facing", 0}, {"bearing:face", 0}});
     dsp::nixie::track(p);
     auto boardAt = at(p, 2, 0, 0);
     placeBoards(ctx, boardAt, 1, 2, 0);
@@ -304,7 +304,7 @@ LV_REGISTER_SELFTEST("display.link_screen", [](Context& ctx) -> ll::coro::CoroTa
     net::setTestCompanion(pl, false);
 });
 
-LV_REGISTER_SELFTEST("display.clipboard_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.clipboard_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2470), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& pl   = ctx.player();
@@ -330,7 +330,7 @@ LV_REGISTER_SELFTEST("display.clipboard_screen", [](Context& ctx) -> ll::coro::C
     ctx.check(last.size() == 1 && last[0].text == "Gold", "last viewed entries");
     // the clipboard writes its first entry onto a nixie tube
     auto& r = region(ctx);
-    ctx.setBlock(p, dsp::kNixieId, {{"levitate:facing", 0}, {"levitate:face", 0}});
+    ctx.setBlock(p, dsp::kNixieId, {{"bearing:facing", 0}, {"bearing:face", 0}});
     dsp::nixie::track(p);
     ctx.check(dsp::nixie::use(pl, r, p, pl.getSelectedItem()), "clipboard used on a nixie");
     ctx.check(dsp::nixie::displayed(r, p) == "Go", "nixie shows 'Go'");
@@ -338,8 +338,8 @@ LV_REGISTER_SELFTEST("display.clipboard_screen", [](Context& ctx) -> ll::coro::C
     pl.setSelectedItem(ItemStack::EMPTY_ITEM());
 });
 
-LV_REGISTER_SELFTEST("display.clipboard_settings", [](Context& ctx) -> ll::coro::CoroTask<> {
-    namespace vb = lv::feature::common::valuebox;
+BR_REGISTER_SELFTEST("display.clipboard_settings", [](Context& ctx) -> ll::coro::CoroTask<> {
+    namespace vb = br::feature::common::valuebox;
     auto p = up(ctx.testPos(2480), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r  = region(ctx);
@@ -349,10 +349,10 @@ LV_REGISTER_SELFTEST("display.clipboard_settings", [](Context& ctx) -> ll::coro:
     char const* block = "minecraft:lodestone";
     vb::registerBox(block, {
         .id = "display_test", .label = "", .labelFallback = "Test",
-        .board  = [](Block const&) { return lv::core::common::plainBoard(16, 4, "x"); },
-        .centre = [](Block const&, int) -> std::optional<lv::core::common::Vec> { return lv::core::common::Vec{0.5, 1, 0.5}; },
-        .get    = [](GlobalPos const& gp) { return lv::core::common::ValueSettings{0, values[gp]}; },
-        .set    = [](GlobalPos const& gp, lv::core::common::ValueSettings s, Player&) { values[gp] = s.value; },
+        .board  = [](Block const&) { return br::core::common::plainBoard(16, 4, "x"); },
+        .centre = [](Block const&, int) -> std::optional<br::core::common::Vec> { return br::core::common::Vec{0.5, 1, 0.5}; },
+        .get    = [](GlobalPos const& gp) { return br::core::common::ValueSettings{0, values[gp]}; },
+        .set    = [](GlobalPos const& gp, br::core::common::ValueSettings s, Player&) { values[gp] = s.value; },
     });
     auto a = p, b = at(p, 2, 0, 0);
     ctx.setBlock(a, block);
@@ -368,7 +368,7 @@ LV_REGISTER_SELFTEST("display.clipboard_settings", [](Context& ctx) -> ll::coro:
     vb::unregisterBox(block, "display_test");
 });
 
-LV_REGISTER_SELFTEST("display.link_item", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.link_item", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(2490), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r  = region(ctx);
@@ -383,17 +383,17 @@ LV_REGISTER_SELFTEST("display.link_item", [](Context& ctx) -> ll::coro::CoroTask
     sp.teleport(Vec3{p.x - 1.5f, float(p.y), p.z + 1.5f}, DimensionType(p.dim));
     co_await ctx.ticks(2);
     // first click: the target
-    sp.simulateUseItemInSlotOnBlock(0, lv::game::blockPos(at(p, 0, 1, 0)), ScriptModuleMinecraft::ScriptFacing::South, Vec3{0.5f, 0.5f, 1.0f});
+    sp.simulateUseItemInSlotOnBlock(0, br::game::blockPos(at(p, 0, 1, 0)), ScriptModuleMinecraft::ScriptFacing::South, Vec3{0.5f, 0.5f, 1.0f});
     auto sel = items::getData(sp.getInventory().getItem(0), "display_link");
     ctx.check(sel.is_object() && sel.contains("pos"), "target selected on the item");
     co_await ctx.ticks(6);
     // second click: the item lets the game place the block (SimulatedPlayers can't place this
     // block item, so the placement itself is done here; the client e2e places it for real)
-    ctx.check(!dsp::link::useItem(sp, r, lv::game::blockPos(at(p, 0, 0, 2)), 1), "the second click places");
+    ctx.check(!dsp::link::useItem(sp, r, br::game::blockPos(at(p, 0, 0, 2)), 1), "the second click places");
     ctx.setBlock(at(p, 0, 1, 2), dsp::kLinkId);
     {
-        auto const& b = r.getBlock(lv::game::blockPos(at(p, 0, 1, 2)));
-        if (auto const* next = dsp::withStates(b, {{"minecraft:block_face", std::string("up")}})) lv::game::setBlock(r, lv::game::blockPos(at(p, 0, 1, 2)), *next);
+        auto const& b = r.getBlock(br::game::blockPos(at(p, 0, 1, 2)));
+        if (auto const* next = dsp::withStates(b, {{"minecraft:block_face", std::string("up")}})) br::game::setBlock(r, br::game::blockPos(at(p, 0, 1, 2)), *next);
     }
     dsp::link::placed(sp, at(p, 0, 1, 2));
     ctx.check(items::getData(sp.getSelectedItem(), "display_link").is_null(), "the selection is cleared");
@@ -401,8 +401,8 @@ LV_REGISTER_SELFTEST("display.link_item", [](Context& ctx) -> ll::coro::CoroTask
     auto far = items::make(dsp::kLinkId);
     items::setData(*far, "display_link", {{"pos", JsonT::array({p.dim, p.x + 80, p.y, p.z})}});
     sp.setSelectedItem(*far);
-    ctx.check(dsp::link::useItem(sp, r, lv::game::blockPos(at(p, 0, 0, 2)), 1), "a far target is refused");    auto link = at(p, 0, 1, 2);
-    ctx.check(lv::game::blockIdAt(r, lv::game::blockPos(link)) == dsp::kLinkId, "link placed, found " + lv::game::blockIdAt(r, lv::game::blockPos(link)));
+    ctx.check(dsp::link::useItem(sp, r, br::game::blockPos(at(p, 0, 0, 2)), 1), "a far target is refused");    auto link = at(p, 0, 1, 2);
+    ctx.check(br::game::blockIdAt(r, br::game::blockPos(link)) == dsp::kLinkId, "link placed, found " + br::game::blockIdAt(r, br::game::blockPos(link)));
     auto d = dsp::link::read(link);
     ctx.check(d && d->targetOffset == std::array<int, 3>{0, 0, -2}, "bound to the board");
     auto src = dsp::link::sourcePos(r, link);
@@ -411,7 +411,7 @@ LV_REGISTER_SELFTEST("display.link_item", [](Context& ctx) -> ll::coro::CoroTask
 
 // U57 (T16 / T15): Create's boiler, elevator location, package address sources and the sources of
 // the smart observer and threshold switch (block ids content_observer / stockpile_switch)
-LV_REGISTER_SELFTEST("display.u57_sources", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("display.u57_sources", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = up(ctx.testPos(5780), 1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = region(ctx);
@@ -420,9 +420,9 @@ LV_REGISTER_SELFTEST("display.u57_sources", [](Context& ctx) -> ll::coro::CoroTa
         char const* source;
     };
     int i = 0;
-    for (auto c : {Case{"levitate:fluid_tank", "boiler"}, Case{"levitate:elevator_contact", "current_floor"},
-                   Case{"levitate:content_observer", "read_package_address"}, Case{"levitate:content_observer", "count_items"},
-                   Case{"levitate:stockpile_switch", "fill_level"}}) {
+    for (auto c : {Case{"bearing:fluid_tank", "boiler"}, Case{"bearing:elevator_contact", "current_floor"},
+                   Case{"bearing:content_observer", "read_package_address"}, Case{"bearing:content_observer", "count_items"},
+                   Case{"bearing:stockpile_switch", "fill_level"}}) {
         auto q = at(p, 2 * i++, 0, 0);
         ctx.require(ctx.setBlock(q, c.block), std::string("place ") + c.block);
         bool found = false;
@@ -431,7 +431,7 @@ LV_REGISTER_SELFTEST("display.u57_sources", [](Context& ctx) -> ll::coro::CoroTa
     }
     // the elevator location is the floor the contact last reported (the pistons unit's BlockData)
     auto contact = at(p, 2, 0, 0);
-    lv::feature::common::blockdata::edit(contact)["pistons"]["floor"] = "B2";
+    br::feature::common::blockdata::edit(contact)["pistons"]["floor"] = "B2";
     auto const* src = static_cast<dsp::Source const*>(nullptr);
     for (auto const* s : dsp::sourcesAt(r, contact))
         if (s->id == "current_floor") src = s;

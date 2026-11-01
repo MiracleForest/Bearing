@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:copper_shingles_from_copper_ingot_stonecutting"
+      "identifier": "bearing:copper_shingles_from_copper_ingot_stonecutting"
     },
     "tags": [
       "stonecutter"
@@ -18,7 +18,7 @@
       }
     ],
     "result": {
-      "item": "levitate:copper_shingles",
+      "item": "bearing:copper_shingles",
       "count": 2
     }
   }

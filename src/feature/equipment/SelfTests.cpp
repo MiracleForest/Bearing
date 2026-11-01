@@ -41,14 +41,14 @@
 
 namespace {
 
-using lv::core::GlobalPos;
-using lv::selftest::Context;
+using br::core::GlobalPos;
+using br::selftest::Context;
 using SharedTypes::Legacy::ArmorSlot;
-namespace eq     = lv::feature::equipment;
-namespace ce     = lv::core::equipment;
-namespace items  = lv::feature::common::items;
-namespace common = lv::feature::common;
-namespace net    = lv::feature::net;
+namespace eq     = br::feature::equipment;
+namespace ce     = br::core::equipment;
+namespace items  = br::feature::common::items;
+namespace common = br::feature::common;
+namespace net    = br::feature::net;
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 BlockPos  bp(GlobalPos const& p) { return BlockPos{p.x, p.y, p.z}; }
@@ -87,10 +87,10 @@ void clearInventory(Player& p) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("equipment.toolbox_compartments", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.toolbox_compartments", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3100), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
-    ctx.require(ctx.setBlock(base, "levitate:brown_toolbox", {{"levitate:facing", 0}}), "toolbox placed");
+    ctx.require(ctx.setBlock(base, "bearing:brown_toolbox", {{"bearing:facing", 0}}), "toolbox placed");
     eq::setToolboxInventory(base, nlohmann::json::object());
     auto& region = ctx.player().getDimensionBlockSource();
     ctx.check(items::slotCount(region, bp(base), -1) == ce::kToolboxSlots, "32 slots through the item capability");
@@ -102,22 +102,22 @@ LV_REGISTER_SELFTEST("equipment.toolbox_compartments", [](Context& ctx) -> ll::c
     ctx.check(inv.count(0) == 100 && inv.filters[0].match.find("cobblestone") != std::string::npos, "compartment 0 holds the cobblestone");
     ctx.check(inv.count(1) == 10, "compartment 1 holds the dirt");
     // a shulker box or a toolbox can't go in (Create: canFitInsideContainerItems)
-    rest = items::insert(region, bp(base), 1, item(ctx, "levitate:red_toolbox", 1), false);
+    rest = items::insert(region, bp(base), 1, item(ctx, "bearing:red_toolbox", 1), false);
     ctx.check(!items::isEmpty(rest), "a toolbox does not fit in a toolbox");
     auto got = items::extract(region, bp(base), 0, items::any(), 64, false);
     ctx.check(items::idOf(got) == "minecraft:cobblestone" && items::countOf(got) == 64, "extract takes a stack of the first compartment");
 });
 
-LV_REGISTER_SELFTEST("equipment.toolbox_break_keeps_contents", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.toolbox_break_keeps_contents", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3105), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     clearItems(p, base);
-    ctx.require(ctx.setBlock(base, "levitate:blue_toolbox", {{"levitate:facing", 2}}), "toolbox placed");
+    ctx.require(ctx.setBlock(base, "bearing:blue_toolbox", {{"bearing:facing", 2}}), "toolbox placed");
     eq::setToolboxInventory(base, nlohmann::json::object());
     auto& region = p.getDimensionBlockSource();
     (void)items::insert(region, bp(base), 1, item(ctx, "minecraft:iron_ingot", 20), false);
-    ctx.require(lv::game::clearBlock(region, bp(base)), "toolbox removed");
+    ctx.require(br::game::clearBlock(region, bp(base)), "toolbox removed");
     co_await ctx.ticks(3);
     // the dropped toolbox carries its contents
     bool found = false;
@@ -125,7 +125,7 @@ LV_REGISTER_SELFTEST("equipment.toolbox_break_keeps_contents", [](Context& ctx) 
     for (auto* e : region.getEntities(box, 0.0f)) {
         if (!e || !e->isType(ActorType::ItemEntity)) continue;
         auto const& s = static_cast<ItemActor*>(e)->item();
-        if (items::idOf(s) != "levitate:blue_toolbox") continue;
+        if (items::idOf(s) != "bearing:blue_toolbox") continue;
         auto data = items::getData(s, eq::kToolboxData);
         auto inv  = ce::ToolboxInv::fromJson(data.value("inv", nlohmann::json::object()));
         found     = inv.count(0) == 20;
@@ -134,7 +134,7 @@ LV_REGISTER_SELFTEST("equipment.toolbox_break_keeps_contents", [](Context& ctx) 
     clearItems(p, base);
 });
 
-LV_REGISTER_SELFTEST("equipment.toolbox_place_with_contents", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.toolbox_place_with_contents", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3110), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -146,23 +146,23 @@ LV_REGISTER_SELFTEST("equipment.toolbox_place_with_contents", [](Context& ctx) -
     co_await ctx.ticks(2);
     ce::ToolboxInv inv;
     (void)inv.insert({"x", items::toJson(item(ctx, "minecraft:apple")).dump(), 5, 64}, false, false);
-    auto box = item(ctx, "levitate:green_toolbox");
+    auto box = item(ctx, "bearing:green_toolbox");
     items::setData(box, eq::kToolboxData, {{"inv", inv.toJson()}});
     ctx.give(sp, box, 0);
     sp.simulateUseItemInSlotOnBlock(0, bp(base), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{.5f, 1.f, .5f});
     co_await ctx.ticks(3);
-    ctx.require(eq::idAt(top) == "levitate:green_toolbox", "the toolbox is placed");
+    ctx.require(eq::idAt(top) == "bearing:green_toolbox", "the toolbox is placed");
     auto placed = ce::ToolboxInv::fromJson(eq::toolboxInventory(top));
     ctx.check(placed.count(0) == 5, "the placed toolbox has the item's 5 apples");
-    ctx.check(eq::stateAt(top, eq::kFacing).value_or(-1) == lv::game::opposite(lv::game::playerFacing(sp)), "it faces the player");
+    ctx.check(eq::stateAt(top, eq::kFacing).value_or(-1) == br::game::opposite(br::game::playerFacing(sp)), "it faces the player");
 });
 
-LV_REGISTER_SELFTEST("equipment.toolbox_equip", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.toolbox_equip", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3115), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     clearInventory(p);
-    ctx.require(ctx.setBlock(base, "levitate:brown_toolbox", {{"levitate:facing", 0}}), "toolbox placed");
+    ctx.require(ctx.setBlock(base, "bearing:brown_toolbox", {{"bearing:facing", 0}}), "toolbox placed");
     eq::setToolboxInventory(base, nlohmann::json::object());
     auto& region = p.getDimensionBlockSource();
     (void)items::insert(region, bp(base), 1, item(ctx, "minecraft:torch", 64), false);
@@ -189,12 +189,12 @@ LV_REGISTER_SELFTEST("equipment.toolbox_equip", [](Context& ctx) -> ll::coro::Co
     clearInventory(p);
 });
 
-LV_REGISTER_SELFTEST("equipment.toolbox_radial_protocol", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.toolbox_radial_protocol", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3120), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     clearInventory(p);
-    ctx.require(ctx.setBlock(base, "levitate:red_toolbox", {{"levitate:facing", 0}}), "toolbox placed");
+    ctx.require(ctx.setBlock(base, "bearing:red_toolbox", {{"bearing:facing", 0}}), "toolbox placed");
     eq::setToolboxInventory(base, nlohmann::json::object());
     (void)items::insert(p.getDimensionBlockSource(), bp(base), 1, item(ctx, "minecraft:arrow", 30), false);
     p.teleport(Vec3{base.x + 1.5f, float(base.y), base.z + .5f}, DimensionType(0));
@@ -220,59 +220,59 @@ LV_REGISTER_SELFTEST("equipment.toolbox_radial_protocol", [](Context& ctx) -> ll
     clearInventory(p);
 });
 
-LV_REGISTER_SELFTEST("equipment.toolbox_dye", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.toolbox_dye", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3125), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
-    ctx.require(ctx.setBlock(base, "levitate:brown_toolbox", {{"levitate:facing", 1}}), "toolbox placed");
+    ctx.require(ctx.setBlock(base, "bearing:brown_toolbox", {{"bearing:facing", 1}}), "toolbox placed");
     eq::setToolboxInventory(base, nlohmann::json::object());
     (void)items::insert(p.getDimensionBlockSource(), bp(base), 1, item(ctx, "minecraft:stick", 7), false);
     auto dye = item(ctx, "minecraft:lime_dye");
     eq::useToolbox(p, dye, base);
-    ctx.check(eq::idAt(base) == "levitate:lime_toolbox", "a dye recolours the toolbox");
+    ctx.check(eq::idAt(base) == "bearing:lime_toolbox", "a dye recolours the toolbox");
     ctx.check(eq::stateAt(base, eq::kFacing).value_or(-1) == 1, "it keeps its facing");
     ctx.check(ce::ToolboxInv::fromJson(eq::toolboxInventory(base)).count(0) == 7, "and its contents");
 });
 
-LV_REGISTER_SELFTEST("equipment.backtank_fill", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.backtank_fill", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3130), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto tank = at(base, 0, 1, 0);
-    ctx.require(ctx.setBlock(base, "levitate:kinetics_test_source", {{"levitate:axis", 1}}), "source below");
-    ctx.require(ctx.setBlock(tank, "levitate:copper_backtank", {{"levitate:facing", 0}}), "backtank placed");
+    ctx.require(ctx.setBlock(base, "bearing:kinetics_test_source", {{"bearing:axis", 1}}), "source below");
+    ctx.require(ctx.setBlock(tank, "bearing:copper_backtank", {{"bearing:facing", 0}}), "backtank placed");
     eq::setBlockAir(tank, 0);
     co_await ctx.ticks(2);
-    lv::kinetics::setGeneratedSpeed(base, 256);
+    br::kinetics::setGeneratedSpeed(base, 256);
     co_await ctx.ticks(40);
     int air = eq::blockAir(tank);
     // 256 RPM: +5 air every tick
     ctx.check(air >= 100, "a backtank on a 256 RPM shaft fills quickly (air " + std::to_string(air) + ")");
-    lv::kinetics::setGeneratedSpeed(base, 0);
+    br::kinetics::setGeneratedSpeed(base, 0);
     co_await ctx.ticks(2);
     int stopped = eq::blockAir(tank);
     co_await ctx.ticks(10);
     ctx.check(eq::blockAir(tank) == stopped, "it stops filling without rotation");
-    ctx.check(lv::kinetics::stressImpactOf("levitate:copper_backtank") == 4, "stress impact 4 (Create)");
+    ctx.check(br::kinetics::stressImpactOf("bearing:copper_backtank") == 4, "stress impact 4 (Create)");
 });
 
-LV_REGISTER_SELFTEST("equipment.backtank_wear_and_tools", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.backtank_wear_and_tools", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3135), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     clearInventory(p);
     // right-click a placed backtank with an empty chest slot puts it on
-    ctx.require(ctx.setBlock(base, "levitate:copper_backtank", {{"levitate:facing", 0}}), "backtank placed");
+    ctx.require(ctx.setBlock(base, "bearing:copper_backtank", {{"bearing:facing", 0}}), "backtank placed");
     eq::setBlockAir(base, 900);
     ItemStack empty = items::empty();
     ctx.require(eq::useBacktankBlock(p, empty, base), "right-click wears it");
     ctx.check(eq::idAt(base) == "minecraft:air", "the block is gone");
     auto const& chest = p.getArmor(ArmorSlot::Torso);
-    ctx.require(items::idOf(chest) == "levitate:copper_backtank", "the backtank is worn");
+    ctx.require(items::idOf(chest) == "bearing:copper_backtank", "the backtank is worn");
     ctx.check(eq::airOf(chest) == 900, "with its 900 air");
     // air tools use air instead of durability
-    p.getInventory().setItem(p.getSelectedItemSlot(), item(ctx, "levitate:extendo_grip"));
+    p.getInventory().setItem(p.getSelectedItemSlot(), item(ctx, "bearing:extendo_grip"));
     ctx.check(eq::extendoReach(p) == 3.f, "one grip: +3 reach");
-    p.setOffhandSlot(item(ctx, "levitate:extendo_grip"));
+    p.setOffhandSlot(item(ctx, "bearing:extendo_grip"));
     ctx.check(eq::extendoReach(p) == 5.f, "two grips: +5 reach");
     eq::extendoAction(p);
     ctx.check(eq::airOf(p.getArmor(ArmorSlot::Torso)) == 899, "a grip action costs 1 air (900 / 1000)");
@@ -288,11 +288,11 @@ LV_REGISTER_SELFTEST("equipment.backtank_wear_and_tools", [](Context& ctx) -> ll
     // the backtank can't break (its durability is the air bar)
     auto copy = p.getArmor(ArmorSlot::Torso);
     copy.hurtAndBreak(5000, &p);
-    ctx.check(!items::isEmpty(copy) && items::idOf(copy) == "levitate:copper_backtank", "the backtank is unbreakable");
+    ctx.check(!items::isEmpty(copy) && items::idOf(copy) == "bearing:copper_backtank", "the backtank is unbreakable");
     clearInventory(p);
 });
 
-LV_REGISTER_SELFTEST("equipment.diving_helmet", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.diving_helmet", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3140), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
@@ -304,10 +304,10 @@ LV_REGISTER_SELFTEST("equipment.diving_helmet", [](Context& ctx) -> ll::coro::Co
                 bool wall = x != 0 || z != 0 || y == 0;
                 ctx.setBlock(q, wall ? "minecraft:glass" : "minecraft:water");
             }
-    auto tank = item(ctx, "levitate:copper_backtank");
+    auto tank = item(ctx, "bearing:copper_backtank");
     eq::setAir(tank, 100);
     p.setArmor(ArmorSlot::Torso, tank);
-    p.setArmor(ArmorSlot::Head, item(ctx, "levitate:copper_diving_helmet"));
+    p.setArmor(ArmorSlot::Head, item(ctx, "bearing:copper_diving_helmet"));
     p.teleport(Vec3{base.x + .5f, float(base.y + 1), base.z + .5f}, DimensionType(0));
     co_await ctx.ticks(45);
     int air = eq::airOf(p.getArmor(ArmorSlot::Torso));
@@ -315,19 +315,19 @@ LV_REGISTER_SELFTEST("equipment.diving_helmet", [](Context& ctx) -> ll::coro::Co
     ctx.check(p.getEffect(13u) != nullptr, "the wearer can breathe (water breathing)");
     // the netherite set grants fire immunity
     clearInventory(p);
-    auto ntank = item(ctx, "levitate:netherite_backtank");
+    auto ntank = item(ctx, "bearing:netherite_backtank");
     eq::setAir(ntank, 100);
     p.setArmor(ArmorSlot::Torso, ntank);
-    p.setArmor(ArmorSlot::Head, item(ctx, "levitate:netherite_diving_helmet"));
+    p.setArmor(ArmorSlot::Head, item(ctx, "bearing:netherite_diving_helmet"));
     p.setArmor(ArmorSlot::Legs, item(ctx, "minecraft:netherite_leggings"));
-    p.setArmor(ArmorSlot::Feet, item(ctx, "levitate:netherite_diving_boots"));
+    p.setArmor(ArmorSlot::Feet, item(ctx, "bearing:netherite_diving_boots"));
     co_await ctx.ticks(3);
     ctx.check(p.getEffect(12u) != nullptr, "the full netherite diving set gives fire resistance");
     clearInventory(p);
     p.teleport(Vec3{base.x + 3.5f, float(base.y + 1), base.z + .5f}, DimensionType(0));
 });
 
-LV_REGISTER_SELFTEST("equipment.potato_cannon", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_cannon", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3145), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -339,7 +339,7 @@ LV_REGISTER_SELFTEST("equipment.potato_cannon", [](Context& ctx) -> ll::coro::Co
     sp.teleport(Vec3{soil.x + 3.5f, float(soil.y + 5), soil.z + .5f}, DimensionType(0));
     sp.simulateLookAt(Vec3{soil.x + .5f, float(soil.y + 1), soil.z + .5f}, sim::LookDuration::Continuous);
     co_await ctx.ticks(2);
-    ctx.give(sp, item(ctx, "levitate:potato_cannon"), 0);
+    ctx.give(sp, item(ctx, "bearing:potato_cannon"), 0);
     ctx.give(sp, item(ctx, "minecraft:potato", 3), 5);
     ctx.require(eq::firePotatoCannon(sp), "the cannon fires");
     ctx.check(items::countOf(sp.getInventory().getItem(5)) == 2, "one potato was used");
@@ -350,7 +350,7 @@ LV_REGISTER_SELFTEST("equipment.potato_cannon", [](Context& ctx) -> ll::coro::Co
     clearInventory(sp);
 });
 
-LV_REGISTER_SELFTEST("equipment.potato_cannon_damage", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.potato_cannon_damage", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3150), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -374,7 +374,7 @@ LV_REGISTER_SELFTEST("equipment.potato_cannon_damage", [](Context& ctx) -> ll::c
     sp.simulateLookAt(Vec3{target.x + .5f, float(target.y) + .5f, target.z + .5f}, sim::LookDuration::Continuous);
     co_await ctx.ticks(3);
     int before = mob->getHealth();
-    ctx.give(sp, item(ctx, "levitate:potato_cannon"), 0);
+    ctx.give(sp, item(ctx, "bearing:potato_cannon"), 0);
     ctx.give(sp, item(ctx, "minecraft:baked_potato", 4), 5);
     ActorUniqueID id;
     id.rawID  = pigId;
@@ -399,7 +399,7 @@ LV_REGISTER_SELFTEST("equipment.potato_cannon_damage", [](Context& ctx) -> ll::c
     clearInventory(sp);
 });
 
-LV_REGISTER_SELFTEST("equipment.symmetry_wand", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.symmetry_wand", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3155), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
@@ -407,7 +407,7 @@ LV_REGISTER_SELFTEST("equipment.symmetry_wand", [](Context& ctx) -> ll::coro::Co
     // mirror at base (plane, flips X); place stone 2 east of it, against a floor block
     ce::Mirror m;
     m.type = ce::MirrorType::Plane, m.orientation = 0, m.x = base.x, m.y = base.y, m.z = base.z, m.placed = true, m.enabled = true;
-    auto wand = item(ctx, "levitate:wand_of_symmetry");
+    auto wand = item(ctx, "bearing:wand_of_symmetry");
     items::setData(wand, eq::kSymmetryData, m.toJson());
     ctx.give(sp, wand, 1);
     auto floorE = at(base, 2, -1, 0), floorW = at(base, -2, -1, 0);
@@ -425,7 +425,7 @@ LV_REGISTER_SELFTEST("equipment.symmetry_wand", [](Context& ctx) -> ll::coro::Co
     ctx.check(eq::idAt(west) == "minecraft:cobblestone", "and mirrored across the plane");
     ctx.check(items::isEmpty(sp.getInventory().getItem(0)), "the copy used an item from the inventory");
     // breaking is mirrored too
-    lv::game::clearBlock(sp.getDimensionBlockSource(), bp(east));
+    br::game::clearBlock(sp.getDimensionBlockSource(), bp(east));
     eq::mirrorBreak(sp, east, "minecraft:cobblestone");
     co_await ctx.ticks(2);
     ctx.check(eq::idAt(west) != "minecraft:cobblestone", "breaking one breaks the mirrored block");
@@ -438,12 +438,12 @@ LV_REGISTER_SELFTEST("equipment.symmetry_wand", [](Context& ctx) -> ll::coro::Co
     eq::mirrorPlacement(sp, stairs);
     auto const* b = eq::blockAt(mirror);
     ctx.check(b && std::string(b->getTypeName()) == "minecraft:oak_stairs", "stairs are mirrored");
-    auto dir = b ? lv::game::intState(*b, "weirdo_direction") : std::nullopt;
+    auto dir = b ? br::game::intState(*b, "weirdo_direction") : std::nullopt;
     ctx.check(dir && *dir == 1, "mirrored east-facing stairs face west (weirdo_direction " + std::to_string(dir.value_or(-1)) + ")");
     // diagonal copies turn blocks too: x <-> z makes west-facing stairs face north
     if (b) {
         auto const& turned = eq::mirroredBlock(*b, ce::Mat2{0, 1, 1, 0});
-        auto        d2     = lv::game::intState(turned, "weirdo_direction");
+        auto        d2     = br::game::intState(turned, "weirdo_direction");
         ctx.check(d2 && *d2 == 3, "a diagonal mirror turns west-facing stairs north (weirdo_direction " + std::to_string(d2.value_or(-1)) + ")");
     }
     // Create's findAndRemoveInInventory takes the block's item: redstone for a wire
@@ -476,7 +476,7 @@ LV_REGISTER_SELFTEST("equipment.symmetry_wand", [](Context& ctx) -> ll::coro::Co
     clearInventory(sp);
 });
 
-LV_REGISTER_SELFTEST("equipment.symmetry_math", [](Context& ctx) {
+BR_REGISTER_SELFTEST("equipment.symmetry_math", [](Context& ctx) {
     ce::Mirror m;
     m.type = ce::MirrorType::Triple;
     ctx.check(ce::mirrorPositions(m, 3, 0, 1).size() == 7, "octagonal mirror makes 7 copies");
@@ -486,7 +486,7 @@ LV_REGISTER_SELFTEST("equipment.symmetry_math", [](Context& ctx) {
     ctx.check(ps.size() == 3, "rectangular diagonal mirror makes 3 copies");
 });
 
-LV_REGISTER_SELFTEST("equipment.worldshaper", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.worldshaper", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3160), 0, 3, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
@@ -500,7 +500,7 @@ LV_REGISTER_SELFTEST("equipment.worldshaper", [](Context& ctx) -> ll::coro::Coro
     st.tool       = ce::ShaperTool::Fill;
     st.placement  = ce::Placement::Attached;
     st.configured = true;
-    auto const* glass = lv::game::blockWith("minecraft:glass");
+    auto const* glass = br::game::blockWith("minecraft:glass");
     ctx.require(glass != nullptr, "glass block");
     st.material = eq::shaperMaterialOf(*glass);
     ctx.require(eq::shaperMaterial(st) != nullptr, "the material round-trips");
@@ -513,31 +513,31 @@ LV_REGISTER_SELFTEST("equipment.worldshaper", [](Context& ctx) -> ll::coro::Coro
     ctx.check(eq::idAt(at(base, 0, 2, 0)) == "minecraft:air", "clear removes them again");
 });
 
-LV_REGISTER_SELFTEST("equipment.sand_paper_and_fertilizer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("equipment.sand_paper_and_fertilizer", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = at(ctx.testPos(3170), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     clearInventory(p);
     // sand paper scrapes oxidation
     ctx.require(ctx.setBlock(base, "minecraft:weathered_copper"), "weathered copper");
-    auto paper = item(ctx, "levitate:sand_paper");
+    auto paper = item(ctx, "bearing:sand_paper");
     ctx.check(eq::sandBlock(p, paper, base), "sand paper scrapes the block");
     ctx.check(eq::idAt(base) == "minecraft:exposed_copper", "weathered -> exposed");
     ctx.check(paper.getDamageValue() == 1, "it uses 1 of 8 durability");
     // polishing needs a sandpaper_polishing recipe for the other hand's item
-    p.getInventory().setItem(p.getSelectedItemSlot(), item(ctx, "levitate:sand_paper"));
+    p.getInventory().setItem(p.getSelectedItemSlot(), item(ctx, "bearing:sand_paper"));
     p.setOffhandSlot(item(ctx, "minecraft:stone"));
     ctx.check(!eq::startSanding(p, true), "stone can't be polished");
-    if (auto quartz = items::make("levitate:rose_quartz", 2)) {
+    if (auto quartz = items::make("bearing:rose_quartz", 2)) {
         p.setOffhandSlot(*quartz);
         ctx.check(eq::startSanding(p, true), "rose quartz can be polished");
         co_await ctx.ticks(40);
         bool polished = false;
         auto& inv = p.getInventory();
-        for (int i = 0; i < inv.getContainerSize(); ++i) polished = polished || items::idOf(inv.getItem(i)) == "levitate:polished_rose_quartz";
+        for (int i = 0; i < inv.getContainerSize(); ++i) polished = polished || items::idOf(inv.getItem(i)) == "bearing:polished_rose_quartz";
         ctx.check(polished, "after 32 ticks the rose quartz is polished");
     } else {
-        ctx.info("levitate:rose_quartz not registered yet (U9): polishing test skipped");
+        ctx.info("bearing:rose_quartz not registered yet (U9): polishing test skipped");
     }
     // tree fertilizer grows a sapling at once
     auto soil = at(base, 3, 0, 0), sap = at(base, 3, 1, 0);
@@ -546,20 +546,20 @@ LV_REGISTER_SELFTEST("equipment.sand_paper_and_fertilizer", [](Context& ctx) -> 
         for (int x = -2; x <= 2; ++x)
             for (int z = -2; z <= 2; ++z) ctx.cleanupBlock(at(sap, x, y - 1, z));
     ctx.require(ctx.setBlock(sap, "minecraft:oak_sapling"), "oak sapling");
-    auto fert = item(ctx, "levitate:tree_fertilizer", 2);
+    auto fert = item(ctx, "bearing:tree_fertilizer", 2);
     ctx.check(eq::useTreeFertilizer(p, fert, sap), "fertilizer used on the sapling");
     ctx.check(eq::idAt(sap) == "minecraft:oak_log", "the sapling became a tree");
     ctx.check(items::countOf(fert) == 1, "one fertilizer was used");
     clearInventory(p);
 });
 
-LV_REGISTER_SELFTEST("equipment.linked_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
-    namespace rl = lv::feature::redstone::link;
+BR_REGISTER_SELFTEST("equipment.linked_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
+    namespace rl = br::feature::redstone::link;
     auto base = at(ctx.testPos(3180), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p = ctx.player();
     clearInventory(p);
-    auto controller = item(ctx, "levitate:linked_controller");
+    auto controller = item(ctx, "bearing:linked_controller");
     auto j          = [&](char const* id) { return items::toJson(item(ctx, id)); };
     auto pair       = [](nlohmann::json a, nlohmann::json b) { return nlohmann::json::array({a, b}); };
     nlohmann::json none = nullptr;
@@ -581,8 +581,8 @@ LV_REGISTER_SELFTEST("equipment.linked_controller", [](Context& ctx) -> ll::coro
     ctx.check(rl::powerAt(base, gold) == 0, "and stops");
     // bind mode: right-click a redstone link, then press a button
     auto link = at(base, 0, 0, 2);
-    ctx.require(ctx.setBlock(link, "levitate:redstone_link", {{"levitate:facing", 1}}), "redstone link");
-    auto& doc                 = lv::feature::common::blockdata::edit(link);
+    ctx.require(ctx.setBlock(link, "bearing:redstone_link", {{"bearing:facing", 1}}), "redstone link");
+    auto& doc                 = br::feature::common::blockdata::edit(link);
     doc["redstone"]["first"]  = j("minecraft:emerald");
     doc["redstone"]["last"]   = j("minecraft:lapis_lazuli");
     auto held = p.getSelectedItem();
@@ -601,7 +601,7 @@ LV_REGISTER_SELFTEST("equipment.linked_controller", [](Context& ctx) -> ll::coro
     ctx.require(ctx.setBlock(lectern, "minecraft:lectern"), "lectern");
     held = p.getSelectedItem();
     ctx.check(eq::lecternUse(p, held, lectern), "the controller goes on the lectern");
-    ctx.check(eq::idAt(lectern) == "levitate:lectern_controller", "a lectern controller");
+    ctx.check(eq::idAt(lectern) == "bearing:lectern_controller", "a lectern controller");
     ctx.check(eq::lecternUse(p, held, lectern) && eq::controllerActive(p), "right-clicking it starts using it");
     eq::controllerButtons(p, {true, false, false, false, false, false}, lectern);
     ctx.check(rl::powerAt(lectern, key) == 15, "the lectern transmits from its own position");
@@ -618,7 +618,7 @@ LV_REGISTER_SELFTEST("equipment.linked_controller", [](Context& ctx) -> ll::coro
     p.teleport(Vec3{base.x - 2.5f, float(base.y), base.z + .5f}, DimensionType(0));
     co_await ctx.ticks(3);
     ctx.check(!eq::controllerActive(p), "walking out of range stops using it");
-    (void)lv::feature::common::blockdata::take(lectern); // no controller drop when the test area is cleared
+    (void)br::feature::common::blockdata::take(lectern); // no controller drop when the test area is cleared
     clearInventory(p);
 });
 

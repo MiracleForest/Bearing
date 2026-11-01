@@ -4,7 +4,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::materials {
+namespace br::core::materials {
 
 namespace {
 
@@ -396,4 +396,4 @@ int decorateChunk(World const& world, std::uint64_t worldSeed, int dim, int cx, 
     return placed;
 }
 
-} // namespace lv::core::materials
+} // namespace br::core::materials

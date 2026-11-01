@@ -3,7 +3,7 @@
 // The server carries the player around the centre (feature/bearings/Turntable.cpp); only the
 // client can turn a player's own view.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <cmath>
@@ -23,7 +23,7 @@
 #include "client/kinetics/KineticsClient.h"
 #include "mod/Module.h"
 
-namespace lv::client::bearings {
+namespace br::client::bearings {
 
 namespace {
 
@@ -33,7 +33,7 @@ void turnView() {
     auto     feet = player->getFeetPos();
     BlockPos on{int(std::floor(feet.x)), int(std::floor(feet.y - 0.2f)), int(std::floor(feet.z))};
     auto&    region = player->getDimensionBlockSource();
-    if (region.getBlock(on).getTypeName() != "levitate:turntable") return;
+    if (region.getBlock(on).getTypeName() != "bearing:turntable") return;
     auto synced = kinetics::syncedSpeed(static_cast<int>(player->getDimensionId()), on.x, on.y, on.z);
     if (!synced || synced->speed == 0) return;
     // speed · 2/3 per tick, scaled per frame by the partial tick in Create: about a third per tick
@@ -61,8 +61,8 @@ private:
 
 } // namespace
 
-} // namespace lv::client::bearings
+} // namespace br::client::bearings
 
-LV_REGISTER_MODULE(lv::client::bearings::TurntableClientModule);
+BR_REGISTER_MODULE(br::client::bearings::TurntableClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -29,14 +29,14 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::advancements {
+namespace br::feature::advancements {
 
 namespace ca = core::advancements;
 
 namespace {
 
-constexpr char kPlayerKey[] = "lv:advancements:player:";
-constexpr char kOwnersKey[] = "lv:advancements:owners";
+constexpr char kPlayerKey[] = "br:advancements:player:";
+constexpr char kOwnersKey[] = "br:advancements:owners";
 constexpr char kCarriedKey[] = "advancements"; ///< BlockData key (owner while carried, counters)
 
 struct Progress {
@@ -125,8 +125,8 @@ void toastFor(Player& player, ca::Def const& d) {
         net::send(player, "advancements.toast", {{"id", d.id}});
         return;
     }
-    std::string head = ca::goal(d.type) ? trFor(player, "lv.advancements.toast.goal", "Goal Reached!")
-                                        : trFor(player, "lv.advancements.toast.task", "Advancement Made!");
+    std::string head = ca::goal(d.type) ? trFor(player, "br.advancements.toast.goal", "Goal Reached!")
+                                        : trFor(player, "br.advancements.toast.task", "Advancement Made!");
     ToastRequestPacket pkt("§e" + head, trFor(player, "advancement.create." + std::string(d.id), std::string(d.id)));
     pkt.sendTo(player);
 }
@@ -140,8 +140,8 @@ void announce(Player& player, ca::Def const& d) {
     level->forEachPlayer([&](Player& p) {
         if (p.isClientSide()) return true;
         std::string title = trFor(p, "advancement.create." + id, id);
-        std::string line  = ca::goal(d.type) ? trFor(p, "lv.advancements.chat.goal", "{0} has reached the goal {1}", name, "§a[" + title + "]§r")
-                                             : trFor(p, "lv.advancements.chat.task", "{0} has made the advancement {1}", name, "§a[" + title + "]§r");
+        std::string line  = ca::goal(d.type) ? trFor(p, "br.advancements.chat.goal", "{0} has reached the goal {1}", name, "§a[" + title + "]§r")
+                                             : trFor(p, "br.advancements.chat.task", "{0} has made the advancement {1}", name, "§a[" + title + "]§r");
         p.sendMessage(line);
         return true;
     });
@@ -164,14 +164,14 @@ void openForm(Player& player) {
     int         total = static_cast<int>(defs.size());
     ll::form::SimpleForm form;
     form.setTitle(trFor(player, "advancement.create.root", "Welcome to Create"));
-    form.setContent(trFor(player, "lv.advancements.form.content", "Create: {0} of {1} advancements made", static_cast<int>(pr.done.size()), total));
+    form.setContent(trFor(player, "br.advancements.form.content", "Create: {0} of {1} advancements made", static_cast<int>(pr.done.size()), total));
     for (std::size_t i = 0; i < defs.size(); ++i) {
         if (!vis[i]) continue;
         auto const& d     = defs[i];
         bool        isDone = pr.done.contains(std::string(d.id));
         std::string title = trFor(player, "advancement.create." + std::string(d.id), std::string(d.id));
         std::string label = (isDone ? "§2" : "§8") + title;
-        if (isDone) label += "\n§2" + trFor(player, "lv.advancements.form.done", "Done");
+        if (isDone) label += "\n§2" + trFor(player, "br.advancements.form.done", "Done");
         int idx = static_cast<int>(i);
         form.appendButton(label, [idx](Player& p) { openDetail(p, idx); });
     }
@@ -186,10 +186,10 @@ void openDetail(Player& player, int index) {
     form.setTitle(trFor(player, "advancement.create." + id, id));
     std::string content = "§6" + trFor(player, "advancement.create." + id + ".desc", "") + "§r";
     if (!d.parent.empty())
-        content += "\n\n" + trFor(player, "lv.advancements.form.parent", "After: {0}", trFor(player, "advancement.create." + std::string(d.parent), std::string(d.parent)));
-    if (isDone) content += "\n\n§2" + trFor(player, "lv.advancements.form.done", "Done");
+        content += "\n\n" + trFor(player, "br.advancements.form.parent", "After: {0}", trFor(player, "advancement.create." + std::string(d.parent), std::string(d.parent)));
+    if (isDone) content += "\n\n§2" + trFor(player, "br.advancements.form.done", "Done");
     form.setContent(content);
-    form.appendButton(trFor(player, "lv.advancements.form.back", "Back"), [](Player& p) { openForm(p); });
+    form.appendButton(trFor(player, "br.advancements.form.back", "Back"), [](Player& p) { openForm(p); });
     form.sendTo(player);
 }
 
@@ -199,57 +199,57 @@ void openDetail(Player& player, int index) {
 
 std::vector<std::string_view> const& blockAdvancements(std::string_view blockId) {
     static std::map<std::string_view, std::vector<std::string_view>> const table = {
-        // Create's registerAwardables per block entity, for the blocks Levitate has
-        {"levitate:portable_storage_interface", {"portable_storage_interface"}},
-        {"levitate:clockwork_bearing", {"clockwork_bearing", "contraption_actors"}},
-        {"levitate:mechanical_bearing", {"contraption_actors"}},
-        {"levitate:windmill_bearing", {"contraption_actors", "windmill", "windmill_maxed"}},
-        {"levitate:elevator_pulley", {"contraption_actors"}},
-        {"levitate:gantry_carriage", {"contraption_actors"}},
-        {"levitate:cart_assembler", {"contraption_actors"}},
-        {"levitate:mechanical_piston", {"contraption_actors"}},
-        {"levitate:sticky_mechanical_piston", {"contraption_actors"}},
-        {"levitate:rope_pulley", {"contraption_actors", "pulley_maxed"}},
-        {"levitate:steam_whistle", {"steam_whistle"}},
-        {"levitate:copper_backtank", {"backtank"}},
-        {"levitate:netherite_backtank", {"backtank"}},
-        {"levitate:item_drain", {"drain", "chained_drain"}},
-        {"levitate:hose_pulley", {"water_supply", "cross_streams", "honey_drain", "hose_pulley", "hose_pulley_lava"}},
-        {"levitate:fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
-        {"levitate:glass_fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
-        {"levitate:encased_fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
-        {"levitate:smart_fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
-        {"levitate:fluid_valve", {"water_supply", "cross_streams", "honey_drain"}},
-        {"levitate:mechanical_pump", {"water_supply", "cross_streams", "honey_drain", "mechanical_pump_0"}},
-        {"levitate:spout", {"spout", "foods"}},
-        {"levitate:fluid_tank", {"steam_engine_maxed", "pipe_organ"}},
-        {"levitate:mechanical_crafter", {"mechanical_crafter", "crafter_lazy_000"}},
-        {"levitate:crushing_wheel", {"crushing_wheel", "crusher_maxed_0000"}},
-        {"levitate:deployer",
+        // Create's registerAwardables per block entity, for the blocks Bearing has
+        {"bearing:portable_storage_interface", {"portable_storage_interface"}},
+        {"bearing:clockwork_bearing", {"clockwork_bearing", "contraption_actors"}},
+        {"bearing:mechanical_bearing", {"contraption_actors"}},
+        {"bearing:windmill_bearing", {"contraption_actors", "windmill", "windmill_maxed"}},
+        {"bearing:elevator_pulley", {"contraption_actors"}},
+        {"bearing:gantry_carriage", {"contraption_actors"}},
+        {"bearing:cart_assembler", {"contraption_actors"}},
+        {"bearing:mechanical_piston", {"contraption_actors"}},
+        {"bearing:sticky_mechanical_piston", {"contraption_actors"}},
+        {"bearing:rope_pulley", {"contraption_actors", "pulley_maxed"}},
+        {"bearing:steam_whistle", {"steam_whistle"}},
+        {"bearing:copper_backtank", {"backtank"}},
+        {"bearing:netherite_backtank", {"backtank"}},
+        {"bearing:item_drain", {"drain", "chained_drain"}},
+        {"bearing:hose_pulley", {"water_supply", "cross_streams", "honey_drain", "hose_pulley", "hose_pulley_lava"}},
+        {"bearing:fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
+        {"bearing:glass_fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
+        {"bearing:encased_fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
+        {"bearing:smart_fluid_pipe", {"water_supply", "cross_streams", "honey_drain"}},
+        {"bearing:fluid_valve", {"water_supply", "cross_streams", "honey_drain"}},
+        {"bearing:mechanical_pump", {"water_supply", "cross_streams", "honey_drain", "mechanical_pump_0"}},
+        {"bearing:spout", {"spout", "foods"}},
+        {"bearing:fluid_tank", {"steam_engine_maxed", "pipe_organ"}},
+        {"bearing:mechanical_crafter", {"mechanical_crafter", "crafter_lazy_000"}},
+        {"bearing:crushing_wheel", {"crushing_wheel", "crusher_maxed_0000"}},
+        {"bearing:deployer",
          {"train_casing_00", "andesite_casing", "brass_casing", "copper_casing", "fist_bump", "deployer", "self_deploying"}},
-        {"levitate:encased_fan", {"encased_fan", "fan_processing"}},
-        {"levitate:stressometer", {"stressometer", "stressometer_maxed"}},
-        {"levitate:cuckoo_clock", {"cuckoo_clock"}},
-        {"levitate:mysterious_cuckoo_clock", {"cuckoo_clock"}},
-        {"levitate:mechanical_arm", {"arm_blaze_burner", "arm_many_targets", "mechanical_arm", "musical_arm"}},
-        {"levitate:millstone", {"millstone"}},
-        {"levitate:mechanical_mixer", {"mechanical_mixer"}},
-        {"levitate:mechanical_press", {"mechanical_press", "compacting", "track_crafting_factory"}},
-        {"levitate:mechanical_saw", {"saw_processing"}},
-        {"levitate:rotation_speed_controller", {"speed_controller"}},
-        {"levitate:steam_engine", {"steam_engine"}},
-        {"levitate:water_wheel", {"lava_wheel_00000", "water_wheel"}},
-        {"levitate:large_water_wheel", {"lava_wheel_00000", "water_wheel"}},
-        {"levitate:chute", {"chute"}},
-        {"levitate:smart_chute", {"chute"}},
-        {"levitate:andesite_funnel", {"funnel"}},
-        {"levitate:brass_funnel", {"funnel"}},
-        {"levitate:display_link", {"display_link", "display_board_0"}},
-        {"levitate:packager", {"packager"}},
-        {"levitate:repackager", {"packager"}},
-        {"levitate:package_frogport", {"frogport"}},
-        {"levitate:factory_gauge", {"factory_gauge"}},
-        {"levitate:track_station", {"contraption_actors", "train", "long_train", "conductor"}},
+        {"bearing:encased_fan", {"encased_fan", "fan_processing"}},
+        {"bearing:stressometer", {"stressometer", "stressometer_maxed"}},
+        {"bearing:cuckoo_clock", {"cuckoo_clock"}},
+        {"bearing:mysterious_cuckoo_clock", {"cuckoo_clock"}},
+        {"bearing:mechanical_arm", {"arm_blaze_burner", "arm_many_targets", "mechanical_arm", "musical_arm"}},
+        {"bearing:millstone", {"millstone"}},
+        {"bearing:mechanical_mixer", {"mechanical_mixer"}},
+        {"bearing:mechanical_press", {"mechanical_press", "compacting", "track_crafting_factory"}},
+        {"bearing:mechanical_saw", {"saw_processing"}},
+        {"bearing:rotation_speed_controller", {"speed_controller"}},
+        {"bearing:steam_engine", {"steam_engine"}},
+        {"bearing:water_wheel", {"lava_wheel_00000", "water_wheel"}},
+        {"bearing:large_water_wheel", {"lava_wheel_00000", "water_wheel"}},
+        {"bearing:chute", {"chute"}},
+        {"bearing:smart_chute", {"chute"}},
+        {"bearing:andesite_funnel", {"funnel"}},
+        {"bearing:brass_funnel", {"funnel"}},
+        {"bearing:display_link", {"display_link", "display_board_0"}},
+        {"bearing:packager", {"packager"}},
+        {"bearing:repackager", {"packager"}},
+        {"bearing:package_frogport", {"frogport"}},
+        {"bearing:factory_gauge", {"factory_gauge"}},
+        {"bearing:track_station", {"contraption_actors", "train", "long_train", "conductor"}},
     };
     static std::vector<std::string_view> const none;
     auto it = table.find(blockId);
@@ -408,22 +408,22 @@ void installProgress() {
     });
 }
 
-} // namespace lv::feature::advancements
+} // namespace br::feature::advancements
 
 // ---- command ---------------------------------------------------------------------------------------------------------
 
-namespace lv::feature::advancements {
+namespace br::feature::advancements {
 struct AdvancementParams {
     std::string id;
 };
-} // namespace lv::feature::advancements
+} // namespace br::feature::advancements
 
 namespace {
-using lv::feature::advancements::AdvancementParams;
+using br::feature::advancements::AdvancementParams;
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
-    using namespace lv;
-    namespace adv = lv::feature::advancements;
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+    using namespace br;
+    namespace adv = br::feature::advancements;
     cmd.overload().text("advancements").execute([](CommandOrigin const& origin, CommandOutput& output) {
         auto* player = commands::playerOf(origin);
         if (!player) return output.error("Only players have advancements.");
@@ -436,7 +436,7 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
                 auto* player = commands::playerOf(origin);
                 if (!player) return output.error("Only players have advancements.");
                 if (!commands::isAdmin(origin)) return output.error("You need operator permission.");
-                if (!lv::core::advancements::find(params.id)) return output.error("Unknown advancement: " + params.id);
+                if (!br::core::advancements::find(params.id)) return output.error("Unknown advancement: " + params.id);
                 bool changed = grant ? adv::award(*player, params.id) : adv::revoke(*player, params.id);
                 output.success(std::string(changed ? "Done: " : "No change: ") + params.id);
             }

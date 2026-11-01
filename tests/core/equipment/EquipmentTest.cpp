@@ -7,7 +7,7 @@
 #include "core/equipment/Symmetry.h"
 #include "core/equipment/Toolbox.h"
 
-using namespace lv::core::equipment;
+using namespace br::core::equipment;
 
 namespace {
 TStack st(std::string id, int n, int max = 64) { return TStack{id, id + "#", n, max}; }
@@ -139,7 +139,7 @@ TEST(Potato, RenderModesDropsAndAmmoIndex) {
     EXPECT_FALSE(potatoTypeFor("minecraft:poisonous_potato")->consumed);
     EXPECT_EQ(potatoTypeFor("minecraft:suspicious_stew")->dropItem, "minecraft:bowl");
     // the sticky types (Create's sticky()): pies, cakes and fish
-    for (auto id : {"minecraft:pumpkin_pie", "minecraft:cake", "levitate:blaze_cake", "minecraft:cod", "minecraft:pufferfish"})
+    for (auto id : {"minecraft:pumpkin_pie", "minecraft:cake", "bearing:blaze_cake", "minecraft:cod", "minecraft:pufferfish"})
         EXPECT_TRUE(potatoTypeFor(id)->sticky) << id;
     EXPECT_FALSE(potatoTypeFor("minecraft:apple")->sticky);
     // the entity's texture array is indexed in this order (assets/pack/rp/entity/potato_projectile.entity.json)

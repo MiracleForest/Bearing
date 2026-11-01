@@ -3,11 +3,11 @@
   "size": [7, 5],
   "height": 7,
   "blocks": [
-    {"area": [[3, 1, 0], [3, 2, 0]], "id": "levitate:andesite_casing"},
-    {"at": [3, 3, 0], "id": "levitate:creative_motor", "states": {"levitate:facing": 3}},
-    {"at": [3, 3, 1], "id": "levitate:mechanical_bearing", "states": {"levitate:facing": 3}},
+    {"area": [[3, 1, 0], [3, 2, 0]], "id": "bearing:andesite_casing"},
+    {"at": [3, 3, 0], "id": "bearing:creative_motor", "states": {"bearing:facing": 3}},
+    {"at": [3, 3, 1], "id": "bearing:mechanical_bearing", "states": {"bearing:facing": 3}},
     {"area": [[3, 3, 2], [3, 4, 2]], "id": "minecraft:oak_planks"},
-    {"at": [3, 5, 2], "id": "levitate:mechanical_bearing", "states": {"levitate:facing": 3}},
+    {"at": [3, 5, 2], "id": "bearing:mechanical_bearing", "states": {"bearing:facing": 3}},
     {"at": [3, 5, 3], "id": "minecraft:oak_planks"},
     {"at": [3, 6, 3], "id": "minecraft:lantern"}
   ],

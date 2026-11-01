@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:lime_seat_from_blue_seat"
+      "identifier": "bearing:lime_seat_from_blue_seat"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:blue_seat"
+        "item": "bearing:blue_seat"
       },
       {
         "item": "minecraft:lime_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:blue_seat"
+        "item": "bearing:blue_seat"
       }
     ],
     "result": {
-      "item": "levitate:lime_seat"
+      "item": "bearing:lime_seat"
     }
   }
 }

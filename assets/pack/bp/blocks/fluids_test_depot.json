@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:fluids_test_depot",
+      "identifier": "bearing:fluids_test_depot",
       "menu_category": {
         "category": "none"
       }
@@ -11,7 +11,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_fluids_test_depot",
+          "texture": "bearing_fluids_test_depot",
           "render_method": "opaque"
         }
       },

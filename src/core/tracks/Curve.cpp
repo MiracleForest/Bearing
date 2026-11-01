@@ -5,7 +5,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 namespace {
 constexpr float kCircle = 2 * std::numbers::pi_v<float>;
@@ -304,4 +304,4 @@ std::optional<Curve> Curve::fromJson(nlohmann::json const& j) {
     }
 }
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

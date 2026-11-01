@@ -29,7 +29,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace {
 
@@ -492,7 +492,7 @@ bool use(Click const& c, Block const& block, Kind kind) {
         // two hit areas overlap slightly in the middle), second slot first
         int  facing = state(block, sFacing, kUp);
         bool used   = false;
-        auto name   = empty ? trFor(c.player, "lv.common.filter.empty", "(empty)") : common::items::displayName(c.held);
+        auto name   = empty ? trFor(c.player, "br.common.filter.empty", "(empty)") : common::items::displayName(c.held);
         for (bool first : {false, true}) {
             if (!core::common::testBoxHit(c.hit, frequencySlotCentre(facing, first), kFrequencySlotScale)) continue;
             setFrequency(c.pos, first, c.held);
@@ -556,4 +556,4 @@ bool use(Click const& c, Block const& block, Kind kind) {
     return false;
 }
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

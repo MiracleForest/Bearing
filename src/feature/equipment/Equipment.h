@@ -28,7 +28,7 @@ class ItemStackBase;
 class Player;
 class Vec3;
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 using core::GlobalPos;
 using Json = nlohmann::json;
@@ -38,35 +38,35 @@ inline constexpr std::array<std::string_view, 16> kColours = {
     "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
     "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
 };
-inline constexpr std::string_view kCopperBacktank       = "levitate:copper_backtank";
-inline constexpr std::string_view kNetheriteBacktank    = "levitate:netherite_backtank";
-inline constexpr std::string_view kCopperHelmet         = "levitate:copper_diving_helmet";
-inline constexpr std::string_view kCopperBoots          = "levitate:copper_diving_boots";
-inline constexpr std::string_view kNetheriteHelmet      = "levitate:netherite_diving_helmet";
-inline constexpr std::string_view kNetheriteBoots       = "levitate:netherite_diving_boots";
-inline constexpr std::string_view kExtendoGrip          = "levitate:extendo_grip";
-inline constexpr std::string_view kPotatoCannon         = "levitate:potato_cannon";
-inline constexpr std::string_view kWand                 = "levitate:wand_of_symmetry";
-inline constexpr std::string_view kWorldshaper          = "levitate:handheld_worldshaper";
-inline constexpr std::string_view kLinkedController     = "levitate:linked_controller";
-inline constexpr std::string_view kLecternController    = "levitate:lectern_controller";
-inline constexpr std::string_view kSandPaper            = "levitate:sand_paper";
-inline constexpr std::string_view kRedSandPaper         = "levitate:red_sand_paper";
-inline constexpr std::string_view kTreeFertilizer       = "levitate:tree_fertilizer";
+inline constexpr std::string_view kCopperBacktank       = "bearing:copper_backtank";
+inline constexpr std::string_view kNetheriteBacktank    = "bearing:netherite_backtank";
+inline constexpr std::string_view kCopperHelmet         = "bearing:copper_diving_helmet";
+inline constexpr std::string_view kCopperBoots          = "bearing:copper_diving_boots";
+inline constexpr std::string_view kNetheriteHelmet      = "bearing:netherite_diving_helmet";
+inline constexpr std::string_view kNetheriteBoots       = "bearing:netherite_diving_boots";
+inline constexpr std::string_view kExtendoGrip          = "bearing:extendo_grip";
+inline constexpr std::string_view kPotatoCannon         = "bearing:potato_cannon";
+inline constexpr std::string_view kWand                 = "bearing:wand_of_symmetry";
+inline constexpr std::string_view kWorldshaper          = "bearing:handheld_worldshaper";
+inline constexpr std::string_view kLinkedController     = "bearing:linked_controller";
+inline constexpr std::string_view kLecternController    = "bearing:lectern_controller";
+inline constexpr std::string_view kSandPaper            = "bearing:sand_paper";
+inline constexpr std::string_view kRedSandPaper         = "bearing:red_sand_paper";
+inline constexpr std::string_view kTreeFertilizer       = "bearing:tree_fertilizer";
 /// Owned by U23 (redstone): referenced by id only.
-inline constexpr std::string_view kRedstoneLink = "levitate:redstone_link";
+inline constexpr std::string_view kRedstoneLink = "bearing:redstone_link";
 
 // ---- states -----------------------------------------------------------------------------------
 /// Horizontal facing of toolboxes, backtanks and the lectern controller: Java 2D order
 /// 0 south, 1 west, 2 north, 3 east (game::playerFacing); the block faces the player.
-inline constexpr char kFacing[] = "levitate:facing";
+inline constexpr char kFacing[] = "bearing:facing";
 
 // ---- item data keys (user data, items::setData) -------------------------------------------------
-inline constexpr char kToolboxData[]    = "lv:toolbox";    ///< {inv, uuid}
-inline constexpr char kAirData[]        = "lv:air";        ///< backtank air (number)
-inline constexpr char kSymmetryData[]   = "lv:symmetry";   ///< Mirror json
-inline constexpr char kShaperData[]     = "lv:shaper";     ///< ShaperSettings json
-inline constexpr char kControllerData[] = "lv:controller"; ///< {"freq": [[a, b] x 6]}
+inline constexpr char kToolboxData[]    = "br:toolbox";    ///< {inv, uuid}
+inline constexpr char kAirData[]        = "br:air";        ///< backtank air (number)
+inline constexpr char kSymmetryData[]   = "br:symmetry";   ///< Mirror json
+inline constexpr char kShaperData[]     = "br:shaper";     ///< ShaperSettings json
+inline constexpr char kControllerData[] = "br:controller"; ///< {"freq": [[a, b] x 6]}
 
 /// `config/equipment.json` (Create's CEquipment keys and defaults).
 struct Config {
@@ -205,9 +205,9 @@ bool useTreeFertilizer(Player& player, ItemStack& held, GlobalPos const& pos);
 
 // ---- potato projectiles (Projectile.cpp) ------------------------------------------------------------
 /// The projectile entity (Create's PotatoProjectileEntity; behaviour pack `entities/potato_projectile.json`).
-inline constexpr std::string_view kPotatoProjectile = "levitate:potato_projectile";
+inline constexpr std::string_view kPotatoProjectile = "bearing:potato_projectile";
 /// Tag of every projectile entity (orphans without a simulated projectile are removed).
-inline constexpr char kPotatoProjectileTag[] = "lv_potato_projectile";
+inline constexpr char kPotatoProjectileTag[] = "br_potato_projectile";
 struct ProjectileInfo {
     std::int64_t entity = 0;     ///< the projectile entity
     std::string  type;           ///< Create's type id
@@ -227,9 +227,9 @@ std::int64_t launchProjectile(int dim, double x, double y, double z, double vx, 
                               std::int64_t owner, double recoveryChance, int aux = 0);
 
 // ---- enchantments (Enchants.cpp) ----------------------------------------------------------------------
-/// Create's enchantments, kept in the item's user data (`lv:enchants`: {"capacity": L, "potato_recovery": L})
+/// Create's enchantments, kept in the item's user data (`br:enchants`: {"capacity": L, "potato_recovery": L})
 /// and shown as lore lines named like enchantments.
-inline constexpr char kEnchantsData[]   = "lv:enchants";
+inline constexpr char kEnchantsData[]   = "br:enchants";
 inline constexpr char kCapacity[]       = "capacity";
 inline constexpr char kPotatoRecovery[] = "potato_recovery";
 /// The level of one of Create's enchantments on a stack (0: none).
@@ -280,11 +280,11 @@ void tickShaper();
 void installShaper();
 
 // ---- peculiar / haunted bells (Bells.cpp, U49) ---------------------------------------------------
-inline constexpr std::string_view kPeculiarBell = "levitate:peculiar_bell";
-inline constexpr std::string_view kHauntedBell  = "levitate:haunted_bell";
-inline constexpr char kBellAttachment[] = "levitate:attachment"; ///< 0 floor, 1 ceiling, 2 single wall, 3 double wall
-inline constexpr char kBellPowered[]    = "levitate:powered";
-inline constexpr char kBellPart[]       = "levitate:part";       ///< 1: frame only (client mod meshing)
+inline constexpr std::string_view kPeculiarBell = "bearing:peculiar_bell";
+inline constexpr std::string_view kHauntedBell  = "bearing:haunted_bell";
+inline constexpr char kBellAttachment[] = "bearing:attachment"; ///< 0 floor, 1 ceiling, 2 single wall, 3 double wall
+inline constexpr char kBellPowered[]    = "bearing:powered";
+inline constexpr char kBellPart[]       = "bearing:part";       ///< 1: frame only (client mod meshing)
 [[nodiscard]] bool isBell(std::string_view id);
 /// Create's AbstractBellBlock#ring: rings the bell at `pos` as hit from `direction` (FacingID; the
 /// swing turns about the axis across it). False when it can't (a haunted bell recharging).
@@ -311,15 +311,15 @@ void soulPulse(GlobalPos const& pos, int distance);
 [[nodiscard]] std::size_t soulPulseCount();
 
 // ---- cardboard armour and sword (Cardboard.cpp, U49) ---------------------------------------------
-inline constexpr std::string_view kCardboardHelmet     = "levitate:cardboard_helmet";
-inline constexpr std::string_view kCardboardChestplate = "levitate:cardboard_chestplate";
-inline constexpr std::string_view kCardboardLeggings   = "levitate:cardboard_leggings";
-inline constexpr std::string_view kCardboardBoots      = "levitate:cardboard_boots";
-inline constexpr std::string_view kCardboardSword      = "levitate:cardboard_sword";
+inline constexpr std::string_view kCardboardHelmet     = "bearing:cardboard_helmet";
+inline constexpr std::string_view kCardboardChestplate = "bearing:cardboard_chestplate";
+inline constexpr std::string_view kCardboardLeggings   = "bearing:cardboard_leggings";
+inline constexpr std::string_view kCardboardBoots      = "bearing:cardboard_boots";
+inline constexpr std::string_view kCardboardSword      = "bearing:cardboard_sword";
 [[nodiscard]] bool isCardboardArmor(std::string_view id);
 /// Create's CardboardArmorHandler#testForStealth: full cardboard set, sneaking, not flying.
 [[nodiscard]] bool hidingAsBox(Actor const& actor);
-/// The box entity (`levitate:cardboard_disguise`) shown in place of a hiding player (0: none).
+/// The box entity (`bearing:cardboard_disguise`) shown in place of a hiding player (0: none).
 [[nodiscard]] std::int64_t disguiseOf(Player const& player);
 /// Create's CardboardSwordItem#cardboardSwordsCannotHurtYou: the bonk replacing an attack. False
 /// when the attack stays a normal one (arthropods, non-living targets, another item).
@@ -339,4 +339,4 @@ void resetControllers();
 void installControllers();
 void uninstallControllers();
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

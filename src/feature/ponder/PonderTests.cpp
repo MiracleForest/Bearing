@@ -12,15 +12,15 @@
 #include "mod/Main.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::ponder {
+namespace br::feature::ponder {
 
 using selftest::Context;
 
-LV_REGISTER_SELFTEST("ponder.data", [](Context& ctx) {
+BR_REGISTER_SELFTEST("ponder.data", [](Context& ctx) {
     auto const& lib = index();
     ctx.check(lib.allComponents().size() >= 150, "the index lists Create's ponder entries (" + std::to_string(lib.allComponents().size()) + ")");
     ctx.check(lib.tags().size() >= 18, "the index has Create's tags");
-    auto dir   = lv::Mod::getInstance().getSelf().getModDir() / "ponder" / "scenes";
+    auto dir   = br::Mod::getInstance().getSelf().getModDir() / "ponder" / "scenes";
     int  files = 0, bad = 0;
     std::error_code ec;
     for (auto const& e : std::filesystem::directory_iterator(dir, ec)) {
@@ -35,15 +35,15 @@ LV_REGISTER_SELFTEST("ponder.data", [](Context& ctx) {
     ctx.check(files >= 167 && bad == 0, "every shipped scene parses (" + std::to_string(files) + " files, " + std::to_string(bad) + " invalid)");
 });
 
-LV_REGISTER_SELFTEST("ponder.resolve", [](Context& ctx) {
+BR_REGISTER_SELFTEST("ponder.resolve", [](Context& ctx) {
     ctx.check(resolve("") == std::string{}, "no id: the index");
-    ctx.check(resolve("shaft") == std::string("levitate:shaft"), "short ids get the levitate namespace");
-    ctx.check(resolve("levitate:large_cogwheel") == std::string("levitate:large_cogwheel"), "full ids");
+    ctx.check(resolve("shaft") == std::string("bearing:shaft"), "short ids get the bearing namespace");
+    ctx.check(resolve("bearing:large_cogwheel") == std::string("bearing:large_cogwheel"), "full ids");
     ctx.check(resolve("kinetic_relays") == std::string("kinetic_relays"), "tag ids");
     ctx.check(!resolve("minecraft:dirt").has_value(), "items without scenes are refused");
 });
 
-LV_REGISTER_SELFTEST("ponder.command", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("ponder.command", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto& p = ctx.player();
     co_await ctx.ticks(1);
     // a vanilla client: refused, nothing sent
@@ -53,7 +53,7 @@ LV_REGISTER_SELFTEST("ponder.command", [](Context& ctx) -> ll::coro::CoroTask<> 
     net::setTestCompanion(p, true);
     r         = request(p, "shaft");
     auto msgs = net::takeTestMessages(p);
-    ctx.check(r.ok && msgs.size() == 1 && msgs[0].channel == "ponder.open" && msgs[0].payload.value("id", "") == "levitate:shaft",
+    ctx.check(r.ok && msgs.size() == 1 && msgs[0].channel == "ponder.open" && msgs[0].payload.value("id", "") == "bearing:shaft",
               "ponder.open carries the entry");
     r    = request(p, "");
     msgs = net::takeTestMessages(p);
@@ -64,4 +64,4 @@ LV_REGISTER_SELFTEST("ponder.command", [](Context& ctx) -> ll::coro::CoroTask<> 
     net::setTestCompanion(p, false);
 });
 
-} // namespace lv::feature::ponder
+} // namespace br::feature::ponder

@@ -23,7 +23,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace {
 
@@ -64,7 +64,7 @@ std::vector<ItemStack> takeItemsNear(GlobalPos const& p, std::string const& id) 
 
 // ---- M3 / M5: what a print carries -----------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("schematics.safe_print", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.safe_print", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(5870);
     o.y += 1;
     auto target = at(o, 6, 0, 0);
@@ -76,15 +76,15 @@ LV_REGISTER_SELFTEST("schematics.safe_print", [](Context& ctx) -> ll::coro::Coro
         put(ctx, at(target, x, 0, 0), "minecraft:stone");
         ctx.cleanupBlock(at(target, x, 1, 0));
     }
-    ctx.require(ctx.setBlock(at(o, 0, 1, 0), "levitate:redstone_link", {{"levitate:facing", 1}}), "link");
-    ctx.require(ctx.setBlock(at(o, 1, 1, 0), "levitate:content_observer", {{"levitate:facing", 5}}), "observer");
+    ctx.require(ctx.setBlock(at(o, 0, 1, 0), "bearing:redstone_link", {{"bearing:facing", 1}}), "link");
+    ctx.require(ctx.setBlock(at(o, 1, 1, 0), "bearing:content_observer", {{"bearing:facing", 5}}), "observer");
     co_await ctx.ticks(2);
     common::blockdata::edit(at(o, 0, 1, 0))["redstone"]["first"] = items::toJson(*items::make("minecraft:diamond"));
     common::filterslot::set(at(o, 1, 1, 0), *items::make("minecraft:gold_ingot"));
     common::blockdata::edit(at(o, 1, 1, 0))["redstone"]["turnOff"] = 5; // runtime: never printed
     auto& player = ctx.player();
     auto  dir    = playerDir(player.getRealName());
-    auto  file   = saveArea(dir, "lv_selftest_safe_print", true, o.dim, cp(o), cp(at(o, 1, 1, 0)));
+    auto  file   = saveArea(dir, "br_selftest_safe_print", true, o.dim, cp(o), cp(at(o, 1, 1, 0)));
     ctx.require(file.has_value(), "saved");
     FileCleanup   cleanup{dir / upath(*file)};
     SchematicData d;
@@ -107,7 +107,7 @@ LV_REGISTER_SELFTEST("schematics.safe_print", [](Context& ctx) -> ll::coro::Coro
 
 // ---- M14 / M15: the schematicannon's item keeps its settings, the barrel rests towards the placer ---
 
-LV_REGISTER_SELFTEST("schematics.cannon_item", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("schematics.cannon_item", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(5880);
     p.y += 1;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
@@ -133,4 +133,4 @@ LV_REGISTER_SELFTEST("schematics.cannon_item", [](Context& ctx) -> ll::coro::Cor
     ctx.check(kept.is_object() && kept.value("replace", -1) == 3 && kept.value("replaceBE", false), "with its settings");
 });
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

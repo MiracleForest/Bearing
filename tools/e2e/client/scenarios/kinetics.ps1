@@ -17,13 +17,13 @@ Invoke-Chat '/gamemode creative'
 Invoke-Chat '/time set noon'
 Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.6 ~'
 Start-Sleep -Milliseconds 500
-Invoke-Chat '/setblock ~6 ~1 ~ levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~5 ~1 ~ levitate:kinetics_test_cog ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~5 ~1 ~1 levitate:kinetics_test_cog ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~5 ~2 ~ levitate:kinetics_test_cog ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~5 ~3 ~1 levitate:kinetics_test_large_cog ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~4 ~1 ~-1 levitate:kinetics_test_shaft ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~5 ~1 ~-1 levitate:kinetics_test_cog ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~6 ~1 ~ bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~5 ~1 ~ bearing:kinetics_test_cog ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~5 ~1 ~1 bearing:kinetics_test_cog ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~5 ~2 ~ bearing:kinetics_test_cog ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~5 ~3 ~1 bearing:kinetics_test_large_cog ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~4 ~1 ~-1 bearing:kinetics_test_shaft ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~5 ~1 ~-1 bearing:kinetics_test_cog ["bearing:axis"=0]'
 Start-Sleep -Seconds 2
 if (-not $vanilla) {
     Invoke-Chat '/create kinetics ~6 ~1 ~ speed 32'
@@ -37,7 +37,7 @@ Save-Screenshot 'kinetics-b' | Out-Null
 if (-not $vanilla) {
     # 3 consumers behind the source: 3 x 4 SU/RPM > 8 SU/RPM
     $mark = Get-LogMark
-    foreach ($dx in 7, 8, 9) { Invoke-Chat "/setblock ~$dx ~1 ~ levitate:kinetics_test_consumer [`"levitate:axis`"=0]" }
+    foreach ($dx in 7, 8, 9) { Invoke-Chat "/setblock ~$dx ~1 ~ bearing:kinetics_test_consumer [`"bearing:axis`"=0]" }
     Wait-LogLine 'kinetics client: overstress flash \(red\)' 30 -Since $mark | Out-Null
     Start-Sleep -Milliseconds 150
     Save-Screenshot 'kinetics-overstressed' | Out-Null

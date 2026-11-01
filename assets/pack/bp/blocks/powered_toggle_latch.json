@@ -2,12 +2,12 @@
   "format_version": "1.26.0",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:powered_toggle_latch",
+      "identifier": "bearing:powered_toggle_latch",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,11 +15,11 @@
           4,
           5
         ],
-        "levitate:powered": [
+        "bearing:powered": [
           0,
           1
         ],
-        "levitate:powering": [
+        "bearing:powering": [
           0,
           1
         ]
@@ -41,10 +41,10 @@
       "minecraft:redstone_producer": {
         "power": 0
       },
-      "minecraft:geometry": "geometry.levitate.powered_toggle_latch_north",
+      "minecraft:geometry": "geometry.bearing.powered_toggle_latch_north",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_powered_toggle_latch",
+          "texture": "bearing_powered_toggle_latch",
           "render_method": "alpha_test",
           "ambient_occlusion": false
         }
@@ -77,63 +77,63 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.powered_toggle_latch_north",
+            "identifier": "geometry.bearing.powered_toggle_latch_north",
             "bone_visibility": {
-              "in_off": "q.block_state('levitate:powered') == 0",
-              "in_on": "q.block_state('levitate:powered') == 1",
-              "lever_off": "q.block_state('levitate:powering') == 0",
-              "lever_on": "q.block_state('levitate:powering') == 1"
+              "in_off": "q.block_state('bearing:powered') == 0",
+              "in_on": "q.block_state('bearing:powered') == 1",
+              "lever_off": "q.block_state('bearing:powering') == 0",
+              "lever_on": "q.block_state('bearing:powering') == 1"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.powered_toggle_latch_south",
+            "identifier": "geometry.bearing.powered_toggle_latch_south",
             "bone_visibility": {
-              "in_off": "q.block_state('levitate:powered') == 0",
-              "in_on": "q.block_state('levitate:powered') == 1",
-              "lever_off": "q.block_state('levitate:powering') == 0",
-              "lever_on": "q.block_state('levitate:powering') == 1"
+              "in_off": "q.block_state('bearing:powered') == 0",
+              "in_on": "q.block_state('bearing:powered') == 1",
+              "lever_off": "q.block_state('bearing:powering') == 0",
+              "lever_on": "q.block_state('bearing:powering') == 1"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.powered_toggle_latch_west",
+            "identifier": "geometry.bearing.powered_toggle_latch_west",
             "bone_visibility": {
-              "in_off": "q.block_state('levitate:powered') == 0",
-              "in_on": "q.block_state('levitate:powered') == 1",
-              "lever_off": "q.block_state('levitate:powering') == 0",
-              "lever_on": "q.block_state('levitate:powering') == 1"
+              "in_off": "q.block_state('bearing:powered') == 0",
+              "in_on": "q.block_state('bearing:powered') == 1",
+              "lever_off": "q.block_state('bearing:powering') == 0",
+              "lever_on": "q.block_state('bearing:powering') == 1"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:geometry": {
-            "identifier": "geometry.levitate.powered_toggle_latch_east",
+            "identifier": "geometry.bearing.powered_toggle_latch_east",
             "bone_visibility": {
-              "in_off": "q.block_state('levitate:powered') == 0",
-              "in_on": "q.block_state('levitate:powered') == 1",
-              "lever_off": "q.block_state('levitate:powering') == 0",
-              "lever_on": "q.block_state('levitate:powering') == 1"
+              "in_off": "q.block_state('bearing:powered') == 0",
+              "in_on": "q.block_state('bearing:powered') == 1",
+              "lever_off": "q.block_state('bearing:powering') == 0",
+              "lever_on": "q.block_state('bearing:powering') == 1"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2 && q.block_state('levitate:powering') == 1",
+        "condition": "q.block_state('bearing:facing') == 2 && q.block_state('bearing:powering') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -145,7 +145,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3 && q.block_state('levitate:powering') == 1",
+        "condition": "q.block_state('bearing:facing') == 3 && q.block_state('bearing:powering') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -157,7 +157,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4 && q.block_state('levitate:powering') == 1",
+        "condition": "q.block_state('bearing:facing') == 4 && q.block_state('bearing:powering') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,
@@ -169,7 +169,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5 && q.block_state('levitate:powering') == 1",
+        "condition": "q.block_state('bearing:facing') == 5 && q.block_state('bearing:powering') == 1",
         "components": {
           "minecraft:redstone_producer": {
             "power": 15,

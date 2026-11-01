@@ -1,5 +1,5 @@
 // Per-block counters behind some advancements (U49): Create keeps them in the block entity
-// (MechanicalPressBlockEntity#tracksCreated, SpoutBlockEntity#created*), Levitate in the block's
+// (MechanicalPressBlockEntity#tracksCreated, SpoutBlockEntity#created*), Bearing in the block's
 // BlockData under the key "advancements" (carried by contraptions with the rest of the document).
 
 #include <algorithm>
@@ -7,7 +7,7 @@
 #include "feature/advancements/Advancements.h"
 #include "feature/common/BlockData.h"
 
-namespace lv::feature::advancements {
+namespace br::feature::advancements {
 
 namespace bd = common::blockdata;
 
@@ -30,7 +30,7 @@ void setCounter(GlobalPos const& pos, char const* name, int value) {
 
 void onItemPressed(GlobalPos const& pos, std::string_view resultId, int count) {
     awardOwner(pos, "mechanical_press");
-    if (resultId != "levitate:track" || count <= 0) return;
+    if (resultId != "bearing:track" || count <= 0) return;
     int made = counter(pos, "tracks") + count;
     if (made >= 1000) {
         awardOwner(pos, "track_crafting_factory");
@@ -43,7 +43,7 @@ void onMovingDeployerUsed(std::string_view contraptionKind, nlohmann::json const
     if (!placed || (contraptionKind != "cart_assembler" && contraptionKind != "train")) return;
     // IBaseRailBlockExtension (vanilla rails) or ITrackBlock
     static constexpr std::string_view kRails[] = {"minecraft:rail", "minecraft:golden_rail", "minecraft:detector_rail",
-                                                  "minecraft:activator_rail", "levitate:track"};
+                                                  "minecraft:activator_rail", "bearing:track"};
     if (std::ranges::find(kRails, usedItemId) == std::end(kRails)) return;
     awardCarriedOwner(deployerDoc, "self_deploying");
 }
@@ -53,11 +53,11 @@ void onSpoutFilled(GlobalPos const& pos, std::string_view resultId) {
     // Create's trackFoods: only while the spout knows its owner
     if (ownerOf(pos).empty()) return;
     int foods = counter(pos, "foods");
-    if (resultId == "levitate:chocolate_glazed_berries") foods |= 1;
-    else if (resultId == "levitate:honeyed_apple") foods |= 2;
-    else if (resultId == "levitate:sweet_roll") foods |= 4;
+    if (resultId == "bearing:chocolate_glazed_berries") foods |= 1;
+    else if (resultId == "bearing:honeyed_apple") foods |= 2;
+    else if (resultId == "bearing:sweet_roll") foods |= 4;
     if (foods != counter(pos, "foods")) setCounter(pos, "foods", foods);
     if (foods == 7) awardOwner(pos, "foods");
 }
 
-} // namespace lv::feature::advancements
+} // namespace br::feature::advancements

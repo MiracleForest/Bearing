@@ -2,12 +2,12 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:chain_conveyor",
+      "identifier": "bearing:chain_conveyor",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1,
           2
@@ -16,14 +16,14 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.chain_conveyor",
+        "identifier": "geometry.bearing.chain_conveyor",
         "bone_visibility": {
-          "rotor": "q.block_state('levitate:rotor') != 1"
+          "rotor": "q.block_state('bearing:rotor') != 1"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_chain_conveyor",
+          "texture": "bearing_chain_conveyor",
           "render_method": "alpha_test"
         }
       },

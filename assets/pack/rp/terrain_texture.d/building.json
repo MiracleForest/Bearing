@@ -1,860 +1,860 @@
 {
-  "levitate_andesite_casing_0": {
+  "bearing_andesite_casing_0": {
     "textures": "textures/blocks/building/andesite_casing_0"
   },
-  "levitate_andesite_casing_4": {
+  "bearing_andesite_casing_4": {
     "textures": "textures/blocks/building/andesite_casing_4"
   },
-  "levitate_andesite_casing_1": {
+  "bearing_andesite_casing_1": {
     "textures": "textures/blocks/building/andesite_casing_1"
   },
-  "levitate_andesite_casing_5": {
+  "bearing_andesite_casing_5": {
     "textures": "textures/blocks/building/andesite_casing_5"
   },
-  "levitate_andesite_casing_2": {
+  "bearing_andesite_casing_2": {
     "textures": "textures/blocks/building/andesite_casing_2"
   },
-  "levitate_andesite_casing_8": {
+  "bearing_andesite_casing_8": {
     "textures": "textures/blocks/building/andesite_casing_8"
   },
-  "levitate_andesite_casing_6": {
+  "bearing_andesite_casing_6": {
     "textures": "textures/blocks/building/andesite_casing_6"
   },
-  "levitate_andesite_casing_12": {
+  "bearing_andesite_casing_12": {
     "textures": "textures/blocks/building/andesite_casing_12"
   },
-  "levitate_andesite_casing_3": {
+  "bearing_andesite_casing_3": {
     "textures": "textures/blocks/building/andesite_casing_3"
   },
-  "levitate_andesite_casing_9": {
+  "bearing_andesite_casing_9": {
     "textures": "textures/blocks/building/andesite_casing_9"
   },
-  "levitate_andesite_casing_7": {
+  "bearing_andesite_casing_7": {
     "textures": "textures/blocks/building/andesite_casing_7"
   },
-  "levitate_andesite_casing_13": {
+  "bearing_andesite_casing_13": {
     "textures": "textures/blocks/building/andesite_casing_13"
   },
-  "levitate_andesite_casing_10": {
+  "bearing_andesite_casing_10": {
     "textures": "textures/blocks/building/andesite_casing_10"
   },
-  "levitate_andesite_casing_14": {
+  "bearing_andesite_casing_14": {
     "textures": "textures/blocks/building/andesite_casing_14"
   },
-  "levitate_andesite_casing_11": {
+  "bearing_andesite_casing_11": {
     "textures": "textures/blocks/building/andesite_casing_11"
   },
-  "levitate_andesite_casing_15": {
+  "bearing_andesite_casing_15": {
     "textures": "textures/blocks/building/andesite_casing_15"
   },
-  "levitate_brass_casing_0": {
+  "bearing_brass_casing_0": {
     "textures": "textures/blocks/building/brass_casing_0"
   },
-  "levitate_brass_casing_4": {
+  "bearing_brass_casing_4": {
     "textures": "textures/blocks/building/brass_casing_4"
   },
-  "levitate_brass_casing_1": {
+  "bearing_brass_casing_1": {
     "textures": "textures/blocks/building/brass_casing_1"
   },
-  "levitate_brass_casing_5": {
+  "bearing_brass_casing_5": {
     "textures": "textures/blocks/building/brass_casing_5"
   },
-  "levitate_brass_casing_2": {
+  "bearing_brass_casing_2": {
     "textures": "textures/blocks/building/brass_casing_2"
   },
-  "levitate_brass_casing_8": {
+  "bearing_brass_casing_8": {
     "textures": "textures/blocks/building/brass_casing_8"
   },
-  "levitate_brass_casing_6": {
+  "bearing_brass_casing_6": {
     "textures": "textures/blocks/building/brass_casing_6"
   },
-  "levitate_brass_casing_12": {
+  "bearing_brass_casing_12": {
     "textures": "textures/blocks/building/brass_casing_12"
   },
-  "levitate_brass_casing_3": {
+  "bearing_brass_casing_3": {
     "textures": "textures/blocks/building/brass_casing_3"
   },
-  "levitate_brass_casing_9": {
+  "bearing_brass_casing_9": {
     "textures": "textures/blocks/building/brass_casing_9"
   },
-  "levitate_brass_casing_7": {
+  "bearing_brass_casing_7": {
     "textures": "textures/blocks/building/brass_casing_7"
   },
-  "levitate_brass_casing_13": {
+  "bearing_brass_casing_13": {
     "textures": "textures/blocks/building/brass_casing_13"
   },
-  "levitate_brass_casing_10": {
+  "bearing_brass_casing_10": {
     "textures": "textures/blocks/building/brass_casing_10"
   },
-  "levitate_brass_casing_14": {
+  "bearing_brass_casing_14": {
     "textures": "textures/blocks/building/brass_casing_14"
   },
-  "levitate_brass_casing_11": {
+  "bearing_brass_casing_11": {
     "textures": "textures/blocks/building/brass_casing_11"
   },
-  "levitate_brass_casing_15": {
+  "bearing_brass_casing_15": {
     "textures": "textures/blocks/building/brass_casing_15"
   },
-  "levitate_copper_casing_0": {
+  "bearing_copper_casing_0": {
     "textures": "textures/blocks/building/copper_casing_0"
   },
-  "levitate_copper_casing_4": {
+  "bearing_copper_casing_4": {
     "textures": "textures/blocks/building/copper_casing_4"
   },
-  "levitate_copper_casing_1": {
+  "bearing_copper_casing_1": {
     "textures": "textures/blocks/building/copper_casing_1"
   },
-  "levitate_copper_casing_5": {
+  "bearing_copper_casing_5": {
     "textures": "textures/blocks/building/copper_casing_5"
   },
-  "levitate_copper_casing_2": {
+  "bearing_copper_casing_2": {
     "textures": "textures/blocks/building/copper_casing_2"
   },
-  "levitate_copper_casing_8": {
+  "bearing_copper_casing_8": {
     "textures": "textures/blocks/building/copper_casing_8"
   },
-  "levitate_copper_casing_6": {
+  "bearing_copper_casing_6": {
     "textures": "textures/blocks/building/copper_casing_6"
   },
-  "levitate_copper_casing_12": {
+  "bearing_copper_casing_12": {
     "textures": "textures/blocks/building/copper_casing_12"
   },
-  "levitate_copper_casing_3": {
+  "bearing_copper_casing_3": {
     "textures": "textures/blocks/building/copper_casing_3"
   },
-  "levitate_copper_casing_9": {
+  "bearing_copper_casing_9": {
     "textures": "textures/blocks/building/copper_casing_9"
   },
-  "levitate_copper_casing_7": {
+  "bearing_copper_casing_7": {
     "textures": "textures/blocks/building/copper_casing_7"
   },
-  "levitate_copper_casing_13": {
+  "bearing_copper_casing_13": {
     "textures": "textures/blocks/building/copper_casing_13"
   },
-  "levitate_copper_casing_10": {
+  "bearing_copper_casing_10": {
     "textures": "textures/blocks/building/copper_casing_10"
   },
-  "levitate_copper_casing_14": {
+  "bearing_copper_casing_14": {
     "textures": "textures/blocks/building/copper_casing_14"
   },
-  "levitate_copper_casing_11": {
+  "bearing_copper_casing_11": {
     "textures": "textures/blocks/building/copper_casing_11"
   },
-  "levitate_copper_casing_15": {
+  "bearing_copper_casing_15": {
     "textures": "textures/blocks/building/copper_casing_15"
   },
-  "levitate_shadow_steel_casing_0": {
+  "bearing_shadow_steel_casing_0": {
     "textures": "textures/blocks/building/shadow_steel_casing_0"
   },
-  "levitate_shadow_steel_casing_4": {
+  "bearing_shadow_steel_casing_4": {
     "textures": "textures/blocks/building/shadow_steel_casing_4"
   },
-  "levitate_shadow_steel_casing_1": {
+  "bearing_shadow_steel_casing_1": {
     "textures": "textures/blocks/building/shadow_steel_casing_1"
   },
-  "levitate_shadow_steel_casing_5": {
+  "bearing_shadow_steel_casing_5": {
     "textures": "textures/blocks/building/shadow_steel_casing_5"
   },
-  "levitate_shadow_steel_casing_2": {
+  "bearing_shadow_steel_casing_2": {
     "textures": "textures/blocks/building/shadow_steel_casing_2"
   },
-  "levitate_shadow_steel_casing_8": {
+  "bearing_shadow_steel_casing_8": {
     "textures": "textures/blocks/building/shadow_steel_casing_8"
   },
-  "levitate_shadow_steel_casing_6": {
+  "bearing_shadow_steel_casing_6": {
     "textures": "textures/blocks/building/shadow_steel_casing_6"
   },
-  "levitate_shadow_steel_casing_12": {
+  "bearing_shadow_steel_casing_12": {
     "textures": "textures/blocks/building/shadow_steel_casing_12"
   },
-  "levitate_shadow_steel_casing_3": {
+  "bearing_shadow_steel_casing_3": {
     "textures": "textures/blocks/building/shadow_steel_casing_3"
   },
-  "levitate_shadow_steel_casing_9": {
+  "bearing_shadow_steel_casing_9": {
     "textures": "textures/blocks/building/shadow_steel_casing_9"
   },
-  "levitate_shadow_steel_casing_7": {
+  "bearing_shadow_steel_casing_7": {
     "textures": "textures/blocks/building/shadow_steel_casing_7"
   },
-  "levitate_shadow_steel_casing_13": {
+  "bearing_shadow_steel_casing_13": {
     "textures": "textures/blocks/building/shadow_steel_casing_13"
   },
-  "levitate_shadow_steel_casing_10": {
+  "bearing_shadow_steel_casing_10": {
     "textures": "textures/blocks/building/shadow_steel_casing_10"
   },
-  "levitate_shadow_steel_casing_14": {
+  "bearing_shadow_steel_casing_14": {
     "textures": "textures/blocks/building/shadow_steel_casing_14"
   },
-  "levitate_shadow_steel_casing_11": {
+  "bearing_shadow_steel_casing_11": {
     "textures": "textures/blocks/building/shadow_steel_casing_11"
   },
-  "levitate_shadow_steel_casing_15": {
+  "bearing_shadow_steel_casing_15": {
     "textures": "textures/blocks/building/shadow_steel_casing_15"
   },
-  "levitate_refined_radiance_casing_0": {
+  "bearing_refined_radiance_casing_0": {
     "textures": "textures/blocks/building/refined_radiance_casing_0"
   },
-  "levitate_refined_radiance_casing_4": {
+  "bearing_refined_radiance_casing_4": {
     "textures": "textures/blocks/building/refined_radiance_casing_4"
   },
-  "levitate_refined_radiance_casing_1": {
+  "bearing_refined_radiance_casing_1": {
     "textures": "textures/blocks/building/refined_radiance_casing_1"
   },
-  "levitate_refined_radiance_casing_5": {
+  "bearing_refined_radiance_casing_5": {
     "textures": "textures/blocks/building/refined_radiance_casing_5"
   },
-  "levitate_refined_radiance_casing_2": {
+  "bearing_refined_radiance_casing_2": {
     "textures": "textures/blocks/building/refined_radiance_casing_2"
   },
-  "levitate_refined_radiance_casing_8": {
+  "bearing_refined_radiance_casing_8": {
     "textures": "textures/blocks/building/refined_radiance_casing_8"
   },
-  "levitate_refined_radiance_casing_6": {
+  "bearing_refined_radiance_casing_6": {
     "textures": "textures/blocks/building/refined_radiance_casing_6"
   },
-  "levitate_refined_radiance_casing_12": {
+  "bearing_refined_radiance_casing_12": {
     "textures": "textures/blocks/building/refined_radiance_casing_12"
   },
-  "levitate_refined_radiance_casing_3": {
+  "bearing_refined_radiance_casing_3": {
     "textures": "textures/blocks/building/refined_radiance_casing_3"
   },
-  "levitate_refined_radiance_casing_9": {
+  "bearing_refined_radiance_casing_9": {
     "textures": "textures/blocks/building/refined_radiance_casing_9"
   },
-  "levitate_refined_radiance_casing_7": {
+  "bearing_refined_radiance_casing_7": {
     "textures": "textures/blocks/building/refined_radiance_casing_7"
   },
-  "levitate_refined_radiance_casing_13": {
+  "bearing_refined_radiance_casing_13": {
     "textures": "textures/blocks/building/refined_radiance_casing_13"
   },
-  "levitate_refined_radiance_casing_10": {
+  "bearing_refined_radiance_casing_10": {
     "textures": "textures/blocks/building/refined_radiance_casing_10"
   },
-  "levitate_refined_radiance_casing_14": {
+  "bearing_refined_radiance_casing_14": {
     "textures": "textures/blocks/building/refined_radiance_casing_14"
   },
-  "levitate_refined_radiance_casing_11": {
+  "bearing_refined_radiance_casing_11": {
     "textures": "textures/blocks/building/refined_radiance_casing_11"
   },
-  "levitate_refined_radiance_casing_15": {
+  "bearing_refined_radiance_casing_15": {
     "textures": "textures/blocks/building/refined_radiance_casing_15"
   },
-  "levitate_railway_casing_0": {
+  "bearing_railway_casing_0": {
     "textures": "textures/blocks/building/railway_casing_0"
   },
-  "levitate_railway_casing_4": {
+  "bearing_railway_casing_4": {
     "textures": "textures/blocks/building/railway_casing_4"
   },
-  "levitate_railway_casing_1": {
+  "bearing_railway_casing_1": {
     "textures": "textures/blocks/building/railway_casing_1"
   },
-  "levitate_railway_casing_5": {
+  "bearing_railway_casing_5": {
     "textures": "textures/blocks/building/railway_casing_5"
   },
-  "levitate_railway_casing_2": {
+  "bearing_railway_casing_2": {
     "textures": "textures/blocks/building/railway_casing_2"
   },
-  "levitate_railway_casing_8": {
+  "bearing_railway_casing_8": {
     "textures": "textures/blocks/building/railway_casing_8"
   },
-  "levitate_railway_casing_6": {
+  "bearing_railway_casing_6": {
     "textures": "textures/blocks/building/railway_casing_6"
   },
-  "levitate_railway_casing_12": {
+  "bearing_railway_casing_12": {
     "textures": "textures/blocks/building/railway_casing_12"
   },
-  "levitate_railway_casing_3": {
+  "bearing_railway_casing_3": {
     "textures": "textures/blocks/building/railway_casing_3"
   },
-  "levitate_railway_casing_9": {
+  "bearing_railway_casing_9": {
     "textures": "textures/blocks/building/railway_casing_9"
   },
-  "levitate_railway_casing_7": {
+  "bearing_railway_casing_7": {
     "textures": "textures/blocks/building/railway_casing_7"
   },
-  "levitate_railway_casing_13": {
+  "bearing_railway_casing_13": {
     "textures": "textures/blocks/building/railway_casing_13"
   },
-  "levitate_railway_casing_10": {
+  "bearing_railway_casing_10": {
     "textures": "textures/blocks/building/railway_casing_10"
   },
-  "levitate_railway_casing_14": {
+  "bearing_railway_casing_14": {
     "textures": "textures/blocks/building/railway_casing_14"
   },
-  "levitate_railway_casing_11": {
+  "bearing_railway_casing_11": {
     "textures": "textures/blocks/building/railway_casing_11"
   },
-  "levitate_railway_casing_15": {
+  "bearing_railway_casing_15": {
     "textures": "textures/blocks/building/railway_casing_15"
   },
-  "levitate_framed_glass_0": {
+  "bearing_framed_glass_0": {
     "textures": "textures/blocks/building/framed_glass_0"
   },
-  "levitate_framed_glass_4": {
+  "bearing_framed_glass_4": {
     "textures": "textures/blocks/building/framed_glass_4"
   },
-  "levitate_framed_glass_1": {
+  "bearing_framed_glass_1": {
     "textures": "textures/blocks/building/framed_glass_1"
   },
-  "levitate_framed_glass_5": {
+  "bearing_framed_glass_5": {
     "textures": "textures/blocks/building/framed_glass_5"
   },
-  "levitate_framed_glass_2": {
+  "bearing_framed_glass_2": {
     "textures": "textures/blocks/building/framed_glass_2"
   },
-  "levitate_framed_glass_8": {
+  "bearing_framed_glass_8": {
     "textures": "textures/blocks/building/framed_glass_8"
   },
-  "levitate_framed_glass_6": {
+  "bearing_framed_glass_6": {
     "textures": "textures/blocks/building/framed_glass_6"
   },
-  "levitate_framed_glass_12": {
+  "bearing_framed_glass_12": {
     "textures": "textures/blocks/building/framed_glass_12"
   },
-  "levitate_framed_glass_3": {
+  "bearing_framed_glass_3": {
     "textures": "textures/blocks/building/framed_glass_3"
   },
-  "levitate_framed_glass_9": {
+  "bearing_framed_glass_9": {
     "textures": "textures/blocks/building/framed_glass_9"
   },
-  "levitate_framed_glass_7": {
+  "bearing_framed_glass_7": {
     "textures": "textures/blocks/building/framed_glass_7"
   },
-  "levitate_framed_glass_13": {
+  "bearing_framed_glass_13": {
     "textures": "textures/blocks/building/framed_glass_13"
   },
-  "levitate_framed_glass_10": {
+  "bearing_framed_glass_10": {
     "textures": "textures/blocks/building/framed_glass_10"
   },
-  "levitate_framed_glass_14": {
+  "bearing_framed_glass_14": {
     "textures": "textures/blocks/building/framed_glass_14"
   },
-  "levitate_framed_glass_11": {
+  "bearing_framed_glass_11": {
     "textures": "textures/blocks/building/framed_glass_11"
   },
-  "levitate_framed_glass_15": {
+  "bearing_framed_glass_15": {
     "textures": "textures/blocks/building/framed_glass_15"
   },
-  "levitate_horizontal_framed_glass_0": {
+  "bearing_horizontal_framed_glass_0": {
     "textures": "textures/blocks/building/horizontal_framed_glass_0"
   },
-  "levitate_horizontal_framed_glass_2": {
+  "bearing_horizontal_framed_glass_2": {
     "textures": "textures/blocks/building/horizontal_framed_glass_2"
   },
-  "levitate_horizontal_framed_glass_8": {
+  "bearing_horizontal_framed_glass_8": {
     "textures": "textures/blocks/building/horizontal_framed_glass_8"
   },
-  "levitate_horizontal_framed_glass_10": {
+  "bearing_horizontal_framed_glass_10": {
     "textures": "textures/blocks/building/horizontal_framed_glass_10"
   },
-  "levitate_vertical_framed_glass_end": {
+  "bearing_vertical_framed_glass_end": {
     "textures": "textures/blocks/building/vertical_framed_glass_end"
   },
-  "levitate_vertical_framed_glass_0": {
+  "bearing_vertical_framed_glass_0": {
     "textures": "textures/blocks/building/vertical_framed_glass_0"
   },
-  "levitate_vertical_framed_glass_4": {
+  "bearing_vertical_framed_glass_4": {
     "textures": "textures/blocks/building/vertical_framed_glass_4"
   },
-  "levitate_vertical_framed_glass_1": {
+  "bearing_vertical_framed_glass_1": {
     "textures": "textures/blocks/building/vertical_framed_glass_1"
   },
-  "levitate_vertical_framed_glass_5": {
+  "bearing_vertical_framed_glass_5": {
     "textures": "textures/blocks/building/vertical_framed_glass_5"
   },
-  "levitate_tiled_glass": {
+  "bearing_tiled_glass": {
     "textures": "textures/blocks/building/tiled_glass"
   },
-  "levitate_oak_window_end": {
+  "bearing_oak_window_end": {
     "textures": "textures/blocks/building/oak_window_end"
   },
-  "levitate_oak_window_0": {
+  "bearing_oak_window_0": {
     "textures": "textures/blocks/building/oak_window_0"
   },
-  "levitate_oak_window_4": {
+  "bearing_oak_window_4": {
     "textures": "textures/blocks/building/oak_window_4"
   },
-  "levitate_oak_window_1": {
+  "bearing_oak_window_1": {
     "textures": "textures/blocks/building/oak_window_1"
   },
-  "levitate_oak_window_5": {
+  "bearing_oak_window_5": {
     "textures": "textures/blocks/building/oak_window_5"
   },
-  "levitate_spruce_window_end": {
+  "bearing_spruce_window_end": {
     "textures": "textures/blocks/building/spruce_window_end"
   },
-  "levitate_spruce_window_0": {
+  "bearing_spruce_window_0": {
     "textures": "textures/blocks/building/spruce_window_0"
   },
-  "levitate_spruce_window_4": {
+  "bearing_spruce_window_4": {
     "textures": "textures/blocks/building/spruce_window_4"
   },
-  "levitate_spruce_window_1": {
+  "bearing_spruce_window_1": {
     "textures": "textures/blocks/building/spruce_window_1"
   },
-  "levitate_spruce_window_5": {
+  "bearing_spruce_window_5": {
     "textures": "textures/blocks/building/spruce_window_5"
   },
-  "levitate_birch_window_end": {
+  "bearing_birch_window_end": {
     "textures": "textures/blocks/building/birch_window_end"
   },
-  "levitate_birch_window_0": {
+  "bearing_birch_window_0": {
     "textures": "textures/blocks/building/birch_window_0"
   },
-  "levitate_birch_window_4": {
+  "bearing_birch_window_4": {
     "textures": "textures/blocks/building/birch_window_4"
   },
-  "levitate_birch_window_1": {
+  "bearing_birch_window_1": {
     "textures": "textures/blocks/building/birch_window_1"
   },
-  "levitate_birch_window_5": {
+  "bearing_birch_window_5": {
     "textures": "textures/blocks/building/birch_window_5"
   },
-  "levitate_jungle_window_end": {
+  "bearing_jungle_window_end": {
     "textures": "textures/blocks/building/jungle_window_end"
   },
-  "levitate_jungle_window_0": {
+  "bearing_jungle_window_0": {
     "textures": "textures/blocks/building/jungle_window_0"
   },
-  "levitate_jungle_window_4": {
+  "bearing_jungle_window_4": {
     "textures": "textures/blocks/building/jungle_window_4"
   },
-  "levitate_jungle_window_1": {
+  "bearing_jungle_window_1": {
     "textures": "textures/blocks/building/jungle_window_1"
   },
-  "levitate_jungle_window_5": {
+  "bearing_jungle_window_5": {
     "textures": "textures/blocks/building/jungle_window_5"
   },
-  "levitate_acacia_window_end": {
+  "bearing_acacia_window_end": {
     "textures": "textures/blocks/building/acacia_window_end"
   },
-  "levitate_acacia_window_0": {
+  "bearing_acacia_window_0": {
     "textures": "textures/blocks/building/acacia_window_0"
   },
-  "levitate_acacia_window_4": {
+  "bearing_acacia_window_4": {
     "textures": "textures/blocks/building/acacia_window_4"
   },
-  "levitate_acacia_window_1": {
+  "bearing_acacia_window_1": {
     "textures": "textures/blocks/building/acacia_window_1"
   },
-  "levitate_acacia_window_5": {
+  "bearing_acacia_window_5": {
     "textures": "textures/blocks/building/acacia_window_5"
   },
-  "levitate_dark_oak_window_end": {
+  "bearing_dark_oak_window_end": {
     "textures": "textures/blocks/building/dark_oak_window_end"
   },
-  "levitate_dark_oak_window_0": {
+  "bearing_dark_oak_window_0": {
     "textures": "textures/blocks/building/dark_oak_window_0"
   },
-  "levitate_dark_oak_window_4": {
+  "bearing_dark_oak_window_4": {
     "textures": "textures/blocks/building/dark_oak_window_4"
   },
-  "levitate_dark_oak_window_1": {
+  "bearing_dark_oak_window_1": {
     "textures": "textures/blocks/building/dark_oak_window_1"
   },
-  "levitate_dark_oak_window_5": {
+  "bearing_dark_oak_window_5": {
     "textures": "textures/blocks/building/dark_oak_window_5"
   },
-  "levitate_mangrove_window_end": {
+  "bearing_mangrove_window_end": {
     "textures": "textures/blocks/building/mangrove_window_end"
   },
-  "levitate_mangrove_window_0": {
+  "bearing_mangrove_window_0": {
     "textures": "textures/blocks/building/mangrove_window_0"
   },
-  "levitate_mangrove_window_4": {
+  "bearing_mangrove_window_4": {
     "textures": "textures/blocks/building/mangrove_window_4"
   },
-  "levitate_mangrove_window_1": {
+  "bearing_mangrove_window_1": {
     "textures": "textures/blocks/building/mangrove_window_1"
   },
-  "levitate_mangrove_window_5": {
+  "bearing_mangrove_window_5": {
     "textures": "textures/blocks/building/mangrove_window_5"
   },
-  "levitate_crimson_window_end": {
+  "bearing_crimson_window_end": {
     "textures": "textures/blocks/building/crimson_window_end"
   },
-  "levitate_crimson_window_0": {
+  "bearing_crimson_window_0": {
     "textures": "textures/blocks/building/crimson_window_0"
   },
-  "levitate_crimson_window_4": {
+  "bearing_crimson_window_4": {
     "textures": "textures/blocks/building/crimson_window_4"
   },
-  "levitate_crimson_window_1": {
+  "bearing_crimson_window_1": {
     "textures": "textures/blocks/building/crimson_window_1"
   },
-  "levitate_crimson_window_5": {
+  "bearing_crimson_window_5": {
     "textures": "textures/blocks/building/crimson_window_5"
   },
-  "levitate_warped_window_end": {
+  "bearing_warped_window_end": {
     "textures": "textures/blocks/building/warped_window_end"
   },
-  "levitate_warped_window_0": {
+  "bearing_warped_window_0": {
     "textures": "textures/blocks/building/warped_window_0"
   },
-  "levitate_warped_window_4": {
+  "bearing_warped_window_4": {
     "textures": "textures/blocks/building/warped_window_4"
   },
-  "levitate_warped_window_1": {
+  "bearing_warped_window_1": {
     "textures": "textures/blocks/building/warped_window_1"
   },
-  "levitate_warped_window_5": {
+  "bearing_warped_window_5": {
     "textures": "textures/blocks/building/warped_window_5"
   },
-  "levitate_cherry_window_end": {
+  "bearing_cherry_window_end": {
     "textures": "textures/blocks/building/cherry_window_end"
   },
-  "levitate_cherry_window_0": {
+  "bearing_cherry_window_0": {
     "textures": "textures/blocks/building/cherry_window_0"
   },
-  "levitate_cherry_window_4": {
+  "bearing_cherry_window_4": {
     "textures": "textures/blocks/building/cherry_window_4"
   },
-  "levitate_cherry_window_1": {
+  "bearing_cherry_window_1": {
     "textures": "textures/blocks/building/cherry_window_1"
   },
-  "levitate_cherry_window_5": {
+  "bearing_cherry_window_5": {
     "textures": "textures/blocks/building/cherry_window_5"
   },
-  "levitate_bamboo_window_end": {
+  "bearing_bamboo_window_end": {
     "textures": "textures/blocks/building/bamboo_window_end"
   },
-  "levitate_bamboo_window_0": {
+  "bearing_bamboo_window_0": {
     "textures": "textures/blocks/building/bamboo_window_0"
   },
-  "levitate_bamboo_window_4": {
+  "bearing_bamboo_window_4": {
     "textures": "textures/blocks/building/bamboo_window_4"
   },
-  "levitate_bamboo_window_1": {
+  "bearing_bamboo_window_1": {
     "textures": "textures/blocks/building/bamboo_window_1"
   },
-  "levitate_bamboo_window_5": {
+  "bearing_bamboo_window_5": {
     "textures": "textures/blocks/building/bamboo_window_5"
   },
-  "levitate_ornate_iron_window_end": {
+  "bearing_ornate_iron_window_end": {
     "textures": "textures/blocks/building/ornate_iron_window_end"
   },
-  "levitate_ornate_iron_window_0": {
+  "bearing_ornate_iron_window_0": {
     "textures": "textures/blocks/building/ornate_iron_window_0"
   },
-  "levitate_ornate_iron_window_4": {
+  "bearing_ornate_iron_window_4": {
     "textures": "textures/blocks/building/ornate_iron_window_4"
   },
-  "levitate_ornate_iron_window_1": {
+  "bearing_ornate_iron_window_1": {
     "textures": "textures/blocks/building/ornate_iron_window_1"
   },
-  "levitate_ornate_iron_window_5": {
+  "bearing_ornate_iron_window_5": {
     "textures": "textures/blocks/building/ornate_iron_window_5"
   },
-  "levitate_industrial_iron_window_end": {
+  "bearing_industrial_iron_window_end": {
     "textures": "textures/blocks/building/industrial_iron_window_end"
   },
-  "levitate_industrial_iron_window_0": {
+  "bearing_industrial_iron_window_0": {
     "textures": "textures/blocks/building/industrial_iron_window_0"
   },
-  "levitate_industrial_iron_window_4": {
+  "bearing_industrial_iron_window_4": {
     "textures": "textures/blocks/building/industrial_iron_window_4"
   },
-  "levitate_industrial_iron_window_1": {
+  "bearing_industrial_iron_window_1": {
     "textures": "textures/blocks/building/industrial_iron_window_1"
   },
-  "levitate_industrial_iron_window_5": {
+  "bearing_industrial_iron_window_5": {
     "textures": "textures/blocks/building/industrial_iron_window_5"
   },
-  "levitate_industrial_iron_window_2": {
+  "bearing_industrial_iron_window_2": {
     "textures": "textures/blocks/building/industrial_iron_window_2"
   },
-  "levitate_industrial_iron_window_8": {
+  "bearing_industrial_iron_window_8": {
     "textures": "textures/blocks/building/industrial_iron_window_8"
   },
-  "levitate_industrial_iron_window_6": {
+  "bearing_industrial_iron_window_6": {
     "textures": "textures/blocks/building/industrial_iron_window_6"
   },
-  "levitate_industrial_iron_window_12": {
+  "bearing_industrial_iron_window_12": {
     "textures": "textures/blocks/building/industrial_iron_window_12"
   },
-  "levitate_industrial_iron_window_3": {
+  "bearing_industrial_iron_window_3": {
     "textures": "textures/blocks/building/industrial_iron_window_3"
   },
-  "levitate_industrial_iron_window_9": {
+  "bearing_industrial_iron_window_9": {
     "textures": "textures/blocks/building/industrial_iron_window_9"
   },
-  "levitate_industrial_iron_window_7": {
+  "bearing_industrial_iron_window_7": {
     "textures": "textures/blocks/building/industrial_iron_window_7"
   },
-  "levitate_industrial_iron_window_13": {
+  "bearing_industrial_iron_window_13": {
     "textures": "textures/blocks/building/industrial_iron_window_13"
   },
-  "levitate_industrial_iron_window_10": {
+  "bearing_industrial_iron_window_10": {
     "textures": "textures/blocks/building/industrial_iron_window_10"
   },
-  "levitate_industrial_iron_window_14": {
+  "bearing_industrial_iron_window_14": {
     "textures": "textures/blocks/building/industrial_iron_window_14"
   },
-  "levitate_industrial_iron_window_11": {
+  "bearing_industrial_iron_window_11": {
     "textures": "textures/blocks/building/industrial_iron_window_11"
   },
-  "levitate_industrial_iron_window_15": {
+  "bearing_industrial_iron_window_15": {
     "textures": "textures/blocks/building/industrial_iron_window_15"
   },
-  "levitate_weathered_iron_window_end": {
+  "bearing_weathered_iron_window_end": {
     "textures": "textures/blocks/building/weathered_iron_window_end"
   },
-  "levitate_weathered_iron_window_0": {
+  "bearing_weathered_iron_window_0": {
     "textures": "textures/blocks/building/weathered_iron_window_0"
   },
-  "levitate_weathered_iron_window_4": {
+  "bearing_weathered_iron_window_4": {
     "textures": "textures/blocks/building/weathered_iron_window_4"
   },
-  "levitate_weathered_iron_window_1": {
+  "bearing_weathered_iron_window_1": {
     "textures": "textures/blocks/building/weathered_iron_window_1"
   },
-  "levitate_weathered_iron_window_5": {
+  "bearing_weathered_iron_window_5": {
     "textures": "textures/blocks/building/weathered_iron_window_5"
   },
-  "levitate_weathered_iron_window_2": {
+  "bearing_weathered_iron_window_2": {
     "textures": "textures/blocks/building/weathered_iron_window_2"
   },
-  "levitate_weathered_iron_window_8": {
+  "bearing_weathered_iron_window_8": {
     "textures": "textures/blocks/building/weathered_iron_window_8"
   },
-  "levitate_weathered_iron_window_6": {
+  "bearing_weathered_iron_window_6": {
     "textures": "textures/blocks/building/weathered_iron_window_6"
   },
-  "levitate_weathered_iron_window_12": {
+  "bearing_weathered_iron_window_12": {
     "textures": "textures/blocks/building/weathered_iron_window_12"
   },
-  "levitate_weathered_iron_window_3": {
+  "bearing_weathered_iron_window_3": {
     "textures": "textures/blocks/building/weathered_iron_window_3"
   },
-  "levitate_weathered_iron_window_9": {
+  "bearing_weathered_iron_window_9": {
     "textures": "textures/blocks/building/weathered_iron_window_9"
   },
-  "levitate_weathered_iron_window_7": {
+  "bearing_weathered_iron_window_7": {
     "textures": "textures/blocks/building/weathered_iron_window_7"
   },
-  "levitate_weathered_iron_window_13": {
+  "bearing_weathered_iron_window_13": {
     "textures": "textures/blocks/building/weathered_iron_window_13"
   },
-  "levitate_weathered_iron_window_10": {
+  "bearing_weathered_iron_window_10": {
     "textures": "textures/blocks/building/weathered_iron_window_10"
   },
-  "levitate_weathered_iron_window_14": {
+  "bearing_weathered_iron_window_14": {
     "textures": "textures/blocks/building/weathered_iron_window_14"
   },
-  "levitate_weathered_iron_window_11": {
+  "bearing_weathered_iron_window_11": {
     "textures": "textures/blocks/building/weathered_iron_window_11"
   },
-  "levitate_weathered_iron_window_15": {
+  "bearing_weathered_iron_window_15": {
     "textures": "textures/blocks/building/weathered_iron_window_15"
   },
-  "levitate_framed_glass_pane": {
+  "bearing_framed_glass_pane": {
     "textures": "textures/blocks/building/framed_glass_pane"
   },
-  "levitate_horizontal_framed_glass_pane": {
+  "bearing_horizontal_framed_glass_pane": {
     "textures": "textures/blocks/building/horizontal_framed_glass_pane"
   },
-  "levitate_vertical_framed_glass_pane": {
+  "bearing_vertical_framed_glass_pane": {
     "textures": "textures/blocks/building/vertical_framed_glass_pane"
   },
-  "levitate_tiled_glass_pane": {
+  "bearing_tiled_glass_pane": {
     "textures": "textures/blocks/building/tiled_glass_pane"
   },
-  "levitate_oak_window_pane": {
+  "bearing_oak_window_pane": {
     "textures": "textures/blocks/building/oak_window_pane"
   },
-  "levitate_spruce_window_pane": {
+  "bearing_spruce_window_pane": {
     "textures": "textures/blocks/building/spruce_window_pane"
   },
-  "levitate_birch_window_pane": {
+  "bearing_birch_window_pane": {
     "textures": "textures/blocks/building/birch_window_pane"
   },
-  "levitate_jungle_window_pane": {
+  "bearing_jungle_window_pane": {
     "textures": "textures/blocks/building/jungle_window_pane"
   },
-  "levitate_acacia_window_pane": {
+  "bearing_acacia_window_pane": {
     "textures": "textures/blocks/building/acacia_window_pane"
   },
-  "levitate_dark_oak_window_pane": {
+  "bearing_dark_oak_window_pane": {
     "textures": "textures/blocks/building/dark_oak_window_pane"
   },
-  "levitate_mangrove_window_pane": {
+  "bearing_mangrove_window_pane": {
     "textures": "textures/blocks/building/mangrove_window_pane"
   },
-  "levitate_crimson_window_pane": {
+  "bearing_crimson_window_pane": {
     "textures": "textures/blocks/building/crimson_window_pane"
   },
-  "levitate_warped_window_pane": {
+  "bearing_warped_window_pane": {
     "textures": "textures/blocks/building/warped_window_pane"
   },
-  "levitate_cherry_window_pane": {
+  "bearing_cherry_window_pane": {
     "textures": "textures/blocks/building/cherry_window_pane"
   },
-  "levitate_bamboo_window_pane": {
+  "bearing_bamboo_window_pane": {
     "textures": "textures/blocks/building/bamboo_window_pane"
   },
-  "levitate_ornate_iron_window_pane": {
+  "bearing_ornate_iron_window_pane": {
     "textures": "textures/blocks/building/ornate_iron_window_pane"
   },
-  "levitate_industrial_iron_window_pane": {
+  "bearing_industrial_iron_window_pane": {
     "textures": "textures/blocks/building/industrial_iron_window_pane"
   },
-  "levitate_weathered_iron_window_pane": {
+  "bearing_weathered_iron_window_pane": {
     "textures": "textures/blocks/building/weathered_iron_window_pane"
   },
-  "levitate_andesite_bars": {
+  "bearing_andesite_bars": {
     "textures": "textures/blocks/building/andesite_bars"
   },
-  "levitate_brass_bars": {
+  "bearing_brass_bars": {
     "textures": "textures/blocks/building/brass_bars"
   },
-  "levitate_copper_bars": {
+  "bearing_copper_bars": {
     "textures": "textures/blocks/building/copper_bars"
   },
-  "levitate_copper_shingles_fresh": {
+  "bearing_copper_shingles_fresh": {
     "textures": "textures/blocks/building/copper_shingles_fresh"
   },
-  "levitate_copper_shingles_exposed": {
+  "bearing_copper_shingles_exposed": {
     "textures": "textures/blocks/building/copper_shingles_exposed"
   },
-  "levitate_copper_shingles_weathered": {
+  "bearing_copper_shingles_weathered": {
     "textures": "textures/blocks/building/copper_shingles_weathered"
   },
-  "levitate_copper_shingles_oxidized": {
+  "bearing_copper_shingles_oxidized": {
     "textures": "textures/blocks/building/copper_shingles_oxidized"
   },
-  "levitate_copper_tiles_fresh": {
+  "bearing_copper_tiles_fresh": {
     "textures": "textures/blocks/building/copper_tiles_fresh"
   },
-  "levitate_copper_tiles_exposed": {
+  "bearing_copper_tiles_exposed": {
     "textures": "textures/blocks/building/copper_tiles_exposed"
   },
-  "levitate_copper_tiles_weathered": {
+  "bearing_copper_tiles_weathered": {
     "textures": "textures/blocks/building/copper_tiles_weathered"
   },
-  "levitate_copper_tiles_oxidized": {
+  "bearing_copper_tiles_oxidized": {
     "textures": "textures/blocks/building/copper_tiles_oxidized"
   },
-  "levitate_andesite_scaffolding": {
+  "bearing_andesite_scaffolding": {
     "textures": "textures/blocks/building/andesite_scaffolding"
   },
-  "levitate_brass_scaffolding": {
+  "bearing_brass_scaffolding": {
     "textures": "textures/blocks/building/brass_scaffolding"
   },
-  "levitate_copper_scaffolding": {
+  "bearing_copper_scaffolding": {
     "textures": "textures/blocks/building/copper_scaffolding"
   },
-  "levitate_andesite_ladder": {
+  "bearing_andesite_ladder": {
     "textures": "textures/blocks/building/andesite_ladder"
   },
-  "levitate_brass_ladder": {
+  "bearing_brass_ladder": {
     "textures": "textures/blocks/building/brass_ladder"
   },
-  "levitate_copper_ladder": {
+  "bearing_copper_ladder": {
     "textures": "textures/blocks/building/copper_ladder"
   },
-  "levitate_andesite_door": {
+  "bearing_andesite_door": {
     "textures": "textures/blocks/building/andesite_door"
   },
-  "levitate_brass_door": {
+  "bearing_brass_door": {
     "textures": "textures/blocks/building/brass_door"
   },
-  "levitate_copper_door": {
+  "bearing_copper_door": {
     "textures": "textures/blocks/building/copper_door"
   },
-  "levitate_train_door": {
+  "bearing_train_door": {
     "textures": "textures/blocks/building/train_door"
   },
-  "levitate_framed_glass_door": {
+  "bearing_framed_glass_door": {
     "textures": "textures/blocks/building/framed_glass_door"
   },
-  "levitate_train_trapdoor": {
+  "bearing_train_trapdoor": {
     "textures": "textures/blocks/building/train_trapdoor"
   },
-  "levitate_framed_glass_trapdoor": {
+  "bearing_framed_glass_trapdoor": {
     "textures": "textures/blocks/building/framed_glass_trapdoor"
   },
-  "levitate_metal_girder": {
+  "bearing_metal_girder": {
     "textures": "textures/blocks/building/metal_girder"
   },
-  "levitate_girder_shaft": {
+  "bearing_girder_shaft": {
     "textures": "textures/blocks/building/girder_shaft"
   },
-  "levitate_metal_bracket": {
+  "bearing_metal_bracket": {
     "textures": "textures/blocks/building/metal_bracket"
   },
-  "levitate_metal_bracket_ring": {
+  "bearing_metal_bracket_ring": {
     "textures": "textures/blocks/building/metal_bracket_ring"
   },
-  "levitate_wooden_bracket": {
+  "bearing_wooden_bracket": {
     "textures": "textures/blocks/building/wooden_bracket"
   },
-  "levitate_wooden_bracket_ring": {
+  "bearing_wooden_bracket_ring": {
     "textures": "textures/blocks/building/wooden_bracket_ring"
   },
-  "levitate_white_table_cloth": {
+  "bearing_white_table_cloth": {
     "textures": "textures/blocks/building/white_table_cloth"
   },
-  "levitate_orange_table_cloth": {
+  "bearing_orange_table_cloth": {
     "textures": "textures/blocks/building/orange_table_cloth"
   },
-  "levitate_magenta_table_cloth": {
+  "bearing_magenta_table_cloth": {
     "textures": "textures/blocks/building/magenta_table_cloth"
   },
-  "levitate_light_blue_table_cloth": {
+  "bearing_light_blue_table_cloth": {
     "textures": "textures/blocks/building/light_blue_table_cloth"
   },
-  "levitate_yellow_table_cloth": {
+  "bearing_yellow_table_cloth": {
     "textures": "textures/blocks/building/yellow_table_cloth"
   },
-  "levitate_lime_table_cloth": {
+  "bearing_lime_table_cloth": {
     "textures": "textures/blocks/building/lime_table_cloth"
   },
-  "levitate_pink_table_cloth": {
+  "bearing_pink_table_cloth": {
     "textures": "textures/blocks/building/pink_table_cloth"
   },
-  "levitate_gray_table_cloth": {
+  "bearing_gray_table_cloth": {
     "textures": "textures/blocks/building/gray_table_cloth"
   },
-  "levitate_light_gray_table_cloth": {
+  "bearing_light_gray_table_cloth": {
     "textures": "textures/blocks/building/light_gray_table_cloth"
   },
-  "levitate_cyan_table_cloth": {
+  "bearing_cyan_table_cloth": {
     "textures": "textures/blocks/building/cyan_table_cloth"
   },
-  "levitate_purple_table_cloth": {
+  "bearing_purple_table_cloth": {
     "textures": "textures/blocks/building/purple_table_cloth"
   },
-  "levitate_blue_table_cloth": {
+  "bearing_blue_table_cloth": {
     "textures": "textures/blocks/building/blue_table_cloth"
   },
-  "levitate_brown_table_cloth": {
+  "bearing_brown_table_cloth": {
     "textures": "textures/blocks/building/brown_table_cloth"
   },
-  "levitate_green_table_cloth": {
+  "bearing_green_table_cloth": {
     "textures": "textures/blocks/building/green_table_cloth"
   },
-  "levitate_red_table_cloth": {
+  "bearing_red_table_cloth": {
     "textures": "textures/blocks/building/red_table_cloth"
   },
-  "levitate_black_table_cloth": {
+  "bearing_black_table_cloth": {
     "textures": "textures/blocks/building/black_table_cloth"
   },
-  "levitate_andesite_table_cloth": {
+  "bearing_andesite_table_cloth": {
     "textures": "textures/blocks/building/andesite_table_cloth"
   },
-  "levitate_brass_table_cloth": {
+  "bearing_brass_table_cloth": {
     "textures": "textures/blocks/building/brass_table_cloth"
   },
-  "levitate_copper_table_cloth": {
+  "bearing_copper_table_cloth": {
     "textures": "textures/blocks/building/copper_table_cloth"
   },
-  "levitate_placard": {
+  "bearing_placard": {
     "textures": "textures/blocks/building/placard"
   },
-  "levitate_placard_powered": {
+  "bearing_placard_powered": {
     "textures": "textures/blocks/building/placard_powered"
   },
-  "levitate_copycat_base": {
+  "bearing_copycat_base": {
     "textures": "textures/blocks/building/copycat_base"
   }
 }

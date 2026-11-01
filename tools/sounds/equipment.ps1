@@ -5,7 +5,7 @@
 #                           air through a tube, a falling resonant body and a soft low thump, 0.45 s.
 #                           Played at the ammo type's pitch (sounds.d/equipment.json; pitch at runtime).
 # The hit sound (Create's potato_hit) layers two vanilla sounds, as Create does (sounds.d/equipment.json).
-param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/levitate'))
+param([string]$Out = (Join-Path $PSScriptRoot '../../assets/pack/rp/sounds/bearing'))
 
 $rate = 44100
 New-Item -ItemType Directory -Force $Out | Out-Null

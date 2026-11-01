@@ -33,7 +33,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 void relocate(Train& t, ct::Body body);
 
@@ -306,6 +306,6 @@ private:
     ll::event::ListenerPtr     mTick;
 };
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains
 
-LV_REGISTER_MODULE(lv::feature::trains::RelocationModule);
+BR_REGISTER_MODULE(br::feature::trains::RelocationModule);

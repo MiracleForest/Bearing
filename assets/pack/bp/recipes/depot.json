@@ -2,26 +2,26 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:depot"
+      "identifier": "bearing:depot"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:depot"
+      "item": "bearing:depot"
     }
   }
 }

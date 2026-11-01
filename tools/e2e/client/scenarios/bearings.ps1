@@ -36,18 +36,18 @@ Invoke-Chat '/time set noon'
 Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.5 ~'
 Start-Sleep -Milliseconds 500
 # a mechanical bearing facing west (towards the player) on a test source; a cross of sails in front
-Invoke-Chat '/setblock ~9 ~2 ~ levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~8 ~2 ~ levitate:mechanical_bearing ["levitate:facing"=4]'
-Invoke-Chat '/setblock ~7 ~2 ~ levitate:white_sail ["levitate:facing"=4]'
+Invoke-Chat '/setblock ~9 ~2 ~ bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~8 ~2 ~ bearing:mechanical_bearing ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~7 ~2 ~ bearing:white_sail ["bearing:facing"=4]'
 foreach ($o in 1, 2) {
-    Invoke-Chat "/setblock ~7 ~$(2 + $o) ~ levitate:red_sail [""levitate:facing""=4]"
-    Invoke-Chat "/setblock ~7 ~$(2 - $o) ~ levitate:white_sail [""levitate:facing""=4]"
-    Invoke-Chat "/setblock ~7 ~2 ~$o levitate:white_sail [""levitate:facing""=4]"
-    Invoke-Chat "/setblock ~7 ~2 ~-$o levitate:white_sail [""levitate:facing""=4]"
+    Invoke-Chat "/setblock ~7 ~$(2 + $o) ~ bearing:red_sail [""bearing:facing""=4]"
+    Invoke-Chat "/setblock ~7 ~$(2 - $o) ~ bearing:white_sail [""bearing:facing""=4]"
+    Invoke-Chat "/setblock ~7 ~2 ~$o bearing:white_sail [""bearing:facing""=4]"
+    Invoke-Chat "/setblock ~7 ~2 ~-$o bearing:white_sail [""bearing:facing""=4]"
 }
 # rails: a cart assembler on the left, a controller rail on the right
-Invoke-Chat '/setblock ~5 ~ ~-4 levitate:cart_assembler ["levitate:rail_axis"=1,"levitate:rail_type"=1]'
-Invoke-Chat '/setblock ~5 ~ ~4 levitate:controller_rail ["levitate:rail_axis"=1,"levitate:power"=15]'
+Invoke-Chat '/setblock ~5 ~ ~-4 bearing:cart_assembler ["bearing:rail_axis"=1,"bearing:rail_type"=1]'
+Invoke-Chat '/setblock ~5 ~ ~4 bearing:controller_rail ["bearing:rail_axis"=1,"bearing:power"=15]'
 Start-Sleep -Seconds 2
 Save-Screenshot 'built' | Out-Null
 
@@ -74,9 +74,9 @@ Save-Screenshot 'placed' | Out-Null
 # a minecart contraption (U21): a minecart placed on a powered controller rail is sent east over
 # a powered cart assembler, which puts the plank above it on the cart and sends it on along the
 # rails
-Invoke-Chat '/setblock ~4 ~ ~-8 levitate:controller_rail ["levitate:rail_axis"=1,"levitate:backwards"=1,"levitate:power"=15]'
+Invoke-Chat '/setblock ~4 ~ ~-8 bearing:controller_rail ["bearing:rail_axis"=1,"bearing:backwards"=1,"bearing:power"=15]'
 Invoke-Chat '/setblock ~4 ~ ~-9 redstone_block'
-Invoke-Chat '/setblock ~5 ~ ~-8 levitate:cart_assembler ["levitate:rail_axis"=1,"levitate:rail_type"=0,"levitate:powered"=1]'
+Invoke-Chat '/setblock ~5 ~ ~-8 bearing:cart_assembler ["bearing:rail_axis"=1,"bearing:rail_type"=0,"bearing:powered"=1]'
 Invoke-Chat '/setblock ~5 ~ ~-9 redstone_block'
 Invoke-Chat '/setblock ~5 ~1 ~-8 oak_planks'
 Invoke-Chat '/fill ~6 ~ ~-8 ~18 ~ ~-8 rail ["rail_direction"=1]'
@@ -91,7 +91,7 @@ Start-Sleep -Milliseconds 800
 $before = Save-Screenshot 'cart-placing'
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
-Wait-LogLine 'minecart placed on levitate:controller_rail' 20 -Since $mark | Out-Null
+Wait-LogLine 'minecart placed on bearing:controller_rail' 20 -Since $mark | Out-Null
 Wait-LogLine 'cart assembler at .* assembled contraption #\d+ on minecart' 30 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 1500
 $after = Save-Screenshot 'cart-gone'
@@ -105,7 +105,7 @@ Invoke-Chat '/fill ~2 ~ ~8 ~8 ~ ~8 rail ["rail_direction"=1]'
 Start-Sleep -Milliseconds 500
 Invoke-Chat '/summon minecart ~3 ~ ~8'
 Invoke-Chat '/summon minecart ~6 ~ ~8'
-Invoke-Chat '/give @s levitate:minecart_coupling 4'
+Invoke-Chat '/give @s bearing:minecart_coupling 4'
 Start-Sleep -Milliseconds 800
 Press-Key 2
 $mark = Get-LogMark

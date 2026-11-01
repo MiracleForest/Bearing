@@ -24,12 +24,12 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace {
 
-constexpr char kDbColumns[]  = "lv:pistons:columns";
-constexpr char kDbContacts[] = "lv:pistons:contacts";
+constexpr char kDbColumns[]  = "br:pistons:columns";
+constexpr char kDbContacts[] = "br:pistons:contacts";
 
 struct Column {
     int  target          = 0;
@@ -391,4 +391,4 @@ void loadElevators() {
     }
 }
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

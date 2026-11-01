@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:mechanical_bearing"
+      "identifier": "bearing:mechanical_bearing"
     },
     "tags": [
       "crafting_table"
@@ -17,19 +17,19 @@
         "tag": "minecraft:wooden_slabs"
       },
       "C": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "I": {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:mechanical_bearing",
+      "item": "bearing:mechanical_bearing",
       "count": 1
     }
   }

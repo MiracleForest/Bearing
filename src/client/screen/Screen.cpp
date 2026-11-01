@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include "client/screen/Screen.h"
 
@@ -44,7 +44,7 @@
 #include <windows.h>
 #pragma comment(lib, "user32.lib")
 
-namespace lv::client::screen {
+namespace br::client::screen {
 
 namespace {
 mce::Color toColor(unsigned argb) {
@@ -181,7 +181,7 @@ void closeNow(bool popHost, bool notify = true) {
     }
     auto screen = std::move(s.screen);
     if (notify && !s.serverType.empty()) {
-        lv::feature::net::client::send("screen.closed", {{"type", s.serverType}, {"context", s.serverContext}});
+        br::feature::net::client::send("screen.closed", {{"type", s.serverType}, {"context", s.serverContext}});
     }
     if (popHost && !s.hostScene.empty() && topScene() == s.hostScene) {
         if (auto* stack = sceneStack()) stack->schedulePopScreen(1);
@@ -710,7 +710,7 @@ std::shared_ptr<ItemStack> iconOf(Json const& item) {
     if (!item.is_object()) return nullptr;
     // a fresh stack built from data on the client thread (never a copy of a game-owned stack)
     auto icon = std::make_shared<ItemStack>();
-    *icon     = lv::feature::common::items::fromJson(item);
+    *icon     = br::feature::common::items::fromJson(item);
     if (icon->isNull()) return nullptr;
     return icon;
 }
@@ -937,7 +937,7 @@ public:
         }));
 
         // server-opened screens
-        namespace net = lv::feature::net;
+        namespace net = br::feature::net;
         net::client::on("screen.open", [](Json const& msg) {
             auto type = msg.value("type", std::string{});
             auto it   = factories().find(type);
@@ -975,8 +975,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::screen
+} // namespace br::client::screen
 
-LV_REGISTER_MODULE(lv::client::screen::ScreenModule);
+BR_REGISTER_MODULE(br::client::screen::ScreenModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -20,7 +20,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::itemrender {
+namespace br::feature::itemrender {
 
 namespace {
 
@@ -75,7 +75,7 @@ std::atomic<bool> testProviderOn{false};
 
 } // namespace
 
-LV_REGISTER_SELFTEST("itemrender.sync", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.sync", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = at(ctx.testPos(3300), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     Companion c(ctx);
@@ -120,7 +120,7 @@ LV_REGISTER_SELFTEST("itemrender.sync", [](Context& ctx) -> ll::coro::CoroTask<>
     co_return;
 });
 
-LV_REGISTER_SELFTEST("itemrender.provider", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.provider", [](Context& ctx) -> ll::coro::CoroTask<> {
     static bool registered = false;
     if (!registered) {
         registered = true;
@@ -155,7 +155,7 @@ LV_REGISTER_SELFTEST("itemrender.provider", [](Context& ctx) -> ll::coro::CoroTa
     co_return;
 });
 
-LV_REGISTER_SELFTEST("itemrender.facing", [](Context& ctx) {
+BR_REGISTER_SELFTEST("itemrender.facing", [](Context& ctx) {
     auto check = [&](int face, float yaw, float pitch) {
         auto t = facingFace(face);
         ctx.check(std::abs(t.yaw - yaw) < 1e-3f && std::abs(t.pitch - pitch) < 1e-3f, "face " + std::to_string(face));
@@ -170,10 +170,10 @@ LV_REGISTER_SELFTEST("itemrender.facing", [](Context& ctx) {
 
 // ---- the units that publish display items --------------------------------------------------------
 
-LV_REGISTER_SELFTEST("itemrender.depot", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.depot", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = at(ctx.testPos(3320), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
-    ctx.require(ctx.setBlock(o, "levitate:depot"), "depot placed");
+    ctx.require(ctx.setBlock(o, "bearing:depot"), "depot placed");
     co_await ctx.ticks(2);
     auto& region = ctx.player().getDimensionBlockSource();
     auto  rest   = common::items::insert(region, game::blockPos(o), 1, stackOf(ctx, "minecraft:iron_ingot", 5), false);
@@ -193,12 +193,12 @@ LV_REGISTER_SELFTEST("itemrender.depot", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(count(&o) == 0, "taken out: gone");
 });
 
-LV_REGISTER_SELFTEST("itemrender.chute", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.chute", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = at(ctx.testPos(3330), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     auto chute = at(o, 0, 1, 0);
     ctx.require(ctx.setBlock(o, "minecraft:chest"), "chest below");
-    ctx.require(ctx.setBlock(chute, "levitate:chute"), "chute");
+    ctx.require(ctx.setBlock(chute, "bearing:chute"), "chute");
     co_await ctx.ticks(2);
     auto& region = ctx.player().getDimensionBlockSource();
     auto  rest   = common::items::insert(region, game::blockPos(chute), -1, stackOf(ctx, "minecraft:stone", 5), false);
@@ -211,12 +211,12 @@ LV_REGISTER_SELFTEST("itemrender.chute", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(count(&chute) == 0, "gone once it left the chute");
 });
 
-LV_REGISTER_SELFTEST("itemrender.filter_slot", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.filter_slot", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = at(ctx.testPos(3340), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
-    ctx.require(ctx.setBlock(o, "levitate:smart_chute"), "smart chute");
+    ctx.require(ctx.setBlock(o, "bearing:smart_chute"), "smart chute");
     co_await ctx.ticks(1);
-    ctx.check(hasProvider("levitate:smart_chute"), "blocks with filter slots have a provider");
+    ctx.check(hasProvider("bearing:smart_chute"), "blocks with filter slots have a provider");
     common::filterslot::set(o, stackOf(ctx, "minecraft:diamond"));
     ctx.check(count(&o) >= 1, "the filter item is drawn on the slot's faces");
     for (auto const& [slot, d] : itemsOf(o)) {
@@ -228,10 +228,10 @@ LV_REGISTER_SELFTEST("itemrender.filter_slot", [](Context& ctx) -> ll::coro::Cor
     ctx.check(count(&o) == 0, "a cleared filter is not drawn");
 });
 
-LV_REGISTER_SELFTEST("itemrender.funnel_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.funnel_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = at(ctx.testPos(3345), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
-    ctx.require(ctx.setBlock(o, "levitate:brass_funnel", {{"levitate:facing", 1}}), "brass funnel");
+    ctx.require(ctx.setBlock(o, "bearing:brass_funnel", {{"bearing:facing", 1}}), "brass funnel");
     co_await ctx.ticks(1);
     common::filterslot::set(o, stackOf(ctx, "minecraft:iron_ingot"));
     auto list = itemsOf(o);
@@ -243,10 +243,10 @@ LV_REGISTER_SELFTEST("itemrender.funnel_filter", [](Context& ctx) -> ll::coro::C
     common::filterslot::set(o, items::empty());
 });
 
-LV_REGISTER_SELFTEST("itemrender.placard", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.placard", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = at(ctx.testPos(3350), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
-    ctx.require(ctx.setBlock(o, "levitate:placard", {{"levitate:facing", 3}}), "placard facing south");
+    ctx.require(ctx.setBlock(o, "bearing:placard", {{"bearing:facing", 3}}), "placard facing south");
     co_await ctx.ticks(1);
     common::blockdata::edit(o)["building"]["item"] = items::toJson(stackOf(ctx, "minecraft:diamond"));
     refresh(o);
@@ -259,10 +259,10 @@ LV_REGISTER_SELFTEST("itemrender.placard", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(count(&o) == 0, "an empty placard shows nothing");
 });
 
-LV_REGISTER_SELFTEST("itemrender.deployer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("itemrender.deployer", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = at(ctx.testPos(3360), 0, 1, 0);
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
-    ctx.require(ctx.setBlock(o, "levitate:deployer", {{"levitate:facing", 3}}), "deployer");
+    ctx.require(ctx.setBlock(o, "bearing:deployer", {{"bearing:facing", 3}}), "deployer");
     co_await ctx.ticks(2);
     Companion c(ctx);
     auto& region = ctx.player().getDimensionBlockSource();
@@ -280,4 +280,4 @@ LV_REGISTER_SELFTEST("itemrender.deployer", [](Context& ctx) -> ll::coro::CoroTa
     co_return;
 });
 
-} // namespace lv::feature::itemrender
+} // namespace br::feature::itemrender

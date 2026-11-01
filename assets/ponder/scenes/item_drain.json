@@ -2,17 +2,17 @@
   "id": "item_drain",
   "size": [5, 5],
   "blocks": [
-    {"at": [2, 1, 2], "id": "levitate:item_drain"},
-    {"at": [0, 1, 2], "id": "levitate:belt", "states": {"levitate:facing": 3, "levitate:part": 0}},
-    {"at": [1, 1, 2], "id": "levitate:belt", "states": {"levitate:facing": 3, "levitate:part": 2}},
-    {"at": [3, 1, 2], "id": "levitate:depot"},
-    {"at": [2, 1, 1], "id": "levitate:fluid_pipe", "states": {"levitate:down": 0, "levitate:up": 0, "levitate:north": 1, "levitate:south": 1, "levitate:west": 0, "levitate:east": 0, "levitate:rim_a": 0, "levitate:rim_b": 1}},
-    {"at": [2, 1, 0], "id": "levitate:fluid_pipe", "states": {"levitate:down": 0, "levitate:up": 0, "levitate:north": 0, "levitate:south": 1, "levitate:west": 0, "levitate:east": 1, "levitate:rim_a": 0, "levitate:rim_b": 4}},
-    {"at": [3, 1, 0], "id": "levitate:mechanical_pump", "states": {"levitate:facing": 5}},
-    {"at": [3, 2, 0], "id": "levitate:cogwheel", "states": {"levitate:axis": 0}},
-    {"at": [2, 2, 0], "id": "levitate:creative_motor", "states": {"levitate:facing": 5}},
-    {"at": [4, 1, 0], "id": "levitate:fluid_tank", "states": {"levitate:above": 1, "levitate:below": 0, "levitate:shape": 0}},
-    {"at": [4, 2, 0], "id": "levitate:fluid_tank", "states": {"levitate:above": 0, "levitate:below": 1, "levitate:shape": 0}}
+    {"at": [2, 1, 2], "id": "bearing:item_drain"},
+    {"at": [0, 1, 2], "id": "bearing:belt", "states": {"bearing:facing": 3, "bearing:part": 0}},
+    {"at": [1, 1, 2], "id": "bearing:belt", "states": {"bearing:facing": 3, "bearing:part": 2}},
+    {"at": [3, 1, 2], "id": "bearing:depot"},
+    {"at": [2, 1, 1], "id": "bearing:fluid_pipe", "states": {"bearing:down": 0, "bearing:up": 0, "bearing:north": 1, "bearing:south": 1, "bearing:west": 0, "bearing:east": 0, "bearing:rim_a": 0, "bearing:rim_b": 1}},
+    {"at": [2, 1, 0], "id": "bearing:fluid_pipe", "states": {"bearing:down": 0, "bearing:up": 0, "bearing:north": 0, "bearing:south": 1, "bearing:west": 0, "bearing:east": 1, "bearing:rim_a": 0, "bearing:rim_b": 4}},
+    {"at": [3, 1, 0], "id": "bearing:mechanical_pump", "states": {"bearing:facing": 5}},
+    {"at": [3, 2, 0], "id": "bearing:cogwheel", "states": {"bearing:axis": 0}},
+    {"at": [2, 2, 0], "id": "bearing:creative_motor", "states": {"bearing:facing": 5}},
+    {"at": [4, 1, 0], "id": "bearing:fluid_tank", "states": {"bearing:above": 1, "bearing:below": 0, "bearing:shape": 0}},
+    {"at": [4, 2, 0], "id": "bearing:fluid_tank", "states": {"bearing:above": 0, "bearing:below": 1, "bearing:shape": 0}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

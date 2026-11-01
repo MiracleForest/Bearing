@@ -25,7 +25,7 @@
 #include "game/WorldDb.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common::vanillaitems {
+namespace br::feature::common::vanillaitems {
 
 namespace {
 
@@ -219,6 +219,6 @@ private:
     std::uint64_t          mTicks = 0;
 };
 
-} // namespace lv::feature::common::vanillaitems
+} // namespace br::feature::common::vanillaitems
 
-LV_REGISTER_MODULE_ORDERED(lv::feature::common::vanillaitems::VanillaItemsModule, lv::ModuleOrder::Services);
+BR_REGISTER_MODULE_ORDERED(br::feature::common::vanillaitems::VanillaItemsModule, br::ModuleOrder::Services);

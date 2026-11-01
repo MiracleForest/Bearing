@@ -1,14 +1,14 @@
 #pragma once
 
-// Train tracks (U5): the `levitate:track` block, curved tracks and the track graph.
+// Train tracks (U5): the `bearing:track` block, curved tracks and the track graph.
 //
 // Contract for later units (trains U27, signals/observers U28, stations U27, wrench U8):
 //
-//   auto& rail = lv::feature::tracks::railways();          // every track graph of the world
-//   auto  at   = lv::feature::tracks::locate(dim, pos);    // nearest graph location
+//   auto& rail = br::feature::tracks::railways();          // every track graph of the world
+//   auto  at   = br::feature::tracks::locate(dim, pos);    // nearest graph location
 //   rail.findPath({...});                                    // A* over directed edges
 //   rail.addPoint({...});                                    // signals / stations / observers
-//   lv::feature::tracks::onGraphChanged([] { ... });        // after every batch of changes
+//   br::feature::tracks::onGraphChanged([] { ... });        // after every batch of changes
 //
 // Everything runs on the server thread and is valid while a world is loaded
 // (`game::db::onWorldReady` … `onWorldClosed`). Graph types live in `core/tracks/Graph.h`.
@@ -27,15 +27,15 @@ class BlockSource;
 class Player;
 class Vec3;
 
-namespace lv::feature::tracks {
+namespace br::feature::tracks {
 
-inline constexpr std::string_view kTrackId     = "levitate:track";
-inline constexpr std::string_view kFakeTrackId = "levitate:fake_track";
-/// Block states of `levitate:track`.
+inline constexpr std::string_view kTrackId     = "bearing:track";
+inline constexpr std::string_view kFakeTrackId = "bearing:fake_track";
+/// Block states of `bearing:track`.
 /// core::tracks::Shape = shape + 16 * shape_hi (Bedrock allows at most 16 values per state)
-inline constexpr std::string_view kShapeState   = "levitate:shape";
-inline constexpr std::string_view kShapeHiState = "levitate:shape_hi";
-inline constexpr std::string_view kTurnState    = "levitate:turn"; ///< 1 while curves start here (Create's HAS_BE)
+inline constexpr std::string_view kShapeState   = "bearing:shape";
+inline constexpr std::string_view kShapeHiState = "bearing:shape_hi";
+inline constexpr std::string_view kTurnState    = "bearing:turn"; ///< 1 while curves start here (Create's HAS_BE)
 
 /// The world's track graphs.
 [[nodiscard]] core::tracks::Railways& railways();
@@ -62,4 +62,4 @@ void onGraphChanged(std::function<void()> fn);
 /// curves removed. The block itself is left to the caller.
 int dismantleCurves(Player& player, core::GlobalPos const& pos);
 
-} // namespace lv::feature::tracks
+} // namespace br::feature::tracks

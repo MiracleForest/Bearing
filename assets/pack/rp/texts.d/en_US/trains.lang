@@ -1,9 +1,9 @@
-tile.levitate:track_station.name=Train Station
-item.levitate:track_station=Train Station
-tile.levitate:small_bogey.name=Small Bogey
-tile.levitate:large_bogey.name=Large Bogey
-tile.levitate:controls.name=Train Controls
-item.levitate:controls=Train Controls
-item.levitate:schedule.name=Train Schedule
-entity.levitate:carriage_contraption.name=Carriage Contraption
+tile.bearing:track_station.name=Train Station
+item.bearing:track_station=Train Station
+tile.bearing:small_bogey.name=Small Bogey
+tile.bearing:large_bogey.name=Large Bogey
+tile.bearing:controls.name=Train Controls
+item.bearing:controls=Train Controls
+item.bearing:schedule.name=Train Schedule
+entity.bearing:carriage_contraption.name=Carriage Contraption
 death.attack.create.run_over=%1$s was run over by %2$s

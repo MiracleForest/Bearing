@@ -2,24 +2,24 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:white_seat",
+      "identifier": "bearing:white_seat",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.seat",
+      "minecraft:geometry": "geometry.bearing.seat",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_white_seat_side",
+          "texture": "bearing_white_seat_side",
           "render_method": "opaque"
         },
         "top": {
-          "texture": "levitate_white_seat_top",
+          "texture": "bearing_white_seat_top",
           "render_method": "opaque"
         },
         "base": {
-          "texture": "levitate_seat_base",
+          "texture": "bearing_seat_base",
           "render_method": "opaque"
         }
       },

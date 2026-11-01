@@ -1,6 +1,6 @@
 // Selftests of the bulk processing unit (U13): testPos dx 1300..1399 (x = column, dz 0..4); U39
 // additions dx 3950..3989.
-// Machines are driven by U2's test generator (levitate:kinetics_test_source).
+// Machines are driven by U2's test generator (bearing:kinetics_test_source).
 
 #include <filesystem>
 #include <functional>
@@ -48,7 +48,7 @@
 #include "mod/Main.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 void recordPlacement(Player& player, BlockPos const& clicked, int face);
 
@@ -57,8 +57,8 @@ namespace {
 using selftest::Context;
 namespace items = common::items;
 
-constexpr char const* kSource = "levitate:kinetics_test_source";
-constexpr char const* kShaft  = "levitate:kinetics_test_shaft";
+constexpr char const* kSource = "bearing:kinetics_test_source";
+constexpr char const* kShaft  = "bearing:kinetics_test_shaft";
 constexpr int         X = 0, Y = 1, Z = 2;
 constexpr int         kDown = 0, kUp = 1, kNorth = 2, kSouth = 3, kWest = 4, kEast = 5;
 
@@ -126,7 +126,7 @@ struct FastFans {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("bulk.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("bulk.registry", [](Context& ctx) {
     for (auto id : {kMillstone, kWheel, kController, kFan, kNozzle}) {
         ctx.check(game::blockWith(id) != nullptr, std::string(id) + " is in the behavior pack");
     }
@@ -146,7 +146,7 @@ LV_REGISTER_SELFTEST("bulk.registry", [](Context& ctx) {
 
 // Every recipe file of every processing type loaded, and every vanilla item a recipe names exists on
 // Bedrock (U54: recipes with conflict markers or Java-only ids used to be skipped silently).
-LV_REGISTER_SELFTEST("bulk.recipe_items", [](Context& ctx) {
+BR_REGISTER_SELFTEST("bulk.recipe_items", [](Context& ctx) {
     namespace fs = std::filesystem;
     std::set<std::string> missing;
     std::size_t           checked = 0;
@@ -201,12 +201,12 @@ LV_REGISTER_SELFTEST("bulk.recipe_items", [](Context& ctx) {
     ctx.info("checked " + std::to_string(checked) + " item references");
 });
 
-LV_REGISTER_SELFTEST("bulk.millstone", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.millstone", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 0};
     ctx.require(co_await loadArea(ctx, a.at(0)), "test area loaded");
     auto& region = overworld(ctx);
     auto  mill   = a.at(0, 1);
-    ctx.require(ctx.setBlock(a.at(0), kSource, {{"levitate:axis", Y}}), "place the source");
+    ctx.require(ctx.setBlock(a.at(0), kSource, {{"bearing:axis", Y}}), "place the source");
     ctx.require(ctx.setBlock(mill, std::string(kMillstone)), "place the millstone");
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(0), 256);
@@ -246,12 +246,12 @@ LV_REGISTER_SELFTEST("bulk.millstone", [](Context& ctx) -> ll::coro::CoroTask<> 
     removeItems(region, around(mill, 3));
 });
 
-LV_REGISTER_SELFTEST("bulk.millstone_throw", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.millstone_throw", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 6};
     ctx.require(co_await loadArea(ctx, a.at(0)), "test area loaded");
     auto& region = overworld(ctx);
     auto  mill   = a.at(0, 1);
-    ctx.require(ctx.setBlock(a.at(0), kSource, {{"levitate:axis", Y}}), "place the source");
+    ctx.require(ctx.setBlock(a.at(0), kSource, {{"bearing:axis", Y}}), "place the source");
     ctx.require(ctx.setBlock(mill, std::string(kMillstone)), "place the millstone");
     co_await ctx.ticks(2);
     spawnItem(region, stack(ctx, "minecraft:cobblestone", 3), {mill.x + .5, mill.y + 1.6, mill.z + .5}, {});
@@ -262,26 +262,26 @@ LV_REGISTER_SELFTEST("bulk.millstone_throw", [](Context& ctx) -> ll::coro::CoroT
     removeItems(region, around(mill, 3));
 });
 
-LV_REGISTER_SELFTEST("bulk.crusher_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.crusher_controller", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 10};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto& region = overworld(ctx);
     auto  w1 = a.at(1, 1, 0), w2 = a.at(1, 1, 2), ctrl = a.at(1, 1, 1);
-    ctx.require(ctx.setBlock(a.at(0, 1, 0), kSource, {{"levitate:axis", X}}), "source 1");
-    ctx.require(ctx.setBlock(a.at(0, 1, 2), kSource, {{"levitate:axis", X}}), "source 2");
-    ctx.setBlock(w1, std::string(kWheel), {{"levitate:axis", X}});
-    ctx.setBlock(w2, std::string(kWheel), {{"levitate:axis", X}});
+    ctx.require(ctx.setBlock(a.at(0, 1, 0), kSource, {{"bearing:axis", X}}), "source 1");
+    ctx.require(ctx.setBlock(a.at(0, 1, 2), kSource, {{"bearing:axis", X}}), "source 2");
+    ctx.setBlock(w1, std::string(kWheel), {{"bearing:axis", X}});
+    ctx.setBlock(w2, std::string(kWheel), {{"bearing:axis", X}});
     ctx.cleanupBlock(ctrl);
     co_await ctx.ticks(3);
     // both turn the same way: an invalid controller
     ctx.check(idAt(region, toBlockPos(ctrl)) == kController, "a controller appears between the wheels");
-    ctx.check(stateOf(region.getBlock(toBlockPos(ctrl)), "levitate:valid") == 0, "wheels turning the same way: not valid");
+    ctx.check(stateOf(region.getBlock(toBlockPos(ctrl)), "bearing:valid") == 0, "wheels turning the same way: not valid");
     kinetics::setGeneratedSpeed(a.at(0, 1, 2), -16);
     co_await ctx.ticks(3);
     auto expected = cb::controllerFacing(cb::Axis::X, cb::Face::South, kinetics::speedAt(w1));
-    ctx.check(stateOf(region.getBlock(toBlockPos(ctrl)), "levitate:valid") == 1, "wheels turning inwards: valid");
+    ctx.check(stateOf(region.getBlock(toBlockPos(ctrl)), "bearing:valid") == 1, "wheels turning inwards: valid");
     ctx.check(
-        stateOf(region.getBlock(toBlockPos(ctrl)), "levitate:facing") == int(expected),
+        stateOf(region.getBlock(toBlockPos(ctrl)), "bearing:facing") == int(expected),
         "controller faces " + std::string(core::kinetics::faceName(expected))
     );
     ctx.check(crushingSpeedAt(region, ctrl) == cb::crushingSpeedOf(16), "crushing speed |16| / 50");
@@ -291,16 +291,16 @@ LV_REGISTER_SELFTEST("bulk.crusher_controller", [](Context& ctx) -> ll::coro::Co
     ctx.check(idAt(region, toBlockPos(ctrl)) != kController, "the controller goes with the wheel");
 });
 
-LV_REGISTER_SELFTEST("bulk.crusher_crushes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.crusher_crushes", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 15};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto& region = overworld(ctx);
     // wheels two blocks up so the output has room below
     auto w1 = a.at(1, 2, 0), w2 = a.at(1, 2, 2), ctrl = a.at(1, 2, 1);
-    ctx.setBlock(a.at(0, 2, 0), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(a.at(0, 2, 2), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(w1, std::string(kWheel), {{"levitate:axis", X}});
-    ctx.setBlock(w2, std::string(kWheel), {{"levitate:axis", X}});
+    ctx.setBlock(a.at(0, 2, 0), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(a.at(0, 2, 2), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(w1, std::string(kWheel), {{"bearing:axis", X}});
+    ctx.setBlock(w2, std::string(kWheel), {{"bearing:axis", X}});
     ctx.cleanupBlock(ctrl);
     co_await ctx.ticks(2);
     // pick the directions so that the pair pulls down
@@ -308,7 +308,7 @@ LV_REGISTER_SELFTEST("bulk.crusher_crushes", [](Context& ctx) -> ll::coro::CoroT
     kinetics::setGeneratedSpeed(a.at(0, 2, 0), s);
     kinetics::setGeneratedSpeed(a.at(0, 2, 2), -s);
     co_await ctx.ticks(3);
-    ctx.require(stateOf(region.getBlock(toBlockPos(ctrl)), "levitate:facing") == kDown, "the controller faces down");
+    ctx.require(stateOf(region.getBlock(toBlockPos(ctrl)), "bearing:facing") == kDown, "the controller faces down");
     // through the capability (a funnel / hopper above)
     auto rest = common::items::insert(region, toBlockPos(ctrl), kUp, stack(ctx, "minecraft:cobblestone", 2), false);
     ctx.check(items::isEmpty(rest), "the controller takes the cobblestone");
@@ -330,15 +330,15 @@ LV_REGISTER_SELFTEST("bulk.crusher_crushes", [](Context& ctx) -> ll::coro::CoroT
     removeItems(region, around(ctrl, 4));
 });
 
-LV_REGISTER_SELFTEST("bulk.crusher_damages", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.crusher_damages", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 20};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto& region = overworld(ctx);
     auto  w1 = a.at(1, 1, 0), w2 = a.at(1, 1, 2), ctrl = a.at(1, 1, 1);
-    ctx.setBlock(a.at(0, 1, 0), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(a.at(0, 1, 2), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(w1, std::string(kWheel), {{"levitate:axis", X}});
-    ctx.setBlock(w2, std::string(kWheel), {{"levitate:axis", X}});
+    ctx.setBlock(a.at(0, 1, 0), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(a.at(0, 1, 2), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(w1, std::string(kWheel), {{"bearing:axis", X}});
+    ctx.setBlock(w2, std::string(kWheel), {{"bearing:axis", X}});
     ctx.cleanupBlock(ctrl);
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(0, 1, 2), -16);
@@ -364,13 +364,13 @@ LV_REGISTER_SELFTEST("bulk.crusher_damages", [](Context& ctx) -> ll::coro::CoroT
     removeItems(region, around(ctrl, 4));
 });
 
-LV_REGISTER_SELFTEST("bulk.fan_current", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.fan_current", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 36};
     ctx.require(co_await loadArea(ctx, a.at(10)), "test area loaded");
     auto& region = overworld(ctx);
     auto  fan    = a.at(1, 0, 0);
-    ctx.setBlock(a.at(0, 0, 0), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kEast}});
+    ctx.setBlock(a.at(0, 0, 0), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kEast}});
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(0, 0, 0), 256);
     co_await ctx.ticks(3);
@@ -405,13 +405,13 @@ LV_REGISTER_SELFTEST("bulk.fan_current", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(common::airflow::typeAt(region, toBlockPos(a.at(3, 0, 0))) == "smoking", "a campfire is a smoking catalyst");
 });
 
-LV_REGISTER_SELFTEST("bulk.fan_pushes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.fan_pushes", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 36};
     ctx.require(co_await loadArea(ctx, a.at(10, 0, 2)), "test area loaded");
     auto& region = overworld(ctx);
     auto  fan    = a.at(1, 0, 2);
-    ctx.setBlock(a.at(0, 0, 2), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kEast}});
+    ctx.setBlock(a.at(0, 0, 2), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kEast}});
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(0, 0, 2), 256);
     co_await ctx.ticks(3);
@@ -428,15 +428,15 @@ LV_REGISTER_SELFTEST("bulk.fan_pushes", [](Context& ctx) -> ll::coro::CoroTask<>
     e->remove();
 });
 
-LV_REGISTER_SELFTEST("bulk.fan_washing", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.fan_washing", [](Context& ctx) -> ll::coro::CoroTask<> {
     FastFans fast;
     Area     a{ctx, 36};
     ctx.require(co_await loadArea(ctx, a.at(1, 0, 4)), "test area loaded");
     auto& region = overworld(ctx);
     // a fan 3 blocks up blowing down into a one-block water pit in the ground (water can't spread)
     auto fan = a.at(1, 3, 4), pit = a.at(1, -1, 4);
-    ctx.setBlock(a.at(1, 4, 4), kSource, {{"levitate:axis", Y}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kDown}});
+    ctx.setBlock(a.at(1, 4, 4), kSource, {{"bearing:axis", Y}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kDown}});
     auto const* ground = &region.getBlock(toBlockPos(pit));
     auto const* water  = game::blockWith("minecraft:water");
     ctx.require(water && game::setBlock(region, toBlockPos(pit), *water), "dig the water pit");
@@ -454,14 +454,14 @@ LV_REGISTER_SELFTEST("bulk.fan_washing", [](Context& ctx) -> ll::coro::CoroTask<
     removeItems(region, area);
     game::setBlock(region, toBlockPos(pit), *ground);
 });
-LV_REGISTER_SELFTEST("bulk.fan_smoking", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.fan_smoking", [](Context& ctx) -> ll::coro::CoroTask<> {
     FastFans fast;
     Area     a{ctx, 60};
     ctx.require(co_await loadArea(ctx, a.at(10)), "test area loaded");
     auto& region = overworld(ctx);
     auto  fan    = a.at(1, 0, 0);
-    ctx.setBlock(a.at(0, 0, 0), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kEast}});
+    ctx.setBlock(a.at(0, 0, 0), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kEast}});
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(0, 0, 0), cb::fanPushing(cb::Face::East, 64) ? 64 : -64);
     ctx.setBlock(a.at(2, 0, 0), "minecraft:campfire");
@@ -480,7 +480,7 @@ LV_REGISTER_SELFTEST("bulk.fan_smoking", [](Context& ctx) -> ll::coro::CoroTask<
 });
 
 // Blasting and haunting results (no entities: lava flows, soul fire needs soul soil).
-LV_REGISTER_SELFTEST("bulk.fan_types", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.fan_types", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 85};
     ctx.require(co_await loadArea(ctx, a.at(0)), "test area loaded");
     auto& region = overworld(ctx);
@@ -509,14 +509,14 @@ LV_REGISTER_SELFTEST("bulk.fan_types", [](Context& ctx) -> ll::coro::CoroTask<> 
     ctx.check(common::airflow::processingTime(17) == config().fanProcessingTime * 2 + 1, "17 items take two rounds");
 });
 
-LV_REGISTER_SELFTEST("bulk.nozzle", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.nozzle", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 26};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto& region = overworld(ctx);
     auto  fan = a.at(1, 1, 2), nozzle = a.at(1, 2, 2);
-    ctx.setBlock(a.at(1, 0, 2), kSource, {{"levitate:axis", Y}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kUp}});
-    ctx.setBlock(nozzle, std::string(kNozzle), {{"levitate:facing", kUp}});
+    ctx.setBlock(a.at(1, 0, 2), kSource, {{"bearing:axis", Y}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kUp}});
+    ctx.setBlock(nozzle, std::string(kNozzle), {{"bearing:facing", kUp}});
     co_await ctx.ticks(3);
     ctx.check(idAt(region, toBlockPos(nozzle)) == kNozzle, "a nozzle in front of a fan stays");
     auto f = fanAt(fan);
@@ -536,27 +536,27 @@ LV_REGISTER_SELFTEST("bulk.nozzle", [](Context& ctx) -> ll::coro::CoroTask<> {
     removeItems(region, around(nozzle, 6));
 });
 
-LV_REGISTER_SELFTEST("bulk.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 31};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto& region = overworld(ctx);
     auto& player = ctx.player();
     // a shaft (axis x) west of the spot: the fan's back connects to it and it blows away (east)
-    ctx.setBlock(a.at(0, 1, 2), kShaft, {{"levitate:axis", X}});
+    ctx.setBlock(a.at(0, 1, 2), kShaft, {{"bearing:axis", X}});
     co_await ctx.ticks(2);
     auto spot = a.at(1, 1, 2);
     recordPlacement(player, toBlockPos(spot), kUp);
     ctx.setBlock(spot, std::string(kFan));
     co_await ctx.ticks(3);
-    ctx.check(stateOf(region.getBlock(toBlockPos(spot)), "levitate:facing") == kEast, "the fan faces away from the shaft");
+    ctx.check(stateOf(region.getBlock(toBlockPos(spot)), "bearing:facing") == kEast, "the fan faces away from the shaft");
     // a crushing wheel next to the shaft takes its axis
     auto wheel = a.at(0, 1, 3);
-    ctx.setBlock(a.at(0, 1, 4), kShaft, {{"levitate:axis", Z}});
+    ctx.setBlock(a.at(0, 1, 4), kShaft, {{"bearing:axis", Z}});
     co_await ctx.ticks(2);
     recordPlacement(player, toBlockPos(wheel), kUp);
     ctx.setBlock(wheel, std::string(kWheel));
     co_await ctx.ticks(3);
-    ctx.check(stateOf(region.getBlock(toBlockPos(wheel)), "levitate:axis") == Z, "the wheel takes the shaft's axis");
+    ctx.check(stateOf(region.getBlock(toBlockPos(wheel)), "bearing:axis") == Z, "the wheel takes the shaft's axis");
     // a nozzle without a fan behind it pops off
     auto nozzle = a.at(2, 1, 0);
     recordPlacement(player, toBlockPos(nozzle), kUp);
@@ -573,10 +573,10 @@ namespace {
 /// Wheels along z at `a.at(1, dy, 0)` / `a.at(1, dy, 2)` pulling down through the controller between.
 ll::coro::CoroTask<GlobalPos> downCrusher(Context& ctx, Area const& a, int dy, float rpm = 256) {
     auto w1 = a.at(1, dy, 0), w2 = a.at(1, dy, 2), ctrl = a.at(1, dy, 1);
-    ctx.setBlock(a.at(0, dy, 0), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(a.at(0, dy, 2), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(w1, std::string(kWheel), {{"levitate:axis", X}});
-    ctx.setBlock(w2, std::string(kWheel), {{"levitate:axis", X}});
+    ctx.setBlock(a.at(0, dy, 0), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(a.at(0, dy, 2), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(w1, std::string(kWheel), {{"bearing:axis", X}});
+    ctx.setBlock(w2, std::string(kWheel), {{"bearing:axis", X}});
     ctx.cleanupBlock(ctrl);
     co_await ctx.ticks(2);
     float s = cb::controllerFacing(cb::Axis::X, cb::Face::South, 64) == cb::Face::Down ? rpm : -rpm;
@@ -586,7 +586,7 @@ ll::coro::CoroTask<GlobalPos> downCrusher(Context& ctx, Area const& a, int dy, f
     auto& region = overworld(ctx);
     for (int i = 0; i < 60; ++i) {
         co_await ctx.ticks(1);
-        if (idAt(region, toBlockPos(ctrl)) == kController && stateOf(region.getBlock(toBlockPos(ctrl)), "levitate:valid")
+        if (idAt(region, toBlockPos(ctrl)) == kController && stateOf(region.getBlock(toBlockPos(ctrl)), "bearing:valid")
             && crushingSpeedAt(region, ctrl) > 0)
             break;
     }
@@ -620,7 +620,7 @@ Actor* spawnMob(BlockSource& region, char const* id, cb::Vec3d const& at) {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("bulk.crusher_pass_through", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.crusher_pass_through", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R64: the entity being crushed has no collision with the controller and goes through
     Area a{ctx, 2650, kU39Shift};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
@@ -628,7 +628,7 @@ LV_REGISTER_SELFTEST("bulk.crusher_pass_through", [](Context& ctx) -> ll::coro::
     CrushDamage none(0);
     co_await watchFrom(ctx, a.at(1, 3, 1));
     auto ctrl = co_await downCrusher(ctx, a, 3);
-    ctx.require(stateOf(region.getBlock(toBlockPos(ctrl)), "levitate:facing") == kDown, "the controller pulls down");
+    ctx.require(stateOf(region.getBlock(toBlockPos(ctrl)), "bearing:facing") == kDown, "the controller pulls down");
     auto* pig = spawnMob(region, "minecraft:pig", {ctrl.x + .5, ctrl.y + 1.2, ctrl.z + .5});
     ctx.require(pig != nullptr, "spawn a pig above the crusher");
     auto id   = idOf(*pig);
@@ -651,7 +651,7 @@ LV_REGISTER_SELFTEST("bulk.crusher_pass_through", [](Context& ctx) -> ll::coro::
     if (auto* e = entityById(id)) e->remove();
 });
 
-LV_REGISTER_SELFTEST("bulk.crusher_kills", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.crusher_kills", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R65: Create's crush damage type: its death message, looting II for the drops
     {
         ActorDamageSource src(SharedTypes::Legacy::ActorDamageCause::Contact, "death.attack.create.crush");
@@ -687,7 +687,7 @@ LV_REGISTER_SELFTEST("bulk.crusher_kills", [](Context& ctx) -> ll::coro::CoroTas
     removeItems(region, around(ctrl, 5));
 });
 
-LV_REGISTER_SELFTEST("bulk.placement_veto", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.placement_veto", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R68: a nozzle without its fan is not placed at all (Create's canSurvive at placement)
     Area a{ctx, 2660, kU39Shift};
     ctx.require(co_await ctx.ensureLoaded(a.at(1)), "test area loaded");
@@ -698,7 +698,7 @@ LV_REGISTER_SELFTEST("bulk.placement_veto", [](Context& ctx) -> ll::coro::CoroTa
     ctx.cleanupBlock(a.at(1, 1, 2));
     sp.teleport(Vec3{floor.x - 2.5f, float(floor.y + 1), floor.z + .5f}, DimensionType(0));
     co_await ctx.ticks(2);
-    sp.getInventory().setItem(0, stack(ctx, "levitate:nozzle", 2));
+    sp.getInventory().setItem(0, stack(ctx, "bearing:nozzle", 2));
     sp.setSelectedSlot(0);
     sp.sendInventory(false);
     sp.simulateLookAt(Vec3{floor.x + .5f, floor.y + 1.f, floor.z + .5f}, sim::LookDuration::Instant);
@@ -708,7 +708,7 @@ LV_REGISTER_SELFTEST("bulk.placement_veto", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(idAt(region, toBlockPos(a.at(1, 1, 2))) != kNozzle, "no nozzle was placed on plain stone");
     ctx.check(items::countOf(sp.getInventory().getItem(0)) == 2, "the nozzle stays in the hand");
     // on top of an upward fan it is placed
-    ctx.require(ctx.setBlock(floor, std::string(kFan), {{"levitate:facing", kUp}}), "an upward fan");
+    ctx.require(ctx.setBlock(floor, std::string(kFan), {{"bearing:facing", kUp}}), "an upward fan");
     co_await ctx.ticks(2);
     sp.simulateUseItemInSlotOnBlock(0, toBlockPos(floor), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{.5f, 1.f, .5f});
     co_await ctx.ticks(12);
@@ -717,7 +717,7 @@ LV_REGISTER_SELFTEST("bulk.placement_veto", [](Context& ctx) -> ll::coro::CoroTa
     sp.sendInventory(false);
 });
 
-LV_REGISTER_SELFTEST("bulk.fan_state_tag", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.fan_state_tag", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R66: the fan processing state of an item entity is kept on the entity (survives saving)
     struct Slow {
         int saved;
@@ -728,8 +728,8 @@ LV_REGISTER_SELFTEST("bulk.fan_state_tag", [](Context& ctx) -> ll::coro::CoroTas
     ctx.require(co_await loadArea(ctx, a.at(10)), "test area loaded");
     auto& region = overworld(ctx);
     auto  fan    = a.at(1, 0, 0);
-    ctx.setBlock(a.at(0, 0, 0), kSource, {{"levitate:axis", X}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kEast}});
+    ctx.setBlock(a.at(0, 0, 0), kSource, {{"bearing:axis", X}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kEast}});
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(0, 0, 0), cb::fanPushing(cb::Face::East, 64) ? 64 : -64);
     ctx.setBlock(a.at(2, 0, 0), "minecraft:campfire");
@@ -742,10 +742,10 @@ LV_REGISTER_SELFTEST("bulk.fan_state_tag", [](Context& ctx) -> ll::coro::CoroTas
         co_await ctx.ticks(2);
         if (auto* e = entityById(id); e && e->hasTags())
             for (auto const& t : e->getTags())
-                if (t.starts_with("lv_fan:")) tag = t;
+                if (t.starts_with("br_fan:")) tag = t;
     }
     ctx.check(!tag.empty(), "the item carries its processing state");
-    ctx.check(tag.starts_with("lv_fan:" + std::to_string(int(cb::FanType::Smoking)) + ":"), "smoking, time left: " + tag);
+    ctx.check(tag.starts_with("br_fan:" + std::to_string(int(cb::FanType::Smoking)) + ":"), "smoking, time left: " + tag);
     cb::Box area{
         {fan.x + 1., fan.y - 1., fan.z - 1.},
         {fan.x + 30., fan.y + 2., fan.z + 2.}
@@ -753,7 +753,7 @@ LV_REGISTER_SELFTEST("bulk.fan_state_tag", [](Context& ctx) -> ll::coro::CoroTas
     removeItems(region, area);
 });
 
-LV_REGISTER_SELFTEST("bulk.haunted_horse", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.haunted_horse", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R67: a haunted horse becomes a skeleton horse with its name, owner, taming and saddle
     Area a{ctx, 2670, kU39Shift};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
@@ -798,14 +798,14 @@ LV_REGISTER_SELFTEST("bulk.haunted_horse", [](Context& ctx) -> ll::coro::CoroTas
     removeItems(region, around(at, 4));
 });
 
-LV_REGISTER_SELFTEST("bulk.fan_multibox", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.fan_multibox", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R71: the current reaches into blocks made of several boxes as far as Create's test points go
     Area a{ctx, 2675, kU39Shift};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto fan = a.at(1, 4, 2);
     co_await watchFrom(ctx, a.at(1, 1, 2));
-    ctx.setBlock(a.at(1, 5, 2), kSource, {{"levitate:axis", Y}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kDown}});
+    ctx.setBlock(a.at(1, 5, 2), kSource, {{"bearing:axis", Y}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kDown}});
     for (int dy = 1; dy < 4; ++dy) ctx.cleanupBlock(a.at(1, dy, 2));
     // bottom stairs: under the step the current stops at its top, elsewhere at the half
     ctx.require(ctx.setBlock(a.at(1, 1, 2), "minecraft:oak_stairs", {{"weirdo_direction", 0}, {"upside_down_bit", 0}}), "stairs below the fan");
@@ -818,13 +818,13 @@ LV_REGISTER_SELFTEST("bulk.fan_multibox", [](Context& ctx) -> ll::coro::CoroTask
     ctx.check(std::abs(f->current.maxDistance - (2.5f + 1 / 32.f)) < .01f, "the current goes half into the stairs: " + std::to_string(f->current.maxDistance));
 });
 
-LV_REGISTER_SELFTEST("bulk.soundscapes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.soundscapes", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R69: a millstone with an input plays Create's milling soundscape to the players near it
     Area a{ctx, 2680, kU39Shift};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto& region = overworld(ctx);
     auto  mill   = a.at(1, 1, 2);
-    ctx.setBlock(a.at(1, 0, 2), kSource, {{"levitate:axis", Y}});
+    ctx.setBlock(a.at(1, 0, 2), kSource, {{"bearing:axis", Y}});
     ctx.setBlock(mill, std::string(kMillstone));
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(1, 0, 2), 64);
@@ -838,16 +838,16 @@ LV_REGISTER_SELFTEST("bulk.soundscapes", [](Context& ctx) -> ll::coro::CoroTask<
     removeItems(region, around(mill, 3));
 });
 
-LV_REGISTER_SELFTEST("bulk.nozzle_overload", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bulk.nozzle_overload", [](Context& ctx) -> ll::coro::CoroTask<> {
     // R70: a pulling nozzle holding more than 256 entities explodes and the entities are gone
     Area a{ctx, 2685, kU39Shift};
     ctx.require(co_await loadArea(ctx, a.at(1)), "test area loaded");
     auto& region = overworld(ctx);
     auto  fan = a.at(2, 0, 2), nozzle = a.at(2, 1, 2);
     co_await watchFrom(ctx, a.at(-8, 0, 2));
-    ctx.setBlock(a.at(2, -1, 2), kSource, {{"levitate:axis", Y}});
-    ctx.setBlock(fan, std::string(kFan), {{"levitate:facing", kUp}});
-    ctx.setBlock(nozzle, std::string(kNozzle), {{"levitate:facing", kUp}});
+    ctx.setBlock(a.at(2, -1, 2), kSource, {{"bearing:axis", Y}});
+    ctx.setBlock(fan, std::string(kFan), {{"bearing:facing", kUp}});
+    ctx.setBlock(nozzle, std::string(kNozzle), {{"bearing:facing", kUp}});
     co_await ctx.ticks(2);
     kinetics::setGeneratedSpeed(a.at(2, -1, 2), cb::fanPushing(cb::Face::Up, 256) ? -256 : 256);
     co_await ctx.ticks(5);
@@ -866,4 +866,4 @@ LV_REGISTER_SELFTEST("bulk.nozzle_overload", [](Context& ctx) -> ll::coro::CoroT
     removeItems(region, around(nozzle, 10));
 });
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

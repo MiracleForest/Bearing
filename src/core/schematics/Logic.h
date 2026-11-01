@@ -15,7 +15,7 @@
 
 #include "core/schematics/Schematic.h"
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 // ---- schematic and quill ---------------------------------------------------------------------------
 
@@ -218,4 +218,4 @@ std::vector<Checklist::Entry> Checklist::entries(NameOf&& nameOf) const {
     return missingEntries;
 }
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

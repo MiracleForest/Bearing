@@ -26,29 +26,29 @@ class BlockSource;
 class Player;
 class Vec3;
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace cb = core::belts;
 using Json   = nlohmann::json;
 
 // ---- ids and states ----------------------------------------------------------------------------------
-inline constexpr char const* kShaftId          = "levitate:shaft";
-inline constexpr char const* kTestShaftId      = "levitate:kinetics_test_shaft";
-inline constexpr char const* kWrenchId         = "levitate:wrench";
-inline constexpr char const* kAndesiteCasingId = "levitate:andesite_casing";
-inline constexpr char const* kBrassCasingId    = "levitate:brass_casing";
+inline constexpr char const* kShaftId          = "bearing:shaft";
+inline constexpr char const* kTestShaftId      = "bearing:kinetics_test_shaft";
+inline constexpr char const* kWrenchId         = "bearing:wrench";
+inline constexpr char const* kAndesiteCasingId = "bearing:andesite_casing";
+inline constexpr char const* kBrassCasingId    = "bearing:brass_casing";
 
-inline constexpr char const* kFacing = "levitate:facing";
-inline constexpr char const* kSlope  = "levitate:slope";
-inline constexpr char const* kPart   = "levitate:part";
-inline constexpr char const* kCasing = "levitate:casing";
-inline constexpr char const* kDyed   = "levitate:dyed";
-inline constexpr char const* kColor  = "levitate:color";
-inline constexpr char const* kLid    = "levitate:lid";
-inline constexpr char const* kRotor  = "levitate:rotor";
-inline constexpr char const* kAxis   = "levitate:axis";
+inline constexpr char const* kFacing = "bearing:facing";
+inline constexpr char const* kSlope  = "bearing:slope";
+inline constexpr char const* kPart   = "bearing:part";
+inline constexpr char const* kCasing = "bearing:casing";
+inline constexpr char const* kDyed   = "bearing:dyed";
+inline constexpr char const* kColor  = "bearing:color";
+inline constexpr char const* kLid    = "bearing:lid";
+inline constexpr char const* kRotor  = "bearing:rotor";
+inline constexpr char const* kAxis   = "bearing:axis";
 
-inline constexpr char const* kDisplayTag = "lv_belt_display";
+inline constexpr char const* kDisplayTag = "br_belt_display";
 
 /// Config section `belts` (Create's CKinetics / CLogistics keys of this unit).
 struct BeltsConfig {
@@ -307,4 +307,4 @@ void loadWorld();
 void saveWorld();
 void closeWorld();
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

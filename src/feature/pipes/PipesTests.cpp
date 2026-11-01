@@ -1,5 +1,5 @@
 // Selftests of the pipes unit (U17, testPos dx 1700..1799; U40's additions 4000..4039), plus the test-only tank block
-// `levitate:pipes_test_tank` (an 8-bucket fluid handler kept in BlockData) that stands in for the
+// `bearing:pipes_test_tank` (an 8-bucket fluid handler kept in BlockData) that stands in for the
 // fluid tanks of U18 so pumps can be tested tank to tank.
 
 #include <cmath>
@@ -32,7 +32,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 namespace {
 
@@ -40,7 +40,7 @@ using selftest::Context;
 namespace bd = common::blockdata;
 namespace ft = common::fluidtypes;
 
-constexpr char kTestTank[] = "levitate:pipes_test_tank";
+constexpr char kTestTank[] = "bearing:pipes_test_tank";
 constexpr int  kTankCap    = 8000;
 
 // ---- the test tank -------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ BlockSource& region() { return *regionOf(0); }
 Block const& blockAt(GlobalPos const& p) { return region().getBlock(toBlockPos(p)); }
 
 std::vector<std::pair<std::string, int>> faces(FaceMask m) {
-    static constexpr char const* names[6]{"levitate:down", "levitate:up", "levitate:north", "levitate:south", "levitate:west", "levitate:east"};
+    static constexpr char const* names[6]{"bearing:down", "bearing:up", "bearing:north", "bearing:south", "bearing:west", "bearing:east"};
     std::vector<std::pair<std::string, int>> out;
     for (int i = 0; i < 6; ++i) out.emplace_back(names[i], (m >> i) & 1);
     return out;
@@ -125,14 +125,14 @@ bool tank(Context& ctx, GlobalPos const& p, common::fluids::FluidStack s) {
 /// A pump at `p` facing `front` (east or west), driven through a cog on its south side by a test
 /// generator at `rpm`. Returns the generator's position.
 GlobalPos pumpAt(Context& ctx, GlobalPos const& p, Face front, float rpm) {
-    ctx.setBlock(p, kPump, {{"levitate:facing", static_cast<int>(front)}});
+    ctx.setBlock(p, kPump, {{"bearing:facing", static_cast<int>(front)}});
     GlobalPos cog = p;
     cog.z += 1;
     GlobalPos src = cog;
     src.x -= 1;
-    ctx.setBlock(cog, "levitate:kinetics_test_cog", {{"levitate:axis", 0}});
-    ctx.setBlock(src, "levitate:kinetics_test_source", {{"levitate:axis", 0}});
-    lv::kinetics::setGeneratedSpeed(src, rpm);
+    ctx.setBlock(cog, "bearing:kinetics_test_cog", {{"bearing:axis", 0}});
+    ctx.setBlock(src, "bearing:kinetics_test_source", {{"bearing:axis", 0}});
+    br::kinetics::setGeneratedSpeed(src, rpm);
     return src;
 }
 
@@ -148,7 +148,7 @@ ll::coro::CoroTask<bool> waitFor(std::function<bool()> cond, int ticks) {
 
 // ---- registry / specs ------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("pipes.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("pipes.registry", [](Context& ctx) {
     namespace ft = common::fluidtypes;
     auto const* water = ft::find("minecraft:water");
     ctx.require(water && water->sourceBlock == "minecraft:water", "water is a registered fluid with a world block");
@@ -157,26 +157,26 @@ LV_REGISTER_SELFTEST("pipes.registry", [](Context& ctx) {
     ctx.check(ft::potionName("potion:long_swiftness") == "long_swiftness", "potion name");
     ctx.check(ft::byWorldBlock("minecraft:flowing_water") == water, "flowing water is water");
     // U19's ids, by string (its potion form and its honey / chocolate source blocks)
-    ctx.check(ft::isPotion("levitate:potion/splash/long_swiftness"), "U19 potion fluids are potions");
-    ctx.check(ft::potionName("levitate:potion/regular/long_swiftness") == "long_swiftness", "U19 potion name");
-    ctx.check(ft::byWorldBlock("levitate:honey") == ft::find("levitate:honey"), "honey's world block is U19's source");
-    for (char const* id : {"minecraft:water", "minecraft:lava", "minecraft:milk", "levitate:tea", "potion:healing",
-                           "levitate:potion/lingering/healing"})
+    ctx.check(ft::isPotion("bearing:potion/splash/long_swiftness"), "U19 potion fluids are potions");
+    ctx.check(ft::potionName("bearing:potion/regular/long_swiftness") == "long_swiftness", "U19 potion name");
+    ctx.check(ft::byWorldBlock("bearing:honey") == ft::find("bearing:honey"), "honey's world block is U19's source");
+    for (char const* id : {"minecraft:water", "minecraft:lava", "minecraft:milk", "bearing:tea", "potion:healing",
+                           "bearing:potion/lingering/healing"})
         ctx.check(ft::effectFor(id) != nullptr, std::string("open pipe effect for ") + id);
-    auto const* pump = lv::kinetics::specOf(kPump);
+    auto const* pump = br::kinetics::specOf(kPump);
     ctx.require(pump != nullptr, "the pump is a kinetic block");
-    lv::kinetics::BlockState s{kPump, {{"levitate:facing", 5}}};
-    ctx.check(pump->axisOf(s) == Axis::X && pump->cogOf(s) == lv::kinetics::CogType::Small, "the pump turns as a small cog on its facing axis");
-    ctx.check(lv::kinetics::stressImpactOf(kPump) == 4, "the pump's stress impact is 4 su/rpm");
-    auto const* valve = lv::kinetics::specOf(kValve);
+    br::kinetics::BlockState s{kPump, {{"bearing:facing", 5}}};
+    ctx.check(pump->axisOf(s) == Axis::X && pump->cogOf(s) == br::kinetics::CogType::Small, "the pump turns as a small cog on its facing axis");
+    ctx.check(br::kinetics::stressImpactOf(kPump) == 4, "the pump's stress impact is 4 su/rpm");
+    auto const* valve = br::kinetics::specOf(kValve);
     ctx.require(valve != nullptr, "the valve is a kinetic block");
-    lv::kinetics::BlockState v{kValve, {{"levitate:facing", 1}, {"levitate:along_first", 0}}};
+    br::kinetics::BlockState v{kValve, {{"bearing:facing", 1}, {"bearing:along_first", 0}}};
     ctx.check(valve->shaftTowards(v, Face::North) && !valve->shaftTowards(v, Face::East), "valve shaft along z when its pipe runs along x");
 });
 
 // ---- connections -------------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("pipes.connect", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.connect", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1700};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     ctx.setBlock(a.at(0), kFluidPipe);
@@ -191,8 +191,8 @@ LV_REGISTER_SELFTEST("pipes.connect", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(cp::has(m, Face::Up) && cp::has(m, Face::East), "the first pipe now connects up and east");
     ctx.check(cp::has(connections(blockAt(a.at(0, 1))), Face::Down), "the upper pipe connects down");
     // rims: towards connected pipes none, the open west end has one
-    auto rimA = game::intState(blockAt(a.at(1)), "levitate:rim_a").value_or(-1);
-    auto rimB = game::intState(blockAt(a.at(1)), "levitate:rim_b").value_or(-1);
+    auto rimA = game::intState(blockAt(a.at(1)), "bearing:rim_a").value_or(-1);
+    auto rimB = game::intState(blockAt(a.at(1)), "bearing:rim_b").value_or(-1);
     ctx.check(rimA == 0 && rimB == 4, "the second pipe has a rim on its open east end only");
     // a test tank connects
     tank(ctx, a.at(2, 0, 1), {});
@@ -202,7 +202,7 @@ LV_REGISTER_SELFTEST("pipes.connect", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(canConnectTo(region(), toBlockPos(a.at(1)), Face::East), "canConnectTo sees the next pipe");
 });
 
-LV_REGISTER_SELFTEST("pipes.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1710};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto& player = ctx.player();
@@ -242,7 +242,7 @@ LV_REGISTER_SELFTEST("pipes.placement", [](Context& ctx) -> ll::coro::CoroTask<>
 
 // ---- wrench, casing, brackets ---------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("pipes.wrench", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.wrench", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1720};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto p = a.at(0);
@@ -251,23 +251,23 @@ LV_REGISTER_SELFTEST("pipes.wrench", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(!wrench(nullptr, region(), toBlockPos(p), Face::East, 1, .5, .5), "wrenching a straight pipe's end does nothing");
     ctx.require(wrench(nullptr, region(), toBlockPos(p), Face::Up, .5, 1, .5), "wrench on the side of a straight pipe");
     ctx.require(kindOf(blockAt(p)) == BlockKind::Glass, "it became a glass pipe");
-    ctx.check(game::intState(blockAt(p), "levitate:axis") == 0, "the glass pipe runs along x");
+    ctx.check(game::intState(blockAt(p), "bearing:axis") == 0, "the glass pipe runs along x");
     co_await ctx.ticks(2);
     ctx.require(wrench(nullptr, region(), toBlockPos(p), Face::Up, .5, 1, .5), "wrench on the glass pipe");
     ctx.check(kindOf(blockAt(p)) == BlockKind::Pipe && connections(blockAt(p)) == kX, "back to a straight fluid pipe");
     // pump: the wrench reverses it
     auto q = a.at(2);
-    ctx.setBlock(q, kPump, {{"levitate:facing", static_cast<int>(Face::East)}});
+    ctx.setBlock(q, kPump, {{"bearing:facing", static_cast<int>(Face::East)}});
     ctx.require(wrench(nullptr, region(), toBlockPos(q), Face::Up, .5, 1, .5), "wrench on the pump");
     ctx.check(pumpFront(blockAt(q)) == Face::West, "the pump was reversed");
     // smart pipe: turns on the floor
     auto s = a.at(4);
-    ctx.setBlock(s, kSmartPipe, {{"levitate:face", 0}, {"levitate:facing", 3}});
+    ctx.setBlock(s, kSmartPipe, {{"bearing:face", 0}, {"bearing:facing", 3}});
     ctx.require(wrench(nullptr, region(), toBlockPos(s), Face::Up, .5, 1, .5), "wrench on the smart pipe");
     ctx.check(cp::smartPipeAxis(smartState(blockAt(s))) == Axis::Z, "the smart pipe turned to z");
 });
 
-LV_REGISTER_SELFTEST("pipes.encased", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.encased", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1730};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto p = a.at(0);
@@ -285,12 +285,12 @@ LV_REGISTER_SELFTEST("pipes.encased", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(kindOf(blockAt(p)) == BlockKind::Pipe, "the casing came off");
     // a glass pipe encases along its axis
     auto g = a.at(3);
-    ctx.setBlock(g, kGlassPipe, {{"levitate:axis", 2}});
+    ctx.setBlock(g, kGlassPipe, {{"bearing:axis", 2}});
     ctx.require(encase(region(), toBlockPos(g)), "copper casing on a glass pipe");
     ctx.check(connections(blockAt(g)) == cp::axisMask(Axis::Z), "encased along the glass pipe's axis");
 });
 
-LV_REGISTER_SELFTEST("pipes.bracket", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.bracket", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1740};
     ctx.require(co_await ctx.ensureLoaded(a.at(0)), "test area loaded");
     auto p = a.at(0);
@@ -298,7 +298,7 @@ LV_REGISTER_SELFTEST("pipes.bracket", [](Context& ctx) -> ll::coro::CoroTask<> {
     co_await ctx.ticks(2);
     ctx.require(attachBracket(region(), toBlockPos(p), kMetalBracket), "bracket attached");
     ctx.check(bracketOf(p) == kMetalBracket, "the bracket is remembered");
-    ctx.check(game::intState(blockAt(p), "levitate:bracket") == 2, "the metal bracket shows");
+    ctx.check(game::intState(blockAt(p), "bearing:bracket") == 2, "the metal bracket shows");
     ctx.setBlock(a.at(0, 0, 1), kFluidPipe);
     co_await ctx.ticks(3);
     ctx.check(connections(blockAt(p)) == kX, "a bracketed pipe keeps its shape");
@@ -312,7 +312,7 @@ LV_REGISTER_SELFTEST("pipes.bracket", [](Context& ctx) -> ll::coro::CoroTask<> {
 
 // ---- flow ---------------------------------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("pipes.pump_tanks", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.pump_tanks", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1750};
     ctx.require(co_await ctx.ensureLoaded(a.at(4)), "test area loaded");
     tank(ctx, a.at(0), {"minecraft:water", 8000});
@@ -320,7 +320,7 @@ LV_REGISTER_SELFTEST("pipes.pump_tanks", [](Context& ctx) -> ll::coro::CoroTask<
     pumpAt(ctx, a.at(3), Face::East, 64);
     tank(ctx, a.at(6), {});
     co_await ctx.ticks(2);
-    ctx.require(std::abs(lv::kinetics::speedAt(a.at(3))) == 64, "the pump turns at 64 RPM");
+    ctx.require(std::abs(br::kinetics::speedAt(a.at(3))) == 64, "the pump turns at 64 RPM");
     bool moved = co_await waitFor([&] { return tankContents(a.at(6)).amount > 0; }, 200);
     ctx.require(moved, "water reached the second tank");
     co_await ctx.ticks(5);
@@ -335,7 +335,7 @@ LV_REGISTER_SELFTEST("pipes.pump_tanks", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.info("transfer " + std::to_string(rate) + " mB/t");
     // a glass pipe shows its fluid
     ctx.require(wrench(nullptr, region(), toBlockPos(a.at(5)), Face::Up, .5, 1, .5), "make a glass pipe");
-    bool shows = co_await waitFor([&] { return game::intState(blockAt(a.at(5)), "levitate:fluid").value_or(0) == 1; }, 60);
+    bool shows = co_await waitFor([&] { return game::intState(blockAt(a.at(5)), "bearing:fluid").value_or(0) == 1; }, 60);
     ctx.check(shows, "the glass pipe shows water");
     // stopping the pump stops the flow
     for (auto const& p : {a.at(3, 0, 1), a.at(2, 0, 1)}) ctx.setBlock(p, "minecraft:air");
@@ -345,7 +345,7 @@ LV_REGISTER_SELFTEST("pipes.pump_tanks", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(tankContents(a.at(6)).amount == still, "no transfer without rotation");
 });
 
-LV_REGISTER_SELFTEST("pipes.open_ends", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.open_ends", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1760};
     ctx.require(co_await ctx.ensureLoaded(a.at(4)), "test area loaded");
     // a full lava cauldron is drained through an open end into a tank
@@ -376,7 +376,7 @@ LV_REGISTER_SELFTEST("pipes.open_ends", [](Context& ctx) -> ll::coro::CoroTask<>
     ctx.check(tankContents(b.at(0)).amount == 3000, "one bucket left the tank (" + std::to_string(tankContents(b.at(0)).amount) + ")");
 });
 
-LV_REGISTER_SELFTEST("pipes.valve", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.valve", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1780};
     ctx.require(co_await ctx.ensureLoaded(a.at(5)), "test area loaded");
     tank(ctx, a.at(0), {"minecraft:water", 8000});
@@ -384,25 +384,25 @@ LV_REGISTER_SELFTEST("pipes.valve", [](Context& ctx) -> ll::coro::CoroTask<> {
     pumpAt(ctx, a.at(2), Face::East, 64);
     // facing up, pipe along x, shaft along z
     auto v = a.at(3);
-    ctx.setBlock(v, kValve, {{"levitate:facing", 1}, {"levitate:along_first", 0}});
+    ctx.setBlock(v, kValve, {{"bearing:facing", 1}, {"bearing:along_first", 0}});
     GlobalPos src = v;
     src.z += 1;
-    ctx.setBlock(src, "levitate:kinetics_test_source", {{"levitate:axis", 2}});
+    ctx.setBlock(src, "bearing:kinetics_test_source", {{"bearing:axis", 2}});
     ctx.setBlock(a.at(4), kFluidPipe, faces(kX));
     tank(ctx, a.at(5), {});
     co_await ctx.ticks(3);
-    float speed = lv::kinetics::speedAt(v);
+    float speed = br::kinetics::speedAt(v);
     ctx.require(speed != 0, "the valve's shaft turns");
-    if (speed < 0) lv::kinetics::setGeneratedSpeed(src, -lv::kinetics::speedAt(src));
+    if (speed < 0) br::kinetics::setGeneratedSpeed(src, -br::kinetics::speedAt(src));
     co_await ctx.ticks(2);
-    ctx.require(lv::kinetics::speedAt(v) > 0, "the valve turns in the opening direction");
-    bool opened = co_await waitFor([&] { return game::intState(blockAt(v), "levitate:enabled").value_or(0) == 1; }, 60);
+    ctx.require(br::kinetics::speedAt(v) > 0, "the valve turns in the opening direction");
+    bool opened = co_await waitFor([&] { return game::intState(blockAt(v), "bearing:enabled").value_or(0) == 1; }, 60);
     ctx.require(opened, "the valve opened");
     ctx.check(valvePointer(v) == 1.f, "pointer fully open");
     bool flows = co_await waitFor([&] { return tankContents(a.at(5)).amount > 0; }, 200);
     ctx.check(flows, "water flows through the open valve");
-    lv::kinetics::setGeneratedSpeed(src, -lv::kinetics::speedAt(src));
-    bool closed = co_await waitFor([&] { return game::intState(blockAt(v), "levitate:enabled").value_or(1) == 0; }, 60);
+    br::kinetics::setGeneratedSpeed(src, -br::kinetics::speedAt(src));
+    bool closed = co_await waitFor([&] { return game::intState(blockAt(v), "bearing:enabled").value_or(1) == 0; }, 60);
     ctx.require(closed, "reversed rotation closes the valve");
     co_await ctx.ticks(40);
     int still = tankContents(a.at(5)).amount;
@@ -410,12 +410,12 @@ LV_REGISTER_SELFTEST("pipes.valve", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(tankContents(a.at(5)).amount == still, "no flow through a closed valve");
 });
 
-LV_REGISTER_SELFTEST("pipes.smart_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.smart_filter", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1790};
     ctx.require(co_await ctx.ensureLoaded(a.at(5)), "test area loaded");
     tank(ctx, a.at(0), {"minecraft:water", 8000});
     auto s = a.at(1);
-    ctx.setBlock(s, kSmartPipe, {{"levitate:face", 0}, {"levitate:facing", 3}});
+    ctx.setBlock(s, kSmartPipe, {{"bearing:face", 0}, {"bearing:facing", 3}});
     auto lava = common::items::make("minecraft:lava_bucket");
     ctx.require(lava.has_value(), "lava bucket");
     common::filterslot::set(s, *lava);
@@ -436,7 +436,7 @@ LV_REGISTER_SELFTEST("pipes.smart_filter", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(common::filterslot::hasSlots(kSmartPipe), "the smart pipe has a filter slot");
 });
 
-LV_REGISTER_SELFTEST("pipes.collision", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.collision", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1750};
     GlobalPos base = a.at(0, 0, 6);
     auto      at   = [&](int dx, int dy = 0) {
@@ -454,14 +454,14 @@ LV_REGISTER_SELFTEST("pipes.collision", [](Context& ctx) -> ll::coro::CoroTask<>
     tank(ctx, at(3, -2), {});
     // lava from the east: its pump's cog sits on the south side like the others
     auto lavaPump = at(4);
-    ctx.setBlock(lavaPump, kPump, {{"levitate:facing", static_cast<int>(Face::West)}});
+    ctx.setBlock(lavaPump, kPump, {{"bearing:facing", static_cast<int>(Face::West)}});
     GlobalPos cog = lavaPump;
     cog.z -= 1;
     GlobalPos src = cog;
     src.x += 1;
-    ctx.setBlock(cog, "levitate:kinetics_test_cog", {{"levitate:axis", 0}});
-    ctx.setBlock(src, "levitate:kinetics_test_source", {{"levitate:axis", 0}});
-    lv::kinetics::setGeneratedSpeed(src, 128);
+    ctx.setBlock(cog, "bearing:kinetics_test_cog", {{"bearing:axis", 0}});
+    ctx.setBlock(src, "bearing:kinetics_test_source", {{"bearing:axis", 0}});
+    br::kinetics::setGeneratedSpeed(src, 128);
     ctx.setBlock(at(5), kFluidPipe, faces(kX));
     tank(ctx, at(6), {"minecraft:lava", 8000});
     ctx.cleanupBlock(at(3));
@@ -469,7 +469,7 @@ LV_REGISTER_SELFTEST("pipes.collision", [](Context& ctx) -> ll::coro::CoroTask<>
     ctx.check(met, "water and lava meeting in a pipe leave cobblestone");
 });
 
-LV_REGISTER_SELFTEST("pipes.milk", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.milk", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 1760};
     GlobalPos base = a.at(0, 0, 6);
     auto      at   = [&](int dx) {
@@ -508,7 +508,7 @@ bool waterlog(GlobalPos const& p) {
 bool isWaterlogged(GlobalPos const& p) { return waterlogged(region(), toBlockPos(p)); }
 } // namespace
 
-LV_REGISTER_SELFTEST("pipes.waterloggable", [](Context& ctx) {
+BR_REGISTER_SELFTEST("pipes.waterloggable", [](Context& ctx) {
     for (char const* id : {kFluidPipe, kGlassPipe, kPump, kValve, kSmartPipe, "minecraft:oak_fence"}) {
         auto const* b = game::blockWith(id);
         ctx.check(b && canContainWater(*b), std::string(id) + " can be waterlogged");
@@ -519,7 +519,7 @@ LV_REGISTER_SELFTEST("pipes.waterloggable", [](Context& ctx) {
     }
 });
 
-LV_REGISTER_SELFTEST("pipes.waterlogged_open_end", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.waterlogged_open_end", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4000};
     ctx.require(co_await ctx.ensureLoaded(a.at(5)), "test area loaded");
     // a waterlogged fence walled in by stone, an open end pulling from it into a tank
@@ -540,7 +540,7 @@ LV_REGISTER_SELFTEST("pipes.waterlogged_open_end", [](Context& ctx) -> ll::coro:
     ctx.check(tankContents(a.at(5)).amount == 1000, "no more water from a dry fence");
 });
 
-LV_REGISTER_SELFTEST("pipes.waterlog_fill", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.waterlog_fill", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4010};
     ctx.require(co_await ctx.ensureLoaded(a.at(5, 0, 3)), "test area loaded");
     // water pushed out of an open end into a fence waterlogs it
@@ -561,13 +561,13 @@ LV_REGISTER_SELFTEST("pipes.waterlog_fill", [](Context& ctx) -> ll::coro::CoroTa
     auto at3 = [&](int dx) { return a.at(dx, 0, 3); };
     tank(ctx, at3(0), {"minecraft:lava", 4000});
     ctx.setBlock(at3(1), kFluidPipe, faces(kX));
-    ctx.setBlock(at3(2), kPump, {{"levitate:facing", static_cast<int>(Face::East)}});
+    ctx.setBlock(at3(2), kPump, {{"bearing:facing", static_cast<int>(Face::East)}});
     GlobalPos cog = at3(2), src = at3(1);
     cog.z += 1;
     src.z += 1;
-    ctx.setBlock(cog, "levitate:kinetics_test_cog", {{"levitate:axis", 0}});
-    ctx.setBlock(src, "levitate:kinetics_test_source", {{"levitate:axis", 0}});
-    lv::kinetics::setGeneratedSpeed(src, 128);
+    ctx.setBlock(cog, "bearing:kinetics_test_cog", {{"bearing:axis", 0}});
+    ctx.setBlock(src, "bearing:kinetics_test_source", {{"bearing:axis", 0}});
+    br::kinetics::setGeneratedSpeed(src, 128);
     ctx.setBlock(at3(3), kFluidPipe, faces(kX));
     ctx.setBlock(at3(4), "minecraft:oak_fence");
     co_await ctx.ticks(80);
@@ -576,7 +576,7 @@ LV_REGISTER_SELFTEST("pipes.waterlog_fill", [](Context& ctx) -> ll::coro::CoroTa
 
 // ---- instant potions at half strength (Create's PotionEffectHandler) -------------------------------
 
-LV_REGISTER_SELFTEST("pipes.instant_potion", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.instant_potion", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4020};
     ctx.require(co_await ctx.ensureLoaded(a.at(1)), "test area loaded");
     auto& mob = ctx.spawnPlayer("pipes_potion");
@@ -597,7 +597,7 @@ LV_REGISTER_SELFTEST("pipes.instant_potion", [](Context& ctx) -> ll::coro::CoroT
 
 // ---- particles and glass pipe flows -------------------------------------------------------------------
 
-LV_REGISTER_SELFTEST("pipes.effects", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pipes.effects", [](Context& ctx) -> ll::coro::CoroTask<> {
     Area a{ctx, 4030};
     ctx.require(co_await ctx.ensureLoaded(a.at(5)), "test area loaded");
     auto& viewer = ctx.spawnPlayer("pipes_viewer");
@@ -611,7 +611,7 @@ LV_REGISTER_SELFTEST("pipes.effects", [](Context& ctx) -> ll::coro::CoroTask<> {
     tank(ctx, a.at(0), {"minecraft:water", 4000});
     ctx.setBlock(a.at(1), kFluidPipe, faces(kX));
     pumpAt(ctx, a.at(2), Face::East, 64);
-    ctx.setBlock(a.at(3), kGlassPipe, {{"levitate:axis", 0}});
+    ctx.setBlock(a.at(3), kGlassPipe, {{"bearing:axis", 0}});
     auto out = a.at(4);
     for (auto const& p : {a.at(4, -1), a.at(5), a.at(4, 0, -1), a.at(4, 0, 1)}) ctx.setBlock(p, "minecraft:stone");
     ctx.cleanupBlock(out);
@@ -630,13 +630,13 @@ LV_REGISTER_SELFTEST("pipes.effects", [](Context& ctx) -> ll::coro::CoroTask<> {
     }
     ctx.check(sent && water, "companions got the glass pipe's water flows");
     // stopping the pump empties the glass pipe for the client mod
-    lv::kinetics::setGeneratedSpeed(a.at(1, 0, 1), 0);
+    br::kinetics::setGeneratedSpeed(a.at(1, 0, 1), 0);
     bool cleared = co_await waitFor([&] { return !glassState(a.at(3)); }, 100);
     ctx.check(cleared, "no flows once the pump stops");
     net::setTestCompanion(viewer, false);
 });
 
-LV_REGISTER_SELFTEST("pipes.persistence", [](Context& ctx) {
+BR_REGISTER_SELFTEST("pipes.persistence", [](Context& ctx) {
     auto& m = model();
     auto  j = m.save(0);
     ctx.check(j.is_object() && j.contains("nodes") && j.contains("pumps"), "the model saves");
@@ -645,5 +645,5 @@ LV_REGISTER_SELFTEST("pipes.persistence", [](Context& ctx) {
     ctx.check(copy.nodes().size() <= m.nodes().size(), "the saved model loads back");
 });
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes
 

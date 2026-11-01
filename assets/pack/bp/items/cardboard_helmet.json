@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:cardboard_helmet",
+      "identifier": "bearing:cardboard_helmet",
       "menu_category": {
         "category": "equipment"
       }
@@ -14,10 +14,10 @@
           "minecraft:trimmable_armors"
         ]
       },
-      "minecraft:icon": "levitate_cardboard_helmet",
+      "minecraft:icon": "bearing_cardboard_helmet",
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.levitate:cardboard_helmet.name"
+        "value": "item.bearing:cardboard_helmet.name"
       },
       "minecraft:wearable": {
         "slot": "slot.armor.head",
@@ -34,7 +34,7 @@
         "repair_items": [
           {
             "items": [
-              "levitate:cardboard"
+              "bearing:cardboard"
             ],
             "repair_amount": "context.other->q.remaining_durability + 0.12 * context.other->q.max_durability"
           }

@@ -2,10 +2,10 @@
   "format_version": "1.10.0",
   "particle_effect": {
     "description": {
-      "identifier": "levitate:fluid_particle",
+      "identifier": "bearing:fluid_particle",
       "basic_render_parameters": {
         "material": "particles_alpha",
-        "texture": "textures/particle/levitate_fluid"
+        "texture": "textures/particle/bearing_fluid"
       }
     },
     "components": {

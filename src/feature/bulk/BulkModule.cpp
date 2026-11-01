@@ -35,13 +35,13 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace k = core::kinetics;
 
 namespace {
 
-constexpr char kDbIndex[] = "lv:bulk:index";
+constexpr char kDbIndex[] = "br:bulk:index";
 
 /// How the player placed a block (Create's BlockPlaceContext).
 struct PlaceIntent {
@@ -160,7 +160,7 @@ void onPlaced(int dim, BlockPos p, Kind kind) {
         auto        face    = faceOf(in.face);
         auto        placedOn = idAt(*region, offset(p, k::opposite(face)));
         auto        opposite = idAt(*region, offset(p, face));
-        auto        isChute  = [](std::string const& id) { return id == "levitate:chute" || id == "levitate:smart_chute"; };
+        auto        isChute  = [](std::string const& id) { return id == "bearing:chute" || id == "bearing:smart_chute"; };
         cb::Face    facing;
         if (isChute(placedOn)) facing = k::opposite(face);
         else if (isChute(opposite)) facing = face;
@@ -169,12 +169,12 @@ void onPlaced(int dim, BlockPos p, Kind kind) {
             auto dir  = pref ? *pref : nearestLooking(in.look);
             facing    = in.sneaking ? dir : k::opposite(dir);
         }
-        setStates(*region, p, {{"levitate:facing", int(facing)}});
+        setStates(*region, p, {{"bearing:facing", int(facing)}});
         markFanDirty(gp);
         break;
     }
     case Kind::Nozzle: {
-        if (fresh) setStates(*region, p, {{"levitate:facing", intent->second.face}});
+        if (fresh) setStates(*region, p, {{"bearing:facing", intent->second.face}});
         if (!nozzleCanSurvive(*region, p)) {
             log().info("nozzle at {} {} {}: needs an encased fan facing the same way behind it, dropped", p.x, p.y, p.z);
             breakBlock(*region, p);
@@ -182,7 +182,7 @@ void onPlaced(int dim, BlockPos p, Kind kind) {
         break;
     }
     case Kind::Wheel: {
-        if (fresh) setStates(*region, p, {{"levitate:axis", int(wheelPlacementAxis(dim, p, intent->second))}});
+        if (fresh) setStates(*region, p, {{"bearing:axis", int(wheelPlacementAxis(dim, p, intent->second))}});
         // Create checks this when a player places the wheel (commands bypass it)
         if (fresh && !wheelCanSurvive(*region, p)) {
             log().info("crushing wheel at {} {} {}: no room next to another wheel / controller, dropped", p.x, p.y, p.z);
@@ -271,12 +271,12 @@ bool useOnMillstone(Player& player, BlockPos const& at) {
     return millstoneTakeOut(player, toGlobal(int(player.getDimensionId()), at));
 }
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk
 
 namespace {
 
-using namespace lv::feature::bulk;
-namespace ia = lv::feature::common::interactions;
+using namespace br::feature::bulk;
+namespace ia = br::feature::common::interactions;
 
 ia::Result onUseOn(ia::UseOnContext const& c) {
     BlockPos at{c.pos.x, c.pos.y, c.pos.z};
@@ -301,7 +301,7 @@ ia::Result vetoPlacement(ia::UseOnContext const& c) {
     if (!c.sneaking && c.block.getBlockType().isInteractiveBlock()) return ia::Result::Pass;
     BlockPos at{c.pos.x, c.pos.y, c.pos.z};
     if (placementSurvives(c.player, at, c.face, *kind)) return ia::Result::Pass;
-    if (c.firstEvent || c.player.isSimulatedPlayer()) lv::log().info("{} at {}: can't be placed there (canSurvive)", c.itemId, c.pos.key());
+    if (c.firstEvent || c.player.isSimulatedPlayer()) br::log().info("{} at {}: can't be placed there (canSurvive)", c.itemId, c.pos.key());
     return ia::Result::Deny;
 }
 
@@ -332,26 +332,26 @@ public:
             for (auto f : k::kFaces) markFanDirty(toGlobal(dim, offset(p, f)));
         }));
         mListeners.push_back(bus.emplaceListener<ll::event::ServerLevelTickEvent>([this](auto&) { tick(); }));
-        mWheelListener = lv::kinetics::onSpeedChanged(std::string(kWheel), [](lv::kinetics::SpeedChange const& c) {
+        mWheelListener = br::kinetics::onSpeedChanged(std::string(kWheel), [](br::kinetics::SpeedChange const& c) {
             if (c.removed) return;
             auto pos = c.pos;
             defer([pos] {
                 if (auto* region = regionOf(pos.dim)) fixControllers(*region, pos);
             });
         });
-        mFanListener = lv::kinetics::onSpeedChanged(std::string(kFan), [](lv::kinetics::SpeedChange const& c) { markFanDirty(c.pos); });
+        mFanListener = br::kinetics::onSpeedChanged(std::string(kFan), [](br::kinetics::SpeedChange const& c) { markFanDirty(c.pos); });
         static bool once = [] {
-            lv::game::db::onWorldReady([] {
+            br::game::db::onWorldReady([] {
                 resetWorld();
                 loadIndex();
             });
-            lv::game::db::onWorldSave([] { saveIndex(); });
-            lv::game::db::onWorldClosed([] {
+            br::game::db::onWorldSave([] { saveIndex(); });
+            br::game::db::onWorldClosed([] {
                 saveIndex();
                 resetWorld();
             });
             // Create's destroy(): a broken millstone / controller drops its contents
-            lv::feature::common::blockdata::onErase([](GlobalPos const& pos, nlohmann::json const& doc, std::string const&) {
+            br::feature::common::blockdata::onErase([](GlobalPos const& pos, nlohmann::json const& doc, std::string const&) {
                 auto it = doc.find("bulk");
                 if (it == doc.end() || !it->is_object()) return;
                 std::vector<ItemStack> stacks;
@@ -372,37 +372,37 @@ public:
         registerCapabilities();
         // Create's CrushingWheelControllerBlockEntity has a DirectBeltInputBehaviour that takes
         // items travelling the way the wheels pull (or from anywhere when they pull down)
-        lv::feature::belts::registerDirectInput(std::string(kController), lv::feature::belts::DirectInput{
+        br::feature::belts::registerDirectInput(std::string(kController), br::feature::belts::DirectInput{
             .canInsertFromSide = [](GlobalPos const& pos, int side) {
                 auto* region = regionOf(pos.dim);
                 if (!region) return false;
                 auto const& block = region->getBlock(toBlockPos(pos));
-                if (!stateOf(block, "levitate:valid")) return false;
-                int facing = stateOf(block, "levitate:facing");
+                if (!stateOf(block, "bearing:valid")) return false;
+                int facing = stateOf(block, "bearing:facing");
                 return facing == int(cb::Face::Down) || facing == side;
             },
-            .insert = [](GlobalPos const& pos, lv::feature::belts::TransportedItem const& item, int, bool simulate) {
+            .insert = [](GlobalPos const& pos, br::feature::belts::TransportedItem const& item, int, bool simulate) {
                 return controller_cap::insert(pos, item.stack, simulate);
             },
         });
         // (U55) chutes read the encased fan's facing and speed (Create's ChuteBlockEntity.calculatePull / Push)
-        lv::feature::common::airflow::registerFan(std::string(kFan), [](BlockSource& region, BlockPos const& p, Block const& b) {
-            return std::optional<lv::feature::common::airflow::Fan>(
-                lv::feature::common::airflow::Fan{stateOf(b, "levitate:facing"), lv::kinetics::speedAt(lv::game::globalPos(region, p))}
+        br::feature::common::airflow::registerFan(std::string(kFan), [](BlockSource& region, BlockPos const& p, Block const& b) {
+            return std::optional<br::feature::common::airflow::Fan>(
+                br::feature::common::airflow::Fan{stateOf(b, "bearing:facing"), br::kinetics::speedAt(br::game::globalPos(region, p))}
             );
         });
         mUseOn = ia::onUseOn({}, onUseOn);
         mVeto  = ia::onUseOn({}, vetoPlacement, ia::priority::Low);
         installCrusherCollision();
         installLootingHook();
-        if (lv::game::db::available()) {
+        if (br::game::db::available()) {
             resetWorld();
             loadIndex();
         }
     }
 
     void uninstall() {
-        lv::feature::common::airflow::unregisterFan(std::string(kFan));
+        br::feature::common::airflow::unregisterFan(std::string(kFan));
         ia::remove(mUseOn);
         ia::remove(mVeto);
         uninstallCrusherCollision();
@@ -410,8 +410,8 @@ public:
         auto& bus = ll::event::EventBus::getInstance();
         for (auto& l : mListeners) bus.removeListener(l);
         mListeners.clear();
-        lv::kinetics::removeListener(mWheelListener);
-        lv::kinetics::removeListener(mFanListener);
+        br::kinetics::removeListener(mWheelListener);
+        br::kinetics::removeListener(mFanListener);
         saveIndex();
     }
 
@@ -427,7 +427,7 @@ private:
                 try {
                     fn();
                 } catch (std::exception const& e) {
-                    lv::log().error("bulk: deferred action failed: {}", e.what());
+                    br::log().error("bulk: deferred action failed: {}", e.what());
                 }
             }
         }
@@ -464,7 +464,7 @@ private:
                     break;
                 }
             } catch (std::exception const& e) {
-                lv::log().error("bulk: tick at {} {} {} failed: {}", pos.x, pos.y, pos.z, e.what());
+                br::log().error("bulk: tick at {} {} {} failed: {}", pos.x, pos.y, pos.z, e.what());
             }
         }
         tickSounds();
@@ -478,10 +478,10 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
     ia::HandlerId                       mUseOn = 0;
     ia::HandlerId                       mVeto  = 0;
-    lv::kinetics::ListenerId                mWheelListener = 0;
-    lv::kinetics::ListenerId                mFanListener   = 0;
+    br::kinetics::ListenerId                mWheelListener = 0;
+    br::kinetics::ListenerId                mFanListener   = 0;
 };
 
 } // namespace
 
-LV_REGISTER_MODULE(BulkModule);
+BR_REGISTER_MODULE(BulkModule);

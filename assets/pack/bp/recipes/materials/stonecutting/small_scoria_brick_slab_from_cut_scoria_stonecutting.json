@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:small_scoria_brick_slab_from_cut_scoria_stonecutting"
+      "identifier": "bearing:small_scoria_brick_slab_from_cut_scoria_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:cut_scoria"
+        "item": "bearing:cut_scoria"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:cut_scoria"
+        "item": "bearing:cut_scoria"
       }
     ],
     "result": {
-      "item": "levitate:small_scoria_brick_slab",
+      "item": "bearing:small_scoria_brick_slab",
       "count": 2
     }
   }

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 Stats statsOf(SpeedConfig const& cfg, bool powered) {
     Stats s;
@@ -108,4 +108,4 @@ int predictTransitTicks(double distance, Stats const& stats, double throttle) {
     return int(std::abs(distance) / v * 2);
 }
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

@@ -2,8 +2,8 @@
 
 #include "core/Format.h"
 
-using lv::core::compactCount;
-using lv::core::formatMessageArgs;
+using br::core::compactCount;
+using br::core::formatMessageArgs;
 
 TEST(Format, Placeholders) {
     EXPECT_EQ(formatMessageArgs("Page {} of {}", 1, 3), "Page 1 of 3");

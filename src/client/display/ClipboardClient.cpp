@@ -6,7 +6,7 @@
 // "display.clipboard_tip" by src/feature/display/Clipboard.cpp), which simulates the copy and the
 // paste like Create's ClipboardCloneable behaviours do.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <mutex>
 #include <optional>
@@ -45,14 +45,14 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::display {
+namespace br::client::display {
 
 namespace net = feature::net;
 using Json    = nlohmann::json;
 
 namespace {
 
-constexpr char kClipboardId[] = "levitate:clipboard";
+constexpr char kClipboardId[] = "bearing:clipboard";
 
 struct Target {
     int      dim = 0;
@@ -168,8 +168,8 @@ void renderTip(MinecraftUIRenderContext& ui) {
     if (!a) return;
     auto [copy, paste, other] = *a;
     std::vector<std::string> lines{ctr("create.clipboard.actions", "Clipboard Actions")};
-    auto rmb = "§7" + ctr("lv.display.key.use", "Right-Click") + "§f";
-    auto lmb = "§7" + ctr("lv.display.key.attack", "Left-Click") + "§f";
+    auto rmb = "§7" + ctr("br.display.key.use", "Right-Click") + "§f";
+    auto lmb = "§7" + ctr("br.display.key.attack", "Left-Click") + "§f";
     if (other) lines.push_back(ctr("create.clipboard.copy_other_clipboard", "{} to Copy entries from this Clipboard", rmb));
     else {
         if (copy) lines.push_back(ctr("create.clipboard.to_copy", "{} to Copy settings", rmb));
@@ -235,8 +235,8 @@ private:
     std::vector<ll::event::ListenerPtr> mListeners;
 };
 
-} // namespace lv::client::display
+} // namespace br::client::display
 
-LV_REGISTER_MODULE(lv::client::display::ClipboardClientModule);
+BR_REGISTER_MODULE(br::client::display::ClipboardClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

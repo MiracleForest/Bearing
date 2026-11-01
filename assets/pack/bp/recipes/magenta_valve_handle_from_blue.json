@@ -2,14 +2,14 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:magenta_valve_handle_from_blue"
+      "identifier": "bearing:magenta_valve_handle_from_blue"
     },
     "tags": [
       "crafting_table"
     ],
     "ingredients": [
       {
-        "item": "levitate:blue_valve_handle"
+        "item": "bearing:blue_valve_handle"
       },
       {
         "item": "minecraft:magenta_dye"
@@ -17,11 +17,11 @@
     ],
     "unlock": [
       {
-        "item": "levitate:blue_valve_handle"
+        "item": "bearing:blue_valve_handle"
       }
     ],
     "result": {
-      "item": "levitate:magenta_valve_handle",
+      "item": "bearing:magenta_valve_handle",
       "count": 1
     }
   }

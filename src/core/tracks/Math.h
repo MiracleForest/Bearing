@@ -13,7 +13,7 @@
 #include <optional>
 #include <string>
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 /// `Mth.equal`: |a - b| < 1e-5.
 [[nodiscard]] inline bool nearlyEqual(double a, double b) { return std::abs(b - a) < 1.0e-5; }
@@ -130,11 +130,11 @@ struct Box {
     }
 };
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks
 
 template <>
-struct std::hash<lv::core::tracks::BlockPos3> {
-    size_t operator()(lv::core::tracks::BlockPos3 const& p) const noexcept {
+struct std::hash<br::core::tracks::BlockPos3> {
+    size_t operator()(br::core::tracks::BlockPos3 const& p) const noexcept {
         return (size_t(uint32_t(p.x)) * 73856093u) ^ (size_t(uint32_t(p.y)) * 19349663u)
              ^ (size_t(uint32_t(p.z)) * 83492791u);
     }

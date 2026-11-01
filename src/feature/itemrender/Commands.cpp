@@ -21,7 +21,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::itemrender {
+namespace br::feature::itemrender {
 
 // Command parameter types need external linkage.
 struct DemoParams {
@@ -36,7 +36,7 @@ constexpr char const* kDemoItems[] = {
     "minecraft:iron_sword",
     "minecraft:torch",
     "minecraft:oak_stairs",
-    "levitate:andesite_casing",
+    "bearing:andesite_casing",
     "minecraft:apple",
 };
 
@@ -88,26 +88,26 @@ void tickDemo() {
 
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload<DemoParams>().text("itemrender").text("demo").required("x").required("y").required("z").execute(
         [](CommandOrigin const& origin, CommandOutput& output, DemoParams const& p) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.itemrender.no_permission", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.itemrender.no_permission", "You need operator permission."));
             int  dim = origin.getEntity() ? static_cast<int>(origin.getEntity()->getDimensionId()) : 0;
             auto& d  = demo();
             if (d.active) clear(d.origin);
             d = Demo{true, GlobalPos{dim, p.x, p.y, p.z}, 0};
             place(d.origin);
             log().info("itemrender: demo at {} {} {}", p.x, p.y, p.z);
-            output.success(tr("lv.itemrender.demo", "Display item test pattern at {} {} {}", p.x, p.y, p.z));
+            output.success(tr("br.itemrender.demo", "Display item test pattern at {} {} {}", p.x, p.y, p.z));
         }
     );
     cmd.overload().text("itemrender").text("clear").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!commands::isAdmin(origin)) return output.error(tr("lv.itemrender.no_permission", "You need operator permission."));
+        if (!commands::isAdmin(origin)) return output.error(tr("br.itemrender.no_permission", "You need operator permission."));
         auto& d = demo();
         if (d.active) clear(d.origin);
         d = Demo{};
         log().info("itemrender: demo cleared");
-        output.success(tr("lv.itemrender.cleared", "Display item test pattern removed"));
+        output.success(tr("br.itemrender.cleared", "Display item test pattern removed"));
     });
 });
 
@@ -123,6 +123,6 @@ private:
     ll::event::ListenerPtr mTick;
 };
 
-} // namespace lv::feature::itemrender
+} // namespace br::feature::itemrender
 
-LV_REGISTER_MODULE(lv::feature::itemrender::DemoModule);
+BR_REGISTER_MODULE(br::feature::itemrender::DemoModule);

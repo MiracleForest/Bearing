@@ -32,7 +32,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace items = common::items;
 namespace ia    = common::interactions;
@@ -157,8 +157,8 @@ void orientControls(Player& p, GlobalPos const& pos) {
     if (idAt(pos) != kControls) return;
     int look = game::playerFacing(p);        // 0 S, 1 W, 2 N, 3 E: where the player looks
     int face = p.isSneaking() ? look : game::opposite(look);
-    static int const toDir[] = {3, 4, 2, 5}; // Java 2D -> levitate:facing (south, west, north, east)
-    setBlockAt(pos, kControls, {{"levitate:facing", toDir[face & 3]}});
+    static int const toDir[] = {3, 4, 2, 5}; // Java 2D -> bearing:facing (south, west, north, east)
+    setBlockAt(pos, kControls, {{"bearing:facing", toDir[face & 3]}});
 }
 
 } // namespace
@@ -387,4 +387,4 @@ void uninstallHooks() {
     gHandlers.clear();
 }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains

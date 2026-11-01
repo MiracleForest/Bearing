@@ -2,16 +2,16 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:item_drain",
+      "identifier": "bearing:item_drain",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.item_drain",
+      "minecraft:geometry": "geometry.bearing.item_drain",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_item_drain",
+          "texture": "bearing_item_drain",
           "render_method": "alpha_test"
         }
       },

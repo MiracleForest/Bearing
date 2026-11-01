@@ -46,7 +46,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace tk  = core::tracks;
 namespace sig = tracks::signals;
@@ -445,7 +445,7 @@ tk::EdgeCost navigationCost(Train const& self, tk::Graph const& g, tk::Edge cons
     if (!n1 || !n2) return {};
     auto cost = sig::pathCost(signalId(self), g, e, redWeight); // signals (U28)
     for (auto const* p : rail().pointsOn(n1->location, n2->location)) {
-        if (p->type != "levitate:station") continue;
+        if (p->type != "bearing:station") continue;
         auto key = p->data.contains("pos") ? GlobalPos{p->data["pos"][0], p->data["pos"][1], p->data["pos"][2], p->data["pos"][3]}.key()
                                            : std::string();
         auto* st = stationByKey(key);
@@ -748,7 +748,7 @@ std::size_t cargoHashOf(Train const& t) {
 
 /// Create's Train.burnFuel: one burnable item from the carriages' chests / barrels, from the
 /// back carriage first when reversing; the item's crafting remainder (a lava bucket's bucket) goes
-/// back into the carriage. (Vaults never give fuel in Create; Levitate's carriages mount vanilla
+/// back into the carriage. (Vaults never give fuel in Create; Bearing's carriages mount vanilla
 /// containers only.)
 void burnFuel(Train& t) {
     if (t.fuelTicks > 0) {
@@ -1024,7 +1024,7 @@ void damageEntities(Train& t, Vec3d const& motion) {
             auto hit = ct::entityHit(motion, {pd.x, pd.y, pd.z}, a->hasCategory(ActorCategory::Monster));
             if (!hit) continue;
             // Create's CreateDamageSources.runOver: "%1$s was run over by %2$s" (the carriage)
-            common::deathmsg::mark(*a, "death.attack.create.run_over", {"%entity.levitate:carriage_contraption.name"});
+            common::deathmsg::mark(*a, "death.attack.create.run_over", {"%entity.bearing:carriage_contraption.name"});
             ActorDamageSource source(SharedTypes::Legacy::ActorDamageCause::EntityAttack, "");
             HurtParameters    params{};
             last = state().tick;
@@ -1643,13 +1643,13 @@ bool tryControls(Player& player, double maxDistance) {
     return true;
 }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains
 
 // ---- TrainsExt.h --------------------------------------------------------------------------------
 
-namespace lv::feature::tracks::trains {
+namespace br::feature::tracks::trains {
 
-namespace ft = lv::feature::trains;
+namespace ft = br::feature::trains;
 
 std::vector<TrainInfo> all() {
     std::vector<TrainInfo> out;
@@ -1689,9 +1689,9 @@ std::vector<StationInfo> stations() {
 void onPointEntered(std::function<void(std::uint64_t, core::tracks::EdgePoint const&)> fn) { ft::ext().entered.push_back(std::move(fn)); }
 void onPointLeft(std::function<void(std::uint64_t, core::tracks::EdgePoint const&)> fn) { ft::ext().left.push_back(std::move(fn)); }
 
-} // namespace lv::feature::tracks::trains
+} // namespace br::feature::tracks::trains
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 std::optional<DoorMode> stationDoorModeOf(std::uint64_t contraption) {
     for (auto const& [id, t] : state().trains) {
@@ -1706,4 +1706,4 @@ std::optional<DoorMode> stationDoorModeOf(std::uint64_t contraption) {
     return std::nullopt;
 }
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains

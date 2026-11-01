@@ -14,7 +14,7 @@
 
 #include "core/GlobalPos.h"
 
-namespace lv::core::kinetics {
+namespace br::core::kinetics {
 
 enum class Axis : std::uint8_t { X = 0, Y = 1, Z = 2 };
 
@@ -153,4 +153,4 @@ struct BlockState {
     friend bool operator==(BlockState const&, BlockState const&) = default;
 };
 
-} // namespace lv::core::kinetics
+} // namespace br::core::kinetics

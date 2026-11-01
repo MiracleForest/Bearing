@@ -7,7 +7,7 @@
 // the track they cover; sections, signal states and observers follow. Before a train enters a
 // section it asks for the way ahead (Create's Navigation signal scan with chain signalling):
 //
-//     namespace sig = lv::feature::tracks::signals;
+//     namespace sig = br::feature::tracks::signals;
 //     // every tick the train moved, after it was assembled and after `tracks::onGraphChanged`:
 //     sig::setTrainExtent(trainId, trailingBogeyLocation, leadingBogeyLocation);
 //     // every tick while driving (front = the leading point, travelling towards front.node2):
@@ -44,7 +44,7 @@
 
 class ItemStack;
 
-namespace lv::feature::tracks::signals {
+namespace br::feature::tracks::signals {
 
 using core::signals::Authority;
 using core::signals::Crossing;
@@ -54,16 +54,16 @@ using core::signals::SignalState;
 using core::signals::SignalType;
 using core::signals::Span;
 
-inline constexpr std::string_view kSignalId   = "levitate:track_signal";
-inline constexpr std::string_view kObserverId = "levitate:track_observer";
+inline constexpr std::string_view kSignalId   = "bearing:track_signal";
+inline constexpr std::string_view kObserverId = "bearing:track_observer";
 /// Edge point types (core::tracks::EdgePoint::type) of signal boundaries and observers.
-inline constexpr std::string_view kSignalPointType   = "levitate:signal";
-inline constexpr std::string_view kObserverPointType = "levitate:observer";
+inline constexpr std::string_view kSignalPointType   = "bearing:signal";
+inline constexpr std::string_view kObserverPointType = "bearing:observer";
 
-/// Block states of `levitate:track_signal` (Create's SignalBlock TYPE / POWERED + the lamp).
-inline constexpr std::string_view kTypeState    = "levitate:signal_type";  ///< SignalType
-inline constexpr std::string_view kLampState    = "levitate:signal_state"; ///< lampValue(SignalState)
-inline constexpr std::string_view kPoweredState = "levitate:powered";      ///< redstone (signal: input, observer: output)
+/// Block states of `bearing:track_signal` (Create's SignalBlock TYPE / POWERED + the lamp).
+inline constexpr std::string_view kTypeState    = "bearing:signal_type";  ///< SignalType
+inline constexpr std::string_view kLampState    = "bearing:signal_state"; ///< lampValue(SignalState)
+inline constexpr std::string_view kPoweredState = "bearing:powered";      ///< redstone (signal: input, observer: output)
 
 /// Value of `kLampState` for a state: 0 off (Invalid, the default of a fresh block), 1 red,
 /// 2 yellow, 3 green.
@@ -151,4 +151,4 @@ void setTrainNameProvider(NameProvider provider);
 /// The train a track observer currently sees ("" when none).
 [[nodiscard]] std::string observedTrain(core::GlobalPos const& pos);
 
-} // namespace lv::feature::tracks::signals
+} // namespace br::feature::tracks::signals

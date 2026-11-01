@@ -1,9 +1,9 @@
 #pragma once
 
 // `config/goggles.json` (U8): Create's CClient goggle overlay / tooltip keys (read by the client
-// mod; on BDS only the Levitate keys matter) and the vanilla-client overlay.
+// mod; on BDS only the Bearing keys matter) and the vanilla-client overlay.
 
-namespace lv::feature::goggles {
+namespace br::feature::goggles {
 
 struct GogglesConfig {
     int version = 2; // 2: vanillaOverlayHud
@@ -23,7 +23,7 @@ struct GogglesConfig {
     int customBorderTopOverlay  = static_cast<int>(0x505000ffu);
     int customBorderBotOverlay  = static_cast<int>(0x5028007fu);
 
-    // ---- Levitate ----
+    // ---- Bearing ----
     /// Show the overlay to players without the client mod.
     bool vanillaOverlay = true;
     /// Players without the client mod see the overlay as Create's panel next to the crosshair,
@@ -34,4 +34,4 @@ struct GogglesConfig {
     int overlayInterval = 4;
 };
 
-} // namespace lv::feature::goggles
+} // namespace br::feature::goggles

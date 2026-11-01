@@ -1,6 +1,6 @@
 #pragma once
 
-// Display items (U33, SPEC §3.3): items the Levitate client mod draws in the world for blocks
+// Display items (U33, SPEC §3.3): items the Bearing client mod draws in the world for blocks
 // (Create's block entity renderers draw them: items on belts, in chutes, filter slots, placards,
 // basins, ...). Server side, server thread. Shared by every unit that shows items.
 //
@@ -40,7 +40,7 @@
 
 class Block;
 
-namespace lv::feature::itemrender {
+namespace br::feature::itemrender {
 
 using core::GlobalPos;
 using core::itemrender::Style;
@@ -85,4 +85,4 @@ void refresh(GlobalPos const& owner);
 /// as Bedrock's FacingID (0 down, 1 up, 2 north, 3 south, 4 west, 5 east). Only the angles are set.
 [[nodiscard]] Transform facingFace(int face);
 
-} // namespace lv::feature::itemrender
+} // namespace br::feature::itemrender

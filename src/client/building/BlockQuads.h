@@ -1,12 +1,12 @@
 #pragma once
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the building unit: block meshes drawn by the client mod in the world (copycats,
 // brackets, sliding doors, connected-texture corners).
 //
 // - `quadsOf(block)`: the block's quads as the chunk mesh draws them, in block units (the block's
-//   bottom-north-west corner at the origin) with atlas UVs. Levitate blocks come from the pack's own
+//   bottom-north-west corner at the origin) with atlas UVs. Bearing blocks come from the pack's own
 //   block files and geometry (core/ponder/BlockModel.h, as Ponder), other blocks are tessellated by
 //   the game into our tessellator and read back.
 // - `cropAndMove`: Create's BakedModelHelper.cropAndMove (the part of a quad inside a box, its UVs
@@ -31,7 +31,7 @@ namespace mce {
 class Mesh;
 }
 
-namespace lv::client::building {
+namespace br::client::building {
 
 struct Quad {
     std::array<glm::vec3, 4> pos;
@@ -84,6 +84,6 @@ private:
     glm::vec3               mCam{0.f};
 };
 
-} // namespace lv::client::building
+} // namespace br::client::building
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

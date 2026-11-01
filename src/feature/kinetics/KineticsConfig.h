@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 
-namespace lv::feature::kinetics {
+namespace br::feature::kinetics {
 
 struct KineticsConfig {
     int version = 3; // 2: gantry_shaft impact 0 (as Create); 3: one copper_valve_handle entry for every valve handle
@@ -83,9 +83,9 @@ struct KineticsConfig {
         {"copper_valve_handle",       8}, // every valve handle (Create's getStressConfigKey)
     };
 
-    // ---- Levitate ----
+    // ---- Bearing ----
     /// Send kinetic speeds to players with the client mod (animated rotating parts).
     bool syncToClients = true;
 };
 
-} // namespace lv::feature::kinetics
+} // namespace br::feature::kinetics

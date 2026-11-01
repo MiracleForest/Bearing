@@ -19,7 +19,7 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace {
 
@@ -308,4 +308,4 @@ void tickLink(BlockSource& region, GP const& pos, Block const& block, Runtime& r
     }
 }
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

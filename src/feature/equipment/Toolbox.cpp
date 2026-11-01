@@ -47,7 +47,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -105,8 +105,8 @@ void store(GlobalPos const& pos, ce::ToolboxInv const& inv) {
 
 std::string colourOf(std::string_view id) {
     std::string s(id);
-    if (!s.starts_with("levitate:") || !s.ends_with("_toolbox")) return {};
-    return s.substr(9, s.size() - 9 - 8);
+    if (!s.starts_with("bearing:") || !s.ends_with("_toolbox")) return {};
+    return s.substr(8, s.size() - 8 - 8);
 }
 
 // ---- links (Create's ToolboxHandler: hotbar slot -> toolbox compartment) --------------------------
@@ -121,7 +121,7 @@ std::map<std::string, std::map<int, Link>>& links() {
     return m;
 }
 bool gLinksDirty = false;
-constexpr char kLinksKey[] = "lv:equipment:toolbox_links";
+constexpr char kLinksKey[] = "br:equipment:toolbox_links";
 
 std::string uuidOf(Player const& p) { return p.getUuid().asString(); }
 
@@ -172,7 +172,7 @@ void unlinkBox(GlobalPos const& box) {
 
 /// Block state of the lid: 0 closed, 1 open (vanilla clients see the open model), 2 the body only
 /// (meshed by the client mod, which draws lid and drawers animated; never set in the world).
-constexpr char kLid[] = "levitate:toolbox_lid";
+constexpr char kLid[] = "bearing:toolbox_lid";
 
 struct Openers {
     std::set<std::int64_t> players;
@@ -286,7 +286,7 @@ Json screenData(Player& player, GlobalPos const& pos) {
     return {
         {"pos", {pos.dim, pos.x, pos.y, pos.z}},
         {"colour", colourOf(idAt(pos))},
-        {"title", trFor(player, "block.levitate." + colourOf(idAt(pos)) + "_toolbox", "Toolbox")},
+        {"title", trFor(player, "block.bearing." + colourOf(idAt(pos)) + "_toolbox", "Toolbox")},
         {"compartments", comps},
     };
 }
@@ -362,18 +362,18 @@ void registerScreen() {
 void openForm(Player& player, GlobalPos const& pos) {
     auto inv = load(pos);
     ll::form::SimpleForm form;
-    form.setTitle(trFor(player, "block.levitate." + colourOf(idAt(pos)) + "_toolbox", "Toolbox"));
-    form.setContent(trFor(player, "lv.equipment.toolbox.form", "Take a stack from a compartment, or put the held item in."));
+    form.setTitle(trFor(player, "block.bearing." + colourOf(idAt(pos)) + "_toolbox", "Toolbox"));
+    form.setContent(trFor(player, "br.equipment.toolbox.form", "Take a stack from a compartment, or put the held item in."));
     for (int c = 0; c < ce::kCompartments; ++c) {
         auto        first = inv.first(c);
         std::string text;
         if (!first.empty()) text = items::displayName(toItem(first)) + " x" + std::to_string(inv.count(c));
         else if (!inv.filters[static_cast<std::size_t>(c)].empty())
             text = items::displayName(toItem(inv.filters[static_cast<std::size_t>(c)])) + " x0";
-        else text = trFor(player, "lv.equipment.toolbox.empty", "Empty compartment");
+        else text = trFor(player, "br.equipment.toolbox.empty", "Empty compartment");
         form.appendButton(text);
     }
-    form.appendButton(trFor(player, "lv.equipment.toolbox.put_held", "Put the held item in"));
+    form.appendButton(trFor(player, "br.equipment.toolbox.put_held", "Put the held item in"));
     // one callback for the buttons and closing the form (the lid closes with it)
     form.sendTo(player, [pos](Player& p, int index, ll::form::FormCancelReason reason) {
         if (reason || index < 0 || !canUse(p, pos)) {
@@ -499,10 +499,10 @@ ItemStack toolboxItem(std::string const& id, ce::ToolboxInv const& inv) {
 } // namespace
 
 bool isToolbox(std::string_view id) {
-    return id.starts_with("levitate:") && id.ends_with("_toolbox") && !colourOf(id).empty();
+    return id.starts_with("bearing:") && id.ends_with("_toolbox") && !colourOf(id).empty();
 }
 
-std::string toolboxId(std::string_view colour) { return "levitate:" + std::string(colour) + "_toolbox"; }
+std::string toolboxId(std::string_view colour) { return "bearing:" + std::string(colour) + "_toolbox"; }
 
 Json toolboxInventory(GlobalPos const& pos) {
     auto const* d = docOf(pos);
@@ -710,14 +710,14 @@ void openToolboxForm(Player& player) {
         form.appendButton(trFor(player, "create.toolbox.unequip", "Unequip: {}", items::displayName(player.getInventory().getItem(slot))),
                           [slot](Player& p) { unequipSlot(p, slot, false); });
     }
-    if (boxes.empty()) form.setContent(trFor(player, "lv.equipment.toolbox.none", "No toolbox in range"));
+    if (boxes.empty()) form.setContent(trFor(player, "br.equipment.toolbox.none", "No toolbox in range"));
     for (auto const& box : boxes) {
         auto inv = load(box);
         for (int c = 0; c < ce::kCompartments; ++c) {
             auto first = inv.first(c);
             if (first.empty()) continue;
             std::string label = items::displayName(toItem(first)) + " x" + std::to_string(inv.count(c));
-            if (boxes.size() > 1) label += " (" + trFor(player, "block.levitate." + colourOf(idAt(box)) + "_toolbox", "Toolbox") + ")";
+            if (boxes.size() > 1) label += " (" + trFor(player, "block.bearing." + colourOf(idAt(box)) + "_toolbox", "Toolbox") + ")";
             form.appendButton(label, [box, c](Player& p) { equipFromToolbox(p, box, c, p.getSelectedItemSlot()); });
         }
     }
@@ -950,17 +950,17 @@ LL_TYPE_INSTANCE_HOOK(
     return origin(results, numCrafts);
 }
 
-// `/create toolbox lid <pos> <ticks>` (Levitate debug, op): holds a toolbox's lid open as if a player
+// `/create toolbox lid <pos> <ticks>` (Bearing debug, op): holds a toolbox's lid open as if a player
 // had its screen open (e2e scenarios photograph the open lid; 0 releases it).
 struct ToolboxLidParams {
     CommandPosition pos;
     int             ticks = 0;
 };
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload<ToolboxLidParams>().text("toolbox").text("lid").required("pos").required("ticks").execute(
         [](CommandOrigin const& origin, CommandOutput& output, ToolboxLidParams const& params) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.contraption.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.contraption.need_op", "You need operator permission."));
             auto* dim = origin.getDimension();
             if (!dim) return output.error("No dimension.");
             auto      bp = game::blockPosOf(params.pos.getPosition(0x7FFFFFFF, origin, Vec3{0, 0, 0}));
@@ -979,6 +979,6 @@ public:
 };
 } // namespace
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-LV_REGISTER_MODULE(lv::feature::equipment::ToolboxHooksModule);
+BR_REGISTER_MODULE(br::feature::equipment::ToolboxHooksModule);

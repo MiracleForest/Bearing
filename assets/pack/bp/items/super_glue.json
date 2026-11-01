@@ -2,19 +2,19 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:super_glue",
+      "identifier": "bearing:super_glue",
       "menu_category": {
         "category": "equipment"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_super_glue",
+      "minecraft:icon": "bearing_super_glue",
       "minecraft:max_stack_size": 1,
       "minecraft:durability": {
         "max_durability": 99
       },
       "minecraft:display_name": {
-        "value": "item.levitate:super_glue.name"
+        "value": "item.bearing:super_glue.name"
       }
     }
   }

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:polished_cut_ochrum_slab"
+      "identifier": "bearing:polished_cut_ochrum_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:polished_cut_ochrum"
+        "item": "bearing:polished_cut_ochrum"
       }
     },
     "unlock": [
       {
-        "item": "levitate:polished_cut_ochrum"
+        "item": "bearing:polished_cut_ochrum"
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_ochrum_slab",
+      "item": "bearing:polished_cut_ochrum_slab",
       "count": 6
     }
   }

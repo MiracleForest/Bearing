@@ -48,7 +48,7 @@ $brass = @{ b = '#d9a548'; h = '#f2d27a'; g = '#a8742c'; k = '#2b2119' }
 foreach ($name in $dyes.Keys) {
     $dye = $dyes[$name]
     $pal = Merge-Pal $brass @{ x = (Hex $dye); y = (Hex (Shade-Color $dye 1.25)); z = (Hex (Shade-Color $dye 0.7)); o = (Hex (Shade-Color $dye 0.5)) }
-    # block texture (64x64, box UV of geometry.levitate.toolbox*, tools/models/equipment.ps1)
+    # block texture (64x64, box UV of geometry.bearing.toolbox*, tools/models/equipment.ps1)
     $c = New-Canvas 64 64
     Paint-Cube $c 0 0 14 4 8 'x' 'o'                                      # base
     Side-Band $c 0 0 14 4 8 2 'z'
@@ -173,7 +173,7 @@ Fill $c 6 5 9 6 't'; Set-Px $c 7 4 'l'; Set-Px $c 8 3 'l'; Set-Px $c 6 3 'y'; Se
 Set-Px $c 7 9 'w'; Set-Px $c 8 10 'w'
 Save $c (Merge-Pal $wood @{ f = '#5c8a3a'; a = '#7fb054'; e = '#3e5f27'; k = '#26331b'; l = '#4f9a2e'; y = '#8fd45e'; w = '#efe9d6' }) "$items/tree_fertilizer.png"
 
-# --- lectern controller (64x64, box UV of geometry.levitate.lectern_controller) ------------------------------
+# --- lectern controller (64x64, box UV of geometry.bearing.lectern_controller) ------------------------------
 $c = New-Canvas 64 64
 Paint-Cube $c 0 0 16 2 16 'p' 't'
 Paint-Cube $c 0 18 8 10 8 's' 't'; Side-Band $c 0 18 8 10 8 4 'u'
@@ -181,7 +181,7 @@ Paint-Cube $c 0 38 16 2 12 'u' 't'
 Paint-Cube $c 32 18 8 2 5 'k' 'n'; Set-Px $c 38 19 'r'; Set-Px $c 41 19 'r'; Set-Px $c 44 19 'b'
 Save $c (Merge-Pal (Merge-Pal $wood $metal) @{ p = '#9c7848'; r = '#c23a2c' }) "$blocks/lectern_controller.png"
 
-# --- peculiar / haunted bell (64x64, box UV of geometry.levitate.bell_*, tools/models/curiosities.ps1) ------------
+# --- peculiar / haunted bell (64x64, box UV of geometry.bearing.bell_*, tools/models/curiosities.ps1) ------------
 $frameMetal = @{ f = '#4a4a52'; e = '#66666f'; q = '#2a2a30' }
 foreach ($set in @(@{ name = 'peculiar_bell'; pal = @{ b = '#d9a548'; h = '#f4d982'; g = '#a8742c'; o = '#6a4718' } },
         @{ name = 'haunted_bell'; pal = @{ b = '#d8cfae'; h = '#f6f0d8'; g = '#9f9576'; o = '#3f4a52' } })) {
@@ -245,7 +245,7 @@ Save $c $card "$armor/cardboard_2.png"
 # --- soul pulse particles (Create's SoulParticle / SoulBaseParticle; particles/soul*.json) -----------------------
 $particles = Join-Path $root 'assets/pack/rp/textures/particle'
 $soulPal = @{ a = '#2a6e8a'; b = '#3fb6d0'; w = '#a6f4ff'; v = '#f2feff' }
-# levitate_soul: 24 frames of 16x16 in a column (8 forming, 8 flickering, 8 rising away)
+# bearing_soul: 24 frames of 16x16 in a column (8 forming, 8 flickering, 8 rising away)
 $c = New-Canvas 16 384
 for ($f = 0; $f -lt 24; $f++) {
     if ($f -lt 8) { $h = 2 + $f; $lift = 0 } elseif ($f -lt 16) { $h = 10 + ($f % 2); $lift = 0 } else { $h = 10 - ($f - 16); $lift = $f - 16 }
@@ -260,8 +260,8 @@ for ($f = 0; $f -lt 24; $f++) {
     }
     if ($h -gt 3) { Set-Px $c 7 ($base - 1) 'v'; Set-Px $c 8 ($base - 1) 'v' }
 }
-Save $c $soulPal "$particles/levitate_soul.png"
-# levitate_soul_base: 8 frames of a flat ring that pulses
+Save $c $soulPal "$particles/bearing_soul.png"
+# bearing_soul_base: 8 frames of a flat ring that pulses
 $c = New-Canvas 16 128
 for ($f = 0; $f -lt 8; $f++) {
     $r = 4.5 + 1.5 * [Math]::Sin([Math]::PI * $f / 4)
@@ -270,6 +270,6 @@ for ($f = 0; $f -lt 8; $f++) {
             if ([Math]::Abs($d - $r) -lt 0.7) { Set-Px $c $x ($y + 16 * $f) 'b' } elseif ([Math]::Abs($d - $r) -lt 1.4) { Set-Px $c $x ($y + 16 * $f) 'a' }
         } }
 }
-Save $c $soulPal "$particles/levitate_soul_base.png"
+Save $c $soulPal "$particles/bearing_soul_base.png"
 
 Write-Host 'equipment textures written'

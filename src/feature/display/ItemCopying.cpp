@@ -1,6 +1,6 @@
 // Create's ItemCopyingRecipe (SupportsItemCopying: schedules, clipboards and filters): a written item
 // crafted with blank ones of the same kind gives that many + 1 copies. Bedrock recipes can't look
-// at item data, so `levitate:<item>_copying_<n>` recipes (n of the item -> n of it) make the craft
+// at item data, so `bearing:<item>_copying_<n>` recipes (n of the item -> n of it) make the craft
 // and this hook gives the results the written item's data (without enchantments). Two written
 // items in the grid are refused (Create's copyCheck finds no recipe for them).
 
@@ -27,7 +27,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 namespace {
 
@@ -35,10 +35,10 @@ namespace items = common::items;
 
 // (Bedrock clipboards stack to 1: no copying recipe can give several of them)
 constexpr std::array<std::string_view, 4> kCopyable{
-    "levitate:schedule",
-    "levitate:filter",
-    "levitate:attribute_filter",
-    "levitate:package_filter",
+    "bearing:schedule",
+    "bearing:filter",
+    "bearing:attribute_filter",
+    "bearing:package_filter",
 };
 
 bool copyable(std::string_view id) { return std::find(kCopyable.begin(), kCopyable.end(), id) != kCopyable.end(); }
@@ -88,7 +88,7 @@ std::optional<Copy> copyCheck(std::vector<ItemStack const*> const& slots, std::s
 
 } // namespace
 
-} // namespace lv::feature::display
+} // namespace br::feature::display
 
 LL_TYPE_INSTANCE_HOOK(
     DisplayItemCopyingCraftHook,
@@ -99,7 +99,7 @@ LL_TYPE_INSTANCE_HOOK(
     std::vector<ItemInstance> const& results,
     uchar                            numCrafts
 ) {
-    namespace d = lv::feature::display;
+    namespace d = br::feature::display;
     try {
         Player& player = mPlayer;
         if (!player.isClientSide() && results.size() == 1 && !results.front().isNull() && d::copyable(results.front().getTypeName())) {
@@ -108,7 +108,7 @@ LL_TYPE_INSTANCE_HOOK(
                 auto c = d::copyCheck(d::grid(player, table), id);
                 if (!c) continue;
                 if (c->refused) {
-                    lv::log().info("display: {} tried to copy two written {} items (refused)", player.getRealName(), id);
+                    br::log().info("display: {} tried to copy two written {} items (refused)", player.getRealName(), id);
                     return ItemStackNetResult::InvalidCraftResult;
                 }
                 if (!c->source || c->targets == 0) break; // blank items only: plain craft
@@ -118,17 +118,17 @@ LL_TYPE_INSTANCE_HOOK(
                     data->erase("ench"); // Create's createCopy drops the enchantments
                     copy.front().setUserData(std::move(data));
                 }
-                lv::log().info("display: {} copied a written {} onto {} blank one(s)", player.getRealName(), id, c->targets);
+                br::log().info("display: {} copied a written {} onto {} blank one(s)", player.getRealName(), id, c->targets);
                 return origin(copy, numCrafts);
             }
         }
     } catch (std::exception const& e) {
-        lv::log().error("display: item copying failed: {}", e.what());
+        br::log().error("display: item copying failed: {}", e.what());
     }
     return origin(results, numCrafts);
 }
 
-namespace lv::feature::display {
+namespace br::feature::display {
 namespace {
 class ItemCopyingModule {
 public:
@@ -136,6 +136,6 @@ public:
     void uninstall() { DisplayItemCopyingCraftHook::unhook(); }
 };
 } // namespace
-} // namespace lv::feature::display
+} // namespace br::feature::display
 
-LV_REGISTER_MODULE(lv::feature::display::ItemCopyingModule);
+BR_REGISTER_MODULE(br::feature::display::ItemCopyingModule);

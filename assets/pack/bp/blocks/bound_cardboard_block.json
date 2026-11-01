@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:bound_cardboard_block",
+      "identifier": "bearing:bound_cardboard_block",
       "menu_category": {
         "category": "construction"
       },
@@ -27,15 +27,15 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_bound_cardboard_block",
+          "texture": "bearing_bound_cardboard_block",
           "render_method": "opaque"
         },
         "north": {
-          "texture": "levitate_bound_cardboard_block_end",
+          "texture": "bearing_bound_cardboard_block_end",
           "render_method": "opaque"
         },
         "south": {
-          "texture": "levitate_bound_cardboard_block_end",
+          "texture": "bearing_bound_cardboard_block_end",
           "render_method": "opaque"
         }
       }

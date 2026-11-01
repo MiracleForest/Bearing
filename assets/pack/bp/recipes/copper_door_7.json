@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:copper_door_7"
+      "identifier": "bearing:copper_door_7"
     },
     "tags": [
       "crafting_table"
@@ -12,7 +12,7 @@
         "item": "minecraft:cherry_door"
       },
       {
-        "item": "levitate:copper_casing"
+        "item": "bearing:copper_casing"
       }
     ],
     "unlock": [
@@ -21,7 +21,7 @@
       }
     ],
     "result": {
-      "item": "levitate:copper_door",
+      "item": "bearing:copper_door",
       "count": 1
     }
   }

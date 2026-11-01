@@ -14,9 +14,9 @@ Invoke-Chat '/time set noon'
 # a generator along x with a cogwheel, looked at from 3 blocks away (ground at y -61)
 Invoke-Chat '/tp @s 0.5 -60 3.5'
 Start-Sleep -Milliseconds 500
-Invoke-Chat '/setblock 4 -59 3 levitate:kinetics_test_cog ["levitate:axis"=0]'
+Invoke-Chat '/setblock 4 -59 3 bearing:kinetics_test_cog ["bearing:axis"=0]'
 Invoke-Chat '/tp @s 0.5 -60 3.5 facing 3.5 -59 3.5'
-Invoke-Chat '/replaceitem entity @s slot.armor.head 0 levitate:goggles'
+Invoke-Chat '/replaceitem entity @s slot.armor.head 0 bearing:goggles'
 Start-Sleep -Seconds 1
 
 function Show-Indicator([string]$command, [string]$rpm, [string]$shot) {
@@ -40,7 +40,7 @@ function Show-Indicator([string]$command, [string]$rpm, [string]$shot) {
     Start-Sleep -Milliseconds 1500
 }
 
-Show-Indicator '/setblock 3 -59 3 levitate:kinetics_test_source ["levitate:axis"=0]' '16' 'indicator-slow'
+Show-Indicator '/setblock 3 -59 3 bearing:kinetics_test_source ["bearing:axis"=0]' '16' 'indicator-slow'
 Show-Indicator '/create kinetics 3 -59 3 speed -64' '-64' 'indicator-medium'
 Show-Indicator '/create kinetics 3 -59 3 speed 128' '128' 'indicator-fast'
 

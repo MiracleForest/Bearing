@@ -19,7 +19,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::bulk {
+namespace br::core::bulk {
 
 using kinetics::Axis;
 using kinetics::Face;
@@ -161,4 +161,4 @@ inline constexpr int kDefaultProcessingTime = 100;
 /// Whether an item entity being pulled through has gone far enough to be taken in.
 [[nodiscard]] bool crusherIntakeReached(Face facing, Vec3d const& entityPos, int bx, int by, int bz);
 
-} // namespace lv::core::bulk
+} // namespace br::core::bulk

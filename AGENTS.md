@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Levitate is a Bedrock port of the *behaviour* of the Java mod **Create 6.0.10** (simibubi and the Creators of Create),
+Bearing is a Bedrock port of the *behaviour* of the Java mod **Create 6.0.10** (simibubi and the Creators of Create),
 written as a LeviLamina native mod. It targets MC **1.26.51** / LeviLamina **26.51.7**, builds with
 xmake + clang-cl on Windows x64, and runs on **both** the dedicated server (BDS) and the client
 (local worlds through LeviLauncher). One code base, two builds (`--target_type=server|client`).
@@ -16,17 +16,17 @@ should match the wording of Create (they are behaviour), written into our own la
 
 | Path | What it is |
 | ---- | ---------- |
-| `src/core/` | Pure C++ (no `mc/`/`ll/` includes): `Format.h` (translation formatting), `Glob.h`, `GlobalPos.h`. Static lib `lv-core`, unit-tested in `tests/`. |
+| `src/core/` | Pure C++ (no `mc/`/`ll/` includes): `Format.h` (translation formatting), `Glob.h`, `GlobalPos.h`. Static lib `br-core`, unit-tested in `tests/`. |
 | `src/game/` | Game adapters: `WorldDb` (LevelDB JSON + world lifecycle), `Blocks` (states, placement, positions). |
-| `src/client/` | Client side (client build only, files wrapped in `#ifdef LV_CLIENT`): `Client.h` (client instance, local player, `ctr`). |
+| `src/client/` | Client side (client build only, files wrapped in `#ifdef BR_CLIENT`): `Client.h` (client instance, local player, `ctr`). |
 | `src/mod/` | Entry (`Main.cpp`), `Log.h`, `Module.h`, `Config.h`, `ModConfig.h`, `I18n.h`, `Commands.h`, `Registry.h`. |
 | `src/selftest/` | In-game test framework (`SelfTest.h`) and the foundation tests. |
 | `src/pack/` | `PackDeployer` (BDS: puts the resource pack on the world). |
-| `src/feature/<unit>/` | Feature units (gameplay, server side; may contain `#ifdef LV_CLIENT` parts). |
+| `src/feature/<unit>/` | Feature units (gameplay, server side; may contain `#ifdef BR_CLIENT` parts). |
 | `assets/lang/<locale>/<unit>.json` | Mod translations (server + client mod text), merged into `lang/<locale>.json`. |
 | `assets/pack/bp/` | Behavior pack: `blocks/`, `items/`, `recipes/`, `loot_tables/`, `manifest.json`. |
 | `assets/pack/rp/` | Resource pack: `textures/`, `models/`, fragments `item_texture.d/`, `terrain_texture.d/`, `blocks.d/`, `sounds.d/`, `texts.d/<locale>/*.lang`. |
-| `tools/build.ps1` | Builds server and/or client into `bin/<target>/Levitate/`. |
+| `tools/build.ps1` | Builds server and/or client into `bin/<target>/Bearing/`. |
 | `tools/xmake/assemble.lua` | Post-build: copies binaries, merges lang + pack fragments. |
 | `tools/textures/lib.ps1` | Pixel-art helpers (`Save-PixelArt`, `Merge-Rows`, `Shade-Color`). |
 | `tools/e2e/` | Real-game harnesses (server + client); see `tools/e2e/README.md`. |
@@ -38,13 +38,13 @@ existing contracts or other units' files. Extend contracts compatibly (add, neve
 and only when your unit really needs it; call such additions out in the PR.
 
 Files a unit typically adds (`<unit>` = a short lowercase name):
-- `src/feature/<unit>/*.cpp|h`, namespace `lv::feature::<unit>`; client parts in `src/client/<unit>/`.
+- `src/feature/<unit>/*.cpp|h`, namespace `br::feature::<unit>`; client parts in `src/client/<unit>/`.
 - `assets/lang/en_US/<unit>.json` + `assets/lang/zh_CN/<unit>.json` (both required).
 - BP: `assets/pack/bp/blocks/<id>.json`, `items/<id>.json`, `recipes/<id>.json`, `loot_tables/blocks/<id>.json`.
 - RP: `textures/blocks|items/*.png` (drawn by `tools/textures/<unit>.ps1`), `models/blocks/*.geo.json`,
   fragments `terrain_texture.d/<unit>.json`, `item_texture.d/<unit>.json`, `blocks.d/<unit>.json`,
   `sounds.d/<unit>.json`, `texts.d/{en_US,zh_CN}/<unit>.lang` (block / item names).
-- Selftests in the unit's .cpp (`LV_REGISTER_SELFTEST("<unit>.<case>", ...)`), e2e scenarios in
+- Selftests in the unit's .cpp (`BR_REGISTER_SELFTEST("<unit>.<case>", ...)`), e2e scenarios in
   `tools/e2e/{server,client}/scenarios/<unit>.ps1`.
 
 Duplicate keys in any merged fragment (lang JSON, item_texture, terrain_texture, blocks, texts,
@@ -55,23 +55,23 @@ reference it with `tr(key, "English fallback")` without defining it.
 
 | Macro | Header | Purpose |
 | ----- | ------ | ------- |
-| `LV_REGISTER_MODULE(T)` / `LV_REGISTER_MODULE_ORDERED(T, order)` | `mod/Module.h` | `T` has `install()`/`uninstall()` (+ optional `load()`, + optional `static T& get()`). |
-| `LV_REGISTER_CONFIG("section", T)` | `mod/Config.h` | Reflectable struct with `int version`; file `config/<section>.json`; `lv::config::get<T>()`. One section per unit. |
-| `LV_REGISTER_SUBCOMMAND(fn)` | `mod/Commands.h` | Adds overloads to `/create` (alias `/levitate`). `commands::playerOf`, `commands::isAdmin`. |
-| `LV_REGISTER_SELFTEST("unit.case", fn)` | `selftest/SelfTest.h` | `fn(Context&)` or `ll::coro::CoroTask<>(Context&)`. |
+| `BR_REGISTER_MODULE(T)` / `BR_REGISTER_MODULE_ORDERED(T, order)` | `mod/Module.h` | `T` has `install()`/`uninstall()` (+ optional `load()`, + optional `static T& get()`). |
+| `BR_REGISTER_CONFIG("section", T)` | `mod/Config.h` | Reflectable struct with `int version`; file `config/<section>.json`; `br::config::get<T>()`. One section per unit. |
+| `BR_REGISTER_SUBCOMMAND(fn)` | `mod/Commands.h` | Adds overloads to `/create` (alias `/bearing`). `commands::playerOf`, `commands::isAdmin`. |
+| `BR_REGISTER_SELFTEST("unit.case", fn)` | `selftest/SelfTest.h` | `fn(Context&)` or `ll::coro::CoroTask<>(Context&)`. |
 
 Registrations live in .cpp files linked directly into the DLL, so they are never stripped.
 
 ## Contracts in short
 
-- **Ids**: `levitate:<path>`, with the paths Create uses where they exist.
-- **World data** (`game/WorldDb.h`): JSON in the world's LevelDB under `lv:<unit>:<...>` keys.
+- **Ids**: `bearing:<path>`, with the paths Create uses where they exist.
+- **World data** (`game/WorldDb.h`): JSON in the world's LevelDB under `br:<unit>:<...>` keys.
   `db::onWorldReady/onWorldSave/onWorldClosed` for the world lifecycle (the client loads many
   worlds in one process). Never keep `Player*` or block pointers across ticks.
-- **Strings**: `lv::tr("key", "English fallback", args...)` / `lv::trFor(player, ...)`, client
-  `lv::client::ctr(...)`, `{}`/`{0}` placeholders. Prefer the key names of Create for strings
-  that exist there; `lv.<unit>.*` for Levitate-only text. Block / item names come from RP `texts.d`.
-- **Logging**: `lv::log()` (`mod/Log.h`). No per-tick logging. Log one line per user-visible action
+- **Strings**: `br::tr("key", "English fallback", args...)` / `br::trFor(player, ...)`, client
+  `br::client::ctr(...)`, `{}`/`{0}` placeholders. Prefer the key names of Create for strings
+  that exist there; `br.<unit>.*` for Bearing-only text. Block / item names come from RP `texts.d`.
+- **Logging**: `br::log()` (`mod/Log.h`). No per-tick logging. Log one line per user-visible action
   that e2e scenarios can wait for.
 - **Selftests** (`selftest/SelfTest.h`): `ctx.player()` (SimulatedPlayer), `ctx.spawnPlayer()`,
   `ctx.testPos(dx)` (distinct `dx` per test; unit U<n> owns dx 100n..100n+99; the run keeps the
@@ -106,7 +106,7 @@ Registrations live in .cpp files linked directly into the DLL, so they are never
   `$renderBlockEntities` hook with `render::Lines lines(ctx); lines.outline(lo, hi, render::kWhite);`
   (`line`, `box`, `plate(face, centre, size, ...)` for a frame on a block face; absolute world
   coordinates, drawn when `lines` leaves scope). Don't copy the tessellator boilerplate again.
-- **Config screen** (U42): `/create config [section]` edits every `LV_REGISTER_CONFIG` section in
+- **Config screen** (U42): `/create config [section]` edits every `BR_REGISTER_CONFIG` section in
   game (booleans, numbers, text, nested maps; operators only), through `config::ConfigEntry`'s
   `values` / `defaults` / `write`. Keep config fields plain reflectable values so they show there.
 - **Client sync** (`feature/net/Net.h`): server → client-mod data goes over the companion protocol
@@ -140,9 +140,9 @@ In a fresh pwsh refresh PATH first (the build script does this and adds LLVM if 
 `$env:Path=[Environment]::GetEnvironmentVariable('Path','Machine')+';'+[Environment]::GetEnvironmentVariable('Path','User')`
 
 ```powershell
-pwsh tools/build.ps1 -Target all -Tests     # bin/server/Levitate + bin/client/Levitate + gtest
+pwsh tools/build.ps1 -Target all -Tests     # bin/server/Bearing + bin/client/Bearing + gtest
 pwsh tools/build.ps1 -Target server -Tests  # one platform + unit tests
-xmake build -P . -y lv-tests; xmake run -P . lv-tests  # -P .: worktrees nested in another checkout
+xmake build -P . -y br-tests; xmake run -P . br-tests  # -P .: worktrees nested in another checkout
 pwsh -NoProfile -File tools/e2e/server/run.ps1 -Scenario smoke       # BDS (4 slots, waits for a free one)
 pwsh -NoProfile -File tools/e2e/client/run.ps1 -Scenario smoke       # headless client via Be.D.D.
 ```
@@ -152,13 +152,13 @@ pwsh -NoProfile -File tools/e2e/client/run.ps1 -Scenario smoke       # headless 
 - `xmake-requires.lock` is committed; it holds entries for both target types.
 - In game: `/create selftest ["glob"]` (op or server console). Quote globs: `create selftest "<unit>.*"`.
   Output lines: `SELFTEST PASS <name>`, `SELFTEST FAIL <name>: <reason>`, `SELFTEST DONE pass=<N> fail=<M>`.
-- Log contract: `Levitate enabled` on enable; `Levitate world ready` when a world is available.
+- Log contract: `Bearing enabled` on enable; `Bearing world ready` when a world is available.
 - E2E client runs: set `$env:LEVI_E2E_SLOTS='1,2,3,4'` to take the first free game slot. Locks live in
   `%APPDATA%\levilauncher.exe\` (`bei-e2e.lock` for slot 1, `hiN-e2e.lock` for clones); the harness
   waits for them. Headless input (Be.D.D.) is the default: the game runs in the
   background and never takes the real mouse/keyboard.
 
-Deploying by hand: copy `bin/server/Levitate` to `<BDS>/plugins/`, or `bin/client/Levitate` to
+Deploying by hand: copy `bin/server/Bearing` to `<BDS>/plugins/`, or `bin/client/Bearing` to
 `%APPDATA%\levilauncher.exe\versions\1.26.51.01\mods\`.
 
 ## Bedrock / LeviLamina rules (learned the hard way)
@@ -190,7 +190,7 @@ Deploying by hand: copy `bin/server/Levitate` to `<BDS>/plugins/`, or `bin/clien
 ## Conventions
 
 - C++20, `.clang-format` (LLVM-based, 4 spaces, 120 columns). Namespaces follow directories
-  (`lv::core`, `lv::game`, `lv::feature::<unit>`, `lv::client::...`).
+  (`br::core`, `br::game`, `br::feature::<unit>`, `br::client::...`).
 - English in code and comments; user-facing text through `tr`/`trFor`/`ctr` + lang fragments (en_US and zh_CN).
 - Every `src/core` change comes with gtest coverage in `tests/`; every feature comes with selftests
   and an e2e scenario.

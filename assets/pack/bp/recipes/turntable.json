@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:turntable"
+      "identifier": "bearing:turntable"
     },
     "tags": [
       "crafting_table"
@@ -16,16 +16,16 @@
         "tag": "minecraft:wooden_slabs"
       },
       "S": {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       }
     },
     "result": {
-      "item": "levitate:turntable",
+      "item": "bearing:turntable",
       "count": 1
     },
     "unlock": [
       {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       }
     ]
   }

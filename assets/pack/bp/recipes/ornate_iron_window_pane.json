@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:ornate_iron_window_pane"
+      "identifier": "bearing:ornate_iron_window_pane"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "#": {
-        "item": "levitate:ornate_iron_window"
+        "item": "bearing:ornate_iron_window"
       }
     },
     "unlock": [
       {
-        "item": "levitate:ornate_iron_window"
+        "item": "bearing:ornate_iron_window"
       }
     ],
     "result": {
-      "item": "levitate:ornate_iron_window_pane",
+      "item": "bearing:ornate_iron_window_pane",
       "count": 16
     }
   }

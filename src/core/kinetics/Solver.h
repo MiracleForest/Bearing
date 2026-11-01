@@ -30,7 +30,7 @@
 
 #include "core/kinetics/Spec.h"
 
-namespace lv::core::kinetics {
+namespace br::core::kinetics {
 
 /// A network is named after the generator that created it (Create: the source's position).
 using NetworkId = GlobalPos;
@@ -251,4 +251,4 @@ enum class StressLevel : std::uint8_t { Low, Medium, High, Overstressed };
 /// Angle in degrees at render time `ticks` (game ticks + partial tick) for `speed` RPM.
 [[nodiscard]] float rotationAngle(double ticks, float speed, float offset);
 
-} // namespace lv::core::kinetics
+} // namespace br::core::kinetics

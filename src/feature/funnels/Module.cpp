@@ -1,7 +1,7 @@
 // Item logistics unit (U12): module, block index, world helpers, player hooks, block changes.
 //
 // Every funnel, tunnel, chute, smart chute, item vault and creative crate is kept in an index
-// (persisted in the world DB under "lv:funnels:index") and ticked like Create's block entities.
+// (persisted in the world DB under "br:funnels:index") and ticked like Create's block entities.
 // Player actions arrive through the shared dispatch (common/Interactions.h; SimulatedPlayers too).
 
 #include <algorithm>
@@ -51,14 +51,14 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("funnels", lv::feature::funnels::Config);
+BR_REGISTER_CONFIG("funnels", br::feature::funnels::Config);
 
-namespace lv::feature::funnels {
+namespace br::feature::funnels {
 
 namespace items     = common::items;
 namespace blockdata = common::blockdata;
 
-Config const& config() { return lv::config::get<Config>(); }
+Config const& config() { return br::config::get<Config>(); }
 
 Kind kindOf(std::string_view id) {
     if (id == kAndesiteFunnel) return Kind::AndesiteFunnel;
@@ -74,7 +74,7 @@ Kind kindOf(std::string_view id) {
 
 namespace {
 
-constexpr char kDbIndex[] = "lv:funnels:index";
+constexpr char kDbIndex[] = "br:funnels:index";
 
 struct Intent {
     std::int64_t  player = 0;
@@ -741,6 +741,6 @@ private:
     ia::HandlerId                       mUseOn = 0;
 };
 
-} // namespace lv::feature::funnels
+} // namespace br::feature::funnels
 
-LV_REGISTER_MODULE(lv::feature::funnels::FunnelsModule);
+BR_REGISTER_MODULE(br::feature::funnels::FunnelsModule);

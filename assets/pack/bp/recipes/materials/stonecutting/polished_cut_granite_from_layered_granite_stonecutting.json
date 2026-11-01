@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:polished_cut_granite_from_layered_granite_stonecutting"
+      "identifier": "bearing:polished_cut_granite_from_layered_granite_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:layered_granite"
+        "item": "bearing:layered_granite"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:layered_granite"
+        "item": "bearing:layered_granite"
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_granite",
+      "item": "bearing:polished_cut_granite",
       "count": 1
     }
   }

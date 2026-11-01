@@ -5,7 +5,7 @@
 
 #include "core/packages/Address.h"
 
-namespace lv::core::packages {
+namespace br::core::packages {
 
 namespace {
 constexpr double kDeg       = std::numbers::pi / 180.0;
@@ -265,4 +265,4 @@ std::vector<std::vector<Stack>> repackSlots(std::vector<Stack> allItems, std::ve
     return packages;
 }
 
-} // namespace lv::core::packages
+} // namespace br::core::packages

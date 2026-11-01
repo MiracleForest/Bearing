@@ -16,7 +16,7 @@
 #include "feature/net/Net.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::basin::sync {
+namespace br::feature::basin::sync {
 
 namespace {
 
@@ -104,4 +104,4 @@ void flush() {
     });
 }
 
-} // namespace lv::feature::basin::sync
+} // namespace br::feature::basin::sync

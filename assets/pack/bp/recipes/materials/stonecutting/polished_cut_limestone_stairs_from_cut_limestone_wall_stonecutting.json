@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:polished_cut_limestone_stairs_from_cut_limestone_wall_stonecutting"
+      "identifier": "bearing:polished_cut_limestone_stairs_from_cut_limestone_wall_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:cut_limestone_wall"
+        "item": "bearing:cut_limestone_wall"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:cut_limestone_wall"
+        "item": "bearing:cut_limestone_wall"
       }
     ],
     "result": {
-      "item": "levitate:polished_cut_limestone_stairs",
+      "item": "bearing:polished_cut_limestone_stairs",
       "count": 1
     }
   }

@@ -5,7 +5,7 @@
 // (Create's editor of ScheduleScreen: type selector, text fields, scroll inputs and ghost item
 // slots) that send the edited part to the server ("set_instruction" / "set_condition").
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <optional>
@@ -18,9 +18,9 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::trains {
+namespace br::client::trains {
 
-using namespace lv::client::screen;
+using namespace br::client::screen;
 namespace items = feature::common::items;
 
 namespace {
@@ -76,7 +76,7 @@ private:
 
     void build() {
         float y = 20;
-        nameField(Rect{8, 3, 204, 14}, mData.value("name", std::string("Track Station")), 25, "rename", ctr("lv.trains.station_name", "Station Name"));
+        nameField(Rect{8, 3, 204, 14}, mData.value("name", std::string("Track Station")), 25, "rename", ctr("br.trains.station_name", "Station Name"));
         if (mData.value("assembling", false)) {
             line(y, ctr("create.station.assembly_title", "Train Assembly"), color::kTextGold);
             size_t n = mData.value("bogeys", size_t{0});
@@ -96,7 +96,7 @@ private:
         }
         if (mData.contains("train")) {
             auto const& t = mData["train"];
-            nameField(Rect{8, y - 1, 204, 13}, t.value("name", std::string()), 35, "train_name", ctr("lv.trains.train_name", "Train Name"));
+            nameField(Rect{8, y - 1, 204, 13}, t.value("name", std::string()), 35, "train_name", ctr("br.trains.train_name", "Train Name"));
             y += 15;
             // Create's AssemblyScreen icon type selector (traditional, electric, modern)
             {
@@ -105,7 +105,7 @@ private:
                 auto&       pick  = add<ScrollInput>(Rect{8, y, 204, 14}, ctr("create.station.icon_type", "Icon Type"), 0, 2, index, [this](int v) {
                     mSend({{"op", "icon"}, {"value", v}});
                 });
-                pick.options = {ctr("lv.trains.icon.traditional", "Traditional"), ctr("lv.trains.icon.electric", "Electric"), ctr("lv.trains.icon.modern", "Modern")};
+                pick.options = {ctr("br.trains.icon.traditional", "Traditional"), ctr("br.trains.icon.electric", "Electric"), ctr("br.trains.icon.modern", "Modern")};
                 y += 17;
             }
             bool can = t.value("canDisassemble", false);
@@ -139,7 +139,7 @@ private:
         for (int i = 0; i < 6; ++i) door.options.push_back(ctr(std::string("create.contraption.door_control.") + keys[i] + ".short", fb[i]));
         y += 18;
         auto const& arr = mData.value("arrivals", Json::array());
-        if (!arr.empty()) line(y, ctr("lv.trains.arrivals", "Arriving trains"), color::kTextGold);
+        if (!arr.empty()) line(y, ctr("br.trains.arrivals", "Arriving trains"), color::kTextGold);
         for (size_t i = 0; i < arr.size() && i < 4; ++i) line(y, arr[i].value("eta", std::string()) + "  " + arr[i].value("name", std::string()));
     }
 
@@ -151,7 +151,7 @@ private:
 
 class ScheduleScreen : public Screen {
 public:
-    ScheduleScreen(Json const& data, SendFn send) : Screen(ctr("item.levitate:schedule.name", "Train Schedule"), 256, 200), mSend(std::move(send)), mData(data) {}
+    ScheduleScreen(Json const& data, SendFn send) : Screen(ctr("item.bearing:schedule.name", "Train Schedule"), 256, 200), mSend(std::move(send)), mData(data) {}
 
     void init() override { build(); }
     void onData(Json const& data) override {
@@ -298,7 +298,7 @@ private:
                     for (auto const& n : names)
                         if (n.is_string()) options.push_back(n.get<std::string>());
                     auto* box   = &f;
-                    auto& pick  = add<ScrollInput>(Rect{8, y, 240, 14}, ctr("lv.trains.station_suggestions", "Station suggestions"), 0, int(options.size()) - 1, 0, [this, box, options](int v) {
+                    auto& pick  = add<ScrollInput>(Rect{8, y, 240, 14}, ctr("br.trains.station_suggestions", "Station suggestions"), 0, int(options.size()) - 1, 0, [this, box, options](int v) {
                         if (!mEdit || v < 0 || v >= int(options.size())) return;
                         field()["Text"] = options[size_t(v)];
                         box->text       = options[size_t(v)];
@@ -317,7 +317,7 @@ private:
         } else if (path == "delay" || path == "idle") {
             scrollField(y, ctr("create.generic.duration", "Duration"), "Value", 0, 120, 5);
             y += 18;
-            scrollField(y, ctr("lv.trains.unit", "Unit"), "TimeUnit", 0, 2, 1,
+            scrollField(y, ctr("br.trains.unit", "Unit"), "TimeUnit", 0, 2, 1,
                         {ctr("create.generic.unit.ticks", "Ticks"), ctr("create.generic.unit.seconds", "Seconds"), ctr("create.generic.unit.minutes", "Minutes")});
         } else if (path == "time_of_day") {
             scrollField(y, ctr("create.generic.daytime.hour", "Hour"), "Hour", 0, 23, 8);
@@ -388,7 +388,7 @@ private:
         }
         showInventory       = false;
         height              = 200;
-        title               = ctr("item.levitate:schedule.name", "Train Schedule");
+        title               = ctr("item.bearing:schedule.name", "Train Schedule");
         auto const& sch     = mData.value("schedule", Json::object());
         auto const& texts   = mData.value("texts", Json::array());
         int         entries = int(texts.size());
@@ -412,7 +412,7 @@ private:
                 auto const& cols = t.value("conditions", Json::array());
                 for (size_t c = 0; c < cols.size(); ++c) {
                     for (size_t i = 0; i < cols[c].size(); ++i) {
-                        std::string prefix = (c > 0 && i == 0) ? ctr("lv.trains.or", "or") + " " : (i > 0 ? ctr("lv.trains.and", "and") + " " : "  ");
+                        std::string prefix = (c > 0 && i == 0) ? ctr("br.trains.or", "or") + " " : (i > 0 ? ctr("br.trains.and", "and") + " " : "  ");
                         add<Label>(Rect{16, y, 190, 10}, prefix + cols[c][i].get<std::string>(), color::kTextGray);
                         auto& ec   = add<IconButton>(Rect{208, y - 1, 14, 12}, "E", [this, e, c, i] { startEdit(true, e, int(c), int(i)); });
                         ec.tooltip = {ctr("create.gui.schedule.lmb_edit", "Left-Click to Edit")};
@@ -467,8 +467,8 @@ public:
     void uninstall() {}
 };
 
-} // namespace lv::client::trains
+} // namespace br::client::trains
 
-LV_REGISTER_MODULE(lv::client::trains::TrainScreensModule);
+BR_REGISTER_MODULE(br::client::trains::TrainScreensModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

@@ -8,8 +8,8 @@
 // and how a block shows text are registered here, per block id:
 //
 //     #include "feature/display/Display.h"
-//     namespace dsp = lv::feature::display;
-//     dsp::registerSource("levitate:track_station", dsp::Source{
+//     namespace dsp = br::feature::display;
+//     dsp::registerSource("bearing:track_station", dsp::Source{
 //         .id   = "station_summary",                       // Create's source id
 //         .name = "create.display_source.station_summary", .nameFallback = "Train Station Summary",
 //         .text = [](dsp::Context const& ctx, dsp::TargetStats const& stats) -> dsp::Lines { ... },
@@ -36,7 +36,7 @@ class BlockSource;
 class Block;
 class Player;
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 using Json = nlohmann::json;
 using core::GlobalPos;
@@ -133,4 +133,4 @@ void itemsPassed(GlobalPos const& source, int count);
 /// A Create progress bar ("█" filled, "▒" empty) `width` characters wide for `level` 0..1.
 [[nodiscard]] std::string progressBar(double level, int width);
 
-} // namespace lv::feature::display
+} // namespace br::feature::display

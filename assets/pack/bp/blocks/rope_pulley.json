@@ -2,21 +2,21 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:rope_pulley",
+      "identifier": "bearing:rope_pulley",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:axis": [
+        "bearing:axis": [
           0,
           1,
           2
         ],
-        "levitate:running": [
+        "bearing:running": [
           0,
           1
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1
         ]
@@ -24,30 +24,30 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.rope_pulley",
+        "identifier": "geometry.bearing.rope_pulley",
         "bone_visibility": {
-          "shaft_x": "q.block_state('levitate:rotor') == 0"
+          "shaft_x": "q.block_state('bearing:rotor') == 0"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_rope_pulley_side",
+          "texture": "bearing_rope_pulley_side",
           "render_method": "alpha_test"
         },
         "side": {
-          "texture": "levitate_rope_pulley_side",
+          "texture": "bearing_rope_pulley_side",
           "render_method": "alpha_test"
         },
         "top": {
-          "texture": "levitate_rope_pulley_top",
+          "texture": "bearing_rope_pulley_top",
           "render_method": "alpha_test"
         },
         "coil": {
-          "texture": "levitate_rope_coil",
+          "texture": "bearing_rope_coil",
           "render_method": "alpha_test"
         },
         "shaft": {
-          "texture": "levitate_pistons_shaft",
+          "texture": "bearing_pistons_shaft",
           "render_method": "alpha_test"
         }
       },
@@ -63,7 +63,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:axis') == 2",
+        "condition": "q.block_state('bearing:axis') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [

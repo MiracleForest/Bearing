@@ -13,7 +13,7 @@ Start-Sleep -Milliseconds 800
 $row1 = 'zinc_ore', 'deepslate_zinc_ore', 'raw_zinc_block', 'zinc_block', 'brass_block', 'andesite_alloy_block',
     'industrial_iron_block', 'weathered_iron_block', 'rose_quartz_block', 'rose_quartz_tiles', 'experience_block', 'cardboard_block'
 $x = -6
-foreach ($b in $row1) { Invoke-Chat "/setblock ~$x ~ ~5 levitate:$b"; $x++ }
+foreach ($b in $row1) { Invoke-Chat "/setblock ~$x ~ ~5 bearing:$b"; $x++ }
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'blocks' | Out-Null
 
@@ -21,13 +21,13 @@ Save-Screenshot 'blocks' | Out-Null
 foreach ($b in $row1) { Invoke-Chat "/setblock ~$(-6 + [array]::IndexOf($row1, $b)) ~ ~5 air" }
 $row2 = 'asurine', 'cut_asurine', 'polished_cut_asurine', 'cut_asurine_bricks', 'small_asurine_bricks', 'layered_asurine', 'asurine_pillar'
 $x = -6
-foreach ($b in $row2) { Invoke-Chat "/setblock ~$x ~ ~5 levitate:$b"; $x++ }
-Invoke-Chat '/setblock ~1 ~ ~5 levitate:cut_asurine_stairs ["minecraft:cardinal_direction"="south"]'
-Invoke-Chat '/setblock ~2 ~ ~5 levitate:cut_asurine_slab'
-Invoke-Chat '/setblock ~3 ~ ~5 levitate:cut_asurine_slab ["levitate:double"=true]'
-Invoke-Chat '/setblock ~4 ~ ~5 levitate:cut_asurine_wall'
-Invoke-Chat '/setblock ~5 ~ ~5 levitate:cut_asurine_wall'
-Invoke-Chat '/setblock ~6 ~ ~5 levitate:crimsite'
+foreach ($b in $row2) { Invoke-Chat "/setblock ~$x ~ ~5 bearing:$b"; $x++ }
+Invoke-Chat '/setblock ~1 ~ ~5 bearing:cut_asurine_stairs ["minecraft:cardinal_direction"="south"]'
+Invoke-Chat '/setblock ~2 ~ ~5 bearing:cut_asurine_slab'
+Invoke-Chat '/setblock ~3 ~ ~5 bearing:cut_asurine_slab ["bearing:double"=true]'
+Invoke-Chat '/setblock ~4 ~ ~5 bearing:cut_asurine_wall'
+Invoke-Chat '/setblock ~5 ~ ~5 bearing:cut_asurine_wall'
+Invoke-Chat '/setblock ~6 ~ ~5 bearing:crimsite'
 Start-Sleep -Milliseconds 1500
 Save-Screenshot 'palette' | Out-Null
 
@@ -35,11 +35,11 @@ Save-Screenshot 'palette' | Out-Null
 foreach ($b in $row2) { Invoke-Chat "/setblock ~$(-6 + [array]::IndexOf($row2, $b)) ~ ~5 air" }
 foreach ($c in @(
         '/fill ~-6 ~ ~5 ~6 ~3 ~6 air',
-        '/fill ~-6 ~ ~5 ~-4 ~ ~5 levitate:layered_asurine', '/fill ~-6 ~1 ~5 ~-5 ~1 ~5 levitate:layered_asurine',
-        '/fill ~-2 ~ ~5 ~-1 ~1 ~5 levitate:asurine_pillar', '/setblock ~0 ~ ~5 levitate:asurine_pillar',
-        '/fill ~1 ~2 ~5 ~3 ~2 ~5 levitate:asurine_pillar ["minecraft:block_face"="east"]',
-        '/fill ~1 ~ ~5 ~3 ~ ~5 levitate:cut_asurine_wall', '/setblock ~2 ~1 ~5 levitate:cut_asurine',
-        '/setblock ~5 ~ ~5 levitate:experience_block')) { Invoke-Chat $c; Start-Sleep -Milliseconds 200 }
+        '/fill ~-6 ~ ~5 ~-4 ~ ~5 bearing:layered_asurine', '/fill ~-6 ~1 ~5 ~-5 ~1 ~5 bearing:layered_asurine',
+        '/fill ~-2 ~ ~5 ~-1 ~1 ~5 bearing:asurine_pillar', '/setblock ~0 ~ ~5 bearing:asurine_pillar',
+        '/fill ~1 ~2 ~5 ~3 ~2 ~5 bearing:asurine_pillar ["minecraft:block_face"="east"]',
+        '/fill ~1 ~ ~5 ~3 ~ ~5 bearing:cut_asurine_wall', '/setblock ~2 ~1 ~5 bearing:cut_asurine',
+        '/setblock ~5 ~ ~5 bearing:experience_block')) { Invoke-Chat $c; Start-Sleep -Milliseconds 200 }
 Invoke-Chat '/time set night'
 Start-Sleep -Milliseconds 2500
 Save-Screenshot 'connected' | Out-Null
@@ -49,7 +49,7 @@ Invoke-Chat '/time set noon'
 Invoke-Chat '/clear @s'
 Invoke-SelfTest 'materials.chromatic_bar_item' | Out-Null   # hotbar slot 1: the charged compound
 foreach ($i in 'zinc_ingot', 'brass_ingot', 'andesite_alloy', 'precision_mechanism', 'electron_tube', 'builders_tea', 'blaze_cake', 'iron_sheet') {
-    Invoke-Chat "/give @s levitate:$i 1"
+    Invoke-Chat "/give @s bearing:$i 1"
 }
 Start-Sleep -Milliseconds 1200
 Save-Screenshot 'items' | Out-Null

@@ -3,7 +3,7 @@
 // HauntedBellMovementBehaviour, on top of the vanilla BellBlock rules (core/equipment/Bells.h).
 //
 // Custom blocks have no block entities: the ringing state lives in memory per position (it only
-// lasts 74 ticks); the bells' positions are kept in the world DB ("lv:equipment:bells") so their
+// lasts 74 ticks); the bells' positions are kept in the world DB ("br:equipment:bells") so their
 // redstone input is watched after a reload. Soul pulses run on the server (Create runs them on each
 // client) and mark the dark spawnable spots with the resource pack's soul particles, so vanilla
 // clients see them too.
@@ -49,7 +49,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -60,10 +60,10 @@ namespace cc    = core::contraption;
 
 namespace {
 
-constexpr char kDbKey[]        = "lv:equipment:bells";
+constexpr char kDbKey[]        = "br:equipment:bells";
 constexpr char kPeculiarSound[] = "block.bell.hit";          // AllSoundEvents.PECULIAR_BELL_USE plays the vanilla bell
-constexpr char kHauntedSound[]  = "levitate.haunted_bell.use";
-constexpr char kConvertSound[]  = "levitate.haunted_bell.convert";
+constexpr char kHauntedSound[]  = "bearing.haunted_bell.use";
+constexpr char kConvertSound[]  = "bearing.haunted_bell.convert";
 
 struct Ringing {
     bool ringing      = false;
@@ -420,8 +420,8 @@ void tickPulses() {
                 GlobalPos at{d, p[0], p[1], p[2]};
                 // SoulPulseEffect#spawnParticles: only where it is dark
                 if (!soulDark(at)) return;
-                particle(d, p[0] + .5, p[1] + .5, p[2] + .5, "levitate:soul");
-                particle(d, p[0] + .5, p[1] + .01, p[2] + .5, "levitate:soul_base");
+                particle(d, p[0] + .5, p[1] + .5, p[2] + .5, "bearing:soul");
+                particle(d, p[0] + .5, p[1] + .01, p[2] + .5, "bearing:soul_base");
                 if (s.marks.size() < 4096) s.marks.push_back(at);
             }
         );
@@ -651,7 +651,7 @@ void bellProjectileHit(Actor& projectile, HitResult const& hit) {
         log().info("equipment: a projectile rang the bell at {} {} {}", pos.x, pos.y, pos.z);
 }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
 LL_TYPE_INSTANCE_HOOK(
     EquipmentBellProjectileHook,
@@ -664,20 +664,20 @@ LL_TYPE_INSTANCE_HOOK(
 ) {
     origin(owner, hit);
     try {
-        lv::feature::equipment::bellProjectileHit(owner, hit);
+        br::feature::equipment::bellProjectileHit(owner, hit);
     } catch (std::exception const& e) {
-        lv::log().error("equipment: bell projectile hit failed: {}", e.what());
+        br::log().error("equipment: bell projectile hit failed: {}", e.what());
     }
 }
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 namespace {
 struct BellProjectileHookModule {
     void install() { EquipmentBellProjectileHook::hook(); }
     void uninstall() { EquipmentBellProjectileHook::unhook(); }
 };
 } // namespace
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
-LV_REGISTER_MODULE(lv::feature::equipment::BellsModule);
-LV_REGISTER_MODULE(lv::feature::equipment::BellProjectileHookModule);
+BR_REGISTER_MODULE(br::feature::equipment::BellsModule);
+BR_REGISTER_MODULE(br::feature::equipment::BellProjectileHookModule);

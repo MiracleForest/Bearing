@@ -20,7 +20,7 @@
 // built by the factory registered for their type: `screen::registerServerScreen(type, factory)`.
 // Widget coordinates are relative to the panel's top-left corner.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <functional>
 #include <memory>
@@ -34,7 +34,7 @@
 class ItemStack;
 class MinecraftUIRenderContext;
 
-namespace lv::client::screen {
+namespace br::client::screen {
 
 using core::common::Rect;
 using Json = nlohmann::json;
@@ -264,6 +264,6 @@ void registerServerScreen(std::string const& type, ServerFactory factory);
 /// Size of the GUI in GUI pixels (0 outside a world).
 [[nodiscard]] std::pair<float, float> guiSize();
 
-} // namespace lv::client::screen
+} // namespace br::client::screen
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

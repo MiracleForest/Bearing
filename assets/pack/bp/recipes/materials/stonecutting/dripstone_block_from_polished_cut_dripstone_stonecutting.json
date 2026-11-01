@@ -2,19 +2,19 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:dripstone_block_from_polished_cut_dripstone_stonecutting"
+      "identifier": "bearing:dripstone_block_from_polished_cut_dripstone_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:polished_cut_dripstone"
+        "item": "bearing:polished_cut_dripstone"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:polished_cut_dripstone"
+        "item": "bearing:polished_cut_dripstone"
       }
     ],
     "result": {

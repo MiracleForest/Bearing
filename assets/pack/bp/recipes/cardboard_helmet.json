@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cardboard_helmet"
+      "identifier": "bearing:cardboard_helmet"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,16 @@
     ],
     "key": {
       "P": {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cardboard"
+        "item": "bearing:cardboard"
       }
     ],
     "result": {
-      "item": "levitate:cardboard_helmet",
+      "item": "bearing:cardboard_helmet",
       "count": 1
     }
   }

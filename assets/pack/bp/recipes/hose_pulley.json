@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:hose_pulley"
+      "identifier": "bearing:hose_pulley"
     },
     "tags": [
       "crafting_table"
@@ -14,22 +14,22 @@
     ],
     "key": {
       "C": {
-        "item": "levitate:copper_casing"
+        "item": "bearing:copper_casing"
       },
       "K": {
         "item": "minecraft:dried_kelp_block"
       },
       "S": {
-        "item": "levitate:copper_sheet"
+        "item": "bearing:copper_sheet"
       }
     },
     "unlock": [
       {
-        "item": "levitate:copper_casing"
+        "item": "bearing:copper_casing"
       }
     ],
     "result": {
-      "item": "levitate:hose_pulley"
+      "item": "bearing:hose_pulley"
     }
   }
 }

@@ -2,24 +2,24 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:purple_seat",
+      "identifier": "bearing:purple_seat",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.seat",
+      "minecraft:geometry": "geometry.bearing.seat",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_purple_seat_side",
+          "texture": "bearing_purple_seat_side",
           "render_method": "opaque"
         },
         "top": {
-          "texture": "levitate_purple_seat_top",
+          "texture": "bearing_purple_seat_top",
           "render_method": "opaque"
         },
         "base": {
-          "texture": "levitate_seat_base",
+          "texture": "bearing_seat_base",
           "render_method": "opaque"
         }
       },

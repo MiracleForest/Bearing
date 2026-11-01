@@ -1,20 +1,20 @@
 <#
 .SYNOPSIS
-  Run an Levitate scenario on a real Bedrock Dedicated Server + LeviLamina.
+  Run an Bearing scenario on a real Bedrock Dedicated Server + LeviLamina.
 
 .DESCRIPTION
-  1. (-Build) builds bin/server/Levitate via tools/build.ps1 -Target server.
+  1. (-Build) builds bin/server/Bearing via tools/build.ps1 -Target server.
   2. Installs BDS + LeviLamina into the machine-wide cache on first use (install.ps1).
   3. Takes a free server slot (<home>\slots\<n>.lock; waits when all are busy). Slots run in
      parallel on different ports, so many worktrees can test at once.
   4. Resets the slot: syncs it with bds-base, deletes the world, deploys the mod, writes
-     server.properties for a fresh flat/peaceful/cheats world "LV-Test" (fixed seed).
+     server.properties for a fresh flat/peaceful/cheats world "BR-Test" (fixed seed).
   5. Runs optional scenarios/<name>.prelaunch.ps1, boots bedrock_server_mod.exe with redirected
-     stdin/stdout, waits for "Levitate enabled" and "Server started", makes it
+     stdin/stdout, waits for "Bearing enabled" and "Server started", makes it
      always day / clear weather / no mobs.
   6. Dot-sources scenarios/<name>.ps1 (helpers: see lib.ps1 "Scenario API" and README).
   7. Stops the server with "stop" and fails the run on: scenario exception, failing/empty/
-     unfinished selftests, ERR/FTL lines from Levitate/LeviLamina/CrashLogger, crash
+     unfinished selftests, ERR/FTL lines from Bearing/LeviLamina/CrashLogger, crash
      dumps, non-zero exit code or a server that does not stop.
   Output: tools/e2e/server/out/<scenario>/server.log (full console), selftest.json, crash/.
   Exit code 0 = pass, 1 = fail.
@@ -30,7 +30,7 @@ param(
     [int]$TimeoutSec = 900,            # whole-scenario budget (boot excluded)
     [int]$BootTimeoutSec = 600,        # a loaded machine (parallel builds) can take minutes to create the world
     [string[]]$Property = @(),         # extra server.properties overrides: -Property gamemode=creative,difficulty=easy
-    [string]$ModDir,                   # default: <repo>/bin/server/Levitate
+    [string]$ModDir,                   # default: <repo>/bin/server/Bearing
     [int]$Slot = -1,                   # force a specific slot
     [string]$OutName,                  # output folder name under out/ (default: the scenario name)
     [switch]$Quiet                     # do not echo server output

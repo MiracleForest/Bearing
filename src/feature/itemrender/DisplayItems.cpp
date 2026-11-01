@@ -28,7 +28,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::itemrender {
+namespace br::feature::itemrender {
 
 namespace ci    = core::itemrender;
 namespace items = common::items;
@@ -376,6 +376,6 @@ private:
     ll::event::ListenerPtr mTick;
 };
 
-} // namespace lv::feature::itemrender
+} // namespace br::feature::itemrender
 
-LV_REGISTER_MODULE(lv::feature::itemrender::DisplayItemsModule);
+BR_REGISTER_MODULE(br::feature::itemrender::DisplayItemsModule);

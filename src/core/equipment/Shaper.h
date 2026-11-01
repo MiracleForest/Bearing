@@ -10,7 +10,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 enum class Brush : int { Cuboid = 0, Sphere = 1, Cylinder = 2, Surface = 3, Cluster = 4 };
 enum class ShaperTool : int { Fill = 0, Place = 1, Replace = 2, Clear = 3, Overlay = 4, Flatten = 5 };
@@ -102,4 +102,4 @@ struct Edge {
 [[nodiscard]] std::string placementFallback(Placement p);
 [[nodiscard]] std::string patternFallback(Pattern p);
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

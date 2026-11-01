@@ -1,9 +1,9 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Gauge needles of the speedometer and stressometer (U6), drawn by the client mod as Create's
 // GaugeRenderer does: the needle chases the dial target the server sends (`transmission.gauge`)
 // by 1/8 of the way per tick (shaking past the end when it is over 1) and is drawn on every head
-// face of the gauge. The chunk mesh holds the gauge without its static needles (`levitate:rotor`
+// face of the gauge. The chunk mesh holds the gauge without its static needles (`bearing:rotor`
 // = 1, done by the kinetic renderer), so vanilla clients keep the static needle positions.
 
 #include <cmath>
@@ -62,7 +62,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::transmission {
+namespace br::client::transmission {
 
 namespace k  = core::kinetics;
 namespace ct = core::transmission;
@@ -100,7 +100,7 @@ State& state() {
 constexpr float kPivotX = .5f, kPivotY = 7.f / 16.f, kPivotZ = -.4f / 16.f;
 
 std::optional<std::map<std::string, k::RotorModel>> loadModels(char const* file) {
-    auto path = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks" / file;
+    auto path = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks" / file;
     std::ifstream in(path);
     if (!in) return std::nullopt;
     auto j = nlohmann::json::parse(in, nullptr, false, true);
@@ -125,11 +125,11 @@ void loadNeedle() {
     auto& s  = state();
     s.loaded = true;
     if (auto rotors = loadModels("transmission_rotors.geo.json")) {
-        auto m = rotors->find("geometry.levitate.transmission_needle");
+        auto m = rotors->find("geometry.bearing.transmission_needle");
         if (m != rotors->end() && m->second.bones.contains("needle")) s.quads = m->second.bones.at("needle");
     }
     if (auto gauges = loadModels("transmission_gauge.geo.json")) {
-        auto m = gauges->find("geometry.levitate.transmission_gauge_side_x");
+        auto m = gauges->find("geometry.bearing.transmission_gauge_side_x");
         if (m != gauges->end() && m->second.bones.contains("dial_0") && m->second.bones.contains("dial_1")) {
             auto  c0 = centroid(m->second.bones.at("dial_0"));
             auto  c1 = centroid(m->second.bones.at("dial_1"));
@@ -155,7 +155,7 @@ mce::Mesh* needleMesh(Tessellator& tess) {
     if (!s.loaded) loadNeedle();
     if (s.needle) return s.needle.get();
     if (s.quads.empty()) return nullptr;
-    auto  tex = BlockGraphics::getTextureUVCoordinateSet("levitate_transmission_rotor", 0, 0);
+    auto  tex = BlockGraphics::getTextureUVCoordinateSet("bearing_transmission_rotor", 0, 0);
     float u0 = tex._u0, v0 = tex._v0, u1 = tex._u1, v1 = tex._v1;
     auto  uv = [&](std::array<float, 2> const& t) { return Vec2{u0 + (u1 - u0) * t[0], v0 + (v1 - v0) * t[1]}; };
     auto  at = [](std::array<float, 3> const& p) { return Vec3{p[0], p[1], p[2]}; };
@@ -165,7 +165,7 @@ mce::Mesh* needleMesh(Tessellator& tess) {
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    s.needle = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_gauge_needle", SupplementaryFieldAutoGenerationMode::None));
+    s.needle = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_gauge_needle", SupplementaryFieldAutoGenerationMode::None));
     return s.needle.get();
 }
 
@@ -230,9 +230,9 @@ void drawNeedles(BaseActorRenderContext& ctx) {
         if (!region.hasChunksAt(bp, 0, false)) continue;
         auto const& block = region.getBlock(bp);
         auto const& id    = block.getTypeName();
-        if (id != "levitate:speedometer" && id != "levitate:stressometer") continue;
-        auto facing = static_cast<k::Face>(std::clamp(game::intState(block, "levitate:facing").value_or(2), 0, 5));
-        bool along  = game::intState(block, "levitate:along_first").value_or(0) != 0;
+        if (id != "bearing:speedometer" && id != "bearing:stressometer") continue;
+        auto facing = static_cast<k::Face>(std::clamp(game::intState(block, "bearing:facing").value_or(2), 0, 5));
+        bool along  = game::intState(block, "bearing:along_first").value_or(0) != 0;
         float dial  = d.prev + (d.state - d.prev) * alpha;
         for (k::Face face : {k::Face::North, k::Face::South, k::Face::West, k::Face::East}) {
             if (!ct::gaugeHeadOnFace(facing, along, face)) continue;
@@ -314,8 +314,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::transmission
+} // namespace br::client::transmission
 
-LV_REGISTER_MODULE(lv::client::transmission::GaugeRendererModule);
+BR_REGISTER_MODULE(br::client::transmission::GaugeRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

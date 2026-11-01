@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:exposed_copper_tile_stairs"
+      "identifier": "bearing:exposed_copper_tile_stairs"
     },
     "tags": [
       "crafting_table"
@@ -14,16 +14,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:exposed_copper_tiles"
+        "item": "bearing:exposed_copper_tiles"
       }
     },
     "unlock": [
       {
-        "item": "levitate:exposed_copper_tiles"
+        "item": "bearing:exposed_copper_tiles"
       }
     ],
     "result": {
-      "item": "levitate:exposed_copper_tile_stairs",
+      "item": "bearing:exposed_copper_tile_stairs",
       "count": 4
     }
   }

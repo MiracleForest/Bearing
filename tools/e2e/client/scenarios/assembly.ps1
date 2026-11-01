@@ -18,10 +18,10 @@ Invoke-Chat '/time set noon'
 # Fixed coordinates (the flat test world's spawn is at 0 -60 0): the player stands at 0.5 -60 0.5.
 Invoke-Chat '/tp @s 0.5 -60 0.5 facing 10.5 -59.6 0.5'
 Start-Sleep -Milliseconds 500
-Invoke-Chat '/setblock 5 -59 0 levitate:deployer ["levitate:facing"=4,"levitate:axis_along_first"=0]'
-Invoke-Chat '/setblock 5 -59 -1 levitate:kinetics_test_source ["levitate:axis"=2]'
-Invoke-Chat '/setblock 4 -60 2 levitate:mechanical_arm'
-Invoke-Chat '/setblock 4 -61 2 levitate:kinetics_test_source ["levitate:axis"=1]'
+Invoke-Chat '/setblock 5 -59 0 bearing:deployer ["bearing:facing"=4,"bearing:axis_along_first"=0]'
+Invoke-Chat '/setblock 5 -59 -1 bearing:kinetics_test_source ["bearing:axis"=2]'
+Invoke-Chat '/setblock 4 -60 2 bearing:mechanical_arm'
+Invoke-Chat '/setblock 4 -61 2 bearing:kinetics_test_source ["bearing:axis"=1]'
 Invoke-Chat '/setblock 3 -60 3 minecraft:composter'
 Start-Sleep -Seconds 2
 Save-Screenshot 'placed-blocks' | Out-Null

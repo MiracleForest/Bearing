@@ -3,11 +3,11 @@
 #include <vector>
 
 /// Token pasting helpers for unique static registration objects.
-#define LV_CONCAT_IMPL(a, b) a##b
-#define LV_CONCAT(a, b)      LV_CONCAT_IMPL(a, b)
-#define LV_UNIQUE(prefix)    LV_CONCAT(prefix, __COUNTER__)
+#define BR_CONCAT_IMPL(a, b) a##b
+#define BR_CONCAT(a, b)      BR_CONCAT_IMPL(a, b)
+#define BR_UNIQUE(prefix)    BR_CONCAT(prefix, __COUNTER__)
 
-namespace lv {
+namespace br {
 
 /// A process-wide list of `Entry`, filled by static registrar objects before `main`/mod load.
 /// The function-local static avoids static-initialization-order problems.
@@ -24,4 +24,4 @@ public:
     static void add(Entry e) { entries().push_back(std::move(e)); }
 };
 
-} // namespace lv
+} // namespace br

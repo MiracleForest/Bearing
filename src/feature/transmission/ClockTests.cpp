@@ -16,13 +16,13 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
 using selftest::Context;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 BlockSource& world() { return *regionOf(0); }
 int          st(GlobalPos const& p, char const* s) { return stateAt(world(), p, s, -1); }
@@ -44,7 +44,7 @@ struct TimeGuard {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("transmission.cuckoo_clock_hands", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.cuckoo_clock_hands", [](Context& ctx) -> ll::coro::CoroTask<> {
     TimeGuard guard;
     setClockDayTimeOverride(3000); // 9:00
     auto p = co_await poweredClock(ctx, 4930, kCuckooClock);
@@ -92,7 +92,7 @@ LV_REGISTER_SELFTEST("transmission.cuckoo_clock_hands", [](Context& ctx) -> ll::
     ctx.check(facing == 1, "a shaft east of it: the clock faces west (1), got " + std::to_string(facing));
 });
 
-LV_REGISTER_SELFTEST("transmission.cuckoo_clock_noon", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.cuckoo_clock_noon", [](Context& ctx) -> ll::coro::CoroTask<> {
     TimeGuard guard;
     setClockDayTimeOverride(6000); // noon: the pig
     auto p = co_await poweredClock(ctx, 4935, kCuckooClock);
@@ -118,7 +118,7 @@ LV_REGISTER_SELFTEST("transmission.cuckoo_clock_noon", [](Context& ctx) -> ll::c
     ctx.check(advancements::has(player, "cuckoo_clock"), "the owner nearby gets the cuckoo_clock advancement");
 });
 
-LV_REGISTER_SELFTEST("transmission.flywheel", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.flywheel", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(4940, -1);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     ctx.setBlock(p, kSource, {{kAxis, 0}});
@@ -132,7 +132,7 @@ LV_REGISTER_SELFTEST("transmission.flywheel", [](Context& ctx) -> ll::coro::Coro
     ctx.check(kinetics::stressImpactOf(kFlywheel) == 0, "Create: no stress impact");
 });
 
-LV_REGISTER_SELFTEST("transmission.cuckoo_clock_surprise", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("transmission.cuckoo_clock_surprise", [](Context& ctx) -> ll::coro::CoroTask<> {
     TimeGuard guard;
     setClockDayTimeOverride(6000);
     auto p = ctx.testPos(4959, -1);
@@ -152,4 +152,4 @@ LV_REGISTER_SELFTEST("transmission.cuckoo_clock_surprise", [](Context& ctx) -> l
     ctx.check(surpriseDeathMessage("Steve") == "death.attack.create.cuckoo_surprise", "explosion deaths get Create's message, got " + surpriseDeathMessage("Steve"));
 });
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

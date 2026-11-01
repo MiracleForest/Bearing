@@ -28,7 +28,7 @@
 #include "mod/Config.h"
 #include "mod/Log.h"
 
-namespace lv::feature::materials {
+namespace br::feature::materials {
 
 namespace cm = core::materials;
 
@@ -66,8 +66,8 @@ std::shared_ptr<Palette const> palette() {
     auto p   = std::make_shared<Palette>();
     using M  = cm::Mat;
     auto set = [&](M m, char const* id) { p->mats[static_cast<size_t>(m)] = blockOf(id); };
-    set(M::ZincOre, "levitate:zinc_ore");
-    set(M::DeepslateZincOre, "levitate:deepslate_zinc_ore");
+    set(M::ZincOre, "bearing:zinc_ore");
+    set(M::DeepslateZincOre, "bearing:deepslate_zinc_ore");
     set(M::Stone, "minecraft:stone");
     set(M::Deepslate, "minecraft:deepslate");
     set(M::Tuff, "minecraft:tuff");
@@ -76,13 +76,13 @@ std::shared_ptr<Palette const> palette() {
     set(M::Calcite, "minecraft:calcite");
     set(M::SmoothBasalt, "minecraft:smooth_basalt");
     set(M::DripstoneBlock, "minecraft:dripstone_block");
-    set(M::Asurine, "levitate:asurine");
-    set(M::Crimsite, "levitate:crimsite");
-    set(M::Limestone, "levitate:limestone");
-    set(M::Ochrum, "levitate:ochrum");
-    set(M::Veridium, "levitate:veridium");
-    set(M::Scoria, "levitate:scoria");
-    set(M::Scorchia, "levitate:scorchia");
+    set(M::Asurine, "bearing:asurine");
+    set(M::Crimsite, "bearing:crimsite");
+    set(M::Limestone, "bearing:limestone");
+    set(M::Ochrum, "bearing:ochrum");
+    set(M::Veridium, "bearing:veridium");
+    set(M::Scoria, "bearing:scoria");
+    set(M::Scorchia, "bearing:scorchia");
     set(M::Blackstone, "minecraft:blackstone");
     set(M::Basalt, "minecraft:basalt");
     set(M::SoulSoil, "minecraft:soul_soil");
@@ -94,7 +94,7 @@ std::shared_ptr<Palette const> palette() {
     p->complete  = true;
     for (auto const* b : p->mats) p->complete = p->complete && b;
     if (!p->complete) { // the behavior pack isn't loaded (yet): try again next chunk
-        if (!gIncompleteLogged.exchange(true)) lv::log().warn("materials: world generation blocks are not loaded, chunks stay undecorated");
+        if (!gIncompleteLogged.exchange(true)) br::log().warn("materials: world generation blocks are not loaded, chunks stay undecorated");
         return nullptr;
     }
     std::atomic_store(&gPalette, std::shared_ptr<Palette const>(p));
@@ -159,7 +159,7 @@ int decorateChunk(BlockSource& region, int dim, int chunkX, int chunkZ) {
     int  placed = cm::decorateChunk(w, seed, dim, chunkX, chunkZ);
     ++gDecorated;
     if (!gAnnounced.exchange(true)) {
-        lv::log().info("materials: world generation active (dimension {}, chunk {} {}, {} blocks)", dim, chunkX, chunkZ, placed);
+        br::log().info("materials: world generation active (dimension {}, chunk {} {}, {} blocks)", dim, chunkX, chunkZ, placed);
     }
     return placed;
 }
@@ -206,4 +206,4 @@ void uninstallWorldGenHooks() {
     MaterialsOverworldDecorateHook::unhook();
 }
 
-} // namespace lv::feature::materials
+} // namespace br::feature::materials

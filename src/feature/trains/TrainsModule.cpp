@@ -32,13 +32,13 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("trains", lv::feature::trains::Config);
+BR_REGISTER_CONFIG("trains", br::feature::trains::Config);
 
-namespace lv::feature::trains {
+namespace br::feature::trains {
 
 namespace {
-constexpr char kStationsKey[] = "lv:trains:stations";
-constexpr char kTrainsKey[]   = "lv:trains:trains";
+constexpr char kStationsKey[] = "br:trains:stations";
+constexpr char kTrainsKey[]   = "br:trains:trains";
 } // namespace
 
 State& state() {
@@ -46,7 +46,7 @@ State& state() {
     return s;
 }
 
-Config const& config() { return lv::config::get<Config>(); }
+Config const& config() { return br::config::get<Config>(); }
 
 ct::SpeedConfig speedConfig() {
     auto const&     c = config();
@@ -326,6 +326,6 @@ struct WorldHooks {
 } const gWorldHooks;
 } // namespace
 
-} // namespace lv::feature::trains
+} // namespace br::feature::trains
 
-LV_REGISTER_MODULE(lv::feature::trains::TrainsModule);
+BR_REGISTER_MODULE(br::feature::trains::TrainsModule);

@@ -2,8 +2,8 @@
   "id": "mechanical_bearing",
   "size": [5, 5],
   "blocks": [
-    {"at": [2, 1, 2], "id": "levitate:creative_motor", "states": {"levitate:facing": 1}},
-    {"at": [2, 2, 2], "id": "levitate:mechanical_bearing", "states": {"levitate:facing": 1}},
+    {"at": [2, 1, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 1}},
+    {"at": [2, 2, 2], "id": "bearing:mechanical_bearing", "states": {"bearing:facing": 1}},
     {"area": [[0, 3, 2], [4, 3, 2]], "id": "minecraft:oak_planks"},
     {"at": [2, 4, 2], "id": "minecraft:oak_fence"}
   ],

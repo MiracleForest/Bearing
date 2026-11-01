@@ -13,7 +13,7 @@
 // Lines are thin bars (`width` in blocks, Create's outlines are 1/32 wide, value boxes 1/64)
 // drawn unlit with the game's "wireframe" material, so they show in every light.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <array>
@@ -30,7 +30,7 @@
 #include "mc/deps/minecraft_renderer/renderer/MaterialPtr.h"
 #include "mc/deps/minecraft_renderer/resources/OffscreenCaptureDescription.h"
 
-namespace lv::client::render {
+namespace br::client::render {
 
 struct Rgb {
     float r = 1, g = 1, b = 1;
@@ -165,6 +165,6 @@ private:
     bool                    mAny = false;
 };
 
-} // namespace lv::client::render
+} // namespace br::client::render
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

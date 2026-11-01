@@ -29,7 +29,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace {
 
@@ -478,4 +478,4 @@ void openThresholdScreen(Player& player, GP const& pos) {
     common::screens::open(player, kThresholdScreen, {{"pos", Json::array({pos.dim, pos.x, pos.y, pos.z})}});
 }
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

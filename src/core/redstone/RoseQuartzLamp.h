@@ -7,7 +7,7 @@
 #include <functional>
 #include <vector>
 
-namespace lv::core::redstone {
+namespace br::core::redstone {
 
 // ---- rose quartz lamp ----------------------------------------------------------------------------
 
@@ -56,4 +56,4 @@ struct BellPose {
 };
 [[nodiscard]] BellPose deskBellPose(float p, float offset);
 
-} // namespace lv::core::redstone
+} // namespace br::core::redstone

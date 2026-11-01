@@ -9,7 +9,7 @@
 
 class Player;
 
-namespace lv::feature::ponder {
+namespace br::feature::ponder {
 
 struct Result {
     bool        ok = false;
@@ -24,4 +24,4 @@ struct Result {
 /// Sends `ponder.open` to the player's client mod (what `/create ponder` does).
 Result request(Player& player, std::string const& id);
 
-} // namespace lv::feature::ponder
+} // namespace br::feature::ponder

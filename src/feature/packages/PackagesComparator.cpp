@@ -16,7 +16,7 @@
 #include "game/Blocks.h"
 #include "mod/Module.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace {
 namespace rs = common::redstone;
@@ -59,6 +59,6 @@ public:
     }
 };
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages
 
-LV_REGISTER_MODULE(lv::feature::packages::PackagesComparatorModule);
+BR_REGISTER_MODULE(br::feature::packages::PackagesComparatorModule);

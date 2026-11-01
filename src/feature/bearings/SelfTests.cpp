@@ -32,16 +32,16 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
 namespace {
 
-namespace ct = ::lv::feature::contraption;
-namespace k  = ::lv::feature::kinetics;
-namespace it = ::lv::feature::common::items;
-using lv::selftest::Context;
+namespace ct = ::br::feature::contraption;
+namespace k  = ::br::feature::kinetics;
+namespace it = ::br::feature::common::items;
+using br::selftest::Context;
 
-constexpr char const* kSource = "levitate:kinetics_test_source";
+constexpr char const* kSource = "bearing:kinetics_test_source";
 
 GP at(GP p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -79,12 +79,12 @@ ct::Id contraptionOf(GP const& bearing) { return bearingState(bearing).value("id
 
 } // namespace
 
-LV_REGISTER_SELFTEST("bearings.mechanical_assembles_when_powered", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.mechanical_assembles_when_powered", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 2100);
     auto bearing = at(p, 0, 1, 0);
     auto front   = at(p, 0, 2, 0);
-    place(ctx, p, kSource, {{"levitate:axis", 1}});
-    place(ctx, bearing, std::string(kMechanicalBearing), {{"levitate:facing", 1}});
+    place(ctx, p, kSource, {{"bearing:axis", 1}});
+    place(ctx, bearing, std::string(kMechanicalBearing), {{"bearing:facing", 1}});
     place(ctx, front, "minecraft:oak_planks");
     place(ctx, at(front, 1, 0, 0), "minecraft:stone"); // not attached
     track(bearing);
@@ -110,12 +110,12 @@ LV_REGISTER_SELFTEST("bearings.mechanical_assembles_when_powered", [](Context& c
     ctx.check(!bearingState(bearing).value("running", true), "not running");
 });
 
-LV_REGISTER_SELFTEST("bearings.mechanical_rotation_modes", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.mechanical_rotation_modes", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p       = co_await area(ctx, 2106);
     auto bearing = at(p, 0, 1, 0);
     auto front   = at(p, 0, 2, 0);
-    place(ctx, p, kSource, {{"levitate:axis", 1}});
-    place(ctx, bearing, std::string(kMechanicalBearing), {{"levitate:facing", 1}});
+    place(ctx, p, kSource, {{"bearing:axis", 1}});
+    place(ctx, bearing, std::string(kMechanicalBearing), {{"bearing:facing", 1}});
     place(ctx, front, "minecraft:oak_planks");
     track(bearing);
     Guard g;
@@ -152,12 +152,12 @@ LV_REGISTER_SELFTEST("bearings.mechanical_rotation_modes", [](Context& ctx) -> l
         for (int dx = -1; dx <= 1; ++dx) ctx.cleanupBlock(at(front, dx, 0, dz));
 });
 
-LV_REGISTER_SELFTEST("bearings.mechanical_removed_places_structure", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.mechanical_removed_places_structure", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p       = co_await area(ctx, 2112);
     auto bearing = at(p, 0, 1, 0);
     auto front   = at(p, 0, 2, 0);
-    place(ctx, p, kSource, {{"levitate:axis", 1}});
-    place(ctx, bearing, std::string(kMechanicalBearing), {{"levitate:facing", 1}});
+    place(ctx, p, kSource, {{"bearing:axis", 1}});
+    place(ctx, bearing, std::string(kMechanicalBearing), {{"bearing:facing", 1}});
     place(ctx, front, "minecraft:oak_planks");
     track(bearing);
     Guard g;
@@ -174,12 +174,12 @@ LV_REGISTER_SELFTEST("bearings.mechanical_removed_places_structure", [](Context&
         for (int dx = -1; dx <= 1; ++dx) ctx.cleanupBlock(at(front, dx, 0, dz));
 });
 
-LV_REGISTER_SELFTEST("bearings.mechanical_assembly_error", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.mechanical_assembly_error", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p       = co_await area(ctx, 2116);
     auto bearing = at(p, 0, 1, 0);
     auto front   = at(p, 0, 2, 0);
-    place(ctx, p, kSource, {{"levitate:axis", 1}});
-    place(ctx, bearing, std::string(kMechanicalBearing), {{"levitate:facing", 1}});
+    place(ctx, p, kSource, {{"bearing:axis", 1}});
+    place(ctx, bearing, std::string(kMechanicalBearing), {{"bearing:facing", 1}});
     place(ctx, front, "minecraft:bedrock");
     track(bearing);
     k::refresh(p);
@@ -192,13 +192,13 @@ LV_REGISTER_SELFTEST("bearings.mechanical_assembly_error", [](Context& ctx) -> l
     k::setGeneratedSpeed(p, 0);
 });
 
-LV_REGISTER_SELFTEST("bearings.windmill_generates", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.windmill_generates", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p       = co_await area(ctx, 2120);
     auto bearing = p;
-    place(ctx, bearing, std::string(kWindmillBearing), {{"levitate:facing", 1}});
+    place(ctx, bearing, std::string(kWindmillBearing), {{"bearing:facing", 1}});
     // 3x3 sails above, glued together
     for (int dz = -1; dz <= 1; ++dz)
-        for (int dx = -1; dx <= 1; ++dx) place(ctx, at(p, dx, 1, dz), "levitate:white_sail", {{"levitate:facing", 1}});
+        for (int dx = -1; dx <= 1; ++dx) place(ctx, at(p, dx, 1, dz), "bearing:white_sail", {{"bearing:facing", 1}});
     ct::addGlue(p.dim, cc::GlueBox::of(ccp(at(p, -1, 1, -1)), ccp(at(p, 1, 1, 1))));
     track(bearing);
     Guard g;
@@ -219,16 +219,16 @@ LV_REGISTER_SELFTEST("bearings.windmill_generates", [](Context& ctx) -> ll::coro
     bearingUse(ctx.player(), bearing);
     co_await ctx.ticks(3);
     ctx.check(!ct::find(id), "a click stops the windmill");
-    ctx.check(blk(ctx, at(p, 1, 1, 0)) == "levitate:white_sail" && blk(ctx, at(p, -1, 1, -1)) == "levitate:white_sail", "sails placed back where they were");
+    ctx.check(blk(ctx, at(p, 1, 1, 0)) == "bearing:white_sail" && blk(ctx, at(p, -1, 1, -1)) == "bearing:white_sail", "sails placed back where they were");
     ctx.check(std::abs(k::theoreticalSpeedAt(bearing)) < 1e-3, "no longer generating");
     ct::clearGlue(p.dim, ccp(p), 3);
 });
 
-LV_REGISTER_SELFTEST("bearings.windmill_needs_sails", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.windmill_needs_sails", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 2126);
-    place(ctx, p, std::string(kWindmillBearing), {{"levitate:facing", 1}});
+    place(ctx, p, std::string(kWindmillBearing), {{"bearing:facing", 1}});
     place(ctx, at(p, 0, 1, 0), "minecraft:oak_planks");
-    place(ctx, at(p, 1, 1, 0), "levitate:white_sail", {{"levitate:facing", 1}});
+    place(ctx, at(p, 1, 1, 0), "bearing:white_sail", {{"bearing:facing", 1}});
     place(ctx, at(p, -1, 1, 0), "minecraft:white_wool");
     ct::addGlue(p.dim, cc::GlueBox::of(ccp(at(p, -1, 1, 0)), ccp(at(p, 1, 1, 0))));
     track(p);
@@ -237,15 +237,15 @@ LV_REGISTER_SELFTEST("bearings.windmill_needs_sails", [](Context& ctx) -> ll::co
     auto st = bearingState(p);
     ctx.check(!st.value("running", true), "2 sail-like blocks are not enough");
     ctx.check(st.value("error", std::string()) == "create.gui.assembly.exception.not_enough_sails", "error: " + st.value("error", std::string()));
-    ctx.check(blk(ctx, at(p, 1, 1, 0)) == "levitate:white_sail" && blk(ctx, at(p, -1, 1, 0)) == "minecraft:white_wool", "structure stays");
+    ctx.check(blk(ctx, at(p, 1, 1, 0)) == "bearing:white_sail" && blk(ctx, at(p, -1, 1, 0)) == "minecraft:white_wool", "structure stays");
     ct::clearGlue(p.dim, ccp(p), 3);
 });
 
-LV_REGISTER_SELFTEST("bearings.clockwork_hands", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.clockwork_hands", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p       = co_await area(ctx, 2130);
     auto bearing = at(p, 0, 1, 0);
-    place(ctx, p, kSource, {{"levitate:axis", 1}});
-    place(ctx, bearing, std::string(kClockworkBearing), {{"levitate:facing", 1}});
+    place(ctx, p, kSource, {{"bearing:axis", 1}});
+    place(ctx, bearing, std::string(kClockworkBearing), {{"bearing:facing", 1}});
     place(ctx, at(p, 0, 2, 0), "minecraft:oak_planks"); // hour hand
     place(ctx, at(p, 0, 3, 0), "minecraft:stone");      // minute hand (not attached to the hour hand)
     track(bearing);
@@ -275,17 +275,17 @@ LV_REGISTER_SELFTEST("bearings.clockwork_hands", [](Context& ctx) -> ll::coro::C
             for (int dx = -1; dx <= 1; ++dx) ctx.cleanupBlock(at(p, dx, dy, dz));
 });
 
-LV_REGISTER_SELFTEST("bearings.turntable_turns_players", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.turntable_turns_players", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p     = co_await area(ctx, 2136);
     auto table = at(p, 0, 1, 0);
-    place(ctx, p, kSource, {{"levitate:axis", 1}});
+    place(ctx, p, kSource, {{"bearing:axis", 1}});
     place(ctx, table, std::string(kTurntable));
     track(table);
     k::refresh(p);
     k::setGeneratedSpeed(p, 32);
     co_await ctx.ticks(4);
     ctx.check(std::abs(k::speedAt(table) - 32) < 1e-3, "the turntable turns at 32 RPM");
-    auto& player = ctx.spawnPlayer("lv_turntable");
+    auto& player = ctx.spawnPlayer("br_turntable");
     player.teleport(Vec3{table.x + 0.8f, table.y + 1.0f, table.z + 0.5f}, player.getDimensionId());
     co_await ctx.ticks(10);
     auto   feet  = player.getFeetPos();
@@ -294,30 +294,30 @@ LV_REGISTER_SELFTEST("bearings.turntable_turns_players", [](Context& ctx) -> ll:
     k::setGeneratedSpeed(p, 0);
 });
 
-LV_REGISTER_SELFTEST("bearings.sails_dye_and_shear", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.sails_dye_and_shear", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto  p = co_await area(ctx, 2140);
     auto& r = regionOf(ctx);
-    for (int dx = -1; dx <= 1; ++dx) place(ctx, at(p, dx, 0, 0), "levitate:white_sail", {{"levitate:facing", 1}});
+    for (int dx = -1; dx <= 1; ++dx) place(ctx, at(p, dx, 0, 0), "bearing:white_sail", {{"bearing:facing", 1}});
     applyDye(r, p, {0.5, 1, 0.5}, "red");
-    ctx.check(blk(ctx, p) == "levitate:red_sail", "the clicked sail is dyed");
-    ctx.check(stateOf(ctx, p, "levitate:facing") == 1, "facing kept");
+    ctx.check(blk(ctx, p) == "bearing:red_sail", "the clicked sail is dyed");
+    ctx.check(stateOf(ctx, p, "bearing:facing") == 1, "facing kept");
     applyDye(r, p, {0.9, 1, 0.5}, "red");
-    ctx.check(blk(ctx, at(p, 1, 0, 0)) == "levitate:red_sail" && blk(ctx, at(p, -1, 0, 0)) == "levitate:white_sail", "then the nearest neighbour");
+    ctx.check(blk(ctx, at(p, 1, 0, 0)) == "bearing:red_sail" && blk(ctx, at(p, -1, 0, 0)) == "bearing:white_sail", "then the nearest neighbour");
     applyDye(r, p, {0.5, 1, 0.5}, "red");
-    ctx.check(blk(ctx, at(p, -1, 0, 0)) == "levitate:red_sail", "then the whole plane");
+    ctx.check(blk(ctx, at(p, -1, 0, 0)) == "bearing:red_sail", "then the whole plane");
     applyDye(r, p, {0.5, 1, 0.5}, std::nullopt);
-    ctx.check(blk(ctx, p) == "levitate:sail_frame", "shears take the canvas off");
+    ctx.check(blk(ctx, p) == "bearing:sail_frame", "shears take the canvas off");
     // the sail item extends the plane next to the clicked sail
     auto& player = ctx.player();
-    ctx.give(player, stack("levitate:white_sail", 4), 0);
+    ctx.give(player, stack("bearing:white_sail", 4), 0);
     player.setSelectedSlot(0);
     ctx.check(sailUse(player, at(p, 1, 0, 0), 1, {0.95, 1, 0.5}, player.getSelectedItem()), "placement helper used");
-    ctx.check(blk(ctx, at(p, 2, 0, 0)) == "levitate:white_sail", "a sail placed east of the clicked one");
-    ctx.check(stateOf(ctx, at(p, 2, 0, 0), "levitate:facing") == 1, "with the same facing");
+    ctx.check(blk(ctx, at(p, 2, 0, 0)) == "bearing:white_sail", "a sail placed east of the clicked one");
+    ctx.check(stateOf(ctx, at(p, 2, 0, 0), "bearing:facing") == 1, "with the same facing");
     ctx.cleanupBlock(at(p, 2, 0, 0));
 });
 
-LV_REGISTER_SELFTEST("bearings.cart_assembler_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.cart_assembler_placement", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = co_await area(ctx, 2146);
     place(ctx, at(p, 0, -1, 0), "minecraft:stone");
     place(ctx, p, "minecraft:golden_rail", {{"rail_direction", 1}});
@@ -325,18 +325,18 @@ LV_REGISTER_SELFTEST("bearings.cart_assembler_placement", [](Context& ctx) -> ll
     ctx.check(placeAssembler(player, p, false), "used on a rail");
     markCreativeBreak(p);
     ctx.check(blk(ctx, p) == std::string(kCartAssembler), "the rail became a cart assembler");
-    ctx.check(stateOf(ctx, p, "levitate:rail_type") == 1, "it knows it was a powered rail");
-    ctx.check(stateOf(ctx, p, "levitate:rail_axis") == 1, "east-west");
+    ctx.check(stateOf(ctx, p, "bearing:rail_type") == 1, "it knows it was a powered rail");
+    ctx.check(stateOf(ctx, p, "bearing:rail_axis") == 1, "east-west");
     place(ctx, at(p, 2, 0, 0), "minecraft:stone");
     ctx.check(placeAssembler(player, at(p, 2, 0, 0), false) && blk(ctx, at(p, 2, 0, 0)) == "minecraft:stone", "refused on a non-rail");
 });
 
-LV_REGISTER_SELFTEST("bearings.cart_contraption_follows_cart", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.cart_contraption_follows_cart", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto  p = co_await area(ctx, 2150);
     auto& r = regionOf(ctx);
     for (int dx = -1; dx <= 6; ++dx) place(ctx, at(p, dx, -1, 0), "minecraft:stone");
     for (int dx = 1; dx <= 6; ++dx) place(ctx, at(p, dx, 0, 0), "minecraft:rail", {{"rail_direction", 1}});
-    place(ctx, p, std::string(kCartAssembler), {{"levitate:rail_axis", 1}, {"levitate:rail_type", 0}, {"levitate:powered", 1}});
+    place(ctx, p, std::string(kCartAssembler), {{"bearing:rail_axis", 1}, {"bearing:rail_type", 0}, {"bearing:powered", 1}});
     place(ctx, at(p, 0, 0, 1), "minecraft:redstone_block");
     place(ctx, at(p, 0, 1, 0), "minecraft:oak_planks");
     track(p);
@@ -370,17 +370,17 @@ LV_REGISTER_SELFTEST("bearings.cart_contraption_follows_cart", [](Context& ctx) 
         for (int dz = -1; dz <= 1; ++dz) ctx.cleanupBlock(at(p, dx, 1, dz));
 });
 
-LV_REGISTER_SELFTEST("bearings.controller_rail_drives_carts", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.controller_rail_drives_carts", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto  p = co_await area(ctx, 2160);
     auto& r = regionOf(ctx);
     for (int dx = -1; dx <= 6; ++dx) place(ctx, at(p, dx, -1, 0), "minecraft:stone");
     for (int dx = 1; dx <= 6; ++dx) place(ctx, at(p, dx, 0, 0), "minecraft:rail", {{"rail_direction", 1}});
     // pointing east (backwards on an east-west rail), powered by a redstone block
-    place(ctx, p, std::string(kControllerRail), {{"levitate:rail_axis", 1}, {"levitate:backwards", 1}});
+    place(ctx, p, std::string(kControllerRail), {{"bearing:rail_axis", 1}, {"bearing:backwards", 1}});
     place(ctx, at(p, 0, 0, 1), "minecraft:redstone_block");
     track(p);
     co_await ctx.ticks(5);
-    ctx.check(stateOf(ctx, p, "levitate:power") == 15, "signal strength 15");
+    ctx.check(stateOf(ctx, p, "bearing:power") == 15, "signal strength 15");
     auto* cart = spawnCart(r, {p.x + .5, p.y + cartRailY(), p.z + .5});
     ctx.require(cart != nullptr, "minecart spawned");
     auto cartId = uidOf(*cart);
@@ -391,7 +391,7 @@ LV_REGISTER_SELFTEST("bearings.controller_rail_drives_carts", [](Context& ctx) -
     cart->remove();
 });
 
-LV_REGISTER_SELFTEST("bearings.coupling_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.coupling_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto  p = co_await area(ctx, 2166);
     auto& r = regionOf(ctx);
     for (int dx = 0; dx <= 4; ++dx) {
@@ -420,11 +420,11 @@ LV_REGISTER_SELFTEST("bearings.coupling_rules", [](Context& ctx) -> ll::coro::Co
     if (cb2) cb2->remove();
 });
 
-LV_REGISTER_SELFTEST("bearings.minecart_contraption_pickup", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("bearings.minecart_contraption_pickup", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto  p = co_await area(ctx, 2174);
     auto& r = regionOf(ctx);
     for (int dx = -1; dx <= 4; ++dx) place(ctx, at(p, dx, -1, 0), "minecraft:stone");
-    place(ctx, p, std::string(kCartAssembler), {{"levitate:rail_axis", 1}, {"levitate:rail_type", 0}, {"levitate:powered", 1}});
+    place(ctx, p, std::string(kCartAssembler), {{"bearing:rail_axis", 1}, {"bearing:rail_type", 0}, {"bearing:powered", 1}});
     place(ctx, at(p, 0, 0, 1), "minecraft:redstone_block");
     place(ctx, at(p, 0, 1, 0), "minecraft:oak_planks");
     place(ctx, at(p, 3, 0, 0), "minecraft:rail", {{"rail_direction", 1}});
@@ -452,7 +452,7 @@ LV_REGISTER_SELFTEST("bearings.minecart_contraption_pickup", [](Context& ctx) ->
         if (it::idOf(st) == kMinecartContraption) item = st;
     }
     ctx.require(it::idOf(item) == kMinecartContraption, "the player got a minecart contraption");
-    ctx.check(it::getData(item, "lv:minecart_contraption").contains("record"), "carrying the structure");
+    ctx.check(it::getData(item, "br:minecart_contraption").contains("record"), "carrying the structure");
     // placing it on a rail brings it back on a new cart
     ctx.give(player, item, 0);
     player.setSelectedSlot(0);
@@ -473,13 +473,13 @@ LV_REGISTER_SELFTEST("bearings.minecart_contraption_pickup", [](Context& ctx) ->
 
 // U38 (R110 / R111): a chest minecart contraption is picked up into its own item with the cart's
 // inventory, without placing anything (Create discards the contraption entity), and comes back.
-LV_REGISTER_SELFTEST("bearings.chest_minecart_contraption_pickup", [](Context& ctx) -> ll::coro::CoroTask<> {
-    auto p = ctx.testPos(3810, ::lv::feature::contraption::kU38Dz);
+BR_REGISTER_SELFTEST("bearings.chest_minecart_contraption_pickup", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto p = ctx.testPos(3810, ::br::feature::contraption::kU38Dz);
     p.y += 2;
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
     auto& r = regionOf(ctx);
     for (int dx = -1; dx <= 4; ++dx) place(ctx, at(p, dx, -1, 0), "minecraft:stone");
-    place(ctx, p, std::string(kCartAssembler), {{"levitate:rail_axis", 1}, {"levitate:rail_type", 0}, {"levitate:powered", 1}});
+    place(ctx, p, std::string(kCartAssembler), {{"bearing:rail_axis", 1}, {"bearing:rail_type", 0}, {"bearing:powered", 1}});
     place(ctx, at(p, 0, 0, 1), "minecraft:redstone_block");
     place(ctx, at(p, 0, 1, 0), "minecraft:oak_planks");
     place(ctx, at(p, 3, 0, 0), "minecraft:rail", {{"rail_direction", 1}});
@@ -511,7 +511,7 @@ LV_REGISTER_SELFTEST("bearings.chest_minecart_contraption_pickup", [](Context& c
         if (it::idOf(st) == kChestMinecartContraption) item = st;
     }
     ctx.require(it::idOf(item) == kChestMinecartContraption, "the player got a chest minecart contraption");
-    auto data = it::getData(item, "lv:minecart_contraption");
+    auto data = it::getData(item, "br:minecart_contraption");
     ctx.check(data.contains("cart_items") && data["cart_items"].size() == 1, "the cart's inventory travels in the item");
     ctx.give(player, item, 0);
     player.setSelectedSlot(0);
@@ -536,4 +536,4 @@ LV_REGISTER_SELFTEST("bearings.chest_minecart_contraption_pickup", [](Context& c
         for (int dz = -1; dz <= 1; ++dz) ctx.cleanupBlock(at(p, dx, 1, dz));
 });
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings

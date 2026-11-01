@@ -20,7 +20,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 class TransmissionModule {
 public:
@@ -52,7 +52,7 @@ public:
             if (region.getLevel().isClientSide()) return;
             auto const& before = ev.previousBlock().getTypeName();
             auto const& after  = ev.newBlock().getTypeName();
-            if (before.rfind("levitate:", 0) != 0 && after.rfind("levitate:", 0) != 0) return;
+            if (before.rfind("bearing:", 0) != 0 && after.rfind("bearing:", 0) != 0) return;
             onBlockChanged(region, game::globalPos(region, ev.pos()), before, after, mLater);
         }));
         mListeners.push_back(bus.emplaceListener<ll::event::ServerLevelTickEvent>([this](auto&) { tick(); }));
@@ -115,6 +115,6 @@ private:
     std::uint64_t                              mTicks         = 0;
 };
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission
 
-LV_REGISTER_MODULE(lv::feature::transmission::TransmissionModule);
+BR_REGISTER_MODULE(br::feature::transmission::TransmissionModule);

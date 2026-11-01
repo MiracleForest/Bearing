@@ -17,7 +17,7 @@
 #include "mod/Log.h"
 #include "mod/Main.h"
 
-namespace lv::feature::schematics {
+namespace br::feature::schematics {
 
 namespace fs = std::filesystem;
 
@@ -190,7 +190,7 @@ cs::Schematic capture(int dim, cs::Pos lo, cs::Pos hi) {
                     liquids[i] = indexOf(extra);
                     anyLiquid  = true;
                 }
-                if (auto const* doc = common::blockdata::get(g)) s.levitateData[i] = doc->dump();
+                if (auto const* doc = common::blockdata::get(g)) s.bearingData[i] = doc->dump();
             }
         }
     }
@@ -221,4 +221,4 @@ std::optional<std::string> saveArea(fs::path const& dir, std::string name, bool 
     return file;
 }
 
-} // namespace lv::feature::schematics
+} // namespace br::feature::schematics

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:gantry_shaft"
+      "identifier": "bearing:gantry_shaft"
     },
     "tags": [
       "crafting_table"
@@ -14,7 +14,7 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "R": {
         "item": "minecraft:redstone"
@@ -22,11 +22,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:gantry_shaft",
+      "item": "bearing:gantry_shaft",
       "count": 8
     }
   }

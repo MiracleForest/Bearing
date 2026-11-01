@@ -10,7 +10,7 @@
 #include <string_view>
 #include <vector>
 
-namespace lv::core::equipment {
+namespace br::core::equipment {
 
 // ---- backtank (Create's BacktankBlockEntity / BacktankUtil) ---------------------------------------
 
@@ -168,4 +168,4 @@ inline constexpr int kControllerButtons = 6;
 /// Frequency key of two frequency item ids (Create's Couple<Frequency>; empty items are "").
 [[nodiscard]] std::string frequencyKey(std::string_view first, std::string_view second);
 
-} // namespace lv::core::equipment
+} // namespace br::core::equipment

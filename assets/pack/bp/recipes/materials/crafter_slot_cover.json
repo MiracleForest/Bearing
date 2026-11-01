@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:crafter_slot_cover"
+      "identifier": "bearing:crafter_slot_cover"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:brass_nugget"
+        "item": "bearing:brass_nugget"
       }
     },
     "unlock": [
       {
-        "item": "levitate:brass_nugget"
+        "item": "bearing:brass_nugget"
       }
     ],
     "result": {
-      "item": "levitate:crafter_slot_cover",
+      "item": "bearing:crafter_slot_cover",
       "count": 1
     }
   }

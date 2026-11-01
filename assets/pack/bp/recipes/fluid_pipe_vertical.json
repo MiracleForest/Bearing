@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:fluid_pipe_vertical"
+      "identifier": "bearing:fluid_pipe_vertical"
     },
     "tags": [
       "crafting_table"
@@ -14,7 +14,7 @@
     ],
     "key": {
       "S": {
-        "item": "levitate:copper_sheet"
+        "item": "bearing:copper_sheet"
       },
       "C": {
         "item": "minecraft:copper_ingot"
@@ -26,7 +26,7 @@
       }
     ],
     "result": {
-      "item": "levitate:fluid_pipe",
+      "item": "bearing:fluid_pipe",
       "count": 4
     }
   }

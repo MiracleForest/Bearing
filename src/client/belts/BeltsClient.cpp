@@ -1,8 +1,8 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the belts unit: belts drawn moving (client mod only).
 //
-// - Chunk meshes: a belt block is left out of the chunk mesh while the server runs Levitate (the
+// - Chunk meshes: a belt block is left out of the chunk mesh while the server runs Bearing (the
 //   companion handshake is done); its position is remembered.
 // - Every frame (block entity pass) each remembered belt is drawn from the same geometry as its
 //   static model (RP models/blocks/belt.geo.json, the bones its block states show): the band with
@@ -79,7 +79,7 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::belts {
+namespace br::client::belts {
 
 namespace cb = core::belts;
 namespace k  = core::kinetics;
@@ -87,8 +87,8 @@ using Json   = nlohmann::json;
 
 namespace {
 
-constexpr char const* kBeltId = "levitate:belt";
-constexpr char const* kModel  = "geometry.levitate.belt";
+constexpr char const* kBeltId = "bearing:belt";
+constexpr char const* kModel  = "geometry.bearing.belt";
 
 struct PosHash {
     std::size_t operator()(BlockPos const& p) const noexcept {
@@ -132,11 +132,11 @@ State& state() {
 std::optional<cb::SegmentState> segmentOf(Block const& b) {
     if (b.getTypeName() != kBeltId) return std::nullopt;
     cb::SegmentState s;
-    s.facing = game::intState(b, "levitate:facing").value_or(0) & 3;
-    s.slope  = cb::Slope(std::clamp(game::intState(b, "levitate:slope").value_or(0), 0, 4));
-    s.part   = cb::Part(std::clamp(game::intState(b, "levitate:part").value_or(1), 0, 3));
-    s.casing = cb::Casing(std::clamp(game::intState(b, "levitate:casing").value_or(0), 0, 2));
-    s.color  = game::intState(b, "levitate:dyed").value_or(0) ? game::intState(b, "levitate:color").value_or(0) : -1;
+    s.facing = game::intState(b, "bearing:facing").value_or(0) & 3;
+    s.slope  = cb::Slope(std::clamp(game::intState(b, "bearing:slope").value_or(0), 0, 4));
+    s.part   = cb::Part(std::clamp(game::intState(b, "bearing:part").value_or(1), 0, 3));
+    s.casing = cb::Casing(std::clamp(game::intState(b, "bearing:casing").value_or(0), 0, 2));
+    s.color  = game::intState(b, "bearing:dyed").value_or(0) ? game::intState(b, "bearing:color").value_or(0) : -1;
     return s;
 }
 
@@ -186,16 +186,16 @@ float yRotation(cb::SegmentState const& s) {
 std::string textureOf(std::string const& bone, cb::SegmentState const& s) {
     static constexpr char const* kColors[] = {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
                                               "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"};
-    if (bone == "pulley" || bone == "pulley_y") return "levitate_belt_pulley";
-    if (bone == "casing" || bone == "casing_slope" || bone == "casing_vertical") return s.casing == cb::Casing::Brass ? "levitate_belt_casing_brass" : "levitate_belt_casing_andesite";
-    return s.color >= 0 ? std::string("levitate_belt_") + kColors[s.color & 15] : "levitate_belt";
+    if (bone == "pulley" || bone == "pulley_y") return "bearing_belt_pulley";
+    if (bone == "casing" || bone == "casing_slope" || bone == "casing_vertical") return s.casing == cb::Casing::Brass ? "bearing_belt_casing_brass" : "bearing_belt_casing_andesite";
+    return s.color >= 0 ? std::string("bearing_belt_") + kColors[s.color & 15] : "bearing_belt";
 }
 
 bool isBand(std::string const& bone) { return bone != "pulley" && bone != "pulley_y" && !bone.starts_with("casing"); }
 
 k::RotorModel const* beltModel() {
     static std::optional<k::RotorModel> model = []() -> std::optional<k::RotorModel> {
-        auto file = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks" / "belt.geo.json";
+        auto file = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks" / "belt.geo.json";
         std::ifstream in(file);
         auto          j = Json::parse(in, nullptr, false, true);
         if (j.is_discarded()) return std::nullopt;
@@ -273,7 +273,7 @@ mce::Mesh* meshFor(Tessellator& tess, std::string const& bone, std::string const
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_belt", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_belt", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -302,8 +302,8 @@ std::optional<cb::Axis> shaftAxisOf(BlockSource& region, BlockPos const& p) {
     if (!region.hasChunksAt(p, 0, false)) return std::nullopt;
     auto const& b  = region.getBlock(p);
     auto const& id = b.getTypeName();
-    if (id != "levitate:shaft" && id != "levitate:kinetics_test_shaft") return std::nullopt;
-    return cb::Axis(std::clamp(game::intState(b, "levitate:axis").value_or(0), 0, 2));
+    if (id != "bearing:shaft" && id != "bearing:kinetics_test_shaft") return std::nullopt;
+    return cb::Axis(std::clamp(game::intState(b, "bearing:axis").value_or(0), 0, 2));
 }
 
 /// Create's BeltConnectorHandler.tick on the client: dust along the planned belt (green when the
@@ -315,7 +315,7 @@ void connectorPreview(Level& level, LocalPlayer& player) {
     if (tick == s.previewTick) return;
     s.previewTick = tick;
     auto const& held = player.getSelectedItem();
-    if (held.isNull() || held.getTypeName() != "levitate:belt_connector") return;
+    if (held.isNull() || held.getTypeName() != "bearing:belt_connector") return;
     if (int(player.getDimensionId()) != s.connectorDim) return;
     auto&    region = player.getDimensionBlockSource();
     BlockPos first  = *s.connectorFirst;
@@ -324,7 +324,7 @@ void connectorPreview(Level& level, LocalPlayer& player) {
     static std::mt19937 rng{std::random_device{}()};
     // client-side particles (Level::addParticleEffect reaches the level renderer; spawnParticleEffect
     // would go to the server particle manager)
-    static HashedString const kValid{"levitate:belt_connector_valid"}, kInvalid{"levitate:belt_connector_invalid"};
+    static HashedString const kValid{"bearing:belt_connector_valid"}, kInvalid{"bearing:belt_connector_invalid"};
     auto dust = [&](double x, double y, double z, bool valid) {
         static_cast<ILevel&>(level).addParticleEffect(valid ? kValid : kInvalid, Vec3{float(x), float(y), float(z)});
     };
@@ -346,7 +346,7 @@ void connectorPreview(Level& level, LocalPlayer& player) {
     w.loaded    = [&](cb::Vec3i const& p) { return region.hasChunksAt(BlockPos{p.x, p.y, p.z}, 0, false); };
     w.shaftAxis = [&](cb::Vec3i const& p) { return shaftAxisOf(region, BlockPos{p.x, p.y, p.z}); };
     w.speed     = [&](cb::Vec3i const& p) {
-        auto sp = lv::client::kinetics::syncedSpeed(s.connectorDim, p.x, p.y, p.z);
+        auto sp = br::client::kinetics::syncedSpeed(s.connectorDim, p.x, p.y, p.z);
         return sp ? sp->speed : 0.f;
     };
     w.replaceable = [&](cb::Vec3i const& p) { return game::replaceable(region, BlockPos{p.x, p.y, p.z}); };
@@ -370,7 +370,7 @@ void ejectorPreview(BaseActorRenderContext& ctx, Level& level, LocalPlayer& play
     auto& s = state();
     if (!s.ejectorSel) return;
     auto const& held = player.getSelectedItem();
-    if (held.isNull() || held.getTypeName() != "levitate:weighted_ejector") return;
+    if (held.isNull() || held.getTypeName() != "bearing:weighted_ejector") return;
     if (int(player.getDimensionId()) != s.ejectorDim) return;
     BlockPos sel = *s.ejectorSel;
     {
@@ -398,7 +398,7 @@ void ejectorPreview(BaseActorRenderContext& ctx, Level& level, LocalPlayer& play
         double offset    = total / segments;
         double renderT   = double(tick) / 3.0;
         auto   step      = cb::facingNormal(*facing);
-        static HashedString const kValid{"levitate:belt_connector_valid"}, kInvalid{"levitate:belt_connector_invalid"};
+        static HashedString const kValid{"bearing:belt_connector_valid"}, kInvalid{"bearing:belt_connector_invalid"};
         for (int i = 0; i < segments; ++i) {
             double t           = std::fmod(renderT, offset) + i * offset;
             auto [along, up]   = launch.at(t);
@@ -442,7 +442,7 @@ void onConnector(Json const& msg) {
 }
 
 void renderBelts(BaseActorRenderContext& ctx) {
-    auto* ci = lv::client::currentClient();
+    auto* ci = br::client::currentClient();
     if (!ci) return;
     auto* level  = ci->getLevel();
     auto* player = ci->getLocalPlayer();
@@ -541,7 +541,7 @@ void renderBelts(BaseActorRenderContext& ctx) {
 
 } // namespace
 
-// Chunk meshes: belts are drawn by us while the server runs Levitate.
+// Chunk meshes: belts are drawn by us while the server runs Bearing.
 LL_STATIC_HOOK(
     BeltsExtractHook,
     ll::memory::HookPriority::Normal,
@@ -623,8 +623,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::belts
+} // namespace br::client::belts
 
-LV_REGISTER_MODULE(lv::client::belts::BeltsClientModule);
+BR_REGISTER_MODULE(br::client::belts::BeltsClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

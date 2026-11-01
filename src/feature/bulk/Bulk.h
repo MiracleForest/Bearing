@@ -2,8 +2,8 @@
 
 // Internals of the bulk processing unit (U13) shared by its .cpp files (not a contract).
 //
-// Blocks: levitate:millstone, levitate:crushing_wheel (+ the invisible
-// levitate:crushing_wheel_controller), levitate:encased_fan, levitate:nozzle. Behaviour of
+// Blocks: bearing:millstone, bearing:crushing_wheel (+ the invisible
+// bearing:crushing_wheel_controller), bearing:encased_fan, bearing:nozzle. Behaviour of
 // Create 6.0.10 (docs/SPEC.md §2.8, §3.6.13). Server thread only.
 
 #include <cstdint>
@@ -26,17 +26,17 @@ class Block;
 class BlockSource;
 class Player;
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace cb = core::bulk;
 using core::GlobalPos;
 using Json = nlohmann::json;
 
-inline constexpr std::string_view kMillstone  = "levitate:millstone";
-inline constexpr std::string_view kWheel      = "levitate:crushing_wheel";
-inline constexpr std::string_view kController = "levitate:crushing_wheel_controller";
-inline constexpr std::string_view kFan        = "levitate:encased_fan";
-inline constexpr std::string_view kNozzle     = "levitate:nozzle";
+inline constexpr std::string_view kMillstone  = "bearing:millstone";
+inline constexpr std::string_view kWheel      = "bearing:crushing_wheel";
+inline constexpr std::string_view kController = "bearing:crushing_wheel_controller";
+inline constexpr std::string_view kFan        = "bearing:encased_fan";
+inline constexpr std::string_view kNozzle     = "bearing:nozzle";
 
 /// `config/bulk.json`: Create's CKinetics values of these machines (same keys and defaults).
 struct BulkConfig {
@@ -47,7 +47,7 @@ struct BulkConfig {
     int   fanBlockCheckRate = 30;  ///< ticks between fans checking for anything blocking their air flow
     float fanRotationArgmax = 256; ///< RPM at which fans reach their maximum stats
     int   fanProcessingTime = 150; ///< ticks a fan processing recipe takes (per 16 items)
-    /// Levitate: airflow particles (Create's client option fanParticleDensity).
+    /// Bearing: airflow particles (Create's client option fanParticleDensity).
     float fanParticleDensity = 0.5f;
 };
 [[nodiscard]] BulkConfig const& config();
@@ -248,4 +248,4 @@ namespace controller_cap {
 [[nodiscard]] ItemStack insert(GlobalPos const& pos, ItemStack const& stack, bool simulate);
 } // namespace controller_cap
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

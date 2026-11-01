@@ -1,8 +1,8 @@
 #pragma once
 
-// Client side (client build only): the parts of Levitate that run in the game client itself,
+// Client side (client build only): the parts of Bearing that run in the game client itself,
 // next to the integrated server of local worlds. Client-only units go under `src/client/<unit>/`
-// and wrap their .cpp files in `#ifdef LV_CLIENT`.
+// and wrap their .cpp files in `#ifdef BR_CLIENT`.
 //
 // Threads: rendering, network handlers and posted input work run on the client thread; raw
 // mouse/keyboard events arrive on the window thread. Never keep game
@@ -17,7 +17,7 @@ class ClientInstance;
 class LocalPlayer;
 class ClientLevel;
 
-namespace lv::client {
+namespace br::client {
 
 /// Current client instance, or nullptr before the game finished starting.
 [[nodiscard]] ClientInstance* currentClient();
@@ -35,4 +35,4 @@ template <class... Args>
     return core::formatMessageArgs(translateClient(key, fallback), args...);
 }
 
-} // namespace lv::client
+} // namespace br::client

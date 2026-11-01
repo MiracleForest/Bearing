@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the materials unit (client mod only):
 // - Block of experience: Create's ExperienceBlock.animateTick end rod particles around the local
@@ -49,7 +49,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::materials {
+namespace br::client::materials {
 
 namespace fm = feature::materials;
 
@@ -80,15 +80,15 @@ void magicalItems(Level& level, BlockSource& region, Vec3 const& around) {
         if (s.isNull() || !s.mItem) continue;
         auto const& id  = s.mItem->mFullName->getString();
         Vec3        pos = e->getPosition();
-        if (id == "levitate:shadow_steel" || id == "levitate:refined_radiance") {
+        if (id == "bearing:shadow_steel" || id == "bearing:refined_radiance") {
             float lo = 5.f;
-            if (id == "levitate:shadow_steel") lo = std::clamp(e->getPosDelta().y * 20.f, 5.f, 20.f);
+            if (id == "bearing:shadow_steel") lo = std::clamp(e->getPosDelta().y * 20.f, 5.f, 20.f);
             float chance = std::clamp(float(s.mCount) - 10.f, lo, 100.f) / 64.f;
             if (rnd() < chance) {
                 Vec3 at = offsetRandomly(pos, .5f);
                 level.addParticle(ParticleType::EndRod, Vec3{at.x, pos.y, at.z}, Vec3{0, -.1f, 0}, 0, nullptr, false);
             }
-        } else if (id == "levitate:chromatic_compound") {
+        } else if (id == "bearing:chromatic_compound") {
             int light = chargeOf(s);
             if (light <= 0 || std::uniform_int_distribution<int>(0, n + 19)(rng()) >= light) continue;
             Vec3  start = offsetRandomly(pos, 3);
@@ -140,7 +140,7 @@ void animate() {
 /// Create's ChromaticCompoundItem charge (0 when none): the server mirrors it into the aux value,
 /// which is all the item renderer's copy of the stack keeps (no item data).
 int chargeOf(ItemStack const& stack) {
-    if (stack.isNull() || !stack.mItem || stack.mItem->mFullName->getString() != "levitate:chromatic_compound") return 0;
+    if (stack.isNull() || !stack.mItem || stack.mItem->mFullName->getString() != "bearing:chromatic_compound") return 0;
     return std::max(0, int(stack.mAuxValue));
 }
 
@@ -245,8 +245,8 @@ public:
     }
 };
 
-} // namespace lv::client::materials
+} // namespace br::client::materials
 
-LV_REGISTER_MODULE(lv::client::materials::MaterialsClientModule);
+BR_REGISTER_MODULE(br::client::materials::MaterialsClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

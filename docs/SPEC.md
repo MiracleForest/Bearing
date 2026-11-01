@@ -1,10 +1,10 @@
-# Levitate behaviour spec
+# Bearing behaviour spec
 
-What Levitate reproduces from the Java mod [Create](https://modrinth.com/mod/create) **6.0.10** (simibubi and the Creators of Create).
+What Bearing reproduces from the Java mod [Create](https://modrinth.com/mod/create) **6.0.10** (simibubi and the Creators of Create).
 This is the behaviour reference for every feature unit (see [AGENTS.md](../AGENTS.md)). It describes
 behaviour only: never copy code or assets from Create.
 
-**Goal: no compromise.** Every block, item, mechanic and screen of Create 6.0.10 exists in Levitate and
+**Goal: no compromise.** Every block, item, mechanic and screen of Create 6.0.10 exists in Bearing and
 behaves the same, on the dedicated server (BDS) and on the client (local worlds). Only what Bedrock
 really cannot do is listed in §8, each with the reason and the closest behaviour we ship instead.
 
@@ -63,7 +63,7 @@ placeholder entity while moving (§8); native screens become forms; overlays bec
 
 ## 2. Blocks and items
 
-Ids are `levitate:<create path>` (Create's registry names). Block names come from RP `texts.d`.
+Ids are `bearing:<create path>` (Create's registry names). Block names come from RP `texts.d`.
 Every block drops itself unless noted; loot tables in `loot_tables/blocks/<id>.json`. Recipes: the
 Create 6.0.10 recipe for every item (crafting shape and every processing route), written as our own
 data files.
@@ -76,21 +76,21 @@ data files.
 `andesite_encased_large_cogwheel`, `brass_encased_large_cogwheel`, `sequenced_gearshift`,
 `rotation_speed_controller`, `speedometer`, `stressometer`, `cuckoo_clock`, `mysterious_cuckoo_clock`,
 `flywheel` (U49), `belt` connector item is U11.
-Encased variants are separate ids (as Create). Every block has `levitate:rotor` (0 full model,
+Encased variants are separate ids (as Create). Every block has `bearing:rotor` (0 full model,
 1 without the rotating parts for the client mod, §3.1). Block states (integers):
 
 | Block | States |
 |---|---|
-| shaft, cogwheel, large_cogwheel, encased shafts, gearbox | `levitate:axis` 0 x / 1 y / 2 z (gearbox: the axis *without* shafts) |
-| encased (large) cogwheels | `axis`, `levitate:top_shaft`, `levitate:bottom_shaft` (shaft end on the positive / negative axis face) |
-| clutch, gearshift | `axis`, `levitate:powered` |
-| encased_chain_drive | `axis`, `levitate:part` (0 none, 1 start, 2 middle, 3 end), `levitate:along_first` (Create's CONNECTED_ALONG_FIRST_COORDINATE) |
-| adjustable_chain_gearshift | the chain drive states + `levitate:signal` 0..15 (Create keeps the analog signal in the block entity; here it is a state so the network re-propagates when it changes) |
-| sequenced_gearshift | `axis` (Create's VERTICAL + HORIZONTAL_AXIS), `levitate:state` 0..5 (Create's STATE), `levitate:mod` (speed modifier of the running instruction: 0, 1, 2, −1, −2 as 0..4) |
-| rotation_speed_controller | `axis` 0 / 2 (HORIZONTAL_AXIS), `levitate:bracket` (large cog on top), `levitate:revision` (toggled to re-attach the network when the target speed changes) |
-| speedometer, stressometer | `levitate:facing` 0..5, `levitate:along_first`, `levitate:dial` 0..5 (static needle for vanilla clients, 22.5° steps) |
-| cuckoo_clock, mysterious_cuckoo_clock (U49) | `levitate:horizontal_facing` (0 south, 1 west, 2 north, 3 east: the dial's side), `levitate:hour` / `levitate:minute` 0..11 (static hands for vanilla clients, minutes in 5-minute steps), `levitate:cuckoo` (0 doors shut, 1 pig out, 2 creeper out) |
-| flywheel (U49) | `levitate:axis` |
+| shaft, cogwheel, large_cogwheel, encased shafts, gearbox | `bearing:axis` 0 x / 1 y / 2 z (gearbox: the axis *without* shafts) |
+| encased (large) cogwheels | `axis`, `bearing:top_shaft`, `bearing:bottom_shaft` (shaft end on the positive / negative axis face) |
+| clutch, gearshift | `axis`, `bearing:powered` |
+| encased_chain_drive | `axis`, `bearing:part` (0 none, 1 start, 2 middle, 3 end), `bearing:along_first` (Create's CONNECTED_ALONG_FIRST_COORDINATE) |
+| adjustable_chain_gearshift | the chain drive states + `bearing:signal` 0..15 (Create keeps the analog signal in the block entity; here it is a state so the network re-propagates when it changes) |
+| sequenced_gearshift | `axis` (Create's VERTICAL + HORIZONTAL_AXIS), `bearing:state` 0..5 (Create's STATE), `bearing:mod` (speed modifier of the running instruction: 0, 1, 2, −1, −2 as 0..4) |
+| rotation_speed_controller | `axis` 0 / 2 (HORIZONTAL_AXIS), `bearing:bracket` (large cog on top), `bearing:revision` (toggled to re-attach the network when the target speed changes) |
+| speedometer, stressometer | `bearing:facing` 0..5, `bearing:along_first`, `bearing:dial` 0..5 (static needle for vanilla clients, 22.5° steps) |
+| cuckoo_clock, mysterious_cuckoo_clock (U49) | `bearing:horizontal_facing` (0 south, 1 west, 2 north, 3 east: the dial's side), `bearing:hour` / `bearing:minute` 0..11 (static hands for vanilla clients, minutes in 5-minute steps), `bearing:cuckoo` (0 doors shut, 1 pig out, 2 creeper out) |
+| flywheel (U49) | `bearing:axis` |
 
 Drops: encased shafts drop a shaft, encased cogwheels their cogwheel / large cogwheel (as Create);
 a gearbox with a horizontal axis drops a vertical gearbox. Recipes (Create 6.0.10, `crafting/kinetics`):
@@ -112,11 +112,11 @@ needing U9 / U10 items wait in `assets/pending_recipes/transmission/`.
 (+ structural `water_wheel_structure`), `creative_motor`. Windmill bearing and sails are U21; steam
 engine is U18.
 
-- States: `levitate:facing` 0..5 (down, up, north, south, west, east) for the crank, valve handles,
-  water wheel and motor; `levitate:axis` 0..2 + `levitate:extension` for the large wheel;
-  `levitate:wood` 0..11 (oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, bamboo,
+- States: `bearing:facing` 0..5 (down, up, north, south, west, east) for the crank, valve handles,
+  water wheel and motor; `bearing:axis` 0..2 + `bearing:extension` for the large wheel;
+  `bearing:wood` 0..11 (oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, bamboo,
   crimson, warped, pale oak; default spruce as Create) for both wheels and the structure;
-  `levitate:segment` 0..7 + `levitate:axis` for the structure; `levitate:rotor` (kinetics renderer).
+  `bearing:segment` 0..7 + `bearing:axis` for the structure; `bearing:rotor` (kinetics renderer).
 - Drops: itself; the large wheel drops itself, the structure drops nothing (§3.6.7).
 - Recipes (Create 6.0.10): hand crank = 3 planks / andesite alloy (right); copper valve handle =
   3 copper sheets / andesite alloy (middle); `<colour>_valve_handle` = copper valve handle + dye
@@ -201,12 +201,12 @@ stones) and `cut_<s>`, `cut_<s>_stairs/_slab/_wall`, `polished_cut_<s>` (+ stair
 ### 2.6 Belts and depots (U11)
 
 `belt_connector` (item "Mechanical Belt", stack 64; recipe: 6 dried kelp, `DDD/DDD`), `belt` (block,
-no item; states `levitate:facing` 0..3 (0 south, 1 west, 2 north, 3 east: start -> end), `levitate:slope`
-0 horizontal / 1 upward / 2 downward / 3 vertical / 4 sideways, `levitate:part` 0 start / 1 middle /
-2 end / 3 pulley, `levitate:casing` 0 none / 1 andesite / 2 brass, `levitate:dyed` + `levitate:color`
+no item; states `bearing:facing` 0..3 (0 south, 1 west, 2 north, 3 east: start -> end), `bearing:slope`
+0 horizontal / 1 upward / 2 downward / 3 vertical / 4 sideways, `bearing:part` 0 start / 1 middle /
+2 end / 3 pulley, `bearing:casing` 0 none / 1 andesite / 2 brass, `bearing:dyed` + `bearing:color`
 0..15 (Create's dye colour in the block entity; a state here so vanilla clients see it); hardness 0.8,
 wool sounds, drops handled in code), `depot` (recipe: andesite alloy + andesite casing, shapeless),
-`weighted_ejector` (states `levitate:facing`, `levitate:lid` (plate up), `levitate:rotor`; recipe:
+`weighted_ejector` (states `bearing:facing`, `bearing:lid` (plate up), `bearing:rotor`; recipe:
 golden sheet / depot / cogwheel in a column). The depot and ejector recipes need U9 / U10 / U6 items
 and wait in `assets/pending_recipes/belts/`.
 
@@ -217,13 +217,13 @@ and wait in `assets/pending_recipes/belts/`.
 
 | Block | States | Drops / recipe (Create 6.0.10) |
 |---|---|---|
-| `andesite_funnel`, `brass_funnel` | `levitate:facing` 0..5 (the side the opening faces, away from the attached block), `levitate:extracting`, `levitate:powered`, `levitate:flap` | itself; 2 from andesite alloy over dried kelp / 2 from electron tube, brass ingot, dried kelp (column) |
-| `andesite_tunnel`, `brass_tunnel` | `levitate:axis` 0 x / 2 z (the belt's axis), `levitate:shape` 0 straight, 1 window, 2 closed, 3 T left, 4 T right, 5 cross | itself; 2 from 2 andesite alloy over 2 dried kelp / 2 from electron tube, 2 brass ingots, 2 dried kelp |
-| `chute` | `levitate:facing` 0 down or 1..4 diagonal (north, south, west, east), `levitate:shape` 0 normal, 1 window, 2 intersection, 3 encased | itself; 4 from iron sheet, iron ingot, iron sheet (column) |
-| `smart_chute` | `levitate:powered` | itself; brass sheet, chute, electron tube (column) |
-| `item_vault` | `levitate:axis` 0 x / 2 z, connected textures `levitate:len` / `levitate:u` / `levitate:v` / `levitate:large` | itself; iron sheet, barrel, iron sheet (column) |
+| `andesite_funnel`, `brass_funnel` | `bearing:facing` 0..5 (the side the opening faces, away from the attached block), `bearing:extracting`, `bearing:powered`, `bearing:flap` | itself; 2 from andesite alloy over dried kelp / 2 from electron tube, brass ingot, dried kelp (column) |
+| `andesite_tunnel`, `brass_tunnel` | `bearing:axis` 0 x / 2 z (the belt's axis), `bearing:shape` 0 straight, 1 window, 2 closed, 3 T left, 4 T right, 5 cross | itself; 2 from 2 andesite alloy over 2 dried kelp / 2 from electron tube, 2 brass ingots, 2 dried kelp |
+| `chute` | `bearing:facing` 0 down or 1..4 diagonal (north, south, west, east), `bearing:shape` 0 normal, 1 window, 2 intersection, 3 encased | itself; 4 from iron sheet, iron ingot, iron sheet (column) |
+| `smart_chute` | `bearing:powered` | itself; brass sheet, chute, electron tube (column) |
+| `item_vault` | `bearing:axis` 0 x / 2 z, connected textures `bearing:len` / `bearing:u` / `bearing:v` / `bearing:large` | itself; iron sheet, barrel, iron sheet (column) |
 | `creative_crate` | — | itself; creative only (no recipe) |
-| `item_hatch` (U49) | `levitate:facing` 2..5 (FacingID towards the container it sits on), `levitate:open` | itself; andesite alloy + iron trapdoor (shapeless) |
+| `item_hatch` (U49) | `bearing:facing` 2..5 (FacingID towards the container it sits on), `bearing:open` | itself; andesite alloy + iron trapdoor (shapeless) |
 
 The recipes use U9's materials (andesite alloy, brass, sheets, electron tube): they wait in
 `assets/pending_recipes/funnels/` until U9 is merged. Belt funnels (`andesite_belt_funnel`,
@@ -233,17 +233,17 @@ The recipes use U9's materials (andesite alloy, brass, sheets, electron tube): t
 
 `millstone`, `crushing_wheel` (+ `crushing_wheel_controller`, invisible), `encased_fan`, `nozzle`.
 
-- `millstone`: state `levitate:rotor` (client models, §3.1). Hardness 1.5, drops itself (and its
+- `millstone`: state `bearing:rotor` (client models, §3.1). Hardness 1.5, drops itself (and its
   contents). Recipe: cogwheel / andesite casing / any of `c:stones` (stone, granite, diorite,
   andesite, deepslate, tuff: one Bedrock recipe each).
-- `crushing_wheel`: states `levitate:axis` 0..2, `levitate:rotor`. Recipe: mechanical crafting
+- `crushing_wheel`: states `bearing:axis` 0..2, `bearing:rotor`. Recipe: mechanical crafting
   (`assets/recipes/mechanical_crafting/crushing_wheel.json`, U16), 2 wheels.
-- `crushing_wheel_controller`: states `levitate:facing` 0..5 (Create's Direction order),
-  `levitate:valid`; invisible, not selectable, unbreakable by hand, no drops (its contents drop when
+- `crushing_wheel_controller`: states `bearing:facing` 0..5 (Create's Direction order),
+  `bearing:valid`; invisible, not selectable, unbreakable by hand, no drops (its contents drop when
   it goes); collision: Create's 13 px slab on its facing side.
-- `encased_fan`: states `levitate:facing` 0..5, `levitate:rotor`. Recipe: shaft / andesite casing /
+- `encased_fan`: states `bearing:facing` 0..5, `bearing:rotor`. Recipe: shaft / andesite casing /
   propeller.
-- `nozzle`: state `levitate:facing` 0..5 (the clicked face). Recipe: ` S ` / ` C ` / `SSS`
+- `nozzle`: state `bearing:facing` 0..5 (the clicked face). Recipe: ` S ` / ` C ` / `SSS`
   (andesite alloy, wool).
 - The crafting recipes ship in the behavior pack (`assets/pack/bp/recipes`).
 
@@ -253,15 +253,15 @@ The recipes use U9's materials (andesite alloy, brass, sheets, electron tube): t
 fading/kindled/seething), `empty_blaze_burner`, `lit_blaze_burner`.
 
 Bedrock blocks (details in §3.6.14):
-- `basin`: `levitate:facing` 0 (no spout) / 2..5 (spout side, Bedrock face). Drops itself and its contents.
-- `mechanical_press`: `levitate:axis` 0 (x) / 2 (z) (Create's horizontal facing; only the axis is
-  visible), `levitate:rotor` 0/1 (kinetic rotor state, §3.1).
-- `mechanical_mixer`: `levitate:rotor` 0/1.
-- `blaze_burner`: `levitate:blaze` 1..4 = smouldering, fading, kindled, seething, `levitate:facing`
-  2..5 (where the blaze looks), `levitate:rotor` 0/1 (client mod: head drawn separately). Create's
-  heat level *none* (no blaze) is the separate block `empty_blaze_burner` (`levitate:facing`), which
+- `basin`: `bearing:facing` 0 (no spout) / 2..5 (spout side, Bedrock face). Drops itself and its contents.
+- `mechanical_press`: `bearing:axis` 0 (x) / 2 (z) (Create's horizontal facing; only the axis is
+  visible), `bearing:rotor` 0/1 (kinetic rotor state, §3.1).
+- `mechanical_mixer`: `bearing:rotor` 0/1.
+- `blaze_burner`: `bearing:blaze` 1..4 = smouldering, fading, kindled, seething, `bearing:facing`
+  2..5 (where the blaze looks), `bearing:rotor` 0/1 (client mod: head drawn separately). Create's
+  heat level *none* (no blaze) is the separate block `empty_blaze_burner` (`bearing:facing`), which
   is also the item Create calls "Empty Blaze Burner"; both drop themselves.
-- `lit_blaze_burner`: `levitate:facing`, `levitate:flame_type` 0 regular / 1 soul (read by U13 for haunting); drops the empty burner.
+- `lit_blaze_burner`: `bearing:facing`, `bearing:flame_type` 0 regular / 1 soul (read by U13 for haunting); drops the empty burner.
 - Recipes (Create 6.0.10): basin = andesite alloy `A A`/`AAA`; mechanical press = shaft / andesite
   casing / iron block; mechanical mixer = cogwheel / andesite casing / whisk; empty blaze burner =
   ` I `/`INI`/` I ` (iron sheet, netherrack). They ship in the behavior pack.
@@ -272,13 +272,13 @@ Bedrock blocks (details in §3.6.14):
 `incomplete_precision_mechanism` and `unprocessed_obsidian_sheet` (U9, with their recipes) and
 `incomplete_track` (U5); U15 owns the engine that advances them (§3.6.15).
 
-- `deployer`: states `levitate:facing` 0..5 (down, up, north, south, west, east; faces away from the
-  player who places it, towards them when sneaking), `levitate:axis_along_first` 0/1 (Create's
+- `deployer`: states `bearing:facing` 0..5 (down, up, north, south, west, east; faces away from the
+  player who places it, towards them when sneaking), `bearing:axis_along_first` 0/1 (Create's
   AXIS_ALONG_FIRST_COORDINATE: the shaft axis; horizontal deployers take a vertical shaft when one is
   above / below and no horizontal one at the sides, vertical ones the shaft offered at the sides or
-  the player's horizontal look axis), `levitate:rotor` (client mod: 1 = drawn without its shaft,
+  the player's horizontal look axis), `bearing:rotor` (client mod: 1 = drawn without its shaft,
   pole and hand). Breaking drops the held item and the items waiting to be handed out.
-- `mechanical_arm`: states `levitate:ceiling` (placed against the bottom of a block), `levitate:rotor`.
+- `mechanical_arm`: states `bearing:ceiling` (placed against the bottom of a block), `bearing:rotor`.
   Shaft input from below (above on the ceiling) and a small cog on its base that meshes with
   cogwheels beside it (Create's ArmBlock is an ICogWheel, U50). Breaking drops the held item.
 - Recipes (Create 6.0.10, in the behavior pack): deployer = electron tube / andesite casing / brass
@@ -289,15 +289,15 @@ Bedrock blocks (details in §3.6.14):
 
 `mechanical_crafter`, `mechanical_saw`, `mechanical_drill` (behaviour in §3.6.16).
 
-- `mechanical_crafter`: states `levitate:facing` 0..5 (the front; only the horizontal values 2..5 are used — Bedrock reads integer states as indices into their value list, so the list starts at 0), `levitate:pointing`
+- `mechanical_crafter`: states `bearing:facing` 0..5 (the front; only the horizontal values 2..5 are used — Bedrock reads integer states as indices into their value list, so the list starts at 0), `bearing:pointing`
   0..3 (Create's Pointing in its order: up, left, down, right; the arrow on the front),
-  `levitate:covered` (a slot cover is on). Full block, brass casing look, the arrow is drawn on
+  `bearing:covered` (a slot cover is on). Full block, brass casing look, the arrow is drawn on
   the front's frame. Kinetic: a small cog turning about the facing axis with shaft ends on the
   front and back (crafter grids mesh like cogs), impact 2.
-- `mechanical_saw`: states `levitate:facing` 0..5, `levitate:axis_along_first` (Create's
-  AXIS_ALONG_FIRST_COORDINATE), `levitate:rotor` (client mod). A 12 px casing with the blade
+- `mechanical_saw`: states `bearing:facing` 0..5, `bearing:axis_along_first` (Create's
+  AXIS_ALONG_FIRST_COORDINATE), `bearing:rotor` (client mod). A 12 px casing with the blade
   sticking out of the front. Kinetic: shaft along DirectionalAxisKineticBlock's axis, impact 4.
-- `mechanical_drill`: states `levitate:facing` 0..5, `levitate:rotor`. A 10 px casing with the
+- `mechanical_drill`: states `bearing:facing` 0..5, `bearing:rotor`. A 10 px casing with the
   drill head in front. Kinetic: shaft on the back only, impact 4.
 - All three: hardness ~ 2.5 s to mine by hand ⚠, explosion resistance 6, drop themselves. Recipes
   (Create 6.0.10): crafter ×3 = electron tube / brass casing / crafting table (column); saw =
@@ -309,25 +309,25 @@ Bedrock blocks (details in §3.6.14):
 `fluid_pipe`, `glass_fluid_pipe`, `encased_fluid_pipe`, `mechanical_pump`, `fluid_valve`, `smart_fluid_pipe`
 (details in §3.6.17).
 
-- `fluid_pipe`: states `levitate:down|up|north|south|west|east` (open faces), `levitate:rim_a` /
-  `levitate:rim_b` (3 bits each: the faces drawing a rim, down/up/north and south/west/east),
-  `levitate:bracket` (0 none, 1 wooden, 2 metal). Hardness 0.5 ⚠ (Create: copper-like, instant-ish).
-- `glass_fluid_pipe` (no item; drops `fluid_pipe`): `levitate:axis` 0..2, `levitate:fluid` (0 empty,
+- `fluid_pipe`: states `bearing:down|up|north|south|west|east` (open faces), `bearing:rim_a` /
+  `bearing:rim_b` (3 bits each: the faces drawing a rim, down/up/north and south/west/east),
+  `bearing:bracket` (0 none, 1 wooden, 2 metal). Hardness 0.5 ⚠ (Create: copper-like, instant-ish).
+- `glass_fluid_pipe` (no item; drops `fluid_pipe`): `bearing:axis` 0..2, `bearing:fluid` (0 empty,
   1 water, 2 lava, 3 honey, 4 chocolate, 5 milk, 6 potion / other, 7 tea: what flows inside),
-  `levitate:bracket`.
+  `bearing:bracket`.
 - `encased_fluid_pipe` (no item; drops `fluid_pipe`, as Create's loot): the six face states.
-- `mechanical_pump`: `levitate:facing` 0..5 (Bedrock FacingID: down, up, north, south, west, east; the
-  arrow), `levitate:rotor` (kinetic model state).
-- `fluid_valve`: `levitate:facing`, `levitate:along_first` (Create's AXIS_ALONG_FIRST_COORDINATE),
-  `levitate:enabled` (open), `levitate:rotor`, `levitate:pointer` (1: no handle; only the client mod's
+- `mechanical_pump`: `bearing:facing` 0..5 (Bedrock FacingID: down, up, north, south, west, east; the
+  arrow), `bearing:rotor` (kinetic model state).
+- `fluid_valve`: `bearing:facing`, `bearing:along_first` (Create's AXIS_ALONG_FIRST_COORDINATE),
+  `bearing:enabled` (open), `bearing:rotor`, `bearing:pointer` (1: no handle; only the client mod's
   chunk meshes use it, the handle is then drawn turning, §3.6.17).
-- `smart_fluid_pipe`: `levitate:face` (0 floor, 1 ceiling, 2 wall), `levitate:facing` (0 north,
+- `smart_fluid_pipe`: `bearing:face` (0 floor, 1 ceiling, 2 wall), `bearing:facing` (0 north,
   1 south, 2 west, 3 east).
 - Recipes (Create 6.0.10, in `assets/pending_recipes/pipes/` until U6/U9 land their ingredients):
   fluid pipe ×4 = copper sheet, copper ingot, copper sheet (row); mechanical pump = cogwheel + fluid
   pipe (shapeless); fluid valve = iron sheet + fluid pipe (shapeless); smart fluid pipe = brass sheet /
   fluid pipe / electron tube (column).
-- `pipes_test_tank` (Levitate test block, not in the menu): an 8-bucket fluid handler used by the
+- `pipes_test_tank` (Bearing test block, not in the menu): an 8-bucket fluid handler used by the
   selftests in place of U18's tanks.
 
 ### 2.13 Tanks and steam (U18)
@@ -336,25 +336,25 @@ Bedrock blocks (details in §3.6.14):
 
 - `fluid_tank` / `creative_fluid_tank`: full blocks (copper, hardness as Create's copper machines,
   drop themselves; the fluid inside is lost when its share no longer fits, §3.6.18). States
-  `levitate:above`, `levitate:below` (another part continues there: Create's TOP / BOTTOM inverted,
-  the vertical connected textures), `levitate:shape` (Create's FluidTankBlock.Shape with window and
+  `bearing:above`, `bearing:below` (another part continues there: Create's TOP / BOTTOM inverted,
+  the vertical connected textures), `bearing:shape` (Create's FluidTankBlock.Shape with window and
   plain swapped so a lone windowed tank is the default state: 0 window, 1 plain, 2 window_nw,
-  3 window_sw, 4 window_ne, 5 window_se), `levitate:light` (0..15, Create's luminosity of a tank
+  3 window_sw, 4 window_ne, 5 window_se), `bearing:light` (0..15, Create's luminosity of a tank
   holding a glowing fluid). (Bedrock reads integer states by their index in the declared list, so
   every list is in ascending order and defaults are 0.)
 - `steam_engine`: attaches to the face of a tank it is placed on (`minecraft:block_face` from
   `minecraft:placement_position`, `minecraft:cardinal_direction` for the floor / ceiling facing);
   it can only be placed on tanks and pops when its tank goes. Drops itself.
 - `steam_whistle`: on the side of a tank (wall, bracket towards the tank) or on its top (floor,
-  mouth towards the player who placed it); states `levitate:size` (0 medium (the default),
-  1 small, 2 large), `levitate:powered`, `levitate:mouth` (1: no mouth; only the client mod's chunk
-  meshes use it, the mouth is then drawn moving, §3.6.18). `steam_whistle_extension` (no item, drops nothing): `levitate:size`,
-  `levitate:shape` (0 single = half, 1 double, 2 double_connected).
-- `powered_shaft`: what a shaft (U6's `levitate:shaft`, `levitate:axis`) becomes two blocks in front of
-  an engine; states `levitate:axis`, `levitate:rotor` (kinetic rotor model); drops a shaft (given by
+  mouth towards the player who placed it); states `bearing:size` (0 medium (the default),
+  1 small, 2 large), `bearing:powered`, `bearing:mouth` (1: no mouth; only the client mod's chunk
+  meshes use it, the mouth is then drawn moving, §3.6.18). `steam_whistle_extension` (no item, drops nothing): `bearing:size`,
+  `bearing:shape` (0 single = half, 1 double, 2 double_connected).
+- `powered_shaft`: what a shaft (U6's `bearing:shaft`, `bearing:axis`) becomes two blocks in front of
+  an engine; states `bearing:axis`, `bearing:rotor` (kinetic rotor model); drops a shaft (given by
   the code to survival players who break it: its loot table can't name U6's item before U6 is in the
   pack, so explosions drop nothing).
-- `steam_test_heater` (Levitate test block, no item): `levitate:heat` = Create's heat level 0..4,
+- `steam_test_heater` (Bearing test block, no item): `bearing:heat` = Create's heat level 0..4,
   used by selftests and e2e until U14's blaze burners exist.
 - Recipes (Create 6.0.10, added with U9's sheets / alloy, `assets/pending_recipes/steam/`): fluid
   tank = copper sheet / barrel / copper sheet (column); steam engine = golden sheet / andesite alloy /
@@ -363,12 +363,12 @@ Bedrock blocks (details in §3.6.14):
 
 ### 2.14 Fluid machines (U19)
 
-`spout`, `item_drain`, `hose_pulley` (states `levitate:facing` 2..5, `levitate:rotor`),
-`portable_fluid_interface` (state `levitate:facing` 0..5), fluids `honey`, `chocolate`, `tea`
+`spout`, `item_drain`, `hose_pulley` (states `bearing:facing` 2..5, `bearing:rotor`),
+`portable_fluid_interface` (state `bearing:facing` 0..5), fluids `honey`, `chocolate`, `tea`
 (builder's tea), potion fluids (by potion type and bottle), `honey_bucket`, `chocolate_bucket`, the
 world blocks `honey` / `chocolate` (non-flowing sources, §3.6.19, §8). Fluid ids: `minecraft:water`,
-`minecraft:lava`, `minecraft:milk`, `levitate:honey`, `levitate:chocolate`, `levitate:tea`,
-`levitate:potion/<regular|splash|lingering>/<potion>` (Java potion names, e.g. `long_swiftness`;
+`minecraft:lava`, `minecraft:milk`, `bearing:honey`, `bearing:chocolate`, `bearing:tea`,
+`bearing:potion/<regular|splash|lingering>/<potion>` (Java potion names, e.g. `long_swiftness`;
 Bedrock's wither potion is `decay`). Recipes: spout = copper casing over dried kelp; item drain = iron
 bars over copper casing; hose pulley = copper casing, dried kelp block, copper sheet (column);
 portable fluid interface = copper casing + chute (shapeless) — all in `assets/pending_recipes/fluids/`
@@ -383,13 +383,13 @@ night vision); emptying recipes: honey bottle, builder's tea.
 `rope_pulley`, `rope`, `pulley_magnet`, `elevator_pulley`, `elevator_contact`, `gantry_carriage`,
 `gantry_shaft`. Mechanics in §3.6.20.
 
-- States: pistons `levitate:facing` 0..5, `levitate:axis_first` (Create's AXIS_ALONG_FIRST_COORDINATE),
-  `levitate:state` 0 retracted / 1 moving / 2 extended, `levitate:rotor`; pole `levitate:facing`; head
-  `levitate:facing`, `levitate:sticky`; rope pulley `levitate:axis` 0 (x) / 2 (z) (1 unused: Bedrock integer states need contiguous values), `levitate:running`,
-  `levitate:rotor`; elevator pulley `levitate:facing` (horizontal values only), `levitate:running`, `levitate:rotor`; elevator
-  contact `levitate:facing`, `levitate:calling`, `levitate:powering`, `levitate:powered`; gantry shaft
-  `levitate:facing`, `levitate:part` 0 start / 1 middle / 2 end / 3 single, `levitate:powered`,
-  `levitate:rotor`; gantry carriage `levitate:facing`, `levitate:axis_first`, `levitate:rotor`.
+- States: pistons `bearing:facing` 0..5, `bearing:axis_first` (Create's AXIS_ALONG_FIRST_COORDINATE),
+  `bearing:state` 0 retracted / 1 moving / 2 extended, `bearing:rotor`; pole `bearing:facing`; head
+  `bearing:facing`, `bearing:sticky`; rope pulley `bearing:axis` 0 (x) / 2 (z) (1 unused: Bedrock integer states need contiguous values), `bearing:running`,
+  `bearing:rotor`; elevator pulley `bearing:facing` (horizontal values only), `bearing:running`, `bearing:rotor`; elevator
+  contact `bearing:facing`, `bearing:calling`, `bearing:powering`, `bearing:powered`; gantry shaft
+  `bearing:facing`, `bearing:part` 0 start / 1 middle / 2 end / 3 single, `bearing:powered`,
+  `bearing:rotor`; gantry carriage `bearing:facing`, `bearing:axis_first`, `bearing:rotor`.
 - Drops: the head drops a pole; rope and magnet drop nothing; the elevator contact drops a
   `redstone_contact` (U23) and has no item of its own (it is a redstone contact converted by an elevator).
 - Recipes (Create 6.0.10): sticky mechanical piston = slime ball over mechanical piston (shipped);
@@ -406,22 +406,22 @@ night vision); emptying recipes: honey bottle, builder's tea.
 `minecart_contraption` (item; listed under §2.25 too, made by U21 as the pickup of a cart contraption).
 Mechanics in §3.6.25.
 
-- Bearings: states `levitate:facing` 0..5 (down, up, north, south, west, east: the turning face) and
-  `levitate:rotor` (kinetic render state, §3.1). Placed as Create's DirectionalKineticBlock: facing
+- Bearings: states `bearing:facing` 0..5 (down, up, north, south, west, east: the turning face) and
+  `bearing:rotor` (kinetic render state, §3.1). Placed as Create's DirectionalKineticBlock: facing
   away from the one adjacent block with a shaft end towards it (two on different axes: none), else
   towards the player (sneaking: away). The shaft end is the back face. Names: Mechanical Bearing,
   Windmill Bearing, Clockwork Bearing; they drop themselves.
 - Sails: `sail_frame` ("Windmill Sail Frame") and 16 sails (`white_sail` "Windmill Sail",
-  `<colour>_sail` "<Colour> Sail"), state `levitate:facing` (placed facing the player, sneaking:
+  `<colour>_sail` "<Colour> Sail"), state `bearing:facing` (placed facing the player, sneaking:
   away), a thin panel (collision as the panel), flammable.
-- `turntable`: kinetic, shaft end at the bottom, `levitate:rotor`.
-- `cart_assembler`: states `levitate:rail_axis` (0 north-south, 1 east-west), `levitate:rail_type`
+- `turntable`: kinetic, shaft end at the bottom, `bearing:rotor`.
+- `cart_assembler`: states `bearing:rail_axis` (0 north-south, 1 east-west), `bearing:rail_type`
   (0 regular, 1 powered, 2 detector, 3 activator, 4 controller: the rail it was placed on),
-  `levitate:powered`, `levitate:backwards`. Only placed by using the item on a straight, flat rail
+  `bearing:powered`, `bearing:backwards`. Only placed by using the item on a straight, flat rail
   (anything else: "Place your Cart Assembler on a rail block"); breaking it drops itself and its
   rail (not in creative). Backwards when the placing player looks south or east (Create: the
   player's motion direction is positive); on a controller rail it keeps the rail's direction.
-- `controller_rail`: states `levitate:rail_axis`, `levitate:power` 0..15, `levitate:backwards`; runs
+- `controller_rail`: states `bearing:rail_axis`, `bearing:power` 0..15, `bearing:backwards`; runs
   along the player's view, backwards (driving south / east) when placed looking south or east.
 - Recipes (Create 6.0.10, in the behavior pack; aligned in U54): 2 white sails = `WS` / `SA` (any
   wool, stick, andesite alloy); white sail ↔ sail frame, one for one (shapeless). Create has no
@@ -445,18 +445,18 @@ Mechanics in §3.6.25.
   its regions. With glue in the off hand (and no wrench in the main hand) a placed block is glued to
   the block it was placed against (one use; Create's glueInOffHandAppliesOnBlockPlace). Players
   holding glue see the regions (particle outlines, §8).
-- `linear_chassis` / `secondary_linear_chassis`: states `levitate:axis` 0..2 (x, y, z; from the clicked
-  face when placed), `levitate:sticky_top` (positive axis end), `levitate:sticky_bottom`. Slime ball or
+- `linear_chassis` / `secondary_linear_chassis`: states `bearing:axis` 0..2 (x, y, z; from the clicked
+  face when placed), `bearing:sticky_top` (positive axis end), `bearing:sticky_bottom`. Slime ball or
   super glue on a non-sticky end makes it sticky; on a sticky end makes both ends sticky; sneak +
   empty hand on a sticky end clears it (no item is used, as Create). A linear chassis face towards a
   connected chassis of the same kind and axis never changes (Create's glueAllowedOnSide). Range 1..`maxChassisRange`,
   default `maxChassisRange / 2` = 8, shared by the connected chassis group (U3's value box; until then
   `/create contraption chassis <x y z> <range>`). The secondary chassis connects only to secondary
   chassis (shapeless crafting turns one into the other).
-- `radial_chassis`: `levitate:axis`, sticky sides `levitate:sticky_north|south|east|west` (for axis y
+- `radial_chassis`: `bearing:axis`, sticky sides `bearing:sticky_north|south|east|west` (for axis y
   the world sides; axis x: north, south, up, down; axis z: up, down, east, west).
-- `sticker`: states `levitate:facing` 0..5 (down, up, north, south, west, east; placed facing the
-  player, sneaking: away), `levitate:extended` = powered by redstone (polled every 4 ticks). Extended,
+- `sticker`: states `bearing:facing` 0..5 (down, up, north, south, west, east; placed facing the
+  player, sneaking: away), `bearing:extended` = powered by redstone (polled every 4 ticks). Extended,
   it holds the block in front on a contraption.
 - Recipes (Create 6.0.10): super glue = slime ball, iron sheet / iron nugget, slime ball; linear
   chassis ×3 = ` P ` / `LLL` / ` P ` (P andesite alloy, L any log); radial chassis ×3 = ` L ` / `PLP` /
@@ -471,14 +471,14 @@ Mechanics in §3.6.25.
 `contraption_controls`, `<colour>_seat` (16, Create's dye order: white, orange, magenta, light_blue,
 yellow, lime, pink, gray, light_gray, cyan, purple, blue, brown, green, red, black). Behaviour in §3.6.22.
 
-- States: `levitate:facing` 0..5 (Bedrock facing order, the front). Harvester, plough and roller
+- States: `bearing:facing` 0..5 (Bedrock facing order, the front). Harvester, plough and roller
   (Create's AttachedActorBlock): placed on a side face they face away from it (on another of
   these actors: its facing), placed on a top / bottom face they face the player; they hang on the
-  block behind them (moved with it). Harvester and roller also have `levitate:anim` 0..3 (the
+  block behind them (moved with it). Harvester and roller also have `bearing:anim` 0..3 (the
   animation step the client mod shows on contraptions; always 0 in the world). Portable storage
   interface: faces the player (the nearest look direction, 6 ways; sneaking: away), plus
-  `levitate:extended` (shown while connected). Contraption controls: faces the player
-  (horizontal), plus `levitate:disabled` (the indicator). Seats: no states, 8 px high.
+  `bearing:extended` (shown while connected). Contraption controls: faces the player
+  (horizontal), plus `bearing:disabled` (the indicator). Seats: no states, 8 px high.
 - Drops: themselves. Mining time 2.5 s (actors), 1 s (seats).
 - Recipes (Create 6.0.10): harvester = andesite alloy, iron sheet, andesite alloy ×2 rows / _
   andesite casing _; plough = iron sheet ×3 / andesite alloy ×3 / _ andesite casing _; roller =
@@ -512,23 +512,23 @@ redstone + zinc ingot (shapeless, in the BP).
 `display_link`, `display_board`, `nixie_tube` + `<colour>_nixie_tube`, `clipboard`.
 
 - `display_link`: states `minecraft:block_face` (the face it was placed on; it reads the block
-  behind it) and `levitate:powered`. Hardness 1.5 (soft metal), drops itself. The item first selects
+  behind it) and `bearing:powered`. Hardness 1.5 (soft metal), drops itself. The item first selects
   a target (right-click any block: "Targeted position selected"), sneak-right-click clears it
   ("Cleared position selection"); the next placement binds the link to it when the target is closer
   than `displayLinkRange` (64) blocks ("Successfully bound to targeted position", else "Targeted
   position is too far from here"). Right-click (not sneaking, not the wrench) opens the
   configuration screen; without a valid target: "Link has no valid target, try placing it again".
-- `display_board`: states `levitate:facing` (Java 2D facing of the front: 0 S, 1 W, 2 N, 3 E; placed
+- `display_board`: states `bearing:facing` (Java 2D facing of the front: 0 S, 1 W, 2 N, 3 E; placed
   towards the player, or with the facing of a board it is placed against unless sneaking),
-  `levitate:up` / `levitate:down` (connected rows). Kinetic: a small cog turning about its facing
+  `bearing:up` / `bearing:down` (connected rows). Kinetic: a small cog turning about its facing
   axis with shafts on both ends, no stress impact; it shows text only at medium speed or more
   (Create's `getMinimumRequiredSpeedLevel` = MEDIUM, ≥ 30 RPM); flaps change at once above 128 RPM.
   A board item used on a board places the next block beside it (Create's placement helper).
-- `nixie_tube` (orange) and the 15 other `<colour>_nixie_tube`s: states `levitate:facing` (0..3) and
-  `levitate:face` (0 floor, 1 ceiling, 2 wall, 3 wall reversed). Light level 5, every colour drops the
+- `nixie_tube` (orange) and the 15 other `<colour>_nixie_tube`s: states `bearing:facing` (0..3) and
+  `bearing:face` (0 floor, 1 ceiling, 2 wall, 3 wall reversed). Light level 5, every colour drops the
   orange tube; only the orange one is in the creative inventory.
-- `clipboard`: item (stack 1) and block (states `levitate:face` 0 floor / 1 wall / 2 ceiling,
-  `levitate:facing`, `levitate:written`). Sneak-right-click places it; a broken clipboard drops
+- `clipboard`: item (stack 1) and block (states `bearing:face` 0 floor / 1 wall / 2 ceiling,
+  `bearing:facing`, `bearing:written`). Sneak-right-click places it; a broken clipboard drops
   itself with its pages (creative: only when written); sneak-right-click on a placed one picks it up.
 - Recipes (Create 6.0.10): display link = transmitter / brass casing; display board ×2 = andesite
   alloy, electron tube, andesite alloy; nixie tube ×4 = two electron tubes (shapeless); clipboard =
@@ -559,12 +559,12 @@ Package"), `package_filter`. `filter` + `attribute_filter` are U3. Mechanics in 
 `stock_link`, `stock_ticker`, `factory_gauge`, `redstone_requester`, `blaze_burner` shopkeeper role on
 `<colour>_table_cloth`, `shopping_list` (item).
 
-- `stock_link` (Create's packager link): face-attached like a lever (`levitate:face` 0 floor /
-  1 wall / 2 ceiling, `levitate:facing` Java 2D facing, `levitate:powered`); it belongs to the
-  packager it is attached to. `stock_ticker`: `levitate:facing` (faces the player, sneak reverses).
-  `factory_gauge`: face-attached, `levitate:panels` = bitmask of its 4 panels (each panel is a
-  quadrant of the model; bone visibility follows the mask). `redstone_requester`: `levitate:axis`
-  (0 x / 1 z, the player's horizontal axis), `levitate:powered`. `shopping_list`: stacks to 1, no
+- `stock_link` (Create's packager link): face-attached like a lever (`bearing:face` 0 floor /
+  1 wall / 2 ceiling, `bearing:facing` Java 2D facing, `bearing:powered`); it belongs to the
+  packager it is attached to. `stock_ticker`: `bearing:facing` (faces the player, sneak reverses).
+  `factory_gauge`: face-attached, `bearing:panels` = bitmask of its 4 panels (each panel is a
+  quadrant of the model; bone visibility follows the mask). `redstone_requester`: `bearing:axis`
+  (0 x / 1 z, the player's horizontal axis), `bearing:powered`. `shopping_list`: stacks to 1, no
   recipe (handed out by shops).
 - Recipes (Create 6.0.10): stock link = transmitter over item vault; factory gauge (×2) = stock
   link + precision mechanism (shapeless) — both in `assets/pending_recipes/stock/` (U9 / U12
@@ -578,27 +578,27 @@ U5: `track`, curved track (no separate id: stored in BlockData + graph), `track_
 U27: `track_station`, `small_bogey`, `large_bogey`, `controls`, `schedule` (item), `railway_casing` is
 U10, `train_door` is U10. U28: `track_signal`, `track_observer`.
 
-U28 (details in §3.6.28): `track_signal` ("Train Signal", states `levitate:signal_type` 0 entry /
-1 cross, `levitate:signal_state` 0 off / 1 red / 2 yellow / 3 green, `levitate:powered`; post
+U28 (details in §3.6.28): `track_signal` ("Train Signal", states `bearing:signal_type` 0 entry /
+1 cross, `bearing:signal_state` 0 off / 1 red / 2 yellow / 3 green, `bearing:powered`; post
 with a lamp head, metal sound, 1.5 s to mine, drops itself) and `track_observer` ("Train
-Observer", `levitate:powered`, full block with a lens on top that lights up, emits redstone 15
+Observer", `bearing:powered`, full block with a lens on top that lights up, emits redstone 15
 on every side while powered). Both are placed by first right-clicking the track they should
 watch (Create's track targeting items). Recipes: `track_signal` ×4 = railway casing + electron tube
 (shapeless), `track_observer` ×2 = railway casing + any pressure plate (shapeless) ⚠.
-- `track_station` ("Train Station"): state `levitate:assembling` 0/1 (the flag shows assembly mode),
+- `track_station` ("Train Station"): state `bearing:assembling` 0/1 (the flag shows assembly mode),
   drops itself. Recipe (Create 6.0.10): shapeless railway casing + compass → 2.
-- `small_bogey` / `large_bogey`: state `levitate:bogey_axis` 0 x / 1 z (along the track); no item,
+- `small_bogey` / `large_bogey`: state `bearing:bogey_axis` 0 x / 1 z (along the track); no item,
   created with train casing on an assembly track (§3.6.27), drop train casing. Wheel radius 6.5 / 12.5
   px, wheel points ±1 block from the bogey (both sizes). The bogey stands in the block above the
   track: its model reaches from the rails (wheels down to 12 px below the block) to the block's top
   (a full-width top plate; collision and selection a full block), so the carriage block above sits
   directly on it (the model's wheels are 13 / 14 px across: Bedrock models are at most 30 px per axis). Wrench: swaps small ↔ large (Create has one
   bogey style), sneak-wrench dismantles (gives the casing).
-- `controls` ("Train Controls"): state `levitate:facing` 0..5 (horizontal values used; Create's
+- `controls` ("Train Controls"): state `bearing:facing` 0..5 (horizontal values used; Create's
   FACING points from the controls towards the driver: placed facing the player, sneaking reversed).
   Recipe: lever / railway casing / precision mechanism (shaped column).
 - `schedule` ("Train Schedule", stack 16): its schedule lives in the item's user data
-  (`lv:schedule`, Create's NBT layout: `Entries` [{`Instruction` {Id, Data}, `Conditions` [[{Id,
+  (`br:schedule`, Create's NBT layout: `Entries` [{`Instruction` {Id, Data}, `Conditions` [[{Id,
   Data}]]}], `Cyclic`, `Progress`). Recipe: sturdy sheet (Create's `c:plates/obsidian`) + paper → 4.
 - The three crafting recipes use U10's railway casing and U9's precision mechanism / sturdy sheet.
 
@@ -622,8 +622,8 @@ crafting table. Details in §3.6.29.
 `cardboard_boots`, `cardboard_sword`. `minecart_contraption`
 is U21's (it is made by its cart assembler). Mechanics in §3.6.31.
 
-- Bells (U49): `levitate:facing` (FacingID 2..5, Java's FACING), `levitate:attachment` (0 floor,
-  1 ceiling, 2 single wall, 3 double wall), `levitate:powered`, `levitate:part` (1: the frame only,
+- Bells (U49): `bearing:facing` (FacingID 2..5, Java's FACING), `bearing:attachment` (0 floor,
+  1 ceiling, 2 single wall, 3 double wall), `bearing:powered`, `bearing:part` (1: the frame only,
   the client mod's mesh; never in the world). Brittle, pickaxe, hardness 3 / resistance 6 (Create's
   soft metal), anvil sounds; drop themselves. Peculiar bell = block of brass over a brass sheet;
   the haunted bell is haunted from it (`assets/recipes/haunting/haunted_bell.json`, U13's fans) or
@@ -635,7 +635,7 @@ is U21's (it is made by its cart assembler). Mechanics in §3.6.31.
   +5 attack damage, enchantable (value 1) with Knockback only, 50 s of fuel, stacks to 1; recipe
   2 cardboard over a stick.
 
-- States: toolboxes, backtank blocks and the lectern controller `levitate:facing` 0..3 (Java 2D
+- States: toolboxes, backtank blocks and the lectern controller `bearing:facing` 0..3 (Java 2D
   order: south, west, north, east; the block faces the player). Toolboxes and backtanks are block
   items that replace their block item (`minecraft:block_placer` `replace_block_item`) so the item
   can stack to 1 / be worn. Their loot tables are empty: the unit drops them itself with their
@@ -647,7 +647,7 @@ is U21's (it is made by its cart assembler). Mechanics in §3.6.31.
   copper / netherite ingots); extendo grip durability 200; potato cannon 100; sand papers 8 (32-tick
   "eat" use); tree fertilizer stacks 64. The netherite helmet, backtank and boots are Create's
   netherite material: +3 armour toughness (a Mob::getToughnessValue hook) and +0.1 knockback
-  resistance (an attribute modifier) per piece. Toolboxes also have `levitate:toolbox_lid` 0..2
+  resistance (an attribute modifier) per piece. Toolboxes also have `bearing:toolbox_lid` 0..2
   (0 closed, 1 open, 2 body only for the client mod).
 - Recipes (Create 6.0.10): toolbox dyeing (any toolbox + a dye, 16 shapeless recipes; the result
   keeps the contents and name of the dyed toolbox),
@@ -673,7 +673,7 @@ opens the filter screen (§4); the reset button clears the entries / attributes 
 Respect Data and the attribute mode (GhostItemMenu.clearContents). The lore shows Create's summary
 (makeSummary: the mode, then up to 4 entries and "- ..."; nothing for an empty filter). Recipes: `filter` = iron nugget, wool, iron
 nugget in a row; `attribute_filter` = brass nugget, wool, brass nugget ⚠ (lands with U9's
-`brass_nugget`). Contents live in the item's user data (`lv:filter`, `lv:attribute_filter`).
+`brass_nugget`). Contents live in the item's user data (`br:filter`, `br:attribute_filter`).
 
 ## 3. Mechanics
 
@@ -683,7 +683,7 @@ Code: `src/core/kinetics/` (solver, pure C++, gtest), `src/feature/kinetics/` (w
 command, sync), `src/client/kinetics/` (renderer). Contract header: `feature/kinetics/Kinetics.h`.
 
 - **Kinetic blocks** are registered per block id with a `KineticSpec`
-  (`LV_REGISTER_KINETIC_BLOCK(id, spec)` / `kinetics::registerBlock`): the integer block states it
+  (`BR_REGISTER_KINETIC_BLOCK(id, spec)` / `kinetics::registerBlock`): the integer block states it
   reads (`states`), rotation axis, shaft ends per face (`hasShaftTowards`), small / large cog
   teeth, generator flag, stress defaults and Create's special-case hooks (`axisModifier` for
   directional shaft halves, `propagate` = `propagateRotationTo`, `customConnection`,
@@ -728,7 +728,7 @@ command, sync), `src/client/kinetics/` (renderer). Contract header: `feature/kin
   generated speed, overrides) is its `NodeRecord` in U3's BlockData (`data["kinetics"]`), written
   back from the solver before every save and before a contraption takes the block
   (`blockdata::onWriteBack`), restored when the world loads, then re-attached as Create's block
-  entities do on load. Worlds saved by wave 1 (`lv:kinetics:c:<dim>:<cx>:<cz>`) are migrated once on
+  entities do on load. Worlds saved by wave 1 (`br:kinetics:c:<dim>:<cx>:<cz>`) are migrated once on
   load (log `kinetics: moved N block records from M chunks into block data`). A block a contraption
   puts back keeps its generated speed and stress overrides (`blockdata::onPut`). A slow world
   check re-reads blocks that changed without an event.
@@ -749,9 +749,9 @@ command, sync), `src/client/kinetics/` (renderer). Contract header: `feature/kin
   saves the serial with its run and declares the same one again after a load, so machines keep the
   limit they had counted down (saved with them).
 - **Command**: `/create kinetics <pos>` dumps the block and its network; `/create kinetics <pos>
-  speed <rpm>` (Levitate debug) sets a generator's speed.
+  speed <rpm>` (Bearing debug) sets a generator's speed.
 - **Client** (client mod only): a kinetic block with a `rotorState` (int state, e.g.
-  `levitate:rotor`) has three models: `0` the full static model (what the world holds and vanilla
+  `bearing:rotor`) has three models: `0` the full static model (what the world holds and vanilla
   clients see), `1` its non-rotating parts (the client mod tessellates this in the chunk mesh), `2..`
   its rotating parts (`spec.parts`, default one part around the rotation axis). The client mod draws
   each rotating part every frame at Create's angle `(ticks + partialTicks)·speed·0.3 + offset`
@@ -771,7 +771,7 @@ command, sync), `src/client/kinetics/` (renderer). Contract header: `feature/kin
   `client/kinetics/KineticsClient.h` (`syncedSpeed`, `onSync`).
 - **Kinetic feedback** (U37, `src/feature/kinetics/Feedback.cpp`, rules in
   `core/kinetics/Feedback.h`). Sent by the server to every client: the particle
-  (`levitate:rotation_indicator`) and the sounds (`levitate.kinetics.*`) are in Levitate's resource
+  (`bearing:rotation_indicator`) and the sounds (`bearing.kinetics.*`) are in Bearing's resource
   pack, so vanilla clients and the client mod see / hear the same thing (one path, never doubled).
   - *Rotation indicators* (Create's GeneratingKineticBlockEntity.updateGeneratedRotation,
     KineticEffectHandler, RotationIndicatorParticle): a generator **without a source** whose speed
@@ -797,9 +797,9 @@ command, sync), `src/client/kinetics/` (renderer). Contract header: `feature/kin
     while the group has sources) from the mean of its block centres, with volume
     `clamp(count / 150, .025, ambientVolumeCap .1) · lerp(distance / 16, 2, 0)` times the group's
     relative volume (kinetic .025, cogs 1.5). Create keeps a looping sound per group and regroups
-    every 5 ticks; the server can't hold a looping sound on a client, so Levitate regroups and
-    restarts its 0.5 s samples every 10 ticks (`levitate.kinetics.cogs`: wooden gear teeth,
-    `levitate.kinetics.rumble`: a low hum; both synthesised by `tools/sounds/gaps.ps1`, seamless
+    every 5 ticks; the server can't hold a looping sound on a client, so Bearing regroups and
+    restarts its 0.5 s samples every 10 ticks (`bearing.kinetics.cogs`: wooden gear teeth,
+    `bearing.kinetics.rumble`: a low hum; both synthesised by `tools/sounds/gaps.ps1`, seamless
     when repeated), played one block from the player towards the mean position (inside the sounds'
     2-block min distance, so the game adds no falloff of its own). Create's milling / crushing
     soundscapes are not part of this (§8).
@@ -810,7 +810,7 @@ Headers in `src/feature/common/` (pure logic in `src/core/common/`, unit-tested)
 
 - **`BlockData`** (`BlockData.h`): one JSON object per (dim, pos), shared by units through
   top-level keys (`data["kinetics"]`, `data["filter"]`, ...). `get/edit/set/erase/has`,
-  `forEachInChunk`, `forEach`. Saved per chunk in the world DB (`lv:common:bd:<dim>:<cx>:<cz>`,
+  `forEachInChunk`, `forEach`. Saved per chunk in the world DB (`br:common:bd:<dim>:<cx>:<cz>`,
   JSON keyed `"x,y,z"`), loaded lazily, written on every world save. Erased automatically when the
   block at the position changes to another block *type* (break, replace, explosion, vanilla
   piston); state changes keep it. `onErase(fn)` lets owners drop contents first. Contraptions (U4)
@@ -937,7 +937,7 @@ Headers in `src/feature/common/` (pure logic in `src/core/common/`, unit-tested)
   `<mod>/recipes/<type>/**.json` (copied from `assets/recipes/` at build time) in Create's 1.20 and
   1.21 spellings: item ingredients (item / tag / alternatives / `count`), fluid ingredients
   (fluid or fluid tag + amount), item results with `count` and `chance` (each item rolled, as
-  Create), fluid results, `heat_requirement`, `processing_time`; `create:` ids become `levitate:`.
+  Create), fluid results, `heat_requirement`, `processing_time`; `create:` ids become `bearing:`.
   Tags resolve through `assets/recipes/tags/*.json` fragments (one per unit) and then Bedrock item
   tags. Broken files are skipped with a warning. `/create reload` reloads them. The gtest
   `RecipeFiles.*` rejects conflict markers, invalid JSON and unparsable recipes in
@@ -952,7 +952,7 @@ Headers in `src/feature/common/` (pure logic in `src/core/common/`, unit-tested)
   `wooden_pressure_plate`, `wooden_button`; `waxed_copper` for Java's waxed copper block).
 - **Vanilla hoppers** (`Hoppers.h`, U54): NeoForge hoppers use the block's item capability, so the
   game's hopper code is hooked (`Hopper::_pushOutItems`, `_tryPullInItemsFromAboveContainer`): a
-  hopper pointing into a `levitate:` block with an item handler inserts one item through it (from
+  hopper pointing into a `bearing:` block with an item handler inserts one item through it (from
   the face it points into), and a hopper under one extracts one item (bottom face), with the
   hopper's own cooldown; vanilla containers keep the vanilla code. Excluded: funnels and blaze
   burners (no capability in Create) and the portable storage interface (it drives its hoppers
@@ -1061,7 +1061,7 @@ Headers in `src/feature/common/` (pure logic in `src/core/common/`, unit-tested)
   every face of the chassis, opened with the wrench only (Create's `requiresWrench`), 1..
   `maxChassisRange` with milestones every 10, labelled "Range of Sticky Sides" (radial: "Radius when
   Sticky"); a value set on one chassis goes to its connected group. Stored in BlockData
-  (`data["chassis"]["range"]`; wave-1 worlds' `lv:contraption:chassis` list is migrated once).
+  (`data["chassis"]["range"]`; wave-1 worlds' `br:contraption:chassis` list is migrated once).
 - **Client**: the client mod renders contraption blocks at their interpolated transform, including
   rotating kinetic parts and actors' animations.
 
@@ -1142,7 +1142,7 @@ Implementation (U4, `src/feature/contraption/Contraption.h` is the contract):
   `minecraft:cardinal_direction`, `pillar_axis`, `direction`, `weirdo_direction`,
   `ground_sign_direction`, `torch_facing_direction`, `rail_direction`, `lever_direction` (about every
   axis), stairs on quarter turns about X / Z (Create's transformStairs), `minecraft:vertical_half` /
-  `upside_down_bit` on half turns, `levitate:facing`, `levitate:axis`, chassis sticky sides; the legacy
+  `upside_down_bit` on half turns, `bearing:facing`, `bearing:axis`, chassis sticky sides; the legacy
   `direction` in the block's own order (S W N E, doors E S W N, trapdoors E W S N);
   `registerRotationHandler` for others); solid blocks first, then brittle ones bottom-up; an occupied
   place is cleared as above; ropes, magnets and doors turned about a horizontal axis break (they drop);
@@ -1168,9 +1168,9 @@ Implementation (U4, `src/feature/contraption/Contraption.h` is the contract):
   entities are never written to the world
   (`Actor::save` refuses them): contraptions live in our DB and spawn their displays again after a
   load, so a world saved mid-move (autosave, or the last save before a crash) holds no falling
-  blocks that could land when it is opened without Levitate (§8). Persistence:
-  `lv:contraption:c:<id>` (blocks, transform, motion, glue, seats, anchor data),
-  `lv:contraption:glue`, `lv:contraption:stickers`.
+  blocks that could land when it is opened without Bearing (§8). Persistence:
+  `br:contraption:c:<id>` (blocks, transform, motion, glue, seats, anchor data),
+  `br:contraption:glue`, `br:contraption:stickers`.
 
 ### 3.5 Tracks (U5)
 
@@ -1178,10 +1178,10 @@ Checked against Create 6.0.10 (TrackBlock, TrackShape, TrackPlacement, TrackPave
 BezierConnection, TrackPropagator, TrackGraph, Navigation). Pure maths in `src/core/tracks/`
 (gtest), game side in `src/feature/tracks/`, curve drawing in `src/client/tracks/`.
 
-**Block `levitate:track`.** States `levitate:shape` + 16 · `levitate:shape_hi` = Create's
+**Block `bearing:track`.** States `bearing:shape` + 16 · `bearing:shape_hi` = Create's
 TrackShape (0 none, 1 ZO, 2 XO, 3 PD, 4 ND, 5–8 ascending N/S/E/W, 9–12 portal N/S/E/W, 13 CR_O,
 14 CR_D, 15 CR_PDX, 16 CR_PDZ, 17 CR_NDX, 18 CR_NDZ; Bedrock allows 16 values per state) and
-`levitate:turn` (Create's HAS_BE: curves start here). Hardness 0.8, metal sound, drops itself,
+`bearing:turn` (Create's HAS_BE: curves start here). Hardness 0.8, metal sound, drops itself,
 collision 2 px (none on slopes), can't stand on another track.
 - **Placing** (Create's getStateForPlacement): the shape whose axis is closest to the horizontal
   look (straight or diagonal; yaw when looking straight up/down). A straight track next to a block
@@ -1217,14 +1217,14 @@ collision 2 px (none on slopes), can't stand on another track.
   (segments = ⌊length · 2⌋), taken from every slot but the selected one, then the selected one,
   then the off hand (`not_enough_tracks`). A block item in the off hand paves under the tracks
   (Create's TrackPaver: slabs half-step on curves, walls and girders along the sides only;
-  `not_enough_pavement`); a metal girder (`levitate:metal_girder`, U10) in the off hand builds the
+  `not_enough_pavement`); a metal girder (`bearing:metal_girder`, U10) in the off hand builds the
   curve with girders (twice the track cost in girders).
 - Sneak + right-click (on a block or in the air) clears the selection ("Selection Cleared").
 
-**Curves** are stored in the world DB (`lv:tracks:curves:<dim>:<cx>:<cz>`, by the chunk of their
+**Curves** are stored in the world DB (`br:tracks:curves:<dim>:<cx>:<cz>`, by the chunk of their
 first block) as Create's BezierConnection (end blocks, start points, axes, normals, girder): handles
 `radius · 4/3 · tan(angle/4)` (S-bends: the side offset), length from 16 straight pieces. The blocks
-the curve passes through (Create's rasterise) hold `levitate:fake_track` (no collision, replaceable,
+the curve passes through (Create's rasterise) hold `bearing:fake_track` (no collision, replaceable,
 breakable: breaking it destroys the curve). Breaking either end track removes its curves, dropping
 one track per two segments (and two girders each when built with girders) unless in creative or
 `doTileDrops` is off; `tracks::dismantleCurves` gives them to a player instead (wrench, U8).
@@ -1249,7 +1249,7 @@ on the 16-block grid of long straight runs (TrackNodeLocation: x/z on a half-blo
 block); edges straight or curved (both directions stored, curves oriented from the edge's first
 node); graphs are the connected components and may span dimensions. Updated incrementally on
 every track change (Create's TrackPropagator: remove reachable nodes, rebuild from the first valid
-node; splits re-checked). Persisted per dimension in `lv:tracks:graph:<dim>` (nodes with their graph
+node; splits re-checked). Persisted per dimension in `br:tracks:graph:<dim>` (nodes with their graph
 id, edges with their node1, edge points) so trains can run through unloaded chunks.
 
 **Portal tracks**: a straight track placed against a nether portal along its axis looks up the
@@ -1364,7 +1364,7 @@ CuckooClockRenderer, FlywheelBlock(Entity)). Pure rules in
   connection axis whatever face is clicked, an unconnected one about the clicked face; then its
   part is worked out again from part none (updateAfterWrenched; the adjustable chain gearshift
   reads its redstone again). The speed controller (HorizontalAxisKineticBlock) only turns on its
-  top and bottom faces (x ↔ z). Gauges (DirectionalAxisKineticBlock, `levitate:along_first`):
+  top and bottom faces (x ↔ z). Gauges (DirectionalAxisKineticBlock, `bearing:along_first`):
   a click on a face along the dial's axis toggles the shaft axis, a top / bottom click turns the
   dial and toggles it (U52). Sneak + wrench on an
   encased shaft / cogwheel takes the casing off: the block turns back into the shaft / cogwheel /
@@ -1399,10 +1399,10 @@ CuckooClockRenderer, FlywheelBlock(Entity)). Pure rules in
   The network is re-read in the same tick, so the driven machines see the new speed and the
   instruction together. The machines stop exactly at the value (bearings, pistons, pulleys,
   gantries below) while the instruction's time (2 ticks longer) runs out.
-  Comparator output = `levitate:state`. One log line per instruction step.
+  Comparator output = `bearing:state`. One log line per instruction step.
 - **Rotation speed controller**: value box (board ⟳ / ⟲, 1..`maxRotationSpeed`, milestones 32) on
   the two side faces at 8 / 11 px; default 16 RPM; label "Targeted Speed in RPM". Changing it
-  re-attaches the network. `levitate:bracket` shows the cog bracket under a large cogwheel.
+  re-attaches the network. `bearing:bracket` shows the cog bracket under a large cogwheel.
 - **Gauges**: speedometer dial = Create's getDialTarget (0..0.45 below `mediumSpeed`, ..0.75 below
   `fastSpeed`, ..1.125 at `maxRotationSpeed`, from the effective speed); stressometer dial = stress /
   capacity of the network (1.125 when overstressed, 0 when not turning). Comparator output
@@ -1415,7 +1415,7 @@ CuckooClockRenderer, FlywheelBlock(Entity)). Pure rules in
   remaining / total su coloured by the stress level. Dust (U42, Create's GaugeBlock.animateTick):
   while the dial is not 0, each player within 32 blocks gets, with the chance the client's random
   display ticks reach the block (667/32³ within 16 blocks, plus 667/64³ within 32), coloured
-  `levitate:gauge_dust` particles off each head face (4 when the dial is past 1, else one with a
+  `bearing:gauge_dust` particles off each head face (4 when the dial is past 1, else one with a
   chance of 1/4), 0.55 out and 0.3 to the side, coloured as Create's gauge colour (speed level
   colour a quarter towards white; stress green → yellow → red).
 - **Cuckoo clocks** (U49, Create's CuckooClockBlock / CuckooClockBlockEntity / CuckooClockRenderer;
@@ -1427,8 +1427,8 @@ CuckooClockRenderer, FlywheelBlock(Entity)). Pure rules in
   the clock with gunpowder on four sides). Nothing happens while it stands still (overstressed:
   still). While it turns: time = day time (outside the overworld ×24), hours `(t/1000 + 6) % 24`,
   minutes `(t % 1000)·60/1000`; the hands show it (hour hand jumps 30° per hour, minute hand 6° per
-  minute; the client mod chases both by a fifth per tick, vanilla clients see `levitate:hour` /
-  `levitate:minute`); note block hat ticks (1/16 volume) every 16 ticks, pitch 2 on multiples of 32,
+  minute; the client mod chases both by a fifth per tick, vanilla clients see `bearing:hour` /
+  `bearing:minute`); note block hat ticks (1/16 volume) every 16 ticks, pitch 2 on multiples of 32,
   else 1.5 (outside the overworld every 3 ticks, pitch 2 on multiples of 6). Overworld only: with
   no animation running, 12:00..12:04 starts the pig, 18:32..18:35 the creeper (a mysterious clock
   starts the surprise instead); the animation counts up each tick and ends after 100. Sounds by
@@ -1437,7 +1437,7 @@ CuckooClockRenderer, FlywheelBlock(Entity)). Pure rules in
   creeper hurt (¼, pitch 3) at it, chest close 5 (1) after; the surprise smokes from 31 and lights
   the fuse at 40. The doors swing 0 → 135° and back around each phase (Create's renderer, including
   its overshoot during the surprise), the figure slides half a block out with them (client mod;
-  vanilla clients see `levitate:cuckoo` with the doors open past 67.5°). When the creeper comes out
+  vanilla clients see `bearing:cuckoo` with the doors open past 67.5°). When the creeper comes out
   the owner within 32 blocks gets "Is it Time?" (`cuckoo_clock`). At progress 50 the surprise
   removes the clock (no drops) and explodes at its centre (power 3, no fire, breaks blocks); deaths
   by that explosion read Create's "%1$s was blown up by tampered cuckoo clock". Sounds play on the
@@ -1481,11 +1481,11 @@ new block; sides on two axes cancel out, on one axis the last in Direction order
 - **Survival** (canSurvive, U52): a hand crank or valve handle needs a block with a collision shape
   behind it (HandCrankBlock): one placed so that it has none is taken back (the item returns to
   the player), and one whose block behind loses its collision shape breaks with its drops on the
-  next tick (neighborChanged; Levitate watches block changes). A water wheel may only touch
+  next tick (neighborChanged; Bearing watches block changes). A water wheel may only touch
   another water wheel along their shared axis (WaterWheelBlock): a placement or a wrench turn
   against that is refused.
 - Vanilla clients see the large water wheel's missing room as red particles along the box's
-  edges, every quarter block, for 1.5 s (`levitate:water_wheel_room`, sent to that player only, at most
+  edges, every quarter block, for 1.5 s (`bearing:water_wheel_room`, sent to that player only, at most
   once a second while the button is held; U52).
 
 **Hand crank.** Right-click (any item but the wrench, also while sneaking with an item in hand:
@@ -1493,7 +1493,7 @@ Create's ItemUseOverrides; sneak + wrench picks it up) turns it for
 10 ticks at 32 RPM (`inUse = 10`, refreshed by every click; Bedrock repeats the click while the
 button is held, so holding keeps it turning); sneaking turns it backwards (clockwise). Each click
 costs `32 · crankHungerMultiplier` (0.01) exhaustion unless the player holds the extendo grip
-(`levitate:extendo_grip`, U31) or is in creative. Sound every 10 ticks while in use: Create's
+(`bearing:extendo_grip`, U31) or is in creative. Sound every 10 ticks while in use: Create's
 `cranking` (wood place at volume .075·inUse/2.5, wooden button click-off at .025·inUse/2.5, pitch
 .5·(.65 + (10 − inUse)/10)). A crank that was turning when the world was saved is stopped on load.
 
@@ -1562,18 +1562,18 @@ ItemDescription, TooltipHelper, OverlayConfigCommand, GoggleConfigScreen, CClien
 `src/core/goggles/` (rotation, text helpers; gtest), `src/feature/goggles/` (wrench, overlay,
 selftests), `src/client/goggles/` (overlay panel, position screen, item tooltips).
 
-**Wrench** (`levitate:wrench`). Right-click on a block (players who may build; value boxes and
+**Wrench** (`bearing:wrench`). Right-click on a block (players who may build; value boxes and
 filter slots keep their plain clicks, U3):
 - a *wrenchable* block runs its `onWrenched`; default (Create's IWrenchable): the state turned by
   `getRotatedBlockState` about the clicked face, set in the world (the kinetic network re-attaches
-  it), the rotate sound (`levitate.wrench_rotate`: wooden trapdoor close, volume .25 × 1, pitch
-  1.25 × (0.5..1.5)) when it changed. Rotation (Levitate state conventions, `core/goggles/Rotation.h`):
-  on the top/bottom face `levitate:horizontal_axis` (0 x / 2 z) or `levitate:horizontal_facing`
-  (0 S, 1 W, 2 N, 3 E) turn a quarter clockwise; else `levitate:axis` (0..2) becomes the axis of
+  it), the rotate sound (`bearing.wrench_rotate`: wooden trapdoor close, volume .25 × 1, pitch
+  1.25 × (0.5..1.5)) when it changed. Rotation (Bearing state conventions, `core/goggles/Rotation.h`):
+  on the top/bottom face `bearing:horizontal_axis` (0 x / 2 z) or `bearing:horizontal_facing`
+  (0 S, 1 W, 2 N, 3 E) turn a quarter clockwise; else `bearing:axis` (0..2) becomes the axis of
   its positive direction turned clockwise about the clicked axis (unchanged when it is that axis);
-  else `levitate:facing` / `minecraft:facing_direction` (0..5, Create's Direction order) turns
-  clockwise about the clicked axis (unchanged when along it), `levitate:axis_along_first` (or
-  `levitate:along_first` on the gauges and the fluid valve, U52) toggles
+  else `bearing:facing` / `minecraft:facing_direction` (0..5, Create's Direction order) turns
+  clockwise about the clicked axis (unchanged when along it), `bearing:axis_along_first` (or
+  `bearing:along_first` on the gauges and the fluid valve, U52) toggles
   when the facing is along the clicked axis or the click was on top/bottom (Create's
   DirectionalAxisKineticBlock).
 - Sneak + right-click runs `onSneakWrenched`; default: survival players get the block's drops,
@@ -1581,7 +1581,7 @@ filter slots keep their plain clicks, U3):
   `Block.getDrops(..., player, wrench)`; U42) into the inventory (the rest dropped at their feet;
   creative: nothing), a contraption anchored at the block
   is disassembled first, the block is destroyed without drops (break particles), remove sound
-  (`levitate.wrench_remove` pop .25/.75 + `levitate.wrench_remove_hit` netherite step 1/.75, pitch
+  (`bearing.wrench_remove` pop .25/.75 + `bearing.wrench_remove_hit` netherite step 1/.75, pitch
   × (0.5..1)).
 - Not wrenchable but in Create's `#create:wrench_pickup` (rails, redstone wire, redstone torches,
   repeaters, comparators, levers, buttons, pressure plates, observers, pistons, tripwire, tripwire
@@ -1595,13 +1595,13 @@ filter slots keep their plain clicks, U3):
   before the pick-up, as Create's TrackBlock).
 - Attacking a minecart (any `*minecart`) with the wrench in survival breaks it in one hit (Create's
   `wrenchInstaKillsMinecarts`, 100 damage).
-- **Contract** `src/feature/goggles/Wrenchable.h`: `LV_REGISTER_WRENCHABLE(id[, Handler{onWrenched,
+- **Contract** `src/feature/goggles/Wrenchable.h`: `BR_REGISTER_WRENCHABLE(id[, Handler{onWrenched,
   onSneakWrenched, rotate}])`, `defaultOnWrenched` / `defaultOnSneakWrenched` / `rotatedBlock` for
   "super" calls (e.g. U21's bearings disassemble after the default rotation, U20's pistons return
   `Pass` unless retracted), `registerEntityHandler` for right-clicks on entities with the wrench
   (U20/U27: minecart contraption pickup, train relocation — Create's "When used on Contraptions").
 
-**Engineer's goggles** (`levitate:goggles`): worn in the head slot (Bedrock's wearable equips it
+**Engineer's goggles** (`bearing:goggles`): worn in the head slot (Bedrock's wearable equips it
 on use and from dispensers). `isWearingGoggles` = goggles in the head slot or any predicate added
 with `addWearingPredicate` (Create's GogglesItem.addIsWearingPredicate).
 Players wearing them also see the rotation indicator particles of generators changing their
@@ -1611,7 +1611,7 @@ doesn't show them, as in Create.
 **Goggle overlay** (Create's GoggleOverlayRenderer), built on the server for the block the player
 looks at (`overlayFor(player, pos)`):
 1. A provider's `proxy` may redirect to another position (IProxyHoveringInformation).
-2. With goggles: the *goggle* lines. Levitate blocks get the defaults unless a provider sets
+2. With goggles: the *goggle* lines. Bearing blocks get the defaults unless a provider sets
    `replaceDefaults`: kinetic stats (only when the impact is not 0: "Kinetic Stats:", gray "Kinetic
    Stress Impact:", aqua `impact × |theoretical speed|` + "su", dark gray "at current speed" — indent 1),
    generator stats (capacity not 0: "Generator Stats:", gray "Kinetic Stress Capacity:", aqua
@@ -1619,8 +1619,8 @@ looks at (`overlayFor(player, pos)`):
    separated by a blank line — the fluid capability (Create's containedFluidTooltip: "Fluid Container
    Info:", per non-empty tank gray name and gold "amount mB" gray " / " dark gray "capacity mB"; a
    single empty tank shows gray "Capacity: " gold "N mB"; fluid names from `fluid.<id>` keys), the
-   item capability (Levitate: "Contents:", gray name green " xN", at most 8 kinds + "...and N more")
-   and the heat capability (Levitate: "Heat: <level>"). Then every provider's `goggle`.
+   item capability (Bearing: "Contents:", gray name green " xN", at most 8 kinds + "...and N more")
+   and the heat capability (Bearing: "Heat: <level>"). Then every provider's `goggle`.
 3. The *hover* lines (with or without goggles), after a blank line when there are goggle lines:
    kinetic blocks in an overstressed network show gold "Overstressed" and the wrapped hint
    `create.gui.contraptions.network_overstressed` (gray, _highlights_ white, 200 px per line; client
@@ -1630,7 +1630,7 @@ looks at (`overlayFor(player, pos)`):
    the goggles added lines and the hover added none.
 4. Nothing when both kinds exist and neither added lines, or when there are no lines. Every line is
    indented by 4 + indent spaces (Create's forGoggles); numbers use Create's format (grouping, ≤ 2
-   decimals). The icon is `levitate:goggles` unless a provider's `icon` names another item.
+   decimals). The icon is `bearing:goggles` unless a provider's `icon` names another item.
 
 Client mod: every `overlayInterval` (config, 4) ticks and on every target change the client sends
 `goggles.query {pos}`; the server answers `goggles.info {pos, lines, icon}` (targets within 8
@@ -1641,10 +1641,10 @@ background `0xF0100010` at 75 % alpha, border gradient `0x505000FF` → `0x50280
 colours with `customColorsOverlay`), the first line 2 px apart, the goggles icon at (+10, −16); it
 fades in over 24 frames sliding 8 px from the offset side. Vanilla clients: every `overlayInterval`
 ticks the server traces the player's look (5.5 blocks) and sends the same lines as a title marked
-with `§l§v§g§r` (stay 100 ticks, no fades; resent every second while unchanged); Levitate's
+with `§l§v§g§r` (stay 100 ticks, no fades; resent every second while unchanged); Bearing's
 resource pack (`ui/hud_screen.json`, U52) hides the vanilla title for marked text and draws it as
 Create's panel at `centre + (32, −12)` (Create's default offset plus the hovering-text shift) in a
-tooltip frame (`textures/ui/levitate_goggle_tooltip`, nine-slice, drawn by
+tooltip frame (`textures/ui/bearing_goggle_tooltip`, nine-slice, drawn by
 `tools/textures/goggles.ps1`), indentation kept. When the target goes the server sends an
 unmarked invisible title (`§r`) for one tick (the HUD keeps the last title text; a clear does not
 change it), then resets the title times (log `goggles: overlay hidden for <player>`). Config `vanillaOverlay` (off: nothing; a panel that is up is taken away) and
@@ -1660,7 +1660,7 @@ to `config/goggles.json`. `/create overlay reset` sets both offsets to 0 (Create
 answers "Create Goggle Overlay has been reset to default position".
 
 **Overlay contract** `src/feature/goggles/GoggleInfo.h` (wave-2 blocks add lines without knowing
-U8's code): `LV_REGISTER_GOGGLE_INFO(id, InfoProvider{goggle, hover, icon, proxy,
+U8's code): `BR_REGISTER_GOGGLE_INFO(id, InfoProvider{goggle, hover, icon, proxy,
 replaceDefaults})` — `goggle` / `hover` get an `InfoContext {player, region, pos, block, sneaking,
 wearingGoggles, tr(...)}` and append lines; helpers `line(text, indent)`, `number`, `addHint`,
 `formattedSpeed` / `formattedStress` (Create's IRotate texts for U6's gauges), `kineticGoggleTooltip`,
@@ -1672,7 +1672,7 @@ handles 32, water wheel 8, large water wheel 4, creative motor up to 256, windmi
 steam engine up to 64, U52). The steam engine item gets Create's kinetic stats too (KineticStats
 covers SteamEngineBlock: capacity 1024 "Large", with goggles "-> Up to 65,536su").
 
-**Item tooltips** (client mod, appended to the game's hover text of `levitate:` items):
+**Item tooltips** (client mod, appended to the game's hover text of `bearing:` items):
 - Create's ItemDescription: when `item.create.<path>.tooltip.summary` (or `block.create...`)
   exists: dark gray "Hold [Shift] for Summary" (key gray, white while held) and, with Ctrl
   actions, "Hold [Ctrl] for Controls"; Shift shows the summary (wrapped at 200 px, Create's palette:
@@ -1718,7 +1718,7 @@ names come from `tools/gen/materials.names.tsv` (Create's en_US / zh_CN wording)
   with 4 random natural texture variants), cut / polished cut / cut bricks / small bricks (each +
   stairs, slab, wall), layered (column, cap top), pillar (axis from the clicked face). Create's
   stones: hardness 1.25 (scoria / scorchia 1.5); stairs / slabs / walls have their pattern's
-  properties. Connected textures (Create's CT, kept by the server in `levitate:c_<dir>`, recomputed
+  properties. Connected textures (Create's CT, kept by the server in `bearing:c_<dir>`, recomputed
   at the next tick after any change): layered stone sides HORIZONTAL_KRYPPERS (same block left /
   right), its top / bottom the cap sheet (OMNIDIRECTIONAL over the 4 horizontal neighbours); pillar
   sides RECTANGLE, the faces on its axis the cap sheet; pillars join along the axis with the same
@@ -1727,12 +1727,12 @@ names come from `tools/gen/materials.names.tsv` (Create's en_US / zh_CN wording)
   Create's mineable tags (`minecraft:is_pickaxe|axe_item_destructible`, `minecraft:iron_tier_destructible`
   for needs_iron_tool), so the game's tool speeds and tiers apply. Stairs: `minecraft:corner_and_cardinal_direction` + `minecraft:vertical_half`
   (Bedrock computes Create's inner / outer corners, corners with any of the unit's stairs), world
-  aligned quarter boxes for model and collision. Slabs: `minecraft:vertical_half` + `levitate:double`;
+  aligned quarter boxes for model and collision. Slabs: `minecraft:vertical_half` + `bearing:double`;
   using a slab on the empty half of the same single slab (clicked face, or the slab beside the
   clicked face by click height) makes it double (one item used, 2 drops); the polished slab's sides
   use Create's slab texture. Walls: `minecraft:connection` (format 1.26.0) for the four connections,
-  plus Java's WallBlock rules kept by the server: a side is tall (`levitate:tall_<dir>`, 16 px) when
-  the bottom face of the block above covers it, else low (14 px); the post (`levitate:up`) shows
+  plus Java's WallBlock rules kept by the server: a side is tall (`bearing:tall_<dir>`, 16 px) when
+  the bottom face of the block above covers it, else low (14 px); the post (`bearing:up`) shows
   unless the wall is exactly straight, a tall straight line drops it, a wall post above or a torch /
   sign / banner / pressure plate (WALL_POST_OVERRIDE) or a block covering the post above forces it;
   collision 24 px (post 4..12, sides 5..11) from the collision hook.
@@ -1755,8 +1755,8 @@ names come from `tools/gen/materials.names.tsv` (Create's en_US / zh_CN wording)
   weighted results 120 / 8 / 8 / 5 / 3 / 2 / 2 / 1 / 1; sturdy sheet: powdered obsidian, lava 500 mB,
   press, press), filling of the potion fluid into cinder flour; the other crushing / milling /
   splashing / filling / emptying / item application recipes of these items ship with U13 / U15 /
-  U19. Tags: `assets/recipes/tags/materials.json` (c: metal tags, `levitate:stone_types/*`,
-  `levitate:pulpifiable`, ...). U3's attribute filter recipe (brass nugget, wool, brass nugget) is in.
+  U19. Tags: `assets/recipes/tags/materials.json` (c: metal tags, `bearing:stone_types/*`,
+  `bearing:pulpifiable`, ...). U3's attribute filter recipe (brass nugget, wool, brass nugget) is in.
 - **Foods** (nutrition, saturation modifier): bar of chocolate 6 / 0.3, sweet roll 6 / 0.8,
   chocolate glazed berries 7 / 0.8, honeyed apple 8 / 0.8, builder's tea 1 / 0.6 (always edible,
   drink, 42 ticks, stacks to 16, gives the bottle back, Haste I for 3 min without particles / icon).
@@ -1769,7 +1769,7 @@ names come from `tools/gen/materials.names.tsv` (Create's en_US / zh_CN wording)
   (y < min, falling > 10 blocks per tick) turns the stack into shadow steel (thrown up by
   `(fall distance + 3)/50`); half of the ticks it picks a random block within 3: a light source in
   line of sight (not unbreakable, not a beacon) is removed and one compound gains a charge (item data
-  `lv:chromatic_compound.light`; a charged compound stacks to 1, the client mod draws Create's charge
+  `br:chromatic_compound.light`; a charged compound stacks to 1, the client mod draws Create's charge
   bar: width round(13 · light / N), colour 0x413c69 → white); a belt segment or depot picked instead
   gives up one item of the first carried stack whose block emits light; at `lightSourceCountForRefinedRadiance` (10) charges it becomes refined
   radiance (+0.25 up); over an active beacon (checked every tick) the whole stack becomes refined
@@ -1791,9 +1791,9 @@ names come from `tools/gen/materials.names.tsv` (Create's en_US / zh_CN wording)
 #### 3.6.10 Building blocks (U10)
 
 Code: `src/feature/building/`, data generated by `tools/gen/building.ps1`, textures by
-`tools/textures/building.ps1`. State conventions: `levitate:facing` 0..5 (Java Direction order; the
-horizontal blocks use 2..5, 0/1 read as north), connected-texture states `levitate:c_<dir>`, pane arms
-`levitate:north|south|west|east`. Bedrock stores list-valued states by index, so every integer state
+`tools/textures/building.ps1`. State conventions: `bearing:facing` 0..5 (Java Direction order; the
+horizontal blocks use 2..5, 0/1 read as north), connected-texture states `bearing:c_<dir>`, pane arms
+`bearing:north|south|west|east`. Bedrock stores list-valued states by index, so every integer state
 of the unit is a 0..n range. Any world change (players, commands, pistons, contraptions) is seen through
 the block-changed event: the position and its neighbours are re-evaluated at the next tick (Create's
 `updateShape`).
@@ -1835,7 +1835,7 @@ the block-changed event: the position and its neighbours are re-evaluated at the
   Redstone on either half, or on either half of the double door partner, opens it (`powered`).
   Andesite and copper doors fold, the others slide; sounds `open.iron_door` / `close.iron_door`,
   pitch 0.9–1.0. Open shapes from Create's `SlidingDoorShapes`, clipped to the block. A closing door
-  keeps its open collision (`levitate:closing`) for the 7 ticks of Create's animation, then plays
+  keeps its open collision (`bearing:closing`) for the 7 ticks of Create's animation, then plays
   `close.iron_door` at volume 0.5. The client mod draws the doors moving (Create's
   SlidingDoorRenderer: a value chasing open / closed at 0.15 per tick, drawn as its square; sliding
   panels move 13 px sideways and 0.5 px out, folding doors turn their leaves 91° / −181°).
@@ -1847,7 +1847,7 @@ the block-changed event: the position and its neighbours are re-evaluated at the
   stays while either end is held. `top` / `bottom` attach to girders, walls, chains, lanterns and
   placards (and stay on solid blocks). A shaft used on a girder makes `metal_girder_encased_shaft`
   (shaft axis z if the girder had an x beam or the clicked face is on z, else x), a kinetic shaft
-  (`specs::shaft`, rotor model `geometry.levitate.girder_shaft_rotor`); it drops the girder and the
+  (`specs::shaft`, rotor model `geometry.bearing.girder_shaft_rotor`); it drops the girder and the
   shaft. Placement helper (Create's GirderPlacementHelper): a girder used (not sneaking) on a girder
   or encased girder extends the line at its end in the direction nearest to the clicked point that
   the clicked block extends along (a vertical girder up / down, a junction any way, an encased one
@@ -1899,7 +1899,7 @@ the block-changed event: the position and its neighbours are re-evaluated at the
   trapdoors, girders and the placard a pickaxe; copper shingles / tiles (stairs, slabs) a stone
   pickaxe or better; other building blocks drop by hand. A copycat (Create's CopycatBlock) is
   harvested by its material's rule (an empty one: axe or pickaxe), gives its material's light
-  (`levitate:light` 0..15), is as hard as gold when empty (3 / 6) and mined at its material's speed
+  (`bearing:light` 0..15), is as hard as gold when empty (3 / 6) and mined at its material's speed
   by players with the client mod (§8); a creative player's break doesn't drop the material.
 - Selftests `building.*` (dx 1000..1099; U43 additions 4350..4399; U48 4870..4899; U59 5920..5939), e2e
   `tools/e2e/{server,client}/scenarios/building.ps1`; client parts in `src/client/building/`.
@@ -1911,7 +1911,7 @@ BeltMovementHandler, DepotBehaviour, SharedDepotBlockMethods, WeightedEjectorBlo
 EjectorTargetHandler). Pure rules in `src/core/belts/` (gtest), game side in `src/feature/belts/`,
 drawing in `src/client/belts/`. Config `config/belts.json` (§5).
 
-- **Belt connector**: right-click a shaft (U6's `levitate:shaft`; U2's test shaft too) selects it,
+- **Belt connector**: right-click a shaft (U6's `bearing:shaft`; U2's test shaft too) selects it,
   right-click a second shaft connects them when (Create's canConnect) both are loaded, closer than
   `maxBeltLength` (20, Euclidean), same axis, in a line or exactly 45 degrees in the plane
   perpendicular to the axis (vertical shafts: straight only), not turning against each other and only
@@ -2015,7 +2015,7 @@ drawing in `src/client/belts/`. Config `config/belts.json` (§5).
   capabilities too.
 - **Data**: BlockData `belt` {c: controller, i: index, n: length} per segment, the controller also
   holds `items`; `depot` {held, incoming, outputs, stackSize, target, airborne, ...}; the index of
-  controllers / depots / ejectors in `lv:belts:index`.
+  controllers / depots / ejectors in `br:belts:index`.
 - **Client mod**: belts are left out of the chunk mesh and drawn every frame from the same geometry:
   the band texture scrolls at the surface speed (1 px steps), pulleys turn at Create's kinetic angle,
   the casing is drawn on horizontal, sloped and vertical segments (the static model shows it too);
@@ -2046,10 +2046,10 @@ Config `config/funnels.json`: `defaultExtractionTimer` 8, `vaultCapacity` 20, `b
     go into the inventory behind (filtered); a right-click on the front face with an item inserts
     the held stack. An upward inserting funnel also takes items from belts / chutes / machines
     above it (item capability on the funnel, Create's DirectBeltInputBehaviour).
-  - Flaps: horizontal funnels flap (block state `levitate:flap` for 4 ticks, visible on every
+  - Flaps: horizontal funnels flap (block state `bearing:flap` for 4 ticks, visible on every
     client) with Create's funnel flap sound (item frame turn + wool).
   - On a belt (Create's BeltFunnelBlock): a horizontal funnel on a belt carrying items, a depot or
-    an ejector is a belt funnel, `levitate:shape` 1 retracted / 2 extended (along the belt), 3
+    an ejector is a belt funnel, `bearing:shape` 1 retracted / 2 extended (along the belt), 3
     pushing / 4 pulling (across it; placed normally: pushing, sneaking: pulling). It becomes one
     when placed there or when the block below changes, and turns back into a plain funnel
     (pushing -> extracting) when the belt goes. Wrench: pulling <-> pushing, retracted <->
@@ -2068,7 +2068,7 @@ Config `config/funnels.json`: `defaultExtractionTimer` 8, `vaultCapacity` 20, `b
   they can only be placed on a horizontal belt (BeltTunnelItem.canPlace), case an uncased segment
   (andesite / brass casing), and break (dropping themselves) when the segment below goes, slopes or
   loses its casing (canSurvive).
-  Shape: a T on each side with an output (a belt running across, or a Levitate block taking items
+  Shape: a T on each side with an output (a belt running across, or a Bearing block taking items
   from that side), cross for both; a straight tunnel between two tunnels gets a window (wrench:
   window ↔ closed; an extended belt funnel facing the tunnel counts as a tunnel there,
   canHaveWindow). The belt reports items crossing into the segment
@@ -2094,7 +2094,7 @@ Config `config/funnels.json`: `defaultExtractionTimer` 8, `vaultCapacity` 20, `b
     xN" line per stack of the group, "Right-Click to retrieve".
 - **Chutes** (Create's ChuteBlockEntity). One stack per chute moving at
   `((push + pull) / 64 clamped to ±20, − 4 when ≤ 0) / 20` blocks per tick (gravity: 4 blocks/s
-  down). Encased fans (U13 registers `levitate:encased_fan` with `airflow::registerFan`: its facing
+  down). Encased fans (U13 registers `bearing:encased_fan` with `airflow::registerFan`: its facing
   and signed speed) above facing down (pull) or below facing up (push) speed items up or reverse them; push / pull propagate along connected chutes (shared among branches). Input:
   from the inventory above (below for upward chutes), 16 items at a time; from chutes feeding into
   it; from items dropped on top of an open chute; upward chutes suck in item entities up to 1 / 2 /
@@ -2149,7 +2149,7 @@ Config `config/funnels.json`: `defaultExtractionTimer` 8, `vaultCapacity` 20, `b
   main inventory slot outside the hotbar) goes into the container behind it as far as it fits
   (insertItemStacked), skipping items that can't go into containers (shulker boxes) and items the
   filter rejects (an empty filter passes everything). When anything went in: Create's hatch sound
-  (barrel open at .25 / 1.4 + netherite place at .75 / 1.15), `levitate:open` for 10 ticks and the
+  (barrel open at .25 / 1.4 + netherite place at .75 / 1.15), `bearing:open` for 10 ticks and the
   action bar "Held item deposited" / "Inventory items deposited". Deployers (the fake player) do
   nothing. The filter slot is the front of the slanted door (U3 filter slot, scale 0.48); a filter
   item in it drops with the block.
@@ -2161,7 +2161,7 @@ Config `config/funnels.json`: `defaultExtractionTimer` 8, `vaultCapacity` 20, `b
   item crosses into a segment (Continue / Stuck / Taken), so the tunnel above can take or split it;
   `beltlink::hasAbove` (dropped items don't land under a tunnel) and
   `beltlink::registerAboveSideInput` / `sideInputAbove` (a distributing brass tunnel takes items
-  inserted into its segment from a side), added by U41. The belt registers `levitate:belt` as a
+  inserted into its segment from a side), added by U41. The belt registers `bearing:belt` as a
   segment; funnels register as the belt's above-interactors and, like chutes, as direct inputs
   (`belts::registerDirectInput`; `belts::canInsertDirect` added by U41).
   Items going *into* belts, depots, funnels and chutes use the item capability with `face` = the
@@ -2173,7 +2173,7 @@ Checked against Create 6.0.10 (MillstoneBlock(Entity), CrushingWheelBlock(Entity
 CrushingWheelControllerBlock(Entity), EncasedFanBlock(Entity), AirCurrent, FanProcessing,
 AllFanProcessingTypes, NozzleBlock(Entity), CKinetics). Pure maths in `src/core/bulk/` (gtest), game
 side in `src/feature/bulk/`. Machine state lives in BlockData `data["bulk"]`; the unit's blocks are
-indexed in `lv:bulk:index` and ticked by the unit.
+indexed in `br:bulk:index` and ticked by the unit.
 
 **Millstone** (impact 4 SU/RPM): a small cog (meshes with cogwheels around it) with a shaft below.
 One input slot, 9 output slots. Items go in when thrown on top (item entities resting on it) or
@@ -2228,7 +2228,7 @@ away (sneaking: towards). Air current, rebuilt on speed changes, neighbour chang
   splashing 400 > haunting 300 > smoking 200 > blasting 100): water / flowing water (also
   waterlogged) → **splashing**; lava → **blasting**; fire, lit campfire, smouldering blaze burner, lit
   blaze burner with a regular flame → **smoking**; soul fire, lit soul campfire, lit blaze burner with
-  a soul flame (U14: state `levitate:flame_type` = 1) → **haunting**; blaze burner at fading or more →
+  a soul flame (U14: state `bearing:flame_type` = 1) → **haunting**; blaze burner at fading or more →
   **blasting**;
 - entities in the current (searched every 5 ticks; not creative-flying players or spectators) get
   `motion += clamp(flow · a − motion, ±5) / 8` with `a = |RPM| / (512, sneaking 4096) / (distance to
@@ -2236,7 +2236,7 @@ away (sneaking: towards). Air current, rebuilt on speed changes, neighbour chang
 - items in processing air: after `fanProcessingTime · ((count − 1) / 16 + 1) + 1` ticks (150) the
   stack becomes the outputs (the first stays in place with the same motion and is not processed
   again by that air; the rest spawn next to it); the processing state (type, time) is kept on the
-  item entity (tag `lv_fan:<type>:<time>`, Create's persistent data), so it survives saving: splashing / haunting = their recipes rolled per
+  item entity (tag `br_fan:<type>:<time>`, Create's persistent data), so it survives saving: splashing / haunting = their recipes rolled per
   item; smoking = the smoker recipe × count; blasting = the furnace (else blast furnace) recipe ×
   count unless the smoker gives the same item (food burns up); anything else that isn't fire
   resistant burns up in blasting air;
@@ -2246,12 +2246,12 @@ away (sneaking: towards). Air current, rebuilt on speed changes, neighbour chang
   Fan"; not fire immune); haunting gives blindness (30 ticks) and slowness II (20
   ticks), and turns a horse into a skeleton horse after 100 ticks that keeps its name, health / speed
   / jump attributes, taming, owner and saddle (its armour drops);
-- a player in a current hears wind (Create's air current sound): Levitate's own sample
-  (`levitate.fan_wind`, `tools/sounds/bulk.ps1`) every 10 ticks, volume `clamp(|RPM| / 128 · .4,
+- a player in a current hears wind (Create's air current sound): Bearing's own sample
+  (`bearing.fan_wind`, `tools/sounds/bulk.ps1`) every 10 ticks, volume `clamp(|RPM| / 128 · .4,
   .01, .4)`, pitch `clamp(|motion| · .5, .5, 2)`;
-- items on `levitate:belt`, `levitate:depot` and `levitate:weighted_ejector` in the current (or one
+- items on `bearing:belt`, `bearing:depot` and `bearing:weighted_ejector` in the current (or one
   below a horizontal one) are processed the same way through their item capability;
-- airflow particles (`levitate:fan_airflow`, density `fanParticleDensity` 0.5 per tick) flow along the
+- airflow particles (`bearing:fan_airflow`, density `fanParticleDensity` 0.5 per tick) flow along the
   current at `(reach + 1 − distance) / 16` blocks per tick, tinted per air type (Create's colours);
   processing particles at items (smoke, soul flames, poof, splash).
 Other units use `feature/common/BulkExt.h` (`airflow::sourceAt`, `typeAt`, `canProcess`, `process`,
@@ -2286,7 +2286,7 @@ BasinOperatingBlockEntity, MechanicalPressBlockEntity, PressingBehaviour, Mechan
 BlazeBurnerBlock(Entity), LitBlazeBurnerBlock, BlazeBurnerBlockItem, CRecipes). Pure numbers in
 `src/core/basin/` (gtest), game side in `src/feature/basin/`, client animation in `src/client/basin/`.
 Contents live in BlockData (`data["basin"]`, `["press"]`, `["mixer"]`, `["burner"]`); the unit's
-blocks are listed in `lv:basin:machines` and ticked while loaded.
+blocks are listed in `br:basin:machines` and ticked while loaded.
 
 **Basin.** 9 input slots and 9 output slots (64 per slot, one stack per item kind, the first free
 slot otherwise), 2 input and 2 output tanks of 1000 mB with enforced variety (one tank per fluid).
@@ -2406,7 +2406,7 @@ server), blaze heads, the fluid surface in the basin (height `2/16 + 12/16 · (1
 mB / 2000, the last fluid's colour). Vanilla clients see the static models (head at rest, whisk at
 rest, no fluid).
 
-**Command**: `/create basin demo` (op, Levitate debug) builds a mixer, a press and burners in front of
+**Command**: `/create basin demo` (op, Bearing debug) builds a mixer, a press and burners in front of
 the player for screenshots.
 
 #### 3.6.15 Assembly (U15)
@@ -2445,10 +2445,10 @@ player's. Filter slot on the two sides that carry neither the hand nor the shaft
 hand unless a set filter asks for it.
 
 *Deploying on items:* a deployer facing down two blocks above a depot / belt / weighted ejector
-(`levitate:depot|belt|weighted_ejector`, reached through their item capability, slot 0) in use mode
+(`bearing:depot|belt|weighted_ejector`, reached through their item capability, slot 0) in use mode
 starts when that item has a recipe with the held item and, when the hand is out, replaces one item
 by the outputs (outputs that don't fit drop on top). Recipes in Create's order: sand paper
-(`levitate:sand_paper` / `red_sand_paper`) polishing (`sandpaper_polishing`), the next deploying step
+(`bearing:sand_paper` / `red_sand_paper`) polishing (`sandpaper_polishing`), the next deploying step
 of a sequenced assembly, `deploying`, `item_application` (keep_held_item honoured). The held item is
 used up (or damaged by 1 if it has durability). Sounds: item pop, item break when the hand empties.
 
@@ -2495,7 +2495,7 @@ renderer. Vanilla clients see the static models.
 **Sequenced assembly** (contract `src/feature/assembly/SequencedAssembly.h`). Recipes
 `assets/recipes/sequenced_assembly/*.json` in Create's format (`ingredient`, `transitional_item`,
 `loops`, `sequence` of deploying / pressing / cutting / filling recipes, weighted `results`; a
-Levitate `tags` object may define tags inline). A machine of another unit asks
+Bearing `tags` object may define tags inline). A machine of another unit asks
 `findStep(kPressing|kCutting|kFilling, stack)` (deploying: `findDeployingStep(stack, held)`,
 filling: `acceptsFluid` / `fluidAmount`) before its own recipes and calls `advance(step, oneItem)`
 per item. The first step accepts the base ingredient or the transitional item, later steps only the
@@ -2523,7 +2523,7 @@ ConnectedInputHandler, EdgeInteractionHandler, SawBlock / SawBlockEntity, TreeCu
 BlockBreakingKineticBlockEntity, BlockBreakingMovementBehaviour). Pure logic in
 `src/core/crafter/` (gtest), game side in `src/feature/crafter/`, items drawn by
 `src/client/crafter/`. Per-block state in BlockData (`crafter`, `saw`); tracked positions in
-`lv:crafter:crafters` / `lv:crafter:machines` (machines also join when the kinetic network sees
+`br:crafter:crafters` / `br:crafter:machines` (machines also join when the kinetic network sees
 them, whatever placed them).
 
 **Mechanical crafter.**
@@ -2635,7 +2635,7 @@ PumpBlock / PumpBlockEntity, FluidValveBlock / FluidValveBlockEntity, SmartFluid
 SmartFluidPipeBlockEntity, FluidPropagator, FluidTransportBehaviour, PipeConnection, FlowSource,
 FluidNetwork, OpenEndedPipe, FluidReactions, the open pipe effect handlers, CFluids). Pure model in
 `src/core/pipes/` (gtest), world adapter in `src/feature/pipes/`. Fluids are ids (`fluids::FluidStack`):
-`minecraft:water|lava|milk|powder_snow`, `levitate:honey|chocolate|tea` (U19), potions
+`minecraft:water|lava|milk|powder_snow`, `bearing:honey|chocolate|tea` (U19), potions
 `potion:<Bedrock potion name>`. The **fluid registry** contract (`feature/common/FluidRegistry.h`,
 added by this unit) gives each id its name, world source block, colour / render slot, lava interaction
 and open-pipe effect; U19 registers its fluids there.
@@ -2657,9 +2657,9 @@ the casing (the copper casing is not returned: encasing doesn't use it up, as Cr
 facing; on a valve cycles `along_first` when the clicked face lies on its facing axis, else turns its
 facing a quarter around the clicked axis keeping the shaft axis when possible ⚠ (Create's default
 IWrenchable rotation); on a smart pipe turns it clockwise when the top / bottom is clicked.
-**Copper casing** (`levitate:copper_casing`, U10) on a fluid or glass pipe makes an encased pipe with the
-same open faces; encased pipes never react to neighbours. **Brackets** (`levitate:metal_bracket`,
-`levitate:wooden_bracket`, U10) attach to straight fluid pipes and glass pipes (one is used up in survival,
+**Copper casing** (`bearing:copper_casing`, U10) on a fluid or glass pipe makes an encased pipe with the
+same open faces; encased pipes never react to neighbours. **Brackets** (`bearing:metal_bracket`,
+`bearing:wooden_bracket`, U10) attach to straight fluid pipes and glass pipes (one is used up in survival,
 a replaced bracket comes back), lock the pipe's shape and drop when the pipe is broken.
 
 **Pumps**: a kinetic small cog on its facing axis (no shaft ends; impact 4 su/RPM). Placement:
@@ -2709,7 +2709,7 @@ PotionEffectHandler). Fluid pipes, glass pipes, pumps, valves and smart pipes ar
 waterlogged <block> at ...`, `pipes: waterlogged the <block> at ...`.
 
 **Particles** (Create's PipeConnection / FluidFX, for every client: the server spawns the resource
-pack particles `levitate:fluid_particle` and `levitate:fluid_drip`, tinted with the fluid's colour,
+pack particles `bearing:fluid_particle` and `bearing:fluid_drip`, tinted with the fluid's colour,
 for the players within 20 blocks): every tick each pipe face with a flow pours one particle out of an
 open end (sucked in towards the face when pulling), or drips one at its rim with a chance of 1/1000;
 a flow that just started splashes once (a rim drip, at open ends the stream).
@@ -2722,9 +2722,9 @@ the filter slot (U3's filter slot, Create's position, scale 0.5) takes any item 
 smart pipe only pulls matching fluids (an empty slot passes everything); a filter change wipes and
 redistributes the network.
 
-**Persistence**: pressures, flows and open end buffers in `lv:pipes:model` (Create saves them in the
+**Persistence**: pressures, flows and open end buffers in `br:pipes:model` (Create saves them in the
 pipe block entities; the phase restarts after a load), valve pointers alongside, brackets in BlockData
-`data["pipes"]["bracket"]`. **Client**: glass pipes show the fluid inside through `levitate:fluid`
+`data["pipes"]["bracket"]`. **Client**: glass pipes show the fluid inside through `bearing:fluid`
 (vanilla clients); the client mod draws Create's flow fronts instead (TransparentStraightPipeRenderer:
 per face with a flow, a 6 px wide column of the fluid growing `progress / 2` blocks from the face
 (inbound) or from the centre (outbound), advanced every tick at the flow's speed; the server sends the
@@ -2732,8 +2732,8 @@ flows of glass pipes over `pipes.glass` when they change, chunk meshes leave the
 pumps' cogs and valves' shafts rotate through the kinetic renderer (U2). Valve pointers (Create's
 FluidValveRenderer): the server sends each valve's pointer, target and rate over `pipes.valve` (on a
 speed change and to a companion joining); the client mod's chunk meshes leave the handle out
-(`levitate:pointer` 1) and draw it turned by `-90° · pointer` about the facing, the pointer moving
-`rate` per tick; vanilla clients see the handle switch between closed and open (`levitate:enabled`).
+(`bearing:pointer` 1) and draw it turned by `-90° · pointer` about the facing, the pointer moving
+`rate` per tick; vanilla clients see the handle switch between closed and open (`bearing:enabled`).
 **Command** `/create pipes <pos>` (op): pressures, flows and transfers of a pipe.
 
 #### 3.6.18 Fluid tanks, boilers, steam engines and whistles (U18)
@@ -2757,12 +2757,12 @@ parts pour their fluid into the new controller (what doesn't fit is lost). Fluid
 tanks never connect. Breaking a part splits its structure into 1×1 tanks: the controller (if it
 remains) keeps one block's worth, the others get one block's worth each in y, x, z order, the rest
 is lost; they re-connect at once. (Create can duplicate the controller's share when a non-controller
-part is broken; Levitate doesn't.) A tank item used on the top or bottom face of a structure wider
+part is broken; Bearing doesn't.) A tank item used on the top or bottom face of a structure wider
 than 1, not sneaking, fills the whole next layer (all positions free, enough items in survival).
 
 **Look**: vertical connected textures (top / middle / bottom / single pieces), windows by default
 (Create's `setWindows`: width 1 every side, width 2 the two outer faces of each column, width 3 the
-middle of each side); the wrench (U8's `levitate:wrench`, not sneaking) toggles them for the whole
+middle of each side); the wrench (U8's `bearing:wrench`, not sneaking) toggles them for the whole
 structure, except on a boiler; becoming a boiler closes them. After a split every part takes the
 window setting of the old structure. A glowing fluid (lava, light 15) lights the parts up to its
 level with 15 / 1.2 = 12 and the parts above with 1, only with windows.
@@ -2825,12 +2825,12 @@ the other way the engine flips its own setting. The powered shaft generates `dir
 (1 + (e ≥ 1 ? 3 : min(2, ⌊4e⌋)))` RPM (64 at full, 48 / 32 / 16 below) with a capacity of `e · 1024 /
 modifier` su per RPM (= e · 16384 su: a full engine 16384 su, a passive one 2048 su); no tank, no
 shaft or efficiency 0: speed 0. Value box "Rotation Direction" (Clockwise / Counter-Clockwise) on the
-engine's four side faces. Puffs of steam twice per shaft turn while it runs: a `levitate:steam_jet`
+engine's four side faces. Puffs of steam twice per shaft turn while it runs: a `bearing:steam_jet`
 particle out of the cylinder's front and Create's boiler sound pool: one pool per boiler side (Create's
 SoundPool(4, 2)) collects the puffs of its engines for 2 ticks and plays at most 4 of them (random
 ones when more), each at the engine's block corner as `extinguish.candle` at volume
 `3 / max(2, engines / 6)` (integer division), pitch `1.18 − rand · .25`, plus the original
-`levitate.steam.engine` sample (Create's `create:steam`) at a sixteenth of that volume, pitch .8.
+`bearing.steam.engine` sample (Create's `create:steam`) at a sixteenth of that volume, pitch .8.
 
 **Whistle** (WhistleBlock / BlockEntity). Pitch = 2 semitones per full extension above it, 1 for a
 half (single) one at the top (`updatePitch`, up to 25). Using a whistle item on a whistle or an
@@ -2843,7 +2843,7 @@ extension (Create's WhistleExtenderBlock.onSneakWrenched) makes it a half one (t
 it fall off, wrench remove sound); on its lower half or on a half extension it is the wrench's own
 dismantling (U8). Extensions without a whistle or
 extension below vanish. Powered by redstone (polled, §8) on a boiler with heat (passive or active) it
-sounds: the `levitate.steam.whistle_chiff` hiss when it starts (per player at volume
+sounds: the `bearing.steam.whistle_chiff` hiss when it starts (per player at volume
 `.175 · (64 − distance) / 64`, pitch `f + .75` for small whistles), then the tone as one looping
 sound instance per whistle (Create's WhistleSoundInstance): one original sample played at
 `f = octave · 2^(−pitch/12)` (sounds `whistle_high` / `whistle_medium` / `whistle_low` are the same
@@ -2853,7 +2853,7 @@ a player coming into range gets it, one leaving it (68 blocks) gets Stop; a pitc
 or shorter column) is sent to the playing clients as SetPitch (ClientboundUpdateSoundDataPacket), a
 size change starts a new instance, and a whistle that stops (unpowered, no steam, removed, chunk
 unloaded) fades out over 4 ticks (Create: −.25 volume per tick) and then stops. Every client plays it
-with the game's own sound engine (no client mod needed). A `levitate:steam_jet` particle (Create's
+with the game's own sound engine (no client mod needed). A `bearing:steam_jet` particle (Create's
 SteamJetParticle: a grey-white puff that grows, rises and fades) leaves the mouth when it starts and
 every 8 ticks, up and out of the mouth. One log line when it starts / stops and one when the looping
 instance starts.
@@ -2871,14 +2871,14 @@ the needle turning `145° · gauge` from its rest position; the gauge chases (Cr
 BoilerData.read); a side whose gauge position has a block with a collision box in front of it
 (Create's updateOcclusion) shows none. Vanilla clients see the tank only (§8). **Whistle mouths**
 (Create's WhistleRenderer): the server sends the sounding whistles (`steam.whistles`); the client
-mod's chunk meshes leave the mouth out (`levitate:mouth` 1) and draw it moved up by
+mod's chunk meshes leave the mouth out (`bearing:mouth` 1) and draw it moved up by
 `animation · 4/16` (Create's chaser: towards 1 while it sounds, EXP .5; back to 0, LINEAR .4) and,
 while sounding and more than half open, down by `sin(ticks / 8 · 2π · (4 − size)) / 16` (size: small
 0, medium 1, large 2); vanilla clients see the mouth still.
 
 **Persistence**: tank parts in BlockData (`data["steam"]`: controller, width, height, window,
 fluid, amount), engines' value box there too; the engine / whistle / powered shaft index in
-`lv:steam:index`, synced tanks in `lv:steam:tanks`. Boiler water supply samples are not saved
+`br:steam:index`, synced tanks in `br:steam:tanks`. Boiler water supply samples are not saved
 (they refill within 50 ticks).
 
 #### 3.6.19 Fluid machines (U19)
@@ -2898,7 +2898,7 @@ contraptions (data carrier `fluids`). Every machine exposes the U3 fluid capabil
   and builder's tea through the emptying / filling recipes and the U3 container registry). Glass
   bottles take water, potion fluids and tea directly; empty buckets take every fluid with a bucket.
   The spout additionally uses filling recipes and sequenced assembly filling steps.
-- **Sequenced assembly** (shared with U15): a transitional item carries Levitate item data
+- **Sequenced assembly** (shared with U15): a transitional item carries Bearing item data
   `"sequenced_assembly": {"recipe": "<recipe id>", "step": n, "progress": f}`; an item matching a
   sequenced assembly recipe's `ingredient` starts at step 0. When step `n mod len(sequence)` is a
   `filling` step and the fluid matches, the spout fills it and advances the step; after
@@ -2910,7 +2910,7 @@ contraptions (data carrier `fluids`). Every machine exposes the U3 fluid capabil
   (`belts::registerProcessor`, Create's onItemReceived / whenItemHeld): an item that can be filled
   stops at the centre of the segment under the spout (also with an empty tank), is filled one at a
   time (the filled one moves on, the rest of the stack stays held) and an item the fluid can't fill
-  passes. Other **Levitate** blocks exposing the item as slot 0 from the top through the item
+  passes. Other **Bearing** blocks exposing the item as slot 0 from the top through the item
   capability are filled through it (the result goes back, leftovers drop; vanilla containers have no
   processing behaviour). Filling takes 20 ticks (FILLING_TIME); the item is filled 15 ticks in, one
   item per cycle. With too little fluid it waits. **Block spouting** (Create's
@@ -2920,13 +2920,13 @@ contraptions (data carrier `fluids`). Every machine exposes the U3 fluid capabil
   cauldron one more level (Java levels 1..3 are Bedrock's `fill_level` 2 / 4 / 6: + 2 up to 6) for 250 mB
   of water; an empty cauldron becomes a water cauldron of level 1 (`fill_level` 2) for 250 mB of water or
   a full lava cauldron for 1000 mB of lava (CauldronSpoutingBehavior; powder snow is no fluid). Sound:
-  `levitate.fluids.spout` (Create's SPOUTING, an original sample in three variants, volume .75, pitch
+  `bearing.fluids.spout` (Create's SPOUTING, an original sample in three variants, volume .75, pitch
   .9..1.1) when an item starts filling; none when it is done. Particles for every client (U17's
-  `levitate:fluid_particle`): a drop leaves the nozzle every tick from 20 to 8 ticks left, 20 drops
+  `bearing:fluid_particle`): a drop leaves the nozzle every tick from 20 to 8 ticks left, 20 drops
   splash off the item when it is filled. Client mod: the stream (its width follows Create's
   `((2p − 1)² − 1) / 32`) and the nozzle drawn in three bits (top, middle, bottom) that squeeze
   together (Create's squeeze: the stream's curve, −1 from 10 to 2 ticks left, then back; each bit
-  `3/32 · squeeze` above the one before), the chunk mesh leaving them out (`levitate:nozzle` 1).
+  `3/32 · squeeze` above the one before), the chunk mesh leaving them out (`bearing:nozzle` 1).
   Logs: `spout at x y z filled <in> into <out>`, `... filled <block> with <n> mB of <fluid>`.
 - **Item drain**: 1500 mB tank, pipes extract on every side but the top, nothing is inserted from
   outside. Items enter through the item capability on the horizontal sides (one at a time when they
@@ -2937,7 +2937,7 @@ contraptions (data carrier `fluids`). Every machine exposes the U3 fluid capabil
   edge), and travel at 1/8 block per tick away from the side they came from (from above through a
   direct input: down, starting at the centre). At the centre an item that can be
   emptied is held for 20 ticks; 15 ticks in it is emptied if all of its fluid fits (otherwise it
-  waits). At the far edge it goes into the next Levitate block (belt, depot, chute, funnel, drain:
+  waits). At the far edge it goes into the next Bearing block (belt, depot, chute, funnel, drain:
   Create's DirectBeltInputBehaviour), or, if that side is not solid, is ejected as an item entity
   (motion 1/8 outwards + 1/8 up); else it waits. Right-click with a fluid container empties it into
   the tank / fills an empty bucket or bottle from it (Create's FluidHelper exchange); right-click
@@ -2971,7 +2971,7 @@ contraptions (data carrier `fluids`). Every machine exposes the U3 fluid capabil
   ticks after it left). Redstone power disables the stationary interface. Logs: `portable fluid
   interface at x y z connected to contraption #n`, `... on contraption #n moves on`, `...
   disconnected`.
-- **Honey and chocolate in the world**: see §8. `levitate:honey` / `levitate:chocolate` are
+- **Honey and chocolate in the world**: see §8. `bearing:honey` / `bearing:chocolate` are
   non-flowing, non-colliding, translucent source blocks (replaceable, not minable, explosion
   resistance 100). Honey / chocolate buckets place them (on the clicked block if it is replaceable,
   else next to the clicked face; survival keeps an empty bucket); an empty bucket picks them up;
@@ -2980,7 +2980,7 @@ contraptions (data carrier `fluids`). Every machine exposes the U3 fluid capabil
   into obsidian (lava source) or limestone (honey) / scoria (chocolate) for flowing lava, as Create's
   fluid interactions (skipped while U9's stones are missing). Log: `<player> placed / picked up
   <fluid> at ...`.
-- Test block `levitate:fluids_test_depot` (not in the creative menu): one item slot from the top and
+- Test block `bearing:fluids_test_depot` (not in the creative menu): one item slot from the top and
   an 8000 mB tank when mounted on a contraption; it stands in for U11's depot in the selftests.
 
 #### 3.6.20 Linear contraptions (U20)
@@ -3071,7 +3071,7 @@ controller click and assembly sounds and open a form of the floors ("Elevator Fl
 marked `>`); the chosen floor is written as `request`. Contacts keep `data["pistons"]["floor"]` = the identifier of the
 current floor for display links (U24). Stress impact 4.
 
-**Gantries**: gantry shafts (`levitate:part` from same-facing neighbours along the axis; placement
+**Gantries**: gantry shafts (`bearing:part` from same-facing neighbours along the axis; placement
 facing away, continuing a neighbouring line, sneaking reverses; a line is powered as a whole by
 redstone, polled) carry carriages placed on them (facing the clicked face; the carriage breaks
 without a shaft behind it). A carriage assembles its structure (the shaft is anchoring) when its
@@ -3087,7 +3087,7 @@ shaft turns after the outer one stops). Stress impact 0 (Create: setNoImpact; th
 `config/kinetics.json` still lists `gantry_shaft` 4 and must become 0).
 
 **Client mod**: pistons, pulleys and gantries rotate their shaft / pinion with the kinetic renderer
-(`levitate:rotor`); running pulleys draw their rope (elevators: belt) and magnet from the pulley to the
+(`bearing:rotor`); running pulleys draw their rope (elevators: belt) and magnet from the pulley to the
 structure (`pistons.rope` messages, every 3 ticks, extrapolated in between); contraption blocks are
 drawn by U4's display entities.
 
@@ -3259,7 +3259,7 @@ Actors:
   from a hopper pointing into it, into a hopper below it). A moving contraption is held once the
   carried PSI's active point passes the stationary PSI's centre, until its timer drops to 4
   (`psiTimeout` = 60 ticks after the last transfer). It also connects when the contraption stands
-  still. Block state `levitate:extended` shows the connection.
+  still. Block state `bearing:extended` shows the connection.
 - **Contraption controls**: on a contraption, right-click (empty hand into the air needs the client
   mod; with an item, or when a world block is behind it, any client) toggles the actors its filter
   targets (Create's disabled-actor list; empty filter: all actors): message "All Actors: On/Off" /
@@ -3269,7 +3269,7 @@ Actors:
   slot on its top (Targeted Component). Assembled while disabled, its target starts disabled; when
   the contraption stops it remembers whether its target is disabled (indicator). Actors of every
   unit can be disabled (their block item is the type); the controls themselves cannot.
-- **Seats**: right-click sits the player (an invisible rideable `levitate:seat` entity, as Create's
+- **Seats**: right-click sits the player (an invisible rideable `bearing:seat` entity, as Create's
   SeatEntity; sneak to leave), or a mob the player leads on a leash within 10 blocks; a mob already
   sitting there is ejected for the player, a player there keeps the seat. A dye of another colour
   recolours it (the dye stays); in the crafting grid any seat + a dye gives the seat of that colour
@@ -3283,7 +3283,7 @@ Actors:
   riders sit down on the placed seat again. Right-clicking a seat on a contraption sits the player.
 - **Client mod**: on moving contraptions the harvester's blades should turn by 50° per block
   travelled (Create: animation speed / 20 per tick) and the roller's drum roll on the ground,
-  shown by swapping the display entity's block for the animation step (`levitate:anim`) while it
+  shown by swapping the display entity's block for the animation step (`bearing:anim`) while it
   is drawn. Not working yet: the display entity's position read in the render hook does not
   follow the drawn movement, so the step stays 0 (follow-up).
 - **Client mod**: an empty-hand right-click into the air is sent as `actors.use`, so contraption
@@ -3304,16 +3304,16 @@ Code: `src/core/redstone/` (state machines, link networks; gtest),
 **Redstone on Bedrock.** Outputs are native: every permutation of our blocks carries
 `minecraft:redstone_producer` with its power (`connected_faces` / `strongly_powered_face` per
 state), so vanilla dust, repeaters, lamps, pistons read them through the game's circuit system
-with no polling (the link receiver and the analog lever emit analog 0..15 via a `levitate:power`
+with no polling (the link receiver and the analog lever emit analog 0..15 via a `bearing:power`
 state). Inputs are read from the game's own circuit components around the block once per game
 tick (wire = transporter strength, lever / button / redstone block / our producers = producer,
 torch = capacitor unless it hangs on the block, repeater / comparator = capacitor only when its
 circuit direction faces the block, powered solid block = powered block); that tick is also
 Create's block-entity tick. `redstone::signalFrom(region, pos, face)` / `bestNeighborSignal`
 (`feature/redstone/Redstone.h`) expose this reader to other units. Blocks are tracked while
-loaded (`lv:redstone:blocks`); settings live in BlockData `data["redstone"]`.
+loaded (`br:redstone:blocks`); settings live in BlockData `data["redstone"]`.
 
-- **Redstone link** (`levitate:facing` 0..5 FacingID = clicked face, `receiver`, `powered`,
+- **Redstone link** (`bearing:facing` 0..5 FacingID = clicked face, `receiver`, `powered`,
   `power` 0..15): needs a non-replaceable block behind it (pops off otherwise). Two frequency
   slots on the front (Create's slot centres: upward link (8, 3.01, 10.5) first / (8, 3.01, 5.5)
   second px, sideways links first above, scale .4975): right-click with any item (not the wrench
@@ -3386,7 +3386,7 @@ loaded (`lv:redstone:blocks`); settings live in BlockData `data["redstone"]`.
   first movement) until it moves on / stops.
 - **Desk bell** (U49, Create's DeskBellBlock / DeskBellBlockEntity / DeskBellRenderer /
   BellMovementBehaviour; `facing` 0..5 = the clicked face, `powered`, `rotor`): a click (empty hand
-  or any item but the wrench, not sneaking with an item) plays `levitate.desk_bell` (our own
+  or any item but the wrench, not sneaking with an item) plays `bearing.desk_bell` (our own
   synthesised ding, `tools/sounds/redstone.ps1`; Create's "Reception bell dings") and powers it:
   15 weakly on every side and strongly into the block it stands on, released 20 ticks after the
   last ring. The wrench turns it (WrenchableDirectionalBlock), sneak + wrench picks it up. Placed in
@@ -3429,7 +3429,7 @@ built-in source. `Context` gives the region, the link, source and target positio
 persisted `config` (Create's sourceConfig) and the game time.
 
 **Display link** (data `BlockData["display_link"]` = target offset, line, source id, config;
-positions in `lv:display:links`): every tick its timer grows; at the source's
+positions in `br:display:links`): every tick its timer grows; at the source's
 `getPassiveRefreshTicks` (default 100; stopwatch 20, accumulated items 200, observed train name 400,
 station summary / status 20) it resets and, unless the link is powered, reads the source and writes
 the target (`updateGatheredData`). A newly opened link screen starts at the block's first source
@@ -3460,7 +3460,7 @@ batch rates, 0 after twice the usual time without items), seats `entity_name`, n
 `nixie_tube`, and the vanilla `target` → `redstone_power` (Number / Progress Bar),
 `enchanting_table` → `enchant_power` (Max Enchanting Cost: twice the bookshelves, at least 1 +
 shelves / 2 ⚠ Create rolls Java's bottom-slot cost), command blocks → `scoreboard` (objective id,
-value list, "name value"), `respawn_anchor` → `death_count` (Player Deaths, counted by Levitate:
+value list, "name value"), `respawn_anchor` → `death_count` (Player Deaths, counted by Bearing:
 "name value", full numbers, no options). Every single-line source has Create's "Attached Label"
 option where Create has it. Counts are plain numbers; other numbers use Create's formatting (up to 2
 decimals, grouped thousands); percentages are truncated; fluids as Create's FluidFormatter ("1000
@@ -3475,7 +3475,7 @@ deaths; a lectern gets 8 entries per page. Station summary / train status (U27),
 characters; a book and quill becomes a written book "Printed Book" by "Data Gatherer" ⚠).
 
 **Display board** (data at the controller `BlockData["display_board"]`, controllers in
-`lv:display:boards`): the controller is the top block at the left end as seen from the front
+`br:display:boards`): the controller is the top block at the left end as seen from the front
 (Create: no UP flag, no identical neighbour clockwise); width up to 32 counter-clockwise, height
 down the DOWN flags; rows connect up / down only when the whole row matches. A size change keeps
 line colours and glow and clears the text. Right-click a line (hit point moved ⅛ block into the
@@ -3489,7 +3489,7 @@ spins every character through Create's flap cycles (letters " ABCDEFGHIJKLMNOPQR
 " 0123456789", anything else at once; one step per tick, all at once above 128 RPM) only while the
 board turns, and draws them on the front face.
 
-**Nixie tubes** (data per tube `BlockData["nixie"]`, tubes in `lv:display:nixies`): a row is the
+**Nixie tubes** (data per tube `BlockData["nixie"]`, tubes in `br:display:nixies`): a row is the
 tubes with the same facing and face, from the left (floor / ceiling: opposite the facing; wall: up;
 wall reversed: down); placed on the floor / ceiling the player's facing is turned clockwise, on a
 wall the clicked face is used (reversed when the look points against the clockwise side of the
@@ -3498,7 +3498,7 @@ first entry of the last viewed page, name tag, display link) goes to the whole r
 characters 2i and 2i+1; an empty hand clears the clicked tube (Create's NixieTubeBlock). Without text a tube shows the redstone power around
 it as "00".."15" (polled every 2 ticks). Dye recolours the whole row (block id changes, data kept).
 
-**Clipboard** (item data `lv:clipboard`, block `BlockData["clipboard"]` = type, pages of {text,
+**Clipboard** (item data `br:clipboard`, block `BlockData["clipboard"]` = type, pages of {text,
 checked}, last opened page, copied settings): right-click (in the air, or on a block without
 settings) opens it; pages 1..51, ~15 entries per page ⚠ (Create: height-limited); "#text" entries are
 addresses (no checkbox); empty entries and pages are dropped when saved; Erase checked items.
@@ -3526,7 +3526,7 @@ apply, simulated); then the block gets a white outline and the tip "Clipboard Ac
 Copy entries from this Clipboard") is drawn next to the crosshair.
 
 **Vanilla clients**: board text and nixie characters as name tags of an invisible entity
-`levitate:display_text` (one per board / tube; the client mod hides them); forms for the link
+`bearing:display_text` (one per board / tube; the client mod hides them); forms for the link
 (source, line, options; a second form for a newly chosen source's options) and the clipboard (one
 page per form: inputs, check toggles, page selector, erase checked).
 
@@ -3538,7 +3538,7 @@ dropped). Text options of the display link's source (e.g. a label) are text fiel
 (`{op: "option", key, value}`, 100 characters). The screens wait with rebuilding on new data while
 the player types.
 
-**Commands** (op, Levitate debug): `/create display text <x y z> <line> <text>` (`_` = space) writes
+**Commands** (op, Bearing debug): `/create display text <x y z> <line> <text>` (`_` = space) writes
 a board line or a nixie row; `/create display bind <x y z> <tx ty tz> <source>` binds a link and
 sends.
 
@@ -3556,7 +3556,7 @@ packager requests and unpacking handlers for U26, postbox access for U27); pure 
   unclosed `{`, trailing `\`) matches only the empty string.
 - **Package item**: 9 content slots, address, order data (`order_id`, `link_index`,
   `is_final_link`, `fragment_index`, `is_final`, optional order context = Create's
-  `PackageOrderWithCrafts` as JSON), all in the item's user data `lv:package`. A new package picks a
+  `PackageOrderWithCrafts` as JSON), all in the item's user data `br:package`. A new package picks a
   random style: one of the 4 cardboard sizes, or with a 1 in 7500 chance one of the 10 rare styles.
   Lore: `→ address` (gold), the first 3 content lines "Name xN", then "and N more...". Sneak +
   right-click opens it into the inventory ("Package breaks" sound; a spawn egg inside spawns its mob
@@ -3567,10 +3567,10 @@ packager requests and unpacking handlers for U26, postbox access for U27); pure 
   block puts it down there. Packages, shulker boxes, bundles, toolboxes and minecart contraptions
   don't fit into packages (bulky items, below).
 - **Package entities** (U46, Create's PackageEntity): thrown, put-down and dropped packages are
-  `levitate:package` entities (a box model per style from the resource pack, so vanilla clients
+  `bearing:package` entities (a box model per style from the resource pack, so vanilla clients
   see them too; size = the style's width × height / 16, rare styles 12 × 10; a random yaw; health
   5; gravity and drag of a mob). The package item (contents, address, order data) is kept in the
-  world DB (`lv:packages:entity:<unique id>`). Put down: at the click point (from below: lowered by
+  world DB (`br:packages:entity:<unique id>`). Put down: at the click point (from below: lowered by
   its height + 0.25; on a side: out by half its width), nothing when a package already stands
   there. Thrown: from the player's mid-height plus the motion, keeping the motion. Every package
   item entity joining the world (drops with Q, broken containers, ...) becomes a package entity
@@ -3593,8 +3593,8 @@ packager requests and unpacking handlers for U26, postbox access for U27); pure 
   and not offered again for 100 ticks).
 - Comparator output (U36): packager / re-packager 15 while holding or animating a package, else 0;
   frogport / postbox calcRedstoneFromInventory over the port's 18 slots.
-- **Packager** (`levitate:facing` 0–5 = the side the tray faces, the inventory is behind it;
-  `levitate:powered`; `levitate:linked`): placed facing away from the first neighbour with an
+- **Packager** (`bearing:facing` 0–5 = the side the tray faces, the inventory is behind it;
+  `bearing:powered`; `bearing:linked`): placed facing away from the first neighbour with an
   inventory in the player's look order (Java's `orderedByNearest`), otherwise towards the player
   (sneaking: away); refused with "Packagers cannot interface with Portable Storage directly" when a
   portable storage interface is behind. A rising redstone edge (polled every tick, see §8) boxes the
@@ -3643,7 +3643,7 @@ packager requests and unpacking handlers for U26, postbox access for U27); pure 
   target, then place it within `packagePortRange` (5) blocks, not below the target ("Can Connect ✔",
   "Too far away", "Cannot connect downward", "No target selected"); a successful placement opens
   the port's screen (Create's PackagePortPlacementPacket). The frog faces its target (Create's
-  getYaw), or without one the player who placed it (snapped to 11.25°): `levitate:yaw` 0..15 turns
+  getYaw), or without one the player who placed it (snapped to 11.25°): `bearing:yaw` 0..15 turns
   the block in 22.5° steps for every client (a quarter-turn transformation plus one of four model
   copies turned by 0 / 22.5 / 45 / −22.5°, `tools/models/packages.ps1`). It catches boxes whose address
   matches its filter ("Catch packages addressed to...", empty = unaddressed only) when they pass its
@@ -3659,10 +3659,10 @@ packager requests and unpacking handlers for U26, postbox access for U27); pure 
   with a clipboard adds "#address" to it instead of opening the screen (not for a blank address or one
   already on the clipboard; "Added '…' to clipboard").
 - **Postbox**: the same port inventory and address; it targets a train station (right-click the
-  station with the postbox, then place it within 5 blocks, below is allowed). `levitate:flag` is up
-  while it holds packages, `levitate:open` while its screen is open (barrel sounds). U27's trains use
+  station with the postbox, then place it within 5 blocks, below is allowed). `bearing:flag` is up
+  while it holds packages, `bearing:open` while its screen is open (barrel sounds). U27's trains use
   `postboxesForStation` / `insertIntoPort` / `extractFromPort`. Create's GlobalPackagePort: the
-  station's list of postboxes is kept in the world DB (`lv:packages:station_ports`: address, mode
+  station's list of postboxes is kept in the world DB (`br:packages:station_ports`: address, mode
   and an 18-slot offline buffer, a copy of the inventory saved with every change); while a postbox's
   chunk is unloaded the trains load from and deliver into its buffer, which goes back into the
   postbox when it loads.
@@ -3687,10 +3687,10 @@ packager requests and unpacking handlers for U26, postbox access for U27); pure 
   between the 4-tick updates; untextured boxes in each style's size and a colour per style), the
   frogport's tongue with the box it catches or sends, and the packager's tray sliding in and out
   (Create's getTrayOffset; the box stays on the tray while it is held); the wheel turns as a kinetic rotor at Create's full size
-  (`geometry.levitate.chain_conveyor_wheel`, 2.5 blocks; the block model keeps a 28 px wheel for
+  (`geometry.bearing.chain_conveyor_wheel`, 2.5 blocks; the block model keeps a 28 px wheel for
   vanilla clients, block geometry stops at 30 px).
 - **Sounds**: the packager, package pop, depot plop and the frogport's open / catch / deposit are
-  original samples (`tools/sounds/packages.ps1`, `levitate.packages.*`).
+  original samples (`tools/sounds/packages.ps1`, `bearing.packages.*`).
 - **Log lines** (e2e): `packages: packager at <pos> activated by redstone`, `... packed a package
   for '<address>' (<n> stacks)`, `... unpacked a package ...`, `chain conveyors at A and B
   connected`, `frogport at <pos> caught a package for '<address>'`, `... sent a package ...`,
@@ -3715,7 +3715,7 @@ Pure logic in `core/stock/Logistics.h` (gtests); the unit's contract-style API i
   network; the owner may lock it (request screen): then only the owner interacts with its blocks
   ("Logistics Network is Protected"; at a keeper: "Interact using a Shopping list, direct access has
   been locked"). Networks (owner, lock, every link position, promises) are saved in the world DB
-  (`lv:stock:networks`); block positions in `lv:stock:blocks`; block settings in BlockData
+  (`br:stock:networks`); block positions in `br:stock:blocks`; block settings in BlockData
   (`data["stock"]`).
 - **Stock** (Create's LogisticsManager): the network's stock = the target inventories of the
   packagers its loaded stock links sit on; a link powered with 15 leaves the network (the power is
@@ -3736,7 +3736,7 @@ Pure logic in `core/stock/Logistics.h` (gtests); the unit's contract-style API i
 - **Stock ticker**: right-click the block hands out the payments its shops collected (27 slots);
   otherwise it opens the category editor if a keeper is present ("Seat a mob or blaze burner next
   to this block to use it"). Keepers (Create's isKeeperPresent / getStockTickerPosition): anything
-  riding a seat entity (U22's `levitate:seat` / `levitate:player_seat`; other vehicles don't
+  riding a seat entity (U22's `bearing:seat` / `bearing:player_seat`; other vehicles don't
   count) beside the ticker at its level or one below, or a blaze burner (with a blaze) beside it at
   its level. Right-clicking the keeper (a seated mob, or the blaze burner block) opens the stock
   keeper request screen; with a shopping list in hand it checks out. Category editor: categories
@@ -3859,10 +3859,10 @@ top speed `trainTopSpeed / 20` (28 → 1.4 b/t), turning `trainTurningTopSpeed /
 selected"; junctions refused: `create.track_target.no_junctions`); the direction the player looks
 along the track is the station's direction (trains arrive facing it; the assembly area lies behind).
 Sneak-use in the air clears the selection. As Create's TrackTargetingBlockItem the selection is
-kept on the item stack (item data `lv:track_target`; placing clears it from the held stack), and a
+kept on the item stack (item data `br:track_target`; placing clears it from the held stack), and a
 spot within 0.75 blocks of another edge point is refused (`occupied`). The station block must be
 placed within 16 blocks of the track (`too_far`); without a selection: `missing`; bound: `success`. A
-station is an edge point (`levitate:station`, id `station:<dim>:<x>:<y>:<z>`) at the track block's
+station is an edge point (`bearing:station`, id `station:<dim>:<x>:<y>:<z>`) at the track block's
 centre; it is re-added when the graph is rebuilt. Breaking the block removes it (trains heading there
 re-route; its auto-schedule drops). Right-click: an auto-schedule held → it is given back; otherwise
 the station screen (also with a schedule in hand, as Create). The *auto-schedule* (Create's depot
@@ -3943,7 +3943,7 @@ until it changes); non-cyclic schedules pause when done. New entries: travel + w
 **Conductors.** A scheduled train needs a conductor facing its travel direction (Create's
 checkConductors): a non-player passenger seated (U4 contraption seats) on the seat in the cell behind
 a Train Controls block that faces it (`missing_driver` / `opposite_driver`), or a blaze burner there
-(`levitate:blaze_burner`, U14). Only an entity seated on such a seat takes or gives schedules; a
+(`bearing:blaze_burner`, U14). Only an entity seated on such a seat takes or gives schedules; a
 schedule on another seated mob: `non_controlling_seat`. Right-click a conductor with a schedule: applied
 ("Train is now following this Schedule", item used); with a schedule already running:
 `remove_with_empty_hand`; empty hand: resumes a paused schedule (`continued`) or takes the schedule
@@ -3973,7 +3973,7 @@ and every 5 ticks while one is held; Esc sends {stop: true}. The mouse wheel cha
 5 ticks (one log line per change on the server). The sprint key (Ctrl) is the horn: {honk: true}
 every 5 ticks while held, {honk: false} when released; the server follows Create's HonkPacket
 (`honkTicks` = 20 for a new honk, 13 while held, 6 or 0 on release) and, while it counts down,
-plays the train horn (`levitate.trains.horn`, the low horn for a large whistle; our own synthesised
+plays the train horn (`bearing.trains.horn`, the low horn for a large whistle; our own synthesised
 samples, `tools/sounds/trains.ps1`) at the train's first whistle with Create's pitch
 2^(((small ? 12 : 0) − semitones) / 12), restarted every 18 ticks, and its end sound at 19 and 5
 ticks left; trains without a whistle have no horn (Create's lowHonk null). Vanilla clients honk with
@@ -4037,7 +4037,7 @@ learned transit times and the delays of the stops, a train standing there as "no
 train standing there: "Departs in …", "Cargo Idle for …", "Passengers: n/m", …; nothing on the last
 stop of a non-looping schedule).
 
-**Persistence.** `lv:trains:stations` (stations), `lv:trains:trains` (trains: points, route,
+**Persistence.** `br:trains:stations` (stations), `br:trains:trains` (trains: points, route,
 carriages with their contraption ids, speed, runtime, navigation); carriages persist with U4.
 
 **Commands.** `/create trains` (train summary: networks, stations, every train's status line),
@@ -4073,7 +4073,7 @@ track markers in `src/client/signals/`, contract `src/feature/tracks/SignalsExt.
 **Placing** (Create's TrackTargetingBlockItem, same for both blocks):
 - Right-click a track with the item: selects it with the direction along the track closest to
   the look ("Targeted track selected", click sound). Curves are selected by clicking their track
-  bed (`levitate:fake_track`). Refused (deny sound, red): crossings
+  bed (`bearing:fake_track`). Refused (deny sound, red): crossings
   (`create.track_target.no_junctions`), a spot within 0.75 blocks of another edge point
   (`occupied`; another signal within 0.25 blocks is joined instead: both form one boundary), no
   graph there (`invalid`).
@@ -4081,7 +4081,7 @@ track markers in `src/client/signals/`, contract `src/feature/tracks/SignalsExt.
   (else `too_far`); without a selection `missing`. Success: "Successfully bound to targeted track",
   the selection is used up. Sneak-right-click a block with a selection clears it
   (`create.track_target.clear`). The selection (track, direction, curve point) is stored on the
-  item stack (item data `lv:track_target`) and travels with it; placing clears it from the held
+  item stack (item data `br:track_target`) and travels with it; placing clears it from the held
   stack. While the held stack carries one, the client mod outlines the selected track (Create's
   TrackTargetingClient); the glint of Create's isFoil isn't drawn (§8).
 - The block keeps its target. When the track graph around it is rebuilt or removed, it binds
@@ -4091,7 +4091,7 @@ track markers in `src/client/signals/`, contract `src/feature/tracks/SignalsExt.
 - A curve selection reaches `maxTrackPlacementLength` + 16 blocks.
 
 **Signal boundaries and sections.** A signal block is bound to a boundary edge point (type
-`levitate:signal`) on one of its two sides: side 1 controls trains travelling along the point's
+`bearing:signal`) on one of its two sides: side 1 controls trains travelling along the point's
 edge (node1 → node2), side 0 the other way. Several signal blocks may share a side (one type per
 side; a joining block takes the side's type). Boundaries split the graph into sections (Create's
 signal edge groups): the track reachable from a boundary side without passing another boundary,
@@ -4128,11 +4128,11 @@ sharper than Create's 7/8 rule): green when all of them are green (or invalid), 
 red, yellow when mixed; off when unbound. The block (Create's SignalBlockEntity.enterState) turns
 red only 15 ticks after showing green or yellow; an invalid signal flashes its red lamp (3 of every
 40 ticks); losing the redstone input applies 4 ticks later (SignalBlock.neighborChanged). The block shows it with its
-lamp (`levitate:signal_state`, vanilla clients and the client mod alike). Comparators reading a
-signal output 15 while it is red, 0 otherwise. Redstone input sets `levitate:powered` (the shared
+lamp (`bearing:signal_state`, vanilla clients and the client mod alike). Comparators reading a
+signal output 15 while it is red, 0 otherwise. Redstone input sets `bearing:powered` (the shared
 `redstone::watch`; powered track observers are signal sources there).
 
-**Track observers** (edge point type `levitate:observer`, never shared, can't be within 0.75 of
+**Track observers** (edge point type `bearing:observer`, never shared, can't be within 0.75 of
 another point): powered while a train covers its position, and for 8 ticks after (Create's
 `keepAlive`), with redstone 15 to all sides (`minecraft:redstone_producer` on the powered state;
 the circuit component's strength is set with the state change). The filter slot on
@@ -4148,7 +4148,7 @@ links reading it at once.
 observer (lit while powered), from `signals.overlay` messages (U3 protocol, companions only, sent
 when the markers change and on join). Vanilla clients see the block lamps only.
 
-**Contract** (`feature/tracks/SignalsExt.h`, namespace `lv::feature::tracks::signals`), for U27
+**Contract** (`feature/tracks/SignalsExt.h`, namespace `br::feature::tracks::signals`), for U27
 trains and other units. Train ids are stable strings (Create: the train UUID).
 - `setTrainSpans(id, spans)` / `setTrainExtent(id, trailing, leading)`: the track the train
   covers (spans: edge between two node locations, from/to blocks from the first node; extent:
@@ -4171,7 +4171,7 @@ trains and other units. Train ids are stable strings (Create: the train UUID).
   fluid passes the test); without it filtered observers never trigger.
   `setTrainNameProvider(fn(id) -> name)` for the display source; `observedTrain(pos)`.
 
-Persistence: the blocks (target, bound point, side, cached type and power) in `lv:signals:blocks`;
+Persistence: the blocks (target, bound point, side, cached type and power) in `br:signals:blocks`;
 edge points are stored with the track graph (U5); observer filters in BlockData; sections,
 occupancy and reservations are rebuilt (trains report again after a load).
 
@@ -4187,13 +4187,13 @@ placement transforms, print order, replace modes, checklist, blueprint layout; g
 
 - **Files.** The server keeps each player's schematics in `<mod>/schematics/<player>/` (Create's
   `schematics/uploaded/<player>/`); the client mod's local folder is `<mod>/schematics/` (Create's
-  `schematics/`). Files are `.mcstructure` (what the quill saves, Bedrock block states, Levitate
+  `schematics/`). Files are `.mcstructure` (what the quill saves, Bedrock block states, Bearing
   BlockData kept per block, the block entities' NBT and the entities in the area except players, as
   Create's `fillFromWorld` with entities) or Create/Java `.nbt` (GZIP or raw NBT, block states mapped to Bedrock:
   vanilla ids with Bedrock's renames and flattened families, state names converted; `create:<path>`
-  → `levitate:<path>` with `levitate:axis` / `levitate:facing` / `levitate:<bool>`; states a block
+  → `bearing:<path>` with `bearing:axis` / `bearing:facing` / `bearing:<bool>`; states a block
   doesn't have are dropped, alternatives tried). Block types without a Bedrock block are skipped and
-  listed to the player once per file (`lv.schematics.unmapped`).
+  listed to the player once per file (`br.schematics.unmapped`).
 - **Schematic and quill.** Right-click a block: first, then second corner (clicking the top or
   bottom face of a non-replaceable block selects the block beyond it); with Ctrl (vanilla:
   sprinting) the corner is the block `range` (10, Ctrl-scroll 1..100) blocks along the view. With
@@ -4215,11 +4215,11 @@ placement transforms, print order, replace modes, checklist, blueprint layout; g
   progress bar follows the server, an upload idle for `schematicIdleTimeout` ticks is cancelled, a
   finished file replaces a same-named one (oldest deleted at `maxSchematics`) and becomes the written
   schematic in the output. Vanilla: a form lists the player's files on the server and writes one.
-- **Written schematic.** Item data `lv:schematic` {file, owner, deployed, anchor, rotation 0..3
+- **Written schematic.** Item data `br:schematic` {file, owner, deployed, anchor, rotation 0..3
   (clockwise), mirror (none, left-right = z flip, front-back = x flip), size}; lore shows the file
   (gold) or Create's invalid-item text. Placement = Create's StructurePlaceSettings: mirror, then
   rotation about the anchor. Client mod: the held schematic's ghost (every block with its own model,
-  tessellated as Ponder draws blocks: Levitate geometry from the pack, other blocks through the
+  tessellated as Ponder draws blocks: Bearing geometry from the pack, other blocks through the
   game's block tessellator; blocks hidden on all six sides are left out) and bounds,
   Alt+scroll picks a tool (Position, Move XZ, Move Y, Rotate, Mirror, Print in creative; only
   Position until deployed), Ctrl+scroll uses it (distance / push along the look axis / up-down /
@@ -4227,7 +4227,7 @@ placement transforms, print order, replace modes, checklist, blueprint layout; g
   target block as the bottom centre (Ctrl: at the fixed distance), Print places it instantly
   (creative, `creativePrintIncludesAir`) with the safe part of its block data (Create's
   BlockHelper.prepareBlockEntityData, `core/schematics/SafeData.h`: of vanilla block entities only
-  signs and banners, `create:safe_nbt`; of Levitate BlockData the whole document of Create's
+  signs and banners, `create:safe_nbt`; of Bearing BlockData the whole document of Create's
   SAFE_NBT blocks (links, levers, diodes, funnels, chassis, pistons, bearings, pulleys, motors,
   creative tanks, cart assemblers, sequenced gearshifts, speed controllers, placards, clipboards)
   but the kinetic record and the advancement owner, of other blocks their filter slots and the
@@ -4266,7 +4266,7 @@ placement transforms, print order, replace modes, checklist, blueprint layout; g
   atan2(distance, dy·3 + distance·2) + 10° from vertical, eased over a tick; resting: Create's
   defaultYaw, the placer's yaw (+180° when sneaking) snapped to 16 directions, 40°; sent with the
   aim and again about every 90 ticks while idle)
-  and recoils up to 0.1 block in the 10 ticks after a shot (the block's `levitate:barrel` = 1
+  and recoils up to 0.1 block in the 10 ticks after a shot (the block's `bearing:barrel` = 1
   permutation hides both bones for the client mod's chunk mesh); everyone: smoke at the barrel,
   particles at the target. The block drops itself with its replace mode, Skip missing Blocks and
   Protect Block Entities in the item's data (`schematicannon`; Create's SCHEMATICANNON_OPTIONS,
@@ -4309,7 +4309,7 @@ Client mod only (§8); the server side is `/create ponder`.
   button of the welcome screen: click, press a key, Esc cancels; saved as `ponderKey` in
   `config/ponder.json`) fills it with Create's curve (`p = min(1, p + max(0.25, p) · 0.25)` per tick, about 11
   ticks; released: −0.05 per tick) and opens the item's first scene. `/create ponder` opens the
-  index, `/create ponder <id>` an entry (`shaft`, `levitate:shaft`) or a tag (`kinetic_relays`).
+  index, `/create ponder <id>` an entry (`shaft`, `bearing:shaft`) or a tag (`kinetic_relays`).
 - **Scene player** (PonderUI): "Pondering about..." with the scene title and the subject item
   (tooltip "Subject of this scene"); the scene drawn in 3D with the game's block renderer from
   the south-west, 30° from above (drag with the left button to turn it); scene dots; the timeline
@@ -4332,7 +4332,7 @@ Client mod only (§8); the server side is `/create ponder`.
   "Ponder Index" lists every entry.
 - **Command**: `/create ponder [id]` (anyone) resolves the id on the server (index + tags) and
   sends `ponder.open {id}` to a companion; the console gets "Only players can ponder.", vanilla
-  clients "Ponder needs the Levitate client mod.", unknown ids "There is nothing to ponder about
+  clients "Ponder needs the Bearing client mod.", unknown ids "There is nothing to ponder about
   <id>.".
 - **Log lines** (e2e): `ponder: loaded N scenes for M entries`, `ponder: hovering <id>`,
   `ponder: held <key> over <id>`, `ponder: Ponder key set to <key>`, `ponder: opened <id> (N scenes)`, `ponder: scene <id> (i/n) of
@@ -4351,8 +4351,8 @@ mirrors, WorldshaperItem / TerrainBrushes / TerrainTools / FlattenTool / Placeme
 LinkedControllerItem / LinkedControllerServerHandler / LecternControllerBlock, SandPaperItem,
 TreeFertilizerItem, CEquipment). Code: `src/core/equipment/` (inventory, mirrors, brushes, air and
 projectile numbers; gtest), `src/feature/equipment/`, `src/client/equipment/`. Block data lives in
-BlockData `data["equipment"]`; item data in the stack's user data (`lv:toolbox`, `lv:air`,
-`lv:symmetry`, `lv:shaper`, `lv:controller`).
+BlockData `data["equipment"]`; item data in the stack's user data (`br:toolbox`, `br:air`,
+`br:symmetry`, `br:shaper`, `br:controller`).
 
 **Toolboxes.** Comparator output (U36): calcRedstoneFromInventory over the 32 slots; the lectern
 controller gives 15. 8 compartments × 4 stacks. A compartment locks to the first item put in (its
@@ -4383,7 +4383,7 @@ empty).
   Vanilla players use `/create toolbox` (a form with the same entries).
 - *Lid and drawers*: while any player has the toolbox screen open (native or form; closed by Esc,
   the form's close, leaving, or moving more than 8 blocks away) the block state
-  `levitate:toolbox_lid` is 1: vanilla clients show the open model (lid 135° back, drawers out). The
+  `bearing:toolbox_lid` is 1: vanilla clients show the open model (lid 135° back, drawers out). The
   client mod meshes the body only (state 2) and animates lid and drawers like Create's
   ToolboxRenderer (lid linear 0.2 per tick to 135°, drawers exponential 0.2, lower 0.35 / upper
   0.175 blocks). Sounds: iron door + chest open on the first opener, chest close when the last
@@ -4411,8 +4411,8 @@ low", gold) and to 1 ("⚠ Backtank pressure depleted", red).
   netherite (diving) boots: fire immunity (fire resistance, refreshed). Each netherite diving piece
   adds 3 armour toughness and 0.1 knockback resistance (Create: netherite armour material).
 - *Fog* (Create's ClientEvents#getFogDensity): a worn diving helmet pushes the fog layer
-  `levitate:diving_helmet` (water fog 6.25 times as far: 0..375 blocks), the netherite one
-  `levitate:netherite_diving_helmet` (also lava fog 0..20 blocks); fog layers live in
+  `bearing:diving_helmet` (water fog 6.25 times as far: 0..375 blocks), the netherite one
+  `bearing:netherite_diving_helmet` (also lava fog 0..20 blocks); fog layers live in
   `assets/pack/rp/fogs/` and reach vanilla clients through PlayerFogPacket.
 - *Diving boots*: in water (not swimming, not flying): sinking (vy − 0.05 per tick, a jump on the
   ground +0.5) and walking speed ×1.3 below 0.145 blocks per tick. The client mod applies this to its
@@ -4425,7 +4425,7 @@ low", gold) and to 1 ("⚠ Backtank pressure depleted", red).
   otherwise); the client mod moves its own player, vanilla players get it as motion packets (U59).
 - *Comparator*: a placed backtank gives fractionToRedstoneLevel(air / max air) (U59).
 - *Capacity* (backtanks) and *Potato Recovery* (potato cannon), levels I–III, weight 10, cost
-  15 + 15·(L−1) .. 45 + 15·(L−1), are kept in the item's user data (`lv:enchants`) and shown as lore
+  15 + 15·(L−1) .. 45 + 15·(L−1), are kept in the item's user data (`br:enchants`) and shown as lore
   lines (`enchantment.create.*`). The enchanting table rolls them per option with Java's algorithm
   (the player's enchantment seed + option; books too); anvils merge them (equal +1, else the higher,
   +1 cost per level); grindstones remove them (§8).
@@ -4451,7 +4451,7 @@ pumpkin pie 7/15/1.1/0.05, cake 8/15/1.1/0.1, blaze cake 15/20/1.1/0.3 (fire 12 
 salmon, cooked, tropical) 4/10/1.3/0.6, pufferfish 4/10/1.1/0.4 (pufferfish effects), suspicious
 stew 3/40/0.8/0.2 (drops the bowl; a hit gives the stew's own effects: Bedrock's table per aux
 value, U59). Knockback × 0.6 along the shot; endermen take damage only; a
-powered wither is immune. Each projectile is a `levitate:potato_projectile` entity drawn from the
+powered wither is immune. Each projectile is a `bearing:potato_projectile` entity drawn from the
 resource pack (also by vanilla clients) with the ammo's texture and Create's render mode (tumbling
 billboard; along the motion with spin 1 for carrot, fish, pufferfish and suspicious stew, spin 2 for
 golden carrot and beetroot; melon and pumpkin as small blocks); it is not saved with the world.
@@ -4463,7 +4463,7 @@ villager with weakness, else give the golden apple effects. A hit that hurts not
 otherwise, unless the hit used the item up, the item comes back with the recovery chance (0, or
 12.5 % + 12.5 % per Potato Recovery level; first projectile of a split only), else the type's drop
 (a bowl for suspicious stew). Crops plant only from the top face; melons and pumpkins that hit a
-side fall as a falling block. Sounds: `levitate.potato_cannon.fwoomp` (original), the hit = item
+side fall as a falling block. Sounds: `bearing.potato_cannon.fwoomp` (original), the hit = item
 frame break + roots break. Glow berries / glistering melon give no glowing (§8). U59: a hit on a
 block runs the block's projectile hit first (vanilla bells ring, targets fire; Create's bells ring
 when hit on a side they ring from); a kill reads Create's "was shot by …'s Potato Cannon" (".item"
@@ -4479,7 +4479,7 @@ diagonal when |yaw mod 90| is in 22..67. Right-click the air disables it (the mi
 sneak-right-click opens the screen (Mirror: Mirror Once / Rectangular / Octagonal, Orientation).
 Every enabled wand in the hotbar mirrors blocks placed within `maxSymmetryWandRange` (50) of its
 mirror (horizontal reflections about the mirror block; 1 / 3 / 7 copies), turning their states
-(Bedrock's structure transform for vanilla blocks, `levitate:facing` for ours); survival copies use
+(Bedrock's structure transform for vanilla blocks, `bearing:facing` for ours); survival copies use
 the block's item each (redstone for wire, a sign item for a sign; Create's findAndRemoveInInventory)
 and need a replaceable, breakable spot, creative copies overwrite what is there; breaking breaks the
 mirrored blocks (survival: same block only, with drops). Every enabled wand in the hotbar shows
@@ -4490,7 +4490,7 @@ triple mirror; Create's SymmetryHandler#onRenderWorld, U59).
 **Handheld worldshaper** (Creative Worldshaper; creative tab only). Left-click — on a block or into
 the air (Bedrock's missed-swing input flag) — picks the block looked at within 128 blocks as the
 material (Create's trySelect: "Using: …", the confirm sound; not blocks without an item, block
-entities, Levitate blocks with data, double-block halves, attached or hanging blocks, bed parts; the
+entities, Bearing blocks with data, double-block halves, attached or hanging blocks, bed parts; the
 same block again changes nothing; leaves are kept persistent). A left click never breaks a block.
 Sneak-right-click opens the screen (brush, its parameters, tool, placement, pattern);
 right-click shapes at the looked-at block up to 128 blocks away (2-tick cooldown; "Shift-Right-Click
@@ -4556,9 +4556,9 @@ turned clockwise). Ringing lasts 74 ticks; the client mod draws the bell swingin
 (`equipment.bell.ring`, BellRenderer: `1.2 sin(t / 1.5 / π) / (2.5 + t / 4.5)` rad about the axis
 across the hit; the chunk mesh has the frame only), vanilla clients see the bell still (§8).
 Sounds: the peculiar bell = the vanilla bell at volume 2, pitch 0.94; the haunted bell its own toll
-(`levitate.haunted_bell.use`, original, volume 4). A peculiar bell above soul fire or a soul campfire
+(`bearing.haunted_bell.use`, original, volume 4). A peculiar bell above soul fire or a soul campfire
 (placed there, or when the block below changes) becomes a haunted bell with the same states, with
-15..24 soul fire flames and `levitate.haunted_bell.convert` (original). A haunted bell placed (also
+15..24 soul fire flames and `bearing.haunted_bell.convert` (original). A haunted bell placed (also
 by conversion) stirs for 20 ticks: now and then a soul particle rises with a soul-escape sound.
 - *Haunted bell*: ringing it (not again while it rang less than 65 ticks ago) sends a soul pulse of
   10 blocks and awards `haunted_bell` to the player. Holding it in either hand (not spectating)
@@ -4572,8 +4572,8 @@ by conversion) stirs for 20 ticks: now and then a soul particle rises with a sou
   no glass / leaves / ice / barrier / bedrock / magma and gives less than 14 light; the spot and the
   block above without full collision, signal, liquid, rail or harmful block; a 0.2 × 0.75 dummy at
   its centre touches no collision box); pulses that don't overlap never mark a spot another running
-  pulse marked. A marked spot with block light 0 gets the soul particle (`levitate:soul`, 24
-  frames: forming, flickering, rising away, ~6 s) and the flat base ring (`levitate:soul_base`,
+  pulse marked. A marked spot with block light 0 gets the soul particle (`bearing:soul`, 24
+  frames: forming, flickering, rising away, ~6 s) and the flat base ring (`bearing:soul_base`,
   4.5–7 s). A pulse of the same origin and size as one still expanding is not started again (it
   would mark nothing new: a held bell asks nearly every tick).
 - *Contraptions*: brittle, hanging on their attachment side; the bell sounds when the contraption
@@ -4582,7 +4582,7 @@ by conversion) stirs for 20 ticks: now and then a soul particle rises with a sou
 **Cardboard armour** (U49, Create's CardboardArmorItem / CardboardArmorHandler(Client) /
 CardboardArmorStealthOverlay; `Cardboard.cpp`). A player in all four pieces who sneaks and isn't
 flying hides as a box: the server makes the player invisible (no body, armour, held item or name on
-any client) and keeps a `levitate:cardboard_disguise` entity at the player's feet, turned with the
+any client) and keeps a `bearing:cardboard_disguise` entity at the player's feet, turned with the
 player — one of the four plain package boxes (U25's models; random each time hiding starts), bobbing
 while the player walks, not drawn for a camera closer than 1.8 blocks (Create: not in first person);
 it takes no damage, has no collision and is removed when the player stops hiding, leaves or changes
@@ -4599,7 +4599,7 @@ trim on the attachables (checked in the client e2e). The item description (`item
 four pieces.
 
 **Cardboard sword** (U49, Create's CardboardSwordItem / KnockbackPacket). Hitting a living entity
-that is not an arthropod does no damage: the "Resonant bonk" (`levitate.cardboard_sword.bonk`,
+that is not an arthropod does no damage: the "Resonant bonk" (`bearing.cardboard_sword.bonk`,
 original, .75 / 1.85) and a knockback of `(2 + Knockback + 1 when sprinting) / 2` along the
 attacker's look (minus knockback resistance; upward `min(.4, vy / 2 + strength)` on the ground;
 the target dismounts); creatures (not monsters, water mobs, ambient mobs or players) get slowness
@@ -4623,7 +4623,7 @@ inventory criteria; visibility; tree layout; gtest), `src/feature/advancements/`
   with "§7(Hidden Advancement)"). Types: silent (no toast), normal (toast), noisy (toast + chat),
   expert (goal frame, toast + chat), secret (goal frame, toast + chat, hidden until done). The root
   is awarded for free (silent).
-- **Progress**: per player (uuid) in the world DB, `lv:advancements:player:<uuid>` `{done: [ids]}`.
+- **Progress**: per player (uuid) in the world DB, `br:advancements:player:<uuid>` `{done: [ids]}`.
   On unlock: client mod: Create's toast at the top right (5 s, "Advancement Made!" / "Goal
   Reached!", icon, title); vanilla: the game's toast (ToastRequestPacket); announce types: the chat
   line "<player> has made the advancement [<title>]" / "has reached the goal [...]" to every player
@@ -4635,7 +4635,7 @@ inventory criteria; visibility; tree layout; gtest), `src/feature/advancements/`
   itself / parent / grandparent that is done or hidden is done. `/create advancements grant|revoke
   <id>` (op) changes the caller's progress.
 - **Owners** (Create's AdvancementBehaviour): the player who placed a block with block advancements
-  (Create's registerAwardables list per block entity) is remembered (`lv:advancements:owners`) until
+  (Create's registerAwardables list per block entity) is remembered (`br:advancements:owners`) until
   they have all of them; placements are seen through the interaction dispatch two ticks after the
   click (also units' own placements); units placing blocks otherwise call `setOwner`. Units award
   with `award(player, id)`, `awardOwner(pos, id)` and `awardOwnerIfNear(pos, id, distance)`.
@@ -4697,7 +4697,7 @@ inventory criteria; visibility; tree layout; gtest), `src/feature/advancements/`
   train_crash (a collision: every seated player but the driver) / train_crash_backwards (the player
   who drove it backwards that tick), long_travel (a player leaves a train seat ≥ 5000 blocks from
   where they sat down).
-- **Not fired**: train_portal (Levitate's trains don't cross dimensions through portal tracks yet).
+- **Not fired**: train_portal (Bearing's trains don't cross dimensions through portal tracks yet).
 - **Fired with their content (U49)**: cuckoo_clock (the creeper animation of a turning cuckoo
   clock starts: its owner within 32 blocks, transmission), haunted_bell (a player rings a haunted
   bell, equipment), cardboard_armor (a sneaking player in full cardboard armour starts hiding,
@@ -4711,14 +4711,14 @@ Rules the build and the review keep for every unit (U35):
 - **Integer block states run 0..n.** Bedrock reads a list-valued integer state by its position in the
   list, so every integer state list in `assets/pack/bp/blocks/` must be `[0, 1, ..., n]`;
   `tools/xmake/assemble.lua` fails the build otherwise (no exceptions). Chutes (U12):
-  `levitate:facing` 0 down, 1..4 north / south / west / east (diagonal), `levitate:shape` 0 normal,
-  1 window, 2 intersection, 3 encased; smart chutes `levitate:powered` [0, 1]. A unit whose state
+  `bearing:facing` 0 down, 1..4 north / south / west / east (diagonal), `bearing:shape` 0 normal,
+  1 window, 2 intersection, 3 encased; smart chutes `bearing:powered` [0, 1]. A unit whose state
   values are not its natural numbers converts at its edges (placement, rotation handler,
   schematic mapping).
 - **One definition per string.** A Create string uses Create's key, Create's en_US text and its official
-  zh_CN text (placeholders as `{0}`); Levitate-only copies of Create strings are not added.
+  zh_CN text (placeholders as `{0}`); Bearing-only copies of Create strings are not added.
   Shared generic keys (`create.generic.unit.*`, `create.action.*`, `create.schedule.condition.threshold.*`
-  units, `create.gui.schedule.move_*`, `create.logistics.filter.*`, `lv.common.filter.empty`, vanilla fluid
+  units, `create.gui.schedule.move_*`, `create.logistics.filter.*`, `br.common.filter.empty`, vanilla fluid
   names `fluid_type.minecraft.*`) are defined in `common.json` (U3); other units reference them with
   `tr(key, "English fallback")`, the fallback being the en_US text. Ponder step texts (U30) are the
   scenes' own.
@@ -4752,7 +4752,7 @@ Each screen: native (client mod) + form fallback (vanilla). Owner unit in bracke
 
 ## 5. Configuration
 
-One section per unit (`config/<unit>.json`, `LV_REGISTER_CONFIG`). Keys mirror Create's server
+One section per unit (`config/<unit>.json`, `BR_REGISTER_CONFIG`). Keys mirror Create's server
 config (CKinetics, CStress, CLogistics, CFluids, CTrains, CSchematics, CEquipment, CRecipes, CWorldGen)
 with the same defaults; each unit lists its keys here in its PR. Create's config GUI is
 `/create config [section]` (U42): the sections, then a scrolled list of the section's booleans,
@@ -4817,7 +4817,7 @@ keys and defaults), `maxSuperGlueRange` 24, `glueOutlines` true, `unmovableBlock
 `config/goggles.json` (U8): Create's CClient keys `enableTooltips` (true),
 `enableOverstressedTooltip` (true), `overlayOffsetX` (20), `overlayOffsetY` (0),
 `customColorsOverlay` (false), `customBackgroundOverlay` (0xf0100010), `customBorderTopOverlay`
-(0x505000ff), `customBorderBotOverlay` (0x5028007f) — read by the client mod — and Levitate's
+(0x505000ff), `customBorderBotOverlay` (0x5028007f) — read by the client mod — and Bearing's
 `vanillaOverlay` (true: overlay for vanilla clients), `vanillaOverlayHud` (true: the resource
 pack's HUD panel; false: the action bar; U52) and `overlayInterval` (4 ticks).
 `config/pipes.json` (U17): `mechanicalPumpRange` (16), `pipesPlaceFluidSourceBlocks` (true) (Create's
@@ -4825,7 +4825,7 @@ CFluids keys and defaults), `waterSourceConversion` (true) and `lavaSourceConver
 rules of the same names, which decide whether a drained source refills).
 `config/basin.json` (U14): Create's CRecipes `bulkPressing` (false), `allowShapelessInMixer` (true),
 `allowShapedSquareInPress` (true), `allowBrewingInMixer` (true, no effect until U19's potion fluids);
-Levitate: `basinIntakeInterval` (1 tick), `burnerParticles` (true).
+Bearing: `basinIntakeInterval` (1 tick), `burnerParticles` (true).
 `config/belts.json` (U11): `maxBeltLength` 20, `maxEjectorDistance` 32, `ejectorScanInterval` 120
 (Create's CKinetics keys and defaults), `displayItems` true (show items on belts / depots / in flight as item entities, §8).
 `config/bearings.json` (U21, Create's CKinetics keys and defaults): `windmillSailsPerRPM` 8,
@@ -4868,7 +4868,7 @@ generators' own behaviour (U7, U18, U21), not a config value.
 `poweredTrainAcceleration` (3). (`maxTrackPlacementLength` is in `config/tracks.json`, U5.)
 
 `config/gaps.json` (U37): Create's CClient `enableAmbientSounds` (true) and `ambientVolumeCap` (0.1),
-applied by the server for everyone; `rotationIndicators` (true, Levitate switch for the goggles
+applied by the server for everyone; `rotationIndicators` (true, Bearing switch for the goggles
 particles). See §3.1 Kinetic feedback.
 `config/generators.json` (U7): `crankHungerMultiplier` (0.01, exhaustion per hand crank use per RPM).
 
@@ -4883,24 +4883,24 @@ UI pass), `placeholderColour` (outline of unregistered blocks).
 
 | Command | Who | Owner |
 |---|---|---|
-| `/create reload`, `/create selftest ["glob"]` (`/create` has the aliases `/levitate` and `/c`, Create's `/c` shortcut) | op | foundation |
+| `/create reload`, `/create selftest ["glob"]` (`/create` has the aliases `/bearing` and `/c`, Create's `/c` shortcut) | op | foundation |
 | `/create clone <begin> <end> <destination> [skipBlocks]` (Create's CloneCommand: the blocks of the area with their block entities and BlockData to `destination` (its min corner), then every glue region overlapping the area, cropped to it (single-block crops skipped); `skipBlocks`: the glue only. At most 32768 blocks (Java's default `commandModificationBlockLimit`), both areas loaded; replies "Successfully cloned N Blocks" / "Successfully applied glue N times"; without arguments the usage line) | op | U32 |
-| `/create debuginfo` (Create's DebugInfoCommand: "Collecting debug information...", then the report in chat and the log, Create's `<details><summary>Server Info</summary>` block with the Levitate, System Information and Other Mods sections: mod, LeviLamina and Minecraft versions, network protocol, platform, OS, other mods; on a local world of the client build it is also copied to the host's clipboard, "Debug information has been copied to your clipboard.") | anyone | U32 |
+| `/create debuginfo` (Create's DebugInfoCommand: "Collecting debug information...", then the report in chat and the log, Create's `<details><summary>Server Info</summary>` block with the Bearing, System Information and Other Mods sections: mod, LeviLamina and Minecraft versions, network protocol, platform, OS, other mods; on a local world of the client build it is also copied to the host's clipboard, "Debug information has been copied to your clipboard.") | anyone | U32 |
 | `/create util replaceInCommandBlocks <begin> <end> <toReplace> <replaceWith>` and its redirect `/create u ...` (Create's ReplaceInCommandBlocksCommand: in every command block of the area, `toReplace` as a regular expression (Java's `replaceAll`) is replaced; "Replaced occurrences in N blocks." counts the commands containing it literally, "Couldn't find \"x\" anywhere." when none) | op | U32 |
 | `/create kinetics <pos>` (dump network: speed, stress, sources) | op | U2 |
 | `/create killtrain <name\|id>` (Create's `/create train remove`), `/create trains` (train summary), `/create train tp <name\|id>` (creative / spectator) | op | U27 |
 | `/create glue <from> <to>` (Create's GlueCommand: glues the box) | op | U4 |
-| `/create glue clear [radius]` (Levitate only: removes the regions near the sender; default 16) | op | U4 |
+| `/create glue clear [radius]` (Bearing only: removes the regions near the sender; default 16) | op | U4 |
 | `/create contraption assemble <x y z> [axis]` / `move <id> <dx dy dz> [ticks]` / `rotate <id> <axis> <degrees> [ticks]` / `stop <id>` / `disassemble <id>` / `list` / `demo` / `chassis <x y z> <range>` (test anchor) | op | U4 |
 | `/create ponder [id]` (client mod; no id: the index; an entry or a tag id) | anyone | U30 |
 | `/create highlight <pos>` | op | U3 |
 | `/create schematic list` (the caller's stored schematics), `/create schematic give <file>` (op: a written schematic of one of them) | anyone / op | U29 |
 | `/create overlay` (overlay position screen, client mod) / `/create overlay reset` | anyone | U8 |
 | `/create pipes <pos>` (pressures, flows and transfers of a pipe) | op | U17 |
-| `/create steam <pos>` (tank / boiler goggle lines) / `steam <pos> fill <fluid> <mB>` (Levitate debug: fills, or drains when negative, through the fluid capability) | op | U18 |
-| `/create display text <x y z> <line> <text>` / `bind <x y z> <tx ty tz> <source>` (Levitate debug) | op | U24 |
+| `/create steam <pos>` (tank / boiler goggle lines) / `steam <pos> fill <fluid> <mB>` (Bearing debug: fills, or drains when negative, through the fluid capability) | op | U18 |
+| `/create display text <x y z> <line> <text>` / `bind <x y z> <tx ty tz> <source>` (Bearing debug) | op | U24 |
 | `/create toolbox` (the toolbox radial menu as a form, for players without the client mod) | anyone | U31 |
-| `/create toolbox lid <x y z> <ticks>` (Levitate debug: holds a toolbox lid open; 0 releases) | op | U45 |
+| `/create toolbox lid <x y z> <ticks>` (Bearing debug: holds a toolbox lid open; 0 releases) | op | U45 |
 | `/create advancements` (Create's advancement tree: native for the client mod, a form otherwise) / `advancements grant\|revoke <id>` (the caller's progress) | anyone / op | U45 |
 | `/create config [section]` (Create's config screen: sections, then their entries; native for the client mod, forms otherwise; changing a value needs op) | anyone / op | U42 |
 
@@ -4908,7 +4908,7 @@ UI pass), `placeholderColour` (outline of unregistered blocks).
 
 Create's English wording and key names (`create.*`) for every string that exists in Create, e.g.
 `create.gui.goggles.kinetic_stats`, `create.gui.stressometer.overstressed`, `create.tooltip.stressImpact`.
-Levitate-only strings use `lv.<unit>.*`. Each unit owns the keys of its features (en_US + zh_CN; zh_CN
+Bearing-only strings use `br.<unit>.*`. Each unit owns the keys of its features (en_US + zh_CN; zh_CN
 matches Create's official Chinese translation wording).
 
 U59: every item with a Create description has its `<key>.tooltip.*` lines (summary, conditions,
@@ -4923,7 +4923,7 @@ goggle-overlay providers of the owning units.
 
 ## 8. Not ported
 
-| Create feature | Why | What Levitate does instead |
+| Create feature | Why | What Bearing does instead |
 |---|---|---|
 | Animated parts / contraptions for **vanilla** clients | Bedrock has no client-side rendering hooks without a client mod | static block models; a moving contraption is drawn as one falling-block display entity per block, moved by the server (respawned when it drifts half a block); the client mod draws everything as Create does |
 | JEI/EMI recipe viewers | third-party Java mods with no Bedrock counterpart | recipes visible in Ponder/tooltips; the configs are edited with `/create config` (U42) or as JSON + `/create reload` |
@@ -4933,10 +4933,10 @@ goggle-overlay providers of the owning units.
 | Contraption blocks drawn as one rotating model on **vanilla** clients (U4) | a vanilla client draws a falling-block entity axis-aligned and can't be told to turn it | each block is its own falling-block entity at its exact rotated position, showing the block turned by the nearest quarter turn; the client mod turns each block by the remaining angle so the structure looks exact. Displays carry no gravity (actor flag HasGravity off, NoAI on; set again after the entity is added), so a vanilla client, which simulates falling blocks itself, doesn't drop a block that has no real block under it (a train carriage over its bogey) |
 | Container menus of mounted inventories (U53, Create's MountedItemStorage#handleInteraction) | a Bedrock client opens a container screen only for a container block (or entity) it has in its world; a carried chest exists only in the contraption's data | a right-click on a carried container opens a form listing its stacks: a button takes a stack out, another puts the held stack in |
 | Smooth contraption motion on **vanilla** clients (U34) | a vanilla client never applies the movement packets of a falling block that isn't falling: it stays where it was spawned | while a vanilla player is in the dimension, each display entity is spawned again at its place once it is half a block away (at most every 4 ticks per block, and where it comes to rest), so vanilla players see the structure move in half-block steps; the client mod moves the displays smoothly from the contraption's motion |
-| Curved tracks drawn for **vanilla** clients (U5) | Bedrock block models are fixed per block state; a curve is not a block | the client mod draws the curve; vanilla clients see the straight end tracks and a track bed (`levitate:fake_track`) on every block the curve passes through |
+| Curved tracks drawn for **vanilla** clients (U5) | Bedrock block models are fixed per block state; a curve is not a block | the client mod draws the curve; vanilla clients see the straight end tracks and a track bed (`bearing:fake_track`) on every block the curve passes through |
 | Tilted track block drawn for **vanilla** clients (U5, U48) | Bedrock block models are fixed per state; the ramp's angle is a real number per block | the curves, the graph and the trains follow Create's tilt for every client (§3.5); the client mod draws the block turned onto the ramp; vanilla clients see the flat block between the two curves' track beds |
 | Smooth gauge needle for **vanilla** clients (U6) | block models are static per state; cube rotations are limited to 22.5° steps | the needle state snaps to the nearest 22.5°; the client mod draws the eased needle |
-| Moving cuckoo clock hands, doors and figure for **vanilla** clients (U6, U49) | block models are static per state and turn cubes only in 22.5° steps | the hands are pixel steps in 12 positions each (`levitate:hour`, `levitate:minute` in 5-minute steps), the doors stand open with the figure out while Create's doors are past half open (`levitate:cuckoo`); the client mod draws Create's chasing hands, swinging doors and sliding figure |
+| Moving cuckoo clock hands, doors and figure for **vanilla** clients (U6, U49) | block models are static per state and turn cubes only in 22.5° steps | the hands are pixel steps in 12 positions each (`bearing:hour`, `bearing:minute` in 5-minute steps), the doors stand open with the figure out while Create's doors are past half open (`bearing:cuckoo`); the client mod draws Create's chasing hands, swinging doors and sliding figure |
 | Flywheel collision and selection beyond its block (U49) | JSON collision / selection boxes are at most 16 px and inside the block | the 28 px wheel collides and is selected as its own block |
 
 | Valve handle "holding opens the angle board" for **vanilla** clients (U7) | the server sees no held button (value box row) | client mod: as Create; vanilla: a click turns the handle, the wrench on its front opens the form |
@@ -4952,7 +4952,7 @@ goggle-overlay providers of the owning units.
 | Sliding door animation for **vanilla** clients (U10) | Bedrock models are static per state and must fit 30 px | the client mod draws the panel sliding / folding (Create's 0.15 per tick, eased); vanilla clients see the open state clipped to the model bounds, no animation |
 | Item on the placard, copycat material, brackets drawn on **vanilla** clients (U10) | a block model can't show another item / block | the data and every behaviour exist on both; the client mod draws the placard's item (display item, U33), the copycat in its material (Create's cropped panel / step models) and the bracket on its shaft or cogwheel; vanilla clients see the placard frame, the copycat base and the plain shaft |
 | Items riding belts / held on depots / thrown by ejectors drawn by the belt renderer, for **vanilla** clients (U11) | Bedrock has no item renderer for vanilla clients | the client mod draws each stack (display items, U33: lying, half size, a pile for bigger stacks, interpolated between ticks) and does not draw the fallback; vanilla players see each stack as an item entity (no pickup, no despawning, they don't merge by themselves, teleported along the belt every tick); with `displayItems` off they see nothing |
-| `/create debuginfo` copied to the clipboard on **remote** clients, its Graphics section (U32) | the server can't reach a Bedrock client's clipboard or renderer; Java's JVM / GPU entries don't exist for a native mod | the report is printed in chat and the log; only the host of a local world of the client build gets it in the clipboard; sections Levitate (mod, LeviLamina, Minecraft, protocol, platform), System Information (OS) and Other Mods |
+| `/create debuginfo` copied to the clipboard on **remote** clients, its Graphics section (U32) | the server can't reach a Bedrock client's clipboard or renderer; Java's JVM / GPU entries don't exist for a native mod | the report is printed in chat and the log; only the host of a local world of the client build gets it in the clipboard; sections Bearing (mod, LeviLamina, Minecraft, protocol, platform), System Information (OS) and Other Mods |
 | `/create clone` copying scheduled block ticks (U32) | Bedrock exposes no tick-list copy | blocks, block entities, BlockData and glue are cloned; pending ticks are not |
 | Items drawn inside chutes by a block entity renderer, for **vanilla** clients (U12) | custom blocks have no block entity renderers | the client mod draws the moving stack (display item, U33, interpolated); vanilla clients get client-only item entities (packets only, never a server entity, so nobody can pick them up) that follow each moving stack |
 | Smooth (lerped) funnel flaps for **vanilla** clients (U12) | no per-frame block animation for custom blocks without a renderer | the flap is a block state shown for 4 ticks after a transfer; the client mod draws Create's four swinging strips |
@@ -4963,12 +4963,12 @@ goggle-overlay providers of the owning units.
 | Item held by a deployer drawn in its moving hand, item held between the arm's moving claws, for **vanilla** clients (U15, U54) | custom blocks have no block entity renderers: vanilla clients see static models | the client mod draws the held item in the moving hand and between the arm's claws (world item renderer, U33; the server sends the stack with the animation state); vanilla clients get a client-only item entity (`feature/common/VanillaItems.h`) in front of the deployer's face and under the static arm's head, which doesn't follow the (unanimated) hand or claw |
 | Transitional item progress bar for **vanilla** clients (U15, U54) | a vanilla client draws an item bar only from durability (`minecraft:durability`), and durability makes the item repairable: two incomplete items would combine in the crafting grid, an anvil or a grindstone, which Create's never do | the client mod draws Create's bar (width and colour from the progress, which the server mirrors into the stack's aux value); vanilla clients see no bar. The tooltip is Create's: the item's lore in the server's language for vanilla clients, rebuilt in the game's language by the client mod |
 | Crafter items drawn on the crafter's face by a block entity renderer, for **vanilla** clients (U16, U54) | custom blocks have no block entity renderers | the client mod draws the slot item, the grouped grid, the exported grid sliding to the next crafter and the growing result with the world item renderer (U33); vanilla clients get each crafter's slot item as a client-only item entity in front of its face (`feature/common/VanillaItems.h`), not the grid's animation; every client sees the blocks, the crit particles, the sounds and the result popping out |
-| Glass pipe flow fronts for **vanilla** clients (U17) | no client-side rendering without the client mod; a block state per progress step, face and fluid would not fit | the client mod draws Create's advancing fronts; vanilla clients see the glass pipe's `levitate:fluid` state fill the whole pipe as soon as a flow starts |
+| Glass pipe flow fronts for **vanilla** clients (U17) | no client-side rendering without the client mod; a block state per progress step, face and fluid would not fit | the client mod draws Create's advancing fronts; vanilla clients see the glass pipe's `bearing:fluid` state fill the whole pipe as soon as a flow starts |
 | Fluid inside tanks and the moving engine piston for **vanilla** clients (U18) | no client-side rendering without the client mod; a fluid level per block would need a block state per level and fluid | the client mod draws them; vanilla clients see the tank (windows show an empty inside) and a static engine |
 | Boiler gauges for **vanilla** clients (U18) | the needle moves with the boiler level: client-side drawing (the client mod draws the gauges); a block state per needle position and side would need hundreds of tank states | vanilla clients see the boiler without gauges; the goggle overlay (U8, with Engineer's Goggles, also in the action bar of vanilla clients) and `/create steam` show the same status |
 | Item drain fluid, the turning valve pointer and the moving whistle mouth for **vanilla** clients (U17, U18, U19) | client-side drawing of continuous values; a block state per level / angle and fluid would multiply the blocks' states | the client mod draws them; vanilla clients see the static models (the valve handle switches between closed and open) |
-| The fluid inside the spout (U19) | Create's SpoutRenderer draws the tank's fluid inside its see-through casing; Levitate's original spout model is a closed box, so there is nothing to see it through | nobody sees it (the goggles show the spout's fluid); a spout model with an open casing would let the client mod draw it |
-| Flowing honey/chocolate in the world (U19) | Bedrock has no data-driven custom fluids: a custom block can't flow, be swum in or use the fluid renderer | they exist everywhere fluids are handled (pipes, tanks, basins, spouts, drains, buckets); in the world a bucket or a hose pulley places a translucent, non-colliding, non-flowing source block (`levitate:honey` / `levitate:chocolate`) that buckets and hose pulleys pick up again; entities in it are slowed (Slowness II) and take no fall damage instead of Create's viscous fluid motion; lava touching it turns into obsidian / limestone / scoria; no fog colour under it |
+| The fluid inside the spout (U19) | Create's SpoutRenderer draws the tank's fluid inside its see-through casing; Bearing's original spout model is a closed box, so there is nothing to see it through | nobody sees it (the goggles show the spout's fluid); a spout model with an open casing would let the client mod draw it |
+| Flowing honey/chocolate in the world (U19) | Bedrock has no data-driven custom fluids: a custom block can't flow, be swum in or use the fluid renderer | they exist everywhere fluids are handled (pipes, tanks, basins, spouts, drains, buckets); in the world a bucket or a hose pulley places a translucent, non-colliding, non-flowing source block (`bearing:honey` / `bearing:chocolate`) that buckets and hose pulleys pick up again; entities in it are slowed (Slowness II) and take no fall damage instead of Create's viscous fluid motion; lava touching it turns into obsidian / limestone / scoria; no fog colour under it |
 | Hose drawn for **vanilla** clients (U19) | Create draws the hose with a block entity renderer; a block in its place would block the fluid it hangs in. Bedrock has no block display entity: the only stand-in is a falling block actor per hose block, which on Bedrock falls and lands as a block unless the server keeps holding it (the contraption engine does that for its own actors through server hooks); a hose reaches `hosePulleyRange` (128) blocks, so one pulley could need up to 128 server entities per hanging hose, moved every tick it winds. Judged too costly for a decoration | the client mod draws the hose and its end piece; vanilla clients see the pulley only (draining and filling work the same) |
 | Spout stream and nozzle squeeze for **vanilla** clients (U19) | no client-side animation without the client mod | the client mod draws Create's stream and squeezes the nozzle; vanilla clients see the static nozzle and the drops and splash (particles, every client) and hear the sounds |
 | Ropes / elevator belts of *moving* pulleys for **vanilla** clients (U20) | the rope length changes every tick; it can't be a rigid contraption block, and placing rope blocks while moving would collide with riders | the client mod draws rope, belt and magnet; vanilla players see the moving structure, and the ropes and magnet as blocks once it stops |
@@ -4982,9 +4982,9 @@ goggle-overlay providers of the owning units.
 | Display board text for **vanilla** clients (U24) | no client-side text rendering on blocks without the client mod | the lines as a name tag in front of a turning board (invisible entity, colours as § codes, no flap animation); the client mod draws the split flaps |
 | Nixie tube glyphs for **vanilla** clients (U24) | same | the two characters as a coloured name tag above each tube |
 
-| Deaths statistic of the respawn anchor source (U24) | Bedrock has no deaths statistic | Levitate counts player deaths per world (`lv:display:deaths`) |
+| Deaths statistic of the respawn anchor source (U24) | Bedrock has no deaths statistic | Bearing counts player deaths per world (`br:display:deaths`) |
 | Package entities piling as entity collision (U25 / U46, U56) | Bedrock entity collision is per type (`minecraft:is_stackable` would let players stand on packages too, which Create's packages don't allow) | the server rests a falling package on the package below it (§3.6.25), so packages pile up as in Create; only the collision itself is not the game's: a vanilla client predicts nothing, the package stands where the server puts it |
-| Chains, frogport tongue and the frogport's anticipation for **vanilla** clients (U25, U56) | chains and the tongue are lines drawn per frame, the anticipation opens the frog's head: client-side rendering, and a block model can't move a part | the client mod draws the chains and the tongue; hanging packages and the box on the packager's tray are client-only item entities for vanilla clients (no gravity, packets only); the frog turns to its target in 22.5° steps for everyone (`levitate:yaw`); its head stays closed (also for the client mod, which draws the tongue but not the frog) |
+| Chains, frogport tongue and the frogport's anticipation for **vanilla** clients (U25, U56) | chains and the tongue are lines drawn per frame, the anticipation opens the frog's head: client-side rendering, and a block model can't move a part | the client mod draws the chains and the tongue; hanging packages and the box on the packager's tray are client-only item entities for vanilla clients (no gravity, packets only); the frog turns to its target in 22.5° steps for everyone (`bearing:yaw`); its head stays closed (also for the client mod, which draws the tongue but not the frog) |
 | Package style models on chains, tongues and trays in the client mod (U56) | the client mod's per-frame renderer draws untextured coloured quads; drawing the styles' textured box models needs the entity / item renderer, which this renderer does not use | boxes in each style's size and a colour per style (cardboard, the rare ones' main colours); the package entities themselves use the textured style models |
 | Factory gauge connection arrows for **vanilla** clients (U26, U56) | lines drawn per frame along the panel plane: client-side rendering | the client mod draws them (U42); vanilla clients see each panel's item as a client-only item entity in front of the panel and the labels and counts in the goggle overlay's action bar |
 | "Click and hold" on a gauge panel / price tag for **vanilla** clients (U26) | the server only sees discrete clicks | client mod: as Create (U42); vanilla: sneak + empty-hand click opens the board (price tag: a click opens it, sneaking clears) |
@@ -4998,7 +4998,7 @@ goggle-overlay providers of the owning units.
 | Train relocation preview for **vanilla** clients (U27) | the server can't draw the train's outline on a vanilla client | relocation works with action-bar prompts (valid / invalid / too far); the client mod draws the carriages at the target |
 | Glint of a signal / track observer item carrying a track selection (Create's isFoil) (U28) | Bedrock draws no enchantment glint on items shown with their block's model (verified: a per-item vtable override of `isGlint` returns true and nothing is drawn) | the selection is on the item stack and travels with it; the client mod outlines the selected track while the item is held |
 | Signal lamp rendered toward the track, track overlay for vanilla clients (U28) | Bedrock block models are fixed per state and can't face an edge point | the lamp shows on all four sides of the signal head (block state); the client mod draws Create's arrows / squares on the track |
-| Crafting blueprint as a hanging entity (U29) | not a Bedrock limit but a design choice (U58 re-check): a behavior-pack entity with its own geometry could carry the sections and U36 already routes entity clicks and attacks, but vanilla clients could see the canvas only, as now; the block group keeps the sections in BlockData and reuses the block clicks and display items. The one difference: each section occupies its block cell (nothing else can be put there), Create's hanging entity does not | each section is a thin, non-colliding `levitate:placed_crafting_blueprint` block; the 2x2 / 3x3 group is placed and removed together; the client mod draws the display items on the canvas (Create's BlueprintRenderer), vanilla clients see the empty canvas |
+| Crafting blueprint as a hanging entity (U29) | not a Bedrock limit but a design choice (U58 re-check): a behavior-pack entity with its own geometry could carry the sections and U36 already routes entity clicks and attacks, but vanilla clients could see the canvas only, as now; the block group keeps the sections in BlockData and reuses the block clicks and display items. The one difference: each section occupies its block cell (nothing else can be put there), Create's hanging entity does not | each section is a thin, non-colliding `bearing:placed_crafting_blueprint` block; the 2x2 / 3x3 group is placed and removed together; the client mod draws the display items on the canvas (Create's BlueprintRenderer), vanilla clients see the empty canvas |
 | Schematic files saved as Create `.nbt` (U29) | Bedrock block states have no lossless Java form | the quill saves Bedrock `.mcstructure`; Create `.nbt` files are read (uploads, `schematics/`) with best-effort Java→Bedrock state mapping, unmapped block types are reported and skipped |
 | Schematic tools, ghost and quill outline for **vanilla** clients (U29) | no client-side input (Ctrl / Alt / scroll) or world rendering without the client mod | sprinting = Ctrl for mid-air corners; no face resizing; right-click a block deploys a schematic there, sneak-right-click opens a form for exact coordinates / rotation / mirror / Print; particle outlines of the selection and of the deployed bounds |
 | Picking local files at the schematic table for **vanilla** clients (U29) | the server can't read the player's disk | the form lists the player's schematics stored on the server (quill saves, earlier uploads) |

@@ -1,19 +1,19 @@
 {
-  "type": "levitate:sequenced_assembly",
+  "type": "bearing:sequenced_assembly",
   "ingredient": {
     "tag": "c:dusts/obsidian"
   },
   "results": [
     {
-      "id": "levitate:sturdy_sheet"
+      "id": "bearing:sturdy_sheet"
     }
   ],
   "sequence": [
     {
-      "type": "levitate:filling",
+      "type": "bearing:filling",
       "ingredients": [
         {
-          "item": "levitate:unprocessed_obsidian_sheet"
+          "item": "bearing:unprocessed_obsidian_sheet"
         },
         {
           "fluid": "minecraft:lava",
@@ -22,38 +22,38 @@
       ],
       "results": [
         {
-          "id": "levitate:unprocessed_obsidian_sheet"
+          "id": "bearing:unprocessed_obsidian_sheet"
         }
       ]
     },
     {
-      "type": "levitate:pressing",
+      "type": "bearing:pressing",
       "ingredients": [
         {
-          "item": "levitate:unprocessed_obsidian_sheet"
+          "item": "bearing:unprocessed_obsidian_sheet"
         }
       ],
       "results": [
         {
-          "id": "levitate:unprocessed_obsidian_sheet"
+          "id": "bearing:unprocessed_obsidian_sheet"
         }
       ]
     },
     {
-      "type": "levitate:pressing",
+      "type": "bearing:pressing",
       "ingredients": [
         {
-          "item": "levitate:unprocessed_obsidian_sheet"
+          "item": "bearing:unprocessed_obsidian_sheet"
         }
       ],
       "results": [
         {
-          "id": "levitate:unprocessed_obsidian_sheet"
+          "id": "bearing:unprocessed_obsidian_sheet"
         }
       ]
     }
   ],
   "transitional_item": {
-    "id": "levitate:unprocessed_obsidian_sheet"
+    "id": "bearing:unprocessed_obsidian_sheet"
   }
 }

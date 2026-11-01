@@ -24,7 +24,7 @@
 #include "core/tracks/Curve.h"
 #include "core/tracks/Shape.h"
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 // ---- locations ---------------------------------------------------------------------------------
 
@@ -114,7 +114,7 @@ struct Node {
 /// A point registered on an edge by another unit (signal, station, observer, ...).
 struct EdgePoint {
     std::string  id;    ///< unique id (the owner chooses it, e.g. "signal:0:12,64,-3:front")
-    std::string  type;  ///< "levitate:signal", "levitate:station", "levitate:observer", ...
+    std::string  type;  ///< "bearing:signal", "bearing:station", "bearing:observer", ...
     NodeLocation node1; ///< edge it lies on, measured from node1 towards node2
     NodeLocation node2;
     double       position = 0;    ///< distance from node1 (blocks)
@@ -301,4 +301,4 @@ private:
 /// TrackPropagator.isValidGraphNodeLocation).
 [[nodiscard]] bool isValidGraphNodeLocation(DiscoveredLocation const& location, std::vector<DiscoveredLocation> const& next, bool first);
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

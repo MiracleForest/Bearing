@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:gantry_carriage"
+      "identifier": "bearing:gantry_carriage"
     },
     "tags": [
       "crafting_table"
@@ -17,19 +17,19 @@
         "tag": "minecraft:wooden_slabs"
       },
       "C": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "I": {
-        "item": "levitate:cogwheel"
+        "item": "bearing:cogwheel"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:gantry_carriage",
+      "item": "bearing:gantry_carriage",
       "count": 1
     }
   }

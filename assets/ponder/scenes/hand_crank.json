@@ -2,9 +2,9 @@
   "id": "hand_crank",
   "size": [5, 5],
   "blocks": [
-    {"at": [4, 1, 2], "id": "levitate:hand_crank", "states": {"levitate:facing": 4}},
-    {"area": [[1, 1, 2], [3, 1, 2]], "id": "levitate:shaft", "states": {"levitate:axis": 0}},
-    {"at": [0, 1, 2], "id": "levitate:speedometer", "states": {"levitate:facing": 1, "levitate:along_first": 1}}
+    {"at": [4, 1, 2], "id": "bearing:hand_crank", "states": {"bearing:facing": 4}},
+    {"area": [[1, 1, 2], [3, 1, 2]], "id": "bearing:shaft", "states": {"bearing:axis": 0}},
+    {"at": [0, 1, 2], "id": "bearing:speedometer", "states": {"bearing:facing": 1, "bearing:along_first": 1}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

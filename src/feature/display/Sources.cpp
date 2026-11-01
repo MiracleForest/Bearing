@@ -41,12 +41,12 @@
 #include "mod/I18n.h"
 #include "mod/Module.h"
 
-namespace lv::feature::display {
+namespace br::feature::display {
 
 namespace {
 namespace items  = common::items;
 namespace fluids = common::fluids;
-namespace k      = lv::kinetics;
+namespace k      = br::kinetics;
 
 // ---- formatting -------------------------------------------------------------------------------
 
@@ -118,14 +118,14 @@ std::string prettyId(std::string id) {
 
 // ---- observed inventories (smart observer, threshold switch) ----------------------------------
 
-/// The block a directional observer looks at: the face its `levitate:facing` (FacingID) state
+/// The block a directional observer looks at: the face its `bearing:facing` (FacingID) state
 /// points to (units may register their own sources with the same id to refine this).
 std::optional<GlobalPos> observedPos(BlockSource& region, GlobalPos const& p) {
     auto const* b = loadedBlock(region, game::blockPos(p));
     if (!b) return std::nullopt;
-    // U23's detectors: `levitate:target` 1 looks down, 2 up, else along `levitate:facing`
-    int target = intState(*b, "levitate:target").value_or(0);
-    int face   = target == 1 ? 0 : target == 2 ? 1 : intState(*b, "levitate:facing").value_or(intState(*b, "facing_direction").value_or(-1));
+    // U23's detectors: `bearing:target` 1 looks down, 2 up, else along `bearing:facing`
+    int target = intState(*b, "bearing:target").value_or(0);
+    int face   = target == 1 ? 0 : target == 2 ? 1 : intState(*b, "bearing:facing").value_or(intState(*b, "facing_direction").value_or(-1));
     if (face < 0 || face > 5) return std::nullopt;
     return offsetPos(p, face);
 }
@@ -212,7 +212,7 @@ Lines valueList(std::vector<std::pair<std::string, std::string>> entries, Target
 }
 
 // ---- deaths (respawn anchor) ------------------------------------------------------------------
-constexpr char kDbDeaths[] = "lv:display:deaths";
+constexpr char kDbDeaths[] = "br:display:deaths";
 std::map<std::string, long long>& deaths() {
     static std::map<std::string, long long> m;
     return m;
@@ -233,8 +233,8 @@ Lines scoreboardLines(std::string const& objectiveName, TargetStats const& stats
     static std::string nameBuf;
     auto resolver = [](ActorUniqueID id) -> std::string const& {
         nameBuf.clear();
-        if (auto lv = ll::service::getLevel())
-            if (auto* p = lv->getPlayer(id)) nameBuf = p->getRealName();
+        if (auto br = ll::service::getLevel())
+            if (auto* p = br->getPlayer(id)) nameBuf = p->getRealName();
         return nameBuf;
     };
     std::vector<std::pair<long long, std::string>> scores;
@@ -326,7 +326,7 @@ Lines stopwatch(Context& ctx, TargetStats const&) {
 struct Registration {
     Registration() {
         // ---- kinetics (U6's gauges) ----
-        registerSource("levitate:speedometer", Source{
+        registerSource("bearing:speedometer", Source{
             .id = "kinetic_speed", .name = "create.display_source.kinetic_speed", .nameFallback = "Rotation Speed (RPM)",
             .text = kineticSpeed,
             .options = {{"Directional", "create.display_source.kinetic_speed.directional", "Include Direction",
@@ -334,7 +334,7 @@ struct Registration {
                          {"Ignore Direction", "Include Direction"}, 0},
                         labelOption()},
         });
-        registerSource("levitate:stressometer", Source{
+        registerSource("bearing:stressometer", Source{
             .id = "kinetic_stress", .name = "create.display_source.kinetic_stress", .nameFallback = "Network Stress",
             .text = kineticStress,
             .options = {{"Mode", "create.display_source.kinetic_stress.display", "Displayed Info",
@@ -346,7 +346,7 @@ struct Registration {
         });
 
         // ---- cuckoo clock ----
-        for (auto const* clock : {"levitate:cuckoo_clock", "levitate:mysterious_cuckoo_clock"}) {
+        for (auto const* clock : {"bearing:cuckoo_clock", "bearing:mysterious_cuckoo_clock"}) {
             registerSource(clock, Source{
                 .id = "time_of_day", .name = "create.display_source.time_of_day", .nameFallback = "Time of Day",
                 .text = timeOfDay,
@@ -363,7 +363,7 @@ struct Registration {
         }
 
         // ---- smart observer (U23): contents of the observed inventory / tank ----
-        registerSource("levitate:content_observer", Source{
+        registerSource("bearing:content_observer", Source{
             .id = "count_items", .name = "create.display_source.count_items", .nameFallback = "Amount of matching Items",
             .text = [](Context& ctx, TargetStats const&) -> Lines {
                 long long total = 0;
@@ -372,7 +372,7 @@ struct Registration {
             },
             .options = {labelOption()},
         });
-        registerSource("levitate:content_observer", Source{
+        registerSource("bearing:content_observer", Source{
             .id = "list_items", .name = "create.display_source.list_items", .nameFallback = "List matching Items",
             .text = [](Context& ctx, TargetStats const& stats) -> Lines {
                 auto list = countItems(ctx);
@@ -384,7 +384,7 @@ struct Registration {
             },
             .options = {valueDisplayOption()}, .multiLine = true,
         });
-        registerSource("levitate:content_observer", Source{
+        registerSource("bearing:content_observer", Source{
             .id = "count_fluids", .name = "create.display_source.fluid_amount", .nameFallback = "Amount of matching Fluids",
             .text = [](Context& ctx, TargetStats const&) -> Lines {
                 long long total = 0;
@@ -393,7 +393,7 @@ struct Registration {
             },
             .options = {labelOption()},
         });
-        registerSource("levitate:content_observer", Source{
+        registerSource("bearing:content_observer", Source{
             .id = "list_fluids", .name = "create.display_source.list_fluids", .nameFallback = "List matching Fluids",
             .text = [](Context& ctx, TargetStats const& stats) -> Lines {
                 auto list = countFluids(ctx);
@@ -410,7 +410,7 @@ struct Registration {
         });
 
         // ---- threshold switch (U23): fill level of the observed inventory ----
-        registerSource("levitate:stockpile_switch", Source{
+        registerSource("bearing:stockpile_switch", Source{
             .id = "fill_level", .name = "create.display_source.fill_level", .nameFallback = "Container Fill Level",
             .text = [](Context& ctx, TargetStats const& stats) -> Lines {
                 double level = 0;
@@ -442,7 +442,7 @@ struct Registration {
         });
 
         // ---- fluid tanks (U18): Create's BoilerDisplaySource ----
-        registerSource("levitate:fluid_tank", Source{
+        registerSource("bearing:fluid_tank", Source{
             .id = "boiler", .name = "create.display_source.boiler_status", .nameFallback = "Boiler Status",
             .text = [](Context& ctx, TargetStats const& stats) -> Lines {
                 auto space = tr("create.display_source.boiler.not_enough_space", "Not enough space ");
@@ -477,7 +477,7 @@ struct Registration {
         });
 
         // ---- elevator contacts (U20): Create's CurrentFloorDisplaySource ----
-        registerSource("levitate:elevator_contact", Source{
+        registerSource("bearing:elevator_contact", Source{
             .id = "current_floor", .name = "create.display_source.current_floor", .nameFallback = "Elevator Location",
             .text = [](Context& ctx, TargetStats const&) -> Lines {
                 // the pistons unit keeps the contact's lastReportedCurrentFloor in its BlockData
@@ -488,7 +488,7 @@ struct Registration {
         });
 
         // ---- smart observer (U23, block id content_observer): Create's PackageAddressDisplaySource ----
-        registerSource("levitate:content_observer", Source{
+        registerSource("bearing:content_observer", Source{
             .id = "read_package_address", .name = "create.display_source.read_package_address", .nameFallback = "Read Package Address",
             .text = [](Context& ctx, TargetStats const&) -> Lines {
                 auto obs = observedPos(ctx.region, ctx.source);
@@ -510,7 +510,7 @@ struct Registration {
         });
 
         // ---- belts, depots, ejectors (U11): the name of the item on them ----
-        for (auto const* id : {"levitate:belt", "levitate:depot", "levitate:weighted_ejector"}) {
+        for (auto const* id : {"bearing:belt", "bearing:depot", "bearing:weighted_ejector"}) {
             registerSource(id, Source{
                 .id = "item_names", .name = "create.display_source.combine_item_names", .nameFallback = "Combine Item Names",
                 .text = [](Context& ctx, TargetStats const&) -> Lines {
@@ -522,7 +522,7 @@ struct Registration {
                     for (int i = 0; i < 32; ++i) {
                         auto const* b  = loadedBlock(ctx.region, game::blockPos(pos));
                         std::string id = b ? std::string(b->getTypeName()) : std::string();
-                        if (id != "levitate:belt" && id != "levitate:depot" && id != "levitate:weighted_ejector") break;
+                        if (id != "bearing:belt" && id != "bearing:depot" && id != "bearing:weighted_ejector") break;
                         common::Access at{ctx.region, game::blockPos(pos), -1};
                         if (auto h = items::find(at); h && h->slots && h->getSlot) {
                             for (int s = 0, n = h->slots(at); s < n; ++s) {
@@ -541,20 +541,20 @@ struct Registration {
         }
 
         // ---- tunnels (U12 calls display::itemsPassed) ----
-        for (auto const* id : {"levitate:andesite_tunnel", "levitate:brass_tunnel"}) {
+        for (auto const* id : {"bearing:andesite_tunnel", "bearing:brass_tunnel"}) {
             registerSource(id, Source{
                 .id = "accumulate_items", .name = "create.display_source.accumulate_items", .nameFallback = "Accumulate Item Count",
                 .text = [](Context& ctx, TargetStats const&) -> Lines {
-                    long long total = ctx.config.value("Collected", 0LL) + ctx.config.value("lv:pending", 0LL);
+                    long long total = ctx.config.value("Collected", 0LL) + ctx.config.value("br:pending", 0LL);
                     ctx.config["Collected"]  = total;
-                    ctx.config["lv:pending"] = 0;
+                    ctx.config["br:pending"] = 0;
                     return {labelled(ctx, std::to_string(total))};
                 },
                 .options = {labelOption()},
                 .refreshTicks = 200, // Create's AccumulatedItemCountDisplaySource
                 .onSignalReset = [](Context& ctx) {
                     ctx.config["Collected"]  = 0;
-                    ctx.config["lv:pending"] = 0;
+                    ctx.config["br:pending"] = 0;
                 },
             });
             registerSource(id, Source{
@@ -583,7 +583,7 @@ struct Registration {
 
         // ---- seats (U22): the seated entity's name ----
         for (int c = 0; c < 16; ++c) {
-            registerSource(std::string("levitate:") + kDyeNames[static_cast<std::size_t>(c)] + "_seat", Source{
+            registerSource(std::string("bearing:") + kDyeNames[static_cast<std::size_t>(c)] + "_seat", Source{
                 .id = "entity_name", .name = "create.display_source.entity_name", .nameFallback = "Entity Name",
                 .text = [](Context& ctx, TargetStats const&) -> Lines {
                     auto level = ll::service::getLevel();
@@ -678,6 +678,6 @@ private:
     ll::event::ListenerPtr mDie;
 };
 
-} // namespace lv::feature::display
+} // namespace br::feature::display
 
-LV_REGISTER_MODULE(lv::feature::display::DisplayDeathsModule);
+BR_REGISTER_MODULE(br::feature::display::DisplayDeathsModule);

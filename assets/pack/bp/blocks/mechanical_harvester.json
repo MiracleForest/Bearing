@@ -2,12 +2,12 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:mechanical_harvester",
+      "identifier": "bearing:mechanical_harvester",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
@@ -15,7 +15,7 @@
           4,
           5
         ],
-        "levitate:anim": [
+        "bearing:anim": [
           0,
           1,
           2,
@@ -25,21 +25,21 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.mechanical_harvester",
+        "identifier": "geometry.bearing.mechanical_harvester",
         "bone_visibility": {
-          "blades0": "q.block_state('levitate:anim') == 0",
-          "blades1": "q.block_state('levitate:anim') == 1",
-          "blades2": "q.block_state('levitate:anim') == 2",
-          "blades3": "q.block_state('levitate:anim') == 3"
+          "blades0": "q.block_state('bearing:anim') == 0",
+          "blades1": "q.block_state('bearing:anim') == 1",
+          "blades2": "q.block_state('bearing:anim') == 2",
+          "blades3": "q.block_state('bearing:anim') == 3"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_actor_casing",
+          "texture": "bearing_actor_casing",
           "render_method": "alpha_test"
         },
         "blade": {
-          "texture": "levitate_harvester_blade",
+          "texture": "bearing_harvester_blade",
           "render_method": "alpha_test"
         }
       },
@@ -79,7 +79,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:facing') == 0",
+        "condition": "q.block_state('bearing:facing') == 0",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -91,7 +91,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 1",
+        "condition": "q.block_state('bearing:facing') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -103,7 +103,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 2",
+        "condition": "q.block_state('bearing:facing') == 2",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -115,7 +115,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 3",
+        "condition": "q.block_state('bearing:facing') == 3",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -127,7 +127,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 4",
+        "condition": "q.block_state('bearing:facing') == 4",
         "components": {
           "minecraft:transformation": {
             "rotation": [
@@ -139,7 +139,7 @@
         }
       },
       {
-        "condition": "q.block_state('levitate:facing') == 5",
+        "condition": "q.block_state('bearing:facing') == 5",
         "components": {
           "minecraft:transformation": {
             "rotation": [

@@ -1,8 +1,8 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Levitate RP",
-    "description": "Textures, models and names of Levitate (Create for Bedrock)",
+    "name": "Bearing RP",
+    "description": "Textures, models and names of Bearing (Create for Bedrock)",
     "uuid": "0e003cde-d3b5-4e8a-9dda-4147c929e436",
     "version": "${version}",
     "min_engine_version": [

@@ -26,13 +26,13 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 
-namespace k  = ::lv::feature::kinetics;
-namespace ct = ::lv::feature::contraption;
-namespace bd = ::lv::feature::common::blockdata;
-namespace vb = ::lv::feature::common::valuebox;
-namespace ck = ::lv::core::kinetics;
+namespace k  = ::br::feature::kinetics;
+namespace ct = ::br::feature::contraption;
+namespace bd = ::br::feature::common::blockdata;
+namespace vb = ::br::feature::common::valuebox;
+namespace ck = ::br::core::kinetics;
 
 namespace {
 
@@ -40,17 +40,17 @@ namespace {
 
 ck::KineticSpec bearingSpec(bool generator, std::string texture, bool rotatingTop) {
     ck::KineticSpec s;
-    s.states          = {"levitate:facing"};
-    s.rotationAxis    = ck::specs::axisFromFacing("levitate:facing");
+    s.states          = {"bearing:facing"};
+    s.rotationAxis    = ck::specs::axisFromFacing("bearing:facing");
     s.hasShaftTowards = [](ck::BlockState const& st, ck::Face f) {
-        return f == ck::opposite(static_cast<ck::Face>(std::clamp(st.get("levitate:facing", 1), 0, 5)));
+        return f == ck::opposite(static_cast<ck::Face>(std::clamp(st.get("bearing:facing", 1), 0, 5)));
     };
     s.generator    = generator;
-    s.rotorState   = "levitate:rotor";
-    s.rotorModel   = "geometry.levitate.bearing_rotor";
+    s.rotorState   = "bearing:rotor";
+    s.rotorModel   = "geometry.bearing.bearing_rotor";
     s.rotorTexture = std::move(texture);
     s.parts        = [rotatingTop](ck::RenderView const& v, std::vector<ck::RotorPart>& out) {
-        auto          facing = static_cast<ck::Face>(std::clamp(v.state ? v.state->get("levitate:facing", 1) : 1, 0, 5));
+        auto          facing = static_cast<ck::Face>(std::clamp(v.state ? v.state->get("bearing:facing", 1) : 1, 0, 5));
         ck::RotorPart shaft;
         shaft.bone = ck::isPositive(facing) ? "shaft_pos" : "shaft_neg";
         shaft.axis = ck::axisOf(facing);
@@ -64,9 +64,9 @@ ck::KineticSpec bearingSpec(bool generator, std::string texture, bool rotatingTo
     return s;
 }
 
-LV_REGISTER_KINETIC_BLOCK("levitate:mechanical_bearing", bearingSpec(false, "levitate_mechanical_bearing_model", true));
-LV_REGISTER_KINETIC_BLOCK("levitate:windmill_bearing", bearingSpec(true, "levitate_windmill_bearing_model", true));
-LV_REGISTER_KINETIC_BLOCK("levitate:clockwork_bearing", bearingSpec(false, "levitate_clockwork_bearing_model", false));
+BR_REGISTER_KINETIC_BLOCK("bearing:mechanical_bearing", bearingSpec(false, "bearing_mechanical_bearing_model", true));
+BR_REGISTER_KINETIC_BLOCK("bearing:windmill_bearing", bearingSpec(true, "bearing_windmill_bearing_model", true));
+BR_REGISTER_KINETIC_BLOCK("bearing:clockwork_bearing", bearingSpec(false, "bearing_clockwork_bearing_model", false));
 
 // ---- state ---------------------------------------------------------------------------------------
 
@@ -491,7 +491,7 @@ void registerOptionBox(
 // ---- movement checks (Create's BlockMovementChecksImpl) ------------------------------------------
 
 cc::Dir facingIn(cc::States const& s) {
-    auto it = s.find("levitate:facing");
+    auto it = s.find("bearing:facing");
     auto const* v = it == s.end() ? nullptr : std::get_if<std::int64_t>(&it->second);
     return static_cast<cc::Dir>(std::clamp<std::int64_t>(v ? *v : 1, 0, 5));
 }
@@ -682,15 +682,15 @@ void orientBearing(BlockSource& region, GP const& pos, Player& player) {
     } else {
         facing = cc::opposite(*preferred);
     }
-    setStates(region, pos, {{"levitate:facing", static_cast<int>(facing)}});
+    setStates(region, pos, {{"bearing:facing", static_cast<int>(facing)}});
 }
 
-} // namespace lv::feature::bearings
+} // namespace br::feature::bearings
 
 // Create's MechanicalBearingBlockEntity#addToTooltip (U59): a turning, stopped bearing with a
 // block in front of it hints that a click assembles the structure ("create.hint.empty_bearing").
 #include "feature/goggles/GoggleInfo.h"
-namespace lv::feature::bearings {
+namespace br::feature::bearings {
 namespace {
 bool emptyBearingHint(goggles::InfoContext const& c, goggles::Tooltip& t) {
     if (c.sneaking) return false;
@@ -698,12 +698,12 @@ bool emptyBearingHint(goggles::InfoContext const& c, goggles::Tooltip& t) {
     if (!windmill && k::speedAt(c.pos) == 0) return false;
     if (load(c.pos).running) return false;
     auto front = cc::Pos{c.pos.x, c.pos.y, c.pos.z} + cc::offset(facingOf(c.block));
-    if (lv::game::replaceable(c.region, BlockPos{front.x, front.y, front.z})) return false;
+    if (br::game::replaceable(c.region, BlockPos{front.x, front.y, front.z})) return false;
     t.push_back(goggles::line(std::string(core::goggles::fmt::kGold) + c.tr("create.hint.empty_bearing.title", "Update Bearing")));
     goggles::addHint(t, c.tr("create.hint.empty_bearing", "_Right-click_ the bearing with an _empty_ _hand_ to _attach_ the structure you just built in front of it."));
     return true;
 }
 } // namespace
-LV_REGISTER_GOGGLE_INFO("levitate:mechanical_bearing", {.hover = emptyBearingHint});
-LV_REGISTER_GOGGLE_INFO("levitate:windmill_bearing", {.hover = emptyBearingHint});
-} // namespace lv::feature::bearings
+BR_REGISTER_GOGGLE_INFO("bearing:mechanical_bearing", {.hover = emptyBearingHint});
+BR_REGISTER_GOGGLE_INFO("bearing:windmill_bearing", {.hover = emptyBearingHint});
+} // namespace br::feature::bearings

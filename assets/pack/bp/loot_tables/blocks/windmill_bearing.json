@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:windmill_bearing",
+          "name": "bearing:windmill_bearing",
           "weight": 1
         }
       ]

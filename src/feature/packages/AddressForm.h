@@ -16,14 +16,14 @@
 #include "feature/packages/Packages.h"
 #include "mod/I18n.h"
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 inline constexpr char const* kSuggestionField = "address_suggestion";
 
 /// Appends the dropdown when there are suggestions ("Keeping Track": (typed address), then each one).
 inline void appendAddressSuggestions(ll::form::CustomForm& form, Player& player, std::vector<std::string> const& suggestions) {
     if (suggestions.empty()) return;
-    std::vector<std::string> options{trFor(player, "lv.packages.form.typed_address", "(the address typed above)")};
+    std::vector<std::string> options{trFor(player, "br.packages.form.typed_address", "(the address typed above)")};
     for (auto const& s : suggestions) options.push_back("#" + s);
     form.appendDropdown(kSuggestionField, trFor(player, "create.gui.address_box.clipboard_tip", "Keeping Track"), options, 0);
 }
@@ -38,4 +38,4 @@ inline void appendAddressSuggestions(ll::form::CustomForm& form, Player& player,
     return suggestions[*v - 1];
 }
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages

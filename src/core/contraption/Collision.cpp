@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 namespace {
 
@@ -108,4 +108,4 @@ bool standsOn(Transform const& t, std::vector<Box> const& boxes, Vec3d const& fe
     return std::any_of(boxes.begin(), boxes.end(), [&](Box const& b) { return b.contains(p); });
 }
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

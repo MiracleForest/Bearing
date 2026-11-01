@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace lv::core {
+namespace br::core {
 
 /// Block position plus dimension id (0 overworld, 1 nether, 2 end, others as the game reports).
 struct GlobalPos {
@@ -16,4 +16,4 @@ struct GlobalPos {
     }
 };
 
-} // namespace lv::core
+} // namespace br::core

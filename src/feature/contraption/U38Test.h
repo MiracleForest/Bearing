@@ -5,8 +5,8 @@
 // full run. U38's tests pass this dz, which moves their row to spawn z - 60 (rows of negative dx,
 // used by no unit): `ctx.testPos(3800 + n, kU38Dz)`.
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 inline constexpr int kU38Dz = -205;
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

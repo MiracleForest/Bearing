@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:copper_diving_helmet",
+      "identifier": "bearing:copper_diving_helmet",
       "menu_category": {
         "category": "equipment"
       }
@@ -13,10 +13,10 @@
           "minecraft:transform_materials"
         ]
       },
-      "minecraft:icon": "levitate_copper_diving_helmet",
+      "minecraft:icon": "bearing_copper_diving_helmet",
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.levitate:copper_diving_helmet.name"
+        "value": "item.bearing:copper_diving_helmet.name"
       },
       "minecraft:wearable": {
         "slot": "slot.armor.head",

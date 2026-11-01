@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Entities and particles of Ponder scenes (U46): Create's createEntity / createItemEntity and
 // emitParticles.
@@ -9,7 +9,7 @@
 //   never added to the level (they don't tick, sync or collide). One puppet per entity type (item
 //   entities: per item), drawn at every place the scene shows one, with the scene camera as the
 //   world matrix. Puppets are dropped when the scene player closes and when the level goes.
-// - Particles are billboards of our own particle sprites (textures/particle/levitate_ponder_particles),
+// - Particles are billboards of our own particle sprites (textures/particle/bearing_ponder_particles),
 //   simulated from the emitter's age (seeded per particle, so scrubbing the timeline shows the same
 //   particles), drawn with the block blend material.
 
@@ -61,7 +61,7 @@
 #include "feature/common/Items.h"
 #include "mod/Log.h"
 
-namespace lv::client::ponder {
+namespace br::client::ponder {
 
 namespace {
 
@@ -231,7 +231,7 @@ int drawSceneParticles(
 ) {
     if (st.particles.empty()) return 0;
     // loaded once and kept (never destroyed after the renderer at exit)
-    static auto* texture = new mce::TexturePtr(ui.getTexture(ResourceLocation(Core::PathView("textures/particle/levitate_ponder_particles")), false));
+    static auto* texture = new mce::TexturePtr(ui.getTexture(ResourceLocation(Core::PathView("textures/particle/bearing_ponder_particles")), false));
     // the camera's right and up in scene coordinates (rows of View's rotation)
     float     yr = view.yaw * kPi / 180.f, pr = view.pitch * kPi / 180.f;
     glm::vec3 right{std::cos(yr), 0.f, std::sin(yr)};
@@ -266,7 +266,7 @@ int drawSceneParticles(
             ++count;
         }
     }
-    auto mesh = tess.end(Tessellator::UploadMode::Buffered, "levitate_ponder_particles", SupplementaryFieldAutoGenerationMode::None);
+    auto mesh = tess.end(Tessellator::UploadMode::Buffered, "bearing_ponder_particles", SupplementaryFieldAutoGenerationMode::None);
     if (count == 0) return 0;
     auto& worldMat    = sc.camera.worldMatrixStack.get();
     auto  ref         = worldMat.push(false);
@@ -276,6 +276,6 @@ int drawSceneParticles(
     return count;
 }
 
-} // namespace lv::client::ponder
+} // namespace br::client::ponder
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

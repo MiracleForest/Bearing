@@ -44,15 +44,15 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::materials {
+namespace br::feature::materials {
 
 // ---- furnace experience ------------------------------------------------------------------------
 
 std::optional<float> createSmeltingXp(std::string const& inputId) {
     static std::unordered_map<std::string, float> const table{
-        {"levitate:crushed_raw_iron", 0.1f},   {"levitate:crushed_raw_gold", 0.1f},  {"levitate:crushed_raw_copper", 0.1f},
-        {"levitate:crushed_raw_zinc", 0.1f},   {"levitate:raw_zinc", 0.7f},          {"levitate:zinc_ore", 1.0f},
-        {"levitate:deepslate_zinc_ore", 1.0f}, {"levitate:dough", 0.0f},             {"minecraft:soul_sand", 0.0f},
+        {"bearing:crushed_raw_iron", 0.1f},   {"bearing:crushed_raw_gold", 0.1f},  {"bearing:crushed_raw_copper", 0.1f},
+        {"bearing:crushed_raw_zinc", 0.1f},   {"bearing:raw_zinc", 0.7f},          {"bearing:zinc_ore", 1.0f},
+        {"bearing:deepslate_zinc_ore", 1.0f}, {"bearing:dough", 0.0f},             {"minecraft:soul_sand", 0.0f},
     };
     auto it = table.find(inputId);
     if (it == table.end()) return std::nullopt;
@@ -150,7 +150,7 @@ LL_TYPE_INSTANCE_HOOK(MaterialsFurnaceWithdrawHook, ll::memory::HookPriority::No
 // ---- block of experience particles -------------------------------------------------------------
 
 void animateExperienceBlocks(BlockSource& region, BlockPos const& center, std::mt19937& random, ParticleSink const& emit) {
-    auto type = BlockType::tryGetFromRegistry(HashedString("levitate:experience_block"));
+    auto type = BlockType::tryGetFromRegistry(HashedString("bearing:experience_block"));
     if (!type) return;
     BlockType const* exp  = type.as_ptr();
     int const        minY = region.getMinHeight(), maxY = region.getMaxHeight();
@@ -227,4 +227,4 @@ void uninstallFurnaceXp() {
     furnaceViews().clear();
 }
 
-} // namespace lv::feature::materials
+} // namespace br::feature::materials

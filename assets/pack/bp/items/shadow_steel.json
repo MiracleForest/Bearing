@@ -2,15 +2,15 @@
   "format_version": "1.21.70",
   "minecraft:item": {
     "description": {
-      "identifier": "levitate:shadow_steel",
+      "identifier": "bearing:shadow_steel",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "levitate_shadow_steel",
+      "minecraft:icon": "bearing_shadow_steel",
       "minecraft:display_name": {
-        "value": "item.levitate:shadow_steel.name"
+        "value": "item.bearing:shadow_steel.name"
       },
       "minecraft:max_stack_size": 64,
       "minecraft:rarity": "uncommon"

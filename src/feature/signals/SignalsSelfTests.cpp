@@ -34,13 +34,13 @@
 
 namespace {
 
-using lv::selftest::Context;
-using lv::core::GlobalPos;
-namespace sg  = lv::feature::signals;
-namespace api = lv::feature::tracks::signals;
-namespace tr  = lv::feature::tracks;
-namespace ct  = lv::core::tracks;
-namespace cs  = lv::core::signals;
+using br::selftest::Context;
+using br::core::GlobalPos;
+namespace sg  = br::feature::signals;
+namespace api = br::feature::tracks::signals;
+namespace tr  = br::feature::tracks;
+namespace ct  = br::core::tracks;
+namespace cs  = br::core::signals;
 
 GlobalPos at(GlobalPos p, int dx, int dy = 0, int dz = 0) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -93,12 +93,12 @@ cs::Authority ask(std::string const& id, GlobalPos from, GlobalPos to, int dir, 
 int lampAt(GlobalPos pos) {
     auto* region = sg::regionOf(pos.dim);
     if (!region) return -1;
-    return lv::game::intState(region->getBlock(lv::game::blockPos(pos)), api::kLampState).value_or(-1);
+    return br::game::intState(region->getBlock(br::game::blockPos(pos)), api::kLampState).value_or(-1);
 }
 
 std::string idAt(GlobalPos pos) {
     auto* region = sg::regionOf(pos.dim);
-    return region ? lv::game::blockIdAt(*region, lv::game::blockPos(pos)) : "";
+    return region ? br::game::blockIdAt(*region, br::game::blockPos(pos)) : "";
 }
 
 int lamp(cs::SignalState s) { return api::lampValue(s); }
@@ -114,16 +114,16 @@ void placeComparator(Context& ctx, GlobalPos pos, std::string const& towards) {
     auto block = Block::tryGetFromRegistry(*nbt);
     if (!block) return ctx.fail("comparator block");
     auto* region = sg::regionOf(pos.dim);
-    if (region) lv::game::setBlock(*region, lv::game::blockPos(pos), *block.as_ptr());
+    if (region) br::game::setBlock(*region, br::game::blockPos(pos), *block.as_ptr());
 }
 
 } // namespace
 
-LV_REGISTER_SELFTEST("signals.blocks", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("signals.blocks", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = ctx.testPos(2800, 0);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
-    ctx.require(lv::game::blockWith(api::kSignalId) != nullptr, "levitate:track_signal is registered");
-    ctx.require(lv::game::blockWith(api::kObserverId) != nullptr, "levitate:track_observer is registered");
+    ctx.require(br::game::blockWith(api::kSignalId) != nullptr, "bearing:track_signal is registered");
+    ctx.require(br::game::blockWith(api::kObserverId) != nullptr, "bearing:track_observer is registered");
     for (int type : {0, 1}) {
         for (int l : {0, 1, 2, 3}) {
             ctx.require(
@@ -141,18 +141,18 @@ LV_REGISTER_SELFTEST("signals.blocks", [](Context& ctx) -> ll::coro::CoroTask<> 
     ctx.check(api::signalState(pos) == cs::SignalState::Invalid, "a fresh signal is not bound");
 });
 
-LV_REGISTER_SELFTEST("signals.place_with_item", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("signals.place_with_item", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(2800, 10);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     lineX(ctx, base, 20);
-    auto item = lv::feature::common::items::make(api::kSignalId, 4);
+    auto item = br::feature::common::items::make(api::kSignalId, 4);
     ctx.require(item.has_value(), "the signal item exists");
     ctx.give(sp, *item, 0);
     sp.teleport(Vec3{base.x + 2.5f, float(base.y), base.z + 2.5f}, DimensionType(0));
     co_await ctx.ticks(2);
     auto use = [&](GlobalPos p) {
-        return sp.simulateUseItemInSlotOnBlock(0, lv::game::blockPos(p), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 1.0f, 0.5f});
+        return sp.simulateUseItemInSlotOnBlock(0, br::game::blockPos(p), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 1.0f, 0.5f});
     };
     auto look = [&](GlobalPos p) {
         sp.simulateLookAt(Vec3{p.x + .5f, p.y + .5f, p.z + .5f}, sim::LookDuration::Continuous);
@@ -224,7 +224,7 @@ LV_REGISTER_SELFTEST("signals.place_with_item", [](Context& ctx) -> ll::coro::Co
     ctx.check(!sg::selectionOf(sp.getInventory().getItem(0)).has_value(), "sneak-clicking clears the selection");
 });
 
-LV_REGISTER_SELFTEST("signals.sections", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("signals.sections", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(2800, 30);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     lineX(ctx, base, 40);
@@ -279,7 +279,7 @@ LV_REGISTER_SELFTEST("signals.sections", [](Context& ctx) -> ll::coro::CoroTask<
     api::removeTrain("selftest-b");
 });
 
-LV_REGISTER_SELFTEST("signals.reservation", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("signals.reservation", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(2800, 40);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     lineX(ctx, base, 40);
@@ -308,7 +308,7 @@ LV_REGISTER_SELFTEST("signals.reservation", [](Context& ctx) -> ll::coro::CoroTa
     api::removeTrain("selftest-b");
 });
 
-LV_REGISTER_SELFTEST("signals.cross_signal", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("signals.cross_signal", [](Context& ctx) -> ll::coro::CoroTask<> {
     // a crossing at x+12: the east-west line and a north-south line through it
     auto base = ctx.testPos(2800, 60);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
@@ -330,17 +330,17 @@ LV_REGISTER_SELFTEST("signals.cross_signal", [](Context& ctx) -> ll::coro::CoroT
     ctx.require(sg::addBlock(sg::Kind::Signal, ns1, t1) && sg::addBlock(sg::Kind::Signal, ns2, t2), "north-south signals bound");
     // the wrench switches the signal before the crossing to a cross signal
     {
-        auto const* handler = lv::feature::goggles::wrench::handlerOf(api::kSignalId);
+        auto const* handler = br::feature::goggles::wrench::handlerOf(api::kSignalId);
         ctx.require(handler && handler->onWrenched, "the signal is wrenchable");
         auto* rg = sg::regionOf(entry.dim);
-        lv::feature::goggles::wrench::Context wc{ctx.player(), *rg, entry, rg->getBlock(lv::game::blockPos(entry)), 2};
+        br::feature::goggles::wrench::Context wc{ctx.player(), *rg, entry, rg->getBlock(br::game::blockPos(entry)), 2};
         handler->onWrenched(wc);
     }
     ctx.require(sg::state().blocks.at(entry).type == 1, "the wrench switches it to a cross signal");
     co_await ctx.ticks(3);
     ctx.check(api::signalState(entry) == cs::SignalState::Green, "cross signal green");
     auto* region = sg::regionOf(entry.dim);
-    ctx.check(lv::game::intState(region->getBlock(lv::game::blockPos(entry)), api::kTypeState).value_or(0) == 1, "the block shows the cross type");
+    ctx.check(br::game::intState(region->getBlock(br::game::blockPos(entry)), api::kTypeState).value_or(0) == 1, "the block shows the cross type");
 
     // a train standing after the exit signal: Create's resolveSignalChain turns the cross signal
     // red too (every signal leading out of its section is red; yellow only when some are free)
@@ -361,7 +361,7 @@ LV_REGISTER_SELFTEST("signals.cross_signal", [](Context& ctx) -> ll::coro::CoroT
     ctx.check(api::signalState(ns1) == cs::SignalState::Green, "released again");
 });
 
-LV_REGISTER_SELFTEST("signals.observer", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("signals.observer", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(2800, 80);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     lineX(ctx, base, 20);
@@ -380,19 +380,19 @@ LV_REGISTER_SELFTEST("signals.observer", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(api::observerPowered(obs), "a train passing powers it");
     ctx.check(api::observedTrain(obs) == "selftest-o", "it knows the train (display link source)");
     auto* region = sg::regionOf(obs.dim);
-    ctx.check(lv::game::intState(region->getBlock(lv::game::blockPos(obs)), api::kPoweredState).value_or(0) == 1, "powered block state");
+    ctx.check(br::game::intState(region->getBlock(br::game::blockPos(obs)), api::kPoweredState).value_or(0) == 1, "powered block state");
     co_await ctx.ticks(2);
     auto strength = [&]() -> int {
         auto* circuit = region->getDimension().mCircuitSystem.get();
         if (!circuit) return -1;
         auto const& all = circuit->mSceneGraph->mAllComponents;
-        auto        it  = all.find(lv::game::blockPos(obs));
+        auto        it  = all.find(br::game::blockPos(obs));
         return it == all.end() || !it->second ? -1 : it->second->getStrength();
     };
     ctx.check(strength() == 15, "it is a redstone source of strength 15 (" + std::to_string(strength()) + ")");
     // (the wire's block state follows on the client's integrated server; BDS doesn't update wire
     // states in the selftest area without a real player, so it is only reported)
-    ctx.info("wire next to it: " + std::to_string(lv::game::intState(region->getBlock(lv::game::blockPos(wire)), "redstone_signal").value_or(-1)));
+    ctx.info("wire next to it: " + std::to_string(br::game::intState(region->getBlock(br::game::blockPos(wire)), "redstone_signal").value_or(-1)));
     // the train moves on: stays on for 8 ticks (Create's keepAlive), then off
     ctx.require(train("selftest-o", at(base, 12), at(base, 18)), "train moved on");
     co_await ctx.ticks(3);
@@ -403,15 +403,15 @@ LV_REGISTER_SELFTEST("signals.observer", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(strength() <= 0, "no redstone power when off");
 
     // a filter: only trains carrying the item trigger it
-    auto dirt = lv::feature::common::items::make("minecraft:dirt");
+    auto dirt = br::feature::common::items::make("minecraft:dirt");
     ctx.require(dirt.has_value(), "dirt item");
-    lv::feature::common::filterslot::set(obs, *dirt, "filter");
+    br::feature::common::filterslot::set(obs, *dirt, "filter");
     // the test train's cargo: nothing, then dirt (other trains keep the real provider)
     auto previous = sg::state().cargo;
     auto carries  = std::make_shared<bool>(false);
     api::setCargoProvider([previous, carries](std::string const& id, api::ItemTest const& item, api::FluidTest const& fluid) {
         if (id != "selftest-o") return previous ? previous(id, item, fluid) : false;
-        auto d = lv::feature::common::items::make("minecraft:dirt");
+        auto d = br::feature::common::items::make("minecraft:dirt");
         return *carries && d && item(*d);
     });
     ctx.require(train("selftest-o", at(base, 5), at(base, 11)), "train back over the observer");
@@ -424,7 +424,7 @@ LV_REGISTER_SELFTEST("signals.observer", [](Context& ctx) -> ll::coro::CoroTask<
     api::removeTrain("selftest-o");
 });
 
-LV_REGISTER_SELFTEST("signals.track_removed", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("signals.track_removed", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(2800, 90);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     lineX(ctx, base, 20);
@@ -450,18 +450,18 @@ LV_REGISTER_SELFTEST("signals.track_removed", [](Context& ctx) -> ll::coro::Coro
 
 // U38: the selection is the item stack's own (Create's TrackTargetingBlockItem keeps it in the
 // item's tag): another stack has none, the selected stack keeps it wherever it goes.
-LV_REGISTER_SELFTEST("signals.selection_on_item", [](Context& ctx) -> ll::coro::CoroTask<> {
-    auto base = ctx.testPos(3870, lv::feature::contraption::kU38Dz);
+BR_REGISTER_SELFTEST("signals.selection_on_item", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto base = ctx.testPos(3870, br::feature::contraption::kU38Dz);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     lineX(ctx, base, 12);
-    auto item = lv::feature::common::items::make(api::kObserverId, 2);
+    auto item = br::feature::common::items::make(api::kObserverId, 2);
     ctx.require(item.has_value(), "the observer item exists");
     ctx.give(sp, *item, 0);
     sp.teleport(Vec3{base.x + 2.5f, float(base.y), base.z + 2.5f}, DimensionType(0));
     co_await ctx.ticks(2);
     auto use = [&](GlobalPos p) {
-        return sp.simulateUseItemInSlotOnBlock(0, lv::game::blockPos(p), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 1.0f, 0.5f});
+        return sp.simulateUseItemInSlotOnBlock(0, br::game::blockPos(p), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 1.0f, 0.5f});
     };
     sp.simulateLookAt(Vec3{base.x + 10.5f, base.y + .5f, base.z + .5f}, sim::LookDuration::Continuous);
     co_await ctx.ticks(10);

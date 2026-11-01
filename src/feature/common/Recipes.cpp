@@ -16,7 +16,7 @@
 #include "mod/Log.h"
 #include "mod/Main.h"
 
-namespace lv::feature::common::recipes {
+namespace br::feature::common::recipes {
 
 namespace fs = std::filesystem;
 
@@ -89,7 +89,7 @@ std::vector<ProcessingRecipe> loadDir(std::string const& type) {
     for (auto const& e : fs::recursive_directory_iterator(dir, ec)) {
         if (!e.is_regular_file() || e.path().extension() != ".json") continue;
         auto rel = fs::relative(e.path(), dir, ec).replace_extension().generic_string();
-        auto id  = "levitate:" + type + "/" + rel;
+        auto id  = "bearing:" + type + "/" + rel;
         auto doc = readJson(e.path());
         if (!doc) {
             log().warn("recipe {} is not valid JSON (skipped)", id);
@@ -194,4 +194,4 @@ void reload() {
     c.tagsLoaded = false;
 }
 
-} // namespace lv::feature::common::recipes
+} // namespace br::feature::common::recipes

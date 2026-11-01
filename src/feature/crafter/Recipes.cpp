@@ -25,7 +25,7 @@
 #include "feature/crafter/Internal.h"
 #include "mod/Log.h"
 
-namespace lv::feature::crafter {
+namespace br::feature::crafter {
 
 namespace ci = common::items;
 namespace rc = common::recipes;
@@ -254,4 +254,4 @@ std::vector<sawrecipes::Option> sawrecipes::forInput(GlobalPos const& pos, ItemS
     return out;
 }
 
-} // namespace lv::feature::crafter
+} // namespace br::feature::crafter

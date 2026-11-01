@@ -2,8 +2,8 @@
   "id": "fan_direction",
   "size": [5, 5],
   "blocks": [
-    {"at": [4, 1, 2], "id": "levitate:creative_motor", "states": {"levitate:facing": 4}},
-    {"at": [3, 1, 2], "id": "levitate:encased_fan", "states": {"levitate:facing": 4}}
+    {"at": [4, 1, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 4}},
+    {"at": [3, 1, 2], "id": "bearing:encased_fan", "states": {"bearing:facing": 4}}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

@@ -2,12 +2,12 @@
   "id": "mechanical_arm_modes",
   "size": [5, 5],
   "blocks": [
-    {"at": [2, 1, 2], "id": "levitate:mechanical_arm"},
-    {"at": [2, 1, 4], "id": "levitate:depot"},
-    {"at": [0, 1, 2], "id": "levitate:depot"},
-    {"at": [1, 1, 0], "id": "levitate:depot"},
-    {"at": [3, 1, 0], "id": "levitate:depot"},
-    {"at": [4, 1, 2], "id": "levitate:depot"}
+    {"at": [2, 1, 2], "id": "bearing:mechanical_arm"},
+    {"at": [2, 1, 4], "id": "bearing:depot"},
+    {"at": [0, 1, 2], "id": "bearing:depot"},
+    {"at": [1, 1, 0], "id": "bearing:depot"},
+    {"at": [3, 1, 0], "id": "bearing:depot"},
+    {"at": [4, 1, 2], "id": "bearing:depot"}
   ],
   "timeline": [
     {"show": "base", "from": "up"},

@@ -6,9 +6,9 @@
 #include "core/assembly/Deployer.h"
 #include "core/assembly/Sequenced.h"
 
-using namespace lv::core::assembly;
-using lv::core::kinetics::Axis;
-using lv::core::kinetics::Face;
+using namespace br::core::assembly;
+using br::core::kinetics::Axis;
+using br::core::kinetics::Face;
 
 namespace {
 nlohmann::json mechanismRecipe() {
@@ -33,39 +33,39 @@ nlohmann::json mechanismRecipe() {
 
 TEST(Sequenced, ParsesCreateFormat) {
     std::string err;
-    auto        r = parseSequenced(mechanismRecipe(), "levitate:sequenced_assembly/precision_mechanism", &err);
+    auto        r = parseSequenced(mechanismRecipe(), "bearing:sequenced_assembly/precision_mechanism", &err);
     ASSERT_TRUE(r) << err;
-    EXPECT_EQ(r->transitionalItem, "levitate:incomplete_precision_mechanism");
+    EXPECT_EQ(r->transitionalItem, "bearing:incomplete_precision_mechanism");
     EXPECT_EQ(r->loops, 5);
     ASSERT_EQ(r->sequence.size(), 3u);
     EXPECT_EQ(r->sequence[0].type, "deploying");
-    EXPECT_EQ(r->sequence[0].recipe.ingredients[1].items[0], "levitate:cogwheel");
+    EXPECT_EQ(r->sequence[0].recipe.ingredients[1].items[0], "bearing:cogwheel");
     EXPECT_EQ(r->sequence[2].recipe.ingredients[1].tags[0], "c:nuggets/iron");
     EXPECT_EQ(r->totalSteps(), 15);
     ASSERT_EQ(r->results.size(), 4u);
     EXPECT_FLOAT_EQ(r->results[0].chance, 120.f);
-    EXPECT_EQ(r->ingredient.items[0], "levitate:golden_sheet");
+    EXPECT_EQ(r->ingredient.items[0], "bearing:golden_sheet");
 }
 
 TEST(Sequenced, ParsesTrackRecipeWithInlineTags) {
     auto doc = nlohmann::json::parse(R"({
-      "type": "levitate:sequenced_assembly",
-      "ingredient": { "tag": "levitate:sleepers" },
-      "tags": { "levitate:sleepers": ["minecraft:stone_slab"] },
-      "transitional_item": { "item": "levitate:incomplete_track" },
+      "type": "bearing:sequenced_assembly",
+      "ingredient": { "tag": "bearing:sleepers" },
+      "tags": { "bearing:sleepers": ["minecraft:stone_slab"] },
+      "transitional_item": { "item": "bearing:incomplete_track" },
       "loops": 1,
       "sequence": [
-        { "type": "levitate:deploying",
-          "ingredients": [{ "item": "levitate:incomplete_track" }, [{ "item": "minecraft:iron_nugget" }, { "item": "levitate:zinc_nugget" }]],
-          "results": [{ "item": "levitate:incomplete_track" }] },
-        { "type": "levitate:pressing", "ingredients": [{ "item": "levitate:incomplete_track" }], "results": [{ "item": "levitate:incomplete_track" }] }
+        { "type": "bearing:deploying",
+          "ingredients": [{ "item": "bearing:incomplete_track" }, [{ "item": "minecraft:iron_nugget" }, { "item": "bearing:zinc_nugget" }]],
+          "results": [{ "item": "bearing:incomplete_track" }] },
+        { "type": "bearing:pressing", "ingredients": [{ "item": "bearing:incomplete_track" }], "results": [{ "item": "bearing:incomplete_track" }] }
       ],
-      "results": [{ "item": "levitate:track", "count": 1 }]
+      "results": [{ "item": "bearing:track", "count": 1 }]
     })");
     auto r = parseSequenced(doc, "t");
     ASSERT_TRUE(r);
-    EXPECT_EQ(r->ingredient.tags[0], "levitate:sleepers");
-    EXPECT_EQ(r->inlineTags.at("levitate:sleepers")[0], "minecraft:stone_slab");
+    EXPECT_EQ(r->ingredient.tags[0], "bearing:sleepers");
+    EXPECT_EQ(r->inlineTags.at("bearing:sleepers")[0], "minecraft:stone_slab");
     EXPECT_EQ(r->sequence[0].recipe.ingredients[1].items.size(), 2u);
     EXPECT_EQ(r->sequence[1].type, "pressing");
 }
@@ -88,7 +88,7 @@ TEST(Sequenced, StepsAndProgress) {
     for (int s = 0; s < 14; ++s) EXPECT_FALSE(completesWith(r, s)) << s;
     EXPECT_TRUE(completesWith(r, 14));
     EXPECT_FLOAT_EQ(progressAt(r, 3), 0.2f);
-    EXPECT_EQ(r.stepAt(4).recipe.ingredients[1].items[0], "levitate:large_cogwheel");
+    EXPECT_EQ(r.stepAt(4).recipe.ingredients[1].items[0], "bearing:large_cogwheel");
 }
 
 TEST(Sequenced, WeightedPick) {
@@ -129,9 +129,9 @@ TEST(Deployer, ShaftAxis) {
     EXPECT_EQ(deployerShaftAxis(Face::Down, false), Axis::Z);
     EXPECT_EQ(deployerShaftAxis(Face::North, true), Axis::X);
     EXPECT_EQ(deployerShaftAxis(Face::South, false), Axis::Y);
-    for (Face f : lv::core::kinetics::kFaces) {
-        for (Axis a : lv::core::kinetics::kAxes) {
-            if (a == lv::core::kinetics::axisOf(f)) continue;
+    for (Face f : br::core::kinetics::kFaces) {
+        for (Axis a : br::core::kinetics::kAxes) {
+            if (a == br::core::kinetics::axisOf(f)) continue;
             EXPECT_EQ(deployerShaftAxis(f, deployerAlongFirstFor(f, a)), a);
         }
     }

@@ -1,4 +1,4 @@
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 // Client side of the pipes unit (client mod only): the fluid moving through glass pipes, as
 // Create's TransparentStraightPipeRenderer / FluidRenderer.renderFluidFlow. Each face of a glass
@@ -6,14 +6,14 @@
 // an inbound flow grows from the face towards the centre, an outbound one from the centre
 // towards the face, `progress` / 2 blocks long. The server sends the flows ("pipes.glass",
 // src/feature/pipes/PipeEffects.cpp) when they change; the fronts advance here every tick at the
-// flow's speed. Chunk meshes draw glass pipes without their static fluid (levitate:fluid 0), so
+// flow's speed. Chunk meshes draw glass pipes without their static fluid (bearing:fluid 0), so
 // only this renderer shows it; vanilla clients keep the static fluid.
 //
 // Fluid valves: Create's FluidValveRenderer turns the pointer smoothly (0 to -90 degrees about the
 // valve's facing as `pointer` goes from closed to open). The server sends each valve's pointer,
 // target and rate ("pipes.valve"); chunk meshes draw valves without their handle
-// (levitate:pointer 1) and the handle is drawn here, turned by the pointer moving `rate` per tick.
-// Vanilla clients see the handle switch between open and closed (levitate:enabled).
+// (bearing:pointer 1) and the handle is drawn here, turned by the pointer moving `rate` per tick.
+// Vanilla clients see the handle switch between open and closed (bearing:enabled).
 
 #include <algorithm>
 #include <array>
@@ -79,14 +79,14 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::pipes {
+namespace br::client::pipes {
 
 using Json = nlohmann::json;
 
 namespace {
 
-constexpr char const* kGlassPipe = "levitate:glass_fluid_pipe";
-constexpr char const* kValve     = "levitate:fluid_valve";
+constexpr char const* kGlassPipe = "bearing:glass_fluid_pipe";
+constexpr char const* kValve     = "bearing:fluid_valve";
 constexpr float       kRadius    = 3.f / 16.f; ///< the fluid column's half width (the static fluid's)
 
 struct Flow {
@@ -172,9 +172,9 @@ std::map<int, std::unique_ptr<mce::Mesh>>& meshCache() {
 }
 
 char const* slotTexture(int slot) {
-    static constexpr char const* names[]{"levitate_pipe_fluid_potion", "levitate_pipe_fluid_water",     "levitate_pipe_fluid_lava",
-                                         "levitate_pipe_fluid_honey",  "levitate_pipe_fluid_chocolate", "levitate_pipe_fluid_milk",
-                                         "levitate_pipe_fluid_potion", "levitate_pipe_fluid_tea"};
+    static constexpr char const* names[]{"bearing_pipe_fluid_potion", "bearing_pipe_fluid_water",     "bearing_pipe_fluid_lava",
+                                         "bearing_pipe_fluid_honey",  "bearing_pipe_fluid_chocolate", "bearing_pipe_fluid_milk",
+                                         "bearing_pipe_fluid_potion", "bearing_pipe_fluid_tea"};
     return names[std::clamp(slot, 0, 7)];
 }
 
@@ -199,7 +199,7 @@ mce::Mesh* cubeMesh(Tessellator& tess, int slot) {
     quad({0, 1, 1}, {1, 1, 1}, {1, 0, 1}, {0, 0, 1}); // south
     quad({0, 1, 0}, {0, 1, 1}, {0, 0, 1}, {0, 0, 0}); // west
     quad({1, 1, 0}, {1, 0, 0}, {1, 0, 1}, {1, 1, 1}); // east
-    out = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_pipe_fluid", SupplementaryFieldAutoGenerationMode::None));
+    out = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_pipe_fluid", SupplementaryFieldAutoGenerationMode::None));
     return out.get();
 }
 
@@ -279,18 +279,18 @@ mce::Mesh* handleMesh(Tessellator& tess, std::string const& bone) {
     if (auto it = s.handleMeshes.find(bone); it != s.handleMeshes.end()) return it->second.get();
     auto& slot = s.handleMeshes[bone];
     static std::optional<core::kinetics::RotorModel> model = []() -> std::optional<core::kinetics::RotorModel> {
-        auto          file = lv::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Levitate_RP" / "models" / "blocks" / "fluid_valve.geo.json";
+        auto          file = br::Mod::getInstance().getSelf().getModDir() / "resource_packs" / "Bearing_RP" / "models" / "blocks" / "fluid_valve.geo.json";
         std::ifstream in(file);
         auto          j = Json::parse(in, nullptr, false, true);
         if (j.is_discarded()) return std::nullopt;
         auto parsed = core::kinetics::parseGeometry(j);
-        if (!parsed || !parsed->contains("geometry.levitate.fluid_valve")) return std::nullopt;
-        return parsed->at("geometry.levitate.fluid_valve");
+        if (!parsed || !parsed->contains("geometry.bearing.fluid_valve")) return std::nullopt;
+        return parsed->at("geometry.bearing.fluid_valve");
     }();
     if (!model) return nullptr;
     auto b = model->bones.find(bone);
     if (b == model->bones.end() || b->second.empty()) return nullptr;
-    auto  tex = BlockGraphics::getTextureUVCoordinateSet("levitate_fluid_valve", 0, 0);
+    auto  tex = BlockGraphics::getTextureUVCoordinateSet("bearing_fluid_valve", 0, 0);
     float u0 = tex._u0, v0 = tex._v0, u1 = tex._u1, v1 = tex._v1;
     auto  uv = [&](std::array<float, 2> const& t) { return Vec2{u0 + (u1 - u0) * t[0], v0 + (v1 - v0) * t[1]}; };
     auto  at = [](std::array<float, 3> const& p) { return Vec3{p[0], p[1], p[2]}; };
@@ -300,7 +300,7 @@ mce::Mesh* handleMesh(Tessellator& tess, std::string const& bone) {
         tess.simpleQuad(at(q.pos[0]), uv(q.uv[0]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[3]), uv(q.uv[3]));
         tess.simpleQuad(at(q.pos[3]), uv(q.uv[3]), at(q.pos[2]), uv(q.uv[2]), at(q.pos[1]), uv(q.uv[1]), at(q.pos[0]), uv(q.uv[0]));
     }
-    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "levitate_valve_handle", SupplementaryFieldAutoGenerationMode::None));
+    slot = std::make_unique<mce::Mesh>(tess.end(Tessellator::UploadMode::Buffered, "bearing_valve_handle", SupplementaryFieldAutoGenerationMode::None));
     return slot.get();
 }
 
@@ -335,9 +335,9 @@ void renderValves(BaseActorRenderContext& rc) {
             continue;
         }
         auto const& block   = region.getBlock(bp);
-        int         facing  = std::clamp(game::intState(block, "levitate:facing").value_or(0), 0, 5);
-        int         along   = game::intState(block, "levitate:along_first").value_or(0) != 0 ? 1 : 0;
-        float       pointer = game::intState(block, "levitate:enabled").value_or(0) != 0 ? 1.f : 0.f;
+        int         facing  = std::clamp(game::intState(block, "bearing:facing").value_or(0), 0, 5);
+        int         along   = game::intState(block, "bearing:along_first").value_or(0) != 0 ? 1 : 0;
+        float       pointer = game::intState(block, "bearing:enabled").value_or(0) != 0 ? 1.f : 0.f;
         if (auto it = s.valves.find(Key{dim, p[0], p[1], p[2]}); it != s.valves.end()) {
             auto const& v     = it->second;
             float       ticks = std::max(0.f, now - static_cast<float>(v.tick));
@@ -370,13 +370,13 @@ void renderValves(BaseActorRenderContext& rc) {
     }
 }
 
-/// The valve state without its handle (levitate:pointer 1), cached per state.
+/// The valve state without its handle (bearing:pointer 1), cached per state.
 Block const* withoutHandle(Block const& block) {
     auto&           s = state();
     std::lock_guard lock(s.mutex);
     auto [it, fresh] = s.handleless.try_emplace(&block, nullptr);
-    if (fresh && game::intState(block, "levitate:pointer").value_or(1) == 0) {
-        if (auto const* type = block.getBlockType().getBlockState(HashedString("levitate:pointer")))
+    if (fresh && game::intState(block, "bearing:pointer").value_or(1) == 0) {
+        if (auto const* type = block.getBlockType().getBlockState(HashedString("bearing:pointer")))
             if (auto b = block.setState(*type, 1)) it->second = b.as_ptr();
     }
     return it->second;
@@ -387,8 +387,8 @@ Block const* withoutFluid(Block const& block) {
     auto&           s = state();
     std::lock_guard lock(s.mutex);
     auto [it, fresh] = s.hidden.try_emplace(&block, nullptr);
-    if (fresh && game::intState(block, "levitate:fluid").value_or(0) != 0) {
-        if (auto const* type = block.getBlockType().getBlockState(HashedString("levitate:fluid")))
+    if (fresh && game::intState(block, "bearing:fluid").value_or(0) != 0) {
+        if (auto const* type = block.getBlockType().getBlockState(HashedString("bearing:fluid")))
             if (auto b = block.setState(*type, 0)) it->second = b.as_ptr();
     }
     return it->second;
@@ -412,7 +412,7 @@ void reset() {
 
 } // namespace
 
-// Chunk meshes: glass pipes lose their static fluid (a world with glass pipes runs Levitate, whose
+// Chunk meshes: glass pipes lose their static fluid (a world with glass pipes runs Bearing, whose
 // server sends the flows drawn here).
 LL_STATIC_HOOK(
     PipesExtractHook,
@@ -482,8 +482,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::pipes
+} // namespace br::client::pipes
 
-LV_REGISTER_MODULE(lv::client::pipes::PipesClientModule);
+BR_REGISTER_MODULE(br::client::pipes::PipesClientModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

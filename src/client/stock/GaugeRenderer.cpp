@@ -5,7 +5,7 @@
 // server sends `stock.gauge {dim, reset, gauges: [{pos, face, facing, panels: [{slot, count,
 // colour, from: [{pos, slot, arrow}]}]}]}` when a gauge changes.
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <array>
 #include <cmath>
@@ -32,7 +32,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::client::stock {
+namespace br::client::stock {
 
 namespace {
 
@@ -304,8 +304,8 @@ private:
     ll::event::ListenerPtr mExit;
 };
 
-} // namespace lv::client::stock
+} // namespace br::client::stock
 
-LV_REGISTER_MODULE(lv::client::stock::StockGaugeRendererModule);
+BR_REGISTER_MODULE(br::client::stock::StockGaugeRendererModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

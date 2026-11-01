@@ -51,7 +51,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 
 namespace ce    = core::equipment;
 namespace items = common::items;
@@ -74,8 +74,8 @@ k::KineticSpec backtankSpec(std::string key) {
     s.stressKey       = std::move(key);
     return s;
 }
-LV_REGISTER_KINETIC_BLOCK(std::string(kCopperBacktank), backtankSpec("copper_backtank"));
-LV_REGISTER_KINETIC_BLOCK(std::string(kNetheriteBacktank), backtankSpec("netherite_backtank"));
+BR_REGISTER_KINETIC_BLOCK(std::string(kCopperBacktank), backtankSpec("copper_backtank"));
+BR_REGISTER_KINETIC_BLOCK(std::string(kNetheriteBacktank), backtankSpec("netherite_backtank"));
 
 struct Filler {
     float speed    = 0;
@@ -190,8 +190,8 @@ void sendFog(Player& p, int fog) {
     if (!packet) return;
     auto&                    pkt = static_cast<PlayerFogPacket&>(*packet);
     std::vector<std::string> stack;
-    if (fog == 1) stack.emplace_back("levitate:diving_helmet");
-    if (fog == 2) stack.emplace_back("levitate:netherite_diving_helmet");
+    if (fog == 1) stack.emplace_back("bearing:diving_helmet");
+    if (fog == 2) stack.emplace_back("bearing:netherite_diving_helmet");
     pkt.mFogStack = stack;
     pkt.sendTo(p);
 }
@@ -518,20 +518,20 @@ void uninstallBacktanks() {
     gListeners.clear();
 }
 
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
 // Create: the netherite diving gear is ArmorMaterials.NETHERITE (toughness 3 per piece); Bedrock's
 // data-driven wearables have protection only.
 LL_TYPE_INSTANCE_HOOK(EquipmentToughnessHook, ll::memory::HookPriority::Normal, Mob, &Mob::getToughnessValue, int) {
-    return origin() + lv::feature::equipment::netheriteToughness(*this);
+    return origin() + br::feature::equipment::netheriteToughness(*this);
 }
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 bool hasAquaAffinityHelmet(Actor const& a) {
     auto head = items::idOf(a.getArmor(ArmorSlot::Head));
     return head == kCopperHelmet || head == kNetheriteHelmet;
 }
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment
 
 namespace {
 /// Create's DivingHelmetItem#getEnchantmentLevel: the helmets have Aqua Affinity I built in, so a
@@ -540,7 +540,7 @@ namespace {
 void giveAquaAffinity(PlayerDestroy::DestroyProgressContext& ctx) {
     if (!ctx.actorIsUnderWater || ctx.actorHasAquaAffinityArmor) return;
     auto* actor = Actor::tryGetFromEntity(const_cast<EntityContext&>(static_cast<EntityContext const&>(ctx.provider)), false);
-    if (actor && lv::feature::equipment::hasAquaAffinityHelmet(*actor))
+    if (actor && br::feature::equipment::hasAquaAffinityHelmet(*actor))
         *const_cast<bool*>(reinterpret_cast<bool const*>(&ctx.actorHasAquaAffinityArmor)) = true;
 }
 } // namespace
@@ -555,7 +555,7 @@ LL_STATIC_HOOK(EquipmentAquaProgressHook, ll::memory::HookPriority::Normal, &Pla
     return origin(ctx);
 }
 
-namespace lv::feature::equipment {
+namespace br::feature::equipment {
 int  netheriteToughness(Actor const& a) { return kNetheriteToughness * netheritePieces(a); }
 void hookToughness(bool on) {
     if (on) {
@@ -568,4 +568,4 @@ void hookToughness(bool on) {
         EquipmentToughnessHook::unhook();
     }
 }
-} // namespace lv::feature::equipment
+} // namespace br::feature::equipment

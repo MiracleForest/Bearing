@@ -8,7 +8,7 @@
 #include "core/GlobalPos.h"
 #include "feature/common/Capabilities.h"
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
 /// Whether the block at `pos` has Create's FluidTransportBehaviour (fluid / glass / encased /
 /// smart pipes, pumps, valves).
@@ -17,4 +17,4 @@ namespace lv::feature::pipes {
 /// `inbound && complete`), one per side that has one.
 [[nodiscard]] std::vector<common::fluids::FluidStack> inboundFlows(core::GlobalPos const& pos);
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes

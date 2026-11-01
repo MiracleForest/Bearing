@@ -24,7 +24,7 @@
 
 #include "core/contraption/Geometry.h"
 
-namespace lv::core::contraption {
+namespace br::core::contraption {
 
 using DirMask = std::uint8_t;
 [[nodiscard]] inline constexpr DirMask bit(Dir d) { return DirMask(1u << static_cast<int>(d)); }
@@ -96,4 +96,4 @@ chassisIncluded(Pos const& chassisPos, BlockInfo const& chassis, WorldQuery cons
 /// only, supportive towards each other, and slime doesn't stick to honey).
 [[nodiscard]] bool canStick(BlockInfo const& a, BlockInfo const& b, Dir fromAToB);
 
-} // namespace lv::core::contraption
+} // namespace br::core::contraption

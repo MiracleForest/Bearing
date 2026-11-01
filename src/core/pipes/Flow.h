@@ -32,7 +32,7 @@
 
 #include "core/pipes/Types.h"
 
-namespace lv::core::pipes {
+namespace br::core::pipes {
 
 /// What a block is to the flow model (Create: which FluidTransportBehaviour it has).
 enum class Kind : std::uint8_t { None, Pipe, Pump };
@@ -242,4 +242,4 @@ private:
 /// mB per tick a network moves for its start pressure (Create: max(1, (int)(p / 2))).
 [[nodiscard]] int transferSpeedFor(float pressure);
 
-} // namespace lv::core::pipes
+} // namespace br::core::pipes

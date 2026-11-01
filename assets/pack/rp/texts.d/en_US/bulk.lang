@@ -1,8 +1,8 @@
-tile.levitate:millstone.name=Millstone
-tile.levitate:crushing_wheel.name=Crushing Wheel
-tile.levitate:crushing_wheel_controller.name=Crushing Wheel Controller
-tile.levitate:encased_fan.name=Encased Fan
-tile.levitate:nozzle.name=Nozzle
+tile.bearing:millstone.name=Millstone
+tile.bearing:crushing_wheel.name=Crushing Wheel
+tile.bearing:crushing_wheel_controller.name=Crushing Wheel Controller
+tile.bearing:encased_fan.name=Encased Fan
+tile.bearing:nozzle.name=Nozzle
 death.attack.create.crush=%1$s was processed by Crushing Wheels
 death.attack.create.crush.player=%1$s was thrown into Crushing Wheels by %2$s
 death.attack.create.fan_fire=%1$s got smoked by an Encased Fan

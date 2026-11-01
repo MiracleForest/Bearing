@@ -11,7 +11,7 @@
 #include "feature/common/BlockData.h"
 #include "feature/contraption/Contraption.h"
 
-namespace lv::feature::contraption {
+namespace br::feature::contraption {
 
 namespace {
 
@@ -54,4 +54,4 @@ BlockDataCarrier const gBlockDataCarrier;
 
 } // namespace
 
-} // namespace lv::feature::contraption
+} // namespace br::feature::contraption

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:encased_fan"
+      "identifier": "bearing:encased_fan"
     },
     "tags": [
       "crafting_table"
@@ -14,22 +14,22 @@
     ],
     "key": {
       "S": {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       },
       "A": {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       },
       "P": {
-        "item": "levitate:propeller"
+        "item": "bearing:propeller"
       }
     },
     "unlock": [
       {
-        "item": "levitate:andesite_casing"
+        "item": "bearing:andesite_casing"
       }
     ],
     "result": {
-      "item": "levitate:encased_fan",
+      "item": "bearing:encased_fan",
       "count": 1
     }
   }

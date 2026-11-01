@@ -3,7 +3,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::tracks {
+namespace br::core::tracks {
 
 namespace {
 nlohmann::json vecJson(Vec3d const& v) { return nlohmann::json::array({v.x, v.y, v.z}); }
@@ -260,4 +260,4 @@ PlacementPlan planConnection(PlacementRequest const& req, Shape shape1) {
     return info;
 }
 
-} // namespace lv::core::tracks
+} // namespace br::core::tracks

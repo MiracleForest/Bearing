@@ -2,14 +2,14 @@
   "format_version": "1.21.40",
   "minecraft:entity": {
     "description": {
-      "identifier": "levitate:player_seat",
+      "identifier": "bearing:player_seat",
       "is_spawnable": false,
       "is_summonable": true
     },
     "components": {
       "minecraft:type_family": {
         "family": [
-          "levitate_seat",
+          "bearing_seat",
           "inanimate"
         ]
       },

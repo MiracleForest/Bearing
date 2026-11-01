@@ -2,16 +2,16 @@
   "format_version": "1.21.40",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:mechanical_arm",
+      "identifier": "bearing:mechanical_arm",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:ceiling": [
+        "bearing:ceiling": [
           0,
           1
         ],
-        "levitate:rotor": [
+        "bearing:rotor": [
           0,
           1
         ]
@@ -19,18 +19,18 @@
     },
     "components": {
       "minecraft:geometry": {
-        "identifier": "geometry.levitate.mechanical_arm",
+        "identifier": "geometry.bearing.mechanical_arm",
         "bone_visibility": {
-          "cog": "q.block_state('levitate:rotor') == 0",
-          "turntable": "q.block_state('levitate:rotor') == 0",
-          "lower": "q.block_state('levitate:rotor') == 0",
-          "upper": "q.block_state('levitate:rotor') == 0",
-          "head": "q.block_state('levitate:rotor') == 0"
+          "cog": "q.block_state('bearing:rotor') == 0",
+          "turntable": "q.block_state('bearing:rotor') == 0",
+          "lower": "q.block_state('bearing:rotor') == 0",
+          "upper": "q.block_state('bearing:rotor') == 0",
+          "head": "q.block_state('bearing:rotor') == 0"
         }
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_mechanical_arm",
+          "texture": "bearing_mechanical_arm",
           "render_method": "alpha_test"
         }
       },
@@ -70,7 +70,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:ceiling') == 1",
+        "condition": "q.block_state('bearing:ceiling') == 1",
         "components": {
           "minecraft:transformation": {
             "rotation": [

@@ -25,7 +25,7 @@
 
 #include "core/common/Recipe.h"
 
-namespace lv::core::assembly {
+namespace br::core::assembly {
 
 /// Step types a sequence may contain (Create's IAssemblyRecipe implementations).
 inline constexpr std::string_view kDeploying = "deploying";
@@ -43,13 +43,13 @@ struct SequenceStep {
 };
 
 struct SequencedRecipe {
-    std::string                                     id; ///< "levitate:sequenced_assembly/precision_mechanism"
+    std::string                                     id; ///< "bearing:sequenced_assembly/precision_mechanism"
     common::ItemIngredient                          ingredient;
     std::string                                     transitionalItem;
     int                                             loops = 1;
     std::vector<SequenceStep>                       sequence;
     std::vector<common::ItemResult>                 results; ///< `chance` is the weight
-    std::map<std::string, std::vector<std::string>> inlineTags; ///< Levitate extension: "tags" {tag: [ids]}
+    std::map<std::string, std::vector<std::string>> inlineTags; ///< Bearing extension: "tags" {tag: [ids]}
 
     /// Steps until the result: sequence length times loops.
     [[nodiscard]] int totalSteps() const { return static_cast<int>(sequence.size()) * loops; }
@@ -57,7 +57,7 @@ struct SequencedRecipe {
     [[nodiscard]] SequenceStep const& stepAt(int finished) const { return sequence[static_cast<std::size_t>(finished) % sequence.size()]; }
 };
 
-/// Maps a step type id ("create:deploying", "levitate:filling", "deploying") to its short name ("" if unknown).
+/// Maps a step type id ("create:deploying", "bearing:filling", "deploying") to its short name ("" if unknown).
 [[nodiscard]] std::string stepTypeName(std::string_view typeId);
 
 /// Parses a sequenced assembly recipe. Returns nullopt and sets `error` for unusable documents.
@@ -87,4 +87,4 @@ struct TooltipLine {
 [[nodiscard]] std::vector<TooltipLine>
 tooltipLines(SequencedRecipe const& recipe, int finished, std::vector<std::string> const& stepNames);
 
-} // namespace lv::core::assembly
+} // namespace br::core::assembly

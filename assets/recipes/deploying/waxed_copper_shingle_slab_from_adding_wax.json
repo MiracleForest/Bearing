@@ -1,8 +1,8 @@
 {
-  "type": "levitate:deploying",
+  "type": "bearing:deploying",
   "ingredients": [
     {
-      "item": "levitate:copper_shingle_slab"
+      "item": "bearing:copper_shingle_slab"
     },
     {
       "item": "minecraft:honeycomb_block"
@@ -10,7 +10,7 @@
   ],
   "results": [
     {
-      "item": "levitate:waxed_copper_shingle_slab"
+      "item": "bearing:waxed_copper_shingle_slab"
     }
   ],
   "keep_held_item": true

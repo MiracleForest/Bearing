@@ -37,7 +37,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::belts {
+namespace br::feature::belts {
 
 namespace citems = common::items;
 
@@ -331,7 +331,7 @@ bool scanTrajectory(Depot& d, Airborne const& a, double t) {
     if (!miss) {
         auto const& b = region->getBlock(hit.mBlock);
         auto        id = std::string(b.getTypeName());
-        if ((id == "levitate:andesite_funnel" || id == "levitate:brass_funnel") && game::intState(b, "levitate:extracting").value_or(0) != 0) miss = true;
+        if ((id == "bearing:andesite_funnel" || id == "bearing:brass_funnel") && game::intState(b, "bearing:extracting").value_or(0) != 0) miss = true;
     }
     if (miss) {
         if (d.earlyTarget && d.earlyTarget->time < t + 1) d.earlyTarget.reset();
@@ -608,7 +608,7 @@ bool onDepotUse(Player& player, GlobalPos const& pos, int face, cb::Vec3d const&
     if (!d) return false;
     if (!depotCanAccept(*d)) return true;
     ItemStack held     = player.getSelectedItem();
-    bool      wasEmpty = citems::isEmpty(held) || citems::idOf(held) == "levitate:mechanical_arm"; // shouldntPlaceItem
+    bool      wasEmpty = citems::isEmpty(held) || citems::idOf(held) == "bearing:mechanical_arm"; // shouldntPlaceItem
     int       took     = 0;
     if (!citems::isEmpty(heldStack(*d))) {
         giveToPlayer(player, heldStack(*d));
@@ -797,4 +797,4 @@ void registerEjectorBox() {
     );
 }
 
-} // namespace lv::feature::belts
+} // namespace br::feature::belts

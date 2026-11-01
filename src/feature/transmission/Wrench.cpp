@@ -31,7 +31,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::transmission {
+namespace br::feature::transmission {
 
 namespace {
 
@@ -144,19 +144,19 @@ Block const* rotatedSpeedController(Block const& block, int face) {
     return withInts(block, {{kAxis, axis == 0 ? 2 : 0}});
 }
 
-LV_REGISTER_WRENCHABLE(kAndesiteShaft, encasedShaft());
-LV_REGISTER_WRENCHABLE(kBrassShaft, encasedShaft());
-LV_REGISTER_WRENCHABLE(kAndesiteCog, encasedCog());
-LV_REGISTER_WRENCHABLE(kBrassCog, encasedCog());
-LV_REGISTER_WRENCHABLE(kAndesiteLargeCog, encasedCog());
-LV_REGISTER_WRENCHABLE(kBrassLargeCog, encasedCog());
-LV_REGISTER_WRENCHABLE(kChainDrive, wrench::Handler{.onWrenched = wrenchChainDrive});
-LV_REGISTER_WRENCHABLE(kChainGearshift, wrench::Handler{.onWrenched = wrenchChainDrive});
-LV_REGISTER_WRENCHABLE(kSpeedController, wrench::Handler{.rotate = rotatedSpeedController});
+BR_REGISTER_WRENCHABLE(kAndesiteShaft, encasedShaft());
+BR_REGISTER_WRENCHABLE(kBrassShaft, encasedShaft());
+BR_REGISTER_WRENCHABLE(kAndesiteCog, encasedCog());
+BR_REGISTER_WRENCHABLE(kBrassCog, encasedCog());
+BR_REGISTER_WRENCHABLE(kAndesiteLargeCog, encasedCog());
+BR_REGISTER_WRENCHABLE(kBrassLargeCog, encasedCog());
+BR_REGISTER_WRENCHABLE(kChainDrive, wrench::Handler{.onWrenched = wrenchChainDrive});
+BR_REGISTER_WRENCHABLE(kChainGearshift, wrench::Handler{.onWrenched = wrenchChainDrive});
+BR_REGISTER_WRENCHABLE(kSpeedController, wrench::Handler{.rotate = rotatedSpeedController});
 
 } // namespace
 
-/// EncasedCogwheelBlock.transform on contraptions: the generic rotation turned levitate:axis; the
+/// EncasedCogwheelBlock.transform on contraptions: the generic rotation turned bearing:axis; the
 /// shaft ends swap when the positive end ends up on the negative side.
 void installEncasedCogRotation() {
     namespace cc = contraption::cc;
@@ -173,4 +173,4 @@ void installEncasedCogRotation() {
     }
 }
 
-} // namespace lv::feature::transmission
+} // namespace br::feature::transmission

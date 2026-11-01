@@ -21,7 +21,7 @@
 #include "feature/common/Items.h"
 #include "feature/stock/StockInternal.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace {
 
@@ -103,4 +103,4 @@ std::optional<CraftingArrangement> craftingArrangement(ItemStack const& output, 
     return std::nullopt;
 }
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

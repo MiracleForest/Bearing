@@ -35,14 +35,14 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("packages", lv::feature::packages::PackagesConfig);
+BR_REGISTER_CONFIG("packages", br::feature::packages::PackagesConfig);
 
-namespace lv::feature::packages {
+namespace br::feature::packages {
 
 namespace items     = common::items;
 namespace blockdata = common::blockdata;
 
-PackagesConfig const& config() { return lv::config::get<PackagesConfig>(); }
+PackagesConfig const& config() { return br::config::get<PackagesConfig>(); }
 
 Kind kindOf(std::string_view id) {
     if (id == kPackagerId) return Kind::Packager;
@@ -66,7 +66,7 @@ char const* kindName(Kind k) {
 
 namespace {
 
-constexpr char const* kIndexKey = "lv:packages:index";
+constexpr char const* kIndexKey = "br:packages:index";
 
 struct ModuleState {
     std::map<GlobalPos, Kind>          index;
@@ -339,8 +339,8 @@ ia::Result packagesUseOn(ia::UseOnContext const& c) {
 
         // the logistics blocks themselves
         if (kind == Kind::Packager || kind == Kind::Repackager) {
-            bool pass = heldId == kWrenchId || heldId == "levitate:factory_gauge" || heldId == kFrogportId
-                     || (heldId == "levitate:stock_link" && !stateAt(target, kLinked).value_or(0)) || (sneak && !item.isNull());
+            bool pass = heldId == kWrenchId || heldId == "bearing:factory_gauge" || heldId == kFrogportId
+                     || (heldId == "bearing:stock_link" && !stateAt(target, kLinked).value_or(0)) || (sneak && !item.isNull());
             if (!pass) {
                 if (!debounced(player, target)) usePackager(player, target);
                 return done();
@@ -754,6 +754,6 @@ struct Lifecycle {
 Lifecycle gLifecycle;
 } // namespace
 
-} // namespace lv::feature::packages
+} // namespace br::feature::packages
 
-LV_REGISTER_MODULE(lv::feature::packages::PackagesModule);
+BR_REGISTER_MODULE(br::feature::packages::PackagesModule);

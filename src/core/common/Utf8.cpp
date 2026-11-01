@@ -1,6 +1,6 @@
 #include "core/common/Utf8.h"
 
-namespace lv::core {
+namespace br::core {
 
 std::string utf8Prefix(std::string const& s, std::size_t chars) {
     std::size_t i = 0, n = 0;
@@ -14,4 +14,4 @@ std::string utf8Prefix(std::string const& s, std::size_t chars) {
     return s.substr(0, i);
 }
 
-} // namespace lv::core
+} // namespace br::core

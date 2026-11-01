@@ -34,12 +34,12 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::redstone {
+namespace br::feature::redstone {
 
 namespace {
 
 constexpr char kBellChannel[] = "redstone.bell";
-constexpr char kBellSound[]   = "levitate.desk_bell";
+constexpr char kBellSound[]   = "bearing.desk_bell";
 
 int gRings = 0;
 
@@ -259,4 +259,4 @@ void registerBellAndLamp() {
     );
 }
 
-} // namespace lv::feature::redstone
+} // namespace br::feature::redstone

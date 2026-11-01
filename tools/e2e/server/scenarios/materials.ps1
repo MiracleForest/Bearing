@@ -9,7 +9,7 @@ $r = Invoke-SelfTest 'materials.*'
 if ($r.Pass -lt 10) { throw "expected at least 10 materials selftests to pass, got $($r.Pass)" }
 
 # Content log: every block / item / recipe of the pack must load without errors.
-$bad = Get-ServerLog | Select-String -Pattern '\[(Blocks|Item|Recipes|Molang|Geometry|Texture|Json)\].*(levitate|materials)' |
+$bad = Get-ServerLog | Select-String -Pattern '\[(Blocks|Item|Recipes|Molang|Geometry|Texture|Json)\].*(bearing|materials)' |
     Where-Object { $_.Line -match 'ERR|WARN|error' }
 if ($bad) { $bad | Select-Object -First 10 | ForEach-Object { Write-Host $_.Line }; throw "content errors for the materials pack" }
 

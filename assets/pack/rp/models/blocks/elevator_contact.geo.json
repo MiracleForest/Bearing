@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.levitate.elevator_contact",
+        "identifier": "geometry.bearing.elevator_contact",
         "texture_width": 16,
         "texture_height": 16,
         "visible_bounds_width": 3,

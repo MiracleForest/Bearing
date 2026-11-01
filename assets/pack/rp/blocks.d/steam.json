@@ -1,8 +1,8 @@
 {
-  "levitate:fluid_tank": { "sound": "copper" },
-  "levitate:creative_fluid_tank": { "sound": "copper" },
-  "levitate:steam_engine": { "sound": "copper" },
-  "levitate:steam_whistle": { "sound": "copper" },
-  "levitate:steam_whistle_extension": { "sound": "copper" },
-  "levitate:powered_shaft": { "sound": "stone" }
+  "bearing:fluid_tank": { "sound": "copper" },
+  "bearing:creative_fluid_tank": { "sound": "copper" },
+  "bearing:steam_engine": { "sound": "copper" },
+  "bearing:steam_whistle": { "sound": "copper" },
+  "bearing:steam_whistle_extension": { "sound": "copper" },
+  "bearing:powered_shaft": { "sound": "stone" }
 }

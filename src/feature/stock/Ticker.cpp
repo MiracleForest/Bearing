@@ -32,7 +32,7 @@
 #include "mod/I18n.h"
 #include "mod/Log.h"
 
-namespace lv::feature::stock {
+namespace br::feature::stock {
 
 namespace items   = common::items;
 namespace screens = common::screens;
@@ -238,7 +238,7 @@ void amountsForm(Player& player, GlobalPos ticker, std::string search, std::stri
     if (shown.empty()) {
         form.appendLabel(trFor(player, "create.gui.stock_keeper.no_search_results", "No matching items found"));
     } else {
-        form.appendLabel(trFor(player, "lv.stock.form.amounts", "Amounts to order (at most {} kinds of item):", cs::kMaxOrderSlots));
+        form.appendLabel(trFor(player, "br.stock.form.amounts", "Amounts to order (at most {} kinds of item):", cs::kMaxOrderSlots));
         for (std::size_t i = 0; i < shown.size(); ++i) {
             auto count = shown[i].count >= kInfinite ? std::string("∞") : std::to_string(shown[i].count);
             form.appendInput("n" + std::to_string(i), items::displayName(shown[i].stack) + " §7(" + count + ")", "0", "");
@@ -315,7 +315,7 @@ void requestForm(Player& player, Json const& ctx) {
         for (auto const& g : data["groups"]) total += static_cast<int>(g.value("items", Json::array()).size());
         if (total == 0) form.appendLabel(trFor(player, "create.gui.stock_keeper.inventories_empty", "Linked Inventories are Empty"));
     }
-    std::vector<std::string> cats{trFor(player, "lv.stock.form.all_categories", "(all categories)")};
+    std::vector<std::string> cats{trFor(player, "br.stock.form.all_categories", "(all categories)")};
     std::vector<int>         catIndex{-2};
     std::vector<std::pair<int, std::string>> collapsible; // Create: clicking a category header hides it
     for (auto const& g : data["groups"]) {
@@ -326,7 +326,7 @@ void requestForm(Player& player, Json const& ctx) {
         if (data["groups"].size() > 1 && !g.value("items", Json::array()).empty()) collapsible.emplace_back(g.value("index", -1), name);
     }
     form.appendInput("search", trFor(player, "create.gui.stock_keeper.search_items", "Search Items"), "", "");
-    form.appendDropdown("category", trFor(player, "lv.stock.form.category", "Category"), cats, 0);
+    form.appendDropdown("category", trFor(player, "br.stock.form.category", "Category"), cats, 0);
     form.appendInput("address", trFor(player, "create.gui.stock_keeper.package_address", "Package Address"), "", data.value("address", std::string{}));
     auto suggestions = packages::addressSuggestions(player);
     packages::appendAddressSuggestions(form, player, suggestions);
@@ -345,7 +345,7 @@ void requestForm(Player& player, Json const& ctx) {
         for (auto const& g : data["groups"])
             if (g.value("index", -2) == index) hidden = g.value("hidden", false);
         wasHidden.push_back(hidden);
-        form.appendToggle("hide" + std::to_string(index), trFor(player, "lv.stock.form.collapse_category", "Collapse {}", name), hidden);
+        form.appendToggle("hide" + std::to_string(index), trFor(player, "br.stock.form.collapse_category", "Collapse {}", name), hidden);
     }
     GlobalPos t = *ticker;
     form.sendTo(player, [t, catIndex, canLock, network, collapsible, wasHidden, suggestions](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
@@ -533,8 +533,8 @@ void categoryForm(Player& player, Json const& ctx) {
             edit.appendInput("name", trFor(p, "create.gui.stock_ticker.category_name", "Category Name"), "", c[static_cast<std::size_t>(index)].value("name", std::string{}));
             edit.appendDropdown(
                 "move",
-                trFor(p, "lv.stock.form.move", "Move"),
-                {trFor(p, "lv.common.form.keep", "(keep)"), "↑", "↓", trFor(p, "create.gui.stock_ticker.shift_moves_top", "Shift moves to top"),
+                trFor(p, "br.stock.form.move", "Move"),
+                {trFor(p, "br.common.form.keep", "(keep)"), "↑", "↓", trFor(p, "create.gui.stock_ticker.shift_moves_top", "Shift moves to top"),
                  trFor(p, "create.gui.stock_ticker.shift_moves_bottom", "Shift moves to bottom")},
                 0
             );
@@ -601,7 +601,7 @@ bool keeperPresent(GlobalPos const& ticker) {
                 return true;
             }
             // Create: a blaze burner block entity, i.e. a burner with a blaze (heat above none)
-            if (y == 0 && idAt(seat) == kBlazeBurner && stateOr(seat, "levitate:blaze", 0) > 0) return true;
+            if (y == 0 && idAt(seat) == kBlazeBurner && stateOr(seat, "bearing:blaze", 0) > 0) return true;
         }
     }
     return false;
@@ -684,7 +684,7 @@ bool placeOrder(Player& player, GlobalPos const& ticker, std::vector<BigStack> c
     if (!order.empty()) advancements::award(player, "stock_ticker"); // Create's PackageOrderRequestPacket
     bool ok = requestOrder(network, RequestType::Player, order, address);
     if (ok) {
-        playSound(ticker, "levitate.stock.request", 1.0f, 1.0f);
+        playSound(ticker, "bearing.stock.request", 1.0f, 1.0f);
         statusKey(player, "create.gui.stock_keeper.request_sent", "Request Sent!", "§a");
     }
     log().info("stock: {} ordered {} stack(s) to '{}' at the stock ticker at {} {} {}: {}", player.getRealName(), order.size(), address, ticker.x, ticker.y, ticker.z, ok ? "sent" : "refused");
@@ -757,4 +757,4 @@ void registerTickerScreens() {
     });
 }
 
-} // namespace lv::feature::stock
+} // namespace br::feature::stock

@@ -17,9 +17,9 @@ class Vec3;
 class Player;
 class Actor;
 
-namespace lv::game {
+namespace br::game {
 
-/// The block's full id ("minecraft:stone", "levitate:example", ...).
+/// The block's full id ("minecraft:stone", "bearing:example", ...).
 [[nodiscard]] std::string blockId(Block const& block);
 /// The block at `pos` ("" when the chunk isn't loaded).
 [[nodiscard]] std::string blockIdAt(BlockSource& region, BlockPos const& pos);
@@ -54,4 +54,4 @@ bool clearBlock(BlockSource& region, BlockPos const& pos);
 /// negative coordinate one block off.)
 [[nodiscard]] BlockPos        blockPosOf(Vec3 const& pos);
 
-} // namespace lv::game
+} // namespace br::game

@@ -1,11 +1,11 @@
-# Levitate end-to-end tests
+# Bearing end-to-end tests
 
 There are two harnesses, one per LeviLamina platform. Both run the real game binaries:
 
 | | Server (`tools/e2e/server`) | Client (`tools/e2e/client`) |
 |---|---|---|
 | Runs | Bedrock Dedicated Server + LeviLamina 26.51.7 (`bedrock_server_mod.exe`) | Minecraft 1.26.51 through LeviLauncher (instance `1.26.51.01`) |
-| Mod taken from | `bin/server/Levitate` | `bin/client/Levitate` |
+| Mod taken from | `bin/server/Bearing` | `bin/client/Bearing` |
 | Driven by | console stdin/stdout | **headless input** through the BeDD mod's pipe (game in the background, your mouse/keyboard untouched; `-Foreground` = real `SendInput`) and window screenshots |
 | Parallel runs | yes: 3 slots, so 3 runs at a time (more runs wait) | opt-in game-instance slots (`-Slot` / `$env:LEVI_E2E_SLOTS`, see below); default one game (slot 1, lock shared with BEI and BeetrootSkin) |
 | Speed | ~20 s plus the tests | ~2 min plus the tests |
@@ -50,7 +50,7 @@ server slot each, as before. Windows Firewall may ask once per new clone exe pat
 
 | Mode | World | Client mod | What it proves |
 |---|---|---|---|
-| `local` (default) | the `LV-Test` local world; the integrated server runs the mod too | deployed | everything in one process |
+| `local` (default) | the `BR-Test` local world; the integrated server runs the mod too | deployed | everything in one process |
 | `remote-mod` | a BDS slot started through the server harness (scenario `client-host`, server build), joined through Play > Servers | deployed | companion protocol over the network (handshake, native screens, key actions, contents tooltip) |
 | `remote-vanilla` | the same BDS | **moved aside** (only LeviLamina; the BDS resource pack is downloaded on join) | a client without the mod is refused native screens gracefully (message, no chest, no crash) |
 
@@ -61,7 +61,7 @@ pwsh -NoProfile -File tools/e2e/client/run.ps1 -Scenario vanilla-refused -Mode r
 ```
 
 How the remote modes work: `run.ps1` starts `server/run.ps1 -Scenario client-host` in the
-background with `$env:LV_E2E_HOST_DIR` (`client/out/<scenario>/host/`). The host writes
+background with `$env:BR_E2E_HOST_DIR` (`client/out/<scenario>/host/`). The host writes
 `ready.json` with its UDP port, runs console commands dropped as `cmd-*.txt`
 (`Send-HostConsole 'cmd'`) and stops when `stop` appears. The client joins it through Play >
 Servers > "+ Add server" (name, `127.0.0.1`, port) > "Add and play" (screenshots `join-*.png`;
@@ -72,7 +72,7 @@ joins once (a failed join restarts the game), and the original list is restored 
 The e2e BDS uses `transport=raknet` (it logs a "NetherNet is the only supported transport" ERR,
 but direct connections work; NetherNet needs the online signaling service) and `allow-list=false`.
 The BDS console log is merged into the session log as `[host] ...` lines, so `Wait-LogLine` /
-`Get-LeviLog` see client and server lines in every mode; ERR/FTL lines of Levitate,
+`Get-LeviLog` see client and server lines in every mode; ERR/FTL lines of Bearing,
 LeviLamina or CrashLogger on the host fail the run too, and so does a failing host harness. The
 BDS uses `default-player-permission-level=operator`, so chat commands work in remote modes.
 Calibrated click positions (fractions of the client area) live at the end of `Enter-RemoteServer`
@@ -85,8 +85,8 @@ the server harness).
 
 ## Prerequisites
 
-- **Server:** [lip](https://github.com/LiteLDev/lip) on `PATH`. The first `run.ps1` calls `server/install.ps1`. It runs `lip install github.com/LiteLDev/LeviLamina@26.51.7` in an empty folder, which brings in BDS 1.26.51, CrashLogger, PreLoader and PeEditor, and installs everything into `%LOCALAPPDATA%\lv-e2e\bds-base`. This takes about 1–3 minutes, once per machine. `install.ps1 -Force` reinstalls. Set `$env:LV_E2E_HOME` to use a different folder.
-- **Client:** LeviLauncher at `%USERPROFILE%\Desktop\LeviLauncher.exe` (or `$env:LV_E2E_LAUNCHER`). The instance `%APPDATA%\levilauncher.exe\versions\1.26.51.01` must have been started and signed in by hand once. The screen must stay unlocked. In headless mode (the default) you can keep using the PC during a run; with `-Foreground` no one should use the mouse.
+- **Server:** [lip](https://github.com/LiteLDev/lip) on `PATH`. The first `run.ps1` calls `server/install.ps1`. It runs `lip install github.com/LiteLDev/LeviLamina@26.51.7` in an empty folder, which brings in BDS 1.26.51, CrashLogger, PreLoader and PeEditor, and installs everything into `%LOCALAPPDATA%\br-e2e\bds-base`. This takes about 1–3 minutes, once per machine. `install.ps1 -Force` reinstalls. Set `$env:BR_E2E_HOME` to use a different folder.
+- **Client:** LeviLauncher at `%USERPROFILE%\Desktop\LeviLauncher.exe` (or `$env:BR_E2E_LAUNCHER`). The instance `%APPDATA%\levilauncher.exe\versions\1.26.51.01` must have been started and signed in by hand once. The screen must stay unlocked. In headless mode (the default) you can keep using the PC during a run; with `-Foreground` no one should use the mouse.
 
 ## What a run does
 
@@ -95,10 +95,10 @@ the server harness).
 2. `install.ps1` (does nothing if already installed).
 3. Takes a free slot.
 4. Syncs the slot from `bds-base` and wipes its world, logs and configs.
-5. Copies the mod to `plugins\Levitate`. LeviLamina 26.x servers load mods from `plugins\`, not `mods\`.
-6. Writes `server.properties` for a fresh world `LV-Test`: FLAT, seed 20260521, survival, peaceful, cheats on, `texturepack-required=true`, content log on the console.
+5. Copies the mod to `plugins\Bearing`. LeviLamina 26.x servers load mods from `plugins\`, not `mods\`.
+6. Writes `server.properties` for a fresh world `BR-Test`: FLAT, seed 20260521, survival, peaceful, cheats on, `texturepack-required=true`, content log on the console.
 7. Runs `scenarios/<name>.prelaunch.ps1` if it exists.
-8. Boots the server and waits for `Levitate enabled` and `Server started`.
+8. Boots the server and waits for `Bearing enabled` and `Server started`.
 9. Runs `gamerule dodaylightcycle false`, `time set noon`, `weather clear`, no weather cycle and no mob spawning.
 10. Dot-sources `scenarios/<name>.ps1`.
 11. Sends `stop`.
@@ -106,7 +106,7 @@ the server harness).
 The run **fails** if any of these happen:
 - the scenario throws;
 - a selftest fails, never prints `DONE`, or matches no test;
-- an `ERR`/`FTL` line comes from `Levitate`, `LeviLamina` or `CrashLogger`, or is a Bedrock content
+- an `ERR`/`FTL` line comes from `Bearing`, `LeviLamina` or `CrashLogger`, or is a Bedrock content
   error (`ERR [Server] [Recipes|Components|Blocks|Geometry|...] ...`: pack mistakes; the transport
   banner is not one);
 - a file appears in `logs\crash`;
@@ -118,13 +118,13 @@ The run **fails** if any of these happen:
 2. Takes the game lock (`-LockTimeoutMinutes`, default 120; `0` waits forever). While waiting it prints `waiting for game lock (<n> min), held by <pid, repo or command line>` every minute. If the lock is not free in time the run exits with code **2** and `NOT RUN` (not a test failure).
 3. Remote modes only: starts the BDS host (server harness, scenario `client-host`) **now, with the game lock held**, and waits up to `-HostTimeoutMinutes` (default 15) for it to be ready. A run queued behind the game lock therefore holds no server slot. If the host gets no slot within `-SlotWaitMinutes` (default 3), the run kills it, **gives the game lock back** and queues again 30 s later, so a slot shortage never blocks the shared game; past `-LockTimeoutMinutes` it exits 2 (`NOT RUN`).
 4. Closes a running game.
-5. Deploys the mod to `mods\Levitate`, always as a fresh copy.
-6. Moves every other mod except LeviLamina and CrashLogger (BEI, ...) to `versions\1.26.51.01\mods.lv-e2e-aside\`.
-7. Installs the `LV-Test` world (remote modes: adds the server entry instead) with `LastPlayed` set to now, so it is the first world in the list.
-8. Launches the game, waits for `Levitate enabled`, clicks Play and then the first world, and waits for `Player Spawned`. If the game shows "Connection timed out (Kelp)", it retries twice, then restarts the game, up to 3 launches.
+5. Deploys the mod to `mods\Bearing`, always as a fresh copy.
+6. Moves every other mod except LeviLamina and CrashLogger (BEI, ...) to `versions\1.26.51.01\mods.br-e2e-aside\`.
+7. Installs the `BR-Test` world (remote modes: adds the server entry instead) with `LastPlayed` set to now, so it is the first world in the list.
+8. Launches the game, waits for `Bearing enabled`, clicks Play and then the first world, and waits for `Player Spawned`. If the game shows "Connection timed out (Kelp)", it retries twice, then restarts the game, up to 3 launches.
 9. Runs the scenario.
 10. Checks the log as the server harness does.
-11. **Always** cleans up (also on failure, timeout and Ctrl+C): closes the game, tells the BDS host to stop, deletes the `LV-Test` world, removes our mod, moves the other mods back, runs `scenarios/<name>.restore.ps1` and releases the game lock, then waits for the host to exit (a host that never got ready is killed at once).
+11. **Always** cleans up (also on failure, timeout and Ctrl+C): closes the game, tells the BDS host to stop, deletes the `BR-Test` world, removes our mod, moves the other mods back, runs `scenarios/<name>.restore.ps1` and releases the game lock, then waits for the host to exit (a host that never got ready is killed at once).
 
 If a run was killed half-way, the next run puts the aside mods back first.
 
@@ -135,11 +135,11 @@ A scenario is `server/scenarios/<name>.ps1` or `client/scenarios/<name>.ps1`. It
 ```powershell
 # server/scenarios/upgrades.ps1
 Invoke-SelfTest 'upgrade.*' | Out-Null                    # records the result; run.ps1 fails the run on any FAIL
-Send-Console 'give @a levitate:example_item 1'
+Send-Console 'give @a bearing:example_item 1'
 Wait-LogLine 'Gave .*example_item' 10 | Out-Null
 
 # client/scenarios/selection-ui.ps1
-Invoke-Chat '/give @s levitate:example_item 1'
+Invoke-Chat '/give @s bearing:example_item 1'
 Click 0.5 0.5 -Relative -Right                             # use the item
 Start-Sleep -Milliseconds 800
 Save-Screenshot 'backpack-open' | Out-Null                 # -> client/out/backpack-ui/backpack-open.png
@@ -184,11 +184,11 @@ The glob is sent **quoted** (`create selftest "core.*"`) because `*` is not vali
 
 ## Locks and concurrency
 
-- **Client:** `%APPDATA%\levilauncher.exe\bei-e2e.lock` is the **same file BEI's harness uses**. There is one game per machine, so LV and BEI runs from any worktree queue behind each other. BeetrootSkin uses it too. The harness polls every 15 s, prints the holder every minute and gives up after `-LockTimeoutMinutes` (default 2 h, exit code 2). Other projects only write their pid into the lock file itself (unreadable while held), so the holder is found with the Windows Restart Manager; our runs also write `<lock>.owner`, which adds the repo/worktree when its pid matches.
-- **Server:** each slot `%LOCALAPPDATA%\lv-e2e\slots\<n>\` has a lock `slots\<n>.lock`, so up to `$env:LV_E2E_SERVER_SLOTS` runs (default 3) go in parallel. Slot n uses UDP ports `19600 + 10n` (IPv4) and `+1` (IPv6), or the next free pair of its band if that is taken (checked for IPv4 and IPv6 right before launch); if BDS still logs "Port [n] may be in use" and exits, the harness boots again on the next pair (up to 4 times) and reports a lasting clash as `PORT CLASH ... not a mod failure`. `-Slot n` forces a slot. Installs are serialized by `install.lock` and happen in a temporary folder that is renamed at the end, so concurrent first runs are safe.
+- **Client:** `%APPDATA%\levilauncher.exe\bei-e2e.lock` is the **same file BEI's harness uses**. There is one game per machine, so BR and BEI runs from any worktree queue behind each other. BeetrootSkin uses it too. The harness polls every 15 s, prints the holder every minute and gives up after `-LockTimeoutMinutes` (default 2 h, exit code 2). Other projects only write their pid into the lock file itself (unreadable while held), so the holder is found with the Windows Restart Manager; our runs also write `<lock>.owner`, which adds the repo/worktree when its pid matches.
+- **Server:** each slot `%LOCALAPPDATA%\br-e2e\slots\<n>\` has a lock `slots\<n>.lock`, so up to `$env:BR_E2E_SERVER_SLOTS` runs (default 3) go in parallel. Slot n uses UDP ports `19600 + 10n` (IPv4) and `+1` (IPv6), or the next free pair of its band if that is taken (checked for IPv4 and IPv6 right before launch); if BDS still logs "Port [n] may be in use" and exits, the harness boots again on the next pair (up to 4 times) and reports a lasting clash as `PORT CLASH ... not a mod failure`. `-Slot n` forces a slot. Installs are serialized by `install.lock` and happen in a temporary folder that is renamed at the end, so concurrent first runs are safe.
 - Every lock is a file opened exclusively. **The OS releases it when the process dies**, so locks never go stale. The holder writes its pid, repo and time to `<lock>.owner`, which a waiting run prints. A server left running by a killed run is killed by the next run that takes the same slot.
-- **Orphaned hosts.** When all slots are busy, a waiting server run checks (at most once a minute) the BDS processes in the slots and kills only orphans: the harness that started it is gone, or it is a `client-host` whose client run is gone, or it is older than `$env:LV_E2E_HOST_MAX_AGE_MIN` (default 45) minutes and the pid in `slots\<n>.lock.owner` is dead. A host whose owner is alive is never killed. The `client-host` scenario also stops by itself as soon as its client run (`$env:LV_E2E_HOST_OWNER_PID`) exits. `. tools/e2e/server/lib.ps1; Stop-OrphanedHosts 0,1,2 -DryRun` shows who owns each host.
-- `%LOCALAPPDATA%` is virtualized when the harness is started from a packaged app such as the Claude desktop app. The files then really live in `%LOCALAPPDATA%\Packages\<app>\LocalCache\Local\lv-e2e`. Processes started from the same app see the same files, but Explorer shows the real path. `%APPDATA%\levilauncher.exe` is not affected because that folder already exists.
+- **Orphaned hosts.** When all slots are busy, a waiting server run checks (at most once a minute) the BDS processes in the slots and kills only orphans: the harness that started it is gone, or it is a `client-host` whose client run is gone, or it is older than `$env:BR_E2E_HOST_MAX_AGE_MIN` (default 45) minutes and the pid in `slots\<n>.lock.owner` is dead. A host whose owner is alive is never killed. The `client-host` scenario also stops by itself as soon as its client run (`$env:BR_E2E_HOST_OWNER_PID`) exits. `. tools/e2e/server/lib.ps1; Stop-OrphanedHosts 0,1,2 -DryRun` shows who owns each host.
+- `%LOCALAPPDATA%` is virtualized when the harness is started from a packaged app such as the Claude desktop app. The files then really live in `%LOCALAPPDATA%\Packages\<app>\LocalCache\Local\br-e2e`. Processes started from the same app see the same files, but Explorer shows the real path. `%APPDATA%\levilauncher.exe` is not affected because that folder already exists.
 
 ## Reading results
 
@@ -200,9 +200,9 @@ The glob is sent **quoted** (`create selftest "core.*"`) because `*` is not vali
 ## Pitfalls
 
 - **Elevated windows block injected input.** While a UAC prompt or a Windows Firewall "allow access" dialog is in the foreground, every click and key is dropped. The input helpers then throw "Minecraft is not the foreground window". Close such dialogs by hand.
-- **Windows Firewall asks once per new executable path.** Each server slot has its own `bedrock_server_mod.exe` path, so slot n's first run can show that dialog. It does not block the server harness, but it can block a client run happening at the same time. Answer it once and it does not come back. Slots 0–2 have already been answered on the dev machine. Keep `LV_E2E_SERVER_SLOTS` small.
+- **Windows Firewall asks once per new executable path.** Each server slot has its own `bedrock_server_mod.exe` path, so slot n's first run can show that dialog. It does not block the server harness, but it can block a client run happening at the same time. Answer it once and it does not come back. Slots 0–2 have already been answered on the dev machine. Keep `BR_E2E_SERVER_SLOTS` small.
 - **Bedrock pauses when it loses focus.** `Focus-Game` brings the window back before each input. Do not use the mouse or keyboard during a client run.
 - **The client window is forced to a 1600x900 client area**, and the harness is DPI-aware, so `-Relative` coordinates are stable.
 - **The "Connection timed out (Kelp)" error** sometimes appears when joining the local world. Once it happens, it tends to repeat for the rest of that game session, so `run.ps1` retries twice and then restarts the game, up to 3 launches. The cause is environmental (the game's online signaling/websocket), not the mod.
 - **Do not leave worlds or mods behind.** BEI's harness opens the *first* world in the list and loads every mod in `mods\`. `run.ps1` cleans up in `finally`. If you test by hand with `-KeepOpen`, close the game normally so the cleanup runs.
-- The fixture world (`client/fixtures/LV-Test/`) contains only `level.dat`; the game generates flat terrain on load. `client/fixtures/build-fixture.ps1 -Source <world dir|zip>` rebuilds it, for example after a game update. `common/nbt.ps1` reads and writes `level.dat` (`Read-LevelDat`, `Set-NbtValue`, `Show-Nbt`).
+- The fixture world (`client/fixtures/BR-Test/`) contains only `level.dat`; the game generates flat terrain on load. `client/fixtures/build-fixture.ps1 -Source <world dir|zip>` rebuilds it, for example after a game update. `common/nbt.ps1` reads and writes `level.dat` (`Read-LevelDat`, `Set-NbtValue`, `Show-Nbt`).

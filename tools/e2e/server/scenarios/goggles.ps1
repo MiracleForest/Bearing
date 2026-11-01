@@ -3,9 +3,9 @@
 $mark = Get-LogMark
 $r = Invoke-SelfTest 'goggles.*'
 if ($r.Pass -lt 9) { throw "expected at least 9 goggles selftests to pass, got $($r.Pass)" }
-Wait-LogLine 'wrench: \S+ rotated levitate:kinetics_test_shaft' 10 -Since $mark | Out-Null
-Wait-LogLine 'wrench: \S+ rotated levitate:sticker' 10 -Since $mark | Out-Null
-Wait-LogLine 'wrench: \S+ dismantled levitate:kinetics_test_shaft' 10 -Since $mark | Out-Null
+Wait-LogLine 'wrench: \S+ rotated bearing:kinetics_test_shaft' 10 -Since $mark | Out-Null
+Wait-LogLine 'wrench: \S+ rotated bearing:sticker' 10 -Since $mark | Out-Null
+Wait-LogLine 'wrench: \S+ dismantled bearing:kinetics_test_shaft' 10 -Since $mark | Out-Null
 Wait-LogLine 'wrench: \S+ dismantled minecraft:hopper' 10 -Since $mark | Out-Null
 Wait-LogLine 'wrench: \S+ broke a minecraft:minecart' 10 -Since $mark | Out-Null
 Wait-LogLine 'goggles: overlay for \S+ at .* lines, client mod\)' 10 -Since $mark | Out-Null

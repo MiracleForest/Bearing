@@ -6,15 +6,15 @@
 //
 // Fluids are identified by id (`fluids::FluidStack::fluid`): vanilla "minecraft:water",
 // "minecraft:lava", "minecraft:milk", "minecraft:powder_snow" (built in); Create's
-// ("levitate:honey", "levitate:chocolate", "levitate:tea" and the potion entry, registered by U19
+// ("bearing:honey", "bearing:chocolate", "bearing:tea" and the potion entry, registered by U19
 // `fluids`); potions in two forms, "potion:<name>" with the Bedrock potion name
-// ("potion:swiftness", "potion:long_swiftness", ...) and U19's "levitate:potion/<bottle>/<name>"
+// ("potion:swiftness", "potion:long_swiftness", ...) and U19's "bearing:potion/<bottle>/<name>"
 // (what its items produce). Both forms are potions here and share the "potion:" entry.
 //
-//     fluidtypes::registerFluid({.id = "levitate:honey", .nameKey = "fluid.create.honey",
-//                                .nameFallback = "Honey", .sourceBlock = "levitate:honey",
-//                                .color = 0xFFF8B533, .lavaInteraction = "levitate:limestone",
-//                                .bucketItem = "levitate:honey_bucket",
+//     fluidtypes::registerFluid({.id = "bearing:honey", .nameKey = "fluid.create.honey",
+//                                .nameFallback = "Honey", .sourceBlock = "bearing:honey",
+//                                .color = 0xFFF8B533, .lavaInteraction = "bearing:limestone",
+//                                .bucketItem = "bearing:honey_bucket",
 //                                .bottleItem = "minecraft:honey_bottle"});
 //
 // Registering a fluid with a bucket / bottle item also registers that item with the U3 fluid
@@ -33,7 +33,7 @@
 
 class BlockSource;
 
-namespace lv::feature::common::fluidtypes {
+namespace br::feature::common::fluidtypes {
 
 inline constexpr int kBucket = 1000; ///< mB in a bucket
 inline constexpr int kBottle = 250;  ///< mB in a bottle (Create's PotionFluidHandler / honey bottle)
@@ -76,7 +76,7 @@ void registerFluid(FluidType type);
 [[nodiscard]] std::uint32_t colorOf(std::string_view id);
 
 [[nodiscard]] bool        isPotion(std::string_view id);
-/// "swiftness" for "potion:swiftness" and "levitate:potion/regular/swiftness" ("" for other ids).
+/// "swiftness" for "potion:swiftness" and "bearing:potion/regular/swiftness" ("" for other ids).
 [[nodiscard]] std::string potionName(std::string_view id);
 
 /// The area an open pipe end affects (block coordinates, max exclusive), Create's
@@ -89,4 +89,4 @@ using EffectHandler = std::function<void(BlockSource& region, Area const& area, 
 void registerEffect(std::string id, EffectHandler handler);
 [[nodiscard]] EffectHandler const* effectFor(std::string_view id);
 
-} // namespace lv::feature::common::fluidtypes
+} // namespace br::feature::common::fluidtypes

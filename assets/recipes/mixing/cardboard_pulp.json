@@ -1,17 +1,17 @@
 {
-  "type": "levitate:mixing",
+  "type": "bearing:mixing",
   "ingredients": [
     {
-      "tag": "levitate:pulpifiable"
+      "tag": "bearing:pulpifiable"
     },
     {
-      "tag": "levitate:pulpifiable"
+      "tag": "bearing:pulpifiable"
     },
     {
-      "tag": "levitate:pulpifiable"
+      "tag": "bearing:pulpifiable"
     },
     {
-      "tag": "levitate:pulpifiable"
+      "tag": "bearing:pulpifiable"
     },
     {
       "fluid": "minecraft:water",
@@ -20,7 +20,7 @@
   ],
   "results": [
     {
-      "id": "levitate:pulp"
+      "id": "bearing:pulp"
     }
   ]
 }

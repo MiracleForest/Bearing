@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:cut_veridium_brick_stairs_from_veridium_pillar_stonecutting"
+      "identifier": "bearing:cut_veridium_brick_stairs_from_veridium_pillar_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:veridium_pillar"
+        "item": "bearing:veridium_pillar"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:veridium_pillar"
+        "item": "bearing:veridium_pillar"
       }
     ],
     "result": {
-      "item": "levitate:cut_veridium_brick_stairs",
+      "item": "bearing:cut_veridium_brick_stairs",
       "count": 1
     }
   }

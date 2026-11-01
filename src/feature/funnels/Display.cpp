@@ -34,7 +34,7 @@
 #include "feature/net/Net.h"
 #include "game/WorldDb.h"
 
-namespace lv::feature::funnels::detail {
+namespace br::feature::funnels::detail {
 
 namespace items = common::items;
 
@@ -60,7 +60,7 @@ std::unordered_map<std::string, Shown>& shown() {
 
 /// Runtime ids far above the server's own counter (it starts at 1 and counts up).
 std::uint64_t nextId() {
-    static std::uint64_t id = 0x4C56000000000000ull; // "LV"
+    static std::uint64_t id = 0x4C56000000000000ull; // "BR"
     return ++id;
 }
 
@@ -200,4 +200,4 @@ void flushDisplays() {
 
 std::size_t shownItems() { return shown().size(); }
 
-} // namespace lv::feature::funnels::detail
+} // namespace br::feature::funnels::detail

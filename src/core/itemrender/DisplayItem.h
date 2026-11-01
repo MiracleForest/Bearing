@@ -19,7 +19,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace lv::core::itemrender {
+namespace br::core::itemrender {
 
 using Json = nlohmann::json;
 
@@ -75,4 +75,4 @@ struct Entry {
 [[nodiscard]] Json encodeKey(std::array<int, 3> const& owner, std::int64_t slot);
 [[nodiscard]] std::optional<std::pair<std::array<int, 3>, std::int64_t>> decodeKey(Json const& j);
 
-} // namespace lv::core::itemrender
+} // namespace br::core::itemrender

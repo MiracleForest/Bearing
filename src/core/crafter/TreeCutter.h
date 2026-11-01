@@ -9,7 +9,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::crafter {
+namespace br::core::crafter {
 
 struct TreePos {
     int x = 0, y = 0, z = 0;
@@ -52,4 +52,4 @@ using TreeReader = std::function<TreeBlock(TreePos const&)>;
 /// to a log.
 [[nodiscard]] int computeLeafDistance(TreeReader const& read, TreePos pos);
 
-} // namespace lv::core::crafter
+} // namespace br::core::crafter

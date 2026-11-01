@@ -65,13 +65,13 @@
   "create.ponder.tag.train_related.description": "Components used in the construction or management of Train Contraptions",
   "create.ponder.tag.windmill_sails": "Sails for Windmill Bearings",
   "create.ponder.tag.windmill_sails.description": "Blocks that count towards the strength of a Windmill Contraption when assembled. Each of these have equal efficiency in doing so.",
-  "lv.ponder.no_client": "Ponder needs the Levitate client mod.",
-  "lv.ponder.unknown": "There is nothing to ponder about {0}.",
-  "lv.ponder.opening": "Opening Ponder: {0}",
-  "lv.ponder.scene_of": "Scene {0} of {1}",
-  "lv.ponder.missing_block": "Not available yet: {0}",
-  "lv.ponder.drag_hint": "Drag to rotate the view",
-  "lv.ponder.players_only": "Only players can ponder.",
-  "lv.ponder.key": "Ponder Key",
-  "lv.ponder.key.rebind": "Click, then press the new key (Esc cancels)"
+  "br.ponder.no_client": "Ponder needs the Bearing client mod.",
+  "br.ponder.unknown": "There is nothing to ponder about {0}.",
+  "br.ponder.opening": "Opening Ponder: {0}",
+  "br.ponder.scene_of": "Scene {0} of {1}",
+  "br.ponder.missing_block": "Not available yet: {0}",
+  "br.ponder.drag_hint": "Drag to rotate the view",
+  "br.ponder.players_only": "Only players can ponder.",
+  "br.ponder.key": "Ponder Key",
+  "br.ponder.key.rebind": "Click, then press the new key (Esc cancels)"
 }

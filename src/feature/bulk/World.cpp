@@ -54,13 +54,13 @@
 // storage) construct themselves empty.
 inline MolangVariableMap::MolangVariableMap() {}
 
-namespace lv::feature::bulk {
+namespace br::feature::bulk {
 
 namespace items = common::items;
 
-LV_REGISTER_CONFIG("bulk", BulkConfig);
+BR_REGISTER_CONFIG("bulk", BulkConfig);
 
-BulkConfig const& config() { return lv::config::get<BulkConfig>(); }
+BulkConfig const& config() { return br::config::get<BulkConfig>(); }
 
 cb::FanConfig fanConfig() {
     auto const& c = config();
@@ -442,4 +442,4 @@ core::common::ProcessingRecipe const* findRecipe(std::string const& type, ItemSt
 Json      stackJson(ItemStack const& s) { return items::isEmpty(s) ? Json(nullptr) : items::toJson(s); }
 ItemStack stackOf(Json const& j) { return j.is_null() ? items::empty() : items::fromJson(j); }
 
-} // namespace lv::feature::bulk
+} // namespace br::feature::bulk

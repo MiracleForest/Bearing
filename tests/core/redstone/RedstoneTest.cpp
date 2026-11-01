@@ -7,7 +7,7 @@
 #include "core/redstone/Diodes.h"
 #include "core/redstone/LinkNetwork.h"
 
-using namespace lv::core::redstone;
+using namespace br::core::redstone;
 
 namespace {
 /// Runs a diode for `ticks` ticks with the given input sequence (last value repeats) and

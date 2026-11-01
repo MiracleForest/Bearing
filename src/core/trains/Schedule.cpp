@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstdio>
 
-namespace lv::core::trains {
+namespace br::core::trains {
 
 namespace {
 
@@ -64,7 +64,7 @@ std::string pathOf(std::string_view id) {
     return std::string(colon == std::string_view::npos ? id : id.substr(colon + 1));
 }
 
-std::string normaliseId(std::string_view id) { return "levitate:" + pathOf(id); }
+std::string normaliseId(std::string_view id) { return "bearing:" + pathOf(id); }
 
 Part Part::fromJson(Json const& j) {
     Part p;
@@ -141,13 +141,13 @@ Schedule Schedule::fromJson(Json const& j) {
         if (!ej.is_object()) continue;
         Entry e;
         e.instruction = Part::fromJson(ej.value("Instruction", Json::object()));
-        if (e.instruction.id.empty() || e.instruction.id == "levitate:") continue;
+        if (e.instruction.id.empty() || e.instruction.id == "bearing:") continue;
         for (auto const& cj : ej.value("Conditions", Json::array())) {
             if (!cj.is_array()) continue;
             std::vector<Part> col;
             for (auto const& pj : cj) {
                 auto p = Part::fromJson(pj);
-                if (!p.id.empty() && p.id != "levitate:") col.push_back(std::move(p));
+                if (!p.id.empty() && p.id != "bearing:") col.push_back(std::move(p));
             }
             if (!col.empty()) e.conditions.push_back(std::move(col));
         }
@@ -680,4 +680,4 @@ Runtime Runtime::fromJson(Json const& j) {
     return r;
 }
 
-} // namespace lv::core::trains
+} // namespace br::core::trains

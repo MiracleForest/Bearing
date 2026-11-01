@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:smart_chute"
+      "identifier": "bearing:smart_chute"
     },
     "tags": [
       "crafting_table"
@@ -14,22 +14,22 @@
     ],
     "key": {
       "I": {
-        "item": "levitate:brass_sheet"
+        "item": "bearing:brass_sheet"
       },
       "S": {
-        "item": "levitate:chute"
+        "item": "bearing:chute"
       },
       "P": {
-        "item": "levitate:electron_tube"
+        "item": "bearing:electron_tube"
       }
     },
     "unlock": [
       {
-        "item": "levitate:chute"
+        "item": "bearing:chute"
       }
     ],
     "result": {
-      "item": "levitate:smart_chute"
+      "item": "bearing:smart_chute"
     }
   }
 }

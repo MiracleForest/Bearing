@@ -13,7 +13,7 @@
 
 #include "core/common/Recipe.h"
 
-namespace lv::core::steam {
+namespace br::core::steam {
 
 inline constexpr int   kMaxBoilerLevel          = 18;
 inline constexpr int   kWaterSupplyPerLevel     = 10; ///< mB per tick per level
@@ -111,4 +111,4 @@ enum class Axis : int { X = 0, Y = 1, Z = 2 };
 /// horizontal facing; `counterClockwise` is the engine's value box; `efficiency` 0 always gives 1.
 [[nodiscard]] int conveyedDirection(float efficiency, Axis shaftAxis, Dir facing, bool counterClockwise);
 
-} // namespace lv::core::steam
+} // namespace br::core::steam

@@ -1,8 +1,8 @@
-// `/create` (aliases `/levitate`, `/c`):
+// `/create` (aliases `/bearing`, `/c`):
 //   /create selftest [glob]     (op / console) run selftests
 //   /create reload              (op / console) reload configs and translations
 //
-// Feature units add sub-commands with LV_REGISTER_SUBCOMMAND (see Commands.h).
+// Feature units add sub-commands with BR_REGISTER_SUBCOMMAND (see Commands.h).
 
 #include "mod/Commands.h"
 
@@ -34,7 +34,7 @@
 #include "mod/Module.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::commands {
+namespace br::commands {
 
 // Command parameter types need external linkage (reflection), so no anonymous namespace here.
 struct SelftestParams {
@@ -85,7 +85,7 @@ LL_TYPE_INSTANCE_HOOK(
         }
         if (!args.empty()) args += "]";
         auto line = std::string(msgId) + args;
-        if (shouldLogCommandError(line)) lv::log().info("Command error: {}", line);
+        if (shouldLogCommandError(line)) br::log().info("Command error: {}", line);
     }
     origin(msgId, params, type);
 }
@@ -96,10 +96,10 @@ void registerAll() {
     if (!ll::service::getCommandRegistry()) return;
     auto& cmd = ll::command::CommandRegistrar::getServerInstance().getOrCreateCommand(
         "create",
-        "Levitate (Create)",
+        "Bearing (Create)",
         CommandPermissionLevel::Any
     );
-    cmd.alias("levitate");
+    cmd.alias("bearing");
     cmd.alias("c"); // Create's /c shortcut (CatnipCommands.createOrAddToShortcut); Bedrock has no /c
 
     auto selftest = [](CommandOrigin const& origin, CommandOutput& output, std::string const& glob) {
@@ -129,7 +129,7 @@ void registerAll() {
         if (!isAdmin(origin)) return output.error("You need operator permission.");
         bool ok = config::loadAll();
         loadTranslations(Mod::getInstance().getSelf().getModDir() / "lang");
-        if (ok) output.success("Levitate configuration reloaded.");
+        if (ok) output.success("Bearing configuration reloaded.");
         else output.error("Some config files failed to load; see the log.");
     });
 
@@ -155,6 +155,6 @@ private:
     ll::event::ListenerPtr mListener;
 };
 
-} // namespace lv::commands
+} // namespace br::commands
 
-LV_REGISTER_MODULE_ORDERED(lv::commands::CommandModule, lv::ModuleOrder::Commands);
+BR_REGISTER_MODULE_ORDERED(br::commands::CommandModule, br::ModuleOrder::Commands);

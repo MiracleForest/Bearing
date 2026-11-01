@@ -10,7 +10,7 @@
 #include "feature/pistons/Pistons.h"
 #include "mod/Log.h"
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace {
 
@@ -50,4 +50,4 @@ bool markRopesClimbable() {
     return all;
 }
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

@@ -2,7 +2,7 @@
 // names the ammo the local player would fire next and its attack damage (x1 + 0.2 per Power
 // level), reload ticks and knockback (+0.5 per Punch level).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <cmath>
 #include <format>
@@ -24,12 +24,12 @@
 #include "feature/common/Items.h"
 #include "mod/Module.h"
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 
 namespace {
 
-namespace ce    = lv::core::equipment;
-namespace items = lv::feature::common::items;
+namespace ce    = br::core::equipment;
+namespace items = br::feature::common::items;
 
 constexpr char kGray[]      = "\xc2\xa7" "7";
 constexpr char kGreen[]     = "\xc2\xa7" "a";
@@ -74,7 +74,7 @@ void appendAmmo(std::string& text, ItemStackBase const& cannon) {
 
 } // namespace
 
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
 LL_TYPE_INSTANCE_HOOK(
     PotatoCannonHovertextHook,
@@ -86,24 +86,24 @@ LL_TYPE_INSTANCE_HOOK(
     bool   showCategory
 ) {
     auto r = origin(level, showCategory);
-    if (isNull() || getTypeName() != "levitate:potato_cannon") return r;
+    if (isNull() || getTypeName() != "bearing:potato_cannon") return r;
     try {
-        lv::client::equipment::appendAmmo(r.mUnredactedString, *this);
-        if (r.mRedactedString) lv::client::equipment::appendAmmo(*r.mRedactedString, *this);
+        br::client::equipment::appendAmmo(r.mUnredactedString, *this);
+        if (r.mRedactedString) br::client::equipment::appendAmmo(*r.mRedactedString, *this);
     } catch (...) {
     }
     return r;
 }
 
-namespace lv::client::equipment {
+namespace br::client::equipment {
 namespace {
 struct PotatoTooltipModule {
     void install() { PotatoCannonHovertextHook::hook(); }
     void uninstall() { PotatoCannonHovertextHook::unhook(); }
 };
 } // namespace
-} // namespace lv::client::equipment
+} // namespace br::client::equipment
 
-LV_REGISTER_MODULE(lv::client::equipment::PotatoTooltipModule);
+BR_REGISTER_MODULE(br::client::equipment::PotatoTooltipModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

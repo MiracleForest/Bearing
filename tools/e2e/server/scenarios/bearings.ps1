@@ -5,10 +5,10 @@ $r = Invoke-SelfTest 'bearings.*'
 if ($r.Pass -lt 15) { throw "expected at least 15 bearings selftests to pass, got $($r.Pass)" }
 
 # A mechanical bearing with a block on top, driven by the kinetic test source from the console.
-Send-Console 'tickingarea add 0 -64 0 15 -40 15 lv_bearings_e2e true'
+Send-Console 'tickingarea add 0 -64 0 15 -40 15 br_bearings_e2e true'
 Wait-Seconds 3
-Send-Console 'setblock 6 -60 6 levitate:kinetics_test_source ["levitate:axis"=1]'
-Send-Console 'setblock 6 -59 6 levitate:mechanical_bearing ["levitate:facing"=1]'
+Send-Console 'setblock 6 -60 6 bearing:kinetics_test_source ["bearing:axis"=1]'
+Send-Console 'setblock 6 -59 6 bearing:mechanical_bearing ["bearing:facing"=1]'
 Send-Console 'setblock 6 -58 6 oak_planks'
 Wait-Seconds 1
 $mark = Get-LogMark
@@ -23,4 +23,4 @@ Wait-LogLine "contraption #$id disassembled" 20 -Since $mark | Out-Null
 Send-Console 'setblock 6 -58 6 air'
 Send-Console 'setblock 6 -59 6 air'
 Send-Console 'setblock 6 -60 6 air'
-Send-Console 'tickingarea remove lv_bearings_e2e'
+Send-Console 'tickingarea remove br_bearings_e2e'

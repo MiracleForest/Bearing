@@ -27,7 +27,7 @@
 #include "game/Blocks.h"
 #include "mod/Log.h"
 
-namespace lv::feature::building {
+namespace br::feature::building {
 
 namespace ia = common::interactions;
 
@@ -67,16 +67,16 @@ Info const* itemInfo(ItemStack const& item) { return item.isNull() ? nullptr : i
 
 /// Java SlabBlock.canBeReplaced when clicking the slab itself.
 bool slabAccepts(Block const& slab, int face, float hitY) {
-    if (stateOf(slab, "levitate:double")) return false;
+    if (stateOf(slab, "bearing:double")) return false;
     bool above = hitY > 0.5f;
-    if (!stateOf(slab, "levitate:top")) return face == Up || (above && horizontal(face));
+    if (!stateOf(slab, "bearing:top")) return face == Up || (above && horizontal(face));
     return face == Down || (!above && horizontal(face));
 }
 
 bool mergeSlab(Player& player, GlobalPos const& p) {
     auto const* b = blockAt(p);
     if (!b) return false;
-    set(p, *withStates(*b, {{"levitate:double", 1}}));
+    set(p, *withStates(*b, {{"bearing:double", 1}}));
     consumeHeld(player);
     playSound(p, "dig.copper");
     log().info("building: {} at {} {} {} doubled", b->getTypeName(), p.x, p.y, p.z);
@@ -136,7 +136,7 @@ bool ladderHelper(Player& player, Info const& held, GlobalPos const& pos) {
     bool        held2 = sturdy(offset(target, opposite(facing)), facing)
                  || (above && above->getTypeName() == held.id && hfacingOf(*above) == facing);
     if (!held2) return false;
-    auto const* block = game::blockWith(held.id, {{"levitate:facing", facing}});
+    auto const* block = game::blockWith(held.id, {{"bearing:facing", facing}});
     if (!block) return false;
     set(target, *block);
     consumeHeld(player);
@@ -152,18 +152,18 @@ bool girderExtends(Block const& b, int dir) {
     if (!i) return false;
     int axis = axisOf(dir);
     if (i->kind == Kind::Girder) {
-        bool x = stateOf(b, "levitate:x") != 0, z = stateOf(b, "levitate:z") != 0;
+        bool x = stateOf(b, "bearing:x") != 0, z = stateOf(b, "bearing:z") != 0;
         if (!x && !z) return axis == 1;
         if (x && z) return true;
         return x ? axis == 0 : axis == 2;
     }
-    if (i->kind == Kind::GirderShaft) return horizontal(dir) && axis != stateOf(b, "levitate:axis");
+    if (i->kind == Kind::GirderShaft) return horizontal(dir) && axis != stateOf(b, "bearing:axis");
     return false;
 }
 
 bool holdsExtendoGrip(Player& player) {
     auto const& off = player.getOffhandSlot();
-    return !off.isNull() && off.getTypeName() == "levitate:extendo_grip";
+    return !off.isNull() && off.getTypeName() == "bearing:extendo_grip";
 }
 
 /// Create's GirderPlacementHelper: a girder used on a girder line extends it at its end (the
@@ -190,7 +190,7 @@ bool girderHelper(Player& player, GlobalPos const& pos, Vec3 const& hit) {
         auto target = offset(pos, dir, count + 1);
         if (!replaceableAt(target)) continue;
         int  axis  = axisOf(dir);
-        auto const* girder = game::blockWith(kGirderId, {{"levitate:axis", axis}, {"levitate:x", axis == 0}, {"levitate:z", axis == 2}});
+        auto const* girder = game::blockWith(kGirderId, {{"bearing:axis", axis}, {"bearing:x", axis == 0}, {"bearing:z", axis == 2}});
         if (!girder) return false;
         set(target, *girder);
         updateConnections(target);
@@ -222,8 +222,8 @@ bool copycatHelper(Player& player, std::string const& heldId, GlobalPos const& p
 bool girderShaft(Player& player, GlobalPos const& pos, int face) {
     auto const* b = blockAt(pos);
     if (!b) return false;
-    int axis = (stateOf(*b, "levitate:x") || axisOf(face) == 2) ? 2 : 0;
-    auto const* shaft = game::blockWith(kGirderShaftId, {{"levitate:axis", axis}, {"levitate:top", stateOf(*b, "levitate:top")}, {"levitate:bottom", stateOf(*b, "levitate:bottom")}});
+    int axis = (stateOf(*b, "bearing:x") || axisOf(face) == 2) ? 2 : 0;
+    auto const* shaft = game::blockWith(kGirderShaftId, {{"bearing:axis", axis}, {"bearing:top", stateOf(*b, "bearing:top")}, {"bearing:bottom", stateOf(*b, "bearing:bottom")}});
     if (!shaft) return false;
     set(pos, *shaft);
     playSound(pos, "hit.netherite", 0.5f, 1.25f);
@@ -305,7 +305,7 @@ bool onUse(Player& player, ItemStack const& item, GlobalPos const& pos, int face
     if (held && held->kind == Kind::CopperSlab && !replaceableAt(pos)) {
         auto next = offset(pos, face);
         auto const* b = blockAt(next);
-        if (b && b->getTypeName() == held->id && !stateOf(*b, "levitate:double")) return mergeSlab(player, next);
+        if (b && b->getTypeName() == held->id && !stateOf(*b, "bearing:double")) return mergeSlab(player, next);
     }
     return false;
 }
@@ -328,7 +328,7 @@ void onPlaced(Player& player, GlobalPos const& pos, int face, Vec3 const& hit) {
             if (horizontal(d)) candidates.push_back(opposite(d));
         for (int f : candidates) {
             if (sturdy(offset(pos, opposite(f)), f)) {
-                set(pos, *withStates(*block, {{"levitate:facing", f}}));
+                set(pos, *withStates(*block, {{"bearing:facing", f}}));
                 return;
             }
         }
@@ -340,19 +340,19 @@ void onPlaced(Player& player, GlobalPos const& pos, int face, Vec3 const& hit) {
         int  facing = horizontal(face) ? face : opposite(horizontalFacing(player));
         bool top    = horizontal(face) ? hitY > 0.5f : face == Down;
         bool power  = hasNeighborSignal(pos);
-        set(pos, *withStates(*block, {{"levitate:facing", facing}, {"levitate:top", top}, {"levitate:open", power}, {"levitate:powered", power}}));
+        set(pos, *withStates(*block, {{"bearing:facing", facing}, {"bearing:top", top}, {"bearing:open", power}, {"bearing:powered", power}}));
         trackRedstone(pos);
         return;
     }
     case Kind::CopperStairs: {
         bool upside = face == Down || (face != Up && hitY > 0.5f);
-        set(pos, *withStates(*block, {{"levitate:facing", horizontalFacing(player)}, {"levitate:upside", upside}}));
+        set(pos, *withStates(*block, {{"bearing:facing", horizontalFacing(player)}, {"bearing:upside", upside}}));
         updateConnections(pos);
         return;
     }
     case Kind::CopperSlab: {
         bool top = face == Down || (face != Up && hitY > 0.5f);
-        set(pos, *withStates(*block, {{"levitate:top", top}}));
+        set(pos, *withStates(*block, {{"bearing:top", top}}));
         return;
     }
     case Kind::Placard: {
@@ -360,25 +360,25 @@ void onPlaced(Player& player, GlobalPos const& pos, int face, Vec3 const& hit) {
         for (int d : nearestLooking(player)) {
             int facing = opposite(d);
             if (!canHang(offset(pos, d))) continue;
-            set(pos, *withStates(*block, {{"levitate:facing", facing}, {"levitate:powered", 0}}));
+            set(pos, *withStates(*block, {{"bearing:facing", facing}, {"bearing:powered", 0}}));
             return;
         }
         refund();
         return;
     }
     case Kind::CopycatPanel:
-        set(pos, *withStates(*block, {{"levitate:facing", opposite(nearestLooking(player)[0])}}));
+        set(pos, *withStates(*block, {{"bearing:facing", opposite(nearestLooking(player)[0])}}));
         copycatPlacedBy(player, pos);
         return;
     case Kind::CopycatStep: {
         bool top = face == Down || (face != Up && hitY > 0.5f);
-        set(pos, *withStates(*block, {{"levitate:facing", horizontalFacing(player)}, {"levitate:top", top}}));
+        set(pos, *withStates(*block, {{"bearing:facing", horizontalFacing(player)}, {"bearing:top", top}}));
         copycatPlacedBy(player, pos);
         return;
     }
     case Kind::Girder: {
         int axis = axisOf(face);
-        set(pos, *withStates(*block, {{"levitate:axis", axis}, {"levitate:x", axis == 0}, {"levitate:z", axis == 2}}));
+        set(pos, *withStates(*block, {{"bearing:axis", axis}, {"bearing:x", axis == 0}, {"bearing:z", axis == 2}}));
         updateConnections(pos);
         return;
     }
@@ -467,8 +467,8 @@ ia::Result bracketWrench(ia::UseOnContext const& c) {
 void installHooks() {
     auto& ids = handlerIds();
     ids.push_back(ia::onUseOn({}, useOn));
-    for (auto const* b : {"levitate:metal_bracket", "levitate:wooden_bracket"}) ids.push_back(ia::onUseOn({"", b}, bracketUseOn, ia::priority::Low));
-    for (auto const* k : {"levitate:shaft", "levitate:cogwheel", "levitate:large_cogwheel"}) ids.push_back(ia::onWrench(k, bracketWrench, ia::priority::High));
+    for (auto const* b : {"bearing:metal_bracket", "bearing:wooden_bracket"}) ids.push_back(ia::onUseOn({"", b}, bracketUseOn, ia::priority::Low));
+    for (auto const* k : {"bearing:shaft", "bearing:cogwheel", "bearing:large_cogwheel"}) ids.push_back(ia::onWrench(k, bracketWrench, ia::priority::High));
     ids.push_back(ia::onPlace({}, placed));
     ids.push_back(ia::onStartDestroy({}, startDestroy));
     ids.push_back(ia::onDestroy({}, destroy));
@@ -483,4 +483,4 @@ namespace detail {
 void advanceClock() { ++now(); }
 } // namespace detail
 
-} // namespace lv::feature::building
+} // namespace br::feature::building

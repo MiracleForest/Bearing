@@ -1,4 +1,4 @@
-# Levitate server (BDS + LeviLamina) e2e helpers. Dot-sourced by run.ps1; scenarios
+# Bearing server (BDS + LeviLamina) e2e helpers. Dot-sourced by run.ps1; scenarios
 # use the helpers in the "Scenario API" section.
 
 . "$PSScriptRoot/../common/common.ps1"
@@ -7,10 +7,10 @@ $script:ServerDir  = $PSScriptRoot
 $script:E2EHome    = Get-E2EHome
 $script:BaseDir    = Join-Path $script:E2EHome 'bds-base'
 $script:SlotsDir   = Join-Path $script:E2EHome 'slots'
-$script:ModName    = 'Levitate'
+$script:ModName    = 'Bearing'
 # Number of parallel server slots. Each slot has its own bedrock_server_mod.exe path, and Windows
 # Firewall asks once per new executable path, so keep this small (see README).
-$script:SlotCount  = if ($env:LV_E2E_SERVER_SLOTS) { [int]$env:LV_E2E_SERVER_SLOTS } else { 4 }
+$script:SlotCount  = if ($env:BR_E2E_SERVER_SLOTS) { [int]$env:BR_E2E_SERVER_SLOTS } else { 4 }
 
 if (-not ('BsE2E.LineSink' -as [type])) {
     Add-Type -TypeDefinition @'
@@ -89,7 +89,7 @@ function Enter-ServerSlot([int]$TimeoutMinutes = 120, [int]$Slot = -1) {
 }
 
 # Hosts older than this are killed when the pid recorded as their slot-lock holder is dead.
-$script:HostMaxAgeMinutes = if ($env:LV_E2E_HOST_MAX_AGE_MIN) { [int]$env:LV_E2E_HOST_MAX_AGE_MIN } else { 45 }
+$script:HostMaxAgeMinutes = if ($env:BR_E2E_HOST_MAX_AGE_MIN) { [int]$env:BR_E2E_HOST_MAX_AGE_MIN } else { 45 }
 
 # Kills BDS hosts in busy slots that no live run owns. A server in slot n is started by a
 # server/run.ps1 (the harness, which holds <n>.lock); for the client harness's remote modes that
@@ -152,7 +152,7 @@ function Exit-ServerSlot {
 # Kill server processes left behind in this slot by a harness that was killed (we hold the
 # slot lock, so anything still running from the slot directory is an orphan).
 function Stop-SlotOrphans {
-    $suffix = "\lv-e2e\slots\$script:Slot\bedrock_server_mod.exe"
+    $suffix = "\br-e2e\slots\$script:Slot\bedrock_server_mod.exe"
     $exe = Join-Path $script:SlotDir 'bedrock_server_mod.exe'
     Get-Process -Name 'bedrock_server_mod' -ErrorAction SilentlyContinue | Where-Object {
         $_.Path -and ($_.Path -eq $exe -or $_.Path.EndsWith($suffix, [StringComparison]::OrdinalIgnoreCase))
@@ -183,15 +183,15 @@ function Initialize-ServerSlot([string]$ModDir) {
     Stop-SlotOrphans
     $slot = $script:SlotDir
     New-Item -ItemType Directory -Force $slot | Out-Null
-    $baseStamp = Get-Content (Join-Path $script:BaseDir '.lv-e2e-installed') -Raw
-    $slotStamp = Join-Path $slot '.lv-slot-stamp'
+    $baseStamp = Get-Content (Join-Path $script:BaseDir '.br-e2e-installed') -Raw
+    $slotStamp = Join-Path $slot '.br-slot-stamp'
     $fresh = -not ((Test-Path $slotStamp) -and (Get-Content $slotStamp -Raw) -eq $baseStamp)
     if ($fresh) {
         Write-Step "populating slot $script:Slot from $script:BaseDir"
         Remove-Item $slotStamp -ErrorAction SilentlyContinue
         # Large immutable binaries are hard-linked (fast, no disk use), everything else copied.
         foreach ($f in Get-ChildItem $script:BaseDir -File) {
-            if ($f.Name -in 'bedrock_server.exe.bak', 'bdsdown.exe', 'PeEditor.exe', 'tooth_lock.json', '.lv-e2e-installed') { continue }
+            if ($f.Name -in 'bedrock_server.exe.bak', 'bdsdown.exe', 'PeEditor.exe', 'tooth_lock.json', '.br-e2e-installed') { continue }
             $dst = Join-Path $slot $f.Name
             if (Test-Path $dst) { Remove-Item -Force $dst }
             $linked = $false
@@ -254,8 +254,8 @@ function Set-ServerProperties([hashtable]$Overrides = @{}) {
     if (-not $port) { throw "no free UDP port pair in $band..$($band + 9) for slot $script:Slot" }
     $script:ServerPort = $port
     $props = [ordered]@{
-        'server-name'                       = "LV-E2E-slot$script:Slot"
-        'level-name'                        = 'LV-Test'
+        'server-name'                       = "BR-E2E-slot$script:Slot"
+        'level-name'                        = 'BR-Test'
         'level-type'                        = 'FLAT'
         'level-seed'                        = '20260521'
         'gamemode'                          = 'survival'
@@ -288,7 +288,7 @@ function Set-ServerProperties([hashtable]$Overrides = @{}) {
         if ($idx -ge 0) { $lines[$idx] = "$k=$($props[$k])" } else { $lines.Add("$k=$($props[$k])") }
     }
     Set-Content -Path $file -Value $lines -Encoding UTF8
-    Write-Step "server.properties: level LV-Test (flat, peaceful, cheats), port $port/$($port + 1)"
+    Write-Step "server.properties: level BR-Test (flat, peaceful, cheats), port $port/$($port + 1)"
 }
 
 # ---------------------------------------------------------------------------------------

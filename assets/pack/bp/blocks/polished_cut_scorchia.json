@@ -2,7 +2,7 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:polished_cut_scorchia",
+      "identifier": "bearing:polished_cut_scorchia",
       "menu_category": {
         "category": "construction"
       }
@@ -20,7 +20,7 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_scorchia_polished",
+          "texture": "bearing_scorchia_polished",
           "render_method": "opaque"
         }
       }

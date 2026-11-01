@@ -17,7 +17,7 @@
 
 #include "core/kinetics/Types.h"
 
-namespace lv::core::crafter {
+namespace br::core::crafter {
 
 using kinetics::Axis;
 using kinetics::Face;
@@ -106,4 +106,4 @@ enum class Phase : std::uint8_t { Idle = 0, Accepting, Assembling, Exporting, Wa
 [[nodiscard]] char const* phaseName(Phase p);
 [[nodiscard]] Phase       phaseFromName(std::string_view name);
 
-} // namespace lv::core::crafter
+} // namespace br::core::crafter

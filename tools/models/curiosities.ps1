@@ -5,17 +5,17 @@
 #   pwsh tools/models/curiosities.ps1
 #
 # Bells (Create's PeculiarBellBlock / HauntedBellBlock, vanilla BellBlock states):
-#   levitate:facing      FacingID 2..5 (north, south, west, east; 0 / 1 unused): Java's FACING. Floor /
+#   bearing:facing      FacingID 2..5 (north, south, west, east; 0 / 1 unused): Java's FACING. Floor /
 #                        ceiling bells: the player's horizontal direction; wall bells: towards the wall.
-#   levitate:attachment  0 floor, 1 ceiling, 2 single wall, 3 double wall (Java's BellAttachType)
-#   levitate:powered     Java's POWERED (a redstone signal rang it)
-#   levitate:part        0 frame + bell; 1 the frame only: the client mod meshes this one and draws the
-#                        bell swinging (geometry.levitate.bell_parts, bone bell); never set in the world
+#   bearing:attachment  0 floor, 1 ceiling, 2 single wall, 3 double wall (Java's BellAttachType)
+#   bearing:powered     Java's POWERED (a redstone signal rang it)
+#   bearing:part        0 frame + bell; 1 the frame only: the client mod meshes this one and draws the
+#                        bell swinging (geometry.bearing.bell_parts, bone bell); never set in the world
 # The models face south (+z) for facing 3, like Create's shapes (forHorizontal(SOUTH)).
 #
 # Cardboard armour: four armour items (Create's cardboard armour material) with plain armour
 # attachables; a hiding wearer (full set, sneaking, not flying) is made invisible by the server and a
-# `levitate:cardboard_disguise` entity (a package box) stands in for the player.
+# `bearing:cardboard_disguise` entity (a package box) stands in for the player.
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path "$PSScriptRoot/../..").Path
 $rp = Join-Path $root 'assets/pack/rp'
@@ -59,10 +59,10 @@ $frames = [ordered]@{
 $attachNames = @('floor', 'ceiling', 'single_wall', 'double_wall')
 $geos = @()
 foreach ($a in $attachNames) {
-    $geos += Geometry "geometry.levitate.bell_$a" @((Bone 'frame' $frames[$a]), (Bone 'bell' $bell @(0, 8, 0)))
-    $geos += Geometry "geometry.levitate.bell_${a}_frame" @((Bone 'frame' $frames[$a]))
+    $geos += Geometry "geometry.bearing.bell_$a" @((Bone 'frame' $frames[$a]), (Bone 'bell' $bell @(0, 8, 0)))
+    $geos += Geometry "geometry.bearing.bell_${a}_frame" @((Bone 'frame' $frames[$a]))
 }
-$geos += Geometry 'geometry.levitate.bell_parts' @((Bone 'bell' $bell @(0, 8, 0)))
+$geos += Geometry 'geometry.bearing.bell_parts' @((Bone 'bell' $bell @(0, 8, 0)))
 Write-Json ([ordered]@{ format_version = '1.12.0'; 'minecraft:geometry' = $geos }) (Join-Path $rp 'models/blocks/bell.geo.json')
 
 # selection / collision boxes (Create's AllShapes.BELL_*: frame + the bell (3,1,3)-(13,13,13)), facing south
@@ -77,38 +77,38 @@ $facingRotation = @{ 2 = 180; 3 = 0; 4 = -90; 5 = 90 }
 foreach ($b in @(@{ id = 'peculiar_bell'; colour = '#faee4d' }, @{ id = 'haunted_bell'; colour = '#f7e9a3' })) {
     $perms = @()
     foreach ($f in 2..5) {
-        $perms += [ordered]@{ condition = "q.block_state('levitate:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $facingRotation[$f], 0) } } }
+        $perms += [ordered]@{ condition = "q.block_state('bearing:facing') == $f"; components = [ordered]@{ 'minecraft:transformation' = [ordered]@{ rotation = @(0, $facingRotation[$f], 0) } } }
     }
     for ($a = 0; $a -lt 4; $a++) {
         $perms += [ordered]@{
-            condition  = "q.block_state('levitate:attachment') == $a"
+            condition  = "q.block_state('bearing:attachment') == $a"
             components = [ordered]@{
-                'minecraft:geometry'      = "geometry.levitate.bell_$($attachNames[$a])"
+                'minecraft:geometry'      = "geometry.bearing.bell_$($attachNames[$a])"
                 'minecraft:collision_box' = $boxes[$a]
                 'minecraft:selection_box' = $boxes[$a]
             }
         }
         $perms += [ordered]@{
-            condition  = "q.block_state('levitate:attachment') == $a && q.block_state('levitate:part') == 1"
-            components = [ordered]@{ 'minecraft:geometry' = "geometry.levitate.bell_$($attachNames[$a])_frame" }
+            condition  = "q.block_state('bearing:attachment') == $a && q.block_state('bearing:part') == 1"
+            components = [ordered]@{ 'minecraft:geometry' = "geometry.bearing.bell_$($attachNames[$a])_frame" }
         }
     }
     $block = [ordered]@{
         format_version    = '1.21.70'
         'minecraft:block' = [ordered]@{
             description  = [ordered]@{
-                identifier    = "levitate:$($b.id)"
+                identifier    = "bearing:$($b.id)"
                 menu_category = [ordered]@{ category = 'items' }
                 states        = [ordered]@{
-                    'levitate:facing'     = @(0, 1, 2, 3, 4, 5)
-                    'levitate:attachment' = @(0, 1, 2, 3)
-                    'levitate:powered'    = @(0, 1)
-                    'levitate:part'       = @(0, 1)
+                    'bearing:facing'     = @(0, 1, 2, 3, 4, 5)
+                    'bearing:attachment' = @(0, 1, 2, 3)
+                    'bearing:powered'    = @(0, 1)
+                    'bearing:part'       = @(0, 1)
                 }
             }
             components   = [ordered]@{
-                'minecraft:geometry'                  = 'geometry.levitate.bell_floor'
-                'minecraft:material_instances'        = [ordered]@{ '*' = [ordered]@{ texture = "levitate_$($b.id)"; render_method = 'alpha_test' } }
+                'minecraft:geometry'                  = 'geometry.bearing.bell_floor'
+                'minecraft:material_instances'        = [ordered]@{ '*' = [ordered]@{ texture = "bearing_$($b.id)"; render_method = 'alpha_test' } }
                 'minecraft:collision_box'             = $boxes[0]
                 'minecraft:selection_box'             = $boxes[0]
                 'minecraft:destructible_by_mining'    = [ordered]@{ seconds_to_destroy = 3.0 }
@@ -122,7 +122,7 @@ foreach ($b in @(@{ id = 'peculiar_bell'; colour = '#faee4d' }, @{ id = 'haunted
     }
     Write-Json $block (Join-Path $bp "blocks/$($b.id).json")
     # Create's loot: the bell itself when it survives the explosion (Bedrock drops of blown up blocks are random anyway)
-    Write-Json ([ordered]@{ pools = @([ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = "levitate:$($b.id)"; weight = 1 }) }) }) (Join-Path $bp "loot_tables/blocks/$($b.id).json")
+    Write-Json ([ordered]@{ pools = @([ordered]@{ rolls = 1; entries = @([ordered]@{ type = 'item'; name = "bearing:$($b.id)"; weight = 1 }) }) }) (Join-Path $bp "loot_tables/blocks/$($b.id).json")
 }
 
 # ---- cardboard armour and sword -----------------------------------------------------------------------------------
@@ -134,35 +134,35 @@ $pieces = @(
     @{ id = 'cardboard_leggings'; slot = 'slot.armor.legs'; ench = 'armor_legs'; durability = 60; geo = 'geometry.humanoid.armor.leggings'; layer = 2; setup = 'variable.leg_layer_visible = 0.0;' },
     @{ id = 'cardboard_boots'; slot = 'slot.armor.feet'; ench = 'armor_feet'; durability = 52; geo = 'geometry.humanoid.armor.boots'; layer = 1; setup = 'variable.boot_layer_visible = 0.0;' }
 )
-$hiding = "q.is_sneaking && q.is_invisible && q.is_item_name_any('slot.armor.head', 0, 'levitate:cardboard_helmet') && q.is_item_name_any('slot.armor.chest', 0, 'levitate:cardboard_chestplate') && q.is_item_name_any('slot.armor.legs', 0, 'levitate:cardboard_leggings') && q.is_item_name_any('slot.armor.feet', 0, 'levitate:cardboard_boots')"
+$hiding = "q.is_sneaking && q.is_invisible && q.is_item_name_any('slot.armor.head', 0, 'bearing:cardboard_helmet') && q.is_item_name_any('slot.armor.chest', 0, 'bearing:cardboard_chestplate') && q.is_item_name_any('slot.armor.legs', 0, 'bearing:cardboard_leggings') && q.is_item_name_any('slot.armor.feet', 0, 'bearing:cardboard_boots')"
 foreach ($p in $pieces) {
     $item = [ordered]@{
         format_version   = '1.21.70'
         'minecraft:item' = [ordered]@{
-            description = [ordered]@{ identifier = "levitate:$($p.id)"; menu_category = [ordered]@{ category = 'equipment' } }
+            description = [ordered]@{ identifier = "bearing:$($p.id)"; menu_category = [ordered]@{ category = 'equipment' } }
             components  = [ordered]@{
                 'minecraft:tags'          = [ordered]@{ tags = @('minecraft:is_armor', 'minecraft:trimmable_armors') }
-                'minecraft:icon'          = "levitate_$($p.id)"
+                'minecraft:icon'          = "bearing_$($p.id)"
                 'minecraft:max_stack_size' = 1
-                'minecraft:display_name'  = [ordered]@{ value = "item.levitate:$($p.id).name" }
+                'minecraft:display_name'  = [ordered]@{ value = "item.bearing:$($p.id).name" }
                 'minecraft:wearable'      = [ordered]@{ slot = $p.slot; protection = 1 }
                 'minecraft:durability'    = [ordered]@{ max_durability = $p.durability }
                 'minecraft:enchantable'   = [ordered]@{ slot = $p.ench; value = 4 }
-                'minecraft:repairable'    = [ordered]@{ repair_items = @([ordered]@{ items = @('levitate:cardboard'); repair_amount = 'context.other->q.remaining_durability + 0.12 * context.other->q.max_durability' }) }
+                'minecraft:repairable'    = [ordered]@{ repair_items = @([ordered]@{ items = @('bearing:cardboard'); repair_amount = 'context.other->q.remaining_durability + 0.12 * context.other->q.max_durability' }) }
                 'minecraft:fuel'          = [ordered]@{ duration = 50 }
             }
         }
     }
     Write-Json $item (Join-Path $bp "items/$($p.id).json")
     $desc = [ordered]@{
-        identifier         = "levitate:$($p.id)"
+        identifier         = "bearing:$($p.id)"
         materials          = [ordered]@{ default = 'armor'; enchanted = 'armor_enchanted' }
         textures           = [ordered]@{ default = "textures/models/armor/cardboard_$($p.layer)"; enchanted = 'textures/misc/enchanted_item_glint' }
         geometry           = [ordered]@{ default = $p.geo }
         # Bedrock still draws the armour of an invisible player: the pieces hide themselves while the
         # wearer hides as a box (the server's invisibility marks it)
-        scripts            = [ordered]@{ parent_setup = $p.setup; pre_animation = @("v.lv_hide = $hiding;") }
-        render_controllers = @([ordered]@{ 'controller.render.armor' = '!v.lv_hide' })
+        scripts            = [ordered]@{ parent_setup = $p.setup; pre_animation = @("v.br_hide = $hiding;") }
+        render_controllers = @([ordered]@{ 'controller.render.armor' = '!v.br_hide' })
     }
     Write-Json ([ordered]@{ format_version = '1.10.0'; 'minecraft:attachable' = [ordered]@{ description = $desc } }) (Join-Path $rp "attachables/$($p.id).json")
 }
@@ -176,13 +176,13 @@ foreach ($p in $pieces) {
 $sizes = @('12x12', '10x12', '10x8', '12x10')
 $groups = [ordered]@{}; $events = [ordered]@{}
 for ($i = 0; $i -lt 4; $i++) {
-    $groups["levitate:style_$i"] = [ordered]@{ 'minecraft:variant' = [ordered]@{ value = $i } }
-    $events["levitate:style_$i"] = [ordered]@{ add = [ordered]@{ component_groups = @("levitate:style_$i") } }
+    $groups["bearing:style_$i"] = [ordered]@{ 'minecraft:variant' = [ordered]@{ value = $i } }
+    $events["bearing:style_$i"] = [ordered]@{ add = [ordered]@{ component_groups = @("bearing:style_$i") } }
 }
 Write-Json ([ordered]@{
         format_version    = '1.21.70'
         'minecraft:entity' = [ordered]@{
-            description      = [ordered]@{ identifier = 'levitate:cardboard_disguise'; is_spawnable = $false; is_summonable = $true; is_experimental = $false }
+            description      = [ordered]@{ identifier = 'bearing:cardboard_disguise'; is_spawnable = $false; is_summonable = $true; is_experimental = $false }
             component_groups = $groups
             components       = [ordered]@{
                 'minecraft:collision_box'        = [ordered]@{ width = 0.01; height = 0.01 }
@@ -190,7 +190,7 @@ Write-Json ([ordered]@{
                 'minecraft:pushable'             = [ordered]@{ is_pushable = $false; is_pushable_by_piston = $false }
                 'minecraft:damage_sensor'        = [ordered]@{ triggers = @([ordered]@{ cause = 'all'; deals_damage = 'no' }) }
                 'minecraft:health'               = [ordered]@{ value = 1; max = 1 }
-                'minecraft:type_family'          = [ordered]@{ family = @('levitate_cardboard_disguise', 'inanimate') }
+                'minecraft:type_family'          = [ordered]@{ family = @('bearing_cardboard_disguise', 'inanimate') }
                 'minecraft:fire_immune'          = [ordered]@{}
                 'minecraft:knockback_resistance' = [ordered]@{ value = 1 }
                 'minecraft:conditional_bandwidth_optimization' = [ordered]@{ default_values = [ordered]@{ max_optimized_distance = 80; max_dropped_ticks = 0; use_motion_prediction_hints = $true } }
@@ -199,25 +199,25 @@ Write-Json ([ordered]@{
         }
     }) (Join-Path $bp 'entities/cardboard_disguise.json')
 $tex = [ordered]@{}; $geo = [ordered]@{}
-for ($i = 0; $i -lt 4; $i++) { $tex["s$i"] = "textures/entity/package/cardboard_package_$($sizes[$i])"; $geo["s$i"] = "geometry.levitate.package_$($sizes[$i])" }
+for ($i = 0; $i -lt 4; $i++) { $tex["s$i"] = "textures/entity/package/cardboard_package_$($sizes[$i])"; $geo["s$i"] = "geometry.bearing.package_$($sizes[$i])" }
 Write-Json ([ordered]@{
         format_version          = '1.10.0'
         'minecraft:client_entity' = [ordered]@{
             description = [ordered]@{
-                identifier         = 'levitate:cardboard_disguise'
+                identifier         = 'bearing:cardboard_disguise'
                 materials          = [ordered]@{ default = 'entity_alphatest' }
                 textures           = $tex
                 geometry           = $geo
-                animations         = [ordered]@{ bob = 'animation.levitate.cardboard_disguise.bob' }
+                animations         = [ordered]@{ bob = 'animation.bearing.cardboard_disguise.bob' }
                 scripts            = [ordered]@{ animate = @('bob') }
-                render_controllers = @('controller.render.levitate.cardboard_disguise')
+                render_controllers = @('controller.render.bearing.cardboard_disguise')
             }
         }
     }) (Join-Path $rp 'entity/cardboard_disguise.entity.json')
 Write-Json ([ordered]@{
         format_version     = '1.8.0'
         render_controllers = [ordered]@{
-            'controller.render.levitate.cardboard_disguise' = [ordered]@{
+            'controller.render.bearing.cardboard_disguise' = [ordered]@{
                 arrays          = [ordered]@{
                     geometries = [ordered]@{ 'Array.sizes' = @('Geometry.s0', 'Geometry.s1', 'Geometry.s2', 'Geometry.s3') }
                     textures   = [ordered]@{ 'Array.styles' = @('Texture.s0', 'Texture.s1', 'Texture.s2', 'Texture.s3') }
@@ -232,7 +232,7 @@ Write-Json ([ordered]@{
 Write-Json ([ordered]@{
         format_version = '1.8.0'
         animations     = [ordered]@{
-            'animation.levitate.cardboard_disguise.bob' = [ordered]@{
+            'animation.bearing.cardboard_disguise.bob' = [ordered]@{
                 loop  = $true
                 bones = [ordered]@{ box = [ordered]@{ position = @(0, 'q.is_on_ground ? math.min(math.abs(math.cos(q.life_time * 573)) * 2, q.ground_speed * 4) : 0', 0) } }
             }
@@ -244,12 +244,12 @@ Write-Json ([ordered]@{
 Write-Json ([ordered]@{
         format_version   = '1.21.70'
         'minecraft:item' = [ordered]@{
-            description = [ordered]@{ identifier = 'levitate:cardboard_sword'; menu_category = [ordered]@{ category = 'equipment' } }
+            description = [ordered]@{ identifier = 'bearing:cardboard_sword'; menu_category = [ordered]@{ category = 'equipment' } }
             components  = [ordered]@{
                 'minecraft:tags'           = [ordered]@{ tags = @('minecraft:is_sword') }
-                'minecraft:icon'           = 'levitate_cardboard_sword'
+                'minecraft:icon'           = 'bearing_cardboard_sword'
                 'minecraft:max_stack_size' = 1
-                'minecraft:display_name'   = [ordered]@{ value = 'item.levitate:cardboard_sword.name' }
+                'minecraft:display_name'   = [ordered]@{ value = 'item.bearing:cardboard_sword.name' }
                 'minecraft:hand_equipped'  = $true
                 'minecraft:damage'         = 5
                 'minecraft:enchantable'    = [ordered]@{ slot = 'sword'; value = 1 }
@@ -266,7 +266,7 @@ function Shaped([string]$name, [string[]]$pattern, $key, [string]$result, [strin
     Write-Json ([ordered]@{
             format_version          = '1.20.10'
             'minecraft:recipe_shaped' = [ordered]@{
-                description = [ordered]@{ identifier = "levitate:$name" }
+                description = [ordered]@{ identifier = "bearing:$name" }
                 tags        = @('crafting_table')
                 pattern     = $pattern
                 key         = $k
@@ -275,13 +275,13 @@ function Shaped([string]$name, [string[]]$pattern, $key, [string]$result, [strin
             }
         }) (Join-Path $bp "recipes/$name.json")
 }
-$cb = @{ P = 'levitate:cardboard' }
-Shaped 'cardboard_helmet' @('PPP', 'P P') $cb 'levitate:cardboard_helmet' 'levitate:cardboard'
-Shaped 'cardboard_chestplate' @('P P', 'PPP', 'PPP') $cb 'levitate:cardboard_chestplate' 'levitate:cardboard'
-Shaped 'cardboard_leggings' @('PPP', 'P P', 'P P') $cb 'levitate:cardboard_leggings' 'levitate:cardboard'
-Shaped 'cardboard_boots' @('P P', 'P P') $cb 'levitate:cardboard_boots' 'levitate:cardboard'
-Shaped 'cardboard_sword' @('P', 'P', 'S') ([ordered]@{ P = 'levitate:cardboard'; S = 'minecraft:stick' }) 'levitate:cardboard_sword' 'levitate:cardboard'
+$cb = @{ P = 'bearing:cardboard' }
+Shaped 'cardboard_helmet' @('PPP', 'P P') $cb 'bearing:cardboard_helmet' 'bearing:cardboard'
+Shaped 'cardboard_chestplate' @('P P', 'PPP', 'PPP') $cb 'bearing:cardboard_chestplate' 'bearing:cardboard'
+Shaped 'cardboard_leggings' @('PPP', 'P P', 'P P') $cb 'bearing:cardboard_leggings' 'bearing:cardboard'
+Shaped 'cardboard_boots' @('P P', 'P P') $cb 'bearing:cardboard_boots' 'bearing:cardboard'
+Shaped 'cardboard_sword' @('P', 'P', 'S') ([ordered]@{ P = 'bearing:cardboard'; S = 'minecraft:stick' }) 'bearing:cardboard_sword' 'bearing:cardboard'
 # c:storage_blocks/brass over c:plates/brass
-Shaped 'peculiar_bell' @('I', 'P') ([ordered]@{ I = 'levitate:brass_block'; P = 'levitate:brass_sheet' }) 'levitate:peculiar_bell' 'levitate:brass_sheet'
+Shaped 'peculiar_bell' @('I', 'P') ([ordered]@{ I = 'bearing:brass_block'; P = 'bearing:brass_sheet' }) 'bearing:peculiar_bell' 'bearing:brass_sheet'
 
 Write-Host 'curiosities: bell geometry, bells, cardboard armour / sword, attachables and recipes written'

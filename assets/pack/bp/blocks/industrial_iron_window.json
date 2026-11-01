@@ -2,32 +2,32 @@
   "format_version": "1.21.90",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:industrial_iron_window",
+      "identifier": "bearing:industrial_iron_window",
       "menu_category": {
         "category": "construction"
       },
       "states": {
-        "levitate:c_down": [
+        "bearing:c_down": [
           0,
           1
         ],
-        "levitate:c_up": [
+        "bearing:c_up": [
           0,
           1
         ],
-        "levitate:c_north": [
+        "bearing:c_north": [
           0,
           1
         ],
-        "levitate:c_south": [
+        "bearing:c_south": [
           0,
           1
         ],
-        "levitate:c_west": [
+        "bearing:c_west": [
           0,
           1
         ],
-        "levitate:c_east": [
+        "bearing:c_east": [
           0,
           1
         ]
@@ -46,2247 +46,2247 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "levitate_industrial_iron_window_0",
+          "texture": "bearing_industrial_iron_window_0",
           "render_method": "alpha_test"
         }
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_0",
-              "render_method": "alpha_test"
-            }
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
-        "components": {
-          "minecraft:material_instances": {
-            "north": {
-              "texture": "levitate_industrial_iron_window_4",
-              "render_method": "alpha_test"
-            },
-            "south": {
-              "texture": "levitate_industrial_iron_window_4",
-              "render_method": "alpha_test"
-            },
-            "east": {
-              "texture": "levitate_industrial_iron_window_4",
-              "render_method": "alpha_test"
-            },
-            "west": {
-              "texture": "levitate_industrial_iron_window_4",
-              "render_method": "alpha_test"
-            },
-            "up": {
-              "texture": "levitate_industrial_iron_window_end",
-              "render_method": "alpha_test"
-            },
-            "down": {
-              "texture": "levitate_industrial_iron_window_end",
-              "render_method": "alpha_test"
-            },
-            "*": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 0",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 0",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 0 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 0 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_0",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_4",
+              "texture": "bearing_industrial_iron_window_0",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_1",
+              "texture": "bearing_industrial_iron_window_4",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_5",
+              "texture": "bearing_industrial_iron_window_1",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_5",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 0 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 0 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_8",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_2",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_12",
+              "texture": "bearing_industrial_iron_window_8",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_6",
+              "texture": "bearing_industrial_iron_window_2",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_9",
+              "texture": "bearing_industrial_iron_window_12",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_3",
+              "texture": "bearing_industrial_iron_window_6",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 0 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_13",
+              "texture": "bearing_industrial_iron_window_9",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_7",
+              "texture": "bearing_industrial_iron_window_3",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 0 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_13",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_7",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_10",
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 0 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_14",
+              "texture": "bearing_industrial_iron_window_10",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 0 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 0 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_11",
+              "texture": "bearing_industrial_iron_window_14",
               "render_method": "alpha_test"
             }
           }
         }
       },
       {
-        "condition": "q.block_state('levitate:c_down') == 1 && q.block_state('levitate:c_up') == 1 && q.block_state('levitate:c_north') == 1 && q.block_state('levitate:c_south') == 1 && q.block_state('levitate:c_west') == 1 && q.block_state('levitate:c_east') == 1",
+        "condition": "q.block_state('bearing:c_down') == 0 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
         "components": {
           "minecraft:material_instances": {
             "north": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "south": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "east": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "west": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
               "render_method": "alpha_test"
             },
             "up": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "down": {
-              "texture": "levitate_industrial_iron_window_end",
+              "texture": "bearing_industrial_iron_window_end",
               "render_method": "alpha_test"
             },
             "*": {
-              "texture": "levitate_industrial_iron_window_15",
+              "texture": "bearing_industrial_iron_window_11",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:c_down') == 1 && q.block_state('bearing:c_up') == 1 && q.block_state('bearing:c_north') == 1 && q.block_state('bearing:c_south') == 1 && q.block_state('bearing:c_west') == 1 && q.block_state('bearing:c_east') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_industrial_iron_window_15",
+              "render_method": "alpha_test"
+            },
+            "south": {
+              "texture": "bearing_industrial_iron_window_15",
+              "render_method": "alpha_test"
+            },
+            "east": {
+              "texture": "bearing_industrial_iron_window_15",
+              "render_method": "alpha_test"
+            },
+            "west": {
+              "texture": "bearing_industrial_iron_window_15",
+              "render_method": "alpha_test"
+            },
+            "up": {
+              "texture": "bearing_industrial_iron_window_end",
+              "render_method": "alpha_test"
+            },
+            "down": {
+              "texture": "bearing_industrial_iron_window_end",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "bearing_industrial_iron_window_15",
               "render_method": "alpha_test"
             }
           }

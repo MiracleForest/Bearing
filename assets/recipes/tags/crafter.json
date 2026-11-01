@@ -38,10 +38,10 @@
     "minecraft:crying_obsidian"
   ],
   "c:ingots/brass": [
-    "levitate:brass_ingot"
+    "bearing:brass_ingot"
   ],
   "c:plates/iron": [
-    "levitate:iron_sheet"
+    "bearing:iron_sheet"
   ],
   "minecraft:planks": [
     "minecraft:oak_planks",

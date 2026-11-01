@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "levitate:secondary_linear_chassis",
+          "name": "bearing:secondary_linear_chassis",
           "weight": 1
         }
       ]

@@ -2,44 +2,44 @@
   "format_version": "1.21.70",
   "minecraft:block": {
     "description": {
-      "identifier": "levitate:display_board",
+      "identifier": "bearing:display_board",
       "menu_category": {
         "category": "items"
       },
       "states": {
-        "levitate:facing": [
+        "bearing:facing": [
           0,
           1,
           2,
           3
         ],
-        "levitate:up": [
+        "bearing:up": [
           0,
           1
         ],
-        "levitate:down": [
+        "bearing:down": [
           0,
           1
         ]
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.levitate.display_board",
+      "minecraft:geometry": "geometry.bearing.display_board",
       "minecraft:material_instances": {
         "side": {
-          "texture": "levitate_display_board_side",
+          "texture": "bearing_display_board_side",
           "render_method": "opaque"
         },
         "front": {
-          "texture": "levitate_display_board_front",
+          "texture": "bearing_display_board_front",
           "render_method": "opaque"
         },
         "back": {
-          "texture": "levitate_display_board_back",
+          "texture": "bearing_display_board_back",
           "render_method": "opaque"
         },
         "*": {
-          "texture": "levitate_display_board_side",
+          "texture": "bearing_display_board_side",
           "render_method": "opaque"
         }
       },
@@ -64,7 +64,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:facing') == 1"
+        "condition": "q.block_state('bearing:facing') == 1"
       },
       {
         "components": {
@@ -76,7 +76,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:facing') == 2"
+        "condition": "q.block_state('bearing:facing') == 2"
       },
       {
         "components": {
@@ -88,7 +88,7 @@
             ]
           }
         },
-        "condition": "q.block_state('levitate:facing') == 3"
+        "condition": "q.block_state('bearing:facing') == 3"
       }
     ]
   }

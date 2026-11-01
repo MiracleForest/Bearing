@@ -54,11 +54,11 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-LV_REGISTER_CONFIG("pipes", lv::feature::pipes::PipesConfig);
+BR_REGISTER_CONFIG("pipes", br::feature::pipes::PipesConfig);
 
-namespace lv::feature::pipes {
+namespace br::feature::pipes {
 
-namespace k  = lv::kinetics;
+namespace k  = br::kinetics;
 namespace ia = common::interactions;
 namespace ft = common::fluidtypes;
 
@@ -66,40 +66,40 @@ namespace ft = common::fluidtypes;
 
 namespace {
 
-Face facingOf(k::BlockState const& s) { return static_cast<Face>(std::clamp(s.get("levitate:facing", 1), 0, 5)); }
+Face facingOf(k::BlockState const& s) { return static_cast<Face>(std::clamp(s.get("bearing:facing", 1), 0, 5)); }
 
 k::KineticSpec pumpSpec() {
     k::KineticSpec s;
-    s.states       = {"levitate:facing"};
+    s.states       = {"bearing:facing"};
     s.rotationAxis = [](k::BlockState const& st) -> std::optional<Axis> { return cp::axisOf(facingOf(st)); };
     // Create's pump is driven through its cog only (pipes take both ends of its axis)
     s.hasShaftTowards = [](k::BlockState const&, Face) { return false; };
     s.cog             = [](k::BlockState const&) { return k::CogType::Small; };
     s.impact          = 4;
-    s.rotorState      = "levitate:rotor";
-    s.rotorModel      = "geometry.levitate.mechanical_pump_cog";
-    s.rotorTexture    = "levitate_mechanical_pump";
+    s.rotorState      = "bearing:rotor";
+    s.rotorModel      = "geometry.bearing.mechanical_pump_cog";
+    s.rotorTexture    = "bearing_mechanical_pump";
     return s;
 }
 
 k::KineticSpec valveSpec() {
     k::KineticSpec s;
-    s.states       = {"levitate:facing", "levitate:along_first"};
+    s.states       = {"bearing:facing", "bearing:along_first"};
     auto shaft     = [](k::BlockState const& st) {
-        return cp::valveAxes(facingOf(st), st.get("levitate:along_first") != 0).shaft;
+        return cp::valveAxes(facingOf(st), st.get("bearing:along_first") != 0).shaft;
     };
     s.rotationAxis    = [shaft](k::BlockState const& st) -> std::optional<Axis> { return shaft(st); };
     s.hasShaftTowards = [shaft](k::BlockState const& st, Face f) { return cp::axisOf(f) == shaft(st); };
-    s.rotorState      = "levitate:rotor";
-    s.rotorModel      = "geometry.levitate.fluid_valve_shaft";
-    s.rotorTexture    = "levitate_fluid_valve";
+    s.rotorState      = "bearing:rotor";
+    s.rotorModel      = "geometry.bearing.fluid_valve_shaft";
+    s.rotorTexture    = "bearing_fluid_valve";
     return s;
 }
 
 } // namespace
 
-LV_REGISTER_KINETIC_BLOCK(kPump, pumpSpec());
-LV_REGISTER_KINETIC_BLOCK(kValve, valveSpec());
+BR_REGISTER_KINETIC_BLOCK(kPump, pumpSpec());
+BR_REGISTER_KINETIC_BLOCK(kValve, valveSpec());
 
 // ---- the world as the flow model sees it -------------------------------------------------------------
 
@@ -141,7 +141,7 @@ public:
         auto const& b = r->getBlock(toBlockPos(p));
         switch (kindOf(b)) {
         case BlockKind::Valve:
-            return game::intState(b, "levitate:enabled").value_or(0) != 0;
+            return game::intState(b, "bearing:enabled").value_or(0) != 0;
         case BlockKind::Smart: {
             if (fluid.empty()) return true;
             auto f = common::filterslot::get(p);
@@ -241,7 +241,7 @@ Runtime& rt() {
     return r;
 }
 
-constexpr char kDbKey[] = "lv:pipes:model";
+constexpr char kDbKey[] = "br:pipes:model";
 
 void saveWorld() {
     auto& r = rt();
@@ -300,8 +300,8 @@ void refreshGlass(GlobalPos const& p) {
     auto const& block = region->getBlock(bp);
     if (kindOf(block) != BlockKind::Glass) return;
     int slot = glassSlotFor(rt().model.visibleFluid(p));
-    if (game::intState(block, "levitate:fluid").value_or(0) == slot) return;
-    auto const* s = block.getBlockType().getBlockState(HashedString("levitate:fluid"));
+    if (game::intState(block, "bearing:fluid").value_or(0) == slot) return;
+    auto const* s = block.getBlockType().getBlockState(HashedString("bearing:fluid"));
     if (!s) return;
     if (auto next = block.setState(*s, slot)) game::setBlock(*region, bp, *next.as_ptr());
 }
@@ -364,12 +364,12 @@ void tickValves() {
         auto& v = it->second;
         if (v.pointer < v.target) v.pointer = std::min(v.target, v.pointer + v.rate);
         else if (v.pointer > v.target) v.pointer = std::max(v.target, v.pointer - v.rate);
-        bool enabled = game::intState(block, "levitate:enabled").value_or(0) != 0;
+        bool enabled = game::intState(block, "bearing:enabled").value_or(0) != 0;
         int  next    = -1;
         if (enabled && v.pointer <= 0.f) next = 0;
         if (!enabled && v.pointer >= 1.f) next = 1;
         if (next >= 0) {
-            if (auto const* s = block.getBlockType().getBlockState(HashedString("levitate:enabled"))) {
+            if (auto const* s = block.getBlockType().getBlockState(HashedString("bearing:enabled"))) {
                 if (auto b = block.setState(*s, next)) {
                     game::setBlock(*region, bp, *b.as_ptr());
                     log().info("pipes: valve at {} {} {} {}", bp.x, bp.y, bp.z, next ? "opened" : "closed");
@@ -436,7 +436,7 @@ void onBlockChanged(ll::event::BlockChangedEvent& ev) {
 
     // display-only changes of our own blocks (glass fluid, rims, rotor, valve pointer) don't concern neighbours
     if (kb != BlockKind::None && kb == ka && flowSignature(before) == flowSignature(after)
-        && game::intState(before, "levitate:bracket") == game::intState(after, "levitate:bracket"))
+        && game::intState(before, "bearing:bracket") == game::intState(after, "bearing:bracket"))
         return;
     // neighbours (Create's updateShape / neighborChanged)
     for (Face f : cp::kFaces) {
@@ -738,21 +738,21 @@ std::vector<std::string> describe(GlobalPos const& pos) {
     auto*                    region = regionFor(pos);
     std::string              at     = std::to_string(pos.x) + " " + std::to_string(pos.y) + " " + std::to_string(pos.z);
     if (!region || !isPipeLike(kindOf(region->getBlock(toBlockPos(pos))))) {
-        out.push_back(tr("lv.pipes.cmd.none", "No pipe at {0}.", at));
+        out.push_back(tr("br.pipes.cmd.none", "No pipe at {0}.", at));
         return out;
     }
-    out.push_back(tr("lv.pipes.cmd.block", "{0} at {1}", region->getBlock(toBlockPos(pos)).getTypeName(), at));
+    out.push_back(tr("br.pipes.cmd.block", "{0} at {1}", region->getBlock(toBlockPos(pos)).getTypeName(), at));
     auto const* n = rt().model.node(pos);
     if (!n) {
-        out.push_back(tr("lv.pipes.cmd.idle", "No pressure."));
+        out.push_back(tr("br.pipes.cmd.idle", "No pressure."));
         return out;
     }
     for (auto const& c : n->connections) {
         if (!c) continue;
-        std::string line = std::string(core::kinetics::faceName(c->side)) + ": " + tr("lv.pipes.cmd.pressure", "pressure in {0} / out {1}", num(c->pressureIn), num(c->pressureOut));
+        std::string line = std::string(core::kinetics::faceName(c->side)) + ": " + tr("br.pipes.cmd.pressure", "pressure in {0} / out {1}", num(c->pressureIn), num(c->pressureOut));
         if (c->flow)
-            line += ", " + tr("lv.pipes.cmd.flow", "{0} flowing {1} ({2}%)", c->flow->fluid.id, c->flow->inbound ? "in" : "out", int(c->flow->progress * 100));
-        if (c->network) line += ", " + tr("lv.pipes.cmd.network", "moving {0} mB/t to {1} targets", c->network->transferSpeed(), c->network->targets().size());
+            line += ", " + tr("br.pipes.cmd.flow", "{0} flowing {1} ({2}%)", c->flow->fluid.id, c->flow->inbound ? "in" : "out", int(c->flow->progress * 100));
+        if (c->network) line += ", " + tr("br.pipes.cmd.network", "moving {0} mB/t to {1} targets", c->network->transferSpeed(), c->network->targets().size());
         out.push_back(line);
     }
     return out;
@@ -760,10 +760,10 @@ std::vector<std::string> describe(GlobalPos const& pos) {
 
 } // namespace
 
-LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
+BR_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload<PipesCommandParams>().text("pipes").required("pos").execute(
         [](CommandOrigin const& origin, CommandOutput& output, PipesCommandParams const& params) {
-            if (!commands::isAdmin(origin)) return output.error(tr("lv.pipes.cmd.need_op", "You need operator permission."));
+            if (!commands::isAdmin(origin)) return output.error(tr("br.pipes.cmd.need_op", "You need operator permission."));
             Vec3  v   = params.pos.getPosition(INT_MAX, origin, Vec3{0.f, 0.f, 0.f});
             auto* dim = origin.getDimension();
             auto  pos = game::globalPos(dim ? static_cast<int>(dim->getDimensionId()) : 0, game::blockPosOf(v));
@@ -775,6 +775,6 @@ LV_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     );
 });
 
-} // namespace lv::feature::pipes
+} // namespace br::feature::pipes
 
-LV_REGISTER_MODULE(lv::feature::pipes::PipesModule);
+BR_REGISTER_MODULE(br::feature::pipes::PipesModule);

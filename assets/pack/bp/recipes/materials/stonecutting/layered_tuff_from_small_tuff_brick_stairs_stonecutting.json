@@ -2,23 +2,23 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "levitate:layered_tuff_from_small_tuff_brick_stairs_stonecutting"
+      "identifier": "bearing:layered_tuff_from_small_tuff_brick_stairs_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
     "ingredients": [
       {
-        "item": "levitate:small_tuff_brick_stairs"
+        "item": "bearing:small_tuff_brick_stairs"
       }
     ],
     "unlock": [
       {
-        "item": "levitate:small_tuff_brick_stairs"
+        "item": "bearing:small_tuff_brick_stairs"
       }
     ],
     "result": {
-      "item": "levitate:layered_tuff",
+      "item": "bearing:layered_tuff",
       "count": 1
     }
   }

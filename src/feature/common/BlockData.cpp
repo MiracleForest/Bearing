@@ -19,7 +19,7 @@
 #include "mod/Log.h"
 #include "mod/Module.h"
 
-namespace lv::feature::common::blockdata {
+namespace br::feature::common::blockdata {
 
 namespace {
 using core::common::blockDataChunkKey;
@@ -51,7 +51,7 @@ void buildIndex() {
     auto& s = store();
     if (s.indexed || !game::db::available()) return;
     s.indexed = true;
-    game::db::forEachKey("lv:common:bd:", [&s](std::string_view suffix) {
+    game::db::forEachKey("br:common:bd:", [&s](std::string_view suffix) {
         int dim, cx, cz;
         if (core::common::parseChunkSuffix(suffix, dim, cx, cz)) s.index.insert({dim, cx, cz});
     });
@@ -300,6 +300,6 @@ private:
     ll::event::ListenerPtr mListener;
 };
 
-} // namespace lv::feature::common::blockdata
+} // namespace br::feature::common::blockdata
 
-LV_REGISTER_MODULE_ORDERED(lv::feature::common::blockdata::BlockDataModule, lv::ModuleOrder::Services);
+BR_REGISTER_MODULE_ORDERED(br::feature::common::blockdata::BlockDataModule, br::ModuleOrder::Services);

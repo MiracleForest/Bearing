@@ -1,6 +1,6 @@
--- Assembles bin/<target_type>/Levitate/ after the DLL is linked:
---   Levitate.dll/.pdb, manifest.json, lang/<locale>.json,
---   behavior_packs/Levitate_BP/, resource_packs/Levitate_RP/
+-- Assembles bin/<target_type>/Bearing/ after the DLL is linked:
+--   Bearing.dll/.pdb, manifest.json, lang/<locale>.json,
+--   behavior_packs/Bearing_BP/, resource_packs/Bearing_RP/
 --
 -- Fragment merging (each feature unit owns its own fragment files; duplicates fail the build):
 --   assets/lang/<locale>/*.json               -> lang/<locale>.json
@@ -43,7 +43,7 @@ local function merge_lang(projectdir, outdir)
     os.mkdir(outdir)
     for _, localedir in ipairs(os.dirs(path.join(projectdir, "assets", "lang", "*"))) do
         local merged = merge_json_fragments(localedir, "lang")
-        if table.empty(merged) then merged = {["lv.lang.empty"] = ""} end
+        if table.empty(merged) then merged = {["br.lang.empty"] = ""} end
         json.savefile(path.join(outdir, path.filename(localedir) .. ".json"), merged)
     end
 end
@@ -81,7 +81,7 @@ local function merge_atlas(src, dst, fragdir, filename, atlas)
     if table.empty(data) then return end
     local out = path.join(dst, "textures", filename)
     os.mkdir(path.directory(out))
-    json.savefile(out, {resource_pack_name = "levitate", texture_name = atlas, texture_data = data})
+    json.savefile(out, {resource_pack_name = "bearing", texture_name = atlas, texture_data = data})
 end
 
 local function merge_sounds(src, dst)
@@ -238,7 +238,7 @@ end
 
 function main(target, target_type)
     local projectdir = os.projectdir()
-    local outdir = path.join(projectdir, "bin", target_type, "Levitate")
+    local outdir = path.join(projectdir, "bin", target_type, "Bearing")
     os.mkdir(outdir)
 
     -- Binaries and manifest (same substitutions as levibuildscript's modpacker).
@@ -249,7 +249,7 @@ function main(target, target_type)
     local major, minor, patch = mod_version()
     local manifest = io.readfile(path.join(projectdir, "manifest.json"))
     local vars = {
-        modName = "Levitate",
+        modName = "Bearing",
         modFile = path.filename(targetfile),
         modVersion = string.format("%d.%d.%d", major, minor, patch),
         modPlatform = target_type,
@@ -270,8 +270,8 @@ function main(target, target_type)
         -- otherwise a game keeps showing a pack cached from another branch's build.
         version = {0, 0, pack_stamp({bpsrc, rpsrc})}
     end
-    local bpdst = path.join(outdir, "behavior_packs", "Levitate_BP")
-    local rpdst = path.join(outdir, "resource_packs", "Levitate_RP")
+    local bpdst = path.join(outdir, "behavior_packs", "Bearing_BP")
+    local rpdst = path.join(outdir, "resource_packs", "Bearing_RP")
     check_block_states(bpsrc)
     check_ponder_ids(projectdir, bpsrc)
     copy_pack(bpsrc, bpdst, version)

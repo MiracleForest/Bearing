@@ -40,20 +40,20 @@ Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~2 ~'
 Start-Sleep -Milliseconds 500
 # rope pulley 6 blocks up, its rope, magnet and a planks platform (without glue only the block
 # under the magnet hangs on it, as in Create); generator beside the pulley
-Invoke-Chat '/setblock ~6 ~6 ~ levitate:rope_pulley ["levitate:axis"=2]'
-Invoke-Chat '/setblock ~6 ~5 ~ levitate:rope'
-Invoke-Chat '/setblock ~6 ~4 ~ levitate:pulley_magnet'
+Invoke-Chat '/setblock ~6 ~6 ~ bearing:rope_pulley ["bearing:axis"=2]'
+Invoke-Chat '/setblock ~6 ~5 ~ bearing:rope'
+Invoke-Chat '/setblock ~6 ~4 ~ bearing:pulley_magnet'
 Invoke-Chat '/fill ~5 ~3 ~-1 ~7 ~3 ~1 oak_planks'
 # a piston facing the player's left with two poles, pushing a gold block
-Invoke-Chat '/setblock ~5 ~1 ~-3 levitate:piston_extension_pole ["levitate:facing"=5]'
-Invoke-Chat '/setblock ~4 ~1 ~-3 levitate:piston_extension_pole ["levitate:facing"=5]'
-Invoke-Chat '/setblock ~6 ~1 ~-3 levitate:mechanical_piston ["levitate:facing"=5,"levitate:axis_first"=0]'
+Invoke-Chat '/setblock ~5 ~1 ~-3 bearing:piston_extension_pole ["bearing:facing"=5]'
+Invoke-Chat '/setblock ~4 ~1 ~-3 bearing:piston_extension_pole ["bearing:facing"=5]'
+Invoke-Chat '/setblock ~6 ~1 ~-3 bearing:mechanical_piston ["bearing:facing"=5,"bearing:axis_first"=0]'
 Invoke-Chat '/setblock ~7 ~1 ~-3 gold_block'
 Start-Sleep -Seconds 1
 Save-Screenshot 'built' | Out-Null
 
 $mark = Get-LogMark
-Invoke-Chat '/setblock ~6 ~6 ~1 levitate:kinetics_test_source ["levitate:axis"=2]'
+Invoke-Chat '/setblock ~6 ~6 ~1 bearing:kinetics_test_source ["bearing:axis"=2]'
 # slowly at first, for pictures on the way down (the log is read with some delay)
 Invoke-Chat '/create kinetics ~6 ~6 ~1 speed 16'
 Wait-LogLine 'pulley at -?\d+ -?\d+ -?\d+ assembled: \d+ blocks' 90 -Since $mark | Out-Null
@@ -67,7 +67,7 @@ Save-Screenshot 'pulley-placed' | Out-Null
 
 # east-facing pistons extend with negative speed (Create's movement modifier)
 $mark = Get-LogMark
-Invoke-Chat '/setblock ~6 ~1 ~-2 levitate:kinetics_test_source ["levitate:axis"=2]'
+Invoke-Chat '/setblock ~6 ~1 ~-2 bearing:kinetics_test_source ["bearing:axis"=2]'
 Start-Sleep -Seconds 2
 Set-GeneratorSpeed '~6 ~1 ~-2' -128 'speed-128'
 Wait-LogLine 'piston at -?\d+ -?\d+ -?\d+ disassembled at offset 2' 90 -Since $mark | Out-Null
@@ -77,13 +77,13 @@ Save-Screenshot 'piston-extended' | Out-Null
 # a gantry (U20): a shaft line along x in front of the player, a carriage with a plank on it;
 # turning the shafts runs the carriage west towards the start of the line
 Invoke-Chat '/tp @s ~ ~ ~ facing ~6 ~2 ~6'
-foreach ($dx in 3..9) { Invoke-Chat "/setblock ~$dx ~1 ~6 levitate:gantry_shaft [""levitate:facing""=5]" }
-Invoke-Chat '/setblock ~8 ~2 ~6 levitate:gantry_carriage ["levitate:facing"=1,"levitate:axis_first"=0]'
+foreach ($dx in 3..9) { Invoke-Chat "/setblock ~$dx ~1 ~6 bearing:gantry_shaft [""bearing:facing""=5]" }
+Invoke-Chat '/setblock ~8 ~2 ~6 bearing:gantry_carriage ["bearing:facing"=1,"bearing:axis_first"=0]'
 Invoke-Chat '/setblock ~8 ~3 ~6 oak_planks'
 Start-Sleep -Seconds 1
 $mark = Get-LogMark
-Invoke-Chat '/setblock ~2 ~1 ~6 levitate:kinetics_test_source ["levitate:axis"=0]'
-Invoke-Chat '/setblock ~10 ~1 ~6 levitate:kinetics_test_source ["levitate:axis"=0]'
+Invoke-Chat '/setblock ~2 ~1 ~6 bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~10 ~1 ~6 bearing:kinetics_test_source ["bearing:axis"=0]'
 # pictures while it runs (taken at once: the log is read with some delay)
 $shots = foreach ($i in 1..5) { Save-Screenshot "gantry-moving-$i"; Start-Sleep -Milliseconds 800 }
 # above the (turning) shafts only
@@ -95,7 +95,7 @@ Save-Screenshot 'gantry-placed' | Out-Null
 
 # the elevator contact's settings (U40): Create's native screen for the client mod (type a floor
 # identifier, confirm), the form for vanilla clients
-Invoke-Chat '/setblock 40 -60 40 levitate:elevator_contact ["levitate:facing"=3]'
+Invoke-Chat '/setblock 40 -60 40 bearing:elevator_contact ["bearing:facing"=3]'
 Invoke-Chat '/tp @s 40.5 -60 43.5 180 25'
 Press-Key '9'
 Start-Sleep -Milliseconds 1000

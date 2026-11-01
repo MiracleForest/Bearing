@@ -25,7 +25,7 @@
 #include "mod/Log.h"
 #include "core/Glob.h"
 
-namespace lv::selftest {
+namespace br::selftest {
 
 namespace {
 bool gRunning       = false;
@@ -72,7 +72,7 @@ SimulatedPlayer& Context::spawnPlayer(std::string const& name) {
     if (!level) fail("no level loaded");
     auto spawn = spawnSurface();
     auto pos   = Vec3{static_cast<float>(spawn.x) + 0.5f, static_cast<float>(spawn.y) + 1.0f, static_cast<float>(spawn.z) + 0.5f};
-    auto n     = name.empty() ? "lv_test_" + std::to_string(++gPlayerCounter) : name;
+    auto n     = name.empty() ? "br_test_" + std::to_string(++gPlayerCounter) : name;
     auto sp    = SimulatedPlayer::create(n, pos, 0);
     if (!sp) fail("could not spawn a simulated player");
     mPlayers.push_back(sp.as_ptr());
@@ -169,14 +169,14 @@ struct TestArea {
     int         x0, z0, x1, z1;
 };
 constexpr TestArea kTestAreas[] = {
-    {"lv_selftest", -16, -64, 120, 64},
-    {"lv_selftest_rows", 0, 64, 112, 200},
+    {"br_selftest", -16, -64, 120, 64},
+    {"br_selftest_rows", 0, 64, 112, 200},
 };
 
 void runServerCommand(std::string const& command) {
     auto level = ll::service::getLevel();
     if (!level) return;
-    ServerCommandOrigin origin("levitate-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
+    ServerCommandOrigin origin("bearing-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
     ll::command::CommandRegistrar::getServerInstance().executeCommand(command, origin);
 }
 
@@ -254,4 +254,4 @@ void runAll(std::string const& glob, std::function<void(std::string const&)> out
     }).launch(ll::thread::ServerThreadExecutor::getDefault());
 }
 
-} // namespace lv::selftest
+} // namespace br::selftest

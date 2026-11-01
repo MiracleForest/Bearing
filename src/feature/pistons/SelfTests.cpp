@@ -1,5 +1,5 @@
 // Selftests of the pistons unit (testPos dx 2000..2099). The kinetic source is U2's test
-// generator (levitate:kinetics_test_source); real generators belong to U7.
+// generator (bearing:kinetics_test_source); real generators belong to U7.
 
 #include <cmath>
 #include <functional>
@@ -18,7 +18,7 @@
 #include "game/Blocks.h"
 #include "selftest/SelfTest.h"
 
-namespace lv::feature::pistons {
+namespace br::feature::pistons {
 
 namespace {
 
@@ -29,7 +29,7 @@ using selftest::Context;
 constexpr int kU40Shift = -201;
 namespace ct = feature::contraption;
 
-constexpr char kSource[] = "levitate:kinetics_test_source";
+constexpr char kSource[] = "bearing:kinetics_test_source";
 
 GlobalPos at(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
 
@@ -69,7 +69,7 @@ struct Cleanup {
 
 } // namespace
 
-LV_REGISTER_SELFTEST("pistons.registry", [](Context& ctx) {
+BR_REGISTER_SELFTEST("pistons.registry", [](Context& ctx) {
     for (auto id : {kPiston, kStickyPiston, kRopePulley, kElevatorPulley, kGantryShaft, kGantryCarriage})
         ctx.check(kinetics::specOf(id) != nullptr, std::string(id) + " is kinetic");
     for (auto id : {kPiston, kStickyPiston, kPole, kHead, kRopePulley, kRope, kMagnet, kElevatorPulley, kElevatorContact, kGantryCarriage, kGantryShaft})
@@ -80,7 +80,7 @@ LV_REGISTER_SELFTEST("pistons.registry", [](Context& ctx) {
     ctx.check(kinetics::specOf(kGantryShaft)->impact == 0 && kinetics::specOf(kGantryCarriage)->impact == 0, "gantries have no stress impact (Create: setNoImpact)");
 });
 
-LV_REGISTER_SELFTEST("pistons.movement_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.movement_rules", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2000);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -109,13 +109,13 @@ static PistonRig buildPiston(Context& ctx, GlobalPos o, std::string_view id, int
     return r;
 }
 
-LV_REGISTER_SELFTEST("pistons.extend_retract", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.extend_retract", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2010);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     auto rig = buildPiston(ctx, o, kPiston, 2);
     put(ctx, at(o, 0, 0, 1), "minecraft:stone");
-    put(ctx, rig.source, kSource, {{"levitate:axis", 0}});
+    put(ctx, rig.source, kSource, {{"bearing:axis", 0}});
     Cleanup cleanup{{o}};
     co_await Context::ticks(3);
     // south-facing pistons extend with positive speed (Create's movement modifier)
@@ -139,13 +139,13 @@ LV_REGISTER_SELFTEST("pistons.extend_retract", [](Context& ctx) -> ll::coro::Cor
     ctx.check(stateOr(o, kState, -1) == int(PistonState::Retracted), "piston retracted");
 });
 
-LV_REGISTER_SELFTEST("pistons.sticky_pull", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.sticky_pull", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2020);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     auto rig = buildPiston(ctx, o, kStickyPiston, 1);
     put(ctx, at(o, 0, 0, 1), "minecraft:stone");
-    put(ctx, rig.source, kSource, {{"levitate:axis", 0}});
+    put(ctx, rig.source, kSource, {{"bearing:axis", 0}});
     Cleanup cleanup{{o}};
     co_await Context::ticks(3);
     kinetics::setGeneratedSpeed(rig.source, 256);
@@ -159,14 +159,14 @@ LV_REGISTER_SELFTEST("pistons.sticky_pull", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(idAt(at(o, 0, 0, 2)) == "minecraft:air", "nothing left in front");
 });
 
-LV_REGISTER_SELFTEST("pistons.collision", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.collision", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2030);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     auto rig = buildPiston(ctx, o, kPiston, 3);
     put(ctx, at(o, 0, 0, 1), "minecraft:stone");
     put(ctx, at(o, 0, 0, 3), "minecraft:bedrock"); // not in the push line (air between)
-    put(ctx, rig.source, kSource, {{"levitate:axis", 0}});
+    put(ctx, rig.source, kSource, {{"bearing:axis", 0}});
     Cleanup cleanup{{o}};
     co_await Context::ticks(3);
     kinetics::setGeneratedSpeed(rig.source, 128);
@@ -177,12 +177,12 @@ LV_REGISTER_SELFTEST("pistons.collision", [](Context& ctx) -> ll::coro::CoroTask
     ctx.check(offsetOf(o) == 1.f, "offset 1 (grid aligned after the collision)");
 });
 
-LV_REGISTER_SELFTEST("pistons.assembly_errors", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.assembly_errors", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2040);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     auto rig = buildPiston(ctx, o, kPiston, 0);
-    put(ctx, rig.source, kSource, {{"levitate:axis", 0}});
+    put(ctx, rig.source, kSource, {{"bearing:axis", 0}});
     co_await Context::ticks(3);
     kinetics::setGeneratedSpeed(rig.source, 128);
     co_await Context::ticks(5);
@@ -198,13 +198,13 @@ LV_REGISTER_SELFTEST("pistons.assembly_errors", [](Context& ctx) -> ll::coro::Co
     ctx.check(lastErrorAt(o) == "create.gui.assembly.exception.unmovableBlock", "unmovableBlock, got '" + lastErrorAt(o) + "'");
 });
 
-LV_REGISTER_SELFTEST("pistons.movement_mode", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.movement_mode", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2050);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
     auto rig = buildPiston(ctx, o, kPiston, 2);
     put(ctx, at(o, 0, 0, 1), "minecraft:oak_planks");
-    put(ctx, rig.source, kSource, {{"levitate:axis", 0}});
+    put(ctx, rig.source, kSource, {{"bearing:axis", 0}});
     Cleanup cleanup{{o}};
     setMovementMode(o, cp::MovementMode::MovePlaceReturned);
     co_await Context::ticks(3);
@@ -219,7 +219,7 @@ LV_REGISTER_SELFTEST("pistons.movement_mode", [](Context& ctx) -> ll::coro::Coro
     ctx.check(idAt(at(o, 0, 0, -1)) == kPole, "poles behind");
 });
 
-LV_REGISTER_SELFTEST("pistons.rope_pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.rope_pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2060);
     o.y += 8;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -230,7 +230,7 @@ LV_REGISTER_SELFTEST("pistons.rope_pulley", [](Context& ctx) -> ll::coro::CoroTa
     put(ctx, at(o, 0, -2, 0), kMagnet);
     put(ctx, at(o, 0, -3, 0), "minecraft:oak_planks");
     auto source = at(o, 0, 0, 1);
-    put(ctx, source, kSource, {{"levitate:axis", 2}});
+    put(ctx, source, kSource, {{"bearing:axis", 2}});
     Cleanup cleanup{{o}};
     co_await Context::ticks(3);
     kinetics::setGeneratedSpeed(source, 128);
@@ -250,7 +250,7 @@ LV_REGISTER_SELFTEST("pistons.rope_pulley", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(idAt(at(o, 0, -7, 0)) == "minecraft:air", "nothing left below");
 });
 
-LV_REGISTER_SELFTEST("pistons.rope_break", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.rope_break", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2070);
     o.y += 6;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -266,7 +266,7 @@ LV_REGISTER_SELFTEST("pistons.rope_break", [](Context& ctx) -> ll::coro::CoroTas
     ctx.check(offsetOf(o) == 0.f, "the pulley's length resets");
 });
 
-LV_REGISTER_SELFTEST("pistons.piston_head_break", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.piston_head_break", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2075);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -281,7 +281,7 @@ LV_REGISTER_SELFTEST("pistons.piston_head_break", [](Context& ctx) -> ll::coro::
     ctx.check(stateOr(o, kState, -1) == int(PistonState::Retracted), "the piston retracts");
 });
 
-LV_REGISTER_SELFTEST("pistons.gantry", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.gantry", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2080);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -302,8 +302,8 @@ LV_REGISTER_SELFTEST("pistons.gantry", [](Context& ctx) -> ll::coro::CoroTask<> 
     put(ctx, at(o, 2, 2, 0), "minecraft:oak_planks");
     // two generators: the kinetics table (U2) still gives gantry shafts 4 SU/RPM (Create: 0)
     auto source = at(o, -1, 0, 0), source2 = at(o, 4, 0, 0);
-    put(ctx, source, kSource, {{"levitate:axis", 0}});
-    put(ctx, source2, kSource, {{"levitate:axis", 0}});
+    put(ctx, source, kSource, {{"bearing:axis", 0}});
+    put(ctx, source2, kSource, {{"bearing:axis", 0}});
     co_await Context::ticks(3);
     // pinion speed = -rpm / 512 along the shaft facing: positive rpm moves the carriage west
     kinetics::setGeneratedSpeed(source, 128);
@@ -323,7 +323,7 @@ LV_REGISTER_SELFTEST("pistons.gantry", [](Context& ctx) -> ll::coro::CoroTask<> 
     for (auto id : gantryContraptions()) ct::disassemble(id);
 });
 
-LV_REGISTER_SELFTEST("pistons.elevator_contacts", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.elevator_contacts", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(2090);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -350,7 +350,7 @@ LV_REGISTER_SELFTEST("pistons.elevator_contacts", [](Context& ctx) -> ll::coro::
     auto pulley = at(o, 0, 12, 0);
     put(ctx, pulley, kElevatorPulley, {{kFacing, int(cc::Dir::North)}});
     put(ctx, at(o, 0, 10, 0), "minecraft:oak_planks");
-    put(ctx, at(o, 1, 12, 0), kSource, {{"levitate:axis", 0}});
+    put(ctx, at(o, 1, 12, 0), kSource, {{"bearing:axis", 0}});
     co_await Context::ticks(3);
     elevatorClicked(pulley);
     co_await Context::ticks(3);
@@ -361,7 +361,7 @@ LV_REGISTER_SELFTEST("pistons.elevator_contacts", [](Context& ctx) -> ll::coro::
 
 // ---- U40: climbing, contact screen (dx 4070..4099) ---------------------------------------------
 
-LV_REGISTER_SELFTEST("pistons.climbable", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.climbable", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(ropesClimbable(), "ropes and pulley magnets have the Climbable property");
     auto o = ctx.testPos(4070, kU40Shift);
     o.y += 1;
@@ -385,7 +385,7 @@ LV_REGISTER_SELFTEST("pistons.climbable", [](Context& ctx) -> ll::coro::CoroTask
     ctx.check(climbed > 1.f, "a player walking into a rope climbs it (rose " + std::to_string(climbed) + " blocks)");
 });
 
-LV_REGISTER_SELFTEST("pistons.contact_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
+BR_REGISTER_SELFTEST("pistons.contact_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto o = ctx.testPos(4080, kU40Shift);
     o.y += 1;
     ctx.require(co_await ctx.ensureLoaded(o), "test area loaded");
@@ -403,4 +403,4 @@ LV_REGISTER_SELFTEST("pistons.contact_screen", [](Context& ctx) -> ll::coro::Cor
     ctx.check(!common::screens::open(p, "pistons.elevator_contact", other), "no contact there: refused");
 });
 
-} // namespace lv::feature::pistons
+} // namespace br::feature::pistons

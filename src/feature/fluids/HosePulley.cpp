@@ -20,10 +20,10 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::fluids {
+namespace br::feature::fluids {
 
 namespace cfl = common::fluids;
-namespace kin = lv::kinetics;
+namespace kin = br::kinetics;
 namespace ck  = core::kinetics;
 
 namespace {
@@ -48,9 +48,9 @@ ck::KineticSpec hoseSpec() {
     };
     s.impact     = 4; // config kinetics.json "hose_pulley"
     s.rotorState = kRotor;
-    return ck::specs::withModel(s, "geometry.levitate.hose_pulley", "levitate_hose_pulley");
+    return ck::specs::withModel(s, "geometry.bearing.hose_pulley", "bearing_hose_pulley");
 }
-LV_REGISTER_KINETIC_BLOCK(kHosePulley, hoseSpec());
+BR_REGISTER_KINETIC_BLOCK(kHosePulley, hoseSpec());
 
 /// Search results kept between transfers (Create's behaviours keep their queues too).
 struct Cache {
@@ -365,13 +365,13 @@ void registerHose() {
     game::db::onWorldClosed([] { caches().clear(); });
 }
 
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids
 
 // Create's HosePulleyBlockEntity#addToGoggleTooltip (U59): a pulley over an infinite body of
 // fluid says so ("create.hint.hose_pulley").
 #include "feature/goggles/GoggleInfo.h"
-namespace lv::feature::fluids {
-LV_REGISTER_GOGGLE_INFO(kHosePulley, {.goggle = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
+namespace br::feature::fluids {
+BR_REGISTER_GOGGLE_INFO(kHosePulley, {.goggle = [](goggles::InfoContext const& c, goggles::Tooltip& t) {
     auto it = caches().find(c.pos);
     if (it == caches().end()) return false;
     bool infinite = (it->second.drain && it->second.drain->infinite) || (it->second.fill && it->second.fill->infinite);
@@ -380,4 +380,4 @@ LV_REGISTER_GOGGLE_INFO(kHosePulley, {.goggle = [](goggles::InfoContext const& c
     goggles::addHint(t, c.tr("create.hint.hose_pulley", "The targeted body of fluid is considered infinite."));
     return true;
 }});
-} // namespace lv::feature::fluids
+} // namespace br::feature::fluids

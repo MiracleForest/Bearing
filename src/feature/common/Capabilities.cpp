@@ -18,7 +18,7 @@
 #include "feature/common/Items.h"
 #include "game/Blocks.h"
 
-namespace lv::feature::common {
+namespace br::feature::common {
 
 namespace {
 template <class Handler, class Provider>
@@ -407,4 +407,4 @@ HeatLevel level(BlockSource& region, BlockPos const& pos) {
 
 } // namespace heat
 
-} // namespace lv::feature::common
+} // namespace br::feature::common

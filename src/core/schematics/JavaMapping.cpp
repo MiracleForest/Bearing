@@ -6,7 +6,7 @@
 #include <charconv>
 #include <unordered_map>
 
-namespace lv::core::schematics {
+namespace br::core::schematics {
 
 using nbt::Tag;
 
@@ -172,24 +172,24 @@ void facingStates(Out& o, std::string const& f) {
 }
 
 void mapCreate(JavaState const& js, std::string const& path, Out& o) {
-    o.name("levitate:" + path);
+    o.name("bearing:" + path);
     if (path == "chute") {
         // chute states run 0..n: facing 0 down, 1..4 north / south / west / east; shape 0 normal,
         // 1 window, 2 intersection, 3 encased
         int f = facingIndex(js.get("facing"));
-        o.i("levitate:facing", f >= 2 ? f - 1 : 0);
+        o.i("bearing:facing", f >= 2 ? f - 1 : 0);
         auto s = js.get("shape");
-        o.i("levitate:shape", s == "window" ? 1 : s == "intersection" ? 2 : s == "encased" ? 3 : 0);
+        o.i("bearing:shape", s == "window" ? 1 : s == "intersection" ? 2 : s == "encased" ? 3 : 0);
         return;
     }
     for (auto const& [k, v] : js.props) {
         if (k == "waterlogged") continue;
-        std::string key = "levitate:" + k;
+        std::string key = "bearing:" + k;
         if (k == "axis") {
-            o.i("levitate:axis", v == "x" ? 0 : v == "y" ? 1 : 2);
+            o.i("bearing:axis", v == "x" ? 0 : v == "y" ? 1 : 2);
         } else if (k == "facing" || k == "horizontal_facing") {
             int f = facingIndex(v);
-            if (f >= 0) o.i("levitate:facing", f);
+            if (f >= 0) o.i("bearing:facing", f);
         } else if (v == "true" || v == "false") {
             o.b(key, v == "true");
         } else if (!v.empty() && (std::isdigit(static_cast<unsigned char>(v[0])) || v[0] == '-')) {
@@ -692,4 +692,4 @@ std::optional<BlockState> mapJavaState(JavaState const& js) {
     return o.st;
 }
 
-} // namespace lv::core::schematics
+} // namespace br::core::schematics

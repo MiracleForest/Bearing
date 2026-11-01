@@ -4,7 +4,7 @@
 #include <cmath>
 #include <numbers>
 
-namespace lv::core::basin {
+namespace br::core::basin {
 
 // ---- blaze burner --------------------------------------------------------------------------------
 
@@ -209,4 +209,4 @@ int redstoneFromInventory(std::vector<int> const& counts, std::vector<int> const
     return static_cast<int>(std::floor(f * 14.f)) + (used > 0 ? 1 : 0);
 }
 
-} // namespace lv::core::basin
+} // namespace br::core::basin

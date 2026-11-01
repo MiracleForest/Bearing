@@ -1,13 +1,13 @@
 // Andesite and brass funnels (Create's FunnelBlock / BeltFunnelBlock / FunnelBlockEntity, SPEC
 // §3.6.12).
 //
-// A funnel is attached to the block behind it (opposite of `levitate:facing`). Extracting
+// A funnel is attached to the block behind it (opposite of `bearing:facing`). Extracting
 // funnels pull items out of that inventory every `defaultExtractionTimer` ticks and drop them in
 // front; inserting funnels put item entities touching their opening (and items handed to an
 // upward funnel by belts / chutes / players) into it. Redstone power pauses both. Brass funnels
 // filter and extract up to a configurable amount; andesite funnels move single items.
 //
-// Belt funnels (Create's BeltFunnelBlock) are funnels with a `levitate:shape` (1 retracted,
+// Belt funnels (Create's BeltFunnelBlock) are funnels with a `bearing:shape` (1 retracted,
 // 2 extended, 3 pushing, 4 pulling): a horizontal funnel on top of a belt / depot / ejector. A
 // pushing one (or a retracted / extended one at the end of a belt moving away from it) puts items
 // from its inventory onto the belt; a pulling one (or one the belt moves towards) takes the belt
@@ -40,7 +40,7 @@
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 
-namespace lv::feature::funnels::detail {
+namespace br::feature::funnels::detail {
 
 namespace items = common::items;
 
@@ -278,7 +278,7 @@ common::items::Handler capability() {
     return h;
 }
 
-/// The horizontal FacingID of a belt's `levitate:facing` (0 south, 1 west, 2 north, 3 east).
+/// The horizontal FacingID of a belt's `bearing:facing` (0 south, 1 west, 2 north, 3 east).
 int beltFace(int beltFacing) {
     static constexpr int kFaces[] = {cf::kSouth, cf::kWest, cf::kNorth, cf::kEast};
     return kFaces[beltFacing & 3];
@@ -664,4 +664,4 @@ void installFunnels() {
     registerAmountBox(kBrassFunnel, amountCentre);
 }
 
-} // namespace lv::feature::funnels::detail
+} // namespace br::feature::funnels::detail

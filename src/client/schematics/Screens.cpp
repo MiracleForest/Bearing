@@ -2,7 +2,7 @@
 // schematics folder, schematicannon, schematic and quill name prompt, schematic coordinates,
 // crafting blueprint) and the file transfers (uploads in chunks, copies of saved schematics).
 
-#ifdef LV_CLIENT
+#ifdef BR_CLIENT
 
 #include <algorithm>
 #include <chrono>
@@ -27,12 +27,12 @@
 #include "mod/Main.h"
 #include "mod/Module.h"
 
-namespace lv::client::schematics {
+namespace br::client::schematics {
 
 namespace fs    = std::filesystem;
 namespace items = feature::common::items;
 namespace net   = feature::net;
-using namespace lv::client::screen;
+using namespace br::client::screen;
 
 fs::path localDir() { return Mod::getInstance().getSelf().getModDir() / "schematics"; }
 
@@ -140,9 +140,9 @@ public:
             if (mFiles.empty()) return ctr("create.gui.schematicTable.noSchematics", "No Schematics Saved");
             return mFiles[static_cast<std::size_t>(std::clamp<int>(v, 0, static_cast<int>(mFiles.size()) - 1))];
         };
-        mPick->tooltip = {ctr("create.gui.schematicTable.availableSchematics", "Available Schematics"), ctr("lv.schematics.table.local", "Your local schematics folder")};
+        mPick->tooltip = {ctr("create.gui.schematicTable.availableSchematics", "Available Schematics"), ctr("br.schematics.table.local", "Your local schematics folder")};
         auto& up = add<IconButton>(Rect{172, 30, 18, 18}, "^", [this] { upload(); });
-        up.tooltip = {ctr("lv.schematics.table.upload", "Upload")};
+        up.tooltip = {ctr("br.schematics.table.upload", "Upload")};
         mUpload = &up;
         auto& refresh = add<IconButton>(Rect{192, 30, 18, 18}, "R", [this] {
             mFiles = localFiles();
@@ -175,7 +175,7 @@ public:
         c.text(107, 57, "->", color::kTextDark, Align::Centre, false);
     }
     void clickInventory(int slot, ItemStack const& stack, Button, bool) override {
-        if (!items::isEmpty(stack) && items::idOf(stack) == "levitate:empty_schematic") mSend({{"op", "insert"}, {"slot", slot}});
+        if (!items::isEmpty(stack) && items::idOf(stack) == "bearing:empty_schematic") mSend({{"op", "insert"}, {"slot", slot}});
     }
 
 private:
@@ -223,9 +223,9 @@ public:
         mPlay  = &add<IconButton>(Rect{75, 50, 18, 18}, ">", [this] { mSend({{"op", "play"}}); });
         mPause = &add<IconButton>(Rect{95, 50, 18, 18}, "||", [this] { mSend({{"op", "pause"}}); });
         mStop  = &add<IconButton>(Rect{115, 50, 18, 18}, "[]", [this] { mSend({{"op", "stop"}}); });
-        mPlay->tooltip  = {ctr("lv.schematics.cannon.play", "Start printing")};
-        mPause->tooltip = {ctr("lv.schematics.cannon.pause", "Pause")};
-        mStop->tooltip  = {ctr("lv.schematics.cannon.stop", "Stop and reset")};
+        mPlay->tooltip  = {ctr("br.schematics.cannon.play", "Start printing")};
+        mPause->tooltip = {ctr("br.schematics.cannon.pause", "Pause")};
+        mStop->tooltip  = {ctr("br.schematics.cannon.stop", "Stop and reset")};
         mStop->litColour = color::kButtonOff;
         static constexpr std::array<char const*, 4> kModes{"dontReplaceSolid", "replaceWithSolid", "replaceWithAny", "replaceWithEmpty"};
         static constexpr std::array<char const*, 4> kModeNames{"Don't Replace Solid Blocks", "Replace Solid with Solid", "Replace Solid with Any", "Replace Solid with Empty"};
@@ -275,7 +275,7 @@ public:
         c.bevel(bar, color::kSlotDark, color::kSlotDark, color::kSlotLight, true);
         float progress = static_cast<float>(mData.value("progress", 0.0));
         c.fill({bar.x + 1, bar.y + 1, (bar.w - 2) * std::clamp(progress, 0.f, 1.f), bar.h - 2}, color::kButtonOn);
-        c.text(width / 2, 74, ctr("lv.schematics.cannon.progress", "{0} / {1} blocks", mData.value("placed", 0), mData.value("toPlace", 0)), color::kTextDark, Align::Centre, false);
+        c.text(width / 2, 74, ctr("br.schematics.cannon.progress", "{0} / {1} blocks", mData.value("placed", 0), mData.value("toPlace", 0)), color::kTextDark, Align::Centre, false);
         // gunpowder gauge (Create: shots left / with backup)
         Rect gauge{126, 100, 8, 16};
         c.bevel(gauge, color::kSlotDark, color::kSlotDark, color::kSlotLight, true);
@@ -550,8 +550,8 @@ private:
 };
 
 
-} // namespace lv::client::schematics
+} // namespace br::client::schematics
 
-LV_REGISTER_MODULE(lv::client::schematics::SchematicsScreensModule);
+BR_REGISTER_MODULE(br::client::schematics::SchematicsScreensModule);
 
-#endif // LV_CLIENT
+#endif // BR_CLIENT

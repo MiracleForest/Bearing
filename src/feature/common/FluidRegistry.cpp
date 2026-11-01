@@ -7,7 +7,7 @@
 #include "core/fluids/Fluids.h"
 #include "mod/I18n.h"
 
-namespace lv::feature::common::fluidtypes {
+namespace br::feature::common::fluidtypes {
 
 namespace {
 
@@ -50,7 +50,7 @@ State& state() {
 }
 
 constexpr std::string_view kShortPotion = "potion:";          // "potion:<name>"
-constexpr std::string_view kU19Potion   = "levitate:potion/"; // U19: "levitate:potion/<bottle>/<name>"
+constexpr std::string_view kU19Potion   = "bearing:potion/"; // U19: "bearing:potion/<bottle>/<name>"
 
 std::string readable(std::string_view text, bool capitaliseWords) {
     std::string out;
@@ -155,4 +155,4 @@ EffectHandler const* effectFor(std::string_view id) {
     return nullptr;
 }
 
-} // namespace lv::feature::common::fluidtypes
+} // namespace br::feature::common::fluidtypes

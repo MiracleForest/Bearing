@@ -12,7 +12,7 @@
 #include "mod/ModConfig.h"
 #include "mod/Log.h"
 
-namespace lv {
+namespace br {
 
 namespace {
 using Table = std::unordered_map<std::string, std::string>;
@@ -69,4 +69,4 @@ std::string localeOf(Player const& player) {
     return code;
 }
 
-} // namespace lv
+} // namespace br

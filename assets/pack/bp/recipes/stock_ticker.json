@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:stock_ticker"
+      "identifier": "bearing:stock_ticker"
     },
     "tags": [
       "crafting_table"
@@ -17,7 +17,7 @@
         "item": "minecraft:glass"
       },
       "A": {
-        "item": "levitate:stock_link"
+        "item": "bearing:stock_link"
       },
       "B": {
         "item": "minecraft:gold_ingot"
@@ -29,7 +29,7 @@
       }
     ],
     "result": {
-      "item": "levitate:stock_ticker",
+      "item": "bearing:stock_ticker",
       "count": 1
     }
   }

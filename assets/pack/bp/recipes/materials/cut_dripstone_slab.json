@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:cut_dripstone_slab"
+      "identifier": "bearing:cut_dripstone_slab"
     },
     "tags": [
       "crafting_table"
@@ -12,16 +12,16 @@
     ],
     "key": {
       "X": {
-        "item": "levitate:cut_dripstone"
+        "item": "bearing:cut_dripstone"
       }
     },
     "unlock": [
       {
-        "item": "levitate:cut_dripstone"
+        "item": "bearing:cut_dripstone"
       }
     ],
     "result": {
-      "item": "levitate:cut_dripstone_slab",
+      "item": "bearing:cut_dripstone_slab",
       "count": 6
     }
   }

@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "levitate:copper_backtank"
+      "identifier": "bearing:copper_backtank"
     },
     "tags": [
       "crafting_table"
@@ -14,10 +14,10 @@
     ],
     "key": {
       "A": {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       },
       "G": {
-        "item": "levitate:shaft"
+        "item": "bearing:shaft"
       },
       "P": {
         "item": "minecraft:copper_ingot"
@@ -28,11 +28,11 @@
     },
     "unlock": [
       {
-        "item": "levitate:andesite_alloy"
+        "item": "bearing:andesite_alloy"
       }
     ],
     "result": {
-      "item": "levitate:copper_backtank",
+      "item": "bearing:copper_backtank",
       "count": 1
     }
   }
