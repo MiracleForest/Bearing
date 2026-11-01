@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The repository moved to [MiracleForest/Levitate](https://github.com/MiracleForest/Levitate).
 - The lip package is now `github.com/MiracleForest/Levitate` (was `github.com/LiteLDev/Levitate`).
-  Installing by the new path needs lip 0.35.0 or later. To move an existing install, run `lip update`
-  with a lip that follows renamed packages, or `lip uninstall github.com/LiteLDev/Levitate[#client]`
-  and then `lip install github.com/MiracleForest/Levitate[#client]`; `plugins/Levitate/config/` (server)
-  and `mods/Levitate/config/` (client) are kept. Versions up to 0.1.0 stay installable at the old path.
+  Installing by the new path needs lip 0.35.0 or later. `lip update` does not move an existing install
+  to the new path; run `lip uninstall github.com/LiteLDev/Levitate[#client]` and then
+  `lip install github.com/MiracleForest/Levitate[#client]`. `plugins/Levitate/config/` (server) and
+  `mods/Levitate/config/` (client) are kept. Versions up to 0.1.0 stay installable at the old path.
 
 ## [0.1.0] - 2026-11-01
 
