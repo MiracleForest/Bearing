@@ -6,7 +6,7 @@
 Rotational power, gears, machines and moving contraptions. Levitate brings simibubi and the Creators of Create's Java mod [Create](https://modrinth.com/mod/create) to Bedrock, for dedicated servers and single-player worlds.
 
 > [!NOTE]
-> Levitate is in early development. There is no release yet.
+> Levitate is in early development. Bedrock limits are listed in [docs/SPEC.md](docs/SPEC.md) §8.
 
 ## Install
 
@@ -32,6 +32,11 @@ Or download the zip from the [latest release](https://github.com/LiteLDev/Levita
 | --- | --- | --- |
 | `/create reload` | Operators, console | Reloads the configuration and translations. |
 | `/create selftest ["glob"]` | Operators, console | Runs the in-game selftests. |
+| `/create config [section]` | Everyone (changes: operators) | Opens the configuration screen (a form without the client mod). |
+| `/create ponder [id]` | Everyone (client mod) | Opens Ponder. |
+| `/create debuginfo` | Everyone | Prints the debug information. |
+
+All commands are listed in [docs/SPEC.md](docs/SPEC.md) §6.
 
 `/levitate` is an alias of `/create`.
 
