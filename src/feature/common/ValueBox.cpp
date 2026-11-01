@@ -93,9 +93,13 @@ constexpr std::uint64_t kHoldTimeout = 100;
 /// every 11 ticks (measured on 1.26.51): a repeat on the same box / slot within this many ticks
 /// is a hold, a click without one is a short click.
 constexpr std::uint64_t kVanillaRepeatWindow = 16;
+/// A second use-on sooner than this after the click is the same click (a vanilla client can send
+/// one twice), not the held button's repeat.
+constexpr std::uint64_t kVanillaMinRepeat = 5;
 struct VanillaClick {
     core::GlobalPos      pos;
-    std::uint64_t        last = 0;
+    std::uint64_t        since = 0;
+    std::uint64_t        last  = 0;
     bool                 held = false;
     valuebox::HoldAction onShort, onHold;
 };
@@ -665,7 +669,7 @@ private:
         // a vanilla client repeating the held button: the first repeat makes it a hold
         if (auto it = vanillaClicks().find(key); it != vanillaClicks().end() && it->second.pos == pos && !net::isCompanion(player)) {
             it->second.last = serverTick();
-            if (!it->second.held) {
+            if (!it->second.held && serverTick() - it->second.since >= kVanillaMinRepeat) {
                 it->second.held = true;
                 log().info("value box hold at {} by {}: hold (vanilla)", pos.key(), player.getRealName());
                 if (it->second.onHold) it->second.onHold(player);
@@ -728,7 +732,7 @@ private:
     }
 
     static void awaitVanillaHold(std::int64_t key, core::GlobalPos const& pos, valuebox::HoldAction onShort, valuebox::HoldAction onHold) {
-        vanillaClicks()[key] = VanillaClick{pos, serverTick(), false, std::move(onShort), std::move(onHold)};
+        vanillaClicks()[key] = VanillaClick{pos, serverTick(), serverTick(), false, std::move(onShort), std::move(onHold)};
     }
 
     /// Bedrock repeats use-on packets while the button is held: one action per click.

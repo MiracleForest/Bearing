@@ -176,6 +176,14 @@ LV_REGISTER_SELFTEST("common.value_box_rules", [](Context& ctx) -> ll::coro::Cor
     co_await ctx.ticks(20);
     ctx.check(seen->shorts == before + 1, "no repeat: a short click");
     co_await ctx.ticks(7);
+    // a click the client sends twice at once is still a short click (not a held button's repeat)
+    click(p, pos, common::items::empty());
+    co_await ctx.ticks(1);
+    click(p, pos, common::items::empty());
+    co_await ctx.ticks(25);
+    ctx.check(seen->shorts == before + 2, "a doubled click is a short click");
+    before += 1;
+    co_await ctx.ticks(7);
     click(p, pos, common::items::empty());
     co_await ctx.ticks(10);
     click(p, pos, common::items::empty()); // the client repeats the held button
