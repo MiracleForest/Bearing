@@ -7,18 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-01
+
+Levitate is now Bearing, published by MiracleForest. This release is **breaking**: the namespace changed
+from `levitate:` to `bearing:`, so worlds saved with 0.1.0 do not carry over (see *Removed*).
+
 ### Changed
 
 - Levitate is now **Bearing**. The repository is [MiracleForest/Bearing](https://github.com/MiracleForest/Bearing)
   (it was LiteLDev/Levitate, then MiracleForest/Levitate; GitHub redirects the old URLs).
 - The lip package is now `github.com/MiracleForest/Bearing` (was `github.com/LiteLDev/Levitate`).
-  Installing by the new path needs lip 0.35.0 or later. `lip update` does not move an existing install
-  to the new path; run `lip uninstall github.com/LiteLDev/Levitate[#client]` and then
-  `lip install github.com/MiracleForest/Bearing[#client]`. Versions up to 0.1.0 stay installable at the old path.
+  Installing by the new path needs lip 0.35.0 or later. To move an existing install, run
+  `lip uninstall github.com/LiteLDev/Levitate[#client]` and then `lip install github.com/MiracleForest/Bearing[#client]`.
+  Versions up to 0.1.0 stay installable at the old path.
 - The mod folder is now `plugins/Bearing/` (server) and `mods/Bearing/` (client), and the release zips are
   `bearing-server-windows-x64.zip` and `bearing-client-windows-x64.zip`. To keep your settings, move
   `config/` from the old `Levitate/` folder into the new one.
-- The block, item and entity namespace is now `bearing:` (was `levitate:`), the resource and behaviour
+- **Breaking:** the block, item and entity namespace is now `bearing:` (was `levitate:`), the resource and behaviour
   packs are named Bearing, and `/bearing` is the alias of `/create` (was `/levitate`).
 
 ### Removed
@@ -66,5 +71,6 @@ server and play with forms in place of Create's screens. `docs/SPEC.md` §8 list
   commands (`/create clone`, `debuginfo`, `util`, `killtrain`, `glue` and more).
 - English and Simplified Chinese translations.
 
-[Unreleased]: https://github.com/MiracleForest/Bearing/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/MiracleForest/Bearing/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/MiracleForest/Bearing/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/MiracleForest/Bearing/releases/tag/v0.1.0
