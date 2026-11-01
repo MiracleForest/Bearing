@@ -1,7 +1,7 @@
 # Levitate
 
-[![Build](https://github.com/LiteLDev/Levitate/actions/workflows/build.yml/badge.svg)](https://github.com/LiteLDev/Levitate/actions/workflows/build.yml)
-[![License](https://img.shields.io/github/license/LiteLDev/Levitate)](COPYING.LESSER)
+[![Build](https://github.com/MiracleForest/Levitate/actions/workflows/build.yml/badge.svg)](https://github.com/MiracleForest/Levitate/actions/workflows/build.yml)
+[![License](https://img.shields.io/github/license/MiracleForest/Levitate)](COPYING.LESSER)
 
 Rotational power, gears, machines and moving contraptions. Levitate brings simibubi and the Creators of Create's Java mod [Create](https://modrinth.com/mod/create) to Bedrock, for dedicated servers and single-player worlds.
 
@@ -19,7 +19,7 @@ lip install github.com/LiteLDev/Levitate           # dedicated server
 lip install github.com/LiteLDev/Levitate#client    # client
 ```
 
-Or download the zip from the [latest release](https://github.com/LiteLDev/Levitate/releases/latest) and extract it next to `LeviLamina/`:
+Or download the zip from the [latest release](https://github.com/MiracleForest/Levitate/releases/latest) and extract it next to `LeviLamina/`:
 
 | Where | Zip | Folder |
 | --- | --- | --- |
