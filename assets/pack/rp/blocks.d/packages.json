@@ -1,0 +1,62 @@
+{
+  "bearing:packager": {
+    "sound": "metal"
+  },
+  "bearing:repackager": {
+    "sound": "metal"
+  },
+  "bearing:chain_conveyor": {
+    "sound": "metal"
+  },
+  "bearing:package_frogport": {
+    "sound": "wood"
+  },
+  "bearing:white_postbox": {
+    "sound": "wood"
+  },
+  "bearing:orange_postbox": {
+    "sound": "wood"
+  },
+  "bearing:magenta_postbox": {
+    "sound": "wood"
+  },
+  "bearing:light_blue_postbox": {
+    "sound": "wood"
+  },
+  "bearing:yellow_postbox": {
+    "sound": "wood"
+  },
+  "bearing:lime_postbox": {
+    "sound": "wood"
+  },
+  "bearing:pink_postbox": {
+    "sound": "wood"
+  },
+  "bearing:gray_postbox": {
+    "sound": "wood"
+  },
+  "bearing:light_gray_postbox": {
+    "sound": "wood"
+  },
+  "bearing:cyan_postbox": {
+    "sound": "wood"
+  },
+  "bearing:purple_postbox": {
+    "sound": "wood"
+  },
+  "bearing:blue_postbox": {
+    "sound": "wood"
+  },
+  "bearing:brown_postbox": {
+    "sound": "wood"
+  },
+  "bearing:green_postbox": {
+    "sound": "wood"
+  },
+  "bearing:red_postbox": {
+    "sound": "wood"
+  },
+  "bearing:black_postbox": {
+    "sound": "wood"
+  }
+}

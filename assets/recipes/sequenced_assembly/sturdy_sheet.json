@@ -1,0 +1,59 @@
+{
+  "type": "bearing:sequenced_assembly",
+  "ingredient": {
+    "tag": "c:dusts/obsidian"
+  },
+  "results": [
+    {
+      "id": "bearing:sturdy_sheet"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "bearing:filling",
+      "ingredients": [
+        {
+          "item": "bearing:unprocessed_obsidian_sheet"
+        },
+        {
+          "fluid": "minecraft:lava",
+          "amount": 500
+        }
+      ],
+      "results": [
+        {
+          "id": "bearing:unprocessed_obsidian_sheet"
+        }
+      ]
+    },
+    {
+      "type": "bearing:pressing",
+      "ingredients": [
+        {
+          "item": "bearing:unprocessed_obsidian_sheet"
+        }
+      ],
+      "results": [
+        {
+          "id": "bearing:unprocessed_obsidian_sheet"
+        }
+      ]
+    },
+    {
+      "type": "bearing:pressing",
+      "ingredients": [
+        {
+          "item": "bearing:unprocessed_obsidian_sheet"
+        }
+      ],
+      "results": [
+        {
+          "id": "bearing:unprocessed_obsidian_sheet"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "bearing:unprocessed_obsidian_sheet"
+  }
+}

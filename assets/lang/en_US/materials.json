@@ -1,0 +1,10 @@
+{
+  "item.bearing.builders_tea.tooltip.summary": "A morning cup that keeps you _fed_ and working _faster_.",
+  "item.bearing.blaze_cake.tooltip.summary": "A sweet snack that makes a _Blaze Burner_ blaze hotter for a while.",
+  "item.bearing.creative_blaze_cake.tooltip.summary": "A one-of-a-kind cake for _Blaze Burners_. A burner that eats it keeps going _forever without fuel_.",
+  "item.bearing.creative_blaze_cake.tooltip.condition1": "When Used",
+  "item.bearing.creative_blaze_cake.tooltip.behaviour1": "Steps the Blaze Burner to its _next heat level_.",
+  "item.bearing.experience_nugget.tooltip.summary": "A small grain of _know-how_ left over from your machines.",
+  "item.bearing.experience_nugget.tooltip.condition1": "When Used",
+  "item.bearing.experience_nugget.tooltip.behaviour1": "_Releases_ the _Experience_ stored inside."
+}

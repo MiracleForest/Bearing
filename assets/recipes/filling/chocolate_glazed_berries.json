@@ -1,0 +1,18 @@
+{
+  "type": "bearing:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "type": "fluid_stack",
+      "fluid": "bearing:chocolate",
+      "amount": 250
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:chocolate_glazed_berries"
+    }
+  ]
+}

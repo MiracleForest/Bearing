@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "bearing:portable_storage_interface",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

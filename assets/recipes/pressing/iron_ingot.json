@@ -1,0 +1,13 @@
+{
+  "type": "bearing:pressing",
+  "ingredients": [
+    {
+      "tag": "c:ingots/iron"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:iron_sheet"
+    }
+  ]
+}

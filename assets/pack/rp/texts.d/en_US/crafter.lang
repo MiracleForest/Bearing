@@ -1,0 +1,7 @@
+tile.bearing:mechanical_crafter.name=Mechanical Crafter
+tile.bearing:mechanical_saw.name=Mechanical Saw
+tile.bearing:mechanical_drill.name=Mechanical Drill
+death.attack.bearing.mechanical_drill=%1$s was skewered by a Mechanical Drill
+death.attack.bearing.mechanical_drill.player=%1$s was shoved onto a Drill by %2$s
+death.attack.bearing.mechanical_saw=%1$s met the business end of a Mechanical Saw
+death.attack.bearing.mechanical_saw.player=%1$s was pushed into a Saw's blade by %2$s

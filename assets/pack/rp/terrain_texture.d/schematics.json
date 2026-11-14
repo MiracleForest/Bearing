@@ -1,0 +1,20 @@
+{
+  "bearing_schematic_table_top": {
+    "textures": "textures/blocks/schematic_table_top"
+  },
+  "bearing_schematic_table_side": {
+    "textures": "textures/blocks/schematic_table_side"
+  },
+  "bearing_schematicannon_base": {
+    "textures": "textures/blocks/schematicannon_base"
+  },
+  "bearing_schematicannon_body": {
+    "textures": "textures/blocks/schematicannon_body"
+  },
+  "bearing_schematicannon_barrel": {
+    "textures": "textures/blocks/schematicannon_barrel"
+  },
+  "bearing_crafting_blueprint_block": {
+    "textures": "textures/blocks/crafting_blueprint"
+  }
+}

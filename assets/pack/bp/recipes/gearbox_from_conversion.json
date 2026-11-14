@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:gearbox_from_conversion"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:vertical_gearbox"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:vertical_gearbox"
+      }
+    ],
+    "result": {
+      "item": "bearing:gearbox",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:controls"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B",
+      "C",
+      "I"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:lever"
+      },
+      "C": {
+        "item": "bearing:railway_casing"
+      },
+      "I": {
+        "item": "bearing:precision_mechanism"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:railway_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:controls"
+    }
+  }
+}

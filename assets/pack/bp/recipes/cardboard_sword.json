@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:cardboard_sword"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P",
+      "P",
+      "S"
+    ],
+    "key": {
+      "P": {
+        "item": "bearing:cardboard"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:cardboard"
+      }
+    ],
+    "result": {
+      "item": "bearing:cardboard_sword",
+      "count": 1
+    }
+  }
+}

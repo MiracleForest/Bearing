@@ -1,0 +1,491 @@
+// Stock unit: table cloth shops (TableClothBlockEntity shop part, TableClothFilteringBehaviour,
+// ShoppingListItem and StockTickerInteractionHandler.interactWithShop). The table cloths
+// themselves (decoration) belong to U10; a cloth becomes a shop when it is placed carrying an
+// order programmed at a stock ticker.
+
+#include <algorithm>
+#include <cmath>
+#include <utility>
+
+#include "mc/world/actor/player/Inventory.h"
+#include "mc/world/actor/player/Player.h"
+#include "mc/world/item/ItemStack.h"
+#include "mc/world/level/block/Block.h"
+
+#include "core/common/ValueChoice.h"
+#include "feature/advancements/Advancements.h"
+#include "feature/common/BlockData.h"
+#include "feature/common/Filter.h"
+#include "feature/common/Items.h"
+#include "feature/common/ValueBox.h"
+#include "feature/itemrender/DisplayItems.h"
+#include "feature/stock/StockInternal.h"
+#include "game/Blocks.h"
+#include "mod/I18n.h"
+#include "mod/Log.h"
+
+namespace br::feature::stock {
+
+namespace items = common::items;
+
+namespace {
+constexpr char const* kClothColours[] = {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan",
+                                         "purple", "blue", "brown", "green", "red", "black", "andesite", "brass", "copper"};
+
+Json shopOf(GlobalPos const& p) {
+    auto const* d = dataOf(p);
+    if (!d) return Json::object();
+    return d->value("shop", Json::object());
+}
+
+void writeShop(GlobalPos const& p, Json const& shop) { editData(p)["shop"] = shop; }
+
+ItemStack priceItem(Json const& shop) { return stackFromJson(shop.value("price", Json())); }
+/// The getPaymentAmount: 1 without a price item.
+int priceAmount(Json const& shop) { return items::isEmpty(priceItem(shop)) ? 1 : std::max(1, shop.value("priceCount", 1)); }
+
+/// The price tag sits on the top of the cloth, towards its facing (TableClothFilterSlot).
+bool hitsPriceTag(GlobalPos const& p, Json const& shop, double lx, double ly, double lz) {
+    auto [fx, fz] = cs::facingVector(shop.value("facing", 0));
+    double cx = 0.5 + fx * 0.3, cz = 0.5 + fz * 0.3;
+    (void)p;
+    return ly < 0.5 && std::abs(lx - cx) <= 0.2 && std::abs(lz - cz) <= 0.2;
+}
+
+Json listOf(ItemStack const& stack) {
+    auto j = items::getData(stack, kListData);
+    return j.is_object() ? j : Json();
+}
+
+int purchasesAt(Json const& list, GlobalPos const& cloth) {
+    for (auto const& e : list.value("purchases", Json::array()))
+        if (posFrom(e.value("pos", Json())) == cloth) return e.value("n", 0);
+    return 0;
+}
+
+void setPurchases(Json& list, GlobalPos const& cloth, int n) {
+    auto& purchases = list["purchases"];
+    if (!purchases.is_array()) purchases = Json::array();
+    for (auto& e : purchases)
+        if (posFrom(e.value("pos", Json())) == cloth) {
+            e["n"] = n;
+            return;
+        }
+    purchases.push_back({{"pos", posJson(cloth)}, {"n", n}});
+}
+
+/// The shopping list's lore (appendHoverText).
+void listLore(ItemStack& stack) {
+    auto                     list  = listOf(stack);
+    std::vector<std::string> lines;
+    if (list.is_object()) {
+        auto baked = bakeList(list, std::nullopt);
+        for (auto const& e : baked.order.byCount()) lines.push_back("§7" + items::displayName(e.stack) + " x" + std::to_string(e.count));
+        auto pay = baked.payment.byCount();
+        lines.push_back("");
+        if (pay.size() == 1) {
+            lines.push_back("§6" + tr("bearing.table_cloth.total_cost", "Total: ") + "§e" + items::displayName(pay[0].stack) + " x" + std::to_string(pay[0].count));
+        } else {
+            lines.push_back("§6" + tr("bearing.table_cloth.total_cost", "Total: "));
+            for (auto const& e : pay) lines.push_back("§e" + items::displayName(e.stack) + " x" + std::to_string(e.count));
+        }
+    }
+    lines.push_back("§7" + tr("bearing.table_cloth.hand_to_shop_keeper", "For a shopkeeper to hold"));
+    lines.push_back("§8" + tr("bearing.table_cloth.sneak_click_discard", "Sneak + click to throw away"));
+    stack.setCustomLore(lines);
+}
+
+ItemStack makeList(Json const& list) {
+    auto made = items::make(kShoppingList, 1);
+    if (!made) return items::empty();
+    ItemStack s = *made;
+    items::setData(s, kListData, list);
+    listLore(s);
+    return s;
+}
+} // namespace
+
+bool isShop(GlobalPos const& p) {
+    if (!isTableCloth(idAt(p))) return false;
+    auto shop = shopOf(p);
+    return shop.is_object() && !shop.value("order", Json::array()).empty();
+}
+
+void onClothPlaced(GlobalPos const& p, Player& player, ItemStack const& item) {
+    auto req = items::getData(item, kRequestData);
+    if (!req.is_object()) return;
+    auto ticker = posFrom(req.value("ticker", Json()));
+    bool valid  = ticker && ticker->dim == p.dim && std::hypot(double(ticker->x - p.x), double(ticker->y - p.y), double(ticker->z - p.z)) < 128;
+    if (valid) statusKey(player, "bearing.redstone_requester.keeper_connected", "Linked to the Stock Keeper", "§f");
+    else statusKey(player, "bearing.redstone_requester.keeper_too_far_away", "The Stock Keeper is out of this requester's range", "§c");
+    Json shop{
+        {"order", req.value("order", Json::array())},
+        {"address", req.value("address", std::string{})},
+        {"ticker", ticker ? posJson(*ticker) : Json()},
+        {"owner", uuidOf(player)},
+        {"facing", game::opposite(game::playerFacing(player))},
+        {"price", nullptr},
+        {"priceCount", 1},
+    };
+    writeShop(p, shop);
+    registry().shops.insert(p);
+    saveRegistry();
+    advancements::award(player, "table_cloth_shop"); // the TableClothBlock#setPlacedBy
+    log().info("stock: table cloth shop placed at {} {} {} by {}", p.x, p.y, p.z, player.getRealName());
+}
+
+int stockLevelForTrade(GlobalPos const& cloth, Json const* otherPurchases) {
+    auto shop   = shopOf(cloth);
+    auto ticker = posFrom(shop.value("ticker", Json()));
+    if (!ticker || idAt(*ticker) != kStockTicker) return 0;
+    auto const& stock = summaryOf(networkAt(*ticker), false);
+    Stock       modifier;
+    if (otherPurchases && otherPurchases->is_object()) modifier = bakeList(*otherPurchases, cloth).order;
+    int smallest = kInfinite;
+    for (auto const& e : orderFromJson(shop.value("order", Json::array()))) {
+        if (e.count <= 0) continue;
+        int have = stock.countOf(e.stack) - modifier.countOf(e.stack);
+        smallest = std::min(smallest, have / e.count);
+    }
+    return smallest;
+}
+
+Baked bakeList(Json const& list, std::optional<GlobalPos> ignore) {
+    Baked out;
+    auto  add = [](Stock& s, ItemStack const& item, int n) {
+        auto key = itemKey(item);
+        if (key.empty() || n == 0) return;
+        s.summary.add(key, n);
+        s.stacks.try_emplace(key, items::withCount(item, 1));
+    };
+    for (auto const& e : list.value("purchases", Json::array())) {
+        auto pos = posFrom(e.value("pos", Json()));
+        int  n   = e.value("n", 0);
+        if (!pos || (ignore && *ignore == *pos) || !isShop(*pos)) continue;
+        auto shop = shopOf(*pos);
+        add(out.payment, priceItem(shop), priceAmount(shop) * n);
+        for (auto const& o : orderFromJson(shop.value("order", Json::array()))) add(out.order, o.stack, o.count * n);
+    }
+    return out;
+}
+
+bool useShop(Player& player, GlobalPos const& p, double lx, double ly, double lz) {
+    auto shop  = shopOf(p);
+    auto owner = shop.value("owner", std::string{});
+    // the owner edits the price tag (TableClothFilteringBehaviour, owner only)
+    if ((owner.empty() || owner == uuidOf(player)) && hitsPriceTag(p, shop, lx, ly, lz)) {
+        auto const& held = player.getSelectedItem();
+        if (items::isEmpty(held)) {
+            auto clear = [p](Player& q) {
+                auto s     = shopOf(p);
+                s["price"] = nullptr;
+                writeShop(p, s);
+                log().info("stock: {} cleared the price of the shop at {} {} {}", q.getRealName(), p.x, p.y, p.z);
+            };
+            if (player.isSneaking()) {
+                clear(player);
+            } else if (!common::valuebox::awaitHold(player, p, clear, [p](Player& q) { common::valuebox::openEditor(q, p, "price"); })) {
+                // vanilla players: the click opens the price board (hold), sneaking clears
+                common::valuebox::openEditor(player, p, "price");
+            }
+            return true;
+        }
+        auto hid = items::idOf(held);
+        if (common::filter::isFilterItem(held) || hid == kShoppingList) {
+            statusKey(player, "bearing.logistics.filter.invalid_item", "This item isn't accepted here.", "§c");
+            return true;
+        }
+        shop["price"] = stackToJson(items::withCount(held, 1));
+        writeShop(p, shop);
+        statusKey(player, "bearing.table_cloth.shop_configured", "Shop set up");
+        log().info("stock: {} set the price of the shop at {} {} {} to {} x{}", player.getRealName(), p.x, p.y, p.z, hid, priceAmount(shop));
+        return true;
+    }
+
+    // The TableClothBlockEntity.useShop
+    ItemStack inHand   = player.getSelectedItem();
+    ItemStack prevList = items::empty();
+    bool      addOnto  = false;
+    auto&     inv      = player.getInventory();
+    for (int i = 0; i < 9; ++i) {
+        auto const& s = inv.getItem(i);
+        if (items::isEmpty(s) || items::idOf(s) != kShoppingList) continue;
+        prevList = s;
+        addOnto  = true;
+        inv.setItem(i, items::empty());
+    }
+    if (!items::isEmpty(inHand) && items::idOf(inHand) == kShoppingList) {
+        prevList = inHand;
+        addOnto  = true;
+    }
+    inHand = player.getSelectedItem();
+    if (!items::isEmpty(inHand) && !addOnto) {
+        statusKey(player, "bearing.stock_keeper.shopping_list_empty_hand", "Use an empty hand to begin a shopping list");
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
+        player.sendInventory(false);
+        return true;
+    }
+    auto giveBack = [&](ItemStack const& list) {
+        if (items::isEmpty(list)) return;
+        if (items::isEmpty(player.getSelectedItem())) player.setSelectedItem(list);
+        else giveOrDrop(player, list);
+        player.sendInventory(false);
+    };
+    if (items::isEmpty(priceItem(shop))) {
+        statusKey(player, "bearing.stock_keeper.no_price_set", "The shop owner hasn't set a price");
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
+        giveBack(prevList);
+        return true;
+    }
+    std::string network;
+    auto        ticker = posFrom(shop.value("ticker", Json()));
+    if (ticker && idAt(*ticker) == kStockTicker && keeperPresent(*ticker)) network = networkAt(*ticker);
+    Json prev       = listOf(prevList);
+    int  stockLevel = stockLevelForTrade(p, prev.is_object() ? &prev : nullptr);
+    if (network.empty()) {
+        statusKey(player, "bearing.stock_keeper.keeper_missing", "No stock keeper", "§c");
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
+        giveBack(prevList);
+        return true;
+    }
+    if (stockLevel == 0) {
+        statusKey(player, "bearing.stock_keeper.out_of_stock", "Out of Stock", "§c");
+        playSound(p, "bearing.stock.deny", 0.5f, 1.0f);
+        giveBack(prevList);
+        return true;
+    }
+    Json list{{"purchases", Json::array()}, {"owner", owner}, {"network", network}};
+    if (addOnto && prev.is_object()) {
+        if (prev.value("owner", std::string{}) == owner && prev.value("network", std::string{}) == network) list = prev;
+        else addOnto = false;
+    }
+    if (purchasesAt(list, p) >= stockLevel) {
+        setPurchases(list, p, std::min(stockLevel, purchasesAt(list, p)));
+        statusKey(player, "bearing.stock_keeper.limited_stock", "Stock limit reached", "§c");
+    } else {
+        playSound(p, "bearing.stock.confirm", 0.5f, 1.0f);
+        setPurchases(list, p, purchasesAt(list, p) + 1);
+        if (!addOnto) statusKey(player, "bearing.stock_keeper.use_list_to_add_purchases", "Click with this list to buy more", "§f");
+    }
+    list["address"] = shop.value("address", std::string{});
+    auto item       = makeList(list);
+    if (items::isEmpty(player.getSelectedItem())) player.setSelectedItem(item);
+    else giveOrDrop(player, item);
+    player.sendInventory(false);
+    log().info("stock: {} added a purchase at the shop at {} {} {} ({} on the list)", player.getRealName(), p.x, p.y, p.z, purchasesAt(list, p));
+    return true;
+}
+
+void checkout(Player& player, GlobalPos const& ticker, ItemStack const& listItem) {
+    // The StockTickerInteractionHandler.interactWithShop
+    auto list = listOf(listItem);
+    if (!list.is_object()) return;
+    auto network = networkAt(ticker);
+    if (network != list.value("network", std::string{})) {
+        playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
+        statusKey(player, "bearing.stock_keeper.wrong_network", "This list belongs to a different shop", "§c");
+        return;
+    }
+    auto baked = bakeList(list, std::nullopt);
+    (void)summaryOf(network, true);
+    auto const& recent = summaryOf(network, false);
+    for (auto const& e : baked.order.byCount()) {
+        if (recent.countOf(e.stack) >= e.count) continue;
+        playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
+        statusKey(player, "bearing.stock_keeper.stock_level_too_low", "Purchase stopped: there is less stock than listed", "§c");
+        log().info("stock: checkout by {} refused: stock too low", player.getRealName());
+        return;
+    }
+    int occupied = 0;
+    for (auto const& e : baked.payment.byCount()) occupied += (e.count + std::max<int>(1, e.stack.getMaxStackSize()) - 1) / std::max<int>(1, e.stack.getMaxStackSize());
+    if (occupied > freePaymentSlots(ticker)) {
+        playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
+        statusKey(player, "bearing.stock_keeper.cash_register_full", "Purchase stopped: the cash register has no room for payment", "§c");
+        return;
+    }
+    // payment: simulate, then take from the main inventory (inventory.items only)
+    auto& inv = player.getInventory();
+    for (bool simulate : {true, false}) {
+        cs::Summary tally = baked.payment.summary;
+        for (int i = 0; i < 36 && i < inv.getContainerSize(); ++i) {
+            ItemStack item = inv.getItem(i);
+            if (items::isEmpty(item)) continue;
+            auto key   = itemKey(item);
+            int  owed  = tally.countOf(key);
+            if (owed <= 0) continue;
+            int take = std::min(items::countOf(item), owed);
+            tally.add(key, -take);
+            if (simulate) continue;
+            inv.setItem(i, items::withCount(item, items::countOf(item) - take));
+            auto rest = insertPayment(ticker, items::withCount(item, take));
+            if (!items::isEmpty(rest)) dropAt(ticker, rest);
+        }
+        if (simulate) {
+            bool broke = false;
+            for (auto const& e : tally.entries())
+                if (e.count > 0) broke = true;
+            if (broke) {
+                playSound(ticker, "bearing.stock.deny", 1.0f, 1.0f);
+                statusKey(player, "bearing.stock_keeper.too_broke", "You don't have enough to pay for this", "§c");
+                return;
+            }
+        }
+    }
+    requestOrder(network, RequestType::Player, baked.order.byCount(), list.value("address", std::string{}));
+    player.setSelectedItem(items::empty());
+    player.sendInventory(false);
+    if (!baked.order.summary.empty()) playSound(ticker, "bearing.stock.trade", 1.0f, 1.0f);
+    log().info("stock: {} checked out a shopping list at the stock ticker at {} {} {}", player.getRealName(), ticker.x, ticker.y, ticker.z);
+}
+
+void shopRemoved(GlobalPos const& p, Json const& doc) {
+    // The TableClothBlockEntity.destroy: the items put on the cloth drop
+    for (auto const& j : doc.value("clothItems", Json::array())) dropAt(p, stackFromJson(j));
+    packages::hideVanillaItems("cloth:" + p.key() + ":");
+    log().info("stock: table cloth removed at {} {} {}", p.x, p.y, p.z);
+}
+
+// ---- items on a plain table cloth (TableClothBlockEntity.use, not a shop) ---------------
+
+namespace {
+constexpr int kClothItems = 4;
+
+std::vector<ItemStack> clothItems(GlobalPos const& p) {
+    std::vector<ItemStack> out;
+    auto const*            d = dataOf(p);
+    if (!d) return out;
+    for (auto const& j : d->value("clothItems", Json::array())) {
+        auto s = stackFromJson(j);
+        if (!items::isEmpty(s)) out.push_back(s);
+    }
+    return out;
+}
+
+/// Vanilla clients (no display items): the items as client-only item entities on the cloth.
+void showClothItemsToVanilla(GlobalPos const& p, std::vector<ItemStack> const& list) {
+    auto prefix = "cloth:" + p.key() + ":";
+    packages::hideVanillaItems(prefix);
+    static constexpr double kSpread[4][2]{{-.2, -.2}, {.2, .2}, {-.2, .2}, {.2, -.2}};
+    for (std::size_t i = 0; i < list.size() && i < 4; ++i) {
+        double ox = list.size() > 1 ? kSpread[i][0] : 0, oz = list.size() > 1 ? kSpread[i][1] : 0;
+        packages::showVanillaItem(prefix + std::to_string(i), p.dim, list[i], {p.x + .5 + ox, p.y + 1.0 / 16.0, p.z + .5 + oz});
+    }
+}
+
+void setClothItems(GlobalPos const& p, std::vector<ItemStack> const& list) {
+    auto& d = editData(p);
+    if (list.empty()) d.erase("clothItems");
+    else {
+        Json a = Json::array();
+        for (auto const& s : list) a.push_back(stackToJson(s));
+        d["clothItems"] = a;
+    }
+    itemrender::refresh(p);
+    showClothItemsToVanilla(p, list);
+}
+
+/// The TableClothRenderer: up to 4 items lying on the cloth, spread around its centre and
+/// turned towards the player who put them down.
+void clothDisplay(GlobalPos const& p, Block const&, std::vector<std::pair<std::int64_t, itemrender::DisplayItem>>& out) {
+    if (isShop(p)) return; // shops show their order (client mod, Shop rendering)
+    auto list = clothItems(p);
+    if (list.empty()) return;
+    auto const* d      = dataOf(p);
+    int         facing = d ? d->value("clothFacing", 0) : 0; // Java 2D facing the items face
+    double      base   = facing * 90.0;
+    auto        n      = static_cast<int>(list.size());
+    for (int i = 0; i < n; ++i) {
+        itemrender::DisplayItem item;
+        item.stack = list[static_cast<std::size_t>(i)];
+        item.style = itemrender::Style::Lying;
+        double x = p.x + .5, y = p.y + 3.0 / 16.0, z = p.z + .5;
+        if (n > 1) {
+            double a = (base + i * (360.0 / n) + 45.0) * 3.14159265358979 / 180.0;
+            x += std::sin(a) * 5.0 / 16.0;
+            z += std::cos(a) * 5.0 / 16.0;
+            if (i % 2 == 0) y -= .005;
+        }
+        item.at       = {x, y, z};
+        item.at.yaw   = static_cast<float>(180.0 - base);
+        item.at.scale = .5f;
+        out.emplace_back(i, std::move(item));
+    }
+}
+} // namespace
+
+bool useClothItems(Player& player, GlobalPos const& p) {
+    auto list = clothItems(p);
+    auto held = player.getSelectedItem();
+    if (items::isEmpty(held)) {
+        // an empty hand takes the last item back
+        if (list.empty()) return false;
+        player.setSelectedItem(list.back());
+        player.sendInventory(false);
+        list.pop_back();
+        setClothItems(p, list);
+        playSound(p, "block.itemframe.remove_item", .5f, 1.f);
+        log().info("stock: {} took an item off the table cloth at {} {} {}", player.getRealName(), p.x, p.y, p.z);
+        return true;
+    }
+    if (static_cast<int>(list.size()) >= kClothItems) return true;
+    list.push_back(items::withCount(held, 1));
+    editData(p)["clothFacing"] = game::opposite(game::playerFacing(player));
+    setClothItems(p, list);
+    { // the reference design shrinks the held stack in every game mode
+        player.setSelectedItem(items::withCount(held, items::countOf(held) - 1));
+        player.sendInventory(false);
+    }
+    playSound(p, "block.itemframe.add_item", .5f, 1.f);
+    log().info("stock: {} put {} on the table cloth at {} {} {}", player.getRealName(), items::idOf(held), p.x, p.y, p.z);
+    return true;
+}
+
+bool hasClothItems(GlobalPos const& p) { return !clothItems(p).empty(); }
+
+void restoreClothItemDisplays() {
+    common::blockdata::forEach([](GlobalPos const& p, Json const& doc) {
+        auto it = doc.find(kDataKey);
+        if (it == doc.end() || !it->is_object() || !it->contains("clothItems")) return;
+        std::vector<ItemStack> list;
+        for (auto const& j : it->value("clothItems", Json::array())) list.push_back(stackFromJson(j));
+        showClothItemsToVanilla(p, list);
+    });
+}
+
+void registerShopValueBoxes() {
+    static bool providers = false;
+    if (!std::exchange(providers, true)) itemrender::registerProvider([](std::string_view id) { return isTableCloth(id); }, clothDisplay);
+    for (auto const* colour : kClothColours) {
+        std::string id = std::string("bearing:") + colour + "_table_cloth";
+        common::valuebox::registerBox(
+            id,
+            {
+                .id            = "price",
+                .label         = "bearing.table_cloth.price_per_order",
+                .labelFallback = "Price per Order",
+                .board =
+                    [](Block const&) {
+                        core::common::BoardSpec b;
+                        b.rows              = {tr("bearing.table_cloth.amount", "Amount")};
+                        b.maxValue          = 100;
+                        b.milestoneInterval = 10;
+                        return b;
+                    },
+                .centre = [](Block const&, int) -> std::optional<core::common::Vec> { return std::nullopt; },
+                .get    = [](GlobalPos const& p) { return core::common::ValueChoice{0, priceAmount(shopOf(p))}; },
+                .set =
+                    [](GlobalPos const& p, core::common::ValueChoice s, Player& editor) {
+                        auto shop  = shopOf(p);
+                        auto owner = shop.value("owner", std::string{});
+                        if (!owner.empty() && owner != uuidOf(editor)) return;
+                        shop["priceCount"] = std::max(1, s.value);
+                        writeShop(p, shop);
+                        log().info("stock: {} set the price amount of the shop at {} {} {} to {}", editor.getRealName(), p.x, p.y, p.z, std::max(1, s.value));
+                    },
+                .format = [](Block const&, core::common::ValueChoice s) { return std::to_string(std::max(1, s.value)); },
+            }
+        );
+    }
+}
+
+} // namespace br::feature::stock

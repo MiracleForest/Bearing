@@ -1,0 +1,13 @@
+{
+  "type": "bearing:pressing",
+  "ingredients": [
+    {
+      "tag": "c:ingots/brass"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:brass_sheet"
+    }
+  ]
+}

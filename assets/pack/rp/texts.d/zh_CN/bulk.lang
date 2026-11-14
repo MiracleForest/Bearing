@@ -1,0 +1,11 @@
+tile.bearing:millstone.name=石磨
+tile.bearing:crushing_wheel.name=粉碎轮
+tile.bearing:crushing_wheel_controller.name=粉碎轮控制器
+tile.bearing:encased_fan.name=鼓风机
+tile.bearing:nozzle.name=分散网
+death.attack.bearing.crush=%1$s被卷进了粉碎轮
+death.attack.bearing.crush.player=%1$s被%2$s喂给了粉碎轮
+death.attack.bearing.fan_fire=%1$s被鼓风机熏成了腊肉
+death.attack.bearing.fan_fire.player=%1$s被%2$s推进了烟熏气流
+death.attack.bearing.fan_lava=%1$s被鼓风机吹成了灰烬
+death.attack.bearing.fan_lava.player=%1$s被%2$s推进了熔炼气流

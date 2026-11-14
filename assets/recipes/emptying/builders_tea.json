@@ -1,0 +1,17 @@
+{
+  "type": "bearing:emptying",
+  "ingredients": [
+    {
+      "item": "bearing:builders_tea"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:glass_bottle"
+    },
+    {
+      "id": "bearing:tea",
+      "amount": 250
+    }
+  ]
+}

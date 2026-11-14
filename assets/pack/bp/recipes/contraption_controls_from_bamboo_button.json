@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:contraption_controls_from_bamboo_button"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B",
+      "C",
+      "I"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bamboo_button"
+      },
+      "C": {
+        "item": "bearing:andesite_casing"
+      },
+      "I": {
+        "item": "bearing:electron_tube"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:contraption_controls"
+    }
+  }
+}

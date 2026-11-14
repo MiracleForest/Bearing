@@ -1,0 +1,93 @@
+#pragma once
+
+#include <filesystem>
+#include <functional>
+#include <string>
+
+#include "nlohmann/json.hpp"
+
+#include "ll/api/Config.h"
+
+#include "mod/Registry.h"
+
+namespace br::config {
+
+/// Per-section JSON configs under `mods/Bearing/config/<section>.json`.
+///
+/// Declare a reflectable aggregate with an integral `version` member and register it once:
+///
+///     struct TeleportsConfig { int version = 1; bool enableCosts = true; };
+///     BR_REGISTER_CONFIG("teleports", TeleportsConfig);       // in a .cpp file
+///
+///     bool c = br::config::get<TeleportsConfig>().enableCosts;    // anywhere
+///
+/// Files are created with defaults on first load, merged with new defaults when `version`
+/// changes, and reloaded by `/bearing reload`. Configs are global (not per world).
+template <class T>
+T& mut() {
+    static T value{};
+    return value;
+}
+
+template <class T>
+T const& get() {
+    return mut<T>();
+}
+
+struct ConfigEntry {
+    std::string                                       section;
+    std::function<bool(std::filesystem::path const&)> load; ///< path of the .json file
+    std::function<bool(std::filesystem::path const&)> save;
+    /// (U42, config screen) The current values / the defaults of the section as JSON.
+    std::function<nlohmann::ordered_json()> values;
+    std::function<nlohmann::ordered_json()> defaults;
+    /// (U42, config screen) Writes the section's file with `patch` merged into the current values
+    /// (RFC 7386 merge patch; values of the wrong type are refused). Apply it with `loadAll()`.
+    std::function<bool(nlohmann::ordered_json const& patch, std::filesystem::path const&)> write;
+};
+using ConfigRegistry = StaticRegistry<ConfigEntry>;
+
+/// Directory holding the config files (valid after mod load).
+[[nodiscard]] std::filesystem::path const& configDir();
+/// Loads every registered section (creates missing files). Returns false if any failed.
+bool loadAll();
+/// Writes every registered section.
+bool saveAll();
+/// Callbacks run after `loadAll()` (e.g. to apply a changed tick interval).
+void onReload(std::function<void()> fn);
+
+namespace detail {
+void setConfigDir(std::filesystem::path dir);
+
+template <ll::config::IsConfig T>
+struct ConfigRegistrar {
+    explicit ConfigRegistrar(std::string section) {
+        ConfigRegistry::add(ConfigEntry{
+            std::move(section),
+            [](std::filesystem::path const& p) {
+                T fresh{};
+                bool ok = ll::config::loadConfig(fresh, p); // false = rewritten (missing / version change)
+                if (!ok) ll::config::saveConfig(fresh, p);
+                mut<T>() = std::move(fresh);
+                return true;
+            },
+            [](std::filesystem::path const& p) { return ll::config::saveConfig(mut<T>(), p); },
+            [] { return ll::reflection::serialize<nlohmann::ordered_json>(mut<T>()).value(); },
+            [] { return ll::reflection::serialize<nlohmann::ordered_json>(T{}).value(); },
+            [](nlohmann::ordered_json const& patch, std::filesystem::path const& p) {
+                auto data = ll::reflection::serialize<nlohmann::ordered_json>(mut<T>()).value();
+                data.merge_patch(patch);
+                T copy = mut<T>();
+                if (!ll::reflection::deserialize(copy, data)) return false;
+                return ll::config::saveConfig(copy, p);
+            },
+        });
+    }
+};
+} // namespace detail
+
+} // namespace br::config
+
+/// Registers config struct `T` under `<configDir>/<section>.json`. `section` is a string literal.
+#define BR_REGISTER_CONFIG(section, T)                                                                                \
+    static ::br::config::detail::ConfigRegistrar<T> BR_UNIQUE(br_config_registrar_)(section)

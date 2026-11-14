@@ -1,0 +1,36 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:deployer"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B",
+      "S",
+      "I"
+    ],
+    "key": {
+      "B": {
+        "item": "bearing:electron_tube"
+      },
+      "S": {
+        "item": "bearing:andesite_casing"
+      },
+      "I": {
+        "item": "bearing:brass_hand"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:electron_tube"
+      }
+    ],
+    "result": {
+      "item": "bearing:deployer",
+      "count": 1
+    }
+  }
+}

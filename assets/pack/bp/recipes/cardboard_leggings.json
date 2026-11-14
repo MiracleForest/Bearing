@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:cardboard_leggings"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PPP",
+      "P P",
+      "P P"
+    ],
+    "key": {
+      "P": {
+        "item": "bearing:cardboard"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:cardboard"
+      }
+    ],
+    "result": {
+      "item": "bearing:cardboard_leggings",
+      "count": 1
+    }
+  }
+}

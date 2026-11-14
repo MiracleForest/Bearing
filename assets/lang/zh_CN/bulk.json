@@ -1,0 +1,16 @@
+{
+  "bearing.recipe.milling": "研磨",
+  "bearing.recipe.crushing": "粉碎",
+  "bearing.recipe.fan_washing": "批量洗涤",
+  "bearing.recipe.fan_washing.fan": "鼓风机吹过流水",
+  "bearing.recipe.fan_smoking": "批量烟熏",
+  "bearing.recipe.fan_smoking.fan": "鼓风机吹过火焰",
+  "bearing.recipe.fan_blasting": "批量熔炼",
+  "bearing.recipe.fan_blasting.fan": "鼓风机吹过熔岩",
+  "bearing.recipe.fan_haunting": "批量缠魂",
+  "bearing.recipe.fan_haunting.fan": "鼓风机吹过灵魂火",
+  "block.bearing.nozzle.tooltip.summary": "装在_鼓风机_出风口，可让风的作用向_四面八方_扩散到周围实体。",
+  "death.attack.bearing.crush": "{0}被卷进了粉碎轮",
+  "death.attack.bearing.fan_fire": "{0}被鼓风机熏成了腊肉",
+  "death.attack.bearing.fan_lava": "{0}被鼓风机吹成了灰烬"
+}

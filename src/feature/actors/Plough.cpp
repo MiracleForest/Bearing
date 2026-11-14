@@ -1,0 +1,168 @@
+// Mechanical plough (PloughMovementBehaviour). No stationary effect.
+//
+// Its active area (0.45 blocks in front) breaks blocks without a collision shape (grass,
+// flowers, snow layers, torches, rails...) except on farmland, throws entities in its way, and
+// uses a hoe on the block below each visited block (vanilla tilling rules).
+
+#include "mc/world/item/ItemStack.h"
+#include "mc/world/level/BlockPos.h"
+#include "mc/world/level/BlockSource.h"
+#include "mc/world/level/block/Block.h"
+
+#include "ll/api/service/Bedrock.h"
+#include "mc/world/level/block/BlockChangeContext.h"
+#include "mc/world/level/Level.h"
+#include "mc/world/actor/Actor.h"
+#include "mc/world/actor/ActorDataIDs.h"
+#include "mc/world/actor/ActorType.h"
+#include "mc/world/actor/SynchedActorDataEntityWrapper.h"
+#include "mc/world/actor/player/Player.h"
+
+#include "feature/actors/Actors.h"
+#include "feature/advancements/Advancements.h"
+#include "feature/contraption/ActorsExt.h"
+#include "game/Blocks.h"
+
+namespace br::feature::actors {
+
+namespace ext = ::br::feature::contraption::actors_ext;
+
+namespace {
+
+/// The PloughMovementBehaviour.canBreak.
+bool ploughCanBreak(BlockSource& region, BlockPos const& pos, Block const& block) {
+    if (block.isAir()) return false;
+    BlockPos below{pos.x, pos.y - 1, pos.z};
+    if (region.getBlock(below).getTypeName() == "minecraft:farmland") return false;
+    std::string id = block.getTypeName();
+    if (isLiquid(id)) return false;
+    if (id == "bearing:track") return true;
+    if (id == "bearing:fake_track") return false;
+    if (id == "minecraft:snow_layer") return true; // the plough whitelist
+    return !hasCollision(region, pos);
+}
+
+/// Vanilla hoe use on `pos` (the block below the visited one): grass, dirt and dirt paths
+/// become farmland, coarse dirt becomes dirt, rooted dirt becomes dirt and drops hanging roots.
+/// Needs air above.
+void till(con::MovingBlockContext& ctx, BlockPos const& pos) {
+    auto* region = regionOf(ctx.contraption.dimension());
+    if (!region || !region->hasChunksAt(pos, 0, false)) return;
+    BlockPos above{pos.x, pos.y + 1, pos.z};
+    if (!region->getBlock(above).isAir()) return;
+    std::string id = region->getBlock(pos).getTypeName();
+    char const* result = nullptr;
+    if (id == "minecraft:grass_block" || id == "minecraft:dirt" || id == "minecraft:grass_path" || id == "minecraft:dirt_path") {
+        result = "minecraft:farmland";
+    } else if (id == "minecraft:coarse_dirt" || id == "minecraft:rooted_dirt") {
+        result = "minecraft:dirt";
+    }
+    if (!result) return;
+    auto const* block = game::blockWith(result);
+    if (!block) return;
+    game::setBlock(*region, pos, *block);
+    cc::Vec3d c{pos.x + .5, pos.y + 1.0, pos.z + .5};
+    ext::playSound(ctx.contraption.dimension(), c, "use.gravel", 1.f, 1.f);
+    if (id == "minecraft:rooted_dirt") {
+        spawnItem(*region, makeItem("minecraft:hanging_roots"), c, {});
+    }
+    logAction("plough tilled " + id + " at " + std::to_string(pos.x) + " " + std::to_string(pos.y) + " " + std::to_string(pos.z));
+}
+
+Breaker const& breaker();
+
+/// The PloughMovementBehaviour#throwEntity for a falling anvil (damageEntities leaves falling
+/// blocks alone: the contraptions' display entities are falling blocks too): thrown like the other
+/// entities; at 0.25 blocks per tick or faster every player within 32 blocks gets anvil_plough.
+void throwAnvils(con::MovingBlockContext& ctx, GlobalPos const& pos) {
+    auto* region = regionOf(pos.dim);
+    auto  level  = ll::service::getLevel();
+    if (!region || !level) return;
+    auto const& here = region->getBlock(toBlockPos(pos));
+    if (!here.isAir() && here._isSolid() && hasCollision(*region, toBlockPos(pos))) return; // as damageEntities
+    cc::Vec3d lo = cc::Vec3d::of(cc::Pos{pos.x, pos.y, pos.z});
+    for (auto* a : entitiesIn(*region, lo, lo + cc::Vec3d{1, 1, 1})) {
+        if (!a || !a->isAlive() || a->getEntityTypeId() != ActorType::FallingBlock || a->hasTag("br_contraption")) continue;
+        auto block = Block::tryGetFromRegistry(static_cast<uint>(a->mEntityData->getInt(static_cast<ushort>(ActorDataIDs::Variant))));
+        if (!block || block->getTypeName().find("anvil") == std::string::npos) continue;
+        cc::Vec3d v = ctx.motion + cc::Vec3d{0, ctx.motion.length() / 4, 0};
+        if (v.length() > 4) v = v * (4 / v.length());
+        auto& delta = const_cast<Vec3&>(a->getPosDelta());
+        delta       = Vec3{delta.x + float(v.x), delta.y + float(v.y), delta.z + float(v.z)};
+        if (delta.length() < .25f) continue;
+        auto at = a->getPosition();
+        int  bx = int(std::floor(at.x)), by = int(std::floor(at.y)), bz = int(std::floor(at.z));
+        level->forEachPlayer([&](Player& p) {
+            auto q = p.getPosition();
+            if (int(p.getDimensionId()) == pos.dim && q.x >= bx - 32 && q.x <= bx + 33 && q.y >= by - 32 && q.y <= by + 33 && q.z >= bz - 32
+                && q.z <= bz + 33)
+                advancements::award(p, "anvil_plough");
+            return true;
+        });
+    }
+}
+
+void visit(con::MovingBlockContext& ctx, GlobalPos const& pos) {
+    damageEntities(ctx, pos, false, false);
+    throwAnvils(ctx, pos);
+    startBreaking(ctx, breaker(), pos);
+    till(ctx, BlockPos{pos.x, pos.y - 1, pos.z});
+}
+
+Breaker const& breaker() {
+    static Breaker const b{
+        [](con::MovingBlockContext const& ctx) { return std::clamp(animationSpeed(ctx) / 500.f, 1.f / 128, 16.f); },
+        ploughCanBreak,
+        [](con::MovingBlockContext& ctx, GlobalPos const& pos) {
+            // the block is gone: plough the ground below now (the reference design revisits the position)
+            till(ctx, BlockPos{pos.x, pos.y - 1, pos.z});
+        },
+        [](con::MovingBlockContext& ctx, Block const& block, BlockPos const& pos) {
+            auto* region = regionOf(ctx.contraption.dimension());
+            auto  level  = ll::service::getLevel();
+            if (!region || !level) return;
+            // snow layers drop as if dug with an iron shovel (plough fake player)
+            ItemStack tool  = block.getTypeName() == "minecraft:snow_layer" ? makeItem("minecraft:iron_shovel") : ItemStack::EMPTY_ITEM();
+            auto      drops = dropsOf(*region, pos, block, tool);
+            std::string id  = block.getTypeName();
+            level->destroyBlock(*region, pos, false, BlockChangeContext{});
+            for (auto const& s : drops) collectOrDrop(ctx, s);
+            logAction("plough broke " + id + " at " + std::to_string(pos.x) + " " + std::to_string(pos.y) + " " + std::to_string(pos.z));
+        },
+    };
+    return b;
+}
+
+cc::Vec3d areaOffset(con::MovingBlockContext const& ctx) { return cc::Vec3d::of(cc::offset(facingOf(ctx.states))) * .45; }
+
+struct Registrar {
+    Registrar() {
+        con::MovingBlockBehaviour b;
+        b.isActive = [](con::MovingBlockContext const& ctx) {
+            return !pointingTowards(relativeMotion(ctx), cc::opposite(facingOf(ctx.states)));
+        };
+        b.tick = [](con::MovingBlockContext& ctx) {
+            tickBreaking(ctx, breaker());
+            if (ctx.stall) return;
+            if (auto p = newAreaPos(ctx, areaOffset(ctx))) visit(ctx, *p);
+        };
+        b.stopMoving = [](con::MovingBlockContext& ctx) { cancelBreaking(ctx); };
+        registerOwnActor(std::string(kPlough), std::move(b));
+        con::registerMovementRules(
+            std::string(kPlough),
+            // An AttachedActorBlock hangs on the block behind it, isn't brittle and
+            // carries nothing on its front (isNotSupportiveFallback)
+            con::MovementRules{
+                nullptr,
+                nullptr,
+                [](cc::States const& s) { return cc::bit(cc::opposite(facingOf(s))); },
+                [](cc::States const& s) { return cc::bit(facingOf(s)); },
+            }
+        );
+    }
+};
+Registrar const gRegistrar;
+
+} // namespace
+
+} // namespace br::feature::actors

@@ -1,0 +1,5 @@
+tile.bearing:linear_chassis.name=轴向底盘
+tile.bearing:secondary_linear_chassis.name=轴向底盘二号
+tile.bearing:radial_chassis.name=径向底盘
+tile.bearing:sticker.name=黏着器
+item.bearing:super_glue.name=强力胶

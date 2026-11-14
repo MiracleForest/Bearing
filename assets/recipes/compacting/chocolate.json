@@ -1,0 +1,14 @@
+{
+  "type": "bearing:compacting",
+  "ingredients": [
+    {
+      "fluid": "bearing:chocolate",
+      "amount": 250
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:bar_of_chocolate"
+    }
+  ]
+}

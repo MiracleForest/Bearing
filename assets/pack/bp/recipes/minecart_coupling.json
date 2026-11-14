@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:minecart_coupling"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  E",
+      " S ",
+      "E  "
+    ],
+    "key": {
+      "E": {
+        "item": "bearing:andesite_alloy"
+      },
+      "S": {
+        "item": "bearing:iron_sheet"
+      }
+    },
+    "result": {
+      "item": "bearing:minecart_coupling",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ]
+  }
+}

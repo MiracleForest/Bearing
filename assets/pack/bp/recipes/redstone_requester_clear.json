@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:redstone_requester_clear"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:redstone_requester"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:redstone_requester"
+      }
+    ],
+    "result": {
+      "item": "bearing:redstone_requester",
+      "count": 1
+    }
+  }
+}

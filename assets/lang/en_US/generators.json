@@ -1,0 +1,5 @@
+{
+  "bearing.kinetics.creative_motor.rotation_speed": "Output Speed (RPM)",
+  "bearing.kinetics.valve_handle.rotated_angle": "Turn per use",
+  "bearing.large_water_wheel.not_enough_space": "Needs more open space to place"
+}

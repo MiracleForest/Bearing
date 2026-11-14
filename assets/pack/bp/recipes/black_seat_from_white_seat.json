@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:black_seat_from_white_seat"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:white_seat"
+      },
+      {
+        "item": "minecraft:black_dye"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:white_seat"
+      }
+    ],
+    "result": {
+      "item": "bearing:black_seat"
+    }
+  }
+}

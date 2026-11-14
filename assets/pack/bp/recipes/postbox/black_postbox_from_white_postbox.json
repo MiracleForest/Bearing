@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:black_postbox_from_white_postbox"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:black_dye"
+      },
+      {
+        "item": "bearing:white_postbox"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:white_postbox"
+      }
+    ],
+    "result": {
+      "item": "bearing:black_postbox",
+      "count": 1
+    }
+  }
+}

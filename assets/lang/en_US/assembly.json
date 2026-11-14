@@ -1,0 +1,30 @@
+{
+  "bearing.tooltip.deployer.header": "Deployer Information",
+  "bearing.tooltip.deployer.using": "Mode: Use",
+  "bearing.tooltip.deployer.punching": "Mode: Attack",
+  "bearing.tooltip.deployer.contains": "Item: {0} x{1}",
+
+  "bearing.mechanical_arm.extract_from": "Pick up from {0}",
+  "bearing.mechanical_arm.deposit_to": "Drop off into {0}",
+  "bearing.mechanical_arm.summary": "This arm has {0} pickup point(s) and {1} drop point(s).",
+  "bearing.mechanical_arm.points_outside_range": "{0} interaction point(s) were out of reach and got dropped.",
+  "bearing.mechanical_arm.selection_mode.round_robin": "Round Robin",
+  "bearing.mechanical_arm.selection_mode.forced_round_robin": "Forced Round Robin",
+  "bearing.mechanical_arm.selection_mode.prefer_first": "Prefer First Target",
+  "bearing.logistics.when_multiple_outputs_available": "Distribution Method",
+
+  "bearing.recipe.sequenced_assembly": "Recipe Sequence",
+  "bearing.recipe.assembly.next": "Next: {0}",
+  "bearing.recipe.assembly.step": "Step {0}:",
+  "bearing.recipe.assembly.progress": "Progress: {0}/{1}",
+  "bearing.recipe.assembly.pressing": "Process in Press",
+  "bearing.recipe.assembly.spout_filling_fluid": "Spout {0}",
+  "bearing.recipe.assembly.deploying_item": "Deploy {0}",
+  "bearing.recipe.assembly.cutting": "Cut with Saw",
+  "bearing.recipe.assembly.repeat": "{0} passes through the steps",
+  "bearing.recipe.assembly.junk": "Random salvage",
+  "bearing.hint.full_deployer.title": "Deployer is jammed",
+  "bearing.hint.full_deployer": "This _Deployer_ is holding _too many items_ and must be _emptied_ before it can work. Pull the overflow out with a _hopper_, _funnel_ or similar.",
+  "bearing.hint.mechanical_arm_no_targets.title": "No Targets",
+  "bearing.hint.mechanical_arm_no_targets": "This _Mechanical Arm_ has _nowhere to work_ yet. While _holding_ the arm item, _right-click_ belts, depots, funnels and similar blocks to assign them."
+}

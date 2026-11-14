@@ -1,0 +1,14 @@
+{
+  "bearing:stock_link": {
+    "sound": "metal"
+  },
+  "bearing:stock_ticker": {
+    "sound": "wood"
+  },
+  "bearing:factory_gauge": {
+    "sound": "copper"
+  },
+  "bearing:redstone_requester": {
+    "sound": "wood"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "bearing.track_target.set": "已选定目标轨道",
+  "bearing.track_target.success": "已与所选轨道关联",
+  "bearing.track_target.clear": "轨道选择已清空",
+  "bearing.track_target.missing": "请先右击要关联的轨道",
+  "bearing.track_target.too_far": "所选轨道超出范围",
+  "bearing.track_target.no_junctions": "岔口不能作为目标",
+  "bearing.track_target.occupied": "该处轨道已有别的标记",
+  "bearing.track_target.invalid": "从这里无法关联此轨道",
+  "bearing.track_signal.cannot_change_mode": "此信号机无法改变模式",
+  "bearing.track_signal.mode_change.entry_signal": "-> 区段内无车时放行",
+  "bearing.track_signal.mode_change.cross_signal": "-> 仅当列车能一路驶出区段时放行",
+  "bearing.display_source.observed_train_name": "经过列车的名字"
+}

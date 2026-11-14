@@ -1,0 +1,22 @@
+{
+  "bearing.boiler.status": "锅炉状态：{0}",
+  "bearing.boiler.status_short": "锅炉：{0}",
+  "bearing.boiler.passive": "被动",
+  "bearing.boiler.idle": "空闲",
+  "bearing.boiler.lvl": "等级 {0}",
+  "bearing.boiler.max_lvl": "最高等级",
+  "bearing.boiler.size": "尺寸",
+  "bearing.boiler.size_dots": "...... ",
+  "bearing.boiler.water": "水量",
+  "bearing.boiler.water_dots": "...... ",
+  "bearing.boiler.heat": "热量",
+  "bearing.boiler.heat_dots": "...... ",
+  "bearing.boiler.via_one_engine": "通过1个引擎",
+  "bearing.boiler.via_engines": "通过 {0} 个引擎",
+  "bearing.boiler.water_input_rate": "水输入速率",
+  "bearing.boiler.per_tick": "{0} 每 Tick",
+  "bearing.generic.pitch": "音高：{0}",
+  "bearing.generic.notes": "F#;F;E;D#;D;C#;C;B;A#;A;G#;G",
+  "br.steam.cmd.none": "{0} {1} {2} 处没有流体储罐、蒸汽引擎或蒸汽汽笛。",
+  "br.steam.cmd.filled": "在 {2} {3} {4} 处移动了 {0} mB 的 {1}。"
+}

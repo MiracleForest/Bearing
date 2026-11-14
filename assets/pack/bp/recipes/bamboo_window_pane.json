@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:bamboo_window_pane"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "bearing:bamboo_window"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:bamboo_window"
+      }
+    ],
+    "result": {
+      "item": "bearing:bamboo_window_pane",
+      "count": 16
+    }
+  }
+}

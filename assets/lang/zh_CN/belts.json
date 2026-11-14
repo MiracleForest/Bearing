@@ -1,0 +1,7 @@
+{
+  "bearing.weighted_ejector.target_set": "目标已选取",
+  "bearing.weighted_ejector.target_not_valid": "改为弹向相邻方块（目标不可用）",
+  "bearing.weighted_ejector.no_target": "改为弹向相邻方块（尚未设定目标）",
+  "bearing.weighted_ejector.targeting": "弹射至 [{0},{1},{2}]",
+  "bearing.weighted_ejector.stack_size": "弹射物品堆数量"
+}

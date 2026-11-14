@@ -1,0 +1,4 @@
+{
+  "bearing:track": { "sound": "metal" },
+  "bearing:fake_track": { "sound": "metal" }
+}

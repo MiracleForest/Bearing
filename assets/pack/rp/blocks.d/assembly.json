@@ -1,0 +1,8 @@
+{
+  "bearing:deployer": {
+    "sound": "wood"
+  },
+  "bearing:mechanical_arm": {
+    "sound": "metal"
+  }
+}

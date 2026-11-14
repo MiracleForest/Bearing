@@ -1,0 +1,65 @@
+{
+  "bearing_white_toolbox": {
+    "textures": "textures/blocks/white_toolbox"
+  },
+  "bearing_orange_toolbox": {
+    "textures": "textures/blocks/orange_toolbox"
+  },
+  "bearing_magenta_toolbox": {
+    "textures": "textures/blocks/magenta_toolbox"
+  },
+  "bearing_light_blue_toolbox": {
+    "textures": "textures/blocks/light_blue_toolbox"
+  },
+  "bearing_yellow_toolbox": {
+    "textures": "textures/blocks/yellow_toolbox"
+  },
+  "bearing_lime_toolbox": {
+    "textures": "textures/blocks/lime_toolbox"
+  },
+  "bearing_pink_toolbox": {
+    "textures": "textures/blocks/pink_toolbox"
+  },
+  "bearing_gray_toolbox": {
+    "textures": "textures/blocks/gray_toolbox"
+  },
+  "bearing_light_gray_toolbox": {
+    "textures": "textures/blocks/light_gray_toolbox"
+  },
+  "bearing_cyan_toolbox": {
+    "textures": "textures/blocks/cyan_toolbox"
+  },
+  "bearing_purple_toolbox": {
+    "textures": "textures/blocks/purple_toolbox"
+  },
+  "bearing_blue_toolbox": {
+    "textures": "textures/blocks/blue_toolbox"
+  },
+  "bearing_brown_toolbox": {
+    "textures": "textures/blocks/brown_toolbox"
+  },
+  "bearing_green_toolbox": {
+    "textures": "textures/blocks/green_toolbox"
+  },
+  "bearing_red_toolbox": {
+    "textures": "textures/blocks/red_toolbox"
+  },
+  "bearing_black_toolbox": {
+    "textures": "textures/blocks/black_toolbox"
+  },
+  "bearing_copper_backtank": {
+    "textures": "textures/blocks/copper_backtank"
+  },
+  "bearing_netherite_backtank": {
+    "textures": "textures/blocks/netherite_backtank"
+  },
+  "bearing_lectern_controller": {
+    "textures": "textures/blocks/lectern_controller"
+  },
+  "bearing_peculiar_bell": {
+    "textures": "textures/blocks/peculiar_bell"
+  },
+  "bearing_haunted_bell": {
+    "textures": "textures/blocks/haunted_bell"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "bearing:haunting",
+  "ingredients": [
+    {
+      "item": "minecraft:brick"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:netherbrick"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:waxed_copper_tile_slab_from_honeycomb"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:copper_tile_slab"
+      },
+      {
+        "item": "minecraft:honeycomb"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:copper_tile_slab"
+      }
+    ],
+    "result": {
+      "item": "bearing:waxed_copper_tile_slab",
+      "count": 1
+    }
+  }
+}

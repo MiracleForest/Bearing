@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:scorchia"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "#D#",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "bearing:scoria"
+      },
+      "D": {
+        "item": "minecraft:black_dye"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:scoria"
+      }
+    ],
+    "result": {
+      "item": "bearing:scorchia",
+      "count": 8
+    }
+  }
+}

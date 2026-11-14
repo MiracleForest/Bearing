@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:wrench"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["GG", "GP", " S"],
+    "key": {
+      "G": { "item": "bearing:golden_sheet" },
+      "P": { "item": "bearing:cogwheel" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "unlock": [{ "item": "bearing:golden_sheet" }],
+    "result": { "item": "bearing:wrench" }
+  }
+}

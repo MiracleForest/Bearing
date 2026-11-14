@@ -1,0 +1,10 @@
+{
+  "item.bearing.builders_tea.tooltip.summary": "清晨来一杯，补充_饱食度_并获得_急迫_，干活更有劲。",
+  "item.bearing.blaze_cake.tooltip.summary": "一份甜点，能让_烈焰人燃烧室_在一段时间内烧得更旺。",
+  "item.bearing.creative_blaze_cake.tooltip.summary": "专供_烈焰人燃烧室_的独特蛋糕。吃过之后，燃烧室将_永远不缺燃料_。",
+  "item.bearing.creative_blaze_cake.tooltip.condition1": "对烈焰人燃烧室使用",
+  "item.bearing.creative_blaze_cake.tooltip.behaviour1": "将燃烧室切换到_下一档热度_。",
+  "item.bearing.experience_nugget.tooltip.summary": "机器运转中留下的一小粒_心得_。",
+  "item.bearing.experience_nugget.tooltip.condition1": "使用时",
+  "item.bearing.experience_nugget.tooltip.behaviour1": "_释放_其中储存的_经验_。"
+}

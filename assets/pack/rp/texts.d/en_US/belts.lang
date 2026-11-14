@@ -1,0 +1,5 @@
+tile.bearing:belt.name=Belt
+item.bearing:belt_connector=Mechanical Belt
+item.bearing:belt_connector.name=Mechanical Belt
+tile.bearing:depot.name=Depot
+tile.bearing:weighted_ejector.name=Weighted Ejector

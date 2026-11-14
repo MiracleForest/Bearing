@@ -1,0 +1,15 @@
+{
+  "bearing.contraptions.movement_mode": "运动模式",
+  "bearing.contraptions.movement_mode.move_place": "每次停下都还原为方块",
+  "bearing.contraptions.movement_mode.move_place_returned": "仅在回到起始位置时还原为方块",
+  "bearing.contraptions.movement_mode.move_never_place": "锚定方块被破坏前始终保持装配",
+  "bearing.gui.assembly.exception.noPistonPoles": "这台活塞的活塞杆没有连成完整的一列",
+  "bearing.gui.assembly.exception.tooManyPistonPoles": "此活塞连接的活塞杆超出上限。\n当前上限：{0}",
+  "bearing.gui.assembly.exception.no_contacts": "升降机结构上必须装有一个朝向水平的接触式红石信号发生器",
+  "bearing.gui.assembly.exception.too_many_contacts": "一部升降机上只能装一个接触式红石信号发生器",
+  "bearing.gui.assembly.exception.column_conflict": "这一列触点已被另一部升降机占用",
+  "bearing.elevator_contact.title": "升降机锚点",
+  "bearing.elevator_contact.floor_identifier": "楼层名称",
+  "bearing.elevator_contact.floor_description": "楼层描述",
+  "bearing.gui.goggles.pole_length": "活塞杆长度："
+}

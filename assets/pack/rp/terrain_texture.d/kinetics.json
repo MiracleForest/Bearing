@@ -1,0 +1,6 @@
+{
+  "bearing_kinetics_test_shaft": { "textures": "textures/blocks/kinetics_test_shaft" },
+  "bearing_kinetics_test_cog": { "textures": "textures/blocks/kinetics_test_cog" },
+  "bearing_kinetics_test_source": { "textures": "textures/blocks/kinetics_test_source" },
+  "bearing_kinetics_test_consumer": { "textures": "textures/blocks/kinetics_test_consumer" }
+}

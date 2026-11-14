@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:cut_granite_wall_from_granite_pillar_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:granite_pillar"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:granite_pillar"
+      }
+    ],
+    "result": {
+      "item": "bearing:cut_granite_wall",
+      "count": 1
+    }
+  }
+}

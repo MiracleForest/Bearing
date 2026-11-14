@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:water_wheel"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "SAS",
+      "SSS"
+    ],
+    "key": {
+      "S": {
+        "tag": "minecraft:wooden_slabs"
+      },
+      "A": {
+        "item": "bearing:shaft"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:shaft"
+      }
+    ],
+    "result": {
+      "item": "bearing:water_wheel"
+    }
+  }
+}

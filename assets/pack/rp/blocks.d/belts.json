@@ -1,0 +1,11 @@
+{
+  "bearing:belt": {
+    "sound": "cloth"
+  },
+  "bearing:depot": {
+    "sound": "stone"
+  },
+  "bearing:weighted_ejector": {
+    "sound": "metal"
+  }
+}

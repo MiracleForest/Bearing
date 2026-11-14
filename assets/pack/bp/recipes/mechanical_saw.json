@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:mechanical_saw"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "AIA",
+      " C "
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:iron_sheet"
+      },
+      "C": {
+        "item": "bearing:andesite_casing"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:mechanical_saw",
+      "count": 1
+    }
+  }
+}

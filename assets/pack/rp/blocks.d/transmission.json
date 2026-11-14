@@ -1,0 +1,65 @@
+{
+  "bearing:shaft": {
+    "sound": "metal"
+  },
+  "bearing:cogwheel": {
+    "sound": "wood"
+  },
+  "bearing:large_cogwheel": {
+    "sound": "wood"
+  },
+  "bearing:andesite_encased_shaft": {
+    "sound": "stone"
+  },
+  "bearing:brass_encased_shaft": {
+    "sound": "metal"
+  },
+  "bearing:andesite_encased_cogwheel": {
+    "sound": "stone"
+  },
+  "bearing:brass_encased_cogwheel": {
+    "sound": "metal"
+  },
+  "bearing:andesite_encased_large_cogwheel": {
+    "sound": "stone"
+  },
+  "bearing:brass_encased_large_cogwheel": {
+    "sound": "metal"
+  },
+  "bearing:gearbox": {
+    "sound": "stone"
+  },
+  "bearing:clutch": {
+    "sound": "stone"
+  },
+  "bearing:gearshift": {
+    "sound": "stone"
+  },
+  "bearing:encased_chain_drive": {
+    "sound": "stone"
+  },
+  "bearing:adjustable_chain_gearshift": {
+    "sound": "stone"
+  },
+  "bearing:sequenced_gearshift": {
+    "sound": "metal"
+  },
+  "bearing:rotation_speed_controller": {
+    "sound": "metal"
+  },
+  "bearing:speedometer": {
+    "sound": "stone"
+  },
+  "bearing:stressometer": {
+    "sound": "stone"
+  },
+  "bearing:cuckoo_clock": {
+    "sound": "wood"
+  },
+  "bearing:mysterious_cuckoo_clock": {
+    "sound": "wood"
+  },
+  "bearing:flywheel": {
+    "sound": "metal"
+  }
+}

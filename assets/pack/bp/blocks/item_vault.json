@@ -1,0 +1,3979 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:item_vault",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "bearing:axis": [
+          0,
+          1,
+          2
+        ],
+        "bearing:len": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bearing:u": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bearing:v": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bearing:large": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1200
+      },
+      "minecraft:map_color": "#a0a5ab",
+      "minecraft:loot": "loot_tables/blocks/item_vault.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_item_vault_side_1111",
+          "render_method": "opaque"
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 0 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "north": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1111",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 0 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1110",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 1 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0011",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1100",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0000",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 2 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0010",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 0 && q.block_state('bearing:v') == 0 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1011",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0111",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1101",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1111",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 1 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 2 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0001",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_0010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 1 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1001",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0101",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1001",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 2 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1000",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0100",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0100",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1000",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:axis') == 2 && q.block_state('bearing:len') == 3 && q.block_state('bearing:u') == 3 && q.block_state('bearing:v') == 3 && q.block_state('bearing:large') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "east": {
+              "texture": "bearing_item_vault_side_1010",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_item_vault_side_0110",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_item_vault_side_0101",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_item_vault_end_large_0110",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "bearing_item_vault_end_large_1010",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

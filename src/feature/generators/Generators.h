@@ -1,0 +1,119 @@
+#pragma once
+
+// Generators unit (U7): hand crank, copper / dyed valve handles, water wheel, large water wheel
+// (+ its structure blocks) and the creative motor. Internal header of the unit (not a contract):
+// the rules live in core/generators/Generators.h, the kinetic network in feature/kinetics.
+//
+// Per-position data: value box settings in BlockData (`data["generators"]`), the turning state
+// of cranks / valves and the flow score of wheels in memory (cranks that were turning when the
+// world was saved are stopped when it loads again), the positions of the wheels in the world DB
+// (`br:generators:wheels`) so they are re-checked every 60 ticks as the lazy tick does.
+
+#include <cstdint>
+#include <optional>
+#include <string>
+#include <string_view>
+
+#include "core/GlobalPos.h"
+#include "core/generators/Generators.h"
+
+class Block;
+class BlockSource;
+class ItemStack;
+class Player;
+
+namespace br::feature::generators {
+
+namespace cg = core::generators;
+using core::GlobalPos;
+using cg::Axis;
+using cg::Face;
+
+inline constexpr char kHandCrank[]   = "bearing:hand_crank";
+inline constexpr char kCopperValve[] = "bearing:copper_valve_handle";
+inline constexpr char kWaterWheel[]  = "bearing:water_wheel";
+inline constexpr char kLargeWheel[]  = "bearing:large_water_wheel";
+inline constexpr char kStructure[]   = "bearing:water_wheel_structure";
+inline constexpr char kMotor[]       = "bearing:creative_motor";
+
+inline constexpr char kFacing[]    = "bearing:facing";    ///< 0..5 (down, up, north, south, west, east)
+inline constexpr char kAxisState[] = "bearing:axis";      ///< 0..2 (x, y, z)
+inline constexpr char kWood[]      = "bearing:wood";      ///< 0..11 (core::generators::kWoods)
+inline constexpr char kRotor[]     = "bearing:rotor";     ///< kinetics renderer: 0 full, 1 static parts
+inline constexpr char kSegment[]   = "bearing:segment";   ///< structure cell 0..7
+inline constexpr char kExtension[] = "bearing:extension"; ///< large wheel behind another one
+
+inline constexpr char kWrench[]      = "bearing:wrench";
+inline constexpr char kExtendoGrip[] = "bearing:extendo_grip";
+
+/// `config/generators.json` (CKinetics keys of this unit).
+struct Config {
+    int   version               = 1;
+    /// Hunger used per hand crank use, multiplied by the crank's speed (crankHungerMultiplier).
+    float crankHungerMultiplier = cg::kCrankHunger;
+};
+
+enum class Kind : std::uint8_t { None, Crank, Valve, WaterWheel, LargeWheel, Structure, Motor };
+[[nodiscard]] Kind kindOf(std::string_view id);
+[[nodiscard]] Kind kindOf(Block const& block);
+/// "bearing:copper_valve_handle" for -1, "bearing:<colour>_valve_handle" for 0..15.
+[[nodiscard]] std::string valveId(int colour);
+/// -1 copper, 0..15 dyed, -2 not a valve handle.
+[[nodiscard]] int valveColour(std::string_view id);
+
+// ---- world access (server thread) -------------------------------------------------------------------------------
+[[nodiscard]] BlockSource* regionOf(int dim);
+/// The block at `pos` when its chunk is loaded.
+[[nodiscard]] Block const* blockAt(GlobalPos const& pos);
+[[nodiscard]] int          stateOf(Block const& block, char const* state, int fallback = 0);
+[[nodiscard]] Face         facingOf(Block const& block);
+[[nodiscard]] Axis         axisStateOf(Block const& block);
+/// Sets integer states on the block at `pos` (keeps the others). Returns false if not possible.
+bool setStates(GlobalPos const& pos, std::initializer_list<std::pair<char const*, int>> states);
+
+// ---- actions --------------------------------------------------------------------------------------------------------
+/// The HandCrankBlock.use: turns the crank (sneaking: backwards) and costs hunger.
+bool useCrank(Player& player, GlobalPos const& pos, bool backwards, bool costHunger);
+/// The ValveHandleBlock.clicked: a dye of another colour dyes the handle, anything else
+/// turns it by its angle (sneaking: the other way). Returns true when the click was used.
+bool useValve(Player& player, GlobalPos const& pos, std::string const& heldId, bool sneaking);
+/// The WaterWheelBlockEntity.applyMaterialIfValid (wheel, large wheel or a structure
+/// block of one). Returns true when the wood changed.
+bool applyMaterial(GlobalPos const& pos, std::string const& heldId);
+/// The canSurvive: a crank / valve handle needs a block with a collision shape behind it
+/// (HandCrankBlock), a water wheel may only touch another one along their shared axis
+/// (WaterWheelBlock). Other blocks always survive.
+[[nodiscard]] bool canSurvive(BlockSource& region, GlobalPos const& pos, Block const& block);
+/// Turns a freshly placed crank / valve / wheel / motor as the getStateForPlacement; one
+/// that cannot survive that way is taken back (the item returns to the player).
+void orientPlaced(Player& player, GlobalPos const& pos, Face clickedFace);
+/// Places a large water wheel as the LargeWaterWheelBlockItem (the clicked position or one
+/// further). Returns false (and tells the player) when there is no room.
+bool placeLargeWheel(Player& player, ItemStack& held, GlobalPos const& clickedPlacement, Face clickedFace);
+/// Notes that a creative player broke the block at `pos` (structure blocks: no drop).
+void noteCreativeBreak(GlobalPos const& pos);
+
+// ---- value settings ---------------------------------------------------------------------------------------------------
+[[nodiscard]] int motorSpeed(GlobalPos const& pos);
+void              setMotorSpeed(GlobalPos const& pos, int rpm);
+[[nodiscard]] int valveAngle(GlobalPos const& pos);
+void              setValveAngle(GlobalPos const& pos, int degrees);
+
+// ---- inspection (selftests) ---------------------------------------------------------------------------------------------
+[[nodiscard]] int  crankInUse(GlobalPos const& pos);
+[[nodiscard]] int  wheelFlowScore(GlobalPos const& pos);
+[[nodiscard]] bool tracksWheel(GlobalPos const& pos);
+/// Re-reads the flow around a wheel now (determineAndApplyFlowScore).
+void evaluateWheel(GlobalPos const& pos);
+/// The fluid flow at a position (fluid flow vector, bubble columns up / down), as the reference design reads it.
+[[nodiscard]] cg::Vec3d flowAt(BlockSource& region, GlobalPos const& pos);
+
+namespace detail {
+/// Set while a player's click on a valve handle must turn it rather than open its value box.
+inline thread_local bool suppressValveBox = false;
+void installHooks();
+void uninstallHooks();
+void registerValueBoxes();
+} // namespace detail
+
+} // namespace br::feature::generators

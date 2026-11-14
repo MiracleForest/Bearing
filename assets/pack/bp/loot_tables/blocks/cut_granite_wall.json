@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "bearing:cut_granite_wall",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

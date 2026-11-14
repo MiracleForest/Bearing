@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:yellow_seat_from_cyan_seat"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:cyan_seat"
+      },
+      {
+        "item": "minecraft:yellow_dye"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:cyan_seat"
+      }
+    ],
+    "result": {
+      "item": "bearing:yellow_seat"
+    }
+  }
+}

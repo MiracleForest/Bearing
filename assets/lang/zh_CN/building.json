@@ -1,0 +1,22 @@
+{
+  "block.bearing.copycat_panel.tooltip.behaviour1": "在可行时换上_手中方块_的外观。_继续使用_可切换_朝向_或_激活_变体。用_扳手_可把材质卸下。",
+  "block.bearing.copycat_panel.tooltip.condition1": "右键使用",
+  "block.bearing.copycat_panel.tooltip.summary": "一块薄_板_，可以套用任何_完整方块_的纹理，_铁栏杆_类与_活板门_类也能用。",
+  "block.bearing.copycat_step.tooltip.behaviour1": "在可行时换上_手中方块_的外观。_继续使用_可切换_朝向_或_激活_变体。用_扳手_可把材质卸下。",
+  "block.bearing.copycat_step.tooltip.condition1": "右键使用",
+  "block.bearing.copycat_step.tooltip.summary": "一个小_台阶_，可以套用任何_完整方块_的纹理。",
+  "block.bearing.metal_bracket.tooltip.summary": "结实的_金属_卡箍，给_传动杆_、_齿轮_与_管道_添上几分工厂气息。",
+  "block.bearing.placard.tooltip.behaviour1": "把手里的_物品__摆上_展示位。若展示的已是同种物品，则改为输出一次短促的_红石_脉冲。",
+  "block.bearing.placard.tooltip.behaviour2": "_取下_正在展示的_物品_。",
+  "block.bearing.placard.tooltip.condition1": "手拿物品右键",
+  "block.bearing.placard.tooltip.condition2": "左键点击",
+  "block.bearing.placard.tooltip.summary": "挂在墙上的_黄铜_铭牌，用来_展示_一件_物品_。装在移动装置上也照常工作。",
+  "block.bearing.wooden_bracket.tooltip.summary": "朴素的_木制_卡箍，给_传动杆_、_齿轮_与_管道_增添一丝居家韵味。",
+  "tag.block.bearing.casing": "机壳",
+  "tag.item.bearing.casing": "机壳",
+  "tag.block.bearing.copycat_allow": "伪装方块可用",
+  "tag.block.bearing.copycat_deny": "伪装方块不可用",
+  "tag.block.bearing.table_cloths": "桌布",
+  "tag.item.bearing.table_cloths": "桌布",
+  "tag.item.bearing.dyed_table_cloths": "染色桌布"
+}

@@ -1,0 +1,363 @@
+{
+  "c:nuggets/zinc": [
+    "bearing:zinc_nugget"
+  ],
+  "c:nuggets/brass": [
+    "bearing:brass_nugget"
+  ],
+  "c:nuggets/copper": [
+    "bearing:copper_nugget"
+  ],
+  "c:ingots/zinc": [
+    "bearing:zinc_ingot"
+  ],
+  "c:ingots/brass": [
+    "bearing:brass_ingot"
+  ],
+  "c:storage_blocks/zinc": [
+    "bearing:zinc_block"
+  ],
+  "c:storage_blocks/brass": [
+    "bearing:brass_block"
+  ],
+  "c:storage_blocks/raw_zinc": [
+    "bearing:raw_zinc_block"
+  ],
+  "c:storage_blocks/raw_iron": [
+    "minecraft:raw_iron_block"
+  ],
+  "c:storage_blocks/raw_gold": [
+    "minecraft:raw_gold_block"
+  ],
+  "c:storage_blocks/raw_copper": [
+    "minecraft:raw_copper_block"
+  ],
+  "c:raw_materials/zinc": [
+    "bearing:raw_zinc"
+  ],
+  "c:raw_materials/iron": [
+    "minecraft:raw_iron"
+  ],
+  "c:raw_materials/gold": [
+    "minecraft:raw_gold"
+  ],
+  "c:raw_materials/copper": [
+    "minecraft:raw_copper"
+  ],
+  "c:ores/zinc": [
+    "bearing:zinc_ore",
+    "bearing:deepslate_zinc_ore"
+  ],
+  "c:plates/iron": [
+    "bearing:iron_sheet"
+  ],
+  "c:plates/gold": [
+    "bearing:golden_sheet"
+  ],
+  "c:plates/copper": [
+    "bearing:copper_sheet"
+  ],
+  "c:plates/brass": [
+    "bearing:brass_sheet"
+  ],
+  "c:plates/obsidian": [
+    "bearing:sturdy_sheet"
+  ],
+  "bearing:plates": [
+    "bearing:iron_sheet",
+    "bearing:golden_sheet",
+    "bearing:copper_sheet",
+    "bearing:brass_sheet",
+    "bearing:sturdy_sheet",
+    "bearing:cardboard"
+  ],
+  "c:dusts/obsidian": [
+    "bearing:powdered_obsidian"
+  ],
+  "c:flours/wheat": [
+    "bearing:wheat_flour"
+  ],
+  "bearing:flours": [
+    "bearing:wheat_flour"
+  ],
+  "c:eggs": [
+    "minecraft:egg"
+  ],
+  "c:strings": [
+    "minecraft:string"
+  ],
+  "c:gems/quartz": [
+    "minecraft:quartz"
+  ],
+  "c:dusts/redstone": [
+    "minecraft:redstone"
+  ],
+  "bearing:crushed_raw_materials": [
+    "bearing:crushed_raw_iron",
+    "bearing:crushed_raw_gold",
+    "bearing:crushed_raw_copper",
+    "bearing:crushed_raw_zinc"
+  ],
+  "bearing:mod_ingots": [
+    "bearing:andesite_alloy",
+    "bearing:zinc_ingot",
+    "bearing:brass_ingot"
+  ],
+  "bearing:pulpifiable": [
+    "minecraft:bamboo",
+    "minecraft:sugar_cane",
+    "minecraft:oak_sapling",
+    "minecraft:spruce_sapling",
+    "minecraft:birch_sapling",
+    "minecraft:jungle_sapling",
+    "minecraft:acacia_sapling",
+    "minecraft:dark_oak_sapling",
+    "minecraft:cherry_sapling",
+    "minecraft:mangrove_propagule",
+    "minecraft:pale_oak_sapling"
+  ],
+  "bearing:upright_on_belt": [
+    "bearing:blaze_cake_base",
+    "bearing:blaze_cake",
+    "bearing:creative_blaze_cake",
+    "bearing:builders_tea"
+  ],
+  "bearing:stone_types/granite": [
+    "bearing:cut_granite",
+    "bearing:cut_granite_stairs",
+    "bearing:cut_granite_wall",
+    "bearing:polished_cut_granite",
+    "bearing:polished_cut_granite_stairs",
+    "bearing:polished_cut_granite_wall",
+    "bearing:cut_granite_bricks",
+    "bearing:cut_granite_brick_stairs",
+    "bearing:cut_granite_brick_wall",
+    "bearing:small_granite_bricks",
+    "bearing:small_granite_brick_stairs",
+    "bearing:small_granite_brick_wall",
+    "bearing:layered_granite",
+    "bearing:granite_pillar",
+    "minecraft:granite"
+  ],
+  "bearing:stone_types/diorite": [
+    "bearing:cut_diorite",
+    "bearing:cut_diorite_stairs",
+    "bearing:cut_diorite_wall",
+    "bearing:polished_cut_diorite",
+    "bearing:polished_cut_diorite_stairs",
+    "bearing:polished_cut_diorite_wall",
+    "bearing:cut_diorite_bricks",
+    "bearing:cut_diorite_brick_stairs",
+    "bearing:cut_diorite_brick_wall",
+    "bearing:small_diorite_bricks",
+    "bearing:small_diorite_brick_stairs",
+    "bearing:small_diorite_brick_wall",
+    "bearing:layered_diorite",
+    "bearing:diorite_pillar",
+    "minecraft:diorite"
+  ],
+  "bearing:stone_types/andesite": [
+    "bearing:cut_andesite",
+    "bearing:cut_andesite_stairs",
+    "bearing:cut_andesite_wall",
+    "bearing:polished_cut_andesite",
+    "bearing:polished_cut_andesite_stairs",
+    "bearing:polished_cut_andesite_wall",
+    "bearing:cut_andesite_bricks",
+    "bearing:cut_andesite_brick_stairs",
+    "bearing:cut_andesite_brick_wall",
+    "bearing:small_andesite_bricks",
+    "bearing:small_andesite_brick_stairs",
+    "bearing:small_andesite_brick_wall",
+    "bearing:layered_andesite",
+    "bearing:andesite_pillar",
+    "minecraft:andesite"
+  ],
+  "bearing:stone_types/calcite": [
+    "bearing:cut_calcite",
+    "bearing:cut_calcite_stairs",
+    "bearing:cut_calcite_wall",
+    "bearing:polished_cut_calcite",
+    "bearing:polished_cut_calcite_stairs",
+    "bearing:polished_cut_calcite_wall",
+    "bearing:cut_calcite_bricks",
+    "bearing:cut_calcite_brick_stairs",
+    "bearing:cut_calcite_brick_wall",
+    "bearing:small_calcite_bricks",
+    "bearing:small_calcite_brick_stairs",
+    "bearing:small_calcite_brick_wall",
+    "bearing:layered_calcite",
+    "bearing:calcite_pillar",
+    "minecraft:calcite"
+  ],
+  "bearing:stone_types/dripstone": [
+    "bearing:cut_dripstone",
+    "bearing:cut_dripstone_stairs",
+    "bearing:cut_dripstone_wall",
+    "bearing:polished_cut_dripstone",
+    "bearing:polished_cut_dripstone_stairs",
+    "bearing:polished_cut_dripstone_wall",
+    "bearing:cut_dripstone_bricks",
+    "bearing:cut_dripstone_brick_stairs",
+    "bearing:cut_dripstone_brick_wall",
+    "bearing:small_dripstone_bricks",
+    "bearing:small_dripstone_brick_stairs",
+    "bearing:small_dripstone_brick_wall",
+    "bearing:layered_dripstone",
+    "bearing:dripstone_pillar",
+    "minecraft:dripstone_block"
+  ],
+  "bearing:stone_types/deepslate": [
+    "bearing:cut_deepslate",
+    "bearing:cut_deepslate_stairs",
+    "bearing:cut_deepslate_wall",
+    "bearing:polished_cut_deepslate",
+    "bearing:polished_cut_deepslate_stairs",
+    "bearing:polished_cut_deepslate_wall",
+    "bearing:cut_deepslate_bricks",
+    "bearing:cut_deepslate_brick_stairs",
+    "bearing:cut_deepslate_brick_wall",
+    "bearing:small_deepslate_bricks",
+    "bearing:small_deepslate_brick_stairs",
+    "bearing:small_deepslate_brick_wall",
+    "bearing:layered_deepslate",
+    "bearing:deepslate_pillar",
+    "minecraft:deepslate"
+  ],
+  "bearing:stone_types/tuff": [
+    "bearing:cut_tuff",
+    "bearing:cut_tuff_stairs",
+    "bearing:cut_tuff_wall",
+    "bearing:polished_cut_tuff",
+    "bearing:polished_cut_tuff_stairs",
+    "bearing:polished_cut_tuff_wall",
+    "bearing:cut_tuff_bricks",
+    "bearing:cut_tuff_brick_stairs",
+    "bearing:cut_tuff_brick_wall",
+    "bearing:small_tuff_bricks",
+    "bearing:small_tuff_brick_stairs",
+    "bearing:small_tuff_brick_wall",
+    "bearing:layered_tuff",
+    "bearing:tuff_pillar",
+    "minecraft:tuff"
+  ],
+  "bearing:stone_types/asurine": [
+    "bearing:cut_asurine",
+    "bearing:cut_asurine_stairs",
+    "bearing:cut_asurine_wall",
+    "bearing:polished_cut_asurine",
+    "bearing:polished_cut_asurine_stairs",
+    "bearing:polished_cut_asurine_wall",
+    "bearing:cut_asurine_bricks",
+    "bearing:cut_asurine_brick_stairs",
+    "bearing:cut_asurine_brick_wall",
+    "bearing:small_asurine_bricks",
+    "bearing:small_asurine_brick_stairs",
+    "bearing:small_asurine_brick_wall",
+    "bearing:layered_asurine",
+    "bearing:asurine_pillar",
+    "bearing:asurine"
+  ],
+  "bearing:stone_types/crimsite": [
+    "bearing:cut_crimsite",
+    "bearing:cut_crimsite_stairs",
+    "bearing:cut_crimsite_wall",
+    "bearing:polished_cut_crimsite",
+    "bearing:polished_cut_crimsite_stairs",
+    "bearing:polished_cut_crimsite_wall",
+    "bearing:cut_crimsite_bricks",
+    "bearing:cut_crimsite_brick_stairs",
+    "bearing:cut_crimsite_brick_wall",
+    "bearing:small_crimsite_bricks",
+    "bearing:small_crimsite_brick_stairs",
+    "bearing:small_crimsite_brick_wall",
+    "bearing:layered_crimsite",
+    "bearing:crimsite_pillar",
+    "bearing:crimsite"
+  ],
+  "bearing:stone_types/limestone": [
+    "bearing:cut_limestone",
+    "bearing:cut_limestone_stairs",
+    "bearing:cut_limestone_wall",
+    "bearing:polished_cut_limestone",
+    "bearing:polished_cut_limestone_stairs",
+    "bearing:polished_cut_limestone_wall",
+    "bearing:cut_limestone_bricks",
+    "bearing:cut_limestone_brick_stairs",
+    "bearing:cut_limestone_brick_wall",
+    "bearing:small_limestone_bricks",
+    "bearing:small_limestone_brick_stairs",
+    "bearing:small_limestone_brick_wall",
+    "bearing:layered_limestone",
+    "bearing:limestone_pillar",
+    "bearing:limestone"
+  ],
+  "bearing:stone_types/ochrum": [
+    "bearing:cut_ochrum",
+    "bearing:cut_ochrum_stairs",
+    "bearing:cut_ochrum_wall",
+    "bearing:polished_cut_ochrum",
+    "bearing:polished_cut_ochrum_stairs",
+    "bearing:polished_cut_ochrum_wall",
+    "bearing:cut_ochrum_bricks",
+    "bearing:cut_ochrum_brick_stairs",
+    "bearing:cut_ochrum_brick_wall",
+    "bearing:small_ochrum_bricks",
+    "bearing:small_ochrum_brick_stairs",
+    "bearing:small_ochrum_brick_wall",
+    "bearing:layered_ochrum",
+    "bearing:ochrum_pillar",
+    "bearing:ochrum"
+  ],
+  "bearing:stone_types/scoria": [
+    "bearing:cut_scoria",
+    "bearing:cut_scoria_stairs",
+    "bearing:cut_scoria_wall",
+    "bearing:polished_cut_scoria",
+    "bearing:polished_cut_scoria_stairs",
+    "bearing:polished_cut_scoria_wall",
+    "bearing:cut_scoria_bricks",
+    "bearing:cut_scoria_brick_stairs",
+    "bearing:cut_scoria_brick_wall",
+    "bearing:small_scoria_bricks",
+    "bearing:small_scoria_brick_stairs",
+    "bearing:small_scoria_brick_wall",
+    "bearing:layered_scoria",
+    "bearing:scoria_pillar",
+    "bearing:scoria"
+  ],
+  "bearing:stone_types/scorchia": [
+    "bearing:cut_scorchia",
+    "bearing:cut_scorchia_stairs",
+    "bearing:cut_scorchia_wall",
+    "bearing:polished_cut_scorchia",
+    "bearing:polished_cut_scorchia_stairs",
+    "bearing:polished_cut_scorchia_wall",
+    "bearing:cut_scorchia_bricks",
+    "bearing:cut_scorchia_brick_stairs",
+    "bearing:cut_scorchia_brick_wall",
+    "bearing:small_scorchia_bricks",
+    "bearing:small_scorchia_brick_stairs",
+    "bearing:small_scorchia_brick_wall",
+    "bearing:layered_scorchia",
+    "bearing:scorchia_pillar",
+    "bearing:scorchia"
+  ],
+  "bearing:stone_types/veridium": [
+    "bearing:cut_veridium",
+    "bearing:cut_veridium_stairs",
+    "bearing:cut_veridium_wall",
+    "bearing:polished_cut_veridium",
+    "bearing:polished_cut_veridium_stairs",
+    "bearing:polished_cut_veridium_wall",
+    "bearing:cut_veridium_bricks",
+    "bearing:cut_veridium_brick_stairs",
+    "bearing:cut_veridium_brick_wall",
+    "bearing:small_veridium_bricks",
+    "bearing:small_veridium_brick_stairs",
+    "bearing:small_veridium_brick_wall",
+    "bearing:layered_veridium",
+    "bearing:veridium_pillar",
+    "bearing:veridium"
+  ]
+}

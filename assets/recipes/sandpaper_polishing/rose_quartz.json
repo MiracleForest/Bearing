@@ -1,0 +1,13 @@
+{
+  "type": "bearing:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "bearing:rose_quartz"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:polished_rose_quartz"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "bearing.contraption.controls.actor_toggle.on": "开启",
+  "bearing.contraption.controls.actor_toggle.off": "关闭",
+  "bearing.contraption.controls.all_actor_toggle": "所有元件：{0}",
+  "bearing.contraption.controls.specific_actor_toggle": "{0} 工作状态：{1}",
+  "bearing.contraption.controls.floor_unreachable": "无法访问",
+  "bearing.contraptions.contoller.target": "目标元件",
+  "bearing.contraptions.mechanical_roller.pave_material": "铺路材料",
+  "bearing.contraptions.roller_mode": "压路机模式",
+  "bearing.contraptions.roller_mode.tunnel_pave": "开路并铺设",
+  "bearing.contraptions.roller_mode.straight_fill": "向下垂直填充",
+  "bearing.contraptions.roller_mode.wide_fill": "向下斜坡填充",
+  "block.bearing.seat.tooltip.summary": "坐稳了，享受旅程！可把玩家固定在移动的_装置_上，平时当家具摆着也很合适。有全部染料颜色可选。",
+  "block.bearing.seat.tooltip.condition1": "使用坐垫时",
+  "block.bearing.seat.tooltip.behaviour1": "你会_坐上去_。按_潜行键_即可起身。",
+  "br.actors.elevator_floors": "电梯楼层",
+  "br.actors.elevator_floors.content": "将电梯送往："
+}

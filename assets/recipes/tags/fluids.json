@@ -1,0 +1,14 @@
+{
+  "c:honey": [
+    "bearing:honey"
+  ],
+  "c:milk": [
+    "minecraft:milk"
+  ],
+  "c:chocolate": [
+    "bearing:chocolate"
+  ],
+  "c:tea": [
+    "bearing:tea"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "bearing_track_station_side": {
+    "textures": "textures/blocks/track_station_side"
+  },
+  "bearing_track_station_side_assembling": {
+    "textures": "textures/blocks/track_station_side_assembling"
+  },
+  "bearing_track_station_top": {
+    "textures": "textures/blocks/track_station_top"
+  },
+  "bearing_track_station_bottom": {
+    "textures": "textures/blocks/track_station_bottom"
+  },
+  "bearing_bogey": {
+    "textures": "textures/blocks/bogey"
+  },
+  "bearing_controls": {
+    "textures": "textures/blocks/controls"
+  }
+}

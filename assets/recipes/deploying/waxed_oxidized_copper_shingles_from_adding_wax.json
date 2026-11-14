@@ -1,0 +1,17 @@
+{
+  "type": "bearing:deploying",
+  "ingredients": [
+    {
+      "item": "bearing:oxidized_copper_shingles"
+    },
+    {
+      "item": "minecraft:honeycomb_block"
+    }
+  ],
+  "results": [
+    {
+      "item": "bearing:waxed_oxidized_copper_shingles"
+    }
+  ],
+  "keep_held_item": true
+}

@@ -1,0 +1,14 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "bearing:display_board" },
+    "tags": ["crafting_table"],
+    "pattern": ["PAP"],
+    "key": {
+      "A": { "item": "bearing:electron_tube" },
+      "P": { "item": "bearing:andesite_alloy" }
+    },
+    "unlock": [{ "item": "bearing:electron_tube" }],
+    "result": { "item": "bearing:display_board", "count": 2 }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "bearing.recipe.mechanical_crafting": "动力合成",
+  "bearing.recipe.sawing": "切削",
+  "bearing.recipe.block_cutting": "方块切割",
+  "bearing.logistics.recipe_filter": "配方过滤器",
+  "br.crafter.inputs_connected": "合成器输入已连接",
+  "br.crafter.inputs_disconnected": "合成器输入已断开"
+}

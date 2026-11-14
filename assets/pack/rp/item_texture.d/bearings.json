@@ -1,0 +1,11 @@
+{
+  "bearing_minecart_coupling": {
+    "textures": "textures/items/minecart_coupling"
+  },
+  "bearing_minecart_contraption": {
+    "textures": "textures/items/minecart_contraption"
+  },
+  "bearing_chest_minecart_contraption": {
+    "textures": "textures/items/chest_minecart_contraption"
+  }
+}

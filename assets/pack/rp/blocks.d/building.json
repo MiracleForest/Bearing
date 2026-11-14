@@ -1,0 +1,398 @@
+{
+  "bearing:andesite_casing": {
+    "sound": "wood"
+  },
+  "bearing:brass_casing": {
+    "sound": "wood"
+  },
+  "bearing:copper_casing": {
+    "sound": "copper"
+  },
+  "bearing:shadow_steel_casing": {
+    "sound": "stone"
+  },
+  "bearing:refined_radiance_casing": {
+    "sound": "stone"
+  },
+  "bearing:railway_casing": {
+    "sound": "netherite"
+  },
+  "bearing:framed_glass": {
+    "sound": "glass"
+  },
+  "bearing:horizontal_framed_glass": {
+    "sound": "glass"
+  },
+  "bearing:vertical_framed_glass": {
+    "sound": "glass"
+  },
+  "bearing:tiled_glass": {
+    "sound": "glass"
+  },
+  "bearing:oak_window": {
+    "sound": "glass"
+  },
+  "bearing:spruce_window": {
+    "sound": "glass"
+  },
+  "bearing:birch_window": {
+    "sound": "glass"
+  },
+  "bearing:jungle_window": {
+    "sound": "glass"
+  },
+  "bearing:acacia_window": {
+    "sound": "glass"
+  },
+  "bearing:dark_oak_window": {
+    "sound": "glass"
+  },
+  "bearing:mangrove_window": {
+    "sound": "glass"
+  },
+  "bearing:crimson_window": {
+    "sound": "glass"
+  },
+  "bearing:warped_window": {
+    "sound": "glass"
+  },
+  "bearing:cherry_window": {
+    "sound": "glass"
+  },
+  "bearing:bamboo_window": {
+    "sound": "glass"
+  },
+  "bearing:ornate_iron_window": {
+    "sound": "glass"
+  },
+  "bearing:industrial_iron_window": {
+    "sound": "glass"
+  },
+  "bearing:weathered_iron_window": {
+    "sound": "glass"
+  },
+  "bearing:framed_glass_pane": {
+    "sound": "glass"
+  },
+  "bearing:horizontal_framed_glass_pane": {
+    "sound": "glass"
+  },
+  "bearing:vertical_framed_glass_pane": {
+    "sound": "glass"
+  },
+  "bearing:tiled_glass_pane": {
+    "sound": "glass"
+  },
+  "bearing:oak_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:spruce_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:birch_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:jungle_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:acacia_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:dark_oak_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:mangrove_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:crimson_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:warped_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:cherry_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:bamboo_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:ornate_iron_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:industrial_iron_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:weathered_iron_window_pane": {
+    "sound": "glass"
+  },
+  "bearing:andesite_bars": {
+    "sound": "metal"
+  },
+  "bearing:brass_bars": {
+    "sound": "metal"
+  },
+  "bearing:copper_bars": {
+    "sound": "metal"
+  },
+  "bearing:copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:exposed_copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:exposed_copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:exposed_copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:weathered_copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:weathered_copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:weathered_copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:oxidized_copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:oxidized_copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:oxidized_copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_exposed_copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_exposed_copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_exposed_copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_weathered_copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_weathered_copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_weathered_copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_oxidized_copper_shingles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_oxidized_copper_shingle_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_oxidized_copper_shingle_slab": {
+    "sound": "copper"
+  },
+  "bearing:copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:exposed_copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:exposed_copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:exposed_copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:weathered_copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:weathered_copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:weathered_copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:oxidized_copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:oxidized_copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:oxidized_copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_exposed_copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_exposed_copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_exposed_copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_weathered_copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_weathered_copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_weathered_copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:waxed_oxidized_copper_tiles": {
+    "sound": "copper"
+  },
+  "bearing:waxed_oxidized_copper_tile_stairs": {
+    "sound": "copper"
+  },
+  "bearing:waxed_oxidized_copper_tile_slab": {
+    "sound": "copper"
+  },
+  "bearing:andesite_scaffolding": {
+    "sound": "scaffolding"
+  },
+  "bearing:brass_scaffolding": {
+    "sound": "scaffolding"
+  },
+  "bearing:copper_scaffolding": {
+    "sound": "scaffolding"
+  },
+  "bearing:andesite_ladder": {
+    "sound": "metal"
+  },
+  "bearing:brass_ladder": {
+    "sound": "metal"
+  },
+  "bearing:copper_ladder": {
+    "sound": "metal"
+  },
+  "bearing:andesite_door": {
+    "sound": "stone"
+  },
+  "bearing:brass_door": {
+    "sound": "stone"
+  },
+  "bearing:copper_door": {
+    "sound": "stone"
+  },
+  "bearing:train_door": {
+    "sound": "netherite"
+  },
+  "bearing:framed_glass_door": {
+    "sound": "glass"
+  },
+  "bearing:train_trapdoor": {
+    "sound": "netherite"
+  },
+  "bearing:framed_glass_trapdoor": {
+    "sound": "glass"
+  },
+  "bearing:metal_girder": {
+    "sound": "netherite"
+  },
+  "bearing:metal_girder_encased_shaft": {
+    "sound": "netherite"
+  },
+  "bearing:metal_bracket": {
+    "sound": "netherite"
+  },
+  "bearing:wooden_bracket": {
+    "sound": "scaffolding"
+  },
+  "bearing:white_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:orange_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:magenta_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:light_blue_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:yellow_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:lime_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:pink_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:gray_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:light_gray_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:cyan_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:purple_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:blue_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:brown_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:green_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:red_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:black_table_cloth": {
+    "sound": "cloth"
+  },
+  "bearing:andesite_table_cloth": {
+    "sound": "metal"
+  },
+  "bearing:brass_table_cloth": {
+    "sound": "metal"
+  },
+  "bearing:copper_table_cloth": {
+    "sound": "metal"
+  },
+  "bearing:placard": {
+    "sound": "copper"
+  },
+  "bearing:copycat_panel": {
+    "sound": "metal"
+  },
+  "bearing:copycat_step": {
+    "sound": "metal"
+  }
+}

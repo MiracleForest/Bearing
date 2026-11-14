@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:chain_from_zinc"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S",
+      "C",
+      "S"
+    ],
+    "key": {
+      "S": {
+        "item": "bearing:zinc_nugget"
+      },
+      "C": {
+        "item": "bearing:zinc_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:zinc_ingot"
+      }
+    ],
+    "result": {
+      "item": "minecraft:iron_chain",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "bearing:track_station": {
+    "sound": "metal"
+  },
+  "bearing:small_bogey": {
+    "sound": "metal"
+  },
+  "bearing:large_bogey": {
+    "sound": "metal"
+  },
+  "bearing:controls": {
+    "sound": "metal"
+  }
+}

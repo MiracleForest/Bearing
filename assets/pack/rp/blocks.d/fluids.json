@@ -1,0 +1,23 @@
+{
+  "bearing:spout": {
+    "sound": "copper"
+  },
+  "bearing:item_drain": {
+    "sound": "copper"
+  },
+  "bearing:hose_pulley": {
+    "sound": "copper"
+  },
+  "bearing:portable_fluid_interface": {
+    "sound": "copper"
+  },
+  "bearing:honey": {
+    "sound": "honey_block"
+  },
+  "bearing:chocolate": {
+    "sound": "honey_block"
+  },
+  "bearing:fluids_test_depot": {
+    "sound": "stone"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "bearing:white_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:orange_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:magenta_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:light_blue_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:yellow_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:lime_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:pink_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:gray_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:light_gray_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:cyan_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:purple_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:blue_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:brown_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:green_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:red_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:black_toolbox": {
+    "sound": "wood"
+  },
+  "bearing:copper_backtank": {
+    "sound": "copper"
+  },
+  "bearing:netherite_backtank": {
+    "sound": "metal"
+  },
+  "bearing:lectern_controller": {
+    "sound": "wood"
+  },
+  "bearing:peculiar_bell": {
+    "sound": "anvil"
+  },
+  "bearing:haunted_bell": {
+    "sound": "anvil"
+  }
+}

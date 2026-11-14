@@ -1,0 +1,19 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "item": "bearing:asurine"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "bearing:crushed_raw_zinc",
+      "chance": 0.3
+    },
+    {
+      "id": "bearing:zinc_nugget",
+      "chance": 0.3
+    }
+  ]
+}

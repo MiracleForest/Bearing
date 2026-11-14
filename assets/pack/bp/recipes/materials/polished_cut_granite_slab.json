@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:polished_cut_granite_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "item": "bearing:polished_cut_granite"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:polished_cut_granite"
+      }
+    ],
+    "result": {
+      "item": "bearing:polished_cut_granite_slab",
+      "count": 6
+    }
+  }
+}

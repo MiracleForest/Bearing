@@ -1,0 +1,27 @@
+{
+  "type": "bearing:sequenced_assembly",
+  "ingredient": { "tag": "bearing:sleepers" },
+  "tags": {
+    "bearing:sleepers": ["minecraft:normal_stone_slab", "minecraft:smooth_stone_slab", "minecraft:andesite_slab"]
+  },
+  "transitional_item": { "item": "bearing:incomplete_track" },
+  "loops": 1,
+  "sequence": [
+    {
+      "type": "bearing:deploying",
+      "ingredients": [{ "item": "bearing:incomplete_track" }, [{ "item": "minecraft:iron_nugget" }, { "item": "bearing:zinc_nugget" }]],
+      "results": [{ "item": "bearing:incomplete_track" }]
+    },
+    {
+      "type": "bearing:deploying",
+      "ingredients": [{ "item": "bearing:incomplete_track" }, [{ "item": "minecraft:iron_nugget" }, { "item": "bearing:zinc_nugget" }]],
+      "results": [{ "item": "bearing:incomplete_track" }]
+    },
+    {
+      "type": "bearing:pressing",
+      "ingredients": [{ "item": "bearing:incomplete_track" }],
+      "results": [{ "item": "bearing:incomplete_track" }]
+    }
+  ],
+  "results": [{ "item": "bearing:track", "count": 1 }]
+}

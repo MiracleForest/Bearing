@@ -1,0 +1,59 @@
+{
+  "bearing:display_link": {
+    "sound": "metal"
+  },
+  "bearing:display_board": {
+    "sound": "metal"
+  },
+  "bearing:clipboard": {
+    "sound": "wood"
+  },
+  "bearing:white_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:magenta_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:light_blue_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:yellow_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:lime_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:pink_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:gray_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:light_gray_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:cyan_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:purple_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:blue_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:brown_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:green_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:red_nixie_tube": {
+    "sound": "glass"
+  },
+  "bearing:black_nixie_tube": {
+    "sound": "glass"
+  }
+}

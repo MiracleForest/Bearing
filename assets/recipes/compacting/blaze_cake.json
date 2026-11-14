@@ -1,0 +1,19 @@
+{
+  "type": "bearing:compacting",
+  "ingredients": [
+    {
+      "tag": "c:eggs"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "bearing:cinder_flour"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:blaze_cake_base"
+    }
+  ]
+}

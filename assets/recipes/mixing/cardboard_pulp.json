@@ -1,0 +1,26 @@
+{
+  "type": "bearing:mixing",
+  "ingredients": [
+    {
+      "tag": "bearing:pulpifiable"
+    },
+    {
+      "tag": "bearing:pulpifiable"
+    },
+    {
+      "tag": "bearing:pulpifiable"
+    },
+    {
+      "tag": "bearing:pulpifiable"
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 250
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:pulp"
+    }
+  ]
+}

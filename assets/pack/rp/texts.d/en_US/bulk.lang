@@ -1,0 +1,11 @@
+tile.bearing:millstone.name=Millstone
+tile.bearing:crushing_wheel.name=Crushing Wheel
+tile.bearing:crushing_wheel_controller.name=Crushing Wheel Controller
+tile.bearing:encased_fan.name=Encased Fan
+tile.bearing:nozzle.name=Nozzle
+death.attack.bearing.crush=%1$s went through the Crushing Wheels
+death.attack.bearing.crush.player=%1$s was fed to the Crushing Wheels by %2$s
+death.attack.bearing.fan_fire=%1$s was smoke-cured by an Encased Fan
+death.attack.bearing.fan_fire.player=%1$s was pushed into a smoking fan by %2$s
+death.attack.bearing.fan_lava=%1$s was reduced to ash by an Encased Fan
+death.attack.bearing.fan_lava.player=%1$s was shoved into a blasting fan by %2$s

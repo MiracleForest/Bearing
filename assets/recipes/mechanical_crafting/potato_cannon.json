@@ -1,0 +1,27 @@
+{
+  "type": "bearing:mechanical_crafting",
+  "category": "misc",
+  "accept_mirrored": true,
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "L": {
+      "item": "bearing:andesite_alloy"
+    },
+    "R": {
+      "item": "bearing:precision_mechanism"
+    },
+    "S": {
+      "item": "bearing:fluid_pipe"
+    }
+  },
+  "pattern": [
+    "LRSSS",
+    "CC   "
+  ],
+  "result": {
+    "count": 1,
+    "id": "bearing:potato_cannon"
+  }
+}

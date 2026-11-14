@@ -1,0 +1,83 @@
+{
+  "bearing_belt": {
+    "textures": "textures/blocks/belt"
+  },
+  "bearing_belt_pulley": {
+    "textures": "textures/blocks/belt_pulley"
+  },
+  "bearing_belt_casing_andesite": {
+    "textures": "textures/blocks/belt_casing_andesite"
+  },
+  "bearing_belt_casing_brass": {
+    "textures": "textures/blocks/belt_casing_brass"
+  },
+  "bearing_depot_top": {
+    "textures": "textures/blocks/depot_top"
+  },
+  "bearing_depot_side": {
+    "textures": "textures/blocks/depot_side"
+  },
+  "bearing_depot_bottom": {
+    "textures": "textures/blocks/depot_bottom"
+  },
+  "bearing_weighted_ejector": {
+    "textures": "textures/blocks/weighted_ejector_shaft"
+  },
+  "bearing_weighted_ejector_top": {
+    "textures": "textures/blocks/weighted_ejector_top"
+  },
+  "bearing_weighted_ejector_side": {
+    "textures": "textures/blocks/weighted_ejector_side"
+  },
+  "bearing_weighted_ejector_bottom": {
+    "textures": "textures/blocks/weighted_ejector_bottom"
+  },
+  "bearing_belt_white": {
+    "textures": "textures/blocks/belt_white"
+  },
+  "bearing_belt_orange": {
+    "textures": "textures/blocks/belt_orange"
+  },
+  "bearing_belt_magenta": {
+    "textures": "textures/blocks/belt_magenta"
+  },
+  "bearing_belt_light_blue": {
+    "textures": "textures/blocks/belt_light_blue"
+  },
+  "bearing_belt_yellow": {
+    "textures": "textures/blocks/belt_yellow"
+  },
+  "bearing_belt_lime": {
+    "textures": "textures/blocks/belt_lime"
+  },
+  "bearing_belt_pink": {
+    "textures": "textures/blocks/belt_pink"
+  },
+  "bearing_belt_gray": {
+    "textures": "textures/blocks/belt_gray"
+  },
+  "bearing_belt_light_gray": {
+    "textures": "textures/blocks/belt_light_gray"
+  },
+  "bearing_belt_cyan": {
+    "textures": "textures/blocks/belt_cyan"
+  },
+  "bearing_belt_purple": {
+    "textures": "textures/blocks/belt_purple"
+  },
+  "bearing_belt_blue": {
+    "textures": "textures/blocks/belt_blue"
+  },
+  "bearing_belt_brown": {
+    "textures": "textures/blocks/belt_brown"
+  },
+  "bearing_belt_green": {
+    "textures": "textures/blocks/belt_green"
+  },
+  "bearing_belt_red": {
+    "textures": "textures/blocks/belt_red"
+  },
+  "bearing_belt_black": {
+    "textures": "textures/blocks/belt_black"
+  }
+}

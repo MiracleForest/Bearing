@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:item_drain"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B",
+      "C"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:iron_bars"
+      },
+      "C": {
+        "item": "bearing:copper_casing"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:copper_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:item_drain"
+    }
+  }
+}

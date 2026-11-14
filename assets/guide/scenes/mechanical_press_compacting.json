@@ -1,0 +1,41 @@
+{
+  "id": "mechanical_press_compacting",
+  "size": [5, 5],
+  "blocks": [
+    {"at": [2, 1, 2], "id": "bearing:andesite_casing"},
+    {"at": [2, 2, 2], "id": "bearing:basin", "states": {"bearing:facing": 0}},
+    {"at": [2, 4, 2], "id": "bearing:mechanical_press", "states": {"bearing:axis": 0}},
+    {"at": [1, 4, 2], "id": "bearing:shaft", "states": {"bearing:axis": 0}},
+    {"at": [0, 4, 2], "id": "bearing:creative_motor", "states": {"bearing:facing": 5}}
+  ],
+  "timeline": [
+    {"show": "base", "from": "up"},
+    {"idle": 15},
+    {"show": [2, 1, 2], "from": "down"},
+    {"idle": 5},
+    {"show": [2, 2, 2], "from": "down"},
+    {"idle": 10},
+    {"show": [2, 4, 2], "from": "down"},
+    {"idle": 5},
+    {"show": [[0, 4, 2], [1, 4, 2]], "from": "east"},
+    {"idle": 10},
+    {"rotate": [[0, 4, 2], [2, 4, 2]], "rpm": 32},
+    {"item": "minecraft:iron_nugget", "at": [2.5, 3.6, 2.5], "to": [2.5, 2.6, 2.5], "ticks": 20},
+    {"idle": 20},
+    {"text": 1, "at": [2.5, 2.5, 2.5], "ticks": 70, "keyframe": true},
+    {"idle": 40},
+    {"item": "minecraft:iron_ingot", "at": [2.5, 2.6, 2.5], "ticks": 50},
+    {"idle": 50},
+    {"text": 2, "at": [2.5, 4.5, 2.5], "ticks": 80, "keyframe": true},
+    {"idle": 90},
+    {"set": [2, 1, 2], "id": "bearing:blaze_burner", "states": {"bearing:blaze": 3, "bearing:facing": 3}},
+    {"idle": 10},
+    {"outline": [2, 1, 2], "color": "red", "ticks": 70},
+    {"text": 3, "at": [2.5, 1.5, 2.5], "color": "red", "ticks": 70, "keyframe": true},
+    {"idle": 80},
+    {"input": [2.5, 4.5, 2.0], "action": "right", "item": "minecraft:iron_block", "ticks": 50, "keyframe": true},
+    {"idle": 10},
+    {"text": 4, "at": [2.5, 4.5, 2.0], "ticks": 70, "keyframe": true},
+    {"idle": 80}
+  ]
+}

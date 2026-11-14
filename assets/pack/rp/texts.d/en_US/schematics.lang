@@ -1,0 +1,7 @@
+tile.bearing:schematic_table.name=Schematic Table
+tile.bearing:schematicannon.name=Schematicannon
+tile.bearing:placed_crafting_blueprint.name=Crafting Blueprint
+item.bearing:empty_schematic.name=Empty Schematic
+item.bearing:schematic.name=Schematic
+item.bearing:schematic_and_quill.name=Schematic And Quill
+item.bearing:crafting_blueprint.name=Crafting Blueprint

@@ -1,0 +1,170 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:mechanical_piston_head",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "bearing:facing": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "bearing:sticky": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.mechanical_piston_head"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_piston_head_side",
+          "render_method": "alpha_test"
+        },
+        "head_side": {
+          "texture": "bearing_piston_head_side",
+          "render_method": "alpha_test"
+        },
+        "inner": {
+          "texture": "bearing_piston_inner",
+          "render_method": "alpha_test"
+        },
+        "front": {
+          "texture": "bearing_piston_front",
+          "render_method": "alpha_test"
+        },
+        "pole": {
+          "texture": "bearing_piston_pole",
+          "render_method": "alpha_test"
+        },
+        "pole_end": {
+          "texture": "bearing_piston_pole_end",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#8b6a3f",
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/mechanical_piston_head.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:facing') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              -90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 3",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 4",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 5",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              -90
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:sticky') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_piston_head_side",
+              "render_method": "alpha_test"
+            },
+            "head_side": {
+              "texture": "bearing_piston_head_side",
+              "render_method": "alpha_test"
+            },
+            "inner": {
+              "texture": "bearing_piston_inner",
+              "render_method": "alpha_test"
+            },
+            "front": {
+              "texture": "bearing_piston_front_sticky",
+              "render_method": "alpha_test"
+            },
+            "pole": {
+              "texture": "bearing_piston_pole",
+              "render_method": "alpha_test"
+            },
+            "pole_end": {
+              "texture": "bearing_piston_pole_end",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

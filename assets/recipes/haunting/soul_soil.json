@@ -1,0 +1,13 @@
+{
+  "type": "bearing:haunting",
+  "ingredients": [
+    {
+      "tag": "minecraft:dirt"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:soul_soil"
+    }
+  ]
+}

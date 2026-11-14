@@ -1,0 +1,164 @@
+{
+  "bearing_raw_zinc": {
+    "textures": "textures/items/raw_zinc"
+  },
+  "bearing_zinc_ingot": {
+    "textures": "textures/items/zinc_ingot"
+  },
+  "bearing_zinc_nugget": {
+    "textures": "textures/items/zinc_nugget"
+  },
+  "bearing_brass_ingot": {
+    "textures": "textures/items/brass_ingot"
+  },
+  "bearing_brass_nugget": {
+    "textures": "textures/items/brass_nugget"
+  },
+  "bearing_brass_sheet": {
+    "textures": "textures/items/brass_sheet"
+  },
+  "bearing_copper_sheet": {
+    "textures": "textures/items/copper_sheet"
+  },
+  "bearing_iron_sheet": {
+    "textures": "textures/items/iron_sheet"
+  },
+  "bearing_golden_sheet": {
+    "textures": "textures/items/golden_sheet"
+  },
+  "bearing_copper_nugget": {
+    "textures": "textures/items/copper_nugget"
+  },
+  "bearing_andesite_alloy": {
+    "textures": "textures/items/andesite_alloy"
+  },
+  "bearing_crushed_raw_iron": {
+    "textures": "textures/items/crushed_raw_iron"
+  },
+  "bearing_crushed_raw_gold": {
+    "textures": "textures/items/crushed_raw_gold"
+  },
+  "bearing_crushed_raw_copper": {
+    "textures": "textures/items/crushed_raw_copper"
+  },
+  "bearing_crushed_raw_zinc": {
+    "textures": "textures/items/crushed_raw_zinc"
+  },
+  "bearing_powdered_obsidian": {
+    "textures": "textures/items/powdered_obsidian"
+  },
+  "bearing_cinder_flour": {
+    "textures": "textures/items/cinder_flour"
+  },
+  "bearing_wheat_flour": {
+    "textures": "textures/items/wheat_flour"
+  },
+  "bearing_dough": {
+    "textures": "textures/items/dough"
+  },
+  "bearing_rose_quartz": {
+    "textures": "textures/items/rose_quartz"
+  },
+  "bearing_polished_rose_quartz": {
+    "textures": "textures/items/polished_rose_quartz"
+  },
+  "bearing_electron_tube": {
+    "textures": "textures/items/electron_tube"
+  },
+  "bearing_precision_mechanism": {
+    "textures": "textures/items/precision_mechanism"
+  },
+  "bearing_propeller": {
+    "textures": "textures/items/propeller"
+  },
+  "bearing_whisk": {
+    "textures": "textures/items/whisk"
+  },
+  "bearing_brass_hand": {
+    "textures": "textures/items/brass_hand"
+  },
+  "bearing_crafter_slot_cover": {
+    "textures": "textures/items/crafter_slot_cover"
+  },
+  "bearing_sturdy_sheet": {
+    "textures": "textures/items/sturdy_sheet"
+  },
+  "bearing_transmitter": {
+    "textures": "textures/items/transmitter"
+  },
+  "bearing_pulp": {
+    "textures": "textures/items/pulp"
+  },
+  "bearing_blaze_cake_base": {
+    "textures": "textures/items/blaze_cake_base"
+  },
+  "bearing_crushed_raw_osmium": {
+    "textures": "textures/items/crushed_raw_osmium"
+  },
+  "bearing_crushed_raw_platinum": {
+    "textures": "textures/items/crushed_raw_platinum"
+  },
+  "bearing_crushed_raw_silver": {
+    "textures": "textures/items/crushed_raw_silver"
+  },
+  "bearing_crushed_raw_tin": {
+    "textures": "textures/items/crushed_raw_tin"
+  },
+  "bearing_crushed_raw_lead": {
+    "textures": "textures/items/crushed_raw_lead"
+  },
+  "bearing_crushed_raw_quicksilver": {
+    "textures": "textures/items/crushed_raw_quicksilver"
+  },
+  "bearing_crushed_raw_aluminum": {
+    "textures": "textures/items/crushed_raw_aluminum"
+  },
+  "bearing_crushed_raw_uranium": {
+    "textures": "textures/items/crushed_raw_uranium"
+  },
+  "bearing_crushed_raw_nickel": {
+    "textures": "textures/items/crushed_raw_nickel"
+  },
+  "bearing_incomplete_precision_mechanism": {
+    "textures": "textures/items/incomplete_precision_mechanism"
+  },
+  "bearing_unprocessed_obsidian_sheet": {
+    "textures": "textures/items/unprocessed_obsidian_sheet"
+  },
+  "bearing_cardboard": {
+    "textures": "textures/items/cardboard"
+  },
+  "bearing_experience_nugget": {
+    "textures": "textures/items/experience_nugget"
+  },
+  "bearing_refined_radiance": {
+    "textures": "textures/items/refined_radiance"
+  },
+  "bearing_shadow_steel": {
+    "textures": "textures/items/shadow_steel"
+  },
+  "bearing_chromatic_compound": {
+    "textures": "textures/items/chromatic_compound"
+  },
+  "bearing_blaze_cake": {
+    "textures": "textures/items/blaze_cake"
+  },
+  "bearing_creative_blaze_cake": {
+    "textures": "textures/items/creative_blaze_cake"
+  },
+  "bearing_bar_of_chocolate": {
+    "textures": "textures/items/bar_of_chocolate"
+  },
+  "bearing_sweet_roll": {
+    "textures": "textures/items/sweet_roll"
+  },
+  "bearing_chocolate_glazed_berries": {
+    "textures": "textures/items/chocolate_glazed_berries"
+  },
+  "bearing_honeyed_apple": {
+    "textures": "textures/items/honeyed_apple"
+  },
+  "bearing_builders_tea": {
+    "textures": "textures/items/builders_tea"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:small_deepslate_brick_slab_from_deepslate_pillar_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:deepslate_pillar"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:deepslate_pillar"
+      }
+    ],
+    "result": {
+      "item": "bearing:small_deepslate_brick_slab",
+      "count": 2
+    }
+  }
+}

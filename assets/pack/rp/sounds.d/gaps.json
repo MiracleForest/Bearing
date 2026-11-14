@@ -1,0 +1,14 @@
+{
+  "bearing.kinetics.cogs": {
+    "category": "block",
+    "min_distance": 2.0,
+    "max_distance": 16.0,
+    "sounds": [{ "name": "sounds/bearing/kinetics_cogs", "volume": 1.0 }]
+  },
+  "bearing.kinetics.rumble": {
+    "category": "block",
+    "min_distance": 2.0,
+    "max_distance": 16.0,
+    "sounds": [{ "name": "sounds/bearing/kinetics_rumble", "volume": 1.0 }]
+  }
+}

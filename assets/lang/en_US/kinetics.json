@@ -1,0 +1,16 @@
+{
+  "bearing.generic.unit.rpm": "RPM",
+  "bearing.generic.unit.stress": "su",
+  "br.kinetics.cmd.none": "No kinetic block at {0}.",
+  "br.kinetics.cmd.block": "{0} at {1}",
+  "br.kinetics.cmd.speed": "Speed: {0} {1} (theoretical {2} {1})",
+  "br.kinetics.cmd.generated": "Generating: {0} {1}",
+  "br.kinetics.cmd.source": "Source: {0}",
+  "br.kinetics.cmd.no_source": "Source: none",
+  "br.kinetics.cmd.stress": "Stress impact: {0} {1}/{2}, capacity: {3} {1}/{2}",
+  "br.kinetics.cmd.network": "Network {0}: {1} blocks, {2} sources",
+  "br.kinetics.cmd.usage": "Stress: {0} / {1} {2}",
+  "br.kinetics.cmd.no_network": "Not part of a network.",
+  "br.kinetics.cmd.not_generator": "No generator at {0}.",
+  "br.kinetics.cmd.speed_set": "Generator at {0} now turns at {1} {2}."
+}

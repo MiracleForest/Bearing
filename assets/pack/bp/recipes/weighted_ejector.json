@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:weighted_ejector"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A",
+      "D",
+      "I"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:golden_sheet"
+      },
+      "D": {
+        "item": "bearing:depot"
+      },
+      "I": {
+        "item": "bearing:cogwheel"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:depot"
+      }
+    ],
+    "result": {
+      "item": "bearing:weighted_ejector"
+    }
+  }
+}

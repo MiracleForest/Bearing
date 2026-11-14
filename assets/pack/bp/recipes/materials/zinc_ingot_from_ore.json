@@ -1,0 +1,14 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "bearing:zinc_ingot_from_ore"
+    },
+    "tags": [
+      "furnace",
+      "blast_furnace"
+    ],
+    "input": "bearing:zinc_ore",
+    "output": "bearing:zinc_ingot"
+  }
+}

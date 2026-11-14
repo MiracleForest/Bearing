@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:mechanical_roller"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A",
+      "C",
+      "I"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:electron_tube"
+      },
+      "C": {
+        "item": "bearing:andesite_casing"
+      },
+      "I": {
+        "item": "bearing:crushing_wheel"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:mechanical_roller"
+    }
+  }
+}

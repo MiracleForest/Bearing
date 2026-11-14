@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:filter_copying_8"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:filter",
+        "count": 8
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:filter"
+      }
+    ],
+    "result": {
+      "item": "bearing:filter",
+      "count": 8
+    }
+  }
+}

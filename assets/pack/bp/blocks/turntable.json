@@ -1,0 +1,41 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:turntable",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "bearing:rotor": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.turntable",
+        "bone_visibility": {
+          "casing": "q.block_state('bearing:rotor') != 2",
+          "rotor": "q.block_state('bearing:rotor') != 1"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_turntable_model",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:map_color": "#9c7a4a",
+      "minecraft:loot": "loot_tables/blocks/turntable.json"
+    }
+  }
+}

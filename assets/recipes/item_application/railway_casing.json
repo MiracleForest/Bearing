@@ -1,0 +1,16 @@
+{
+  "type": "bearing:item_application",
+  "ingredients": [
+    {
+      "item": "bearing:brass_casing"
+    },
+    {
+      "item": "bearing:sturdy_sheet"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:railway_casing"
+    }
+  ]
+}

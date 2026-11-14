@@ -1,0 +1,13 @@
+{
+  "type": "bearing:haunting",
+  "ingredients": [
+    {
+      "tag": "c:cobblestones"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:blackstone"
+    }
+  ]
+}

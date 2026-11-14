@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:track_observer_from_wooden_pressure_plate"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:railway_casing"
+      },
+      {
+        "item": "minecraft:wooden_pressure_plate"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:railway_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:track_observer",
+      "count": 2
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "bearing:splashing",
+  "ingredients": [
+    {
+      "item": "minecraft:magma"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:obsidian"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:waxed_copper_tile_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "item": "bearing:waxed_copper_tiles"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:waxed_copper_tiles"
+      }
+    ],
+    "result": {
+      "item": "bearing:waxed_copper_tile_slab",
+      "count": 6
+    }
+  }
+}

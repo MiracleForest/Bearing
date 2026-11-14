@@ -1,0 +1,11 @@
+{
+  "bearing:mechanical_crafter": {
+    "sound": "metal"
+  },
+  "bearing:mechanical_saw": {
+    "sound": "metal"
+  },
+  "bearing:mechanical_drill": {
+    "sound": "metal"
+  }
+}

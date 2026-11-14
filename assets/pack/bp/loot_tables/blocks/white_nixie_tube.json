@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "entries": [
+        {
+          "name": "bearing:nixie_tube",
+          "type": "item",
+          "weight": 1
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:sticky_mechanical_piston"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S",
+      "P"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:slime_ball"
+      },
+      "P": {
+        "item": "bearing:mechanical_piston"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:mechanical_piston"
+      }
+    ],
+    "result": {
+      "item": "bearing:sticky_mechanical_piston",
+      "count": 1
+    }
+  }
+}

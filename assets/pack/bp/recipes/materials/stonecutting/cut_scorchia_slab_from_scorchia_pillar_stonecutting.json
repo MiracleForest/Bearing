@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:cut_scorchia_slab_from_scorchia_pillar_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:scorchia_pillar"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:scorchia_pillar"
+      }
+    ],
+    "result": {
+      "item": "bearing:cut_scorchia_slab",
+      "count": 2
+    }
+  }
+}

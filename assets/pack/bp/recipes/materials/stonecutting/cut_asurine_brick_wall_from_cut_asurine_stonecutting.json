@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:cut_asurine_brick_wall_from_cut_asurine_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:cut_asurine"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:cut_asurine"
+      }
+    ],
+    "result": {
+      "item": "bearing:cut_asurine_brick_wall",
+      "count": 1
+    }
+  }
+}

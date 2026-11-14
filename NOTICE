@@ -1,0 +1,25 @@
+Bearing
+Copyright (c) 2026 MiracleForest and the Bearing contributors
+
+Bearing is licensed under the GNU Lesser General Public License v3.0 or later
+(COPYING.LESSER, which supplements COPYING).
+
+Bearing is an unofficial Bedrock adaptation of Create 6.0.10 by simibubi and the
+Creators of Create. Parts of Bearing's logic are adapted from Create's source code,
+which is licensed under the MIT License (LICENSES/Create-MIT.txt):
+
+    Copyright (c) The Create Team / The Creators of Create
+
+Parts of Bearing's Ponder screens and scene player are adapted from the Ponder
+library (https://github.com/Creators-of-Create/Ponder), which is licensed under the
+MIT License (LICENSES/Ponder-MIT.txt):
+
+    Copyright (c) 2022 The Create Team
+
+Create's assets (textures, models, sounds, language files) are All Rights Reserved
+and are not used: Bearing's textures, models and sounds are its own, and its
+language files are written independently. Game names of blocks, items and mechanics, and some short labels, match
+Create's because they identify the same features.
+
+Bearing is not affiliated with or endorsed by the Create Team, Mojang Studios or
+Microsoft.

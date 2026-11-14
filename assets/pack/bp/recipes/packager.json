@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:packager"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " C ",
+      "CAC",
+      "RCR"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:cardboard_block"
+      },
+      "C": {
+        "item": "minecraft:iron_ingot"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "result": {
+      "item": "bearing:packager",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "bearing:cardboard_block"
+      }
+    ]
+  }
+}

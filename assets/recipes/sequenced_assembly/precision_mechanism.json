@@ -1,0 +1,96 @@
+{
+  "type": "bearing:sequenced_assembly",
+  "ingredient": {
+    "tag": "c:plates/gold"
+  },
+  "loops": 5,
+  "results": [
+    {
+      "id": "bearing:precision_mechanism",
+      "chance": 120.0
+    },
+    {
+      "id": "bearing:golden_sheet",
+      "chance": 8.0
+    },
+    {
+      "id": "bearing:andesite_alloy",
+      "chance": 8.0
+    },
+    {
+      "id": "bearing:cogwheel",
+      "chance": 5.0
+    },
+    {
+      "id": "minecraft:gold_nugget",
+      "chance": 3.0
+    },
+    {
+      "id": "bearing:shaft",
+      "chance": 2.0
+    },
+    {
+      "id": "bearing:crushed_raw_gold",
+      "chance": 2.0
+    },
+    {
+      "id": "minecraft:iron_ingot"
+    },
+    {
+      "id": "minecraft:clock"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "bearing:deploying",
+      "ingredients": [
+        {
+          "item": "bearing:incomplete_precision_mechanism"
+        },
+        {
+          "item": "bearing:cogwheel"
+        }
+      ],
+      "results": [
+        {
+          "id": "bearing:incomplete_precision_mechanism"
+        }
+      ]
+    },
+    {
+      "type": "bearing:deploying",
+      "ingredients": [
+        {
+          "item": "bearing:incomplete_precision_mechanism"
+        },
+        {
+          "item": "bearing:large_cogwheel"
+        }
+      ],
+      "results": [
+        {
+          "id": "bearing:incomplete_precision_mechanism"
+        }
+      ]
+    },
+    {
+      "type": "bearing:deploying",
+      "ingredients": [
+        {
+          "item": "bearing:incomplete_precision_mechanism"
+        },
+        {
+          "tag": "c:nuggets/iron"
+        }
+      ],
+      "results": [
+        {
+          "id": "bearing:incomplete_precision_mechanism"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "bearing:incomplete_precision_mechanism"
+  }
+}

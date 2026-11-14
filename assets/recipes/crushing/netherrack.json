@@ -1,0 +1,18 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "item": "minecraft:netherrack"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "bearing:cinder_flour"
+    },
+    {
+      "id": "bearing:cinder_flour",
+      "chance": 0.5
+    }
+  ]
+}

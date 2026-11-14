@@ -1,0 +1,13 @@
+{
+  "type": "bearing:pressing",
+  "ingredients": [
+    {
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:golden_sheet"
+    }
+  ]
+}

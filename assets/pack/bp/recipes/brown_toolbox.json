@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:brown_toolbox"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " C ",
+      "SWS",
+      " L "
+    ],
+    "key": {
+      "C": {
+        "item": "bearing:cogwheel"
+      },
+      "S": {
+        "item": "bearing:golden_sheet"
+      },
+      "W": {
+        "item": "minecraft:chest"
+      },
+      "L": {
+        "item": "minecraft:leather"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:cogwheel"
+      }
+    ],
+    "result": {
+      "item": "bearing:brown_toolbox",
+      "count": 1
+    }
+  }
+}

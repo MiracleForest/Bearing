@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:white_sail"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "WS",
+      "SA"
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:wool"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      },
+      "A": {
+        "item": "bearing:andesite_alloy"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ],
+    "result": {
+      "item": "bearing:white_sail",
+      "count": 2
+    }
+  }
+}

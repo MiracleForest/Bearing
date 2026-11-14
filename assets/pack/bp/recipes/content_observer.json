@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:content_observer"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "R",
+      "B",
+      "I"
+    ],
+    "key": {
+      "R": {
+        "item": "bearing:electron_tube"
+      },
+      "B": {
+        "item": "bearing:brass_casing"
+      },
+      "I": {
+        "item": "minecraft:observer"
+      }
+    },
+    "result": {
+      "item": "bearing:content_observer",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "bearing:electron_tube"
+      }
+    ]
+  }
+}

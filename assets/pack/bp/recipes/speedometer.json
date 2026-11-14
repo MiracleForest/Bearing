@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:speedometer"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "C",
+      "A"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:andesite_casing"
+      },
+      "C": {
+        "item": "minecraft:compass"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:speedometer",
+      "count": 1
+    }
+  }
+}

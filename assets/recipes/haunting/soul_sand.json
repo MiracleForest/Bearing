@@ -1,0 +1,13 @@
+{
+  "type": "bearing:haunting",
+  "ingredients": [
+    {
+      "tag": "minecraft:sand"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:soul_sand"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "bearing.recipe.mechanical_crafting": "Mechanical Crafting",
+  "bearing.recipe.sawing": "Sawing",
+  "bearing.recipe.block_cutting": "Block Cutting",
+  "bearing.logistics.recipe_filter": "Recipe Filter",
+  "br.crafter.inputs_connected": "Crafter inputs connected",
+  "br.crafter.inputs_disconnected": "Crafter inputs disconnected"
+}

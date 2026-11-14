@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:white_toolbox_dyeing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "tag": "bearing:toolbox"
+      },
+      {
+        "item": "minecraft:white_dye"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:white_dye"
+      }
+    ],
+    "result": {
+      "item": "bearing:white_toolbox"
+    }
+  }
+}

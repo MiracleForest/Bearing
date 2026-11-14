@@ -1,0 +1,17 @@
+{
+  "type": "bearing:deploying",
+  "ingredients": [
+    {
+      "item": "bearing:waxed_copper_tile_slab"
+    },
+    {
+      "tag": "minecraft:axes"
+    }
+  ],
+  "results": [
+    {
+      "item": "bearing:copper_tile_slab"
+    }
+  ],
+  "keep_held_item": true
+}

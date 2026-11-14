@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:metal_bracket"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "PCP"
+    ],
+    "key": {
+      "C": {
+        "item": "bearing:andesite_alloy"
+      },
+      "P": {
+        "item": "minecraft:iron_ingot"
+      },
+      "S": {
+        "item": "minecraft:iron_nugget"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ],
+    "result": {
+      "item": "bearing:metal_bracket",
+      "count": 4
+    }
+  }
+}

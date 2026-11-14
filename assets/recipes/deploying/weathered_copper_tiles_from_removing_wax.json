@@ -1,0 +1,17 @@
+{
+  "type": "bearing:deploying",
+  "ingredients": [
+    {
+      "item": "bearing:waxed_weathered_copper_tiles"
+    },
+    {
+      "tag": "minecraft:axes"
+    }
+  ],
+  "results": [
+    {
+      "item": "bearing:weathered_copper_tiles"
+    }
+  ],
+  "keep_held_item": true
+}

@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:rose_quartz_tiles_from_polished_rose_quartz_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:polished_rose_quartz"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:polished_rose_quartz"
+      }
+    ],
+    "result": {
+      "item": "bearing:rose_quartz_tiles",
+      "count": 2
+    }
+  }
+}

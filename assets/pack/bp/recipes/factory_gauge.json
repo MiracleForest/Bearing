@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:factory_gauge"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:stock_link"
+      },
+      {
+        "item": "bearing:precision_mechanism"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:stock_link"
+      }
+    ],
+    "result": {
+      "item": "bearing:factory_gauge",
+      "count": 2
+    }
+  }
+}

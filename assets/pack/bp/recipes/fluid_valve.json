@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "bearing:fluid_valve" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "bearing:iron_sheet" },
+      { "item": "bearing:fluid_pipe" }
+    ],
+    "unlock": [{ "item": "bearing:fluid_pipe" }],
+    "result": { "item": "bearing:fluid_valve" }
+  }
+}

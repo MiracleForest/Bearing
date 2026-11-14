@@ -1,0 +1,15 @@
+{
+  "bearing.contraptions.movement_mode": "Movement Mode",
+  "bearing.contraptions.movement_mode.move_place": "Turn into blocks on every stop",
+  "bearing.contraptions.movement_mode.move_place_returned": "Turn into blocks only at start position",
+  "bearing.contraptions.movement_mode.move_never_place": "Stay assembled until the anchor is gone",
+  "bearing.gui.assembly.exception.noPistonPoles": "This Piston's row of Extension Poles has gaps",
+  "bearing.gui.assembly.exception.tooManyPistonPoles": "This Piston has more Extension Poles than allowed.\nCurrent limit: {0}",
+  "bearing.gui.assembly.exception.no_contacts": "An Elevator needs a sideways-facing Redstone Contact on its structure",
+  "bearing.gui.assembly.exception.too_many_contacts": "An Elevator may carry only a single Redstone Contact",
+  "bearing.gui.assembly.exception.column_conflict": "These contacts are already claimed by a different Elevator",
+  "bearing.elevator_contact.title": "Elevator Contact",
+  "bearing.elevator_contact.floor_identifier": "Floor Identifier",
+  "bearing.elevator_contact.floor_description": "Floor Description",
+  "bearing.gui.goggles.pole_length": "Pole Length:"
+}

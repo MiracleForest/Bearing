@@ -1,0 +1,23 @@
+{
+  "bearing:fluid_pipe": {
+    "sound": "metal"
+  },
+  "bearing:glass_fluid_pipe": {
+    "sound": "glass"
+  },
+  "bearing:encased_fluid_pipe": {
+    "sound": "metal"
+  },
+  "bearing:mechanical_pump": {
+    "sound": "metal"
+  },
+  "bearing:fluid_valve": {
+    "sound": "metal"
+  },
+  "bearing:smart_fluid_pipe": {
+    "sound": "metal"
+  },
+  "bearing:pipes_test_tank": {
+    "sound": "metal"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "processing_time": 500,
+  "results": [
+    {
+      "id": "bearing:powdered_obsidian"
+    },
+    {
+      "id": "minecraft:obsidian",
+      "chance": 0.75
+    }
+  ]
+}

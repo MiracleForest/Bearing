@@ -1,0 +1,272 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:sticker",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "bearing:facing": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "bearing:extended": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:map_color": "#9a9d96",
+      "minecraft:loot": "loot_tables/blocks/sticker.json",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_sticker_side",
+          "render_method": "opaque"
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:facing') == 0 && q.block_state('bearing:extended') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_sticker_front",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 0 && q.block_state('bearing:extended') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_sticker_front_extended",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 1 && q.block_state('bearing:extended') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_sticker_front",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 1 && q.block_state('bearing:extended') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "bearing_sticker_front_extended",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 2 && q.block_state('bearing:extended') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_sticker_front",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 2 && q.block_state('bearing:extended') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_sticker_front_extended",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 3 && q.block_state('bearing:extended') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_sticker_front",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 3 && q.block_state('bearing:extended') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "bearing_sticker_front_extended",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 4 && q.block_state('bearing:extended') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_sticker_front",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 4 && q.block_state('bearing:extended') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_sticker_front_extended",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 5 && q.block_state('bearing:extended') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_sticker_front",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 5 && q.block_state('bearing:extended') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_sticker_side",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "bearing_sticker_front_extended",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "bearing_sticker_back",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

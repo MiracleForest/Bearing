@@ -1,0 +1,4 @@
+tile.bearing:track.name=Train Track
+item.bearing:track=Train Track
+tile.bearing:fake_track.name=Track Marker for Maps
+item.bearing:incomplete_track=Incomplete Track

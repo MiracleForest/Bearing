@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:mangrove_window_pane"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "bearing:mangrove_window"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:mangrove_window"
+      }
+    ],
+    "result": {
+      "item": "bearing:mangrove_window_pane",
+      "count": 16
+    }
+  }
+}

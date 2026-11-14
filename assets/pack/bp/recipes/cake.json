@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:cake"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " M ",
+      "SES",
+      " P "
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:milk_bucket"
+      },
+      "S": {
+        "item": "minecraft:sugar"
+      },
+      "E": {
+        "item": "minecraft:egg"
+      },
+      "P": {
+        "item": "bearing:dough"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:dough"
+      }
+    ],
+    "result": {
+      "item": "minecraft:cake",
+      "count": 1
+    }
+  }
+}

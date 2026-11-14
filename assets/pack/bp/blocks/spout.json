@@ -1,0 +1,66 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:spout",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "bearing:nozzle": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.spout",
+        "bone_visibility": {
+          "nozzle_top": "q.block_state('bearing:nozzle') == 0",
+          "nozzle_middle": "q.block_state('bearing:nozzle') == 0",
+          "nozzle_bottom": "q.block_state('bearing:nozzle') == 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_spout",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -7,
+          0,
+          -7
+        ],
+        "size": [
+          14,
+          16,
+          14
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -7,
+          0,
+          -7
+        ],
+        "size": [
+          14,
+          16,
+          14
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#c46e43",
+      "minecraft:loot": "loot_tables/blocks/spout.json"
+    }
+  }
+}

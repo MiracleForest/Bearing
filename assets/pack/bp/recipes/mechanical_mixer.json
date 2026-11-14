@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:mechanical_mixer"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["S", "C", "I"],
+    "key": {
+      "S": { "item": "bearing:cogwheel" },
+      "C": { "item": "bearing:andesite_casing" },
+      "I": { "item": "bearing:whisk" }
+    },
+    "unlock": [{ "item": "bearing:andesite_casing" }],
+    "result": { "item": "bearing:mechanical_mixer" }
+  }
+}

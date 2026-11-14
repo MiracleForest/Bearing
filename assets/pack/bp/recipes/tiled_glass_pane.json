@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:tiled_glass_pane"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "bearing:tiled_glass"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:tiled_glass"
+      }
+    ],
+    "result": {
+      "item": "bearing:tiled_glass_pane",
+      "count": 16
+    }
+  }
+}

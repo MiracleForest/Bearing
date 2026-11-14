@@ -1,0 +1,50 @@
+{
+  "bearing_fluid_pipe": {
+    "textures": "textures/blocks/fluid_pipe"
+  },
+  "bearing_glass_fluid_pipe": {
+    "textures": "textures/blocks/glass_fluid_pipe"
+  },
+  "bearing_encased_fluid_pipe": {
+    "textures": "textures/blocks/encased_fluid_pipe"
+  },
+  "bearing_mechanical_pump": {
+    "textures": "textures/blocks/mechanical_pump"
+  },
+  "bearing_fluid_valve": {
+    "textures": "textures/blocks/fluid_valve"
+  },
+  "bearing_smart_fluid_pipe": {
+    "textures": "textures/blocks/smart_fluid_pipe"
+  },
+  "bearing_pipe_bracket_wood": {
+    "textures": "textures/blocks/pipe_bracket_wood"
+  },
+  "bearing_pipe_bracket_metal": {
+    "textures": "textures/blocks/pipe_bracket_metal"
+  },
+  "bearing_pipes_test_tank": {
+    "textures": "textures/blocks/pipes_test_tank"
+  },
+  "bearing_pipe_fluid_water": {
+    "textures": "textures/blocks/pipe_fluid_water"
+  },
+  "bearing_pipe_fluid_lava": {
+    "textures": "textures/blocks/pipe_fluid_lava"
+  },
+  "bearing_pipe_fluid_honey": {
+    "textures": "textures/blocks/pipe_fluid_honey"
+  },
+  "bearing_pipe_fluid_chocolate": {
+    "textures": "textures/blocks/pipe_fluid_chocolate"
+  },
+  "bearing_pipe_fluid_milk": {
+    "textures": "textures/blocks/pipe_fluid_milk"
+  },
+  "bearing_pipe_fluid_potion": {
+    "textures": "textures/blocks/pipe_fluid_potion"
+  },
+  "bearing_pipe_fluid_tea": {
+    "textures": "textures/blocks/pipe_fluid_tea"
+  }
+}

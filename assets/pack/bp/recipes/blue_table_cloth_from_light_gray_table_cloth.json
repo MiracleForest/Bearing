@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:blue_table_cloth_from_light_gray_table_cloth"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:blue_dye"
+      },
+      {
+        "item": "bearing:light_gray_table_cloth"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:blue_dye"
+      }
+    ],
+    "result": {
+      "item": "bearing:blue_table_cloth",
+      "count": 1
+    }
+  }
+}

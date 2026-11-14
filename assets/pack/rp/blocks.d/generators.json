@@ -1,0 +1,68 @@
+{
+  "bearing:hand_crank": {
+    "sound": "wood"
+  },
+  "bearing:copper_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:white_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:orange_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:magenta_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:light_blue_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:yellow_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:lime_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:pink_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:gray_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:light_gray_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:cyan_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:purple_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:blue_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:brown_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:green_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:red_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:black_valve_handle": {
+    "sound": "copper"
+  },
+  "bearing:water_wheel": {
+    "sound": "wood"
+  },
+  "bearing:large_water_wheel": {
+    "sound": "wood"
+  },
+  "bearing:water_wheel_structure": {
+    "sound": "wood"
+  },
+  "bearing:creative_motor": {
+    "sound": "metal"
+  }
+}

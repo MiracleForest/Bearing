@@ -1,0 +1,8 @@
+{
+  "bearing_wrench": {
+    "textures": "textures/items/wrench"
+  },
+  "bearing_goggles": {
+    "textures": "textures/items/goggles"
+  }
+}

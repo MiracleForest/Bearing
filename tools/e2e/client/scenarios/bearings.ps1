@@ -1,0 +1,131 @@
+# Rotating contraptions (U21) on a real client: a mechanical bearing turning a cross of sails, a
+# cart assembler and a controller rail, then the bearings selftests on this world's server.
+#   local / remote-mod: the sails turn smoothly (client mod), the bearing's plate turns with them.
+#   remote-vanilla:     a client without the mod sees the blocks move as falling-block displays.
+# Screenshots: out/bearings/{built,turning-a,turning-b,rails,placed,cart-placing,cart-gone,coupled}.png
+$vanilla = $script:Mode -eq 'remote-vanilla'
+# Sets a test generator's speed and waits for the server to confirm it (sent again when lost; a
+# failed attempt is pictured).
+function Set-GeneratorSpeed([string]$rel, [int]$rpm, [string]$picture) {
+    try { Invoke-ChatConfirmed "/bearing kinetics $rel speed $rpm" "Generator at -?\d+ -?\d+ -?\d+ now turns at $rpm " | Out-Null }
+    catch { Save-Screenshot $picture | Out-Null; throw }
+}
+
+# Two pictures of a moving contraption must differ in a region of the screen (by default right of
+# the chat lines, above the hotbar): the structure moves on the client (U34).
+function Assert-ContraptionMoved([string]$a, [string]$b, [string]$what, [double]$x0 = 0.42, [double]$x1 = 0.85, [double]$y0 = 0.05, [double]$y1 = 0.85) {
+    Add-Type -AssemblyName System.Drawing
+    $ia = [System.Drawing.Bitmap]::new($a); $ib = [System.Drawing.Bitmap]::new($b)
+    try {
+        $changed = 0; $total = 0
+        for ($x = [int]($ia.Width * $x0); $x -lt [int]($ia.Width * $x1); $x += 8) {
+            for ($y = [int]($ia.Height * $y0); $y -lt [int]($ia.Height * $y1); $y += 8) {
+                $p = $ia.GetPixel($x, $y); $q = $ib.GetPixel($x, $y); $total++
+                if ([Math]::Abs($p.R - $q.R) + [Math]::Abs($p.G - $q.G) + [Math]::Abs($p.B - $q.B) -gt 60) { $changed++ }
+            }
+        }
+    } finally { $ia.Dispose(); $ib.Dispose() }
+    Write-Step "${what}: $changed of $total sampled pixels changed between the two pictures"
+    if ($changed -lt [Math]::Max(10, $total * 0.01)) { throw "$what did not move on the client ($changed of $total pixels changed)" }
+}
+
+
+Reset-CameraPerspective
+Invoke-Chat '/gamemode creative'
+Invoke-Chat '/time set noon'
+Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.5 ~'
+Start-Sleep -Milliseconds 500
+# a mechanical bearing facing west (towards the player) on a test source; a cross of sails in front
+Invoke-Chat '/setblock ~9 ~2 ~ bearing:kinetics_test_source ["bearing:axis"=0]'
+Invoke-Chat '/setblock ~8 ~2 ~ bearing:mechanical_bearing ["bearing:facing"=4]'
+Invoke-Chat '/setblock ~7 ~2 ~ bearing:white_sail ["bearing:facing"=4]'
+foreach ($o in 1, 2) {
+    Invoke-Chat "/setblock ~7 ~$(2 + $o) ~ bearing:red_sail [""bearing:facing""=4]"
+    Invoke-Chat "/setblock ~7 ~$(2 - $o) ~ bearing:white_sail [""bearing:facing""=4]"
+    Invoke-Chat "/setblock ~7 ~2 ~$o bearing:white_sail [""bearing:facing""=4]"
+    Invoke-Chat "/setblock ~7 ~2 ~-$o bearing:white_sail [""bearing:facing""=4]"
+}
+# rails: a cart assembler on the left, a controller rail on the right
+Invoke-Chat '/setblock ~5 ~ ~-4 bearing:cart_assembler ["bearing:rail_axis"=1,"bearing:rail_type"=1]'
+Invoke-Chat '/setblock ~5 ~ ~4 bearing:controller_rail ["bearing:rail_axis"=1,"bearing:power"=15]'
+Start-Sleep -Seconds 2
+Save-Screenshot 'built' | Out-Null
+
+$mark = Get-LogMark
+Set-GeneratorSpeed '~9 ~2 ~' 32 'speed-32'
+if (-not $vanilla) { Wait-LogLine 'mechanical_bearing at .* assembled contraption #\d+ \(9 blocks\)' 30 -Since $mark | Out-Null }
+Start-Sleep -Milliseconds 1200
+$a = Save-Screenshot 'turning-a'
+Start-Sleep -Milliseconds 700
+$b = Save-Screenshot 'turning-b'
+Assert-ContraptionMoved $a $b 'the turning sails'
+
+Invoke-Chat '/tp @s ~ ~ ~ facing ~5 ~ ~10'
+Start-Sleep -Milliseconds 800
+Save-Screenshot 'rails' | Out-Null
+Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.5 ~'
+
+$mark = Get-LogMark
+Set-GeneratorSpeed '~9 ~2 ~' 0 'speed-0'
+if (-not $vanilla) { Wait-LogLine 'mechanical_bearing at .* disassembled' 30 -Since $mark | Out-Null }
+Start-Sleep -Milliseconds 1500
+Save-Screenshot 'placed' | Out-Null
+
+# a minecart contraption (U21): a minecart placed on a powered controller rail is sent east over
+# a powered cart assembler, which puts the plank above it on the cart and sends it on along the
+# rails
+Invoke-Chat '/setblock ~4 ~ ~-8 bearing:controller_rail ["bearing:rail_axis"=1,"bearing:backwards"=1,"bearing:power"=15]'
+Invoke-Chat '/setblock ~4 ~ ~-9 redstone_block'
+Invoke-Chat '/setblock ~5 ~ ~-8 bearing:cart_assembler ["bearing:rail_axis"=1,"bearing:rail_type"=0,"bearing:powered"=1]'
+Invoke-Chat '/setblock ~5 ~ ~-9 redstone_block'
+Invoke-Chat '/setblock ~5 ~1 ~-8 oak_planks'
+Invoke-Chat '/fill ~6 ~ ~-8 ~18 ~ ~-8 rail ["rail_direction"=1]'
+Invoke-Chat '/give @s minecart 1'
+Press-Key 1
+# stand south-west of the controller rail and place the cart on it, as a player does
+Invoke-Chat '/tp @s ~2 ~ ~-5'
+Invoke-Chat '/tp @s ~ ~ ~ -146 23' # at the controller rail (2 east, 3 north, below the eyes)
+Start-Sleep -Milliseconds 800
+# the plank on the assembler in front of the player, before and after the cart took it away: if
+# the structure didn't move on the client, the plank would still be drawn where it was
+$before = Save-Screenshot 'cart-placing'
+$mark = Get-LogMark
+Click 0.5 0.5 -Relative -Right
+Wait-LogLine 'minecart placed on bearing:controller_rail' 20 -Since $mark | Out-Null
+Wait-LogLine 'cart assembler at .* assembled contraption #\d+ on minecart' 30 -Since $mark | Out-Null
+Start-Sleep -Milliseconds 1500
+$after = Save-Screenshot 'cart-gone'
+Assert-ContraptionMoved $before $after 'the minecart contraption'
+Invoke-Chat '/tp @s ~-2 ~ ~5'
+Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.5 ~'
+
+# two minecarts coupled with the minecart coupling, as a player does (U21); the client mod draws
+# the coupling between them (CouplingRenderer, U38)
+Invoke-Chat '/fill ~2 ~ ~8 ~8 ~ ~8 rail ["rail_direction"=1]'
+Start-Sleep -Milliseconds 500
+Invoke-Chat '/summon minecart ~3 ~ ~8'
+Invoke-Chat '/summon minecart ~6 ~ ~8'
+Invoke-Chat '/give @s bearing:minecart_coupling 4'
+Start-Sleep -Milliseconds 800
+Press-Key 2
+$mark = Get-LogMark
+Invoke-Chat '/tp @s ~3 ~ ~5 0 22' # 3 blocks north of the first cart
+Start-Sleep -Milliseconds 800
+Click 0.5 0.5 -Relative -Right
+Start-Sleep -Milliseconds 600
+Invoke-Chat '/tp @s ~ ~ ~ -45 16' # the second cart, 3 blocks further east
+Start-Sleep -Milliseconds 800
+Click 0.5 0.5 -Relative -Right
+Wait-LogLine 'minecarts -?\d+ and -?\d+ coupled' 20 -Since $mark | Out-Null
+Invoke-Chat '/tp @s ~1.5 ~ ~-1 0 20' # facing the coupling between them
+Start-Sleep -Milliseconds 1500
+Save-Screenshot 'coupled' | Out-Null
+if (-not $vanilla) { Wait-LogLine 'bearings client: drawing 1 minecart coupling' 20 -Since $mark | Out-Null }
+Invoke-Chat '/kill @e[type=minecart]'
+Invoke-Chat '/tp @s ~-4.5 ~ ~-4'
+Invoke-Chat '/tp @s ~ ~ ~ facing ~10 ~1.5 ~'
+if (-not $vanilla) {
+    $r = Invoke-SelfTest 'bearings.*'
+    if ($r.Pass -lt 15) { throw "expected at least 15 bearings selftests to pass, got $($r.Pass)" }
+}
+Assert-NoErrors

@@ -1,0 +1,19 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "tag": "bearing:stone_types/veridium"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "bearing:crushed_raw_copper",
+      "chance": 0.8
+    },
+    {
+      "id": "bearing:copper_nugget",
+      "chance": 0.8
+    }
+  ]
+}

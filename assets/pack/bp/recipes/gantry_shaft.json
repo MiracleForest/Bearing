@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:gantry_shaft"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A",
+      "R",
+      "A"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:andesite_alloy"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ],
+    "result": {
+      "item": "bearing:gantry_shaft",
+      "count": 8
+    }
+  }
+}

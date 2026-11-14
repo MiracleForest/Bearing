@@ -1,0 +1,118 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:elevator_pulley",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "bearing:facing": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "bearing:running": [
+          0,
+          1
+        ],
+        "bearing:rotor": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.elevator_pulley",
+        "bone_visibility": {
+          "shaft_x": "q.block_state('bearing:rotor') == 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_elevator_pulley_side",
+          "render_method": "alpha_test"
+        },
+        "side": {
+          "texture": "bearing_elevator_pulley_side",
+          "render_method": "alpha_test"
+        },
+        "top": {
+          "texture": "bearing_elevator_pulley_top",
+          "render_method": "alpha_test"
+        },
+        "coil": {
+          "texture": "bearing_elevator_belt",
+          "render_method": "alpha_test"
+        },
+        "shaft": {
+          "texture": "bearing_pistons_shaft",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#8a5a3a",
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/elevator_pulley.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:facing') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 3",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 4",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 5",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

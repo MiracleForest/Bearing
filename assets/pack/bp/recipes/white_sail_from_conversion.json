@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:white_sail_from_conversion"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:sail_frame"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:sail_frame"
+      }
+    ],
+    "result": {
+      "item": "bearing:white_sail",
+      "count": 1
+    }
+  }
+}

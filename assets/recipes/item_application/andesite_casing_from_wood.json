@@ -1,0 +1,16 @@
+{
+  "type": "bearing:item_application",
+  "ingredients": [
+    {
+      "tag": "c:stripped_woods"
+    },
+    {
+      "item": "bearing:andesite_alloy"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:andesite_casing"
+    }
+  ]
+}

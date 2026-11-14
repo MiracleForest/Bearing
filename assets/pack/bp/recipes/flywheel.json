@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:flywheel"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CCC",
+      "CAC",
+      "CCC"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:shaft"
+      },
+      "C": {
+        "item": "bearing:brass_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_ingot"
+      }
+    ],
+    "result": {
+      "item": "bearing:flywheel",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:elevator_pulley"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B",
+      "C",
+      "I"
+    ],
+    "key": {
+      "B": {
+        "item": "bearing:brass_casing"
+      },
+      "C": {
+        "item": "minecraft:dried_kelp_block"
+      },
+      "I": {
+        "item": "bearing:iron_sheet"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:elevator_pulley",
+      "count": 1
+    }
+  }
+}

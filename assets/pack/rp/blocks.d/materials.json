@@ -1,0 +1,821 @@
+{
+  "bearing:zinc_ore": {
+    "sound": "stone"
+  },
+  "bearing:deepslate_zinc_ore": {
+    "sound": "deepslate"
+  },
+  "bearing:raw_zinc_block": {
+    "sound": "stone"
+  },
+  "bearing:zinc_block": {
+    "sound": "metal"
+  },
+  "bearing:brass_block": {
+    "sound": "metal"
+  },
+  "bearing:andesite_alloy_block": {
+    "sound": "stone"
+  },
+  "bearing:rose_quartz_tiles": {
+    "sound": "deepslate"
+  },
+  "bearing:small_rose_quartz_tiles": {
+    "sound": "deepslate"
+  },
+  "bearing:experience_block": {
+    "sound": "amethyst_block"
+  },
+  "bearing:industrial_iron_block": {
+    "sound": "netherite"
+  },
+  "bearing:weathered_iron_block": {
+    "sound": "netherite"
+  },
+  "bearing:rose_quartz_block": {
+    "sound": "deepslate"
+  },
+  "bearing:cardboard_block": {
+    "sound": "wood"
+  },
+  "bearing:bound_cardboard_block": {
+    "sound": "wood"
+  },
+  "bearing:cut_granite": {
+    "sound": "stone"
+  },
+  "bearing:cut_granite_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_granite_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_granite_wall": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_granite": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_granite_stairs": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_granite_slab": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_granite_wall": {
+    "sound": "stone"
+  },
+  "bearing:cut_granite_bricks": {
+    "sound": "stone"
+  },
+  "bearing:cut_granite_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_granite_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_granite_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:small_granite_bricks": {
+    "sound": "stone"
+  },
+  "bearing:small_granite_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:small_granite_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:small_granite_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:layered_granite": {
+    "sound": "stone"
+  },
+  "bearing:granite_pillar": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite_wall": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_diorite": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_diorite_stairs": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_diorite_slab": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_diorite_wall": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite_bricks": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_diorite_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:small_diorite_bricks": {
+    "sound": "stone"
+  },
+  "bearing:small_diorite_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:small_diorite_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:small_diorite_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:layered_diorite": {
+    "sound": "stone"
+  },
+  "bearing:diorite_pillar": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite_wall": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_andesite": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_andesite_stairs": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_andesite_slab": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_andesite_wall": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite_bricks": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_andesite_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:small_andesite_bricks": {
+    "sound": "stone"
+  },
+  "bearing:small_andesite_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:small_andesite_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:small_andesite_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:layered_andesite": {
+    "sound": "stone"
+  },
+  "bearing:andesite_pillar": {
+    "sound": "stone"
+  },
+  "bearing:cut_calcite": {
+    "sound": "calcite"
+  },
+  "bearing:cut_calcite_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:cut_calcite_slab": {
+    "sound": "calcite"
+  },
+  "bearing:cut_calcite_wall": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_calcite": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_calcite_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_calcite_slab": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_calcite_wall": {
+    "sound": "calcite"
+  },
+  "bearing:cut_calcite_bricks": {
+    "sound": "calcite"
+  },
+  "bearing:cut_calcite_brick_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:cut_calcite_brick_slab": {
+    "sound": "calcite"
+  },
+  "bearing:cut_calcite_brick_wall": {
+    "sound": "calcite"
+  },
+  "bearing:small_calcite_bricks": {
+    "sound": "calcite"
+  },
+  "bearing:small_calcite_brick_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:small_calcite_brick_slab": {
+    "sound": "calcite"
+  },
+  "bearing:small_calcite_brick_wall": {
+    "sound": "calcite"
+  },
+  "bearing:layered_calcite": {
+    "sound": "calcite"
+  },
+  "bearing:calcite_pillar": {
+    "sound": "calcite"
+  },
+  "bearing:cut_dripstone": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_dripstone_stairs": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_dripstone_slab": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_dripstone_wall": {
+    "sound": "dripstone_block"
+  },
+  "bearing:polished_cut_dripstone": {
+    "sound": "dripstone_block"
+  },
+  "bearing:polished_cut_dripstone_stairs": {
+    "sound": "dripstone_block"
+  },
+  "bearing:polished_cut_dripstone_slab": {
+    "sound": "dripstone_block"
+  },
+  "bearing:polished_cut_dripstone_wall": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_dripstone_bricks": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_dripstone_brick_stairs": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_dripstone_brick_slab": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_dripstone_brick_wall": {
+    "sound": "dripstone_block"
+  },
+  "bearing:small_dripstone_bricks": {
+    "sound": "dripstone_block"
+  },
+  "bearing:small_dripstone_brick_stairs": {
+    "sound": "dripstone_block"
+  },
+  "bearing:small_dripstone_brick_slab": {
+    "sound": "dripstone_block"
+  },
+  "bearing:small_dripstone_brick_wall": {
+    "sound": "dripstone_block"
+  },
+  "bearing:layered_dripstone": {
+    "sound": "dripstone_block"
+  },
+  "bearing:dripstone_pillar": {
+    "sound": "dripstone_block"
+  },
+  "bearing:cut_deepslate": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_deepslate_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_deepslate_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_deepslate_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_deepslate": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_deepslate_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_deepslate_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_deepslate_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_deepslate_bricks": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_deepslate_brick_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_deepslate_brick_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_deepslate_brick_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:small_deepslate_bricks": {
+    "sound": "deepslate"
+  },
+  "bearing:small_deepslate_brick_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:small_deepslate_brick_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:small_deepslate_brick_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:layered_deepslate": {
+    "sound": "deepslate"
+  },
+  "bearing:deepslate_pillar": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_tuff": {
+    "sound": "tuff"
+  },
+  "bearing:cut_tuff_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:cut_tuff_slab": {
+    "sound": "tuff"
+  },
+  "bearing:cut_tuff_wall": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_tuff": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_tuff_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_tuff_slab": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_tuff_wall": {
+    "sound": "tuff"
+  },
+  "bearing:cut_tuff_bricks": {
+    "sound": "tuff"
+  },
+  "bearing:cut_tuff_brick_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:cut_tuff_brick_slab": {
+    "sound": "tuff"
+  },
+  "bearing:cut_tuff_brick_wall": {
+    "sound": "tuff"
+  },
+  "bearing:small_tuff_bricks": {
+    "sound": "tuff"
+  },
+  "bearing:small_tuff_brick_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:small_tuff_brick_slab": {
+    "sound": "tuff"
+  },
+  "bearing:small_tuff_brick_wall": {
+    "sound": "tuff"
+  },
+  "bearing:layered_tuff": {
+    "sound": "tuff"
+  },
+  "bearing:tuff_pillar": {
+    "sound": "tuff"
+  },
+  "bearing:asurine": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_asurine": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_asurine_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_asurine_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_asurine_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine_bricks": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine_brick_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine_brick_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_asurine_brick_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:small_asurine_bricks": {
+    "sound": "deepslate"
+  },
+  "bearing:small_asurine_brick_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:small_asurine_brick_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:small_asurine_brick_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:layered_asurine": {
+    "sound": "deepslate"
+  },
+  "bearing:asurine_pillar": {
+    "sound": "deepslate"
+  },
+  "bearing:crimsite": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_crimsite": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_crimsite_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_crimsite_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:polished_cut_crimsite_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite_bricks": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite_brick_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite_brick_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:cut_crimsite_brick_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:small_crimsite_bricks": {
+    "sound": "deepslate"
+  },
+  "bearing:small_crimsite_brick_stairs": {
+    "sound": "deepslate"
+  },
+  "bearing:small_crimsite_brick_slab": {
+    "sound": "deepslate"
+  },
+  "bearing:small_crimsite_brick_wall": {
+    "sound": "deepslate"
+  },
+  "bearing:layered_crimsite": {
+    "sound": "deepslate"
+  },
+  "bearing:crimsite_pillar": {
+    "sound": "deepslate"
+  },
+  "bearing:limestone": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone_wall": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_limestone": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_limestone_stairs": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_limestone_slab": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_limestone_wall": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone_bricks": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_limestone_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:small_limestone_bricks": {
+    "sound": "stone"
+  },
+  "bearing:small_limestone_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:small_limestone_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:small_limestone_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:layered_limestone": {
+    "sound": "stone"
+  },
+  "bearing:limestone_pillar": {
+    "sound": "stone"
+  },
+  "bearing:ochrum": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum_slab": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum_wall": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_ochrum": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_ochrum_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_ochrum_slab": {
+    "sound": "calcite"
+  },
+  "bearing:polished_cut_ochrum_wall": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum_bricks": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum_brick_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum_brick_slab": {
+    "sound": "calcite"
+  },
+  "bearing:cut_ochrum_brick_wall": {
+    "sound": "calcite"
+  },
+  "bearing:small_ochrum_bricks": {
+    "sound": "calcite"
+  },
+  "bearing:small_ochrum_brick_stairs": {
+    "sound": "calcite"
+  },
+  "bearing:small_ochrum_brick_slab": {
+    "sound": "calcite"
+  },
+  "bearing:small_ochrum_brick_wall": {
+    "sound": "calcite"
+  },
+  "bearing:layered_ochrum": {
+    "sound": "calcite"
+  },
+  "bearing:ochrum_pillar": {
+    "sound": "calcite"
+  },
+  "bearing:scoria": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria_wall": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scoria": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scoria_stairs": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scoria_slab": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scoria_wall": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria_bricks": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_scoria_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:small_scoria_bricks": {
+    "sound": "stone"
+  },
+  "bearing:small_scoria_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:small_scoria_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:small_scoria_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:layered_scoria": {
+    "sound": "stone"
+  },
+  "bearing:scoria_pillar": {
+    "sound": "stone"
+  },
+  "bearing:scorchia": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia_wall": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scorchia": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scorchia_stairs": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scorchia_slab": {
+    "sound": "stone"
+  },
+  "bearing:polished_cut_scorchia_wall": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia_bricks": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:cut_scorchia_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:small_scorchia_bricks": {
+    "sound": "stone"
+  },
+  "bearing:small_scorchia_brick_stairs": {
+    "sound": "stone"
+  },
+  "bearing:small_scorchia_brick_slab": {
+    "sound": "stone"
+  },
+  "bearing:small_scorchia_brick_wall": {
+    "sound": "stone"
+  },
+  "bearing:layered_scorchia": {
+    "sound": "stone"
+  },
+  "bearing:scorchia_pillar": {
+    "sound": "stone"
+  },
+  "bearing:veridium": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium_slab": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium_wall": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_veridium": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_veridium_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_veridium_slab": {
+    "sound": "tuff"
+  },
+  "bearing:polished_cut_veridium_wall": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium_bricks": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium_brick_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium_brick_slab": {
+    "sound": "tuff"
+  },
+  "bearing:cut_veridium_brick_wall": {
+    "sound": "tuff"
+  },
+  "bearing:small_veridium_bricks": {
+    "sound": "tuff"
+  },
+  "bearing:small_veridium_brick_stairs": {
+    "sound": "tuff"
+  },
+  "bearing:small_veridium_brick_slab": {
+    "sound": "tuff"
+  },
+  "bearing:small_veridium_brick_wall": {
+    "sound": "tuff"
+  },
+  "bearing:layered_veridium": {
+    "sound": "tuff"
+  },
+  "bearing:veridium_pillar": {
+    "sound": "tuff"
+  }
+}

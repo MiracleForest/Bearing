@@ -1,0 +1,16 @@
+{
+  "bearing.recipe.milling": "Milling",
+  "bearing.recipe.crushing": "Crushing",
+  "bearing.recipe.fan_washing": "Bulk Washing",
+  "bearing.recipe.fan_washing.fan": "Fan blowing through water",
+  "bearing.recipe.fan_smoking": "Bulk Smoking",
+  "bearing.recipe.fan_smoking.fan": "Fan blowing through fire",
+  "bearing.recipe.fan_blasting": "Bulk Blasting",
+  "bearing.recipe.fan_blasting.fan": "Fan blowing through lava",
+  "bearing.recipe.fan_haunting": "Bulk Haunting",
+  "bearing.recipe.fan_haunting.fan": "Fan blowing through soul fire",
+  "block.bearing.nozzle.tooltip.summary": "Mounted on an _Encased Fan's_ outlet, it sprays the fan's effect onto entities _in every direction_.",
+  "death.attack.bearing.crush": "{0} went through the Crushing Wheels",
+  "death.attack.bearing.fan_fire": "An Encased Fan's smoke finished off {0}",
+  "death.attack.bearing.fan_lava": "{0} was reduced to ash by an Encased Fan"
+}

@@ -1,0 +1,922 @@
+// Trains unit: train stations (edge points on the track graph), the assembly area with its
+// bogeys, train assembly / disassembly and the station screen (native + form).
+
+#include <algorithm>
+#include <cmath>
+#include <map>
+#include <set>
+
+#include "ll/api/form/CustomForm.h"
+#include "ll/api/form/SimpleForm.h"
+#include "ll/api/event/EventBus.h"
+#include "ll/api/event/world/ServerLevelTickEvent.h"
+#include "ll/api/service/Bedrock.h"
+
+#include "mc/deps/core/math/Vec3.h"
+#include "mc/world/actor/player/Player.h"
+#include "mc/world/item/ItemStack.h"
+#include "mc/world/level/BlockPos.h"
+#include "mc/world/level/BlockSource.h"
+#include "mc/world/level/Level.h"
+#include "mc/world/level/block/Block.h"
+#include "mc/world/level/block/BlockType.h"
+
+#include "core/trains/Assembly.h"
+#include "feature/advancements/Advancements.h"
+#include "feature/common/Items.h"
+#include "feature/common/Screens.h"
+#include "feature/contraption/Contraption.h"
+#include "feature/contraption/PistonsExt.h"
+#include "feature/net/Net.h"
+#include "feature/tracks/Tracks.h"
+#include "feature/trains/Trains.h"
+#include "game/Blocks.h"
+#include "mod/I18n.h"
+#include "mod/Log.h"
+#include "mod/Module.h"
+#include "game/WorldDb.h"
+
+namespace br::feature::trains {
+
+namespace items   = common::items;
+namespace screens = common::screens;
+namespace tk      = core::tracks;
+
+namespace {
+
+GlobalPos offsetOf(GlobalPos p, int dx, int dy, int dz) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
+
+Json posJson(GlobalPos const& p) { return Json::array({p.dim, p.x, p.y, p.z}); }
+
+/// The first `n` characters (code points) of UTF-8 text (the reference design limits names in characters).
+std::string utf8Prefix(std::string const& s, size_t n) {
+    size_t i = 0, count = 0;
+    while (i < s.size() && count < n) {
+        unsigned char c = static_cast<unsigned char>(s[i]);
+        size_t        len = c < 0x80 ? 1 : (c >> 5) == 6 ? 2 : (c >> 4) == 14 ? 3 : (c >> 3) == 30 ? 4 : 1;
+        if (i + len > s.size()) break;
+        i += len;
+        ++count;
+    }
+    return s.substr(0, i);
+}
+GlobalPos posOf(Json const& j) {
+    if (!j.is_array() || j.size() < 4) return {};
+    return {j[0].get<int>(), j[1].get<int>(), j[2].get<int>(), j[3].get<int>()};
+}
+
+/// The track block of assembly index `i` (one block past the station's track, along the
+/// assembly direction).
+GlobalPos assemblyTrack(Station const& s, int i) { return offsetOf(s.track, -s.fx * (i + 1), 0, -s.fz * (i + 1)); }
+
+int trackAxisOf(Station const& s) { return s.fx != 0 ? 0 : 2; }
+
+bool trackOk(Station const& s) { return straightTrackAxis(s.track) == trackAxisOf(s); }
+
+std::string errorText(Player* p, Json const& e) {
+    if (!e.is_object()) return {};
+    std::string key = e.value("key", std::string()), fb = e.value("fallback", std::string());
+    auto        args = e.value("args", std::vector<std::string>{});
+    std::string text(p ? translate(key, fb, localeOf(*p)) : translate(key, fb));
+    return core::formatMessage(text, args);
+}
+
+void setError(Station& s, ct::AssemblyError const& e) {
+    s.lastError = {{"key", e.key}, {"fallback", e.fallback}, {"args", e.args}, {"carriage", e.carriage}};
+    log().info("trains: assembly failed at station '{}': {}", s.name, errorText(nullptr, s.lastError));
+    markStationsDirty();
+}
+
+} // namespace
+
+// ---- station record -----------------------------------------------------------------------------
+
+std::string Station::pointId() const { return "station:" + pos.key(); }
+
+Json Station::toJson() const {
+    return {
+        {"pos",        posJson(pos)        },
+        {"track",      posJson(track)      },
+        {"f",          Json::array({fx, fz})},
+        {"name",       name                },
+        {"door",       int(door)           },
+        {"assembling", assembling          },
+        {"auto",       autoSchedule        },
+        {"last",       lastTrainName       },
+        {"error",      lastError           }
+    };
+}
+
+Station Station::fromJson(Json const& j) {
+    Station s;
+    s.pos   = posOf(j.at("pos"));
+    s.track = posOf(j.at("track"));
+    auto f  = j.value("f", Json::array({1, 0}));
+    s.fx    = f[0].get<int>();
+    s.fz    = f[1].get<int>();
+    s.name  = j.value("name", std::string("Track Station"));
+    s.door  = DoorMode(std::clamp(j.value("door", 0), 0, 5));
+    s.assembling    = j.value("assembling", false);
+    s.autoSchedule  = j.value("auto", Json());
+    s.lastTrainName = j.value("last", std::string());
+    s.lastError     = j.value("error", Json());
+    return s;
+}
+
+std::optional<ct::TrackPos> Station::point() const {
+    auto const* p = tracks::railways().point(pointId());
+    if (!p) return std::nullopt;
+    return ct::TrackPos{p->node1, p->node2, p->position};
+}
+
+Station* stationAt(GlobalPos const& pos) { return stationByKey(pos.key()); }
+
+Station* stationByKey(std::string const& key) {
+    auto& m  = state().stations;
+    auto  it = m.find(key);
+    return it == m.end() ? nullptr : &it->second;
+}
+
+namespace {
+/// Adds the station's edge point when it is missing or moved. Returns false if the track isn't
+/// on the graph.
+bool addPoint(Station const& s) {
+    auto loc = tracks::targetAt(s.track, Vec3{float(s.fx), 0, float(s.fz)});
+    if (!loc) return false;
+    auto& rail = tracks::railways();
+    auto* g    = rail.graph(loc->graph);
+    if (!g) return false;
+    auto const* n1 = g->node(loc->node1);
+    auto const* n2 = g->node(loc->node2);
+    if (!n1 || !n2) return false;
+    if (auto const* existing = rail.point(s.pointId())) {
+        if (existing->node1 == n1->location && existing->node2 == n2->location && std::abs(existing->position - loc->position) < 1e-6
+            && existing->data.value("name", std::string()) == s.name)
+            return true;
+    }
+    tk::EdgePoint p;
+    p.id          = s.pointId();
+    p.type        = "bearing:station";
+    p.node1       = n1->location;
+    p.node2       = n2->location;
+    p.position    = loc->position;
+    p.facingNode2 = true;
+    p.data        = {{"name", s.name}, {"pos", posJson(s.pos)}};
+    return rail.addPoint(std::move(p));
+}
+} // namespace
+
+bool pointOccupied(GlobalPos const& track, int fx, int fz, std::string const& except) {
+    auto loc = tracks::targetAt(track, Vec3{float(fx), 0, float(fz)});
+    if (!loc) return false;
+    auto& rail = tracks::railways();
+    auto* g    = rail.graph(loc->graph);
+    if (!g) return false;
+    auto const* n1 = g->node(loc->node1);
+    auto const* n2 = g->node(loc->node2);
+    auto const* e  = g->edge(loc->node1, loc->node2);
+    if (!n1 || !n2 || !e) return false;
+    double len = g->edgeLength(*e);
+    for (auto const* p : rail.pointsOn(n1->location, n2->location)) {
+        if (p->id == except) continue;
+        double other = p->node1 == n1->location ? p->position : len - p->position;
+        if (std::abs(loc->position - other) <= .75) return true;
+    }
+    return false;
+}
+
+bool createStation(GlobalPos const& pos, GlobalPos const& track, int fx, int fz, std::string* errorKey) {
+    auto* region = regionOf(track.dim);
+    if (!region) return false;
+    auto shape = tracks::shapeAt(*region, game::blockPos(track));
+    if (!shape) {
+        if (errorKey) *errorKey = "bearing.track_target.invalid";
+        return false;
+    }
+    if (tk::isJunction(*shape)) {
+        if (errorKey) *errorKey = "bearing.track_target.no_junctions";
+        return false;
+    }
+    if (pointOccupied(track, fx, fz, "station:" + pos.key())) { // the OverlapResult.OCCUPIED
+        if (errorKey) *errorKey = "bearing.track_target.occupied";
+        return false;
+    }
+    Station s;
+    s.pos   = pos;
+    s.track = track;
+    s.fx    = fx;
+    s.fz    = fz;
+    if (!addPoint(s)) {
+        if (errorKey) *errorKey = "bearing.track_target.invalid";
+        return false;
+    }
+    state().stations[pos.key()] = s;
+    markStationsDirty();
+    log().info("trains: station placed at {} {} {} on the track at {} {} {}", pos.x, pos.y, pos.z, track.x, track.y, track.z);
+    return true;
+}
+
+void removeStation(GlobalPos const& pos) {
+    auto& m  = state().stations;
+    auto  it = m.find(pos.key());
+    if (it == m.end()) return;
+    tracks::railways().removePoint(it->second.pointId());
+    for (auto& [id, t] : state().trains) {
+        if (t.nav && t.nav->stationPos == pos.key()) cancelNavigation(t);
+        if (t.currentStation == pos.key()) t.currentStation.clear();
+    }
+    dropAutoSchedule(it->second);
+    log().info("trains: station '{}' removed", it->second.name);
+    m.erase(it);
+    markStationsDirty();
+}
+
+void refreshStationPoints() {
+    for (auto& [k, s] : state().stations) addPoint(s);
+}
+
+Train* trainAt(Station const& s) {
+    for (auto& [id, t] : state().trains)
+        if (!t.invalid && t.currentStation == s.pos.key()) return &t;
+    return nullptr;
+}
+
+// ---- assembly area ------------------------------------------------------------------------------
+
+std::map<int, int> bogeysOf(Station const& s, int* trackLength) {
+    std::map<int, int> out;
+    int                axis = trackAxisOf(s);
+    int                len  = 0;
+    for (int i = 0; i < config().maxAssemblyLength; ++i) {
+        auto t = assemblyTrack(s, i);
+        if (straightTrackAxis(t) != axis) break;
+        ++len;
+        auto above = offsetOf(t, 0, 1, 0);
+        auto id    = idAt(above);
+        if (!isBogey(id)) continue;
+        int baxis = intStateAt(above, kBogeyAxisState).value_or(0) == 0 ? 0 : 2;
+        if (baxis != axis) continue;
+        out[i] = id == kLargeBogey ? 1 : 0;
+    }
+    if (trackLength) *trackLength = len;
+    return out;
+}
+
+std::optional<int> assemblyIndex(Station const& s, GlobalPos const& track) {
+    if (!s.assembling || track.dim != s.track.dim || track.y != s.track.y) return std::nullopt;
+    int dx = track.x - s.track.x, dz = track.z - s.track.z;
+    int i  = -(dx * s.fx + dz * s.fz) - 1; // along the assembly direction
+    if (i < 0) return std::nullopt;
+    if (assemblyTrack(s, i) != track) return std::nullopt;
+    int len = 0;
+    bogeysOf(s, &len);
+    if (i >= len) return std::nullopt;
+    return i;
+}
+
+std::string useCasingOnTrack(Player* player, GlobalPos const& track, bool hasCasing) {
+    Station*           station = nullptr;
+    std::optional<int> index;
+    for (auto& [k, s] : state().stations) {
+        if (auto i = assemblyIndex(s, track)) {
+            station = &s;
+            index   = i;
+            break;
+        }
+    }
+    if (!station) return {};
+    auto tr = [&](std::string_view key, std::string_view fb) {
+        return player ? trFor(*player, key, fb) : std::string(translate(key, fb));
+    };
+    auto             bogeys = bogeysOf(*station);
+    std::vector<int> existing;
+    for (auto const& [i, size] : bogeys) existing.push_back(i);
+    // The trackClicked: where no bogey may go, a bogey within one block of the click cycles
+    // its size (no casing needed)
+    if (!ct::canPlaceBogey(*index, existing)) {
+        for (int d = -1; d <= 1; ++d) {
+            auto it = bogeys.find(*index + d);
+            if (it == bogeys.end()) continue;
+            auto at = offsetOf(assemblyTrack(*station, it->first), 0, 1, 0);
+            setBlockAt(at, it->second == 0 ? kLargeBogey : kSmallBogey, {{kBogeyAxisState, trackAxisOf(*station) == 0 ? 0 : 1}});
+            playSound(at.dim, {at.x + .5, at.y + .5, at.z + .5}, "random.click", 0.5f, 1.2f); // the playRotateSound
+            log().info("trains: bogey at {} {} {} is now {}", at.x, at.y, at.z, it->second == 0 ? "large" : "small");
+            return "!";
+        }
+        return "!";
+    }
+    // creative players need no casing (callers pass hasCasing = true for them)
+    if (!hasCasing) return tr("bearing.train_assembly.requires_casing", "Train Casing used on a track turns it into a bogey");
+    auto  above  = offsetOf(track, 0, 1, 0);
+    auto* region = regionOf(track.dim);
+    if (!region || !game::replaceable(*region, game::blockPos(above))) {
+        // The reference design breaks the block above (with drops); unbreakable blocks stop it
+        auto const& b = region ? &region->getBlock(game::blockPos(above)) : nullptr;
+        if (!b || b->getBlockType().getDestroySpeed() < 0) return "!";
+        game::clearBlock(*region, game::blockPos(above));
+    }
+    setBlockAt(above, kSmallBogey, {{kBogeyAxisState, trackAxisOf(*station) == 0 ? 0 : 1}});
+    log().info("trains: bogey created at {} {} {} (assembly index {} of station '{}')", above.x, above.y, above.z, *index, station->name);
+    return "+" + tr("bearing.train_assembly.bogey_created", "New bogey in place. Click once more for another type");
+}
+
+void setAssembling(Station& s, bool on, Player* by) {
+    if (on == s.assembling) return;
+    if (on) {
+        if (!trackOk(s)) return;
+        if (auto* t = trainAt(s)) {
+            if (!disassemble(s, by)) return;
+            (void)t;
+        }
+        // trains heading here look for another way
+        for (auto& [id, t] : state().trains)
+            if (t.nav && t.nav->stationPos == s.pos.key()) cancelNavigation(t);
+    }
+    s.assembling = on;
+    s.lastError  = nullptr;
+    setBlockAt(s.pos, kStation, {{kAssemblingState, on ? 1 : 0}});
+    markStationsDirty();
+    log().info("trains: station '{}' {} assembly mode", s.name, on ? "entered" : "left");
+}
+
+std::optional<std::uint64_t> assemble(Station& s, Player* by) {
+    auto fail = [&](ct::AssemblyError const& e) -> std::optional<std::uint64_t> {
+        setError(s, e);
+        return std::nullopt;
+    };
+    if (!trackOk(s)) return fail({"bearing.station.no_assembly_diagonal", "Trains can't be assembled", {}});
+    auto point = s.point();
+    if (!point) return fail({"bearing.gui.assembly.exception", "Assembly of this contraption failed:", {}});
+    auto bogeys = bogeysOf(s);
+    std::vector<int> indices;
+    for (auto const& [i, size] : bogeys) indices.push_back(i);
+    if (auto e = ct::checkBogeys(indices, config().maxBogeyCount)) return fail(*e);
+
+    int    dx = -s.fx, dz = -s.fz; // assembly direction
+    auto   bogeyPos = [&](int k) { return offsetOf(assemblyTrack(s, indices[k]), 0, 1, 0); };
+    auto   cpos     = [](GlobalPos const& p) { return cc::Pos{p.x, p.y, p.z}; };
+    int    n        = int(indices.size());
+    std::vector<cc::AssemblyResult> found(n);
+    std::vector<bool>               ran(n, false);
+    auto options = [&](int k) {
+        contraption::AssembleOptions o;
+        auto                         b = bogeyPos(k);
+        o.anchor        = b;
+        o.start         = {cpos(b), cpos(offsetOf(b, 0, 1, 0))};
+        o.kind          = "train";
+        o.includeAnchor = true;
+        o.pivot         = {0.5, 0, 0.5};
+        return o;
+    };
+    std::optional<ct::AssemblyError> dryError;
+    auto structure = [&](int k) -> cc::AssemblyResult const& {
+        if (!ran[k]) {
+            found[k] = contraption::ext::dryRun(options(k));
+            ran[k]   = true;
+            if (!found[k].ok() && !dryError) {
+                auto e   = contraption::ext::errorOf(found[k]);
+                dryError = ct::AssemblyError{e.key, e.fallback, e.args};
+            }
+        }
+        return found[k];
+    };
+    auto layoutOr = ct::planCarriages(
+        indices,
+        [&](int k) {
+            std::vector<int> held;
+            auto const&      r = structure(k);
+            for (int j = 0; j < n; ++j) {
+                auto b = cpos(bogeyPos(j));
+                if (std::any_of(r.blocks.begin(), r.blocks.end(), [&](cc::Pos const& q) { return q == b; })) held.push_back(j);
+            }
+            return held;
+        },
+        [&](int k) { return int(structure(k).blocks.size()); }
+    );
+    if (dryError) return fail(*dryError);
+    if (auto const* e = std::get_if<ct::AssemblyError>(&layoutOr)) return fail(*e);
+    auto const& layout = std::get<ct::Layout>(layoutOr);
+
+    // what the carriages hold: no tracks or stations; controls along the track
+    bool anyForward = false, anyBackward = false;
+    std::vector<std::vector<std::pair<cc::Pos, int>>> controlsOf(layout.carriages.size());
+    std::vector<std::pair<bool, bool>>                dirsOf(layout.carriages.size());
+    for (size_t c = 0; c < layout.carriages.size(); ++c) {
+        int  first = layout.carriages[c].bogeys.front();
+        auto base  = cpos(bogeyPos(first));
+        std::vector<int> facings;
+        for (auto const& p : structure(first).blocks) {
+            GlobalPos   gp{s.pos.dim, p.x, p.y, p.z};
+            std::string id = idAt(gp);
+            if (id == tracks::kTrackId || id == tracks::kFakeTrackId || id == kStation) {
+                return fail({"bearing.gui.assembly.exception.unmovableBlock",
+                             "Block {3} at [{0},{1},{2}] cannot be moved",
+                             {std::to_string(p.x), std::to_string(p.y), std::to_string(p.z), id},
+                             int(c) + 1});
+            }
+            if (id != kControls) continue;
+            int  f   = intStateAt(gp, "bearing:facing").value_or(2);
+            auto off = cc::offset(cc::Dir(std::clamp(f, 0, 5)));
+            int  rel = off.x == dx && off.z == dz ? 1 : (off.x == -dx && off.z == -dz ? -1 : 0);
+            facings.push_back(rel);
+            controlsOf[c].push_back({p - base, rel});
+        }
+        bool fw = false, bw = false;
+        if (auto e = ct::checkControls(facings, fw, bw)) {
+            auto err     = *e;
+            err.carriage = int(c) + 1;
+            return fail(err);
+        }
+        dirsOf[c] = {fw, bw};
+        anyForward |= fw;
+        anyBackward |= bw;
+    }
+    if (!anyForward) {
+        return fail({"bearing.train_assembly.no_controls",
+                     "No forward-facing Train Controls found. Check that they are glued to the train",
+                     {}});
+    }
+
+    // assemble every carriage (undo on failure)
+    Train t;
+    t.id = state().nextTrainId;
+    for (size_t c = 0; c < layout.carriages.size(); ++c) {
+        auto const& plan  = layout.carriages[c];
+        int         first = plan.bogeys.front();
+        auto        r     = contraption::assemble(options(first));
+        if (!r.ok()) {
+            for (auto const& done : t.carriages) contraption::disassemble(done.contraption);
+            return fail({r.errorKey, r.errorText, r.errorArgs, int(c) + 1});
+        }
+        Carriage car;
+        car.contraption = *r.id;
+        auto b0         = bogeyPos(first);
+        car.origin      = {double(b0.x), double(b0.y), double(b0.z)};
+        for (int k : plan.bogeys) {
+            car.bogeyOffsets.push_back(1.0 + indices[k]);
+            auto b = bogeyPos(k);
+            car.bogeyLocal.push_back({b.x - b0.x, b.y - b0.y, b.z - b0.z});
+            car.bogeySize.push_back(bogeys[indices[k]]);
+        }
+        car.controls = controlsOf[c];
+        car.forward  = dirsOf[c].first;
+        car.backward = dirsOf[c].second;
+        if (auto* con = contraption::find(car.contraption)) con->anchorData() = {{"train", t.id}, {"carriage", c}};
+        t.carriages.push_back(std::move(car));
+    }
+    ++state().nextTrainId;
+    t.name        = s.lastTrainName.empty() ? std::string(translate("bearing.train.unnamed", "Unnamed Train")) : s.lastTrainName;
+    t.owner       = by ? uuidOf(*by) : std::string();
+    t.dim         = s.pos.dim;
+    t.ax          = dx;
+    t.az          = dz;
+    t.doubleEnded = anyBackward;
+    t.body.front  = *point;
+    std::vector<double> offs{0};
+    for (auto const& car : t.carriages)
+        for (double o : car.bogeyOffsets) offs.insert(offs.end(), {o - 1, o, o + 1});
+    std::sort(offs.begin(), offs.end());
+    offs.erase(std::unique(offs.begin(), offs.end(), [](double a, double b) { return std::abs(a - b) < 1e-9; }), offs.end());
+    t.body.offsets = offs;
+    auto pos       = ct::positionOf(tracks::railways(), *point);
+    t.lift         = pos ? t.carriages.front().origin.y - pos->y : 1;
+    t.currentStation = s.pos.key();
+    auto [it, ok]    = state().trains.emplace(t.id, std::move(t));
+    Train& train     = it->second;
+    s.lastError      = nullptr;
+    s.assembling     = false;
+    setBlockAt(s.pos, kStation, {{kAssemblingState, 0}});
+    markStationsDirty();
+    placeCarriages(train);
+    log().info(
+        "trains: assembled train #{} '{}' with {} carriages ({} bogeys) at station '{}'",
+        train.id,
+        train.name,
+        train.carriages.size(),
+        n,
+        s.name
+    );
+    if (by) playSound(s.pos.dim, {s.pos.x + .5, s.pos.y + .5, s.pos.z + .5}, "random.anvil_use", 0.5f, 1.5f);
+    // The StationBlockEntity#assemble
+    advancements::awardOwner(s.pos, "train");
+    if (train.carriages.size() >= 6) advancements::awardOwner(s.pos, "long_train");
+    saveAll();
+    return train.id;
+}
+
+bool canDisassemble(Station const& s) {
+    auto* t = trainAt(s);
+    if (!t || t->disassembling || std::abs(t->speed) > 1e-6 || t->derailed) return false;
+    if (!trackOk(s)) return false;
+    // the front must stand at the station marker (a train that reversed in has its back there)
+    auto p = s.point();
+    auto a = p ? ct::positionOf(tracks::railways(), *p) : std::nullopt;
+    auto f = ct::positionOf(tracks::railways(), t->body.front);
+    if (!a || !f || a->distanceTo(*f) > 0.75) return false;
+    for (auto const& c : t->carriages) {
+        auto* con = contraption::find(c.contraption);
+        if (!con) return false;
+        double a = std::fmod(std::abs(con->transform().angle), 90.0);
+        if (std::min(a, 90 - a) > 1.0) return false;
+    }
+    return true;
+}
+
+bool disassemble(Station& s, Player* by) {
+    if (!canDisassemble(s)) return false;
+    Train& t        = *trainAt(s);
+    t.disassembling = true;
+    if (auto p = s.point()) t.body.front = *p; // exactly at the station marker
+    placeCarriages(t);
+    auto id         = t.id;
+    auto stationKey = s.pos.key();
+    std::string byUuid = by ? uuidOf(*by) : std::string();
+    // the carriages take the aligned transform on their next tick; place them after that
+    defer([id, stationKey, byUuid] {
+        defer([id, stationKey, byUuid] {
+            auto* t = findTrain(id);
+            auto* s = stationByKey(stationKey);
+            if (!t) return;
+            if (t->runtime.hasSchedule && !t->runtime.isAutoSchedule) {
+                auto item = makeScheduleItem(t->runtime.discard());
+                if (auto* p = playerByUuid(byUuid)) {
+                    if (!p->add(item)) p->drop(item, false);
+                    p->sendInventory(false);
+                }
+            }
+            for (auto const& c : t->carriages) contraption::disassemble(c.contraption);
+            if (s) {
+                s->lastTrainName = t->name;
+                markStationsDirty();
+            }
+            log().info("trains: disassembled train #{} '{}' at station '{}'", t->id, t->name, s ? s->name : std::string("?"));
+            t->carriages.clear();
+            removeTrain(id);
+        });
+    });
+    return true;
+}
+
+std::vector<std::pair<std::string, int>> arrivals(Station const& s) {
+    // The GlobalTrainDisplayData: every prediction whose destination matches the station
+    std::vector<std::pair<std::string, int>> out;
+    for (auto& [id, t] : state().trains)
+        for (auto const& p : predictionsOf(t))
+            if (ct::stationMatches(p.destination, s.name)) out.push_back({t.name, p.ticks});
+    auto key = [](int ticks) { return ticks == -1 ? 1 << 30 : ticks < 200 ? 0 : ticks; };
+    std::stable_sort(out.begin(), out.end(), [&](auto const& a, auto const& b) {
+        return key(a.second) != key(b.second) ? key(a.second) < key(b.second) : a.first < b.first;
+    });
+    return out;
+}
+
+// ---- station screen -----------------------------------------------------------------------------
+
+namespace {
+
+Station* screenStation(Player& p, Json const& ctx) {
+    auto pos = posOf(ctx.value("pos", Json()));
+    auto* s  = stationAt(pos);
+    if (!s || int(p.getDimensionId()) != pos.dim) return nullptr;
+    auto feet = p.getFeetPos();
+    double dx = feet.x - (pos.x + .5), dy = feet.y - (pos.y + .5), dz = feet.z - (pos.z + .5);
+    if (dx * dx + dy * dy + dz * dz > 16 * 16) return nullptr;
+    return s;
+}
+
+std::string etaString(Player& p, int ticks) {
+    auto e = ct::etaOf(ticks);
+    switch (e.kind) {
+    case ct::EtaText::Kind::Now:
+        return trFor(p, "bearing.display_source.station_summary.now", "now");
+    case ct::EtaText::Kind::Minutes:
+        return std::to_string(e.value) + trFor(p, "bearing.display_source.station_summary.minutes", " min");
+    case ct::EtaText::Kind::Seconds:
+        return trFor(p, "bearing.display_source.station_summary.seconds", "{0}s", e.value);
+    default:
+        return " ~ ";
+    }
+}
+
+Json stationData(Player& p, Station& s) {
+    int  len    = 0;
+    auto bogeys = bogeysOf(s, &len);
+    Json d;
+    d["name"]       = s.name;
+    d["assembling"] = s.assembling;
+    d["trackOk"]    = trackOk(s);
+    d["diagonal"]   = straightTrackAxis(s.track) < 0;
+    d["bogeys"]     = bogeys.size();
+    d["trackLength"] = len;
+    d["door"]       = int(s.door);
+    d["auto"]       = !s.autoSchedule.is_null();
+    d["error"]      = s.lastError.is_object() ? Json{{"text", errorText(&p, s.lastError)}, {"carriage", s.lastError.value("carriage", 0)}} : Json();
+    if (auto* t = trainAt(s)) {
+        d["train"] = {
+            {"id",             t->id                                   },
+            {"name",           t->name                                 },
+            {"canDisassemble", canDisassemble(s)                       },
+            {"schedule",       t->runtime.hasSchedule                  },
+            {"autoSchedule",   t->runtime.isAutoSchedule               },
+            {"carriages",      t->carriages.size()                     },
+            {"icon",           t->icon                                 }
+        };
+    } else {
+        // A train navigating here within 30 blocks is "imminent"
+        for (auto& [id, t] : state().trains)
+            if (t.nav && t.nav->stationPos == s.pos.key() && t.nav->distance < 30)
+                d["incoming"] = {{"id", t.id}, {"name", t.name}, {"distance", t.nav->distance}};
+    }
+    Json arr = Json::array();
+    for (auto const& [name, ticks] : arrivals(s)) arr.push_back({{"name", name}, {"eta", etaString(p, ticks)}});
+    d["arrivals"] = arr;
+    return d;
+}
+
+void renameStationForm(Player& player, GlobalPos pos);
+void renameTrainForm(Player& player, GlobalPos pos);
+
+void stationAction(Player& p, Json const& ctx, Json const& action) {
+    auto* s = screenStation(p, ctx);
+    if (!s) return;
+    std::string op  = action.value("op", std::string());
+    GlobalPos   pos = s->pos;
+    if (op == "rename") {
+        if (action.contains("text")) {
+            std::string name = utf8Prefix(action.value("text", std::string()), 25);
+            if (!name.empty()) {
+                s->name = name;
+                addPoint(*s);
+                markStationsDirty();
+                log().info("trains: station renamed to '{}'", name);
+            }
+        } else {
+            renameStationForm(p, pos);
+        }
+    } else if (op == "create") {
+        setAssembling(*s, true, &p);
+    } else if (op == "cancel") {
+        setAssembling(*s, false, &p);
+    } else if (op == "assemble") {
+        if (s->assembling) assemble(*s, &p);
+    } else if (op == "disassemble") {
+        disassemble(*s, &p);
+    } else if (op == "door") {
+        s->door = DoorMode(std::clamp(action.value("mode", 0), 0, 5));
+        markStationsDirty();
+    } else if (op == "icon") {
+        // The AssemblyScreen icon selector (TrainEditPacket)
+        static constexpr char const* kIcons[]{"traditional", "electric", "modern"};
+        if (auto* t = trainAt(*s)) {
+            int v = action.value("value", 0);
+            if (v >= 0 && v < 3 && t->icon != kIcons[v]) {
+                t->icon = kIcons[v];
+                log().info("trains: train #{} icon is now {}", t->id, t->icon);
+            }
+        }
+    } else if (op == "train_name") {
+        if (auto* t = trainAt(*s)) {
+            if (action.contains("text")) {
+                std::string name = utf8Prefix(action.value("text", std::string()), 35);
+                if (!name.empty()) {
+                    log().info("trains: train #{} renamed to '{}'", t->id, name);
+                    t->name = name;
+                }
+            } else {
+                renameTrainForm(p, pos);
+            }
+        }
+    } else if (op == "remove_schedule") {
+        if (auto* t = trainAt(*s); t && t->runtime.hasSchedule) {
+            bool autoS = t->runtime.isAutoSchedule;
+            auto sch   = t->runtime.discard();
+            cancelNavigation(*t);
+            if (!autoS) {
+                auto item = makeScheduleItem(sch);
+                if (!p.add(item)) p.drop(item, false);
+                p.sendInventory(false);
+            }
+            actionBar(p, autoS ? trFor(p, "bearing.schedule.auto_removed_from_train", "Station-issued schedule thrown away")
+                               : trFor(p, "bearing.schedule.removed_from_train", "Took the schedule back from the train"));
+        }
+    }
+}
+
+std::vector<std::string> doorNames(Player& p) {
+    static char const* keys[] = {"all", "north", "east", "south", "west", "none"};
+    static char const* fb[]   = {"Open All Doors", "North Side Only", "East Side Only", "South Side Only", "West Side Only", "Keep Doors Closed"};
+    std::vector<std::string> out;
+    for (int i = 0; i < 6; ++i) out.push_back(trFor(p, std::string("bearing.contraption.door_control.") + keys[i], fb[i]));
+    return out;
+}
+
+void renameStationForm(Player& player, GlobalPos pos) {
+    auto* s = stationAt(pos);
+    if (!s) return;
+    ll::form::CustomForm form(s->name);
+    form.appendInput("name", trFor(player, "br.trains.station_name", "Station Name"), "", s->name);
+    form.appendDropdown("door", trFor(player, "bearing.contraption.door_control", "Carriage Doors"), doorNames(player), size_t(s->door));
+    form.sendTo(player, [pos](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
+        if (!result) return;
+        Json ctx{{"pos", posJson(pos)}};
+        if (auto it = result->find("name"); it != result->end())
+            if (auto const* v = std::get_if<std::string>(&it->second)) stationAction(p, ctx, {{"op", "rename"}, {"text", *v}});
+        if (auto it = result->find("door"); it != result->end())
+            if (auto const* v = std::get_if<uint64>(&it->second)) stationAction(p, ctx, {{"op", "door"}, {"mode", int(*v)}});
+        screens::refresh(p, "trains.station", ctx);
+    });
+}
+
+void renameTrainForm(Player& player, GlobalPos pos) {
+    auto* s = stationAt(pos);
+    auto* t = s ? trainAt(*s) : nullptr;
+    if (!t) return;
+    ll::form::CustomForm form(t->name);
+    form.appendInput("name", trFor(player, "br.trains.train_name", "Train Name"), "", t->name);
+    form.sendTo(player, [pos](Player& p, ll::form::CustomFormResult const& result, ll::form::FormCancelReason) {
+        if (!result) return;
+        Json ctx{{"pos", posJson(pos)}};
+        if (auto it = result->find("name"); it != result->end())
+            if (auto const* v = std::get_if<std::string>(&it->second)) stationAction(p, ctx, {{"op", "train_name"}, {"text", *v}});
+        screens::refresh(p, "trains.station", ctx);
+    });
+}
+
+void stationForm(Player& p, Json const& ctx) {
+    auto* s = screenStation(p, ctx);
+    if (!s) return;
+    auto        d   = stationData(p, *s);
+    GlobalPos   pos = s->pos;
+    std::string content;
+    std::vector<std::pair<std::string, Json>> buttons;
+    if (s->assembling) {
+        size_t n = d["bogeys"].get<size_t>();
+        content  = n == 0   ? trFor(p, "bearing.station.no_bogeys", "No Bogeys")
+                 : n == 1 ? trFor(p, "bearing.station.one_bogey", "1 Bogey")
+                          : trFor(p, "bearing.station.more_bogeys", "{0} Bogeys", n);
+        content += "\n" + trFor(p, "bearing.station.how_to", "Turn a highlighted track into a bogey by applying Train Casing to it.");
+        content += "\n" + trFor(p, "bearing.station.how_to_1", "Mine a bogey's upper block to take the bogey away.");
+        content += "\n" + trFor(p, "bearing.station.how_to_2", "Each carriage must rest on one bogey or two.");
+        if (d["error"].is_object()) {
+            content += "\n\n" + trFor(p, "bearing.station.failed", "Assembly Failed");
+            if (int c = d["error"].value("carriage", 0)) content += "\n" + trFor(p, "bearing.station.carriage_number", "Carriage {0}:", c);
+            content += "\n" + d["error"].value("text", std::string()) + "\n" + trFor(p, "bearing.station.retry", "Fix the issue, then try again");
+        }
+        buttons.push_back({trFor(p, "bearing.station.assemble_train", "Assemble Train"), {{"op", "assemble"}}});
+        buttons.push_back({trFor(p, "bearing.station.cancel", "Stop Assembling"), {{"op", "cancel"}}});
+    } else if (d.contains("train")) {
+        content = d["train"]["name"].get<std::string>();
+        buttons.push_back({trFor(p, "br.trains.rename_train", "Rename Train"), {{"op", "train_name"}}});
+        if (d["train"]["canDisassemble"].get<bool>())
+            buttons.push_back({trFor(p, "bearing.station.disassemble_train", "Disassemble Train"), {{"op", "disassemble"}}});
+        else
+            content += "\n" + trFor(p, "bearing.station.train_not_aligned", "Disassembly blocked:") + " "
+                     + trFor(p, "bearing.station.train_not_aligned_1", "carriages are misaligned");
+        if (d["train"]["schedule"].get<bool>()) {
+            bool a = d["train"]["autoSchedule"].get<bool>();
+            buttons.push_back({a ? trFor(p, "bearing.station.remove_auto_schedule", "Drop Station Schedule")
+                                 : trFor(p, "bearing.station.remove_schedule", "Take Schedule"),
+                               {{"op", "remove_schedule"}}});
+        }
+    } else {
+        content = trFor(p, "bearing.station.idle", "Station waiting");
+        if (d["trackOk"].get<bool>())
+            buttons.push_back({trFor(p, "bearing.station.create_train", "Build a New Train"), {{"op", "create"}}});
+        else
+            content += "\n" + trFor(p, "bearing.station.no_assembly_diagonal", "Trains can't be assembled") + " "
+                     + trFor(p, d["diagonal"].get<bool>() ? "bearing.station.no_assembly_diagonal_1" : "bearing.station.no_assembly_curve_1",
+                             d["diagonal"].get<bool>() ? "on diagonal tracks" : "on curved tracks");
+    }
+    for (auto const& a : d["arrivals"]) content += "\n" + a["name"].get<std::string>() + "  " + a["eta"].get<std::string>();
+    buttons.push_back({trFor(p, "br.trains.station_settings", "Name & Door Control"), {{"op", "rename"}}});
+    ll::form::SimpleForm form(s->name, content);
+    for (auto const& [text, act] : buttons) {
+        Json a = act;
+        form.appendButton(text, [pos, a](Player& pl) {
+            Json c{{"pos", posJson(pos)}};
+            stationAction(pl, c, a);
+        });
+    }
+    form.sendTo(p);
+}
+
+} // namespace
+
+void openStationScreen(Player& player, GlobalPos const& pos) { screens::open(player, "trains.station", {{"pos", posJson(pos)}}); }
+
+void registerStationScreens() {
+    screens::registerType({
+        .id     = "trains.station",
+        .data   = [](Player& p, Json const& ctx) -> std::optional<Json> {
+            auto* s = screenStation(p, ctx);
+            if (!s) return std::nullopt;
+            return stationData(p, *s);
+        },
+        .action = [](Player& p, Json const& ctx, Json const& action) { stationAction(p, ctx, action); },
+        .form   = [](Player& p, Json const& ctx) { stationForm(p, ctx); },
+    });
+}
+
+// ---- station flags (StationBlockEntity#flag, drawn by the client mod) -------------------
+
+namespace {
+
+/// The reference design raises the flag while a train stands at the station or while it is in assembly mode.
+struct FlagSync {
+    std::map<std::string, bool> raised;     ///< station key -> flag target last sent
+    std::map<std::string, bool> assembling; ///< station key -> assembly mode last sent (flag colour)
+    bool                         dirty = true;
+};
+FlagSync& flags() {
+    static FlagSync f;
+    return f;
+}
+
+Json flagsMessage() {
+    Json list = Json::array();
+    for (auto const& [key, s] : state().stations) {
+        auto r = flags().raised.find(key);
+        list.push_back({s.pos.dim, s.pos.x, s.pos.y, s.pos.z, r != flags().raised.end() && r->second ? 1 : 0, s.fx, s.fz, s.assembling ? 1 : 0});
+    }
+    return {{"flags", std::move(list)}};
+}
+
+void syncFlags() {
+    auto& f       = flags();
+    bool  changed = f.dirty;
+    f.dirty       = false;
+    std::set<std::string> seen;
+    for (auto& [key, s] : state().stations) {
+        seen.insert(key);
+        bool target = s.assembling || trainAt(s) != nullptr;
+        if (auto a = f.assembling.find(key); a == f.assembling.end() || a->second != s.assembling) {
+            f.assembling[key] = s.assembling;
+            changed           = true;
+        }
+        auto it     = f.raised.find(key);
+        if (it != f.raised.end() && it->second == target) continue;
+        bool first = it == f.raised.end();
+        f.raised[key] = target;
+        changed       = true;
+        if (first) continue;
+        // CONTRAPTION_ASSEMBLE (pitch 2) as the flag goes up, CONTRAPTION_DISASSEMBLE as it comes down
+        ct::Vec3d at{s.pos.x + .5, s.pos.y + 1.0, s.pos.z + .5};
+        if (target) {
+            playSound(s.pos.dim, at, "open.wooden_trapdoor", .5f, 1.f);
+            playSound(s.pos.dim, at, "random.chestopen", .045f, 1.48f);
+        } else {
+            playSound(s.pos.dim, at, "close.wooden_trapdoor", .35f, .75f);
+        }
+        log().info("trains: station '{}' flag {}", s.name, target ? "raised" : "lowered");
+    }
+    for (auto it = f.raised.begin(); it != f.raised.end();) {
+        if (seen.contains(it->first)) ++it;
+        else f.assembling.erase(it->first), it = f.raised.erase(it), changed = true;
+    }
+    if (!changed) return;
+    auto level = ll::service::getLevel();
+    if (!level) return;
+    auto msg = flagsMessage();
+    level->forEachPlayer([&](Player& p) {
+        net::send(p, "trains.flags", msg);
+        return true;
+    });
+}
+
+class StationFlagsModule {
+public:
+    void install() {
+        static bool joined = false; // join listeners can't be removed
+        if (!joined) {
+            joined = true;
+            net::onCompanionJoined([](Player& p) { net::send(p, "trains.flags", flagsMessage()); });
+        }
+        game::db::onWorldClosed([] { flags() = FlagSync{}; });
+        mTick = ll::event::EventBus::getInstance().emplaceListener<ll::event::ServerLevelTickEvent>([this](auto&) {
+            if (++mTicks % 2 != 0) return;
+            try {
+                syncFlags();
+            } catch (std::exception const& e) {
+                log().error("trains: station flag sync failed: {}", e.what());
+            }
+        });
+    }
+    void uninstall() { ll::event::EventBus::getInstance().removeListener(mTick); }
+
+private:
+    ll::event::ListenerPtr mTick;
+    std::uint64_t          mTicks = 0;
+};
+
+} // namespace
+
+/// Selftests: the flag state the companions were last sent (nullopt: station unknown).
+std::optional<bool> stationFlagRaised(GlobalPos const& pos) {
+    auto it = flags().raised.find(pos.key());
+    if (it == flags().raised.end()) return std::nullopt;
+    return it->second;
+}
+
+} // namespace br::feature::trains
+
+BR_REGISTER_MODULE(br::feature::trains::StationFlagsModule);

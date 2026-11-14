@@ -1,0 +1,29 @@
+# Schematics (U29): schematic and quill, schematic table uploads, written schematics, the
+# schematicannon (save an area, print it elsewhere, compare), crafting blueprints and (U58) what a print
+# carries and the cannon item keeping its settings. Every
+# schematics selftest, then their log lines.
+$mark = Get-LogMark
+$r = Invoke-SelfTest 'schematics.*'
+if ($r.Pass -lt 12) { throw "expected at least 12 schematics selftests to pass, got $($r.Pass)" }
+Wait-LogLine 'schematic and quill: .* saved br_selftest_quill' 10 -Since $mark | Out-Null
+Wait-LogLine 'schematicannon at -?\d+ -?\d+ -?\d+: finished printing br_selftest_print_compare\.mcstructure \(13 blocks\)' 10 -Since $mark | Out-Null
+Wait-LogLine 'schematics: new schematic uploaded: .*/br_selftest_table_upload\.mcstructure' 10 -Since $mark | Out-Null
+Wait-LogLine 'schematicannon at -?\d+ -?\d+ -?\d+: printed a material checklist' 10 -Since $mark | Out-Null
+Wait-LogLine 'crafting blueprint placed at -?\d+ -?\d+ -?\d+ \(3x3\)' 10 -Since $mark | Out-Null
+Wait-LogLine 'crafting blueprint at -?\d+ -?\d+ -?\d+: .* crafted 4 minecraft:stick' 10 -Since $mark | Out-Null
+
+# From the console: blocks place with their states and the command lists nothing for the console
+Send-Console 'tickingarea add 0 -64 0 15 -40 15 br_schematics_e2e true'
+Wait-Seconds 3
+Send-Console 'setblock 3 -60 3 bearing:schematicannon'
+Send-Console 'setblock 5 -60 3 bearing:schematic_table ["bearing:facing"=2]'
+Wait-Seconds 1
+$m = Get-LogMark
+Send-Console 'testforblock 3 -60 3 bearing:schematicannon'
+Wait-LogLine 'Successfully found the block' 10 -Since $m | Out-Null
+$m = Get-LogMark
+Send-Console 'testforblock 5 -60 3 bearing:schematic_table'
+Wait-LogLine 'Successfully found the block' 10 -Since $m | Out-Null
+Send-Console 'setblock 3 -60 3 air'
+Send-Console 'setblock 5 -60 3 air'
+Send-Console 'tickingarea remove br_schematics_e2e'

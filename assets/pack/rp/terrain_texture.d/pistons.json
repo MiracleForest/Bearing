@@ -1,0 +1,83 @@
+{
+  "bearing_elevator_belt": {
+    "textures": "textures/blocks/elevator_belt"
+  },
+  "bearing_elevator_contact_front": {
+    "textures": "textures/blocks/elevator_contact_front"
+  },
+  "bearing_elevator_contact_front_dim": {
+    "textures": "textures/blocks/elevator_contact_front_dim"
+  },
+  "bearing_elevator_contact_front_powered": {
+    "textures": "textures/blocks/elevator_contact_front_powered"
+  },
+  "bearing_elevator_contact_side": {
+    "textures": "textures/blocks/elevator_contact_side"
+  },
+  "bearing_elevator_pulley_side": {
+    "textures": "textures/blocks/elevator_pulley_side"
+  },
+  "bearing_elevator_pulley_top": {
+    "textures": "textures/blocks/elevator_pulley_top"
+  },
+  "bearing_gantry_carriage_side": {
+    "textures": "textures/blocks/gantry_carriage_side"
+  },
+  "bearing_gantry_carriage_top": {
+    "textures": "textures/blocks/gantry_carriage_top"
+  },
+  "bearing_gantry_pinion": {
+    "textures": "textures/blocks/gantry_pinion"
+  },
+  "bearing_gantry_shaft": {
+    "textures": "textures/blocks/gantry_shaft"
+  },
+  "bearing_gantry_shaft_end": {
+    "textures": "textures/blocks/gantry_shaft_end"
+  },
+  "bearing_gantry_shaft_powered": {
+    "textures": "textures/blocks/gantry_shaft_powered"
+  },
+  "bearing_piston_back": {
+    "textures": "textures/blocks/piston_back"
+  },
+  "bearing_piston_front": {
+    "textures": "textures/blocks/piston_front"
+  },
+  "bearing_piston_front_sticky": {
+    "textures": "textures/blocks/piston_front_sticky"
+  },
+  "bearing_piston_head_side": {
+    "textures": "textures/blocks/piston_head_side"
+  },
+  "bearing_piston_inner": {
+    "textures": "textures/blocks/piston_inner"
+  },
+  "bearing_piston_pole": {
+    "textures": "textures/blocks/piston_pole"
+  },
+  "bearing_piston_pole_end": {
+    "textures": "textures/blocks/piston_pole_end"
+  },
+  "bearing_piston_side": {
+    "textures": "textures/blocks/piston_side"
+  },
+  "bearing_pistons_shaft": {
+    "textures": "textures/blocks/pistons_shaft"
+  },
+  "bearing_pulley_magnet": {
+    "textures": "textures/blocks/pulley_magnet"
+  },
+  "bearing_rope": {
+    "textures": "textures/blocks/rope"
+  },
+  "bearing_rope_coil": {
+    "textures": "textures/blocks/rope_coil"
+  },
+  "bearing_rope_pulley_side": {
+    "textures": "textures/blocks/rope_pulley_side"
+  },
+  "bearing_rope_pulley_top": {
+    "textures": "textures/blocks/rope_pulley_top"
+  }
+}

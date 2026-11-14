@@ -1,0 +1,30 @@
+{
+  "type": "bearing:mechanical_crafting",
+  "category": "misc",
+  "accept_mirrored": false,
+  "key": {
+    "H": {
+      "item": "bearing:brass_hand"
+    },
+    "L": {
+      "tag": "c:ingots/brass"
+    },
+    "R": {
+      "item": "bearing:precision_mechanism"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    " L ",
+    " R ",
+    "SSS",
+    "SSS",
+    " H "
+  ],
+  "result": {
+    "count": 1,
+    "id": "bearing:extendo_grip"
+  }
+}

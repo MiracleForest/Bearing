@@ -1,0 +1,17 @@
+{
+  "type": "bearing:deploying",
+  "ingredients": [
+    {
+      "item": "bearing:weathered_copper_shingle_slab"
+    },
+    {
+      "tag": "minecraft:axes"
+    }
+  ],
+  "results": [
+    {
+      "item": "bearing:exposed_copper_shingle_slab"
+    }
+  ],
+  "keep_held_item": true
+}

@@ -1,0 +1,5 @@
+{
+  "bearing.kinetics.creative_motor.rotation_speed": "输出转速（RPM）",
+  "bearing.kinetics.valve_handle.rotated_angle": "每次使用转动的角度",
+  "bearing.large_water_wheel.not_enough_space": "放置空间不足，请移除周围方块"
+}

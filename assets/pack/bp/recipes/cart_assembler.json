@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:cart_assembler"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CRC",
+      "L L"
+    ],
+    "key": {
+      "C": {
+        "item": "bearing:andesite_alloy"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "L": {
+        "tag": "minecraft:logs"
+      }
+    },
+    "result": {
+      "item": "bearing:cart_assembler",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ]
+  }
+}

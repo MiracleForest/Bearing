@@ -1,0 +1,17 @@
+{
+  "bearing_millstone": {
+    "textures": "textures/blocks/millstone"
+  },
+  "bearing_crushing_wheel": {
+    "textures": "textures/blocks/crushing_wheel"
+  },
+  "bearing_crushing_wheel_controller": {
+    "textures": "textures/blocks/crushing_wheel_controller"
+  },
+  "bearing_encased_fan": {
+    "textures": "textures/blocks/encased_fan"
+  },
+  "bearing_nozzle": {
+    "textures": "textures/blocks/nozzle"
+  }
+}

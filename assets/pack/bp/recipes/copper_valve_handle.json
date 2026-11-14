@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:copper_valve_handle"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CCC",
+      " A "
+    ],
+    "key": {
+      "C": {
+        "item": "bearing:copper_sheet"
+      },
+      "A": {
+        "item": "bearing:andesite_alloy"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:copper_sheet"
+      }
+    ],
+    "result": {
+      "item": "bearing:copper_valve_handle"
+    }
+  }
+}

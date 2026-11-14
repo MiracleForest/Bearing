@@ -1,0 +1,71 @@
+{
+  "bearing:mechanical_bearing": {
+    "sound": "stone"
+  },
+  "bearing:windmill_bearing": {
+    "sound": "wood"
+  },
+  "bearing:clockwork_bearing": {
+    "sound": "stone"
+  },
+  "bearing:turntable": {
+    "sound": "wood"
+  },
+  "bearing:sail_frame": {
+    "sound": "scaffolding"
+  },
+  "bearing:white_sail": {
+    "sound": "cloth"
+  },
+  "bearing:orange_sail": {
+    "sound": "cloth"
+  },
+  "bearing:magenta_sail": {
+    "sound": "cloth"
+  },
+  "bearing:light_blue_sail": {
+    "sound": "cloth"
+  },
+  "bearing:yellow_sail": {
+    "sound": "cloth"
+  },
+  "bearing:lime_sail": {
+    "sound": "cloth"
+  },
+  "bearing:pink_sail": {
+    "sound": "cloth"
+  },
+  "bearing:gray_sail": {
+    "sound": "cloth"
+  },
+  "bearing:light_gray_sail": {
+    "sound": "cloth"
+  },
+  "bearing:cyan_sail": {
+    "sound": "cloth"
+  },
+  "bearing:purple_sail": {
+    "sound": "cloth"
+  },
+  "bearing:blue_sail": {
+    "sound": "cloth"
+  },
+  "bearing:brown_sail": {
+    "sound": "cloth"
+  },
+  "bearing:green_sail": {
+    "sound": "cloth"
+  },
+  "bearing:red_sail": {
+    "sound": "cloth"
+  },
+  "bearing:black_sail": {
+    "sound": "cloth"
+  },
+  "bearing:cart_assembler": {
+    "sound": "metal"
+  },
+  "bearing:controller_rail": {
+    "sound": "metal"
+  }
+}

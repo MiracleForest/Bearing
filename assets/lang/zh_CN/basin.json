@@ -1,0 +1,9 @@
+{
+  "bearing.gui.goggles.basin_contents": "工作盆内容物：",
+  "bearing.recipe.heat_requirement.none": "无需加热",
+  "bearing.recipe.heat_requirement.heated": "加热",
+  "bearing.recipe.heat_requirement.superheated": "超级加热",
+  "br.basin.demo": "工作盆演示已建在 {} {} {}",
+  "br.basin.need_op": "你需要管理员权限。",
+  "br.basin.need_player": "请以玩家身份运行此命令。"
+}

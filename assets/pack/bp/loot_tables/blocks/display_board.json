@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "entries": [
+        {
+          "name": "bearing:display_board",
+          "type": "item",
+          "weight": 1
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

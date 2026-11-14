@@ -1,0 +1,9 @@
+tile.bearing:track_station.name=Train Station
+item.bearing:track_station=Train Station
+tile.bearing:small_bogey.name=Small Bogey
+tile.bearing:large_bogey.name=Large Bogey
+tile.bearing:controls.name=Train Controls
+item.bearing:controls=Train Controls
+item.bearing:schedule.name=Train Schedule
+entity.bearing:carriage_contraption.name=Carriage Contraption
+death.attack.bearing.run_over=%1$s was run over by %2$s

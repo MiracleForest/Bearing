@@ -1,0 +1,14 @@
+{
+  "bearing.track_target.set": "Track picked as target",
+  "bearing.track_target.success": "Linked to the chosen track",
+  "bearing.track_target.clear": "Track choice cleared",
+  "bearing.track_target.missing": "First right-click the track you want to target",
+  "bearing.track_target.too_far": "The chosen track is out of range",
+  "bearing.track_target.no_junctions": "Junctions can't be targeted",
+  "bearing.track_target.occupied": "That track spot is already taken",
+  "bearing.track_target.invalid": "This track can't be targeted from here",
+  "bearing.track_signal.cannot_change_mode": "This signal's mode can't be changed",
+  "bearing.track_signal.mode_change.entry_signal": "-> Let trains in when the section is empty",
+  "bearing.track_signal.mode_change.cross_signal": "-> Let trains in only if they can pass all the way through",
+  "bearing.display_source.observed_train_name": "Name of Passing Train"
+}

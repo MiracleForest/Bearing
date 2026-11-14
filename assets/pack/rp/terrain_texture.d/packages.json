@@ -1,0 +1,74 @@
+{
+  "bearing_packager_side": {
+    "textures": "textures/blocks/packager_side"
+  },
+  "bearing_packager_front": {
+    "textures": "textures/blocks/packager_front"
+  },
+  "bearing_packager_back": {
+    "textures": "textures/blocks/packager_back"
+  },
+  "bearing_repackager_side": {
+    "textures": "textures/blocks/repackager_side"
+  },
+  "bearing_repackager_front": {
+    "textures": "textures/blocks/repackager_front"
+  },
+  "bearing_repackager_back": {
+    "textures": "textures/blocks/repackager_back"
+  },
+  "bearing_chain_conveyor": {
+    "textures": "textures/blocks/chain_conveyor"
+  },
+  "bearing_package_frogport": {
+    "textures": "textures/blocks/package_frogport"
+  },
+  "bearing_white_postbox": {
+    "textures": "textures/blocks/white_postbox"
+  },
+  "bearing_orange_postbox": {
+    "textures": "textures/blocks/orange_postbox"
+  },
+  "bearing_magenta_postbox": {
+    "textures": "textures/blocks/magenta_postbox"
+  },
+  "bearing_light_blue_postbox": {
+    "textures": "textures/blocks/light_blue_postbox"
+  },
+  "bearing_yellow_postbox": {
+    "textures": "textures/blocks/yellow_postbox"
+  },
+  "bearing_lime_postbox": {
+    "textures": "textures/blocks/lime_postbox"
+  },
+  "bearing_pink_postbox": {
+    "textures": "textures/blocks/pink_postbox"
+  },
+  "bearing_gray_postbox": {
+    "textures": "textures/blocks/gray_postbox"
+  },
+  "bearing_light_gray_postbox": {
+    "textures": "textures/blocks/light_gray_postbox"
+  },
+  "bearing_cyan_postbox": {
+    "textures": "textures/blocks/cyan_postbox"
+  },
+  "bearing_purple_postbox": {
+    "textures": "textures/blocks/purple_postbox"
+  },
+  "bearing_blue_postbox": {
+    "textures": "textures/blocks/blue_postbox"
+  },
+  "bearing_brown_postbox": {
+    "textures": "textures/blocks/brown_postbox"
+  },
+  "bearing_green_postbox": {
+    "textures": "textures/blocks/green_postbox"
+  },
+  "bearing_red_postbox": {
+    "textures": "textures/blocks/red_postbox"
+  },
+  "bearing_black_postbox": {
+    "textures": "textures/blocks/black_postbox"
+  }
+}

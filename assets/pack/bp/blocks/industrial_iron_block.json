@@ -1,0 +1,37 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:industrial_iron_block",
+      "menu_category": {
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6.0
+      },
+      "minecraft:map_color": "#4c4c4c",
+      "minecraft:loot": "loot_tables/blocks/industrial_iron_block.json",
+      "tag:minecraft:is_pickaxe_item_destructible": {},
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "down": {
+          "texture": "bearing_industrial_iron_block_top",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "bearing_industrial_iron_block_top",
+          "render_method": "opaque"
+        },
+        "*": {
+          "texture": "bearing_industrial_iron_block",
+          "render_method": "opaque"
+        }
+      }
+    }
+  }
+}

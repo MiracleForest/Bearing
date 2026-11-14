@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:mechanical_arm"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "LLA",
+      "L  ",
+      "IC "
+    ],
+    "key": {
+      "L": {
+        "item": "bearing:brass_sheet"
+      },
+      "A": {
+        "item": "bearing:andesite_alloy"
+      },
+      "I": {
+        "item": "bearing:precision_mechanism"
+      },
+      "C": {
+        "item": "bearing:brass_casing"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:mechanical_arm",
+      "count": 1
+    }
+  }
+}

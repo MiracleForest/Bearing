@@ -1,0 +1,18 @@
+{
+  "type": "bearing:filling",
+  "ingredients": [
+    {
+      "item": "bearing:cinder_flour"
+    },
+    {
+      "type": "fluid_stack",
+      "fluid": "bearing:potion/regular/strength",
+      "amount": 25
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:redstone"
+    }
+  ]
+}

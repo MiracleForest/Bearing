@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:repackager_from_conversion"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:packager"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:packager"
+      }
+    ],
+    "result": {
+      "item": "bearing:repackager",
+      "count": 1
+    }
+  }
+}

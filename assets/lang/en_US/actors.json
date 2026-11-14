@@ -1,0 +1,18 @@
+{
+  "bearing.contraption.controls.actor_toggle.on": "On",
+  "bearing.contraption.controls.actor_toggle.off": "Off",
+  "bearing.contraption.controls.all_actor_toggle": "All Actors: {0}",
+  "bearing.contraption.controls.specific_actor_toggle": "{0} Actors: {1}",
+  "bearing.contraption.controls.floor_unreachable": "Unreachable",
+  "bearing.contraptions.contoller.target": "Targeted Component",
+  "bearing.contraptions.mechanical_roller.pave_material": "Paving Material",
+  "bearing.contraptions.roller_mode": "Roller Mode",
+  "bearing.contraptions.roller_mode.tunnel_pave": "Clear Path and Pave",
+  "bearing.contraptions.roller_mode.straight_fill": "Fill Straight Down",
+  "bearing.contraptions.roller_mode.wide_fill": "Fill Down in a Slope",
+  "block.bearing.seat.tooltip.summary": "Take a seat and enjoy the trip! Keeps a player fixed to a moving _contraption_, and works as plain furniture too. Available in every dye colour.",
+  "block.bearing.seat.tooltip.condition1": "Using the Seat",
+  "block.bearing.seat.tooltip.behaviour1": "You _sit down_ on it. Press _Sneak_ to stand back up.",
+  "br.actors.elevator_floors": "Elevator Floors",
+  "br.actors.elevator_floors.content": "Send the elevator to:"
+}

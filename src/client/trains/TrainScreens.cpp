@@ -1,0 +1,474 @@
+// Native trains screens (client mod, SPEC §4): the train station screen (idle / assembly /
+// train present, door control, arriving trains) and the schedule editor. Both are opened by the
+// server (screens::open) and send "screen.action" messages. Station and train names are typed into
+// native text fields; the schedule's instruction / condition editors are native sub-screens
+// (editor of ScheduleDialog: type selector, text fields, scroll inputs and ghost item
+// slots) that send the edited part to the server ("set_instruction" / "set_condition").
+
+#ifdef BR_CLIENT
+
+#include <algorithm>
+#include <optional>
+
+
+#include "client/Client.h"
+#include "client/screen/Screen.h"
+#include "core/trains/Schedule.h"
+#include "feature/common/Items.h"
+#include "mod/Log.h"
+#include "mod/Module.h"
+
+namespace br::client::trains {
+
+using namespace br::client::screen;
+namespace items = feature::common::items;
+
+namespace {
+
+class StationDialog : public Screen {
+public:
+    // the station's name is the editable title (station screen)
+    StationDialog(Json const& data, SendFn send) : Screen("", 220, 168), mSend(std::move(send)), mData(data) {}
+
+    void init() override { build(); }
+    void onData(Json const& data) override {
+        mData = data;
+        // the screen is rebuilt with new data, but not while a name is being typed
+        if (typing()) {
+            mDirty = true;
+            return;
+        }
+        rebuild();
+    }
+    void tick() override {
+        if (mDirty && !typing()) rebuild();
+    }
+
+private:
+    bool typing() const { return std::any_of(mFields.begin(), mFields.end(), [](TextField const* f) { return f->focused(); }); }
+    void rebuild() {
+        mDirty = false;
+        mFields.clear();
+        widgets.clear();
+        build();
+    }
+    TextField& nameField(Rect r, std::string const& text, int maxLength, char const* op, std::string const& tip) {
+        auto& f = add<TextField>(r, text, [this, text, op](std::string const& typed) {
+            if (typed == text || typed.empty()) return;
+            mSend({{"op", op}, {"text", typed}});
+            log().info("trains: {} typed: '{}'", op, typed);
+        });
+        f.maxLength = maxLength;
+        f.tooltip   = {tip};
+        mFields.push_back(&f);
+        return f;
+    }
+
+    void line(float& y, std::string const& text, unsigned colour = color::kTextDark) {
+        add<Label>(Rect{8, y, 204, 10}, text, colour);
+        y += 11;
+    }
+    void button(float x, float y, float w, std::string const& text, Json action, std::vector<std::string> tip = {}, bool enabled = true) {
+        auto& b   = add<ImageButton>(Rect{x, y, w, 18}, text, [this, action] { mSend(action); });
+        b.enabled = enabled;
+        b.tooltip = std::move(tip);
+    }
+
+    void build() {
+        float y = 20;
+        nameField(Rect{8, 3, 204, 14}, mData.value("name", std::string("Track Station")), 25, "rename", ctr("br.trains.station_name", "Station Name"));
+        if (mData.value("assembling", false)) {
+            line(y, ctr("bearing.station.assembly_title", "Train Assembly"), color::kTextGold);
+            size_t n = mData.value("bogeys", size_t{0});
+            line(y, n == 0 ? ctr("bearing.station.no_bogeys", "No Bogeys") : n == 1 ? ctr("bearing.station.one_bogey", "1 Bogey") : ctr("bearing.station.more_bogeys", "{0} Bogeys", n));
+            line(y, ctr("bearing.station.how_to", "Turn a highlighted track into a bogey by applying Train Casing to it."), color::kTextGray);
+            line(y, ctr("bearing.station.how_to_1", "Mine a bogey's upper block to take the bogey away."), color::kTextGray);
+            line(y, ctr("bearing.station.how_to_2", "Each carriage must rest on one bogey or two."), color::kTextGray);
+            if (mData["error"].is_object()) {
+                line(y, ctr("bearing.station.failed", "Assembly Failed"), color::kButtonOff);
+                if (int c = mData["error"].value("carriage", 0)) line(y, ctr("bearing.station.carriage_number", "Carriage {0}:", c));
+                line(y, mData["error"].value("text", std::string()));
+                line(y, ctr("bearing.station.retry", "Fix the issue, then try again"), color::kTextGray);
+            }
+            button(8, 140, 100, ctr("bearing.station.assemble_train", "Assemble Train"), {{"op", "assemble"}});
+            button(112, 140, 100, ctr("bearing.station.cancel", "Stop Assembling"), {{"op", "cancel"}});
+            return;
+        }
+        if (mData.contains("train")) {
+            auto const& t = mData["train"];
+            nameField(Rect{8, y - 1, 204, 13}, t.value("name", std::string()), 35, "train_name", ctr("br.trains.train_name", "Train Name"));
+            y += 15;
+            // The AssemblyScreen icon type selector (traditional, electric, modern)
+            {
+                std::string icon  = t.value("icon", std::string("traditional"));
+                int         index = icon == "electric" ? 1 : icon == "modern" ? 2 : 0;
+                auto&       pick  = add<ScrollField>(Rect{8, y, 204, 14}, ctr("bearing.station.icon_type", "Icon Type"), 0, 2, index, [this](int v) {
+                    mSend({{"op", "icon"}, {"value", v}});
+                });
+                pick.options = {ctr("br.trains.icon.traditional", "Traditional"), ctr("br.trains.icon.electric", "Electric"), ctr("br.trains.icon.modern", "Modern")};
+                y += 17;
+            }
+            bool can = t.value("canDisassemble", false);
+            button(8, y, 120, ctr("bearing.station.disassemble_train", "Disassemble Train"), {{"op", "disassemble"}},
+                   can ? std::vector<std::string>{} : std::vector<std::string>{ctr("bearing.station.train_not_aligned", "Disassembly blocked:"), ctr("bearing.station.train_not_aligned_1", "carriages are misaligned")},
+                   can);
+            y += 22;
+            if (t.value("schedule", false)) {
+                bool a = t.value("autoSchedule", false);
+                button(8, y, 120, a ? ctr("bearing.station.remove_auto_schedule", "Drop Station Schedule") : ctr("bearing.station.remove_schedule", "Take Schedule"), {{"op", "remove_schedule"}});
+                y += 22;
+            }
+        } else {
+            line(y, ctr("bearing.station.idle", "Station waiting"), color::kTextGray);
+            if (mData.contains("incoming")) line(y, mData["incoming"].value("name", std::string()) + " ...", color::kTextGold);
+            if (mData.value("trackOk", false)) {
+                button(8, y, 120, ctr("bearing.station.create_train", "Build a New Train"), {{"op", "create"}});
+                y += 22;
+            } else {
+                bool diag = mData.value("diagonal", false);
+                line(y, ctr("bearing.station.no_assembly_diagonal", "Trains can't be assembled"), color::kButtonOff);
+                line(y, diag ? ctr("bearing.station.no_assembly_diagonal_1", "on a diagonal") : ctr("bearing.station.no_assembly_curve_1", "on a curve"), color::kButtonOff);
+            }
+        }
+        // door control
+        static char const* keys[] = {"all", "north", "east", "south", "west", "none"};
+        static char const* fb[]   = {"Open All", "North", "East", "South", "West", "None"};
+        auto& door = add<ScrollField>(Rect{8, y, 204, 14}, ctr("bearing.contraption.door_control", "Carriage Doors"), 0, 5, mData.value("door", 0), [this](int v) {
+            mSend({{"op", "door"}, {"mode", v}});
+        });
+        for (int i = 0; i < 6; ++i) door.options.push_back(ctr(std::string("bearing.contraption.door_control.") + keys[i] + ".short", fb[i]));
+        y += 18;
+        auto const& arr = mData.value("arrivals", Json::array());
+        if (!arr.empty()) line(y, ctr("br.trains.arrivals", "Arriving trains"), color::kTextGold);
+        for (size_t i = 0; i < arr.size() && i < 4; ++i) line(y, arr[i].value("eta", std::string()) + "  " + arr[i].value("name", std::string()));
+    }
+
+    SendFn                  mSend;
+    Json                    mData;
+    std::vector<TextField*> mFields;
+    bool                    mDirty = false;
+};
+
+class ScheduleDialog : public Screen {
+public:
+    ScheduleDialog(Json const& data, SendFn send) : Screen(ctr("item.bearing:schedule.name", "Train Schedule"), 256, 200), mSend(std::move(send)), mData(data) {}
+
+    void init() override { build(); }
+    void onData(Json const& data) override {
+        mData = data;
+        if (mEdit) return; // the editor keeps its own copy until it is confirmed
+        widgets.clear();
+        build();
+    }
+    void onClose() override {
+        // The ScheduleDialog#onClose: an open editor is applied
+        if (mEdit) confirmEdit(false);
+    }
+    void clickInventory(int, ItemStack const& stack, Button b, bool) override {
+        // the reference item / frequency slots take ghost items (the inventory is only read)
+        if (!mEdit) return;
+        if (items::isEmpty(stack)) setCursorItem(nullptr);
+        else if (b == Button::Left) setCursorItem(items::toJsonWithCount(stack, 1));
+    }
+
+private:
+    /// An open instruction / condition editor (editor sub-screen of the schedule).
+    struct Edit {
+        bool condition = false;
+        int  entry = 0, column = 0, index = 0;
+        Json part; ///< {"Id", "Data"}
+    };
+
+    Json& field() { return mEdit->part["Data"]; }
+    int   intOf(char const* key, int fallback) {
+        auto const& d = field();
+        return d.contains(key) && d[key].is_number() ? d[key].get<int>() : fallback;
+    }
+
+    void startEdit(bool condition, int entry, int column, int index) {
+        auto const& entries = mData.value("schedule", Json::object()).value("Entries", Json::array());
+        if (entry < 0 || entry >= int(entries.size())) return;
+        auto const& e = entries[size_t(entry)];
+        Edit        ed{condition, entry, column, index, Json()};
+        if (condition) {
+            auto const& cols = e.value("Conditions", Json::array());
+            if (column < 0 || column >= int(cols.size()) || index < 0 || index >= int(cols[size_t(column)].size())) return;
+            ed.part = cols[size_t(column)][size_t(index)];
+        } else {
+            ed.part = e.value("Instruction", Json::object());
+        }
+        if (!ed.part.contains("Data") || !ed.part["Data"].is_object()) ed.part["Data"] = Json::object();
+        mEdit    = std::move(ed);
+        mRebuild = true;
+        log().info("trains: schedule {} editor opened for entry {}", condition ? "condition" : "instruction", entry + 1);
+    }
+
+    void confirmEdit(bool rebuild) {
+        if (!mEdit) return;
+        for (auto* f : mFields) f->blur(true);
+        Json action{{"op", mEdit->condition ? "set_condition" : "set_instruction"}, {"entry", mEdit->entry}, {"part", mEdit->part}};
+        if (mEdit->condition) action["column"] = mEdit->column, action["index"] = mEdit->index;
+        mSend(action);
+        log().info("trains: schedule {} editor confirmed: {}", mEdit->condition ? "condition" : "instruction", mEdit->part.value("Id", std::string()));
+        mEdit.reset();
+        setCursorItem(nullptr);
+        if (rebuild) mRebuild = true;
+    }
+
+    /// A value of the edited part changed with the mouse wheel.
+    ScrollField& scrollField(float y, std::string const& label, char const* key, int min, int max, int fallback, std::vector<std::string> options = {}) {
+        auto& s   = add<ScrollField>(Rect{8, y, 240, 14}, label, min, max, std::clamp(intOf(key, fallback), min, max), [this, key](int v) {
+            if (mEdit) field()[key] = v;
+        });
+        s.options = std::move(options);
+        return s;
+    }
+
+    /// A ghost item slot of the edited part (`key`, or `key`[index] for the frequency).
+    void itemSlot(float x, float y, char const* key, int index, std::vector<std::string> tip) {
+        auto& slot = add<Slot>(Rect{x, y, 18, 18}, [this, key, index](Button b, bool) {
+            if (!mEdit) return;
+            Json item = b == Button::Left && cursorItem.is_object() ? cursorItem : Json();
+            if (index < 0) field()[key] = item;
+            else {
+                if (!field()[key].is_array()) field()[key] = Json::array({nullptr, nullptr});
+                field()[key][size_t(index)] = item;
+            }
+            mRebuild = true;
+        });
+        Json const& v = index < 0 ? field().value(key, Json()) : (field().value(key, Json::array()).size() > size_t(index) ? field()[key][size_t(index)] : Json());
+        slot.stack   = iconOf(v);
+        slot.tooltip = std::move(tip);
+    }
+
+    void buildEditor() {
+        auto& ed   = *mEdit;
+        auto  id   = ed.part.value("Id", std::string());
+        auto  path = core::trains::pathOf(id);
+        // type selector: the "Next Action:" / "Continue if/after:" scroll input
+        auto const& types = mData.value(ed.condition ? "conditions" : "instructions", Json::array());
+        int         cur   = 0;
+        std::vector<std::string> names;
+        for (size_t i = 0; i < types.size(); ++i) {
+            names.push_back(types[i].value("name", std::string()));
+            if (types[i].value("id", std::string()) == id) cur = int(i);
+        }
+        // the editor replaces the schedule's title (editor sub-screen header)
+        title = ed.condition ? ctr("bearing.schedule.condition.editor", "Edit Condition") : ctr("bearing.schedule.instruction.editor", "Edit Instruction");
+        // (the scroll input adds ": " to its label: the "Next Action:" without its colon)
+        auto bare = [](std::string s) {
+            while (!s.empty() && (s.back() == ':' || s.back() == ' ')) s.pop_back();
+            return s;
+        };
+        auto& type = add<ScrollField>(Rect{8, 18, 240, 14}, bare(ed.condition ? ctr("bearing.schedule.condition_type", "Move on when:") : ctr("bearing.schedule.instruction_type", "Then do:")), 0,
+                                      std::max(0, int(types.size()) - 1), cur, [this, types](int v) {
+            if (!mEdit || v < 0 || v >= int(types.size())) return;
+            auto nid    = types[size_t(v)].value("id", std::string());
+            auto p      = mEdit->condition ? core::trains::defaultCondition(nid) : core::trains::defaultInstruction(nid);
+            mEdit->part = p.toJson();
+            mRebuild    = true;
+        });
+        type.options  = names;
+        float y       = 38;
+        showInventory = false;
+        height        = 200;
+        if (!ed.condition) {
+            if (field().contains("Text")) {
+                bool        address = path == "package_retrieval", title = path == "rename";
+                std::string base    = address ? "bearing.schedule.instruction.address_filter_edit_box" : title ? "bearing.schedule.instruction.name_edit_box" : "bearing.schedule.instruction.filter_edit_box";
+                add<Label>(Rect{8, y, 240, 10}, ctr(base, address ? "Pick up packages bearing this address" : title ? "Schedule Title" : "Station Name"), color::kTextDark);
+                y += 11;
+                auto& f = add<TextField>(Rect{8, y, 240, 14}, field().value("Text", std::string()), [this](std::string const& t) {
+                    if (mEdit) field()["Text"] = t;
+                });
+                f.onChange  = [this](std::string const& t) {
+                    if (mEdit) field()["Text"] = t;
+                };
+                f.maxLength = address ? 50 : 25;
+                if (title) f.tooltip = {ctr(base + "_1", "Shown on display boards"), ctr(base + "_2", "Blank = name of the upcoming stop")};
+                else if (address)
+                    f.tooltip = {ctr(base + "_1", "* matches any text"), ctr(base + "_2", "The train goes wherever it must to fetch them"), ctr(base + "_3", "Add a later step to bring it back")};
+                else f.tooltip = {ctr(base + "_1", "* matches any text"), ctr(base + "_2", "e.g. 'Harbor, Track *'"), ctr(base + "_3", "The closest free matching station is used")};
+                mFields.push_back(&f);
+                y += 18;
+                // The DestinationSuggestions: the station names, nearest first
+                auto const& names = mData.value("stations", Json::array());
+                if (path == "destination" && names.is_array() && !names.empty()) {
+                    std::vector<std::string> options;
+                    for (auto const& n : names)
+                        if (n.is_string()) options.push_back(n.get<std::string>());
+                    auto* box   = &f;
+                    auto& pick  = add<ScrollField>(Rect{8, y, 240, 14}, ctr("br.trains.station_suggestions", "Station suggestions"), 0, int(options.size()) - 1, 0, [this, box, options](int v) {
+                        if (!mEdit || v < 0 || v >= int(options.size())) return;
+                        field()["Text"] = options[size_t(v)];
+                        box->text       = options[size_t(v)];
+                    });
+                    pick.options = options;
+                    y += 18;
+                }
+            }
+            if (path == "throttle") {
+                auto& t  = add<ScrollField>(Rect{8, y, 240, 14}, ctr("bearing.schedule.instruction.throttle_edit_box", "Throttle"), 1, 20, std::clamp(intOf("Value", 100) / 5, 1, 20), [this](int v) {
+                    if (mEdit) field()["Value"] = v * 5;
+                });
+                t.format  = [](int v) { return std::to_string(v * 5) + "%"; };
+                t.tooltip = {ctr("bearing.schedule.instruction.throttle_edit_box_1", "Sets how fast the train may go")};
+            }
+        } else if (path == "delay" || path == "idle") {
+            scrollField(y, ctr("bearing.generic.duration", "Duration"), "Value", 0, 120, 5);
+            y += 18;
+            scrollField(y, ctr("br.trains.unit", "Unit"), "TimeUnit", 0, 2, 1,
+                        {ctr("bearing.generic.unit.ticks", "Ticks"), ctr("bearing.generic.unit.seconds", "Seconds"), ctr("bearing.generic.unit.minutes", "Minutes")});
+        } else if (path == "time_of_day") {
+            scrollField(y, ctr("bearing.generic.daytime.hour", "Hour"), "Hour", 0, 23, 8);
+            y += 18;
+            scrollField(y, ctr("bearing.generic.daytime.minute", "Minute"), "Minute", 0, 59, 0);
+            y += 18;
+            static char const* rots[] = {"24", "12", "6", "4", "3", "2", "1", "0_45", "0_30", "0_15"};
+            std::vector<std::string> r;
+            for (auto const* k : rots) r.push_back(ctr(std::string("bearing.schedule.condition.time_of_day.rotation.every_") + k, k));
+            scrollField(y, ctr("bearing.schedule.condition.time_of_day.rotation", "Rotation"), "Rotation", 0, 9, 5, r);
+        } else if (path == "item_threshold" || path == "fluid_threshold") {
+            bool item     = path == "item_threshold";
+            showInventory = true;
+            height        = 120;
+            scrollField(y, ctr("bearing.schedule.condition.threshold.train_holds", "Train holds"), "Operator", 0, 2, 0,
+                        {ctr("bearing.schedule.condition.threshold.greater", "more than"), ctr("bearing.schedule.condition.threshold.less", "less than"), ctr("bearing.schedule.condition.threshold.equal", "exactly")});
+            y += 18;
+            itemSlot(8, y, item ? "Item" : "Bucket", -1,
+                     {ctr("bearing.schedule.condition.threshold.place_item", "Item to Compare"), ctr("bearing.schedule.condition.threshold.place_item_2", "Filter items work too"),
+                      ctr("bearing.schedule.condition.threshold.place_item_3", "An empty slot counts everything")});
+            auto& t = add<TextField>(Rect{30, y + 2, 50, 14}, field().value("Threshold", std::string("10")), [this](std::string const& v) {
+                if (mEdit) field()["Threshold"] = v;
+            });
+            t.onChange  = [this](std::string const& v) {
+                if (mEdit) field()["Threshold"] = v;
+            };
+            t.maxLength = 4;
+            t.filter    = [](char32_t ch) { return ch >= U'0' && ch <= U'9'; };
+            t.tooltip   = {ctr("bearing.schedule.condition.threshold.x_units_of_item", "Amount")};
+            mFields.push_back(&t);
+            if (item) {
+                auto& m   = add<ScrollField>(Rect{86, y + 2, 162, 14}, ctr("bearing.schedule.condition.threshold.item_measure", "Item Measure"), 0, 1, std::clamp(intOf("Measure", 0), 0, 1), [this](int v) {
+                    if (mEdit) field()["Measure"] = v;
+                });
+                m.options = {ctr("bearing.schedule.condition.threshold.items", "Items"), ctr("bearing.schedule.condition.threshold.stacks", "Stacks")};
+            } else {
+                add<Label>(Rect{86, y + 5, 162, 10}, ctr("bearing.schedule.condition.threshold.buckets", "Buckets"), color::kTextDark);
+            }
+        } else if (path == "redstone_link") {
+            showInventory = true;
+            height        = 120;
+            itemSlot(8, y, "Frequency", 0, {ctr("bearing.logistics.firstFrequency", "Frequency #1")});
+            itemSlot(28, y, "Frequency", 1, {ctr("bearing.logistics.secondFrequency", "Frequency #2")});
+            auto& inv   = add<ScrollField>(Rect{52, y + 2, 196, 14}, bare(ctr("bearing.schedule.condition.redstone_link.frequency_state", "Frequency is:")), 0, 1, std::clamp(intOf("Inverted", 0), 0, 1), [this](int v) {
+                if (mEdit) field()["Inverted"] = v;
+            });
+            inv.options = {ctr("bearing.schedule.condition.redstone_link.powered", "Powered"), ctr("bearing.schedule.condition.redstone_link.unpowered", "Not powered")};
+        } else if (path == "player_count") {
+            scrollField(y, ctr("bearing.schedule.condition.player_count.players", "Players"), "Count", 0, 20, 1);
+            y += 18;
+            scrollField(y, ctr("bearing.schedule.condition.player_count.condition", "Conditional"), "Exact", 0, 1, 0,
+                        {ctr("bearing.schedule.condition.player_count.exactly", "Exactly"), ctr("bearing.schedule.condition.player_count.or_above", "Or above")});
+        }
+        // The confirm button (I_CONFIRM) closes the editor
+        add<ImageButton>(Rect{226, height - 24, 22, 18}, "OK", [this] { confirmEdit(true); });
+    }
+
+    void small(float x, float y, std::string const& sym, std::string const& tip, Json action) {
+        auto& b   = add<ImageButton>(Rect{x, y, 14, 12}, sym, [this, action] { mSend(action); });
+        b.tooltip = {tip};
+    }
+
+    void build() {
+        mFields.clear();
+        if (mEdit) {
+            buildEditor();
+            return;
+        }
+        showInventory       = false;
+        height              = 200;
+        title               = ctr("item.bearing:schedule.name", "Train Schedule");
+        auto const& sch     = mData.value("schedule", Json::object());
+        auto const& texts   = mData.value("texts", Json::array());
+        int         entries = int(texts.size());
+        int         pages   = std::max(1, (entries + 2) / 3);
+        mPage               = std::clamp(mPage, 0, pages - 1);
+        float y             = 18;
+        if (entries == 0) add<Label>(Rect{8, y, 240, 10}, ctr("bearing.schedule.no_stops", "No stations have been added to this schedule"), color::kTextGray);
+        int progress = sch.value("Progress", 0);
+        for (int e = mPage * 3; e < std::min(entries, mPage * 3 + 3); ++e) {
+            auto const& t = texts[size_t(e)];
+            std::string head = std::to_string(e + 1) + ". " + t.value("summary", std::string());
+            add<Label>(Rect{8, y, 170, 10}, head, e == progress && progress > 0 ? color::kTextGold : color::kTextDark);
+            auto& ei   = add<ImageButton>(Rect{180, y - 1, 14, 12}, "E", [this, e] { startEdit(false, e, 0, 0); });
+            ei.tooltip = {ctr("bearing.gui.schedule.lmb_edit", "Left-Click to Edit")};
+            small(194, y - 1, "T", ctr("bearing.schedule.instruction_type", "Then do:"), {{"op", "cycle_instruction"}, {"entry", e}});
+            small(208, y - 1, "^", ctr("bearing.gui.schedule.move_up", "Move up"), {{"op", "up"}, {"entry", e}});
+            small(222, y - 1, "v", ctr("bearing.gui.schedule.move_down", "Move down"), {{"op", "down"}, {"entry", e}});
+            small(236, y - 1, "x", ctr("bearing.gui.schedule.remove_entry", "Remove Action"), {{"op", "remove"}, {"entry", e}});
+            y += 13;
+            if (t.value("supports", true)) {
+                auto const& cols = t.value("conditions", Json::array());
+                for (size_t c = 0; c < cols.size(); ++c) {
+                    for (size_t i = 0; i < cols[c].size(); ++i) {
+                        std::string prefix = (c > 0 && i == 0) ? ctr("br.trains.or", "or") + " " : (i > 0 ? ctr("br.trains.and", "and") + " " : "  ");
+                        add<Label>(Rect{16, y, 190, 10}, prefix + cols[c][i].get<std::string>(), color::kTextGray);
+                        auto& ec   = add<ImageButton>(Rect{208, y - 1, 14, 12}, "E", [this, e, c, i] { startEdit(true, e, int(c), int(i)); });
+                        ec.tooltip = {ctr("bearing.gui.schedule.lmb_edit", "Left-Click to Edit")};
+                        small(222, y - 1, "x", ctr("bearing.gui.schedule.rmb_remove", "Right-Click to Remove"), {{"op", "remove_condition"}, {"entry", e}, {"column", c}, {"index", i}});
+                        y += 12;
+                    }
+                }
+                small(16, y, "+", ctr("bearing.gui.schedule.add_condition", "Add Condition"), {{"op", "add_condition"}, {"entry", e}, {"column", int(cols.size()) - 1}});
+                small(32, y, "|", ctr("bearing.gui.schedule.alternative_condition", "Alternative Condition"), {{"op", "add_condition"}, {"entry", e}, {"column", -1}});
+                y += 15;
+            }
+            y += 3;
+        }
+        float by = 176;
+        auto& add1 = add<ImageButton>(Rect{8, by, 70, 18}, "+ " + ctr("bearing.gui.schedule.add_entry", "Add Action"), [this] { mSend({{"op", "add"}}); });
+        (void)add1;
+        auto& loop = add<ImageButton>(Rect{82, by, 70, 18}, ctr("bearing.schedule.loop", "Repeat Endlessly"), [this] { mSend({{"op", "loop"}}); });
+        loop.toggled = sch.value("Cyclic", true);
+        auto& reset   = add<ImageButton>(Rect{156, by, 18, 18}, "R", [this] { mSend({{"op", "reset"}}); });
+        reset.tooltip = {ctr("bearing.schedule.reset", "Start From the Top")};
+        auto& skip    = add<ImageButton>(Rect{176, by, 18, 18}, ">", [this] { mSend({{"op", "skip"}}); });
+        skip.tooltip  = {ctr("bearing.schedule.skip", "Skip This Stop")};
+        if (pages > 1) {
+            add<ImageButton>(Rect{204, by, 18, 18}, "<", [this] { --mPage; mRebuild = true; });
+            add<ImageButton>(Rect{228, by, 18, 18}, ">", [this] { ++mPage; mRebuild = true; });
+        }
+    }
+
+    void tick() override {
+        if (!mRebuild) return;
+        mRebuild = false;
+        widgets.clear();
+        build();
+    }
+
+    SendFn                  mSend;
+    Json                    mData;
+    int                     mPage    = 0;
+    bool                    mRebuild = false;
+    std::optional<Edit>     mEdit;
+    std::vector<TextField*> mFields;
+};
+
+} // namespace
+
+class TrainScreensModule {
+public:
+    void install() {
+        registerServerScreen("trains.station", [](Json const& data, SendFn send) { return std::make_unique<StationDialog>(data, std::move(send)); });
+        registerServerScreen("trains.schedule", [](Json const& data, SendFn send) { return std::make_unique<ScheduleDialog>(data, std::move(send)); });
+    }
+    void uninstall() {}
+};
+
+} // namespace br::client::trains
+
+BR_REGISTER_MODULE(br::client::trains::TrainScreensModule);
+
+#endif // BR_CLIENT

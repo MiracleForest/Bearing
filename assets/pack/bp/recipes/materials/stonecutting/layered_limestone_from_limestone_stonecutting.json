@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:layered_limestone_from_limestone_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:limestone"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:limestone"
+      }
+    ],
+    "result": {
+      "item": "bearing:layered_limestone",
+      "count": 1
+    }
+  }
+}

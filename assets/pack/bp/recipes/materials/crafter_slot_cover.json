@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:crafter_slot_cover"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:brass_nugget"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_nugget"
+      }
+    ],
+    "result": {
+      "item": "bearing:crafter_slot_cover",
+      "count": 1
+    }
+  }
+}

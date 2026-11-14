@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:copper_backtank"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AGA",
+      "PBP",
+      " P "
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:andesite_alloy"
+      },
+      "G": {
+        "item": "bearing:shaft"
+      },
+      "P": {
+        "item": "minecraft:copper_ingot"
+      },
+      "B": {
+        "item": "minecraft:copper_block"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ],
+    "result": {
+      "item": "bearing:copper_backtank",
+      "count": 1
+    }
+  }
+}

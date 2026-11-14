@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:millstone_from_deepslate"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "C",
+      "S",
+      "I"
+    ],
+    "key": {
+      "C": {
+        "item": "bearing:cogwheel"
+      },
+      "S": {
+        "item": "bearing:andesite_casing"
+      },
+      "I": {
+        "item": "minecraft:deepslate"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:millstone",
+      "count": 1
+    }
+  }
+}

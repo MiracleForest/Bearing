@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:deepslate_from_cut_deepslate_wall_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:cut_deepslate_wall"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:cut_deepslate_wall"
+      }
+    ],
+    "result": {
+      "item": "minecraft:deepslate",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "bearing:deploying",
+  "ingredients": [
+    {
+      "item": "bearing:exposed_copper_tile_slab"
+    },
+    {
+      "item": "minecraft:honeycomb_block"
+    }
+  ],
+  "results": [
+    {
+      "item": "bearing:waxed_exposed_copper_tile_slab"
+    }
+  ],
+  "keep_held_item": true
+}

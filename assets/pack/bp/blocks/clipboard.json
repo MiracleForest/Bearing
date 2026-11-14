@@ -1,0 +1,217 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:clipboard",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "bearing:face": [
+          0,
+          1,
+          2
+        ],
+        "bearing:facing": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bearing:written": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.bearing.clipboard",
+      "minecraft:material_instances": {
+        "paper": {
+          "texture": "bearing_clipboard_paper",
+          "render_method": "alpha_test"
+        },
+        "board": {
+          "texture": "bearing_clipboard_board",
+          "render_method": "alpha_test"
+        },
+        "*": {
+          "texture": "bearing_clipboard_board",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.3
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#8b6a3e",
+      "minecraft:loot": "loot_tables/blocks/clipboard.json"
+    },
+    "permutations": [
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 0"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 1"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 2"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 3"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 0"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              -90,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 1"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              180,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 2"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              90,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 3"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              0,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 0"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              -90,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 1"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              180,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 2"
+      },
+      {
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              90,
+              0
+            ]
+          }
+        },
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 3"
+      },
+      {
+        "components": {
+          "minecraft:material_instances": {
+            "paper": {
+              "texture": "bearing_clipboard_paper_written",
+              "render_method": "alpha_test"
+            },
+            "board": {
+              "texture": "bearing_clipboard_board",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "bearing_clipboard_board",
+              "render_method": "alpha_test"
+            }
+          }
+        },
+        "condition": "q.block_state('bearing:written') == 1"
+      }
+    ]
+  }
+}

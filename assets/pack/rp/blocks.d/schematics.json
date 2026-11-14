@@ -1,0 +1,11 @@
+{
+  "bearing:schematic_table": {
+    "sound": "wood"
+  },
+  "bearing:schematicannon": {
+    "sound": "metal"
+  },
+  "bearing:placed_crafting_blueprint": {
+    "sound": "wood"
+  }
+}

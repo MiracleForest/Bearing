@@ -1,0 +1,38 @@
+{
+  "bearing:redstone_link": {
+    "sound": "wood"
+  },
+  "bearing:analog_lever": {
+    "sound": "wood"
+  },
+  "bearing:pulse_repeater": {
+    "sound": "stone"
+  },
+  "bearing:pulse_extender": {
+    "sound": "stone"
+  },
+  "bearing:pulse_timer": {
+    "sound": "stone"
+  },
+  "bearing:powered_latch": {
+    "sound": "stone"
+  },
+  "bearing:powered_toggle_latch": {
+    "sound": "stone"
+  },
+  "bearing:content_observer": {
+    "sound": "stone"
+  },
+  "bearing:stockpile_switch": {
+    "sound": "stone"
+  },
+  "bearing:redstone_contact": {
+    "sound": "stone"
+  },
+  "bearing:desk_bell": {
+    "sound": "stone"
+  },
+  "bearing:rose_quartz_lamp": {
+    "sound": "glass"
+  }
+}

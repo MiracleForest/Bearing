@@ -1,0 +1,8 @@
+{
+  "bearing:track_signal": {
+    "sound": "metal"
+  },
+  "bearing:track_observer": {
+    "sound": "metal"
+  }
+}

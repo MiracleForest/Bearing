@@ -1,0 +1,26 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "item": "bearing:zinc_ore"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "bearing:crushed_raw_zinc"
+    },
+    {
+      "id": "bearing:crushed_raw_zinc",
+      "chance": 0.75
+    },
+    {
+      "id": "bearing:experience_nugget",
+      "chance": 0.75
+    },
+    {
+      "id": "minecraft:cobblestone",
+      "chance": 0.125
+    }
+  ]
+}

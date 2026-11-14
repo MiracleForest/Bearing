@@ -1,0 +1,13 @@
+{
+  "type": "bearing:pressing",
+  "ingredients": [
+    {
+      "tag": "c:ingots/copper"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:copper_sheet"
+    }
+  ]
+}

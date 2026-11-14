@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "bearing:asurine_pillar",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

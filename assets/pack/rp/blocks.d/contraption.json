@@ -1,0 +1,14 @@
+{
+  "bearing:linear_chassis": {
+    "sound": "wood"
+  },
+  "bearing:secondary_linear_chassis": {
+    "sound": "wood"
+  },
+  "bearing:radial_chassis": {
+    "sound": "wood"
+  },
+  "bearing:sticker": {
+    "sound": "stone"
+  }
+}

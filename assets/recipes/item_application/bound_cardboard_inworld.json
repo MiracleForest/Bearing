@@ -1,0 +1,16 @@
+{
+  "type": "bearing:item_application",
+  "ingredients": [
+    {
+      "item": "bearing:cardboard_block"
+    },
+    {
+      "tag": "c:strings"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:bound_cardboard_block"
+    }
+  ]
+}

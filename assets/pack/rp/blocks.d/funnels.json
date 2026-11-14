@@ -1,0 +1,29 @@
+{
+  "bearing:andesite_funnel": {
+    "sound": "metal"
+  },
+  "bearing:brass_funnel": {
+    "sound": "metal"
+  },
+  "bearing:andesite_tunnel": {
+    "sound": "metal"
+  },
+  "bearing:brass_tunnel": {
+    "sound": "metal"
+  },
+  "bearing:chute": {
+    "sound": "metal"
+  },
+  "bearing:smart_chute": {
+    "sound": "metal"
+  },
+  "bearing:item_vault": {
+    "sound": "metal"
+  },
+  "bearing:creative_crate": {
+    "sound": "wood"
+  },
+  "bearing:item_hatch": {
+    "sound": "netherite"
+  }
+}

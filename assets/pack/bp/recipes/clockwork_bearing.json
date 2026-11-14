@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:clockwork_bearing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B",
+      "C",
+      "S"
+    ],
+    "key": {
+      "B": {
+        "tag": "minecraft:wooden_slabs"
+      },
+      "C": {
+        "item": "bearing:brass_casing"
+      },
+      "S": {
+        "item": "bearing:electron_tube"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:clockwork_bearing",
+      "count": 1
+    }
+  }
+}

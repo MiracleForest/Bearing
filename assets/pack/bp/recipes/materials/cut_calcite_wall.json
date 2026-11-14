@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:cut_calcite_wall"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "item": "bearing:cut_calcite"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:cut_calcite"
+      }
+    ],
+    "result": {
+      "item": "bearing:cut_calcite_wall",
+      "count": 6
+    }
+  }
+}

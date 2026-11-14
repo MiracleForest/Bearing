@@ -1,0 +1,5 @@
+tile.bearing:linear_chassis.name=Linear Chassis
+tile.bearing:secondary_linear_chassis.name=Secondary Linear Chassis
+tile.bearing:radial_chassis.name=Radial Chassis
+tile.bearing:sticker.name=Sticker
+item.bearing:super_glue.name=Super Glue

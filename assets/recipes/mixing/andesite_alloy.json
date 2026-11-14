@@ -1,0 +1,16 @@
+{
+  "type": "bearing:mixing",
+  "ingredients": [
+    {
+      "item": "minecraft:andesite"
+    },
+    {
+      "tag": "c:nuggets/iron"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:andesite_alloy"
+    }
+  ]
+}

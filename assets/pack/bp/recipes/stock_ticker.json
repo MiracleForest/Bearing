@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:stock_ticker"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "C",
+      "A",
+      "B"
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:glass"
+      },
+      "A": {
+        "item": "bearing:stock_link"
+      },
+      "B": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "bearing:stock_ticker",
+      "count": 1
+    }
+  }
+}

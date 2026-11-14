@@ -1,0 +1,7 @@
+tile.bearing:mechanical_crafter.name=动力合成器
+tile.bearing:mechanical_saw.name=动力锯
+tile.bearing:mechanical_drill.name=动力钻头
+death.attack.bearing.mechanical_drill=%1$s被动力钻头钻穿了
+death.attack.bearing.mechanical_drill.player=%1$s被%2$s推上了钻头
+death.attack.bearing.mechanical_saw=%1$s撞上了动力锯的锯刃
+death.attack.bearing.mechanical_saw.player=%1$s被%2$s推向了锯刃

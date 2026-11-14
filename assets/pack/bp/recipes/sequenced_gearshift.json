@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:sequenced_gearshift"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:brass_casing"
+      },
+      {
+        "item": "bearing:cogwheel"
+      },
+      {
+        "item": "bearing:electron_tube"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:brass_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:sequenced_gearshift",
+      "count": 1
+    }
+  }
+}

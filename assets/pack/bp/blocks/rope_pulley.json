@@ -1,0 +1,79 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:rope_pulley",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "bearing:axis": [
+          0,
+          1,
+          2
+        ],
+        "bearing:running": [
+          0,
+          1
+        ],
+        "bearing:rotor": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.rope_pulley",
+        "bone_visibility": {
+          "shaft_x": "q.block_state('bearing:rotor') == 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_rope_pulley_side",
+          "render_method": "alpha_test"
+        },
+        "side": {
+          "texture": "bearing_rope_pulley_side",
+          "render_method": "alpha_test"
+        },
+        "top": {
+          "texture": "bearing_rope_pulley_top",
+          "render_method": "alpha_test"
+        },
+        "coil": {
+          "texture": "bearing_rope_coil",
+          "render_method": "alpha_test"
+        },
+        "shaft": {
+          "texture": "bearing_pistons_shaft",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#7a5c3a",
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/rope_pulley.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:axis') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

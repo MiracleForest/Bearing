@@ -1,0 +1,13 @@
+{
+  "type": "bearing:haunting",
+  "ingredients": [
+    {
+      "item": "minecraft:red_mushroom"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:crimson_fungus"
+    }
+  ]
+}

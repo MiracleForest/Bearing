@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:gearshift"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:andesite_casing"
+      },
+      {
+        "item": "bearing:cogwheel"
+      },
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:andesite_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:gearshift",
+      "count": 1
+    }
+  }
+}

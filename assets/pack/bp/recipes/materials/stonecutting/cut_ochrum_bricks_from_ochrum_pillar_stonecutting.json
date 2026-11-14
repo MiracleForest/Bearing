@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:cut_ochrum_bricks_from_ochrum_pillar_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:ochrum_pillar"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:ochrum_pillar"
+      }
+    ],
+    "result": {
+      "item": "bearing:cut_ochrum_bricks",
+      "count": 1
+    }
+  }
+}

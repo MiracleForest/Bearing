@@ -1,0 +1,28 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "item": "minecraft:deepslate_gold_ore"
+    }
+  ],
+  "processing_time": 350,
+  "results": [
+    {
+      "id": "bearing:crushed_raw_gold",
+      "count": 2
+    },
+    {
+      "id": "bearing:crushed_raw_gold",
+      "chance": 0.25
+    },
+    {
+      "id": "bearing:experience_nugget",
+      "count": 2,
+      "chance": 0.75
+    },
+    {
+      "id": "minecraft:cobbled_deepslate",
+      "chance": 0.125
+    }
+  ]
+}

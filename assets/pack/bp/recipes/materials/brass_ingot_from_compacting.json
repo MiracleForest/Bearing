@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:brass_ingot_from_compacting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "bearing:brass_nugget"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_nugget"
+      }
+    ],
+    "result": {
+      "item": "bearing:brass_ingot",
+      "count": 1
+    }
+  }
+}

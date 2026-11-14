@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:light_gray_seat_from_green_seat"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:green_seat"
+      },
+      {
+        "item": "minecraft:light_gray_dye"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:green_seat"
+      }
+    ],
+    "result": {
+      "item": "bearing:light_gray_seat"
+    }
+  }
+}

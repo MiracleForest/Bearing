@@ -1,0 +1,26 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond_ore"
+    }
+  ],
+  "processing_time": 350,
+  "results": [
+    {
+      "id": "minecraft:diamond"
+    },
+    {
+      "id": "minecraft:diamond",
+      "chance": 0.75
+    },
+    {
+      "id": "bearing:experience_nugget",
+      "chance": 0.75
+    },
+    {
+      "id": "minecraft:cobblestone",
+      "chance": 0.125
+    }
+  ]
+}

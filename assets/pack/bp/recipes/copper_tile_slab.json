@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:copper_tile_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "XXX"
+    ],
+    "key": {
+      "X": {
+        "item": "bearing:copper_tiles"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:copper_tiles"
+      }
+    ],
+    "result": {
+      "item": "bearing:copper_tile_slab",
+      "count": 6
+    }
+  }
+}

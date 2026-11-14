@@ -1,0 +1,13 @@
+{
+  "type": "bearing:pressing",
+  "ingredients": [
+    {
+      "item": "bearing:pulp"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:cardboard"
+    }
+  ]
+}

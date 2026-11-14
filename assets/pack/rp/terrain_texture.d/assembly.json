@@ -1,0 +1,8 @@
+{
+  "bearing_deployer": {
+    "textures": "textures/blocks/deployer"
+  },
+  "bearing_mechanical_arm": {
+    "textures": "textures/blocks/mechanical_arm"
+  }
+}

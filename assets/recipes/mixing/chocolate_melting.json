@@ -1,0 +1,15 @@
+{
+  "type": "bearing:mixing",
+  "ingredients": [
+    {
+      "item": "bearing:bar_of_chocolate"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "bearing:chocolate",
+      "amount": 250
+    }
+  ],
+  "heat_requirement": "heated"
+}

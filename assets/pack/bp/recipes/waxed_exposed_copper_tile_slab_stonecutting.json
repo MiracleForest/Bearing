@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:waxed_exposed_copper_tile_slab_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:waxed_exposed_copper_tiles"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:waxed_exposed_copper_tiles"
+      }
+    ],
+    "result": {
+      "item": "bearing:waxed_exposed_copper_tile_slab",
+      "count": 2
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:mechanical_press"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["S", "C", "I"],
+    "key": {
+      "S": { "item": "bearing:shaft" },
+      "C": { "item": "bearing:andesite_casing" },
+      "I": { "item": "minecraft:iron_block" }
+    },
+    "unlock": [{ "item": "bearing:andesite_casing" }],
+    "result": { "item": "bearing:mechanical_press" }
+  }
+}

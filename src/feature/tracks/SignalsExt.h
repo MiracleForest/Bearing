@@ -1,0 +1,154 @@
+#pragma once
+
+// Train signals and track observers (U28): contract for trains (U27) and other units.
+// Implemented in src/feature/signals/. SPEC §3.6.28 documents it.
+//
+// Signals split the track graph into signal sections (signal edge groups). Trains report
+// the track they cover; sections, signal states and observers follow. Before a train enters a
+// section it asks for the way ahead (Navigation signal scan with chain signalling):
+//
+//     namespace sig = br::feature::tracks::signals;
+//     // every tick the train moved, after it was assembled and after `tracks::onGraphChanged`:
+//     sig::setTrainExtent(trainId, trailingBogeyLocation, leadingBogeyLocation);
+//     // every tick while driving (front = the leading point, travelling towards front.node2):
+//     auto way = sig::checkAhead(trainId, front, path.edges, brakingDistance + 4);
+//     if (!way.clear) brakeToStopWithin(way.stopDistance);   // stop before the signal
+//     // when the train stops navigating (schedule cancelled, manual control):
+//     sig::releaseReservations(trainId);
+//     // disassembled / destroyed:
+//     sig::removeTrain(trainId);
+//     // path finding (tracks::PathQuery::edgeCost), the red signal penalties and one-way signals:
+//     double weight = sig::redSignalWeight(ticksWaitingForSignal);
+//     q.edgeCost = [&](auto const& g, auto const& e) { return sig::pathCost(trainId, g, e, weight); };
+//
+// Track observers need the train's cargo for their filter (items in the carriages'
+// inventories, fluids in their tanks). Trains provide it once:
+//
+//     sig::setCargoProvider([](std::string const& trainId, sig::ItemTest const& item, sig::FluidTest const& fluid) {
+//         return anyCarriageItem(trainId, item) || anyCarriageFluid(trainId, fluid);
+//     });
+//
+// Everything runs on the server thread while a world is loaded. Train ids are any stable string
+// (the train UUID). Graph types: core/tracks/Graph.h; signal types: core/signals/Signals.h.
+
+#include <functional>
+#include <optional>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include "core/GlobalPos.h"
+#include "core/signals/Signals.h"
+#include "core/tracks/Graph.h"
+#include "feature/common/Capabilities.h"
+
+class ItemStack;
+
+namespace br::feature::tracks::signals {
+
+using core::signals::Authority;
+using core::signals::Crossing;
+using core::signals::GroupId;
+using core::signals::kNoGroup;
+using core::signals::SignalState;
+using core::signals::SignalType;
+using core::signals::Span;
+
+inline constexpr std::string_view kSignalId   = "bearing:track_signal";
+inline constexpr std::string_view kObserverId = "bearing:track_observer";
+/// Edge point types (core::tracks::EdgePoint::type) of signal boundaries and observers.
+inline constexpr std::string_view kSignalPointType   = "bearing:signal";
+inline constexpr std::string_view kObserverPointType = "bearing:observer";
+
+/// Block states of `bearing:track_signal` (SignalBlock TYPE / POWERED + the lamp).
+inline constexpr std::string_view kTypeState    = "bearing:signal_type";  ///< SignalType
+inline constexpr std::string_view kLampState    = "bearing:signal_state"; ///< lampValue(SignalState)
+inline constexpr std::string_view kPoweredState = "bearing:powered";      ///< redstone (signal: input, observer: output)
+
+/// Value of `kLampState` for a state: 0 off (Invalid, the default of a fresh block), 1 red,
+/// 2 yellow, 3 green.
+[[nodiscard]] constexpr int lampValue(SignalState s) { return s == SignalState::Invalid ? 0 : int(s) + 1; }
+
+/// The Train.Penalties used by signals in path finding.
+inline constexpr double kRedSignalPenalty         = 25;
+inline constexpr double kRedstoneRedSignalPenalty = 400;
+
+// ---- reported by trains -----------------------------------------------------------------------
+
+/// The track a train covers now (every stretch from its last to its first wheel), replacing
+/// what it reported before. A section is occupied while any part of a train is on it; observers
+/// see the trains over them. Entering a section releases the train's reservation of it.
+void setTrainSpans(std::string const& trainId, std::vector<Span> const& spans);
+/// Convenience: the spans from `trailing` to `leading` (both travelling the same way, the
+/// leading point ahead), found along the graph within `maxLength` blocks. False (nothing
+/// changed) when no such way exists.
+bool setTrainExtent(
+    std::string const&                trainId,
+    core::tracks::GraphLocation const& trailing,
+    core::tracks::GraphLocation const& leading,
+    double                            maxLength = 1024
+);
+/// The train is gone: its sections are free, its reservations released.
+void removeTrain(std::string const& trainId);
+
+// ---- asked by trains --------------------------------------------------------------------------
+
+/// May the train go on? Checks the signals on `path` (edges after `front`'s edge, as
+/// core::tracks::PathResult::edges) within `lookahead` blocks, reserves the sections it may
+/// enter and tells where to stop otherwise (entry / cross signal rules, SPEC §3.6.28).
+[[nodiscard]] Authority checkAhead(
+    std::string const&                     trainId,
+    core::tracks::GraphLocation const&     front,
+    std::vector<core::tracks::PathStep> const& path,
+    double                                 lookahead
+);
+/// Drops the sections reserved for the train (it no longer follows the path it asked for).
+void releaseReservations(std::string const& trainId);
+/// The type of the signals on one side of a boundary (Crossing::boundary / side).
+[[nodiscard]] SignalType boundaryType(std::string const& boundaryId, int side);
+/// Signal boundaries on the way (in order, with the side entered and the distance).
+[[nodiscard]] std::vector<Crossing> signalsAhead(
+    core::tracks::GraphLocation const&         front,
+    std::vector<core::tracks::PathStep> const& path,
+    double                                     maxDistance
+);
+/// Extra path cost for entering `edge` (red signal 25, redstone-forced red signal 400).
+[[nodiscard]] double pathPenalty(std::string const& trainId, core::tracks::Graph const& graph, core::tracks::Edge const& edge);
+/// The Navigation.search over the signals of `edge`: a boundary without a signal facing the
+/// travel direction can't be passed (the cost's barrier); redstone-forced red signals cost 400;
+/// occupied ones cost `redWeight`, halved after each (start it with `redSignalWeight`).
+[[nodiscard]] core::tracks::EdgeCost
+pathCost(std::string const& trainId, core::tracks::Graph const& graph, core::tracks::Edge const& edge, double& redWeight);
+/// The signalWeight: clamp(ticksWaitingForSignal * 2, 25, 200).
+[[nodiscard]] inline double redSignalWeight(int ticksWaitingForSignal) {
+    double w = ticksWaitingForSignal * 2.0;
+    return w < kRedSignalPenalty ? kRedSignalPenalty : w > 200 ? 200 : w;
+}
+
+// ---- queries ----------------------------------------------------------------------------------
+
+/// The signal section at a graph location (kNoGroup on track without signals).
+[[nodiscard]] GroupId sectionAt(core::tracks::GraphLocation const& loc);
+/// Trains in a section.
+[[nodiscard]] std::vector<std::string> trainsIn(GroupId section);
+/// The state shown by the signal block at `pos` (Invalid when it isn't bound to a track).
+[[nodiscard]] SignalState signalState(core::GlobalPos const& pos);
+/// Whether the track observer at `pos` is powered (a matching train passes).
+[[nodiscard]] bool observerPowered(core::GlobalPos const& pos);
+
+// ---- provided by trains -----------------------------------------------------------------------
+
+using ItemTest      = std::function<bool(ItemStack const&)>;
+using FluidTest     = std::function<bool(common::fluids::FluidStack const&)>;
+/// Whether any item / fluid the train carries passes the tests.
+using CargoProvider = std::function<bool(std::string const& trainId, ItemTest const& item, FluidTest const& fluid)>;
+/// Without a provider, observers with a filter never trigger (empty filters always do).
+void setCargoProvider(CargoProvider provider);
+/// The train's name (Train.name), shown by display links on a track observer
+/// ("Detected Train Name"). Without a provider the source shows nothing.
+using NameProvider = std::function<std::string(std::string const& trainId)>;
+void setTrainNameProvider(NameProvider provider);
+/// The train a track observer currently sees ("" when none).
+[[nodiscard]] std::string observedTrain(core::GlobalPos const& pos);
+
+} // namespace br::feature::tracks::signals

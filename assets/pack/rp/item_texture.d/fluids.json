@@ -1,0 +1,8 @@
+{
+  "bearing_honey_bucket": {
+    "textures": "textures/items/honey_bucket"
+  },
+  "bearing_chocolate_bucket": {
+    "textures": "textures/items/chocolate_bucket"
+  }
+}

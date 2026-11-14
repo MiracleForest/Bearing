@@ -1,0 +1,283 @@
+#pragma once
+
+// Mechanical belts, depots and weighted ejectors: the game-independent rules (pure C++, gtest).
+//
+// Checked against the reference design: BeltBlock, BeltHelper, BeltConnectorItem (canConnect,
+// createBelts), BeltSlicer, BeltInventory (tick, insertion, endings), BeltMovementHandler
+// (entities), DepotBehaviour (held item sliding to the centre), WeightedEjectorBlockEntity.
+//
+// Conventions:
+// - A horizontal facing is the Java 2D data value (0 south, 1 west, 2 north, 3 east), the order of
+//   `game::playerFacing` and of the `bearing:facing` block state.
+// - A face / side is a Bedrock FacingID (0 down, 1 up, 2 north, 3 south, 4 west, 5 east), as the
+//   capabilities' `face` (`Direction side`).
+// - Belt positions (`beltPosition`) run from 0 at the outer edge of the START segment to `length`
+//   at the outer edge of the END segment; segment i covers [i, i + 1).
+
+#include <array>
+#include <cstdint>
+#include <functional>
+#include <optional>
+#include <string>
+#include <vector>
+
+namespace br::core::belts {
+
+// ---- geometry ---------------------------------------------------------------------------------------
+
+enum class Slope : std::uint8_t { Horizontal = 0, Upward = 1, Downward = 2, Vertical = 3, Sideways = 4 };
+enum class Part : std::uint8_t { Start = 0, Middle = 1, End = 2, Pulley = 3 };
+enum class Casing : std::uint8_t { None = 0, Andesite = 1, Brass = 2 };
+enum class Axis : std::uint8_t { X = 0, Y = 1, Z = 2 };
+
+struct Vec3i {
+    int x = 0, y = 0, z = 0;
+    friend bool  operator==(Vec3i const&, Vec3i const&) = default;
+    friend auto  operator<=>(Vec3i const&, Vec3i const&) = default;
+    Vec3i        operator+(Vec3i const& o) const { return {x + o.x, y + o.y, z + o.z}; }
+    Vec3i        operator-(Vec3i const& o) const { return {x - o.x, y - o.y, z - o.z}; }
+    Vec3i        operator*(int k) const { return {x * k, y * k, z * k}; }
+    [[nodiscard]] long long distSqr() const { return 1LL * x * x + 1LL * y * y + 1LL * z * z; }
+};
+
+struct Vec3d {
+    double x = 0, y = 0, z = 0;
+    Vec3d operator+(Vec3d const& o) const { return {x + o.x, y + o.y, z + o.z}; }
+    Vec3d operator-(Vec3d const& o) const { return {x - o.x, y - o.y, z - o.z}; }
+    Vec3d operator*(double k) const { return {x * k, y * k, z * k}; }
+};
+
+/// The block states of one belt segment.
+struct SegmentState {
+    int    facing = 0; ///< horizontal facing (start -> end for straight belts)
+    Slope  slope  = Slope::Horizontal;
+    Part   part   = Part::Middle;
+    Casing casing = Casing::None;
+    int    color  = -1; ///< dye colour 0..15 (Bedrock / Java dye order), -1 undyed
+    friend bool operator==(SegmentState const&, SegmentState const&) = default;
+};
+
+[[nodiscard]] Vec3i facingNormal(int facing);
+/// +1 for south / east, -1 for north / west (`getAxisDirection().getStep()`).
+[[nodiscard]] int  facingStep(int facing);
+[[nodiscard]] Axis facingAxis(int facing);
+[[nodiscard]] int  oppositeFacing(int facing);
+/// Java `Direction.getClockWise()` (north -> east -> south -> west).
+[[nodiscard]] int clockwise(int facing);
+/// The facing of a horizontal unit offset (nullopt for anything else).
+[[nodiscard]] std::optional<int> facingOf(int dx, int dz);
+/// Bedrock FacingID of a horizontal facing.
+[[nodiscard]] int faceOfFacing(int facing);
+/// Horizontal facing of a FacingID (nullopt for up / down).
+[[nodiscard]] std::optional<int> facingOfFace(int face);
+[[nodiscard]] int  oppositeFace(int face);
+[[nodiscard]] Vec3i faceNormal(int face);
+
+/// The BeltHelper.getBeltVector: one step from START towards END.
+[[nodiscard]] Vec3i beltVector(SegmentState const& s);
+/// The BeltBlock.nextSegmentPosition (offset to the next / previous segment; nullopt past
+/// the ends).
+[[nodiscard]] std::optional<Vec3i> nextSegmentOffset(SegmentState const& s, bool forward);
+/// Rotation axis of the pulleys (BeltBlock.getRotationAxis).
+[[nodiscard]] Axis rotationAxis(SegmentState const& s);
+/// START, END and PULLEY segments have a shaft (`hasPulley`).
+[[nodiscard]] inline bool hasPulley(Part p) { return p != Part::Middle; }
+/// Items and entities ride horizontal and sloped belts only (`canTransportObjects`).
+[[nodiscard]] inline bool canTransportObjects(Slope s) { return s != Slope::Vertical && s != Slope::Sideways; }
+/// The BeltSlicer.beltStatesCompatible (two belts may be merged end to end).
+[[nodiscard]] bool statesCompatible(SegmentState const& a, SegmentState const& b);
+/// The segment seen from the other end (BeltSlicer.flipBelt).
+[[nodiscard]] SegmentState flipped(SegmentState s);
+
+// ---- placing with the belt connector -----------------------------------------------------------------
+
+/// What the connector needs to know about the world (BeltConnectorItem.canConnect).
+struct ConnectWorld {
+    std::function<bool(Vec3i const&)>                loaded;
+    /// The axis of a shaft at the position (nullopt: not a plain shaft).
+    std::function<std::optional<Axis>(Vec3i const&)> shaftAxis;
+    /// The theoretical speed of a kinetic block (RPM, signed; 0 when none).
+    std::function<float(Vec3i const&)>               speed;
+    /// The block can be replaced by a placement (air, grass, water, ...).
+    std::function<bool(Vec3i const&)>                replaceable;
+};
+
+enum class ConnectError : std::uint8_t {
+    None,
+    Unloaded,
+    SamePosition,
+    TooFar,        ///< not closer than maxBeltLength
+    NotAligned,    ///< not in a line / 45 degree diagonal perpendicular to the shaft axis
+    AxisMismatch,  ///< the shafts have different axes
+    VerticalShaftDiagonal,
+    SpeedConflict, ///< the shafts turn in opposite directions
+    Obstructed,    ///< a block in between can't be replaced
+    NotShaft,
+};
+[[nodiscard]] char const* connectErrorName(ConnectError e);
+
+/// The canConnect: `maxLength` is the config `maxBeltLength` (20).
+[[nodiscard]] ConnectError canConnect(ConnectWorld const& w, Vec3i const& first, Vec3i const& second, int maxLength);
+
+/// The BeltConnectorHandler.tick (the client's preview while a shaft is selected): the dotted
+/// line from `first` towards `selected`, with the component along the shaft `axis` removed and the
+/// direction snapped to a straight or 45 degree step. Points are `first + step * f` for f in
+/// [0, length) every 1/16 block. nullopt: nothing to draw.
+struct PreviewLine {
+    Vec3i step;
+    float length = 0;
+};
+[[nodiscard]] std::optional<PreviewLine> previewLine(Vec3i const& first, Vec3i const& selected, Axis axis);
+
+/// The getSlopeBetween.
+[[nodiscard]] Slope slopeBetween(Vec3i const& start, Vec3i const& end);
+/// The getFacingFromTo plus the vertical-belt special case of createBelts (`shaftAxis`).
+[[nodiscard]] int facingBetween(Vec3i const& start, Vec3i const& end, Axis shaftAxis);
+/// The getBeltChainBetween.
+[[nodiscard]] std::vector<Vec3i> chainBetween(Vec3i const& start, Vec3i const& end, Slope slope, int facing);
+
+struct PlannedSegment {
+    Vec3i        pos;
+    SegmentState state;
+};
+/// The createBelts: the segments to place (START, MIDDLE / PULLEY where a shaft stands,
+/// END; SIDEWAYS when a pulley shaft is vertical).
+[[nodiscard]] std::vector<PlannedSegment> planBelt(ConnectWorld const& w, Vec3i const& start, Vec3i const& end);
+
+// ---- speeds ------------------------------------------------------------------------------------------
+
+/// The getBeltMovementSpeed: blocks per tick (speed / 480).
+[[nodiscard]] inline float beltMovementSpeed(float rpm) { return rpm / 480.f; }
+/// The getDirectionAwareBeltMovementSpeed: > 0 moves items from START towards END.
+[[nodiscard]] float directionAwareSpeed(float rpm, int facing);
+/// The getMovementFacing: the horizontal facing items move to.
+[[nodiscard]] int movementFacing(float rpm, int facing);
+
+/// The BeltHelper.getVectorForOffset: centre line point at `offset` along the belt,
+/// relative to the controller (START) block's centre.
+[[nodiscard]] Vec3d vectorForOffset(SegmentState const& controller, int length, float offset);
+/// The top surface of a belt / depot (13 px).
+inline constexpr double kBeltTop = 13.0 / 16.0;
+
+// ---- items on a belt ---------------------------------------------------------------------------------
+
+/// The TransportedItemStack (the stack itself lives in the game layer, keyed by `id`).
+struct Item {
+    std::uint64_t id               = 0;
+    float         beltPosition     = 0;
+    float         prevBeltPosition = 0;
+    float         sideOffset       = 0;
+    float         prevSideOffset   = 0;
+    int           insertedAt       = 0;
+    int           insertedFrom     = 1; ///< FacingID (up by default)
+    bool          locked           = false;
+    bool          lockedExternally = false;
+    /// The `getTargetSideOffset`: 0 unless the item was put on the belt sideways.
+    float         targetSideOffset = 0;
+};
+
+/// The BeltInventory.Ending (margins in blocks before the end where items stop).
+enum class Ending : std::uint8_t { Unresolved, Eject, Insert, Funnel, Blocked };
+[[nodiscard]] float endingMargin(Ending e);
+
+enum class EndInsert : std::uint8_t { Unchanged, Partial, Consumed };
+
+/// The world as the belt inventory sees it during one tick.
+class InventoryEnv {
+public:
+    virtual ~InventoryEnv() = default;
+    /// Direction-aware speed (blocks per tick).
+    [[nodiscard]] virtual float speed() const = 0;
+    [[nodiscard]] virtual int   length() const = 0;
+    /// Items are processed only on horizontal belts.
+    [[nodiscard]] virtual bool horizontal() const { return true; }
+    virtual Ending resolveEnding() { return Ending::Eject; }
+    /// Belt processing (handleBeltProcessingAndCheckIfRemoved); true = the item is gone.
+    virtual bool processing(Item&, float /*nextOffset*/, bool /*noMovement*/) { return false; }
+    /// Funnels on the belt (checkForFunnels); true = the item stops this tick.
+    virtual bool funnels(Item&, float /*nextOffset*/) { return false; }
+    /// Tunnels / crushers on the belt; true = the item is stuck this tick.
+    virtual bool obstacles(Item&, float /*nextOffset*/) { return false; }
+    /// Insert into the block after the end (Ending::Insert).
+    virtual EndInsert insertAtEnd(Item&) { return EndInsert::Unchanged; }
+    /// The item falls off the end (Ending::Eject); the inventory removes it afterwards.
+    virtual void eject(Item&) {}
+    /// The stack of an item is empty (removed by some other means).
+    [[nodiscard]] virtual bool emptyStack(Item const&) const { return false; }
+};
+
+/// The BeltInventory: items sorted with the one furthest along the movement first.
+class Inventory {
+public:
+    std::vector<Item>          items;
+    std::vector<Item>          toInsert;
+    std::vector<std::uint64_t> toRemove;
+    bool                       movementPositive = true;
+
+    /// Queues an item (inserted at the start of the next tick, as the addItem).
+    void addItem(Item item) { toInsert.push_back(item); }
+    /// Inserts now, keeping the order.
+    void insertSorted(Item item);
+    /// One tick (BeltInventory.tick). Returns true when the contents changed.
+    bool tick(InventoryEnv& env);
+    /// The canInsertAtFromSide (`movementFace` = FacingID of the movement direction).
+    [[nodiscard]] bool canInsertAtFromSide(int segment, int side, int movementFace) const;
+    [[nodiscard]] bool canInsertAt(int segment, int movementFace) const { return canInsertAtFromSide(segment, 1, movementFace); }
+    /// The getStackAtOffset (the first item within [segment, segment + 1]).
+    [[nodiscard]] Item*       stackAtOffset(int segment);
+    [[nodiscard]] Item const* find(std::uint64_t id) const;
+    [[nodiscard]] Item*       find(std::uint64_t id);
+    /// Every item, queued ones included.
+    [[nodiscard]] std::vector<Item> all() const;
+    [[nodiscard]] bool              empty() const { return items.empty() && toInsert.empty(); }
+    /// Applies the queues now (removals, insertions).
+    void flushQueues();
+};
+
+/// The BeltSlicer.hoveringEnd: the click is on the outer half of an end segment.
+/// `hitFromCentre` = hit point minus the segment's centre.
+[[nodiscard]] bool hoveringEnd(SegmentState const& s, Vec3d const& hitFromCentre);
+
+// ---- depots ------------------------------------------------------------------------------------------
+
+/// The DepotBehaviour.tick(TransportedItemStack): slides the held item to the centre; true
+/// when it has arrived (within 1/16).
+bool depotSlide(Item& item);
+
+// ---- weighted ejector --------------------------------------------------------------------------------
+
+/// Gravity and drag of a launched object (Bedrock entity physics: what players and mobs follow).
+struct LaunchPhysics {
+    double gravity         = 0.08;
+    double horizontalDrag  = 0.91;
+    double verticalDrag    = 0.98;
+};
+
+/// A launch towards a target `horizontal` blocks ahead and `vertical` blocks up (the
+/// EntityLauncher.recalculateTrajectory): yPeak = max(0, v + (h + .5) / 8) + (h <= 1 ? 1 : 4),
+/// yMotion = sqrt(2 yPeak / 13) + .015 yPeak, the flight time from Simi's approximation and
+/// xMotion with the xError correction.
+struct Launch {
+    int    horizontal = 1;
+    int    vertical   = 0;
+    double vx = 0, vy = 0; ///< initial motion (blocks per tick) along the facing / up (xMotion / yMotion)
+    double ticks = 1;      ///< the totalFlyingTicks
+    LaunchPhysics physics;
+
+    /// Offset (along, up) from the block centre after `t` ticks (getGlobalPos: the
+    /// closed-form arc pulled towards the target as (t / ticks)^3, half as much vertically).
+    [[nodiscard]] std::pair<double, double> at(double t) const;
+    /// Velocity (along, up) after `t` ticks (getGlobalVelocity).
+    [[nodiscard]] std::pair<double, double> velocity(double t) const;
+    /// Ticks until a launched item arrives (max(3, totalFlyingTicks)).
+    [[nodiscard]] double itemTicks() const { return ticks < 3 ? 3.0 : ticks; }
+};
+[[nodiscard]] Launch planLaunch(int horizontal, int vertical, LaunchPhysics physics = {});
+
+/// The WeightedEjectorBlockEntity.getWindUpSpeed: charge per tick (1 = fully charged).
+[[nodiscard]] float ejectorWindUp(float rpm, int horizontal, int vertical);
+/// The EjectorTargetHandler.getValidTargetDirection: the facing that reaches `target` from
+/// `ejector` (nullopt: off to a side, straight above / below, or further than `maxDistance`).
+[[nodiscard]] std::optional<int> ejectorTargetFacing(Vec3i const& ejector, Vec3i const& target, int maxDistance);
+
+} // namespace br::core::belts

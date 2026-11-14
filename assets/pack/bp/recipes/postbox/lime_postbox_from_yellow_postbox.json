@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:lime_postbox_from_yellow_postbox"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:lime_dye"
+      },
+      {
+        "item": "bearing:yellow_postbox"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:yellow_postbox"
+      }
+    ],
+    "result": {
+      "item": "bearing:lime_postbox",
+      "count": 1
+    }
+  }
+}

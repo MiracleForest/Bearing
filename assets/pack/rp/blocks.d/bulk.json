@@ -1,0 +1,17 @@
+{
+  "bearing:millstone": {
+    "sound": "stone"
+  },
+  "bearing:crushing_wheel": {
+    "sound": "stone"
+  },
+  "bearing:crushing_wheel_controller": {
+    "sound": "stone"
+  },
+  "bearing:encased_fan": {
+    "sound": "wood"
+  },
+  "bearing:nozzle": {
+    "sound": "cloth"
+  }
+}

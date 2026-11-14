@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:item": {
+    "description": {
+      "identifier": "bearing:crushed_raw_copper",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "bearing_crushed_raw_copper",
+      "minecraft:display_name": {
+        "value": "item.bearing:crushed_raw_copper.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

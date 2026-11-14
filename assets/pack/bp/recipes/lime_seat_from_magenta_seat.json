@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:lime_seat_from_magenta_seat"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:magenta_seat"
+      },
+      {
+        "item": "minecraft:lime_dye"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:magenta_seat"
+      }
+    ],
+    "result": {
+      "item": "bearing:lime_seat"
+    }
+  }
+}

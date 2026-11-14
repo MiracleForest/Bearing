@@ -1,0 +1,164 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:steam_whistle",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "bearing:size": [
+          0,
+          1,
+          2
+        ],
+        "bearing:powered": [
+          0,
+          1
+        ],
+        "bearing:mouth": [
+          0,
+          1
+        ]
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:block_face"
+          ]
+        },
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.steam_whistle",
+        "bone_visibility": {
+          "bracket": "q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:block_face') != 'down'",
+          "small": "q.block_state('bearing:size') == 1",
+          "medium": "q.block_state('bearing:size') == 0",
+          "large": "q.block_state('bearing:size') == 2",
+          "mouth_small": "q.block_state('bearing:size') == 1 && q.block_state('bearing:mouth') == 0",
+          "mouth_medium": "q.block_state('bearing:size') == 0 && q.block_state('bearing:mouth') == 0",
+          "mouth_large": "q.block_state('bearing:size') == 2 && q.block_state('bearing:mouth') == 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_steam_whistle",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/steam_whistle.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down') && q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down') && q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down') && q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

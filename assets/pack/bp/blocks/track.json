@@ -1,0 +1,440 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:track",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "bearing:shape": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "bearing:shape_hi": [
+          0,
+          1
+        ],
+        "bearing:turn": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.track",
+        "bone_visibility": {
+          "oz": true,
+          "ox": false,
+          "dp": false,
+          "dn": false,
+          "asc": false
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_track",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          2,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          4,
+          16
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.8
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.8
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#7d6a52",
+      "minecraft:loot": "loot_tables/blocks/track.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": true,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": true,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": true,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": false,
+              "dp": true,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": false,
+              "dp": false,
+              "dn": true,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 5",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": true
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "minecraft:collision_box": false,
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 6",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": true
+            }
+          },
+          "minecraft:collision_box": false,
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 7",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": true
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "minecraft:collision_box": false,
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 8",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": true
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          },
+          "minecraft:collision_box": false,
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 9",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": true,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 10",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": true,
+              "ox": false,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 11",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": true,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 12",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": true,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 13",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": true,
+              "ox": true,
+              "dp": false,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 14",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": false,
+              "dp": true,
+              "dn": true,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 0 && q.block_state('bearing:shape') == 15",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": true,
+              "dp": true,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 1 && q.block_state('bearing:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": true,
+              "ox": false,
+              "dp": true,
+              "dn": false,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 1 && q.block_state('bearing:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": false,
+              "ox": true,
+              "dp": false,
+              "dn": true,
+              "asc": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:shape_hi') == 1 && q.block_state('bearing:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.track",
+            "bone_visibility": {
+              "oz": true,
+              "ox": false,
+              "dp": false,
+              "dn": true,
+              "asc": false
+            }
+          }
+        }
+      }
+    ]
+  }
+}

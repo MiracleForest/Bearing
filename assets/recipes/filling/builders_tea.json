@@ -1,0 +1,18 @@
+{
+  "type": "bearing:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "type": "fluid_stack",
+      "fluid": "bearing:tea",
+      "amount": 250
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:builders_tea"
+    }
+  ]
+}

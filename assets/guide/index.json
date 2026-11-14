@@ -1,0 +1,1383 @@
+{
+  "components": [
+    {
+      "id": "bearing:shaft",
+      "scenes": [
+        "shaft",
+        "shaft_casing"
+      ]
+    },
+    {
+      "id": "bearing:andesite_encased_shaft",
+      "scenes": [
+        "shaft_casing"
+      ]
+    },
+    {
+      "id": "bearing:brass_encased_shaft",
+      "scenes": [
+        "shaft_casing"
+      ]
+    },
+    {
+      "id": "bearing:cogwheel",
+      "scenes": [
+        "cogwheel",
+        "cog_speedup",
+        "cogwheel_casing"
+      ]
+    },
+    {
+      "id": "bearing:large_cogwheel",
+      "scenes": [
+        "cog_speedup",
+        "large_cogwheel",
+        "cogwheel_casing"
+      ]
+    },
+    {
+      "id": "bearing:belt_connector",
+      "scenes": [
+        "belt_connector",
+        "belt_directions",
+        "belt_transport",
+        "belt_casing"
+      ]
+    },
+    {
+      "id": "bearing:andesite_casing",
+      "scenes": [
+        "shaft_casing",
+        "belt_casing"
+      ]
+    },
+    {
+      "id": "bearing:brass_casing",
+      "scenes": [
+        "shaft_casing",
+        "belt_casing"
+      ]
+    },
+    {
+      "id": "bearing:gearbox",
+      "scenes": [
+        "gearbox"
+      ]
+    },
+    {
+      "id": "bearing:vertical_gearbox",
+      "scenes": [
+        "gearbox"
+      ]
+    },
+    {
+      "id": "bearing:clutch",
+      "scenes": [
+        "clutch"
+      ]
+    },
+    {
+      "id": "bearing:gearshift",
+      "scenes": [
+        "gearshift"
+      ]
+    },
+    {
+      "id": "bearing:sequenced_gearshift",
+      "scenes": [
+        "sequenced_gearshift"
+      ]
+    },
+    {
+      "id": "bearing:encased_fan",
+      "scenes": [
+        "fan_direction",
+        "fan_processing"
+      ]
+    },
+    {
+      "id": "bearing:creative_motor",
+      "scenes": [
+        "creative_motor",
+        "creative_motor_mojang"
+      ]
+    },
+    {
+      "id": "bearing:water_wheel",
+      "scenes": [
+        "water_wheel"
+      ]
+    },
+    {
+      "id": "bearing:large_water_wheel",
+      "scenes": [
+        "large_water_wheel"
+      ]
+    },
+    {
+      "id": "bearing:hand_crank",
+      "scenes": [
+        "hand_crank"
+      ]
+    },
+    {
+      "id": "bearing:copper_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:white_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:orange_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:magenta_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:light_blue_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:yellow_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:lime_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:pink_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:gray_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:light_gray_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:cyan_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:purple_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:blue_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:brown_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:green_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:red_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:black_valve_handle",
+      "scenes": [
+        "valve_handle"
+      ]
+    },
+    {
+      "id": "bearing:encased_chain_drive",
+      "scenes": [
+        "chain_drive",
+        "chain_gearshift"
+      ]
+    },
+    {
+      "id": "bearing:adjustable_chain_gearshift",
+      "scenes": [
+        "chain_gearshift"
+      ]
+    },
+    {
+      "id": "bearing:rotation_speed_controller",
+      "scenes": [
+        "rotation_speed_controller"
+      ]
+    },
+    {
+      "id": "bearing:speedometer",
+      "scenes": [
+        "speedometer"
+      ]
+    },
+    {
+      "id": "bearing:stressometer",
+      "scenes": [
+        "stressometer"
+      ]
+    },
+    {
+      "id": "bearing:millstone",
+      "scenes": [
+        "millstone"
+      ]
+    },
+    {
+      "id": "bearing:crushing_wheel",
+      "scenes": [
+        "crushing_wheels"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_mixer",
+      "scenes": [
+        "mechanical_mixer"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_press",
+      "scenes": [
+        "mechanical_press",
+        "mechanical_press_compacting"
+      ]
+    },
+    {
+      "id": "bearing:basin",
+      "scenes": [
+        "basin",
+        "mechanical_mixer",
+        "mechanical_press_compacting"
+      ]
+    },
+    {
+      "id": "bearing:empty_blaze_burner",
+      "scenes": [
+        "empty_blaze_burner"
+      ]
+    },
+    {
+      "id": "bearing:blaze_burner",
+      "scenes": [
+        "blaze_burner"
+      ]
+    },
+    {
+      "id": "bearing:depot",
+      "scenes": [
+        "depot"
+      ]
+    },
+    {
+      "id": "bearing:weighted_ejector",
+      "scenes": [
+        "weighted_ejector",
+        "weighted_ejector_tunnel",
+        "weighted_ejector_redstone"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_crafter",
+      "scenes": [
+        "mechanical_crafter",
+        "mechanical_crafter_connect",
+        "mechanical_crafter_covers"
+      ]
+    },
+    {
+      "id": "bearing:crafter_slot_cover",
+      "scenes": [
+        "mechanical_crafter_covers"
+      ]
+    },
+    {
+      "id": "bearing:item_vault",
+      "scenes": [
+        "item_vault_storage",
+        "item_vault_sizes"
+      ]
+    },
+    {
+      "id": "bearing:chute",
+      "scenes": [
+        "chute",
+        "chute_upward",
+        "smart_chute"
+      ]
+    },
+    {
+      "id": "bearing:smart_chute",
+      "scenes": [
+        "smart_chute"
+      ]
+    },
+    {
+      "id": "bearing:brass_funnel",
+      "scenes": [
+        "brass_funnel",
+        "funnel_intro",
+        "funnel_direction",
+        "funnel_compat",
+        "funnel_redstone",
+        "funnel_transfer"
+      ]
+    },
+    {
+      "id": "bearing:andesite_funnel",
+      "scenes": [
+        "funnel_intro",
+        "funnel_direction",
+        "funnel_compat",
+        "funnel_redstone",
+        "funnel_transfer",
+        "brass_funnel"
+      ]
+    },
+    {
+      "id": "bearing:andesite_tunnel",
+      "scenes": [
+        "andesite_tunnel"
+      ]
+    },
+    {
+      "id": "bearing:brass_tunnel",
+      "scenes": [
+        "brass_tunnel",
+        "brass_tunnel_modes"
+      ]
+    },
+    {
+      "id": "bearing:linear_chassis",
+      "scenes": [
+        "linear_chassis_group",
+        "linear_chassis_attachment"
+      ]
+    },
+    {
+      "id": "bearing:secondary_linear_chassis",
+      "scenes": [
+        "linear_chassis_group",
+        "linear_chassis_attachment"
+      ]
+    },
+    {
+      "id": "bearing:radial_chassis",
+      "scenes": [
+        "radial_chassis"
+      ]
+    },
+    {
+      "id": "bearing:super_glue",
+      "scenes": [
+        "super_glue"
+      ]
+    },
+    {
+      "id": "bearing:sticker",
+      "scenes": [
+        "sticker"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_arm",
+      "scenes": [
+        "mechanical_arm",
+        "mechanical_arm_filtering",
+        "mechanical_arm_modes",
+        "mechanical_arm_redstone"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_piston",
+      "scenes": [
+        "mechanical_piston",
+        "piston_pole",
+        "mechanical_piston_modes"
+      ]
+    },
+    {
+      "id": "bearing:sticky_mechanical_piston",
+      "scenes": [
+        "mechanical_piston",
+        "piston_pole",
+        "mechanical_piston_modes"
+      ]
+    },
+    {
+      "id": "bearing:piston_extension_pole",
+      "scenes": [
+        "piston_pole"
+      ]
+    },
+    {
+      "id": "bearing:rope_pulley",
+      "scenes": [
+        "rope_pulley",
+        "rope_pulley_modes",
+        "rope_pulley_multi_rope",
+        "rope_pulley_attachment"
+      ]
+    },
+    {
+      "id": "bearing:elevator_pulley",
+      "scenes": [
+        "elevator_pulley",
+        "elevator_pulley_multi_rope"
+      ]
+    },
+    {
+      "id": "bearing:windmill_bearing",
+      "scenes": [
+        "windmill_source",
+        "windmill_structure"
+      ]
+    },
+    {
+      "id": "bearing:white_sail",
+      "scenes": [
+        "sail"
+      ]
+    },
+    {
+      "id": "bearing:sail_frame",
+      "scenes": [
+        "sail_frame"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_bearing",
+      "scenes": [
+        "mechanical_bearing",
+        "bearing_modes",
+        "stabilized_bearings"
+      ]
+    },
+    {
+      "id": "bearing:clockwork_bearing",
+      "scenes": [
+        "clockwork_bearing"
+      ]
+    },
+    {
+      "id": "bearing:gantry_shaft",
+      "scenes": [
+        "gantry_shaft",
+        "gantry_redstone",
+        "gantry_direction",
+        "gantry_cascaded"
+      ]
+    },
+    {
+      "id": "bearing:gantry_carriage",
+      "scenes": [
+        "gantry_carriage",
+        "gantry_redstone",
+        "gantry_direction",
+        "gantry_cascaded"
+      ]
+    },
+    {
+      "id": "bearing:cart_assembler",
+      "scenes": [
+        "cart_assembler",
+        "cart_assembler_modes",
+        "cart_assembler_dual",
+        "cart_assembler_rails"
+      ]
+    },
+    {
+      "id": "bearing:portable_storage_interface",
+      "scenes": [
+        "portable_storage_interface",
+        "portable_storage_interface_redstone"
+      ]
+    },
+    {
+      "id": "bearing:redstone_contact",
+      "scenes": [
+        "redstone_contact"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_saw",
+      "scenes": [
+        "mechanical_saw_processing",
+        "mechanical_saw_breaker",
+        "mechanical_saw_contraption"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_drill",
+      "scenes": [
+        "mechanical_drill",
+        "mechanical_drill_contraption"
+      ]
+    },
+    {
+      "id": "bearing:deployer",
+      "scenes": [
+        "deployer",
+        "deployer_modes",
+        "deployer_processing",
+        "deployer_redstone",
+        "deployer_contraption"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_harvester",
+      "scenes": [
+        "mechanical_harvester"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_plough",
+      "scenes": [
+        "mechanical_plough"
+      ]
+    },
+    {
+      "id": "bearing:contraption_controls",
+      "scenes": [
+        "contraption_controls"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_roller",
+      "scenes": [
+        "mechanical_roller_pave",
+        "mechanical_roller_fill"
+      ]
+    },
+    {
+      "id": "bearing:fluid_pipe",
+      "scenes": [
+        "fluid_pipe_flow",
+        "fluid_pipe_interaction",
+        "encased_fluid_pipe"
+      ]
+    },
+    {
+      "id": "bearing:copper_casing",
+      "scenes": [
+        "encased_fluid_pipe"
+      ]
+    },
+    {
+      "id": "bearing:mechanical_pump",
+      "scenes": [
+        "mechanical_pump_flow",
+        "mechanical_pump_speed"
+      ]
+    },
+    {
+      "id": "bearing:fluid_valve",
+      "scenes": [
+        "valve_pipe"
+      ]
+    },
+    {
+      "id": "bearing:smart_fluid_pipe",
+      "scenes": [
+        "smart_pipe"
+      ]
+    },
+    {
+      "id": "bearing:fluid_tank",
+      "scenes": [
+        "fluid_tank_storage",
+        "fluid_tank_sizes"
+      ]
+    },
+    {
+      "id": "bearing:creative_fluid_tank",
+      "scenes": [
+        "creative_fluid_tank",
+        "fluid_tank_sizes"
+      ]
+    },
+    {
+      "id": "bearing:hose_pulley",
+      "scenes": [
+        "hose_pulley",
+        "hose_pulley_level",
+        "hose_pulley_infinite"
+      ]
+    },
+    {
+      "id": "bearing:spout",
+      "scenes": [
+        "spout_filling"
+      ]
+    },
+    {
+      "id": "bearing:item_drain",
+      "scenes": [
+        "item_drain"
+      ]
+    },
+    {
+      "id": "bearing:portable_fluid_interface",
+      "scenes": [
+        "portable_fluid_interface",
+        "portable_storage_interface_redstone"
+      ]
+    },
+    {
+      "id": "bearing:pulse_extender",
+      "scenes": [
+        "pulse_extender"
+      ]
+    },
+    {
+      "id": "bearing:pulse_repeater",
+      "scenes": [
+        "pulse_repeater"
+      ]
+    },
+    {
+      "id": "bearing:powered_latch",
+      "scenes": [
+        "powered_latch"
+      ]
+    },
+    {
+      "id": "bearing:powered_toggle_latch",
+      "scenes": [
+        "powered_toggle_latch"
+      ]
+    },
+    {
+      "id": "bearing:analog_lever",
+      "scenes": [
+        "analog_lever"
+      ]
+    },
+    {
+      "id": "bearing:nixie_tube",
+      "scenes": [
+        "nixie_tube"
+      ]
+    },
+    {
+      "id": "bearing:redstone_link",
+      "scenes": [
+        "redstone_link"
+      ]
+    },
+    {
+      "id": "bearing:rose_quartz_lamp",
+      "scenes": [
+        "rose_quartz_lamp"
+      ]
+    },
+    {
+      "id": "bearing:pulse_timer",
+      "scenes": [
+        "pulse_timer"
+      ]
+    },
+    {
+      "id": "bearing:content_observer",
+      "scenes": [
+        "smart_observer"
+      ]
+    },
+    {
+      "id": "bearing:stockpile_switch",
+      "scenes": [
+        "threshold_switch"
+      ]
+    },
+    {
+      "id": "bearing:chain_conveyor",
+      "scenes": [
+        "chain_conveyor"
+      ]
+    },
+    {
+      "id": "bearing:package_frogport",
+      "scenes": [
+        "package_frogport"
+      ]
+    },
+    {
+      "id": "bearing:white_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:orange_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:magenta_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:light_blue_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:yellow_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:lime_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:pink_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:gray_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:light_gray_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:cyan_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:purple_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:blue_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:brown_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:green_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:red_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:black_postbox",
+      "scenes": [
+        "postbox"
+      ]
+    },
+    {
+      "id": "bearing:packager",
+      "scenes": [
+        "packager",
+        "packager_address"
+      ]
+    },
+    {
+      "id": "bearing:stock_link",
+      "scenes": [
+        "stock_link"
+      ]
+    },
+    {
+      "id": "bearing:stock_ticker",
+      "scenes": [
+        "stock_ticker",
+        "stock_ticker_address"
+      ]
+    },
+    {
+      "id": "bearing:redstone_requester",
+      "scenes": [
+        "redstone_requester"
+      ]
+    },
+    {
+      "id": "bearing:repackager",
+      "scenes": [
+        "repackager"
+      ]
+    },
+    {
+      "id": "bearing:white_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:orange_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:magenta_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:light_blue_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:yellow_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:lime_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:pink_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:gray_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:light_gray_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:cyan_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:purple_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:blue_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:brown_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:green_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:red_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:black_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:andesite_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:brass_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:copper_table_cloth",
+      "scenes": [
+        "table_cloth"
+      ]
+    },
+    {
+      "id": "bearing:factory_gauge",
+      "scenes": [
+        "factory_gauge_restocker",
+        "factory_gauge_recipe",
+        "factory_gauge_crafting",
+        "factory_gauge_links"
+      ]
+    },
+    {
+      "id": "bearing:track",
+      "scenes": [
+        "track_placement",
+        "track_portal",
+        "track_chunks"
+      ]
+    },
+    {
+      "id": "bearing:track_station",
+      "scenes": [
+        "train_assembly",
+        "auto_schedule"
+      ]
+    },
+    {
+      "id": "bearing:track_signal",
+      "scenes": [
+        "train_signal_placement",
+        "train_signal_signaling",
+        "train_signal_redstone"
+      ]
+    },
+    {
+      "id": "bearing:schedule",
+      "scenes": [
+        "train_schedule"
+      ]
+    },
+    {
+      "id": "bearing:controls",
+      "scenes": [
+        "train_controls"
+      ]
+    },
+    {
+      "id": "bearing:track_observer",
+      "scenes": [
+        "track_observer"
+      ]
+    },
+    {
+      "id": "bearing:display_link",
+      "scenes": [
+        "display_link",
+        "display_link_redstone"
+      ]
+    },
+    {
+      "id": "bearing:display_board",
+      "scenes": [
+        "display_board"
+      ]
+    },
+    {
+      "id": "bearing:steam_whistle",
+      "scenes": [
+        "steam_whistle"
+      ]
+    },
+    {
+      "id": "bearing:steam_engine",
+      "scenes": [
+        "steam_engine"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "id": "kinetic_relays",
+      "icon": "bearing:cogwheel",
+      "index": true,
+      "items": [
+        "bearing:shaft",
+        "bearing:cogwheel",
+        "bearing:large_cogwheel",
+        "bearing:belt_connector",
+        "bearing:gearbox",
+        "bearing:vertical_gearbox",
+        "bearing:clutch",
+        "bearing:gearshift",
+        "bearing:encased_chain_drive",
+        "bearing:adjustable_chain_gearshift",
+        "bearing:chain_conveyor",
+        "bearing:sequenced_gearshift",
+        "bearing:rotation_speed_controller"
+      ]
+    },
+    {
+      "id": "kinetic_sources",
+      "icon": "bearing:water_wheel",
+      "index": true,
+      "items": [
+        "bearing:hand_crank",
+        "bearing:copper_valve_handle",
+        "bearing:water_wheel",
+        "bearing:large_water_wheel",
+        "bearing:windmill_bearing",
+        "bearing:steam_engine",
+        "bearing:creative_motor"
+      ]
+    },
+    {
+      "id": "kinetic_appliances",
+      "icon": "bearing:mechanical_press",
+      "index": true,
+      "items": [
+        "bearing:millstone",
+        "bearing:turntable",
+        "bearing:encased_fan",
+        "bearing:cuckoo_clock",
+        "bearing:mechanical_press",
+        "bearing:mechanical_mixer",
+        "bearing:mechanical_crafter",
+        "bearing:mechanical_drill",
+        "bearing:mechanical_saw",
+        "bearing:deployer",
+        "bearing:mechanical_pump",
+        "bearing:mechanical_arm",
+        "bearing:mechanical_piston",
+        "bearing:rope_pulley",
+        "bearing:elevator_pulley",
+        "bearing:mechanical_bearing",
+        "bearing:gantry_shaft",
+        "bearing:gantry_carriage",
+        "bearing:clockwork_bearing",
+        "bearing:display_board",
+        "bearing:crushing_wheel"
+      ]
+    },
+    {
+      "id": "fluids",
+      "icon": "bearing:fluid_pipe",
+      "index": true,
+      "items": [
+        "bearing:fluid_pipe",
+        "bearing:mechanical_pump",
+        "bearing:fluid_valve",
+        "bearing:smart_fluid_pipe",
+        "bearing:hose_pulley",
+        "bearing:item_drain",
+        "bearing:spout",
+        "bearing:portable_fluid_interface",
+        "bearing:fluid_tank",
+        "bearing:creative_fluid_tank"
+      ]
+    },
+    {
+      "id": "logistics",
+      "icon": "minecraft:chest",
+      "index": true,
+      "items": [
+        "bearing:belt_connector",
+        "bearing:filter",
+        "bearing:attribute_filter",
+        "bearing:chute",
+        "bearing:smart_chute",
+        "bearing:item_vault",
+        "bearing:depot",
+        "bearing:weighted_ejector",
+        "bearing:mechanical_arm",
+        "bearing:andesite_funnel",
+        "bearing:brass_funnel",
+        "bearing:andesite_tunnel",
+        "bearing:brass_tunnel",
+        "bearing:content_observer",
+        "bearing:stockpile_switch",
+        "bearing:creative_crate",
+        "bearing:portable_storage_interface"
+      ]
+    },
+    {
+      "id": "high_logistics",
+      "icon": "bearing:stock_ticker",
+      "index": true,
+      "items": [
+        "bearing:packager",
+        "bearing:stock_link",
+        "bearing:stock_ticker",
+        "bearing:package_frogport",
+        "bearing:white_postbox",
+        "bearing:redstone_requester",
+        "bearing:red_table_cloth",
+        "bearing:factory_gauge",
+        "bearing:repackager",
+        "bearing:package_filter"
+      ]
+    },
+    {
+      "id": "redstone",
+      "icon": "minecraft:redstone",
+      "index": true,
+      "items": [
+        "bearing:content_observer",
+        "bearing:stockpile_switch",
+        "bearing:nixie_tube",
+        "bearing:redstone_contact",
+        "bearing:analog_lever",
+        "bearing:redstone_link",
+        "bearing:pulse_extender",
+        "bearing:pulse_repeater",
+        "bearing:pulse_timer",
+        "bearing:powered_latch",
+        "bearing:powered_toggle_latch",
+        "bearing:rose_quartz_lamp"
+      ]
+    },
+    {
+      "id": "decoration",
+      "icon": "minecraft:rose_bush",
+      "index": true,
+      "items": [
+        "bearing:nixie_tube",
+        "bearing:display_board",
+        "bearing:cuckoo_clock",
+        "bearing:wooden_bracket",
+        "bearing:metal_bracket",
+        "bearing:metal_girder",
+        "bearing:andesite_casing",
+        "bearing:brass_casing",
+        "bearing:copper_casing",
+        "bearing:railway_casing"
+      ]
+    },
+    {
+      "id": "creative",
+      "icon": "bearing:creative_crate",
+      "index": true,
+      "items": [
+        "bearing:creative_crate",
+        "bearing:creative_fluid_tank",
+        "bearing:creative_motor"
+      ]
+    },
+    {
+      "id": "movement_anchor",
+      "icon": "bearing:mechanical_piston",
+      "index": true,
+      "items": [
+        "bearing:mechanical_piston",
+        "bearing:windmill_bearing",
+        "bearing:mechanical_bearing",
+        "bearing:clockwork_bearing",
+        "bearing:rope_pulley",
+        "bearing:elevator_pulley",
+        "bearing:gantry_carriage",
+        "bearing:cart_assembler",
+        "bearing:track_station"
+      ]
+    },
+    {
+      "id": "contraption_actor",
+      "icon": "bearing:mechanical_harvester",
+      "index": true,
+      "items": [
+        "bearing:mechanical_harvester",
+        "bearing:mechanical_plough",
+        "bearing:mechanical_drill",
+        "bearing:mechanical_saw",
+        "bearing:deployer",
+        "bearing:portable_storage_interface",
+        "bearing:portable_fluid_interface",
+        "bearing:mechanical_bearing",
+        "bearing:andesite_funnel",
+        "bearing:brass_funnel",
+        "bearing:white_seat",
+        "bearing:controls",
+        "bearing:contraption_controls",
+        "bearing:redstone_contact",
+        "minecraft:bell",
+        "minecraft:dispenser",
+        "minecraft:dropper"
+      ]
+    },
+    {
+      "id": "contraption_assembly",
+      "icon": "bearing:super_glue",
+      "index": true,
+      "items": [
+        "bearing:linear_chassis",
+        "bearing:secondary_linear_chassis",
+        "bearing:radial_chassis",
+        "bearing:super_glue",
+        "bearing:sticker",
+        "minecraft:slime",
+        "minecraft:honey_block"
+      ]
+    },
+    {
+      "id": "windmill_sails",
+      "icon": "bearing:windmill_bearing",
+      "index": false,
+      "items": [
+        "bearing:white_sail",
+        "bearing:sail_frame",
+        "minecraft:white_wool"
+      ]
+    },
+    {
+      "id": "arm_targets",
+      "icon": "bearing:mechanical_arm",
+      "index": false,
+      "items": [
+        "bearing:mechanical_arm",
+        "bearing:belt_connector",
+        "bearing:chute",
+        "bearing:depot",
+        "bearing:weighted_ejector",
+        "bearing:basin",
+        "bearing:andesite_funnel",
+        "bearing:brass_funnel",
+        "bearing:mechanical_crafter",
+        "bearing:millstone",
+        "bearing:deployer",
+        "bearing:mechanical_saw",
+        "bearing:blaze_burner",
+        "bearing:crushing_wheel",
+        "bearing:track_station",
+        "minecraft:composter",
+        "minecraft:jukebox",
+        "minecraft:campfire",
+        "minecraft:soul_campfire",
+        "minecraft:respawn_anchor"
+      ]
+    },
+    {
+      "id": "train_related",
+      "icon": "bearing:track",
+      "index": true,
+      "items": [
+        "bearing:track",
+        "bearing:track_station",
+        "bearing:track_signal",
+        "bearing:track_observer",
+        "bearing:controls",
+        "bearing:schedule",
+        "bearing:train_door",
+        "bearing:train_trapdoor",
+        "bearing:railway_casing"
+      ]
+    },
+    {
+      "id": "display_sources",
+      "icon": "bearing:display_link",
+      "index": false,
+      "items": [
+        "bearing:white_seat",
+        "bearing:depot",
+        "bearing:nixie_tube",
+        "bearing:stockpile_switch",
+        "bearing:content_observer",
+        "bearing:andesite_tunnel",
+        "bearing:track_observer",
+        "bearing:track_station",
+        "bearing:display_link",
+        "bearing:brass_tunnel",
+        "bearing:cuckoo_clock",
+        "bearing:stressometer",
+        "bearing:speedometer",
+        "bearing:fluid_tank",
+        "bearing:factory_gauge",
+        "bearing:belt_connector",
+        "minecraft:enchanting_table",
+        "minecraft:respawn_anchor",
+        "minecraft:command_block",
+        "minecraft:target"
+      ]
+    },
+    {
+      "id": "display_targets",
+      "icon": "bearing:display_link",
+      "index": false,
+      "items": [
+        "bearing:nixie_tube",
+        "bearing:display_board",
+        "bearing:display_link",
+        "minecraft:oak_sign",
+        "minecraft:lectern"
+      ]
+    },
+    {
+      "id": "threshold_switch_targets",
+      "icon": "bearing:stockpile_switch",
+      "index": false,
+      "items": [
+        "bearing:rope_pulley",
+        "bearing:item_vault",
+        "bearing:fluid_tank",
+        "minecraft:chest",
+        "minecraft:barrel"
+      ]
+    }
+  ]
+}

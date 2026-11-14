@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:cut_scoria_brick_slab_from_scoria_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:scoria"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:scoria"
+      }
+    ],
+    "result": {
+      "item": "bearing:cut_scoria_brick_slab",
+      "count": 2
+    }
+  }
+}

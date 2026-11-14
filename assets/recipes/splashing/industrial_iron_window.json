@@ -1,0 +1,13 @@
+{
+  "type": "bearing:splashing",
+  "ingredients": [
+    {
+      "item": "bearing:industrial_iron_window"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:weathered_iron_window"
+    }
+  ]
+}

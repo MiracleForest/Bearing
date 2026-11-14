@@ -1,0 +1,61 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:green_seat",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.bearing.seat",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_green_seat_side",
+          "render_method": "opaque"
+        },
+        "top": {
+          "texture": "bearing_green_seat_top",
+          "render_method": "opaque"
+        },
+        "base": {
+          "texture": "bearing_seat_base",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#546d1b",
+      "minecraft:loot": "loot_tables/blocks/green_seat.json",
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          8,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          8,
+          16
+        ]
+      }
+    }
+  }
+}

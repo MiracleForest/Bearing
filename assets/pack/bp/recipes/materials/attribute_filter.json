@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:attribute_filter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "NWN"
+    ],
+    "key": {
+      "N": {
+        "item": "bearing:brass_nugget"
+      },
+      "W": {
+        "tag": "minecraft:wool"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_nugget"
+      }
+    ],
+    "result": {
+      "item": "bearing:attribute_filter"
+    }
+  }
+}

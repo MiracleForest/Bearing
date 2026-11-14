@@ -1,0 +1,4 @@
+{
+  "bearing_filter": { "textures": "textures/items/filter" },
+  "bearing_attribute_filter": { "textures": "textures/items/attribute_filter" }
+}

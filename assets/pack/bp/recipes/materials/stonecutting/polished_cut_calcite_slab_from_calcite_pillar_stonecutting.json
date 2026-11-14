@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:polished_cut_calcite_slab_from_calcite_pillar_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:calcite_pillar"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:calcite_pillar"
+      }
+    ],
+    "result": {
+      "item": "bearing:polished_cut_calcite_slab",
+      "count": 2
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:item": {
+    "description": {
+      "identifier": "bearing:potato_cannon",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "bearing_potato_cannon",
+      "minecraft:max_stack_size": 1,
+      "minecraft:display_name": {
+        "value": "item.bearing:potato_cannon.name"
+      },
+      "minecraft:durability": {
+        "max_durability": 100
+      },
+      "minecraft:hand_equipped": true,
+      "minecraft:enchantable": {
+        "slot": "bow",
+        "value": 1
+      }
+    }
+  }
+}

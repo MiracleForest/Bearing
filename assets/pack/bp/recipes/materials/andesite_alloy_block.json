@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:andesite_alloy_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CCC",
+      "CCC",
+      "CCC"
+    ],
+    "key": {
+      "C": {
+        "item": "bearing:andesite_alloy"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ],
+    "result": {
+      "item": "bearing:andesite_alloy_block",
+      "count": 1
+    }
+  }
+}

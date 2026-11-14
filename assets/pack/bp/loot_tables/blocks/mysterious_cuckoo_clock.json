@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "bearing:mysterious_cuckoo_clock",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

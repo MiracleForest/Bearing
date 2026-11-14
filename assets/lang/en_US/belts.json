@@ -1,0 +1,7 @@
+{
+  "bearing.weighted_ejector.target_set": "Target Selected",
+  "bearing.weighted_ejector.target_not_valid": "Target invalid: items land on the next block",
+  "bearing.weighted_ejector.no_target": "No target set: items land on the next block",
+  "bearing.weighted_ejector.targeting": "Ejecting to [{0},{1},{2}]",
+  "bearing.weighted_ejector.stack_size": "Ejected Stack Size"
+}

@@ -1,0 +1,46 @@
+{
+  "bearing.packages.packager": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/bearing/packages_packager", "pitch": 1.0, "volume": 0.6 }]
+  },
+  "bearing.packages.package_pop": {
+    "category": "player",
+    "sounds": [{ "name": "sounds/bearing/packages_package_pop", "pitch": 1.0, "volume": 0.75 }]
+  },
+  "bearing.packages.depot_plop": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/bearing/packages_depot_plop", "pitch": 1.0, "volume": 0.25 }]
+  },
+  "bearing.packages.frogport_open": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/bearing/packages_frogport_open", "pitch": 1.0, "volume": 0.3 }]
+  },
+  "bearing.packages.frogport_catch": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/bearing/packages_frogport_catch", "pitch": 1.0, "volume": 0.5 }]
+  },
+  "bearing.packages.frogport_deposit": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/bearing/packages_frogport_deposit", "pitch": 1.0, "volume": 0.5 }]
+  },
+  "bearing.packages.postbox_flag": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/random/click",
+        "pitch": 2.0,
+        "volume": 0.5
+      }
+    ]
+  },
+  "bearing.packages.deny": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "sounds/note/bass",
+        "pitch": 0.6,
+        "volume": 0.9
+      }
+    ]
+  }
+}

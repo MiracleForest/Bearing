@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:electron_tube"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "L",
+      "N"
+    ],
+    "key": {
+      "L": {
+        "item": "bearing:polished_rose_quartz"
+      },
+      "N": {
+        "item": "bearing:iron_sheet"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:polished_rose_quartz"
+      }
+    ],
+    "result": {
+      "item": "bearing:electron_tube",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:stockpile_switch"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "R",
+      "B",
+      "I"
+    ],
+    "key": {
+      "R": {
+        "item": "bearing:electron_tube"
+      },
+      "B": {
+        "item": "bearing:brass_casing"
+      },
+      "I": {
+        "item": "minecraft:comparator"
+      }
+    },
+    "result": {
+      "item": "bearing:stockpile_switch",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "bearing:electron_tube"
+      }
+    ]
+  }
+}

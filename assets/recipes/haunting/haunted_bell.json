@@ -1,0 +1,13 @@
+{
+  "type": "bearing:haunting",
+  "ingredients": [
+    {
+      "item": "bearing:peculiar_bell"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:haunted_bell"
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:stock_link",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "bearing:face": [
+          0,
+          1,
+          2
+        ],
+        "bearing:facing": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bearing:powered": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#c8a24a",
+      "minecraft:loot": "loot_tables/blocks/stock_link.json",
+      "minecraft:geometry": "geometry.bearing.stock_link",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_stock_link",
+          "render_method": "opaque"
+        },
+        "body": {
+          "texture": "bearing_stock_link_side",
+          "render_method": "opaque"
+        },
+        "bulb": {
+          "texture": "bearing_stock_link_bulb",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          8,
+          12
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          8,
+          12
+        ]
+      },
+      "minecraft:light_dampening": 0
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 0 && q.block_state('bearing:facing') == 3",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              -180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 1 && q.block_state('bearing:facing') == 3",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              -180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:face') == 2 && q.block_state('bearing:facing') == 3",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:powered') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "bearing_stock_link",
+              "render_method": "opaque"
+            },
+            "body": {
+              "texture": "bearing_stock_link_side",
+              "render_method": "opaque"
+            },
+            "bulb": {
+              "texture": "bearing_stock_link_bulb_off",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

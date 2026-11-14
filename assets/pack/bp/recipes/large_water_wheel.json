@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:large_water_wheel"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PPP",
+      "PWP",
+      "PPP"
+    ],
+    "key": {
+      "P": {
+        "tag": "minecraft:planks"
+      },
+      "W": {
+        "item": "bearing:water_wheel"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:water_wheel"
+      }
+    ],
+    "result": {
+      "item": "bearing:large_water_wheel"
+    }
+  }
+}

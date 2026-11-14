@@ -1,0 +1,8 @@
+{
+  "bearing:basin": { "sound": "metal" },
+  "bearing:mechanical_press": { "sound": "wood" },
+  "bearing:mechanical_mixer": { "sound": "wood" },
+  "bearing:blaze_burner": { "sound": "metal" },
+  "bearing:empty_blaze_burner": { "sound": "metal" },
+  "bearing:lit_blaze_burner": { "sound": "metal" }
+}

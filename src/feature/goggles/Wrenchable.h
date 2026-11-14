@@ -1,0 +1,112 @@
+#pragma once
+
+// Wrench contract (U8, docs/SPEC.md §3.6.8): the IWrenchable for Bearing blocks.
+//
+// Right-click with the wrench calls the block's `onWrenched` (default: the rotation of
+// `bearing:facing` / `bearing:axis` / `bearing:horizontal_facing` / `bearing:horizontal_axis` /
+// `bearing:axis_along_first` about the clicked face, core/goggles/Rotation.h), sneak + right-click
+// calls `onSneakWrenched` (default: the block is picked up: its loot-table drops go to the player's
+// inventory in survival, the block is removed with the "component breaks" sound).
+//
+// Every kinetic block (feature/kinetics/Kinetics.h) is wrenchable with the defaults, as every
+// IRotate block is. Other blocks opt in:
+//
+//     #include "feature/goggles/Wrenchable.h"
+//     namespace wrench = br::feature::goggles::wrench;
+//     BR_REGISTER_WRENCHABLE("bearing:sticker");                         // defaults
+//     BR_REGISTER_WRENCHABLE("bearing:mechanical_bearing", {             // the BearingBlock
+//         .onWrenched = [](wrench::Context& c) {
+//             auto r = wrench::defaultOnWrenched(c);
+//             if (r == wrench::Result::Success) disassembleBearing(c.pos);
+//             return r;
+//         },
+//     });
+//
+// Server thread only. Handlers run inside the use-item call of the player (SimulatedPlayers
+// included); block changes made there are kept.
+
+#include <cstdint>
+#include <functional>
+#include <optional>
+#include <string>
+#include <string_view>
+
+#include "core/GlobalPos.h"
+#include "mod/Registry.h"
+
+class Actor;
+class Block;
+class BlockSource;
+class ItemStack;
+class Player;
+
+namespace br::feature::goggles::wrench {
+
+inline constexpr char const* kWrenchId = "bearing:wrench";
+
+/// A wrench click on a block (UseOnContext).
+struct Context {
+    Player&         player;
+    BlockSource&    region;
+    core::GlobalPos pos;
+    Block const&    block;  ///< the block clicked
+    int             face;   ///< clicked face (0 down, 1 up, 2 north, 3 south, 4 west, 5 east)
+    double          hitX = 0.5, hitY = 0.5, hitZ = 0.5; ///< block-local click position
+};
+
+/// The InteractionResult: `Pass` lets the game handle the click normally.
+enum class Result : std::uint8_t { Pass, Success };
+
+struct Handler {
+    /// Right-click (onWrenched). Empty: `defaultOnWrenched`.
+    std::function<Result(Context&)> onWrenched;
+    /// Sneak + right-click (onSneakWrenched). Empty: `defaultOnSneakWrenched`.
+    std::function<Result(Context&)> onSneakWrenched;
+    /// The state after a click on `face` (getRotatedBlockState). Empty: `rotatedBlock`.
+    std::function<Block const*(Block const& block, int face)> rotate;
+};
+
+/// Declares `blockId` wrenchable (replaces an earlier registration).
+void registerBlock(std::string blockId, Handler handler = {});
+/// The handler of a block id: the registered one, a default one for kinetic blocks, else nullptr.
+[[nodiscard]] Handler const* handlerOf(std::string_view blockId);
+[[nodiscard]] bool           isWrenchable(std::string_view blockId);
+
+/// The IWrenchable.getRotatedBlockState on Bearing's state conventions (the same block
+/// when nothing changes).
+[[nodiscard]] Block const& rotatedBlock(Block const& block, int face);
+/// The default onWrenched: rotates (with the block's `rotate`), sets the block (the kinetic
+/// network re-attaches it) and plays the rotate sound when it changed. Always Success.
+Result defaultOnWrenched(Context& ctx);
+/// The default onSneakWrenched: survival players get the drops of the block's loot table
+/// rolled with the wrench as the tool (inventory, else dropped at their feet), the block is
+/// removed without drops and the remove sound plays.
+/// A contraption anchored at the block is disassembled first.
+Result defaultOnSneakWrenched(Context& ctx);
+
+/// The `#bearing:wrench_pickup` tag: vanilla blocks sneak-wrenching picks up (rails,
+/// redstone wire, torches, repeaters, comparators, levers, buttons, pressure plates, observers,
+/// pistons, tripwire, tripwire hooks, daylight detectors, targets, hoppers, redstone lamps) and
+/// the metal bars and industrial / weathered iron blocks.
+[[nodiscard]] bool canWrenchPickup(std::string_view blockId);
+
+/// Plays the wrench sounds at a block ("bearing.wrench_rotate" / "bearing.wrench_remove").
+void playRotateSound(core::GlobalPos const& pos);
+void playRemoveSound(core::GlobalPos const& pos);
+
+/// Right-click on an entity with the wrench (minecart contraption pickup, train
+/// relocation). Handlers are tried in registration order until one returns true.
+using EntityHandler = std::function<bool(Player& player, Actor& target, bool sneaking)>;
+void registerEntityHandler(EntityHandler handler);
+
+namespace detail {
+struct Registrar {
+    explicit Registrar(std::string id, Handler h = {}) { registerBlock(std::move(id), std::move(h)); }
+};
+} // namespace detail
+
+} // namespace br::feature::goggles::wrench
+
+/// Registers a wrenchable block at static init: `BR_REGISTER_WRENCHABLE("bearing:x"[, handler]);`
+#define BR_REGISTER_WRENCHABLE(...)                                                                                    \
+    static ::br::feature::goggles::wrench::detail::Registrar BR_UNIQUE(br_wrenchable_)(__VA_ARGS__)

@@ -1,0 +1,7 @@
+tile.bearing:fluid_pipe.name=Fluid Pipe
+tile.bearing:glass_fluid_pipe.name=Glass Fluid Pipe
+tile.bearing:encased_fluid_pipe.name=Encased Fluid Pipe
+tile.bearing:mechanical_pump.name=Mechanical Pump
+tile.bearing:fluid_valve.name=Fluid Valve
+tile.bearing:smart_fluid_pipe.name=Smart Fluid Pipe
+tile.bearing:pipes_test_tank.name=Pipes Test Tank

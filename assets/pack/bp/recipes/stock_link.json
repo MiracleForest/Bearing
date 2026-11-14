@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:stock_link"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "C",
+      "B"
+    ],
+    "key": {
+      "C": {
+        "item": "bearing:transmitter"
+      },
+      "B": {
+        "item": "bearing:item_vault"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:transmitter"
+      }
+    ],
+    "result": {
+      "item": "bearing:stock_link",
+      "count": 1
+    }
+  }
+}

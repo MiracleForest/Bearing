@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:cuckoo_clock"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S",
+      "C",
+      "A"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:clock"
+      },
+      "C": {
+        "item": "bearing:andesite_casing"
+      },
+      "S": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_casing"
+      }
+    ],
+    "result": {
+      "item": "bearing:cuckoo_clock",
+      "count": 1
+    }
+  }
+}

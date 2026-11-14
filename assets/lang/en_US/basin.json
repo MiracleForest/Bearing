@@ -1,0 +1,9 @@
+{
+  "bearing.gui.goggles.basin_contents": "Basin Contents:",
+  "bearing.recipe.heat_requirement.none": "No Heating Required",
+  "bearing.recipe.heat_requirement.heated": "Heated",
+  "bearing.recipe.heat_requirement.superheated": "Super-Heated",
+  "br.basin.demo": "Basin demo built at {} {} {}",
+  "br.basin.need_op": "You need operator permission.",
+  "br.basin.need_player": "Run this as a player."
+}

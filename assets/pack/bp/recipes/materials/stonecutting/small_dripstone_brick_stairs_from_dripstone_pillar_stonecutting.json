@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:small_dripstone_brick_stairs_from_dripstone_pillar_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:dripstone_pillar"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:dripstone_pillar"
+      }
+    ],
+    "result": {
+      "item": "bearing:small_dripstone_brick_stairs",
+      "count": 1
+    }
+  }
+}

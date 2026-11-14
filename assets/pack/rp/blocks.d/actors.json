@@ -1,0 +1,65 @@
+{
+  "bearing:mechanical_harvester": {
+    "sound": "metal"
+  },
+  "bearing:mechanical_plough": {
+    "sound": "metal"
+  },
+  "bearing:mechanical_roller": {
+    "sound": "metal"
+  },
+  "bearing:portable_storage_interface": {
+    "sound": "metal"
+  },
+  "bearing:contraption_controls": {
+    "sound": "metal"
+  },
+  "bearing:white_seat": {
+    "sound": "cloth"
+  },
+  "bearing:orange_seat": {
+    "sound": "cloth"
+  },
+  "bearing:magenta_seat": {
+    "sound": "cloth"
+  },
+  "bearing:light_blue_seat": {
+    "sound": "cloth"
+  },
+  "bearing:yellow_seat": {
+    "sound": "cloth"
+  },
+  "bearing:lime_seat": {
+    "sound": "cloth"
+  },
+  "bearing:pink_seat": {
+    "sound": "cloth"
+  },
+  "bearing:gray_seat": {
+    "sound": "cloth"
+  },
+  "bearing:light_gray_seat": {
+    "sound": "cloth"
+  },
+  "bearing:cyan_seat": {
+    "sound": "cloth"
+  },
+  "bearing:purple_seat": {
+    "sound": "cloth"
+  },
+  "bearing:blue_seat": {
+    "sound": "cloth"
+  },
+  "bearing:brown_seat": {
+    "sound": "cloth"
+  },
+  "bearing:green_seat": {
+    "sound": "cloth"
+  },
+  "bearing:red_seat": {
+    "sound": "cloth"
+  },
+  "bearing:black_seat": {
+    "sound": "cloth"
+  }
+}

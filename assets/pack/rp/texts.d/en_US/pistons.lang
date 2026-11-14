@@ -1,0 +1,11 @@
+tile.bearing:mechanical_piston.name=Mechanical Piston
+tile.bearing:sticky_mechanical_piston.name=Sticky Mechanical Piston
+tile.bearing:piston_extension_pole.name=Piston Extension Pole
+tile.bearing:mechanical_piston_head.name=Mechanical Piston Head
+tile.bearing:rope_pulley.name=Rope Pulley
+tile.bearing:rope.name=Rope
+tile.bearing:pulley_magnet.name=Pulley Magnet
+tile.bearing:elevator_pulley.name=Elevator Pulley
+tile.bearing:elevator_contact.name=Elevator Contact
+tile.bearing:gantry_carriage.name=Gantry Carriage
+tile.bearing:gantry_shaft.name=Gantry Shaft

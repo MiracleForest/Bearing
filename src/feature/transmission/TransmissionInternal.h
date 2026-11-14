@@ -1,0 +1,228 @@
+#pragma once
+
+// Internals of the transmission unit (U6), shared by its own .cpp files only.
+
+#include <cstdint>
+#include <functional>
+#include <optional>
+#include <utility>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include "core/GlobalPos.h"
+#include "core/kinetics/Spec.h"
+#include "core/kinetics/Types.h"
+#include "core/transmission/Transmission.h"
+
+class Block;
+class BlockSource;
+class BlockPos;
+class Player;
+class ItemStack;
+
+namespace br::feature::transmission {
+
+namespace ct = core::transmission;
+namespace ck = core::kinetics;
+using core::GlobalPos;
+using ck::Axis;
+using ck::Face;
+
+// ---- ids --------------------------------------------------------------------------------------------
+inline constexpr char kShaft[]               = "bearing:shaft";
+inline constexpr char kCogwheel[]            = "bearing:cogwheel";
+inline constexpr char kLargeCogwheel[]       = "bearing:large_cogwheel";
+inline constexpr char kGearbox[]             = "bearing:gearbox";
+inline constexpr char kVerticalGearbox[]     = "bearing:vertical_gearbox"; ///< item only
+inline constexpr char kClutch[]              = "bearing:clutch";
+inline constexpr char kGearshift[]           = "bearing:gearshift";
+inline constexpr char kChainDrive[]          = "bearing:encased_chain_drive";
+inline constexpr char kChainGearshift[]      = "bearing:adjustable_chain_gearshift";
+inline constexpr char kAndesiteShaft[]       = "bearing:andesite_encased_shaft";
+inline constexpr char kBrassShaft[]          = "bearing:brass_encased_shaft";
+inline constexpr char kAndesiteCog[]         = "bearing:andesite_encased_cogwheel";
+inline constexpr char kBrassCog[]            = "bearing:brass_encased_cogwheel";
+inline constexpr char kAndesiteLargeCog[]    = "bearing:andesite_encased_large_cogwheel";
+inline constexpr char kBrassLargeCog[]       = "bearing:brass_encased_large_cogwheel";
+inline constexpr char kSequencedGearshift[]  = "bearing:sequenced_gearshift";
+inline constexpr char kSpeedController[]     = "bearing:rotation_speed_controller";
+inline constexpr char kSpeedometer[]         = "bearing:speedometer";
+inline constexpr char kStressometer[]        = "bearing:stressometer";
+inline constexpr char kCuckooClock[]         = "bearing:cuckoo_clock";            ///< U49
+inline constexpr char kMysteriousCuckooClock[] = "bearing:mysterious_cuckoo_clock"; ///< U49
+inline constexpr char kFlywheel[]            = "bearing:flywheel";                ///< U49
+// other units' ids (referenced by id only)
+inline constexpr char kAndesiteCasing[] = "bearing:andesite_casing";
+inline constexpr char kBrassCasing[]    = "bearing:brass_casing";
+inline constexpr char kWrench[]         = "bearing:wrench";
+inline constexpr char kGoggles[]        = "bearing:goggles";
+inline constexpr char kPoweredShaft[]   = "bearing:powered_shaft"; ///< U18
+inline constexpr char kExtendoGrip[]    = "bearing:extendo_grip";  ///< U31
+
+// ---- state names ----------------------------------------------------------------------------------
+inline constexpr char kAxis[]       = "bearing:axis";
+inline constexpr char kRotor[]      = "bearing:rotor";
+inline constexpr char kPowered[]    = "bearing:powered";
+inline constexpr char kTopShaft[]   = "bearing:top_shaft";
+inline constexpr char kBottomShaft[] = "bearing:bottom_shaft";
+inline constexpr char kPart[]       = "bearing:part";
+inline constexpr char kAlongFirst[] = "bearing:along_first";
+inline constexpr char kSignal[]     = "bearing:signal";
+inline constexpr char kSeqState[]   = "bearing:state";
+inline constexpr char kSeqMod[]     = "bearing:mod";
+inline constexpr char kFacing[]     = "bearing:facing";
+inline constexpr char kDial[]       = "bearing:dial";
+inline constexpr char kRevision[]   = "bearing:revision";
+inline constexpr char kBracket[]    = "bearing:bracket";
+// cuckoo clocks (U49)
+inline constexpr char kHorizontalFacing[] = "bearing:horizontal_facing"; ///< 0 south, 1 west, 2 north, 3 east
+inline constexpr char kHour[]              = "bearing:hour";               ///< static hour hand 0..11
+inline constexpr char kMinute[]            = "bearing:minute";             ///< static minute hand 0..11 (5 minutes)
+inline constexpr char kCuckoo[]            = "bearing:cuckoo";             ///< 0 doors shut, 1 pig out, 2 creeper out
+
+/// Every block id of the unit (for listeners and selftests).
+[[nodiscard]] std::vector<std::string> const& allBlocks();
+
+[[nodiscard]] bool isSmallCogBlock(std::string_view id);  ///< cogwheel + encased small cogs
+[[nodiscard]] bool isLargeCogBlock(std::string_view id);  ///< large cogwheel + encased large cogs
+[[nodiscard]] bool isEncasedCog(std::string_view id);
+[[nodiscard]] bool isEncasedShaft(std::string_view id);
+[[nodiscard]] bool isChainDrive(std::string_view id);
+[[nodiscard]] bool isGauge(std::string_view id);
+[[nodiscard]] bool isCuckooClock(std::string_view id); ///< both cuckoo clocks (U49)
+/// Blocks that read redstone (clutch, gearshift, adjustable chain gearshift, sequenced gearshift).
+[[nodiscard]] bool readsRedstone(std::string_view id);
+/// Blocks with a comparator output (gauges, sequenced gearshift).
+[[nodiscard]] bool hasComparatorOutput(std::string_view id);
+
+// ---- world helpers (World.cpp) ---------------------------------------------------------------------
+[[nodiscard]] BlockSource* regionOf(int dim);
+[[nodiscard]] std::string  idAt(BlockSource& region, GlobalPos const& pos);
+/// Integer state of the block at `pos` (fallback when missing / unloaded).
+[[nodiscard]] int stateAt(BlockSource& region, GlobalPos const& pos, std::string_view state, int fallback = 0);
+/// Sets the block at `pos` to `id` with `states` (unknown states ignored). False on failure.
+bool place(BlockSource& region, GlobalPos const& pos, std::string_view id, std::vector<std::pair<std::string_view, int>> const& states);
+/// Changes some states of the block at `pos` (no-op when unchanged). False on failure.
+bool setStates(BlockSource& region, GlobalPos const& pos, std::vector<std::pair<std::string_view, int>> const& states);
+/// The kinetic spec of the block at `pos` says it has a shaft end towards `face`.
+[[nodiscard]] bool shaftTowards(BlockSource& region, GlobalPos const& pos, Face face);
+/// The rotation axis of the kinetic block at `pos` (nullopt if not kinetic / no axis).
+[[nodiscard]] std::optional<Axis> rotationAxisAt(BlockSource& region, GlobalPos const& pos);
+/// Kinetic cog type at `pos` (none for non-kinetic blocks).
+[[nodiscard]] ck::CogType cogAt(BlockSource& region, GlobalPos const& pos);
+/// Air, water, grass, ... (a placement may replace it).
+[[nodiscard]] bool replaceableAt(BlockSource& region, GlobalPos const& pos);
+/// Redstone power reaching `pos` from its neighbours (getBestNeighborSignal), 0..15.
+[[nodiscard]] int neighbourSignal(BlockSource& region, GlobalPos const& pos);
+void playSound(int dim, GlobalPos const& pos, std::string const& sound, float volume = 1.f, float pitch = 1.f);
+void actionBar(Player& player, std::string const& text);
+[[nodiscard]] Player* playerById(std::int64_t uid);
+[[nodiscard]] GlobalPos stepPos(GlobalPos p, Face f, int n = 1);
+/// The Direction.getNearest of the player's look vector.
+[[nodiscard]] Face nearestLooking(Player const& player);
+/// The getHorizontalDirection (the horizontal face the player looks towards).
+[[nodiscard]] Face horizontalLooking(Player const& player);
+
+// ---- placement (Placement.cpp) ----------------------------------------------------------------------
+struct PlaceContext {
+    GlobalPos clickedPos; ///< the block that was clicked
+    Face      face;       ///< the clicked face
+    GlobalPos pos;        ///< where the block goes
+    double    hitX = .5, hitY = .5, hitZ = .5; ///< hit point, block-local (0..1) on the clicked block
+    bool      sneaking = false;
+};
+/// The getStateForPlacement of `itemId` (states to apply) or nullopt when it is not ours.
+[[nodiscard]] std::optional<std::vector<std::pair<std::string_view, int>>>
+stateForPlacement(BlockSource& region, std::string_view itemId, PlaceContext const& ctx, Player const& player);
+/// The CogwheelBlockItem.onItemUseFirst: a cogwheel / large cogwheel used on any block with
+/// cog teeth (cogwheels, encased cogwheels, and blocks with an integrated cog: mixer, crafter,
+/// millstone, pump, arm, display board) goes to the spot where it meshes. True when it placed one.
+bool cogItemUseFirst(Player& player, ItemStack& item, GlobalPos const& clicked, double hx, double hy, double hz);
+/// Handles a right-click of `player` holding `item` on a block of the unit (shaft helper,
+/// encasing, the sequenced gearshift screen). Returns true when the click was used.
+bool useOn(Player& player, ItemStack& item, GlobalPos const& clicked, Face face, double hx, double hy, double hz);
+void installPlacementHooks();
+void uninstallPlacementHooks();
+
+// ---- block behaviour (Behaviour.cpp) ----------------------------------------------------------------
+/// Recomputes the chain drive shape at `pos` from its neighbours.
+void updateChainShape(BlockSource& region, GlobalPos const& pos);
+/// The ChainDriveBlock.updateShape for every side but the axis, from `state` (placement and
+/// updateAfterWrenched start from part none).
+[[nodiscard]] ct::ChainState chainShapeAt(BlockSource& region, GlobalPos const& pos, ct::ChainState state);
+/// Tracks / untracks a block that needs ticking (redstone, comparator output, gauges).
+void track(GlobalPos const& pos);
+void untrack(GlobalPos const& pos);
+/// One server tick of every tracked block.
+void tickBlocks();
+/// The comparator output of a block of the unit (-1: none).
+[[nodiscard]] int comparatorSignal(GlobalPos const& pos);
+/// The gauge's current dial target (0 when it is not a gauge).
+[[nodiscard]] float dialTarget(GlobalPos const& pos);
+void loadTracked();
+void saveTracked();
+void clearTracked();
+/// A block changed from `before` to `after` at `pos`: tracking, chain shapes (work for the tick
+/// goes to `later`).
+void onBlockChanged(BlockSource& region, GlobalPos const& pos, std::string const& before, std::string const& after,
+                    std::vector<std::function<void()>>& later);
+/// Registers the comparator output of the gauges and the sequenced gearshift (common/Redstone.h).
+void installComparatorOutput();
+/// (U52) Registers the encased cogwheels' contraption rotation (the shaft ends follow the turn).
+void installEncasedCogRotation();
+void uninstallComparatorOutput();
+
+// ---- sequenced gearshift (Sequencer.cpp) -------------------------------------------------------------
+void sequencerRedstone(BlockSource& region, GlobalPos const& pos, bool powered);
+void sequencerTick(BlockSource& region, GlobalPos const& pos);
+void sequencerSpeedChanged(GlobalPos const& pos, float previous, float now);
+bool openSequencerScreen(Player& player, GlobalPos const& pos);
+[[nodiscard]] std::vector<ct::Instruction> sequencerInstructions(GlobalPos const& pos);
+void setSequencerInstructions(GlobalPos const& pos, std::vector<ct::Instruction> list);
+[[nodiscard]] int sequencerCurrent(GlobalPos const& pos);
+void registerSequencerScreen();
+void clearSequencers();
+void sequencerForget(GlobalPos const& pos);
+
+// ---- speed controller (SpeedController.cpp) -------------------------------------------------------
+[[nodiscard]] int  targetSpeed(GlobalPos const& pos);
+void               setTargetSpeed(GlobalPos const& pos, int rpm);
+void               registerSpeedControllerBox();
+void               clearSpeedControllers();
+inline constexpr int kDefaultTargetSpeed = 16;
+
+// ---- gauges (Gauges.cpp) ------------------------------------------------------------------------------
+void gaugeTick(BlockSource& region, GlobalPos const& pos);
+/// (U42) Gauge dust particles sent so far (GaugeBlock.animateTick, selftests).
+[[nodiscard]] std::size_t gaugeDustSent();
+/// (Selftests) Every gauge tick picks the gauge for animateTick for every player in range, instead
+/// of the client's random block pick (a chance of about 2% a tick).
+void forceGaugeAnimation(bool on);
+void gaugeForget(GlobalPos const& pos);
+void gaugeSyncTo(Player& player);
+void clearGauges();
+
+// ---- cuckoo clocks (Clock.cpp, U49) -------------------------------------------------------------------------
+/// The front of a clock from its bearing:horizontal_facing value.
+[[nodiscard]] Face clockFacing(int horizontalFacing);
+[[nodiscard]] int  horizontalFacingOf(Face face);
+/// One server tick of a cuckoo clock (CuckooClockBlockEntity.tick).
+void clockTick(BlockSource& region, GlobalPos const& pos);
+/// The running animation (0 none, 1 pig, 2 creeper, 3 surprise) and its progress (selftests).
+[[nodiscard]] std::pair<int, int> clockAnimation(GlobalPos const& pos);
+/// Starts an animation as the clock would at its time (selftests, the startAnimation).
+void startClockAnimation(BlockSource& region, GlobalPos const& pos, int animation);
+void clockForget(GlobalPos const& pos);
+void clockSyncTo(Player& player);
+void clearClocks();
+/// The time the clocks show (the level's day time; selftests may pin it).
+[[nodiscard]] std::int64_t clockDayTime();
+void setClockDayTimeOverride(std::optional<std::int64_t> dayTime);
+void installClockHooks();
+void uninstallClockHooks();
+/// The death message of an explosion death right after a surprise (selftests).
+[[nodiscard]] std::string surpriseDeathMessage(std::string const& name);
+void                      markSurpriseForTest();
+
+} // namespace br::feature::transmission

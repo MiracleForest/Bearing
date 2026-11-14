@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:linked_controller"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      " P ",
+      "SSS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:wooden_button"
+      },
+      "P": {
+        "item": "bearing:redstone_link"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:wooden_button"
+      }
+    ],
+    "result": {
+      "item": "bearing:linked_controller",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:andesite_tunnel"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AA",
+      "KK"
+    ],
+    "key": {
+      "A": {
+        "item": "bearing:andesite_alloy"
+      },
+      "K": {
+        "item": "minecraft:dried_kelp"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:andesite_alloy"
+      }
+    ],
+    "result": {
+      "item": "bearing:andesite_tunnel",
+      "count": 2
+    }
+  }
+}

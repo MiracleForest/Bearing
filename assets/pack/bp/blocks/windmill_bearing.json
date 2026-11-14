@@ -1,0 +1,125 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:block": {
+    "description": {
+      "identifier": "bearing:windmill_bearing",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "bearing:facing": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "bearing:rotor": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.bearing.bearing_up"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "bearing_windmill_bearing_model",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#8f8f8f",
+      "minecraft:loot": "loot_tables/blocks/windmill_bearing.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('bearing:facing') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.bearing_down",
+            "bone_visibility": {
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.bearing_up",
+            "bone_visibility": {
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.bearing_north",
+            "bone_visibility": {
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.bearing_south",
+            "bone_visibility": {
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.bearing_west",
+            "bone_visibility": {
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('bearing:facing') == 5",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.bearing.bearing_east",
+            "bone_visibility": {
+              "casing": "q.block_state('bearing:rotor') != 2",
+              "top": "q.block_state('bearing:rotor') == 0",
+              "shaft": "q.block_state('bearing:rotor') == 0"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

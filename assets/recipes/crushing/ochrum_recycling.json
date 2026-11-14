@@ -1,0 +1,19 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "tag": "bearing:stone_types/ochrum"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "bearing:crushed_raw_gold",
+      "chance": 0.2
+    },
+    {
+      "id": "minecraft:gold_nugget",
+      "chance": 0.2
+    }
+  ]
+}

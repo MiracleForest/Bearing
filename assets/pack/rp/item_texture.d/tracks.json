@@ -1,0 +1,4 @@
+{
+  "bearing_track": { "textures": "textures/items/track" },
+  "bearing_incomplete_track": { "textures": "textures/items/incomplete_track" }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "bearing:splashing",
+  "ingredients": [
+    {
+      "tag": "c:flours/wheat"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:dough"
+    }
+  ]
+}

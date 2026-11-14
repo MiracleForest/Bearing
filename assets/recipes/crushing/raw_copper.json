@@ -1,0 +1,18 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "tag": "c:raw_materials/copper"
+    }
+  ],
+  "processing_time": 400,
+  "results": [
+    {
+      "id": "bearing:crushed_raw_copper"
+    },
+    {
+      "id": "bearing:experience_nugget",
+      "chance": 0.75
+    }
+  ]
+}

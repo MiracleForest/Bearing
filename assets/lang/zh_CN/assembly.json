@@ -1,0 +1,30 @@
+{
+  "bearing.tooltip.deployer.header": "机械手信息",
+  "bearing.tooltip.deployer.using": "模式：使用",
+  "bearing.tooltip.deployer.punching": "模式：攻击",
+  "bearing.tooltip.deployer.contains": "物品：{0} ×{1}",
+
+  "bearing.mechanical_arm.extract_from": "从 {0} 取出物品",
+  "bearing.mechanical_arm.deposit_to": "放入 {0}",
+  "bearing.mechanical_arm.summary": "该动力臂共有 {0} 个取货点和 {1} 个送货点。",
+  "bearing.mechanical_arm.points_outside_range": "有 {0} 个交互点超出动力臂可达范围，已被移除。",
+  "bearing.mechanical_arm.selection_mode.round_robin": "轮询调度",
+  "bearing.mechanical_arm.selection_mode.forced_round_robin": "强制轮询调度",
+  "bearing.mechanical_arm.selection_mode.prefer_first": "第一目标优先",
+  "bearing.logistics.when_multiple_outputs_available": "分配方法",
+
+  "bearing.recipe.sequenced_assembly": "序列装配",
+  "bearing.recipe.assembly.next": "下一步：{0}",
+  "bearing.recipe.assembly.step": "第{0}步：",
+  "bearing.recipe.assembly.progress": "组装进度：{0}/{1}",
+  "bearing.recipe.assembly.pressing": "进行冲压",
+  "bearing.recipe.assembly.spout_filling_fluid": "注入 {0}",
+  "bearing.recipe.assembly.deploying_item": "安装 {0}",
+  "bearing.recipe.assembly.cutting": "用动力锯切割",
+  "bearing.recipe.assembly.repeat": "整个流程执行 {0} 遍",
+  "bearing.recipe.assembly.junk": "随机废料",
+  "bearing.hint.full_deployer.title": "机械手卡住了",
+  "bearing.hint.full_deployer": "这台_机械手_里塞了_过多物品_，需要先_清空_才能工作。可以用_漏斗_等方式把多余的物品抽走。",
+  "bearing.hint.mechanical_arm_no_targets.title": "没有目标",
+  "bearing.hint.mechanical_arm_no_targets": "这台_动力臂_还没有可操作的_目标_。_手持_动力臂物品时，_右击_传送带、置物台、漏斗等方块即可将其设为目标。"
+}

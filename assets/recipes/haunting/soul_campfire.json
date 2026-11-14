@@ -1,0 +1,13 @@
+{
+  "type": "bearing:haunting",
+  "ingredients": [
+    {
+      "item": "minecraft:campfire"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:soul_campfire"
+    }
+  ]
+}

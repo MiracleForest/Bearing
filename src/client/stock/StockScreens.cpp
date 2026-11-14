@@ -1,0 +1,770 @@
+// Native screens of the stock unit (SPEC §4, §3.6.26): the stock keeper request screen, the
+// stock ticker category editor, the redstone requester, the factory gauge settings and item
+// picker; plus the hover label of gauges and tickers. Everything goes through "screen.action";
+// the server answers with fresh data. Search, addresses and category names are typed into native
+// text fields (vanilla players get the server's forms).
+
+#ifdef BR_CLIENT
+
+#include <algorithm>
+#include <array>
+#include <chrono>
+#include <optional>
+
+#include "ll/api/event/EventBus.h"
+#include "ll/api/event/client/ClientExitLevelEvent.h"
+#include "ll/api/event/render/UIRenderEvent.h"
+#include "ll/api/event/world/ClientLevelTickEvent.h"
+
+#include "mc/client/gui/screens/ScreenView.h"
+#include "mc/client/player/LocalPlayer.h"
+#include "mc/world/item/ItemStack.h"
+#include "mc/world/level/BlockSource.h"
+#include "mc/world/level/Level.h"
+#include "mc/world/level/block/Block.h"
+#include "mc/world/phys/HitResult.h"
+
+#include "client/Client.h"
+#include "client/packages/AddressSuggestions.h"
+#include "client/screen/Screen.h"
+#include "core/GlobalPos.h"
+#include "feature/common/Items.h"
+#include "feature/net/Net.h"
+#include "mod/Log.h"
+#include "mod/Module.h"
+
+namespace br::client::stock {
+
+namespace {
+using namespace br::client::screen;
+namespace items = br::feature::common::items;
+namespace net   = br::feature::net;
+
+
+/// Puts server text into a field unless the player is typing in it.
+void syncField(TextField& field, std::string const& text) {
+    if (!field.focused()) field.text = text;
+}
+
+std::string countText(int n) {
+    if (n >= 1'000'000'000) return "∞";
+    if (n >= 1'000'000) return std::to_string(n / 1'000'000) + "m";
+    if (n >= 10'000) return std::to_string(n / 1000) + "k";
+    return std::to_string(n);
+}
+
+/// A slot showing a big count at its bottom right.
+class CountSlot : public Slot {
+public:
+    using Slot::Slot;
+    int  count = 0;
+    void render(Canvas& c, float mx, float my) override {
+        Slot::render(c, mx, my);
+        if (stack && count > 0) c.text(rect.x + rect.w - 1, rect.y + rect.h - 9, countText(count), color::kText, Align::Right);
+    }
+};
+
+// ---- stock keeper request screen ---------------------------------------------------------------
+
+class RequestScreen : public Screen {
+public:
+    static constexpr int kCols = 9, kRows = 5;
+
+    RequestScreen(Json const& data, SendFn send)
+    : Screen(ctr("bearing.gui.stock_keeper.title", "Stock Keeper"), 186, 196),
+      mSend(std::move(send)),
+      mData(data) {}
+
+    void init() override {
+        for (int i = 0; i < kCols * kRows; ++i) {
+            auto r = core::common::gridCell(12, 30, kCols, 18, i);
+            mGrid.push_back(&add<CountSlot>(r, [this, i](Button b, bool shift) { clickStock(i, b, shift); }));
+        }
+        for (int i = 0; i < 9; ++i) {
+            auto r = core::common::gridCell(12, 128, 9, 18, i);
+            mOrder.push_back(&add<CountSlot>(r, [this, i](Button b, bool shift) { clickOrder(i, b, shift); }));
+        }
+        // The search box filters the stock as the player types
+        mSearch              = &add<TextField>(Rect{12, 15, 140, 14}, mData.value("search", std::string{}));
+        mSearch->placeholder = ctr("bearing.gui.stock_keeper.search_items", "Search Items");
+        // (sent once typing pauses for 250 ms, or on Enter: one server answer per search, not per key)
+        mSearch->onChange = [this](std::string const& text) {
+            mPendingSearch = text;
+            mSearchAt      = std::chrono::steady_clock::now();
+        };
+        mSearch->onSubmit = [this](std::string const& text) {
+            sendSearch(text);
+            if (!text.empty()) log().info("stock keeper search typed: '{}'", text);
+        };
+        // the address the order is sent to (kept on the ticker as the last used one)
+        mAddress              = &add<TextField>(Rect{12, 150, 162, 16}, mData.value("address", std::string{}), [this](std::string const& text) {
+            if (text == mData.value("address", std::string{})) return;
+            mData["address"] = text;
+            mSend({{"op", "address"}, {"text", text}});
+            log().info("stock keeper address typed: '{}'", text);
+        });
+        mAddress->placeholder = ctr("bearing.gui.stock_keeper.package_address", "Package Address");
+        mAddress->tooltip     = {ctr("bearing.gui.stock_keeper.package_address", "Package Address")};
+        for (auto const& l : packages::clipboardTip()) mAddress->tooltip.push_back(l);
+        mAddress->maxLength   = 25; // the AddressEditBox
+        mSearch->maxLength    = 50;
+        mSendBtn      = &add<ImageButton>(Rect{126, 170, 48, 18}, ">", [this] { sendOrder(); });
+        auto& clear   = add<ImageButton>(Rect{104, 170, 18, 18}, "x", [this] { mOrderList.clear(); refreshOrder(); });
+        clear.tooltip = {ctr("br.stock.screen.clear_order", "Clear order")};
+        mLock         = &add<ImageButton>(Rect{156, 12, 18, 16}, "L", [this] { mSend({{"op", "lock"}}); });
+        mSuggest = &add<packages::AddressSuggestions>(*mAddress, packages::suggestionsOf(mData)); // drawn over the rest
+        onData(mData);
+    }
+
+    void onData(Json const& data) override {
+        mData = data;
+        syncField(*mSearch, data.value("search", std::string{}));
+        syncField(*mAddress, data.value("address", std::string{}));
+        if (mSuggest) mSuggest->options = packages::suggestionsOf(data);
+        mEntries.clear();
+        mHeaders.clear();
+        auto groups = data.value("groups", Json::array());
+        for (auto const& g : groups) {
+            auto list = g.value("items", Json::array());
+            if (list.empty()) continue;
+            // With categories, each starts with its header row (click: collapse / expand)
+            while (mEntries.size() % kCols) mEntries.push_back({});
+            if (groups.size() > 1) {
+                bool hidden = g.value("hidden", false);
+                mHeaders.push_back({static_cast<int>(mEntries.size() / kCols), g.value("name", std::string{}), g.value("index", -1), hidden});
+                mEntries.resize(mEntries.size() + kCols);
+                if (hidden) continue;
+            }
+            for (auto const& e : list) mEntries.push_back({iconOf(e.value("item", Json())), e.value("count", 0)});
+        }
+        // The schematic list mode (a clipboard checklist in hand): the checklist is the order
+        mChecklist = data.contains("checklist");
+        if (mChecklist) {
+            mOrderList.clear();
+            for (auto const& e : data.value("checklist", Json::array())) {
+                auto icon = iconOf(e.value("item", Json()));
+                if (icon) mOrderList.push_back({icon, e.value("count", 0)});
+            }
+        }
+        bool program        = data.value("program", false);
+        mSendBtn->symbol    = program ? "P" : ">";
+        mSendBtn->tooltip   = {program ? ctr("bearing.gui.stock_keeper.program_requester", "Program Requester") : ctr("bearing.gui.stock_keeper.send", "Send")};
+        mLock->visible      = data.value("canLock", false);
+        mLock->toggled      = data.value("locked", false);
+        mLock->tooltip      = {data.value("locked", false) ? ctr("bearing.gui.stock_keeper.network_locked", "Network is locked") : ctr("bearing.gui.stock_keeper.network_open", "Network is open"),
+                               ctr("bearing.gui.stock_keeper.network_lock_tip", "When locked, other players"), ctr("bearing.gui.stock_keeper.network_lock_tip_1", "can't order items here"),
+                               ctr("bearing.gui.stock_keeper.network_lock_tip_2", "Click to toggle")};
+        if (!mChecklist) {
+            // the screen is rebuilt after a vanilla-style form: the order being put together survives
+            auto& stash = orderStash();
+            if (mOrderList.empty() && stash.first == data.value("pos", Json())) mOrderList = stash.second;
+            // keep the order within the new stock
+            for (auto& o : mOrderList) o.second = std::min(o.second, available(o.first));
+            std::erase_if(mOrderList, [](auto const& o) { return o.second <= 0; });
+        }
+        mScroll = std::clamp(mScroll, 0, maxScroll());
+        refreshGrid();
+        refreshOrder();
+    }
+
+    void renderExtra(Canvas& c, float, float) override {
+        for (auto const& h : mHeaders) {
+            int row = h.row - mScroll;
+            if (row < 0 || row >= kRows) continue;
+            // The category line: ▶ collapsed / ▼ expanded, then the name
+            auto name = h.name.empty() ? ctr("bearing.gui.stock_ticker.empty_category_name_placeholder", "(Empty)") : h.name;
+            c.text(14, 30 + 18.0f * static_cast<float>(row) + 5, std::string(h.hidden ? "▶ " : "▼ ") + name, color::kTextGold, Align::Left);
+        }
+        if (mChecklist)
+            c.text(width / 2, 70, ctr(mOrderList.empty() ? "bearing.gui.stock_keeper.schematic_list.no_results" : "bearing.gui.stock_keeper.schematic_list.requesting",
+                                      mOrderList.empty() ? "None of the checklist items are in stock" : "Press 'Send' to order every checklist item that is in stock"),
+                   color::kTextGray, Align::Centre);
+        else if (mData.value("links", 0) == 0) c.text(width / 2, 70, ctr("bearing.gui.stock_keeper.no_packagers_linked", "No packager connected"), color::kButtonOff, Align::Centre);
+        else if (mEntries.empty()) c.text(width / 2, 70, ctr(mData.value("search", std::string{}).empty() ? "bearing.gui.stock_keeper.inventories_empty" : "bearing.gui.stock_keeper.no_search_results", "Nothing matches the search"), color::kTextGray, Align::Centre);
+        if (mOrderList.size() > 9) c.text(150, 174, "[+" + std::to_string(mOrderList.size() - 9) + "]", color::kTextDark, Align::Right);
+        else if (mOrderList.size() >= 9 && !mChecklist) c.text(12, 174, ctr("bearing.gui.stock_keeper.slots_full", "No free order slots"), color::kButtonOff);
+    }
+
+    bool clickBackground(float, float, Button, bool) override { return false; }
+
+    void tick() override {
+        if (mPendingSearch && std::chrono::steady_clock::now() - mSearchAt >= std::chrono::milliseconds(250)) sendSearch(*mPendingSearch);
+    }
+    void sendSearch(std::string const& text) {
+        mPendingSearch.reset();
+        if (text == mSentSearch) return;
+        mSentSearch = text;
+        mSend({{"op", "search"}, {"text", text}});
+    }
+    // the grid scrolls with the wheel (rows)
+    bool scrollGrid(int delta) {
+        mScroll = std::clamp(mScroll - delta, 0, maxScroll());
+        refreshGrid();
+        return true;
+    }
+
+private:
+    struct Entry {
+        std::shared_ptr<ItemStack> stack;
+        int                        count = 0;
+    };
+    struct Header {
+        int         row = 0;
+        std::string name;
+        int         index  = -1;
+        bool        hidden = false;
+    };
+
+    int maxScroll() const { return std::max(0, static_cast<int>((mEntries.size() + kCols - 1) / kCols) - kRows); }
+
+    int available(std::shared_ptr<ItemStack> const& s) const {
+        for (auto const& e : mEntries)
+            if (e.stack && s && items::sameItemSameData(*e.stack, *s)) return e.count;
+        return 0;
+    }
+
+    void refreshGrid() {
+        for (int i = 0; i < kCols * kRows; ++i) {
+            auto  idx  = static_cast<std::size_t>(mScroll * kCols + i);
+            auto& slot = *mGrid[static_cast<std::size_t>(i)];
+            if (idx < mEntries.size() && mEntries[idx].stack) {
+                slot.stack   = mEntries[idx].stack;
+                slot.count   = mEntries[idx].count;
+                slot.tooltip = {slot.stack->getName() + " x" + countText(slot.count), ctr("br.stock.screen.click_add", "Click: +1, Shift: +stack, right-click: -1")};
+            } else {
+                slot.stack = nullptr;
+                slot.count = 0;
+                slot.tooltip.clear();
+            }
+        }
+    }
+
+    using OrderList = std::vector<std::pair<std::shared_ptr<ItemStack>, int>>;
+    static std::pair<Json, OrderList>& orderStash() {
+        static std::pair<Json, OrderList> s;
+        return s;
+    }
+
+    void refreshOrder() {
+        if (!mChecklist) orderStash() = {mData.value("pos", Json()), mOrderList};
+        for (int i = 0; i < 9; ++i) {
+            auto& slot = *mOrder[static_cast<std::size_t>(i)];
+            if (i < static_cast<int>(mOrderList.size())) {
+                slot.stack   = mOrderList[static_cast<std::size_t>(i)].first;
+                slot.count   = mOrderList[static_cast<std::size_t>(i)].second;
+                slot.tooltip = {slot.stack->getName() + " x" + std::to_string(slot.count)};
+            } else {
+                slot.stack = nullptr;
+                slot.count = 0;
+                slot.tooltip.clear();
+            }
+        }
+        mSendBtn->enabled = !mOrderList.empty();
+    }
+
+    /// The StockKeeperRequestScreen click: +1, Shift +stack, right-click -1.
+    void change(std::shared_ptr<ItemStack> const& s, int max, Button b, bool shift) {
+        if (!s) return;
+        auto it = std::find_if(mOrderList.begin(), mOrderList.end(), [&](auto const& o) { return items::sameItemSameData(*o.first, *s); });
+        int  step = shift ? std::max<int>(1, s->getMaxStackSize()) : 1;
+        if (b == Button::Right) {
+            if (it == mOrderList.end()) return;
+            it->second -= step;
+            if (it->second <= 0) mOrderList.erase(it);
+        } else {
+            if (it == mOrderList.end()) {
+                if (mOrderList.size() >= 9) return;
+                mOrderList.push_back({s, 0});
+                it = mOrderList.end() - 1;
+            }
+            it->second = std::min(max, it->second + step);
+        }
+        refreshOrder();
+    }
+
+    void clickStock(int i, Button b, bool shift) {
+        if (mChecklist) return; // the checklist can't be edited
+        auto idx = static_cast<std::size_t>(mScroll * kCols + i);
+        // The StockKeeperCategoryHidingPacket: a click on a category's header row collapses
+        // or expands it
+        for (auto const& h : mHeaders) {
+            if (static_cast<int>(idx) / kCols != h.row) continue;
+            mSend({{"op", "hide"}, {"index", h.index}});
+            log().info("stock keeper category {} {}", h.index, h.hidden ? "expanded" : "collapsed");
+            return;
+        }
+        if (idx >= mEntries.size()) return;
+        change(mEntries[idx].stack, mEntries[idx].count, b, shift);
+    }
+
+    void clickOrder(int i, Button b, bool shift) {
+        if (mChecklist || i >= static_cast<int>(mOrderList.size())) return;
+        auto s = mOrderList[static_cast<std::size_t>(i)].first;
+        change(s, available(s), b == Button::Left ? Button::Right : Button::Left, shift);
+    }
+
+    void sendOrder() {
+        if (mOrderList.empty()) return;
+        Json list = Json::array();
+        for (auto const& [s, n] : mOrderList) list.push_back({{"item", items::toJsonWithCount(*s, 1)}, {"count", n}});
+        mSend({{"op", "order"}, {"items", list}, {"address", mAddress->text}, {"encode", mData.value("program", false)}});
+        mOrderList.clear();
+        refreshOrder();
+        close();
+    }
+
+    SendFn                                                   mSend;
+    Json                                                     mData;
+    std::vector<CountSlot*>                                  mGrid, mOrder;
+    std::vector<Entry>                                       mEntries;
+    std::vector<Header>                                      mHeaders;
+    std::vector<std::pair<std::shared_ptr<ItemStack>, int>> mOrderList;
+    ImageButton *                                             mSendBtn{}, *mLock{};
+    TextField *                                              mSearch{}, *mAddress{};
+    packages::AddressSuggestions*                            mSuggest{};
+    int                                                      mScroll = 0;
+    bool                                                     mChecklist = false; ///< the schematic list mode
+    std::optional<std::string>                               mPendingSearch; ///< typed, not sent yet
+    std::chrono::steady_clock::time_point                    mSearchAt;
+    std::string                                              mSentSearch = mData.value("search", std::string{});
+};
+
+/// Forwards the wheel over the item grid to the request screen.
+class GridScroll : public Widget {
+public:
+    GridScroll(Rect r, RequestScreen& s) : Widget(r), mScreen(s) {}
+    void render(Canvas&, float, float) override {}
+    bool scroll(float mx, float my, int delta, bool) override { return hovered(mx, my) && mScreen.scrollGrid(delta); }
+
+private:
+    RequestScreen& mScreen;
+};
+
+// ---- category editor ---------------------------------------------------------------------------
+
+/// An icon button whose callback knows whether Shift was held (Shift moves a category to
+/// the top / bottom).
+class ShiftButton : public ImageButton {
+public:
+    ShiftButton(Rect r, std::string symbol, std::function<void(bool)> fn) : ImageButton(r, std::move(symbol), {}), mFn(std::move(fn)) {
+        onClick = [this] { mFn(mShift); };
+    }
+    bool click(float mx, float my, Button b, bool shift) override {
+        mShift = shift;
+        return ImageButton::click(mx, my, b, shift);
+    }
+
+private:
+    std::function<void(bool)> mFn;
+    bool                      mShift = false;
+};
+
+class CategoryScreen : public Screen {
+public:
+    CategoryScreen(Json const& data, SendFn send)
+    : Screen(ctr("bearing.gui.stock_ticker.category_editor", "Category Editor"), 186, 150),
+      mSend(std::move(send)),
+      mData(data) {
+        showInventory = true;
+    }
+
+    void init() override {
+        for (int i = 0; i < 6; ++i) {
+            float y = 24 + 18.0f * static_cast<float>(i);
+            Row   r;
+            r.slot = &add<Slot>(Rect{10, y, 18, 18}, [](Button, bool) {});
+            r.up   = &add<ShiftButton>(Rect{116, y + 1, 16, 16}, "^", [this, i](bool shift) { mSend({{"op", "move"}, {"index", i}, {"delta", -1}, {"toEnd", shift}}); });
+            r.down = &add<ShiftButton>(Rect{133, y + 1, 16, 16}, "v", [this, i](bool shift) { mSend({{"op", "move"}, {"index", i}, {"delta", 1}, {"toEnd", shift}}); });
+            // The category name box, edited in place
+            r.name = &add<TextField>(Rect{32, y + 1, 80, 16}, std::string{}, [this, i](std::string const& text) {
+                if (static_cast<std::size_t>(i) < mNames.size() && text == mNames[static_cast<std::size_t>(i)]) return;
+                mSend({{"op", "rename"}, {"index", i}, {"name", text}});
+                log().info("stock ticker category {} renamed to '{}'", i + 1, text);
+            });
+            r.name->maxLength   = 28; // the category name box
+            r.name->placeholder = ctr("bearing.gui.stock_ticker.empty_category_name_placeholder", "(Empty)");
+            r.del  = &add<ImageButton>(Rect{167, y + 1, 16, 16}, "x", [this, i] { mSend({{"op", "remove"}, {"index", i}}); });
+            r.up->tooltip   = {ctr("bearing.gui.schedule.move_up", "Move up"), "§7" + ctr("bearing.gui.stock_ticker.shift_moves_top", "Shift: send to top")};
+            r.down->tooltip = {ctr("bearing.gui.schedule.move_down", "Move down"), "§7" + ctr("bearing.gui.stock_ticker.shift_moves_bottom", "Shift: send to bottom")};
+            r.name->tooltip = {ctr("bearing.gui.stock_ticker.category_name", "Category Name")};
+            r.del->tooltip  = {ctr("bearing.gui.stock_ticker.delete_category", "Delete Category")};
+            r.del->litColour = color::kButtonOff;
+            mRows.push_back(r);
+        }
+        auto& addBtn  = add<ImageButton>(Rect{10, 130, 18, 16}, "+", [this] { mSend({{"op", "add"}, {"slot", -1}}); });
+        addBtn.tooltip = {ctr("bearing.gui.stock_ticker.new_category", "New Category"), ctr("br.stock.screen.add_filter", "Shift-click a filter in your inventory to add a category")};
+        onData(mData);
+    }
+
+    void onData(Json const& data) override {
+        mData     = data;
+        auto cats = data.value("categories", Json::array());
+        mNames.assign(mRows.size(), {});
+        for (std::size_t i = 0; i < mRows.size(); ++i) {
+            bool has = i < cats.size();
+            for (Widget* w : {static_cast<Widget*>(mRows[i].slot), static_cast<Widget*>(mRows[i].up), static_cast<Widget*>(mRows[i].down), static_cast<Widget*>(mRows[i].name), static_cast<Widget*>(mRows[i].del)})
+                w->visible = has;
+            if (!has) continue;
+            mRows[i].slot->stack = iconOf(cats[i].value("filter", Json()));
+            mNames[i]            = cats[i].value("name", std::string{});
+            syncField(*mRows[i].name, mNames[i]);
+        }
+    }
+
+    void renderExtra(Canvas& c, float, float) override {
+        c.text(32, 134, ctr("bearing.gui.stock_ticker.category_filter_tip", "Filters (list or attribute) go here"), color::kTextDark, Align::Left, false);
+    }
+
+    void clickInventory(int slot, ItemStack const& stack, Button, bool shift) override {
+        if (shift && !items::isEmpty(stack)) mSend({{"op", "add"}, {"slot", slot}});
+    }
+
+private:
+    struct Row {
+        Slot*       slot{};
+        ImageButton *up{}, *down{}, *del{};
+        TextField*  name{};
+    };
+    SendFn                   mSend;
+    Json                     mData;
+    std::vector<Row>         mRows;
+    std::vector<std::string> mNames;
+};
+
+// ---- redstone requester ------------------------------------------------------------------------
+
+class RequesterScreen : public Screen {
+public:
+    RequesterScreen(Json const& data, SendFn send)
+    : Screen(ctr("br.stock.screen.requester", "Redstone Requester"), 186, 96),
+      mSend(std::move(send)),
+      mData(data) {}
+
+    void init() override {
+        for (int i = 0; i < 9; ++i) mSlots.push_back(&add<CountSlot>(core::common::gridCell(12, 22, 9, 18, i), [this, i](Button b, bool shift) { step(i, b == Button::Left ? 1 : -1, shift); }));
+        mAllow = &add<ImageButton>(Rect{12, 46, 18, 18}, "+", [this] { mSend({{"op", "set"}, {"partial", true}}); });
+        mDeny  = &add<ImageButton>(Rect{32, 46, 18, 18}, "=", [this] { mSend({{"op", "set"}, {"partial", false}}); });
+        mAllow->tooltip   = {ctr("bearing.gui.redstone_requester.allow_partial", "Send whatever is available")};
+        mDeny->tooltip    = {ctr("bearing.gui.redstone_requester.dont_allow_partial", "Only send complete orders")};
+        mDeny->litColour  = color::kButtonOff;
+        mAddress = &add<TextField>(Rect{12, 70, 162, 16}, mData.value("address", std::string{}), [this](std::string const& text) {
+            if (text == mData.value("address", std::string{})) return;
+            mData["address"] = text;
+            mSend({{"op", "set"}, {"address", text}});
+            log().info("redstone requester address typed: '{}'", text);
+        });
+        mAddress->maxLength   = 25; // the AddressEditBox
+        mAddress->placeholder = ctr("bearing.gui.redstone_requester.requester_address", "Deliver order to...");
+        mAddress->tooltip     = {ctr("bearing.gui.redstone_requester.requester_address", "Deliver order to..."), ctr("bearing.gui.redstone_requester.requester_address_tip", "Type the address that"),
+                                 ctr("bearing.gui.redstone_requester.requester_address_tip_1", "this order is delivered to.")};
+        for (auto const& l : packages::clipboardTip()) mAddress->tooltip.push_back(l);
+        mSuggest = &add<packages::AddressSuggestions>(*mAddress, packages::suggestionsOf(mData)); // drawn over the rest
+        onData(mData);
+    }
+
+    void onData(Json const& data) override {
+        mData   = data;
+        if (mAddress) syncField(*mAddress, data.value("address", std::string{}));
+        if (mSuggest) mSuggest->options = packages::suggestionsOf(data);
+        auto ol = data.value("order", Json::array());
+        for (std::size_t i = 0; i < mSlots.size(); ++i) {
+            auto& s = *mSlots[i];
+            s.stack = i < ol.size() ? iconOf(ol[i].value("item", Json())) : nullptr;
+            s.count = i < ol.size() ? ol[i].value("count", 1) : 0;
+            s.tooltip = s.stack ? std::vector<std::string>{s.stack->getName() + " x" + std::to_string(s.count), ctr("bearing.gui.factory_panel.scroll_to_change_amount", "Scroll for a different amount")}
+                                : std::vector<std::string>{};
+        }
+        bool partial     = data.value("partial", false);
+        mAllow->toggled  = partial;
+        mDeny->toggled   = !partial;
+    }
+
+    void renderExtra(Canvas& c, float, float) override {
+        c.text(56, 51, mAllow->toggled ? ctr("bearing.gui.redstone_requester.allow_partial", "Send whatever is available") : ctr("bearing.gui.redstone_requester.dont_allow_partial", "Only send complete orders"), color::kTextDark, Align::Left, false);
+    }
+
+    /// Amounts 1..256, Shift ×10 (mouseScrolled); clicks step too.
+    void step(int i, int dir, bool shift) {
+        auto& s = *mSlots[static_cast<std::size_t>(i)];
+        if (!s.stack) return;
+        s.count = std::clamp(s.count + dir * (shift ? 10 : 1), 1, 256);
+        Json amounts = Json::array();
+        for (auto* slot : mSlots)
+            if (slot->stack) amounts.push_back(slot->count);
+        mSend({{"op", "set"}, {"amounts", amounts}});
+    }
+
+private:
+    SendFn                  mSend;
+    Json                    mData;
+    std::vector<CountSlot*> mSlots;
+    ImageButton *            mAllow{}, *mDeny{};
+    TextField*              mAddress{};
+    packages::AddressSuggestions* mSuggest{};
+};
+
+class SlotScroll : public Widget {
+public:
+    SlotScroll(Rect r, std::function<void(int, bool)> fn) : Widget(r), mFn(std::move(fn)) {}
+    void render(Canvas&, float, float) override {}
+    bool scroll(float mx, float my, int delta, bool shift) override {
+        if (!hovered(mx, my)) return false;
+        mFn(delta > 0 ? 1 : -1, shift);
+        return true;
+    }
+
+private:
+    std::function<void(int, bool)> mFn;
+};
+
+// ---- factory gauge -----------------------------------------------------------------------------
+
+class GaugeScreen : public Screen {
+public:
+    GaugeScreen(Json const& data, SendFn send) : Screen("", 186, 150), mSend(std::move(send)), mData(data) {}
+
+    void init() override {
+        bool restocker = mData.value("restocker", false);
+        title = restocker ? ctr("bearing.gui.factory_panel.title_as_restocker", "Restocker Settings") : ctr("bearing.gui.factory_panel.title_as_recipe", "Recipe Settings");
+        mItem = &add<Slot>(Rect{12, 22, 18, 18}, [](Button, bool) {});
+        for (int i = 0; i < 9; ++i) {
+            auto& s = add<CountSlot>(core::common::gridCell(12, 50, 9, 18, i), [this, i](Button b, bool shift) {
+                if (b == Button::Middle) return;
+                changeInput(i, b == Button::Left ? 1 : -1, shift && b == Button::Left, false);
+            });
+            mInputs.push_back(&s);
+        }
+        mOutput = &add<ScrollField>(Rect{12, 74, 80, 16}, "", 1, 64, mData.value("output", 1), [this](int v) { mSend({{"op", "set"}, {"output", v}}); });
+        mOutput->format = [](int v) { return ctr("bearing.gui.factory_panel.expected_output", "Expected: {0}", "x" + std::to_string(v)); };
+        mExpiry = &add<ScrollField>(Rect{96, 74, 78, 16}, "", -1, 31, mData.value("promiseInterval", -1), [this](int v) { mSend({{"op", "set"}, {"promiseInterval", v}}); });
+        mExpiry->format = [](int v) {
+            if (v == -1) return ctr("bearing.gui.factory_panel.promises_do_not_expire", "Promises never time out");
+            return v == 0 ? std::string("30s") : std::to_string(v) + "m";
+        };
+        mExpiry->tooltip = {ctr("bearing.gui.factory_panel.promises_expire_title", "Promises time out after"), ctr("bearing.gui.factory_panel.promise_prevents_oversending", "That way nothing is sent twice.")};
+        auto prompt = restocker ? ctr("bearing.gui.factory_panel.restocker_address", "Deliver items to...") : ctr("bearing.gui.factory_panel.recipe_address", "Deliver ingredients to...");
+        mAddress    = &add<TextField>(Rect{12, 96, 162, 16}, mData.value("address", std::string{}), [this](std::string const& text) {
+            if (text == mData.value("address", std::string{})) return;
+            mData["address"] = text;
+            mSend({{"op", "set"}, {"address", text}});
+            log().info("factory gauge address typed: '{}'", text);
+        });
+        mAddress->maxLength   = 25; // the AddressEditBox
+        mAddress->placeholder = prompt;
+        mAddress->tooltip     = {prompt};
+        for (auto const& l : packages::clipboardTip()) mAddress->tooltip.push_back(l);
+        auto& clear  = add<ImageButton>(Rect{12, 120, 18, 18}, "0", [this] { mSend({{"op", "set"}, {"clearPromises", true}}); });
+        clear.tooltip = {ctr("bearing.gui.factory_panel.promised_items", "Items promised"), ctr("bearing.gui.factory_panel.left_click_reset", "Left-Click to reset")};
+        // The redstone link icon: shown while links are connected, a click disconnects them
+        mLinks = &add<ImageButton>(Rect{34, 120, 18, 18}, "R", [this] { mSend({{"op", "set"}, {"redstoneReset", true}}); });
+        mLinks->tooltip   = {ctr("bearing.gui.factory_panel.has_link_connections", "Gauge has links attached"), "§8§o" + ctr("bearing.gui.factory_panel.left_click_disconnect", "Left-Click to unlink")};
+        mLinks->litColour = color::kButtonOff;
+        if (!restocker) {
+            auto& conn   = add<ImageButton>(Rect{134, 120, 18, 18}, "+", [this] { mSend({{"op", "connect"}}); });
+            conn.tooltip = {ctr("bearing.gui.factory_panel.connect_input", "Add new connection")};
+            // The relocate button ("Move this gauge")
+            auto& move   = add<ImageButton>(Rect{90, 120, 18, 18}, "M", [this] { mSend({{"op", "relocate"}}); });
+            move.tooltip = {ctr("bearing.gui.factory_panel.relocate", "Move this gauge")};
+            // The 3x3 button: shown when the inputs make the item at a crafting table
+            mCrafting = &add<ImageButton>(Rect{112, 120, 18, 18}, "#", [this] {
+                bool on = !mData.value("crafting", false);
+                mSend({{"op", "set"}, {"crafting", on}});
+                log().info("factory gauge mechanical crafting {}", on ? "on" : "off");
+            });
+            mCrafting->tooltip = {ctr("bearing.gui.factory_panel.activate_crafting", "Craft with Mechanical Crafters"),
+                                  "§7" + ctr("bearing.gui.factory_panel.crafting_input_tip", "Unpacked into the linked"),
+                                  "§7" + ctr("bearing.gui.factory_panel.crafting_input_tip_1", "3x3 mechanical crafter grid")};
+        }
+        auto& reset   = add<ImageButton>(Rect{156, 120, 18, 18}, "x", [this] { mSend({{"op", "set"}, {"reset", true}}); close(); });
+        reset.tooltip = {ctr("bearing.gui.factory_panel.reset", "Reset all settings")};
+        reset.litColour = color::kButtonOff;
+        for (auto* w : {static_cast<Widget*>(mOutput)}) w->visible = !restocker;
+        mSuggest = &add<packages::AddressSuggestions>(*mAddress, packages::suggestionsOf(mData)); // drawn over the rest
+        onData(mData);
+    }
+
+    void onData(Json const& data) override {
+        mData        = data;
+        if (mAddress) {
+            syncField(*mAddress, data.value("address", std::string{}));
+        if (mSuggest) mSuggest->options = packages::suggestionsOf(data);
+            // A gauge without an address is inactive (the box's tooltip says so)
+            mAddress->tooltip = {mAddress->placeholder};
+            if (data.value("address", std::string{}).empty())
+                mAddress->tooltip.push_back(ctr("bearing.gui.factory_panel.address_missing", "Idle: no destination address given"));
+            for (auto const& l : packages::clipboardTip()) mAddress->tooltip.push_back(l);
+        }
+        mItem->stack = iconOf(data.value("item", Json()));
+        auto inputs  = data.value("inputs", Json::array());
+        for (std::size_t i = 0; i < mInputs.size(); ++i) {
+            auto& s   = *mInputs[i];
+            bool  has = i < inputs.size() && !mData.value("restocker", false);
+            s.visible = has;
+            if (!has) continue;
+            s.stack   = iconOf(inputs[i].value("item", Json()));
+            s.count   = inputs[i].value("amount", 1);
+            s.tooltip = {s.stack ? s.stack->getName() + " x" + std::to_string(s.count) : std::string{}, ctr("bearing.gui.factory_panel.scroll_to_change_amount", "Scroll for a different amount"),
+                         ctr("bearing.gui.factory_panel.left_click_disconnect", "Left-Click to unlink") + " (Shift)"};
+        }
+        mOutput->value = data.value("output", 1);
+        mExpiry->value = data.value("promiseInterval", -1);
+        if (mLinks) mLinks->visible = data.value("links", 0) > 0;
+        if (mCrafting) {
+            mCrafting->visible = data.value("craftable", false) || data.value("crafting", false);
+            mCrafting->toggled = data.value("crafting", false);
+        }
+    }
+
+    void renderExtra(Canvas& c, float, float) override {
+        c.text(34, 24, mData.value("label", std::string{}), color::kTextDark, Align::Left, false);
+        c.text(34, 33, ctr("br.stock.screen.in_storage", "In storage: {}", countText(mData.value("inStorage", 0))) + "  " + ctr("br.stock.screen.promised", "Promised: {}", mData.value("promised", 0)), color::kTextDark, Align::Left, false);
+        if (!mData.value("restocker", false) && mData.value("inputs", Json::array()).empty())
+            c.text(12, 54, ctr("bearing.gui.factory_panel.unconfigured_input_tip", "Link more factory gauges"), color::kTextGray);
+    }
+
+    void changeInput(int i, int dir, bool disconnect, bool shift) {
+        auto inputs = mData.value("inputs", Json::array());
+        if (i >= static_cast<int>(inputs.size())) return;
+        if (disconnect) {
+            // Left-click an input to disconnect it
+            mSend({{"op", "set"}, {"disconnect", inputs[static_cast<std::size_t>(i)].value("pos", Json())}, {"disconnectSlot", inputs[static_cast<std::size_t>(i)].value("slot", 0)}});
+            return;
+        }
+        Json amounts = Json::array();
+        for (std::size_t k = 0; k < inputs.size(); ++k) {
+            int v = inputs[k].value("amount", 1);
+            if (static_cast<int>(k) == i) v = std::clamp(v + dir * (shift ? 10 : 1), 1, 64);
+            amounts.push_back(v);
+        }
+        mSend({{"op", "set"}, {"amounts", amounts}});
+    }
+
+private:
+    SendFn                  mSend;
+    Json                    mData;
+    Slot*                   mItem{};
+    std::vector<CountSlot*> mInputs;
+    ScrollField *           mOutput{}, *mExpiry{};
+    TextField*              mAddress{};
+    packages::AddressSuggestions* mSuggest{};
+    ImageButton*             mCrafting{};
+    ImageButton*             mLinks{};
+};
+
+class GaugeItemScreen : public Screen {
+public:
+    GaugeItemScreen(Json const& data, SendFn send)
+    : Screen(ctr("bearing.gui.factory_panel.place_item_to_monitor", "Insert an item to track"), 176, 40),
+      mSend(std::move(send)) {
+        (void)data;
+        showInventory = true;
+    }
+    void renderExtra(Canvas& c, float, float) override { c.text(width / 2, 22, ctr("bearing.logistics.filter.click_to_set", "Use an item here to set it"), color::kTextDark, Align::Centre, false); }
+    void clickInventory(int, ItemStack const& stack, Button, bool) override {
+        // the game's stack is only read (never copied on the client thread)
+        if (!items::isEmpty(stack)) mSend({{"op", "set"}, {"item", items::toJsonWithCount(stack, 1)}});
+    }
+
+private:
+    SendFn mSend;
+};
+
+// ---- hover label -------------------------------------------------------------------------------
+
+struct Hover {
+    bool                     has = false;
+    core::GlobalPos          pos;
+    std::array<int, 3>       key{};
+    std::vector<std::string> lines;
+    int                      cooldown = 0;
+};
+Hover& hover() {
+    static Hover h;
+    return h;
+}
+
+void pollHover() {
+    auto& h = hover();
+    if (h.cooldown > 0) --h.cooldown;
+    auto* player = currentPlayer();
+    if (!player || !net::client::connected() || current()) {
+        h.has = false;
+        return;
+    }
+    auto const& hit = player->getLevel().getHitResult();
+    if (hit.mType != HitResultType::Tile) {
+        h.has = false;
+        return;
+    }
+    auto&       region = player->getDimensionBlockSource();
+    auto const& id     = region.getBlock(hit.mBlock).getTypeName();
+    if (id != "bearing:factory_gauge" && id != "bearing:stock_ticker") {
+        h.has = false;
+        return;
+    }
+    double             lx = hit.mPos.x - hit.mBlock.x, ly = hit.mPos.y - hit.mBlock.y, lz = hit.mPos.z - hit.mBlock.z;
+    core::GlobalPos    pos{static_cast<int>(player->getDimensionId()), hit.mBlock.x, hit.mBlock.y, hit.mBlock.z};
+    std::array<int, 3> key{static_cast<int>(lx * 2), static_cast<int>(ly * 2), static_cast<int>(lz * 2)};
+    if (h.pos == pos && h.key == key && h.cooldown > 0) return;
+    h.pos = pos, h.key = key, h.cooldown = 10;
+    net::client::send("stock.hover", {{"pos", Json::array({pos.dim, pos.x, pos.y, pos.z})}, {"hit", Json::array({lx, ly, lz})}});
+}
+} // namespace
+
+class StockScreensModule {
+public:
+    void install() {
+        registerServerScreen("stock.request", [](Json const& data, SendFn send) {
+            auto s = std::make_unique<RequestScreen>(data, std::move(send));
+            s->add<GridScroll>(Rect{12, 30, 162, 90}, *s);
+            return s;
+        });
+        registerServerScreen("stock.categories", [](Json const& data, SendFn send) { return std::make_unique<CategoryScreen>(data, std::move(send)); });
+        registerServerScreen("stock.requester", [](Json const& data, SendFn send) {
+            auto  s   = std::make_unique<RequesterScreen>(data, std::move(send));
+            auto* raw = s.get();
+            for (int i = 0; i < 9; ++i) s->add<SlotScroll>(core::common::gridCell(12, 22, 9, 18, i), [raw, i](int dir, bool shift) { raw->step(i, dir, shift); });
+            return s;
+        });
+        registerServerScreen("stock.gauge", [](Json const& data, SendFn send) {
+            auto  s   = std::make_unique<GaugeScreen>(data, std::move(send));
+            auto* raw = s.get();
+            for (int i = 0; i < 9; ++i) s->add<SlotScroll>(core::common::gridCell(12, 50, 9, 18, i), [raw, i](int dir, bool shift) { raw->changeInput(i, dir, false, shift); });
+            return s;
+        });
+        registerServerScreen("stock.gauge_item", [](Json const& data, SendFn send) { return std::make_unique<GaugeItemScreen>(data, std::move(send)); });
+    }
+    // client input / render listeners are added at mod load (see ValueBoxClient.cpp)
+    void load() {
+        net::client::on("stock.hover", [](Json const& msg) {
+            auto& h = hover();
+            h.lines.clear();
+            for (auto const& l : msg.value("lines", Json::array())) h.lines.push_back(l.get<std::string>());
+            h.has = !h.lines.empty();
+        });
+        auto& bus = ll::event::EventBus::getInstance();
+        mListeners.push_back(bus.emplaceListener<ll::event::ClientLevelTickEvent>([](auto&) { pollHover(); }));
+        mListeners.push_back(bus.emplaceListener<ll::event::ClientExitLevelEvent>([](auto&) { hover() = Hover{}; }));
+        mListeners.push_back(bus.emplaceListener<ll::event::AfterUIRenderEvent>([](ll::event::AfterUIRenderEvent& ev) {
+            auto& h = hover();
+            if (!h.has || current() || ev.screenView().getScreenName() != "hud_screen") return;
+            auto [sw, sh] = guiSize();
+            Canvas c(ev.uiRenderContext());
+            c.tooltip(sw / 2 + 4, sh / 2 + 14, h.lines);
+        }));
+    }
+    void uninstall() {
+        auto& bus = ll::event::EventBus::getInstance();
+        for (auto& l : mListeners) bus.removeListener(l);
+        mListeners.clear();
+    }
+
+private:
+    std::vector<ll::event::ListenerPtr> mListeners;
+};
+
+} // namespace br::client::stock
+
+BR_REGISTER_MODULE(br::client::stock::StockScreensModule);
+
+#endif // BR_CLIENT

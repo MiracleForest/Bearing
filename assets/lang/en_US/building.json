@@ -1,0 +1,22 @@
+{
+  "block.bearing.copycat_panel.tooltip.behaviour1": "Takes on the look of the _block in your hand_ when it can. Use it _once more_ to switch the _facing_ or _powered_ variant. A _Wrench_ strips the material off again.",
+  "block.bearing.copycat_panel.tooltip.condition1": "On Right-Click",
+  "block.bearing.copycat_panel.tooltip.summary": "A thin _panel_ that can wear the texture of any _full block_. _Bars_ and _Trapdoors_ work as well.",
+  "block.bearing.copycat_step.tooltip.behaviour1": "Takes on the look of the _block in your hand_ when it can. Use it _once more_ to switch the _facing_ or _powered_ variant. A _Wrench_ strips the material off again.",
+  "block.bearing.copycat_step.tooltip.condition1": "On Right-Click",
+  "block.bearing.copycat_step.tooltip.summary": "A small _step_ that can wear the texture of any _full block_.",
+  "block.bearing.metal_bracket.tooltip.summary": "A heavy-duty _metal_ clamp that dresses up _Shafts, Cogwheels_ and _Pipes_ with a factory feel.",
+  "block.bearing.placard.tooltip.behaviour1": "_Puts_ the _item_ you hold on display. If the same item is _already shown_, gives off a short _Redstone_ pulse instead.",
+  "block.bearing.placard.tooltip.behaviour2": "_Takes out_ the displayed _item_.",
+  "block.bearing.placard.tooltip.condition1": "Right-Click Holding an Item",
+  "block.bearing.placard.tooltip.condition2": "On Left-Click",
+  "block.bearing.placard.tooltip.summary": "A _brass_ wall plaque for _showing off_ a single _item_. Keeps working on moving contraptions.",
+  "block.bearing.wooden_bracket.tooltip.summary": "A rustic _wooden_ clamp that dresses up _Shafts, Cogwheels_ and _Pipes_ with a homely touch.",
+  "tag.block.bearing.casing": "Casings",
+  "tag.item.bearing.casing": "Casings",
+  "tag.block.bearing.copycat_allow": "Usable by Copycat Blocks",
+  "tag.block.bearing.copycat_deny": "Not Usable by Copycat Blocks",
+  "tag.block.bearing.table_cloths": "Table Cloths",
+  "tag.item.bearing.table_cloths": "Table Cloths",
+  "tag.item.bearing.dyed_table_cloths": "Dyed Table Cloths"
+}

@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:linear_chassis_from_secondary"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:secondary_linear_chassis"
+      }
+    ],
+    "result": {
+      "item": "bearing:linear_chassis",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "bearing:secondary_linear_chassis"
+      }
+    ]
+  }
+}

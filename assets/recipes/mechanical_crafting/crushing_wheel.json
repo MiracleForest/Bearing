@@ -1,0 +1,26 @@
+{
+  "type": "bearing:mechanical_crafting",
+  "accept_mirrored": false,
+  "key": {
+    "A": {
+      "item": "bearing:andesite_alloy"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AAPAA",
+    "APSPA",
+    "AAPAA",
+    " AAA "
+  ],
+  "result": {
+    "id": "bearing:crushing_wheel",
+    "count": 2
+  }
+}

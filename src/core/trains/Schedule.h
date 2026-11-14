@@ -1,0 +1,224 @@
+#pragma once
+
+// Train schedules (pure C++): the Schedule / ScheduleRuntime.
+//
+// A schedule is a list of entries; each entry has an instruction (travel to a station, rename,
+// throttle, ...) and, for instructions that support them, wait conditions as columns: the
+// conditions of one column are met one after another (AND), the first complete column (OR)
+// moves the train on. The runtime is a state machine (pre transit -> in transit -> post transit)
+// driven every tick by the game through `Driver`.
+//
+// Ids are "bearing:<path>" ("<path>" alone is accepted when loading).
+
+#include <cstdint>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include "nlohmann/json.hpp"
+
+namespace br::core::trains {
+
+using Json = nlohmann::json;
+
+namespace ids {
+inline constexpr std::string_view kDestination     = "bearing:destination";
+inline constexpr std::string_view kPackageDelivery = "bearing:package_delivery";
+inline constexpr std::string_view kPackageRetrieval = "bearing:package_retrieval";
+inline constexpr std::string_view kRename          = "bearing:rename";
+inline constexpr std::string_view kThrottle        = "bearing:throttle";
+
+inline constexpr std::string_view kDelay          = "bearing:delay";
+inline constexpr std::string_view kTimeOfDay      = "bearing:time_of_day";
+inline constexpr std::string_view kFluidThreshold = "bearing:fluid_threshold";
+inline constexpr std::string_view kItemThreshold  = "bearing:item_threshold";
+inline constexpr std::string_view kRedstoneLink   = "bearing:redstone_link";
+inline constexpr std::string_view kPlayerCount    = "bearing:player_count";
+inline constexpr std::string_view kIdle           = "bearing:idle";
+inline constexpr std::string_view kUnloaded       = "bearing:unloaded";
+inline constexpr std::string_view kPowered        = "bearing:powered";
+} // namespace ids
+
+/// Instruction ids in the menu order.
+[[nodiscard]] std::vector<std::string_view> const& instructionIds();
+/// Condition ids in the menu order.
+[[nodiscard]] std::vector<std::string_view> const& conditionIds();
+/// "bearing:delay" -> "delay" (strips any namespace).
+[[nodiscard]] std::string pathOf(std::string_view id);
+/// "bearing:delay" / "delay" -> "bearing:delay".
+[[nodiscard]] std::string normaliseId(std::string_view id);
+
+/// An instruction or a condition: its id and the data fields (`Text`, `Value`, ...).
+struct Part {
+    std::string id;
+    Json        data = Json::object();
+
+    [[nodiscard]] Json toJson() const { return {{"Id", id}, {"Data", data}}; }
+    [[nodiscard]] static Part fromJson(Json const& j);
+};
+
+/// The default data of a new instruction / condition (defaults).
+[[nodiscard]] Part defaultInstruction(std::string_view id);
+[[nodiscard]] Part defaultCondition(std::string_view id);
+/// Rename and throttle take no wait conditions (supportsConditions).
+[[nodiscard]] bool supportsConditions(std::string_view instructionId);
+
+struct Entry {
+    Part                           instruction;
+    std::vector<std::vector<Part>> conditions; ///< columns (OR) of conditions (AND)
+
+    /// A new entry as the editor adds it: travel to a station, wait 5 seconds.
+    [[nodiscard]] static Entry makeDefault();
+};
+
+struct Schedule {
+    std::vector<Entry> entries;
+    bool               cyclic        = true; ///< "Loop Forever"
+    int                savedProgress = 0;    ///< entry to start at
+
+    [[nodiscard]] Json            toJson() const;
+    [[nodiscard]] static Schedule fromJson(Json const& j);
+};
+
+// ---- condition helpers --------------------------------------------------------------------------
+
+/// Ticks of a `Value` + `TimeUnit` (0 ticks, 1 seconds, 2 minutes) condition.
+[[nodiscard]] int waitTicks(Json const& data);
+/// Time of day condition: the target day time (ticks) and the rotation period (ticks).
+[[nodiscard]] int timeOfDayTarget(Json const& data);
+[[nodiscard]] int timeOfDayRotation(Json const& data);
+/// Whether day time `dayTime` (0..23999 continuing) fulfils the time of day condition.
+[[nodiscard]] bool timeOfDayReached(Json const& data, std::int64_t dayTime);
+/// The clock string of a day time target ("8:00 AM" style parts: hour 1..12, minute, pm).
+struct Clock {
+    int  hour   = 0;
+    int  minute = 0;
+    bool pm     = false;
+};
+[[nodiscard]] Clock clockOf(Json const& data);
+/// Threshold comparison (0 greater, 1 less, 2 equal).
+[[nodiscard]] bool compareThreshold(int op, long long have, long long threshold);
+/// The `Threshold` field as a number (the reference design stores a string; invalid -> 0).
+[[nodiscard]] long long thresholdOf(Json const& data);
+
+/// The station name filter: `*` matches anything, everything else literal, whole name.
+[[nodiscard]] bool stationMatches(std::string_view filter, std::string_view name);
+/// The title of a destination filter (the filter with '*' removed, trimmed).
+[[nodiscard]] std::string filterTitle(std::string_view filter);
+
+// ---- runtime ------------------------------------------------------------------------------------
+
+enum class RuntimeState : int { PreTransit = 0, InTransit = 1, PostTransit = 2 };
+
+/// What starting a "travel to" instruction gave.
+/// Skip / SkipCooldown: nothing to do, the entry is skipped with its conditions (package
+/// instructions without packages; Fetch also waits the retry interval). NoDriver: the driver
+/// reported the failure itself (retry after the interval).
+enum class StartResult { Navigating, AlreadyThere, NoMatch, NoPath, NoDriver, NoTarget, Skip, SkipCooldown };
+
+/// The game side of a running schedule.
+class Driver {
+public:
+    virtual ~Driver() = default;
+    // instructions
+    virtual StartResult startDestination(std::string const& filter) = 0;
+    virtual StartResult startPackages(bool delivery, std::string const& filter) = 0;
+    virtual void        rename(std::string const& title)              = 0;
+    virtual void        setThrottle(double throttle)                  = 0;
+    [[nodiscard]] virtual bool navigating() const                    = 0;
+    [[nodiscard]] virtual bool derailed() const                      = 0;
+    // conditions
+    [[nodiscard]] virtual std::int64_t dayTime() const                     = 0;
+    [[nodiscard]] virtual long long    itemCount(Json const& filter, bool stacks) const = 0;
+    [[nodiscard]] virtual long long    fluidAmount(Json const& filter) const = 0; ///< mB
+    [[nodiscard]] virtual bool         linkPowered(Json const& frequency) const = 0;
+    [[nodiscard]] virtual int          seatedPlayers() const                   = 0;
+    [[nodiscard]] virtual int          idleTicks() const                       = 0;
+    [[nodiscard]] virtual bool         stationPowered() const                  = 0;
+    [[nodiscard]] virtual bool         stationUnloaded() const                 = 0;
+    /// A status message for the train's owner (`train.status.<key>`).
+    virtual void status(std::string const& key, std::vector<std::string> const& args, bool good) = 0;
+};
+
+/// The ScheduleRuntime (the schedule a train follows and where it is in it).
+struct Runtime {
+    static constexpr int kInterval = 40; ///< ticks between failed attempts
+
+    bool               hasSchedule = false;
+    Schedule           schedule;
+    bool               isAutoSchedule = false;
+    int                currentEntry   = 0;
+    RuntimeState       state          = RuntimeState::PreTransit;
+    bool               paused         = false;
+    bool               completed      = false;
+    int                cooldown       = 0;
+    int                ticksInTransit = 0;
+    bool               failedLast     = false; ///< a navigation failed: print success next time
+    std::vector<int>   conditionProgress;
+    std::vector<Json>  conditionContext;
+    std::string        currentTitle;
+    std::vector<int>   predictionTicks; ///< learned transit ticks per entry (-1 unknown)
+
+    void setSchedule(Schedule s, bool autoSchedule);
+    /// Removes the schedule; returns it with `savedProgress` = the current entry.
+    Schedule discard();
+
+    /// One tick (ScheduleRuntime.tick).
+    void tick(Driver& driver);
+    /// The train arrived at its destination (POST_TRANSIT, conditions start).
+    void destinationReached();
+    /// Navigation was cancelled (PRE_TRANSIT, retry next tick).
+    void transitInterrupted();
+
+    /// The current entry's instruction, nullptr when none.
+    [[nodiscard]] Entry const* entry() const;
+    /// The title shown on displays: the current title, else the next destination's filter title.
+    [[nodiscard]] std::string title() const;
+    /// Ticks the current wait still takes when column 0 only has delays (-1 unknown).
+    [[nodiscard]] int remainingWaitTicks() const;
+
+    /// The ScheduleRuntime.submitPredictions: when the train reaches each upcoming
+    /// destination of its schedule (station summaries on display boards).
+    struct Prediction {
+        int         ticks = -1;  ///< -1: unknown (" ~ ")
+        std::string title;       ///< the schedule title shown with it
+        std::string destination; ///< a station name (current / navigating) or the entry's filter
+    };
+    struct PredictionInput {
+        std::string currentStation;      ///< name of the station the train stands at ("" none)
+        std::string navDestination;      ///< name of the station it navigates to ("" none)
+        double      distanceToDestination = 0;
+        double      distanceStartedAt     = 0;
+        double      speed                 = 0; ///< min(throttle * max, (max + turn) / 2), blocks per tick
+    };
+    [[nodiscard]] std::vector<Prediction> predictions(PredictionInput const& in) const;
+
+    [[nodiscard]] Json            toJson() const;
+    [[nodiscard]] static Runtime  fromJson(Json const& j);
+
+private:
+    void tickConditions(Driver& driver);
+    void startInstruction(Driver& driver);
+};
+
+/// One tick of a wait condition with its context (`Time` counters, ...). True when met.
+[[nodiscard]] bool tickCondition(Part const& condition, Json& context, Driver const& driver);
+
+/// The status line of the condition a waiting train shows on displays (the
+/// getWaitingStatus): a translation key with its arguments.
+struct StatusText {
+    std::string              key;
+    std::string              fallback;
+    std::vector<std::string> args;
+};
+[[nodiscard]] StatusText waitingStatus(Part const& condition, Json const& context, Driver const& driver);
+
+/// Station summary time column (display source): "now" (< 200 t), " ~ " (unknown /
+/// >= 11700 t), else minutes, or seconds rounded up to 15 s steps.
+struct EtaText {
+    enum class Kind { Now, Unknown, Minutes, Seconds } kind = Kind::Unknown;
+    int value = 0;
+};
+[[nodiscard]] EtaText etaOf(int ticks);
+
+} // namespace br::core::trains

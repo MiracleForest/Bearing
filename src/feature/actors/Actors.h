@@ -1,0 +1,218 @@
+#pragma once
+
+// Contraption actors (U22, SPEC §2.18 / §3.6.22): mechanical harvester, mechanical plough,
+// mechanical roller, portable storage interface, contraption controls and the 16 seats.
+//
+// Internal header of the unit (not a contract for other units). Every actor registers itself
+// with `contraption::registerActor` (MovingBlockBehaviour); stationary behaviour (PSI
+// transfers, seats, controls) runs in the unit's module.
+
+#include <cstdint>
+#include <functional>
+#include <optional>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include "nlohmann/json.hpp"
+
+#include "core/GlobalPos.h"
+#include "feature/contraption/Contraption.h"
+
+class Actor;
+class Block;
+class BlockPos;
+class BlockSource;
+class ItemStack;
+class Player;
+
+namespace br::feature::actors {
+
+namespace cc  = ::br::core::contraption;
+namespace con = ::br::feature::contraption;
+using Json    = nlohmann::json;
+using core::GlobalPos;
+
+inline constexpr std::string_view kHarvester = "bearing:mechanical_harvester";
+inline constexpr std::string_view kPlough    = "bearing:mechanical_plough";
+inline constexpr std::string_view kRoller    = "bearing:mechanical_roller";
+inline constexpr std::string_view kPsi       = "bearing:portable_storage_interface";
+inline constexpr std::string_view kControls  = "bearing:contraption_controls";
+inline constexpr std::string_view kSeatEntity = "bearing:seat";
+/// The seat entity players ride (another rider offset: Bedrock places a riding player lower).
+inline constexpr std::string_view kPlayerSeatEntity = "bearing:player_seat";
+[[nodiscard]] inline bool isSeatEntityId(std::string_view id) { return id == kSeatEntity || id == kPlayerSeatEntity; }
+inline constexpr char             kFacing[]  = "bearing:facing";
+
+/// The 16 dye colours in their order (white first).
+inline constexpr std::string_view kColours[16]{
+    "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+    "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
+};
+
+/// `config/actors.json`: the keys (CKinetics / CLogistics) for this unit's blocks.
+struct Config {
+    int  version               = 1;
+    bool harvestPartiallyGrown = false; ///< CKinetics.harvestPartiallyGrown
+    bool harvesterReplants     = true;  ///< CKinetics.harvesterReplants
+    bool moveItemsToStorage    = true;  ///< CKinetics.moveItemsToStorage
+    int  rollerFillDepth       = 12;    ///< CKinetics.rollerFillDepth
+    int  psiTimeout            = 60;    ///< CLogistics.psiTimeout (ticks)
+    bool seatHostileMobs       = true;  ///< CLogistics.seatHostileMobs
+};
+
+// ---- blocks -----------------------------------------------------------------------------------
+
+[[nodiscard]] bool isSeat(std::string_view id);
+/// "bearing:<colour>_seat" -> colour index (nullopt for other blocks).
+[[nodiscard]] std::optional<int> seatColour(std::string_view id);
+[[nodiscard]] std::string        seatId(int colour);
+/// The front of an actor block (`bearing:facing`, Bedrock facing order).
+[[nodiscard]] cc::Dir facingOf(cc::States const& states, cc::Dir fallback = cc::Dir::North);
+[[nodiscard]] cc::Dir facingAt(BlockSource& region, BlockPos const& pos, cc::Dir fallback = cc::Dir::North);
+[[nodiscard]] BlockPos toBlockPos(cc::Pos const& p);
+[[nodiscard]] BlockPos toBlockPos(GlobalPos const& p);
+[[nodiscard]] cc::Pos  toPos(BlockPos const& p);
+[[nodiscard]] BlockSource* regionOf(int dim);
+/// Entities (players included: the region's entity query leaves them out) whose box meets
+/// the box `lo`..`hi`.
+[[nodiscard]] std::vector<Actor*> entitiesIn(BlockSource& region, cc::Vec3d const& lo, cc::Vec3d const& hi);
+/// Debounce of repeated use packets while the button is held: true when `key` acted within
+/// the last 250 ms (and remembers this use otherwise).
+[[nodiscard]] bool recentlyUsed(std::int64_t key);
+/// Sets one integer state of the block at `pos` (keeps the others).
+bool setIntState(BlockSource& region, BlockPos const& pos, std::string const& state, int value);
+
+// ---- items ------------------------------------------------------------------------------------
+
+[[nodiscard]] ItemStack makeItem(std::string const& id, int count = 1);
+/// Spawns an item entity at `pos` with `velocity`.
+void spawnItem(BlockSource& region, ItemStack const& item, cc::Vec3d const& pos, cc::Vec3d const& velocity);
+/// The drops of a block broken with `tool` (empty stack: no tool).
+[[nodiscard]] std::vector<ItemStack> dropsOf(BlockSource& region, BlockPos const& pos, Block const& block, ItemStack const& tool);
+
+// ---- actor helpers (MovingBlockBehaviour / BlockBreakingMovementBehaviour) ---------------
+
+/// Front of the actor in world space (the contraption's rotation applied).
+[[nodiscard]] cc::Vec3d worldFacing(con::MovingBlockContext const& ctx);
+/// Movement in the contraption's own frame (relativeMotion).
+[[nodiscard]] cc::Vec3d relativeMotion(con::MovingBlockContext const& ctx);
+/// The VecHelper.isVecPointingTowards(vec, dir).
+[[nodiscard]] bool pointingTowards(cc::Vec3d const& vec, cc::Dir dir);
+/// The MovingBlockContext.getAnimationSpeed (magnitude).
+[[nodiscard]] float animationSpeed(con::MovingBlockContext const& ctx);
+/// The active area: the block at the actor's center + `localOffset` (contraption frame,
+/// rotated with it). Returns it when it differs from the one visited last (kept in ctx.data
+/// under `key`), nullopt otherwise.
+[[nodiscard]] std::optional<GlobalPos> newAreaPos(con::MovingBlockContext& ctx, cc::Vec3d const& localOffset, char const* key = "Area");
+/// The world point of the active area.
+[[nodiscard]] cc::Vec3d areaPoint(con::MovingBlockContext const& ctx, cc::Vec3d const& localOffset);
+/// The collectOrDropItem:into contraption storage (moveItemsToStorage), the rest dropped.
+void collectOrDrop(con::MovingBlockContext& ctx, ItemStack const& stack);
+/// The damageEntities: hurts (damage > 0) and/or throws the entities in a block.
+void damageEntities(con::MovingBlockContext& ctx, GlobalPos const& pos, bool hurt, bool roller);
+/// Death message of the roller's damage source (DamageSources.roller), a
+/// translation key of the resource pack (actors.lang).
+inline constexpr char kRollerDeathMessage[] = "death.attack.bearing.mechanical_roller";
+/// Plays the block's own hit sound at `pos` (getSoundType().getHitSound()) for the
+/// players nearby: the game's hit sound event, resolved by every client from the block.
+void playHitSound(int dim, BlockPos const& pos, Block const& block);
+
+/// The BlockBreakingMovementBehaviour state in the actor data.
+struct Breaker {
+    /// Speed of breaking (|animation speed| / 500, clamped to [1/128, 16]); the roller
+    /// multiplies by 1.5.
+    std::function<float(con::MovingBlockContext const&)>                     speed;
+    std::function<bool(BlockSource&, BlockPos const&, Block const&)>         canBreak;
+    /// Called when the block broke (drops already handled by `onDrops`), e.g. to revisit.
+    std::function<void(con::MovingBlockContext&, GlobalPos const&)>            onBroken;
+    /// What happens to the drops (default: collectOrDrop each).
+    std::function<void(con::MovingBlockContext&, Block const&, BlockPos const&)> breakBlock;
+};
+/// Starts breaking at `pos` when `canBreak` says so (sets ctx.stall). Returns true if it did.
+bool startBreaking(con::MovingBlockContext& ctx, Breaker const& b, GlobalPos const& pos);
+/// Progresses the current break (call from `tick`). Keeps ctx.stall while breaking.
+void tickBreaking(con::MovingBlockContext& ctx, Breaker const& b);
+void cancelBreaking(con::MovingBlockContext& ctx);
+/// Default block breaking: break particles and drops collected or dropped (no tool).
+void destroyAndCollect(con::MovingBlockContext& ctx, Block const& block, BlockPos const& pos);
+/// Whether a block can be broken at all (not air, not a liquid, not unbreakable).
+[[nodiscard]] bool isBreakable(Block const& block);
+[[nodiscard]] bool isLiquid(std::string const& id);
+[[nodiscard]] bool hasCollision(BlockSource& region, BlockPos const& pos);
+
+// ---- contraption controls (Controls.cpp) ------------------------------------------------------
+
+/// Whether actors of `blockId` are disabled on contraption `id` by its controls.
+[[nodiscard]] bool actorDisabled(con::Id id, std::string const& blockId);
+/// Registers an actor of this unit, wrapped with the controls check (isActive = !disabled).
+void registerOwnActor(std::string const& blockId, con::MovingBlockBehaviour behaviour);
+/// Wraps the actors of other units found on `c` with the controls check.
+void wrapActorsOf(con::Contraption const& c);
+/// A player's click on contraption controls carried by a contraption.
+void controlsClickOnContraption(Player& player, con::Contraption& c, cc::Pos const& local);
+/// A player's click on stationary controls.
+void controlsClickStationary(Player& player, GlobalPos const& pos);
+void controlsTick(std::uint64_t tick);
+/// Starts polling the redstone power of stationary controls at `pos`.
+void trackStationaryControls(GlobalPos const& pos);
+void controlsInstall();
+void controlsLoad();
+void controlsSave();
+void controlsClear();
+
+// ---- portable storage interface (Psi.cpp) -----------------------------------------------------
+
+void psiTick();
+void psiInstall();
+void psiClear();
+/// Whether the stationary PSI at `pos` is connected (selftests).
+[[nodiscard]] bool psiConnected(GlobalPos const& pos);
+
+// ---- seats (Seats.cpp) ------------------------------------------------------------------------
+
+/// Right-click on a seat block. Returns true when handled (the vanilla use is cancelled).
+bool seatUse(Player& player, GlobalPos const& pos, ItemStack const& held);
+/// Seats `entity` on the seat block at `pos` (SeatBlock.sitDown).
+bool sitDown(Actor& entity, GlobalPos const& pos);
+/// The SeatBlock.canBePickedUp.
+[[nodiscard]] bool canBePickedUp(Actor const& entity);
+/// Whether an entity sits on the seat block at `pos`.
+[[nodiscard]] Actor* seatedAt(GlobalPos const& pos);
+void seatsTick(std::uint64_t tick);
+/// Puts a rider seated on a contraption seat on a seat entity there (the engine moves it with
+/// the seat, so the rider stays seated while the contraption moves).
+void mountOnContraptionSeat(con::Contraption& c, cc::Pos const& local, Actor& rider);
+/// Gets an entity off the seat entity it rides (removing that seat entity).
+void leaveSeat(Actor& rider);
+void seatsInstall();
+void seatsUninstall();
+
+// ---- roller (Roller.cpp) ----------------------------------------------------------------------
+
+enum class RollingMode : int { TunnelPave = 0, StraightFill = 1, WideFill = 2 };
+[[nodiscard]] RollingMode rollerMode(GlobalPos const& pos);
+void                      setRollerMode(GlobalPos const& pos, RollingMode mode, bool share = true);
+void                      rollerPlaced(GlobalPos const& pos);
+void                      rollerInstall();
+
+// ---- interaction with blocks carried by contraptions (Interact.cpp) ---------------------------
+
+struct ContraptionHit {
+    con::Id   id = 0;
+    cc::Pos   local;
+    double    distance = 0;
+    std::string block;
+};
+/// The nearest contraption block of interest (controls / seats) the player looks at within reach.
+[[nodiscard]] std::optional<ContraptionHit> raycastContraption(Player& player, double reach);
+/// Handles a use on a contraption block (controls, seats). Returns true if handled.
+bool useOnContraption(Player& player);
+bool useOnContraption(Player& player, ContraptionHit const& hit);
+
+// ---- stats --------------------------------------------------------------------------------------
+
+/// Logs one line per user-visible action (`actors: ...`).
+void logAction(std::string const& text);
+
+} // namespace br::feature::actors

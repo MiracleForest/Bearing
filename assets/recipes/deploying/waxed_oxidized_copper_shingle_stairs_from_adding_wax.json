@@ -1,0 +1,17 @@
+{
+  "type": "bearing:deploying",
+  "ingredients": [
+    {
+      "item": "bearing:oxidized_copper_shingle_stairs"
+    },
+    {
+      "item": "minecraft:honeycomb_block"
+    }
+  ],
+  "results": [
+    {
+      "item": "bearing:waxed_oxidized_copper_shingle_stairs"
+    }
+  ],
+  "keep_held_item": true
+}

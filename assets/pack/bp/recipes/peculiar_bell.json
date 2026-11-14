@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:peculiar_bell"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "I",
+      "P"
+    ],
+    "key": {
+      "I": {
+        "item": "bearing:brass_block"
+      },
+      "P": {
+        "item": "bearing:brass_sheet"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:brass_sheet"
+      }
+    ],
+    "result": {
+      "item": "bearing:peculiar_bell",
+      "count": 1
+    }
+  }
+}

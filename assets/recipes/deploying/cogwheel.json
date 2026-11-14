@@ -1,0 +1,16 @@
+{
+  "type": "bearing:deploying",
+  "ingredients": [
+    {
+      "item": "bearing:shaft"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "results": [
+    {
+      "id": "bearing:cogwheel"
+    }
+  ]
+}

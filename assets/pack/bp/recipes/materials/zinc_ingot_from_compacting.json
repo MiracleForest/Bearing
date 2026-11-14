@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:zinc_ingot_from_compacting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "bearing:zinc_nugget"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:zinc_nugget"
+      }
+    ],
+    "result": {
+      "item": "bearing:zinc_ingot",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "bearing:crushing",
+  "ingredients": [
+    {
+      "item": "bearing:deepslate_zinc_ore"
+    }
+  ],
+  "processing_time": 350,
+  "results": [
+    {
+      "id": "bearing:crushed_raw_zinc",
+      "count": 2
+    },
+    {
+      "id": "bearing:crushed_raw_zinc",
+      "chance": 0.25
+    },
+    {
+      "id": "bearing:experience_nugget",
+      "chance": 0.75
+    },
+    {
+      "id": "minecraft:cobbled_deepslate",
+      "chance": 0.125
+    }
+  ]
+}

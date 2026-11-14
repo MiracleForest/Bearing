@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:blue_seat_from_red_seat"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "bearing:red_seat"
+      },
+      {
+        "item": "minecraft:blue_dye"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "bearing:red_seat"
+      }
+    ],
+    "result": {
+      "item": "bearing:blue_seat"
+    }
+  }
+}

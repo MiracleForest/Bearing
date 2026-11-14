@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bearing:industrial_iron_window_pane"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "bearing:industrial_iron_window"
+      }
+    },
+    "unlock": [
+      {
+        "item": "bearing:industrial_iron_window"
+      }
+    ],
+    "result": {
+      "item": "bearing:industrial_iron_window_pane",
+      "count": 16
+    }
+  }
+}

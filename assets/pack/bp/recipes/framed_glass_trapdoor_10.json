@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bearing:framed_glass_trapdoor_10"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:warped_trapdoor"
+      },
+      {
+        "item": "bearing:framed_glass"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:warped_trapdoor"
+      }
+    ],
+    "result": {
+      "item": "bearing:framed_glass_trapdoor",
+      "count": 1
+    }
+  }
+}

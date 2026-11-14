@@ -1,0 +1,559 @@
+// Redstone unit (U23): placement, survival, the per-tick behaviour dispatcher and the simple
+// components (analog lever, brass diodes, latches, redstone contact).
+
+#include <algorithm>
+#include <cmath>
+#include <random>
+
+#include "ll/api/service/Bedrock.h"
+
+#include "mc/world/actor/player/AbilitiesIndex.h"
+#include "mc/world/actor/player/Player.h"
+#include "mc/world/item/ItemStack.h"
+#include "mc/world/level/BlockPos.h"
+#include "mc/world/level/BlockSource.h"
+#include "mc/world/level/Level.h"
+#include "mc/world/level/block/Block.h"
+#include "mc/world/level/block/BlockChangeContext.h"
+
+#include "feature/common/Capabilities.h"
+#include "feature/common/Items.h"
+#include "feature/common/Redstone.h"
+#include "feature/common/ValueBox.h"
+#include "feature/goggles/Wrenchable.h"
+#include "feature/pistons/ElevatorColumns.h"
+#include "core/goggles/Rotation.h"
+#include "feature/redstone/Internal.h"
+#include "feature/redstone/Redstone.h"
+#include "game/Blocks.h"
+#include "mod/I18n.h"
+#include "mod/Log.h"
+
+namespace br::feature::redstone {
+
+namespace {
+
+bool canBuild(Player& p) { return !p.isSpectator() && p.canUseAbility(AbilitiesIndex::Build); }
+
+bool holds(ItemStack const& s, char const* id) { return !s.isNull() && s.getTypeName() == id; }
+
+std::string posText(GP const& p) { return std::to_string(p.x) + " " + std::to_string(p.y) + " " + std::to_string(p.z); }
+
+/// Directions sorted by how directly the player looks along them (Java's getNearestLookingDirections).
+std::array<int, 6> lookingOrder(float pitch, float yaw) {
+    std::array<int, 6> dirs{0, 1, 2, 3, 4, 5};
+    double p = pitch * 3.14159265358979 / 180.0, y = yaw * 3.14159265358979 / 180.0;
+    double lx = -std::sin(y) * std::cos(p), ly = -std::sin(p), lz = std::cos(y) * std::cos(p);
+    auto   score = [&](int d) {
+        auto o = offsetOf(d);
+        return o[0] * lx + o[1] * ly + o[2] * lz;
+    };
+    std::stable_sort(dirs.begin(), dirs.end(), [&](int a, int b) { return score(a) > score(b); });
+    return dirs;
+}
+
+/// A neighbour a smart observer / threshold switch can read (the reference design checks the item and fluid
+/// capabilities, belts, pipes and funnels; ours come through the capabilities).
+bool canDetect(BlockSource& region, BlockPos const& pos) {
+    if (!loadedAt(region, pos)) return false;
+    common::Access at{region, pos, -1};
+    return common::items::find(at).has_value() || common::fluids::find(at).has_value();
+}
+
+/// The block a lever / link hangs on, as a direction from the block.
+int attachedDirection(Block const& block, Kind kind) {
+    if (kind == Kind::Lever) {
+        switch (state(block, sFace, 0)) {
+        case 0: return kDown;
+        case 2: return kUp;
+        default: return opposite(state(block, sFacing, kNorth));
+        }
+    }
+    return opposite(state(block, sFacing, kUp));
+}
+
+/// The elevator contact a contact facing `facing` at `pos` turns into (the
+/// RedstoneContactItem.getPlacementState / RedstoneContactBlock.onWrenched), nullptr when there is
+/// no elevator column there (or the contact faces up / down).
+Block const* elevatorContactFor(BlockSource& region, BlockPos const& pos, int facing, int powered) {
+    if (!isHorizontal(facing)) return nullptr;
+    if (!pistons::elevatorColumnExists(static_cast<int>(region.getDimensionId()), pos.x, pos.z, facing)) return nullptr;
+    return vanillaBlock(kElevatorContact, Json{{sFacing, facing}, {sPowered, powered}});
+}
+
+bool supports(BlockSource& region, BlockPos const& pos) {
+    if (!loadedAt(region, pos)) return true; // unknown: keep the block
+    return !game::replaceable(region, pos);
+}
+
+} // namespace
+
+// ---- placement ---------------------------------------------------------------------------------
+
+Block const* placementState(BlockSource& region, BlockPos const& pos, Block const& placed, Kind kind, Placement const& p) {
+    switch (kind) {
+    case Kind::Link: return withStates(placed, {{sFacing, p.clickedFace}, {sReceiver, 0}, {sPowered, 0}, {sPower, 0}});
+    case Kind::Lever: {
+        int face = p.clickedFace == kUp ? 0 : p.clickedFace == kDown ? 2 : 1;
+        int dir  = face == 1 ? p.clickedFace : horizontalLooking(p.yaw);
+        return withStates(placed, {{sFace, face}, {sFacing, dir}, {sLeverState, 0}, {sPower, 0}});
+    }
+    case Kind::PulseRepeater:
+    case Kind::PulseExtender:
+    case Kind::PulseTimer:
+    case Kind::PoweredLatch:
+    case Kind::ToggleLatch: return withStates(placed, {{sFacing, opposite(horizontalLooking(p.yaw))}});
+    case Kind::SmartObserver:
+    case Kind::ThresholdSwitch: {
+        std::optional<int> preferred;
+        for (int d : lookingOrder(p.pitch, p.yaw)) {
+            if (canDetect(region, step(pos, d))) {
+                preferred = d;
+                break;
+            }
+        }
+        if (!preferred) {
+            int facing = nearestLooking(p.pitch, p.yaw);
+            preferred  = p.sneaking ? facing : opposite(facing);
+        }
+        if (*preferred == kUp || *preferred == kDown) {
+            return withStates(placed, {{sTarget, *preferred == kUp ? 2 : 1}, {sFacing, horizontalLooking(p.yaw)}});
+        }
+        return withStates(placed, {{sTarget, 0}, {sFacing, *preferred}});
+    }
+    case Kind::Contact: {
+        int facing         = opposite(nearestLooking(p.pitch, p.yaw));
+        int placeDirection = opposite(p.clickedFace);
+        if (p.sneaking || hasValidContact(region, pos, placeDirection)) facing = placeDirection;
+        int powered = hasValidContact(region, pos, facing) ? 1 : 0;
+        // RedstoneContactItem.getPlacementState: a horizontal contact placed into an existing
+        // elevator column becomes an elevator contact
+        if (auto const* elevator = elevatorContactFor(region, pos, facing, powered)) return elevator;
+        return withStates(placed, {{sFacing, facing}, {sPowered, powered}});
+    }
+    // DeskBellBlock: the bell stands on the clicked face
+    case Kind::DeskBell: return withStates(placed, {{sFacing, p.clickedFace}, {sPowered, 0}});
+    // RoseQuartzLampBlock: POWERED follows the input it is placed into (it does not light up)
+    case Kind::RoseQuartzLamp:
+        return withStates(placed, {{sPowered, lampInput(region, pos) > 0 ? 1 : 0}, {sPowering, 0}, {sActivate, 0}});
+    }
+    return &placed;
+}
+
+bool canSurvive(BlockSource& region, BlockPos const& pos, Block const& block, Kind kind) {
+    switch (kind) {
+    case Kind::Link:
+    case Kind::Lever: return supports(region, step(pos, attachedDirection(block, kind)));
+    case Kind::PulseRepeater:
+    case Kind::PulseExtender:
+    case Kind::PulseTimer:
+    case Kind::PoweredLatch:
+    case Kind::ToggleLatch: return supports(region, step(pos, kDown));
+    default: return true;
+    }
+}
+
+// ---- lifecycle ---------------------------------------------------------------------------------
+
+void onAdded(BlockSource& region, GP const& pos, Block const& block, Runtime& rt) {
+    rt.neighbour = true;
+    if (rt.kind == Kind::ThresholdSwitch) rt.lazy = 0;
+    if (rt.kind == Kind::Link) linkLoaded(region, pos, block, rt);
+    rt.loaded = true;
+}
+
+void onRemoved(GP const& pos, Runtime& rt) {
+    if (rt.kind == Kind::Link) linkUnloaded(pos, rt);
+}
+
+void onUnloaded(GP const& pos, Runtime& rt) {
+    if (rt.kind == Kind::Link) linkUnloaded(pos, rt);
+    rt.loaded = false;
+}
+
+// ---- analog lever ------------------------------------------------------------------------------
+
+void leverUse(BlockSource& region, GP const& pos, Block const& block, bool back) {
+    auto bp   = game::blockPos(pos);
+    int  prev = state(block, sLeverState);
+    int  next = cr::analogLeverNext(prev, back);
+    if (next != prev) {
+        setStates(region, bp, {{sLeverState, next}});
+        // neighbours see it 15 ticks after the last click
+        if (auto* rt = runtimeAt(pos)) counterOf(pos, *rt) = cr::kAnalogLeverDelay;
+        else dataFor(pos)["counter"] = cr::kAnalogLeverDelay;
+    }
+    playSound(pos.dim, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, "random.click", 0.2f, cr::analogLeverPitch(next));
+    if (next > 0) spawnParticle(pos.dim, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, "minecraft:redstone_ore_dust_particle");
+    log().info("analog lever at {} set to {}", posText(pos), next);
+}
+
+namespace {
+
+void tickLever(BlockSource& region, GP const& pos, Block const& block, Runtime& rt) {
+    int& left   = counterOf(pos, rt);
+    int  handle = state(block, sLeverState);
+    if (left > 0) {
+        if (--left == 0) setStates(region, game::blockPos(pos), {{sPower, handle}});
+    } else if (state(block, sPower) != handle) {
+        // placed or set without a click (commands): follow the handle
+        setStates(region, game::blockPos(pos), {{sPower, handle}});
+    }
+    // The animateTick: red dust while the lever is on (one in four ticks)
+    static std::minstd_rand rng{0x5eed};
+    if (handle > 0 && rng() % 16 == 0) {
+        spawnParticle(pos.dim, pos.x + 0.5, pos.y + 0.4, pos.z + 0.5, "minecraft:redstone_ore_dust_particle");
+    }
+}
+
+// ---- brass diodes ------------------------------------------------------------------------------
+
+void tickBrassDiode(BlockSource& region, GP const& pos, Block const& block, Runtime& rt) {
+    auto bp      = game::blockPos(pos);
+    bool input   = rt.inBack;
+    bool powered = state(block, sPowered) != 0;
+    if (cr::advanceSchedule(rt.sched, powered != input, cr::kBrassDiodeInputDelay)) {
+        powered = cr::diodeInputTick(powered, input, rt.sched, cr::kBrassDiodeInputDelay);
+    }
+    int            delay = diodeDelay(pos, rt.kind);
+    int&           count = counterOf(pos, rt);
+    cr::DiodeState s{count, state(block, sPowering) != 0};
+    cr::tickDiode(diodeKind(rt.kind), delay, powered, s);
+    count = s.state;
+    setStates(region, bp, {{sPowered, powered ? 1 : 0}, {sPowering, s.powering ? 1 : 0}});
+}
+
+// ---- latches -----------------------------------------------------------------------------------
+
+void tickLatch(BlockSource& region, GP const& pos, Block const& block, Runtime& rt) {
+    auto bp   = game::blockPos(pos);
+    bool back = rt.inBack;
+    if (rt.kind == Kind::PoweredLatch) {
+        bool           side = rt.inSide;
+        cr::LatchState s{state(block, sPowered) != 0, state(block, sPoweredSide) != 0, state(block, sPowering) != 0};
+        if (cr::advanceSchedule(rt.sched, cr::poweredLatchNeedsTick(s, back, side), cr::kLatchInputDelay)) {
+            s = cr::poweredLatchTick(s, back, side);
+            setStates(region, bp, {{sPowered, s.powered}, {sPoweredSide, s.poweredSide}, {sPowering, s.powering}});
+        }
+        return;
+    }
+    cr::ToggleLatchState s{state(block, sPowered) != 0, state(block, sPowering) != 0};
+    if (cr::advanceSchedule(rt.sched, s.powered != back, cr::kLatchInputDelay)) {
+        s = cr::toggleLatchTick(s, back, rt.sched);
+        setStates(region, bp, {{sPowered, s.powered}, {sPowering, s.powering}});
+    }
+}
+
+// ---- contacts ----------------------------------------------------------------------------------
+
+void tickContact(BlockSource& region, GP const& pos, Block const& block, Runtime& rt) {
+    bool recheck = rt.neighbour;
+    if (rt.blockTick >= 0 && --rt.blockTick < 0) {
+        rt.contraptionContact = false; // the contraption's contact moved on: the scheduled tick
+        recheck               = true;
+    }
+    if (!recheck || rt.contraptionContact) return;
+    bool valid = hasValidContact(region, game::blockPos(pos), state(block, sFacing, kUp));
+    if ((state(block, sPowered) != 0) != valid) setStates(region, game::blockPos(pos), {{sPowered, valid ? 1 : 0}});
+}
+
+} // namespace
+
+char const* counterKey(Kind kind) {
+    switch (kind) {
+    case Kind::Lever: return "lastChange";
+    case Kind::SmartObserver: return "turnOff";
+    default: return "state";
+    }
+}
+
+int& counterOf(GP const& pos, Runtime& rt) {
+    if (!rt.counterLoaded) {
+        auto const* d    = dataOf(pos);
+        rt.counter       = d ? d->value(counterKey(rt.kind), d->value("counter", 0)) : 0;
+        rt.counterLoaded = true;
+    }
+    return rt.counter;
+}
+
+void persistCounter(GP const& pos, Runtime const& rt) {
+    if (!rt.counterLoaded) return;
+    auto const* d = dataOf(pos);
+    if (!d && rt.counter == 0) return;
+    if (d && d->value(counterKey(rt.kind), -1) == rt.counter) return;
+    dataFor(pos)[counterKey(rt.kind)] = rt.counter;
+}
+
+void readInputs(BlockSource& region, GP const& pos, Block const& block, Runtime& rt) {
+    auto bp = game::blockPos(pos);
+    if (isDiodeShaped(rt.kind)) {
+        int facing = state(block, sFacing, kNorth);
+        rt.inBack  = signalFrom(region, bp, facing) > 0;
+        rt.inSide  = rt.kind == Kind::PoweredLatch
+               && (signalFrom(region, bp, clockwise(facing)) > 0 || signalFrom(region, bp, counterClockwise(facing)) > 0);
+    } else if (rt.kind == Kind::Link && !state(block, sReceiver)) {
+        rt.inLink = linkInput(region, bp, state(block, sFacing, kUp));
+    }
+}
+
+bool hasValidContact(BlockSource& region, BlockPos const& pos, int facing) {
+    auto n = step(pos, facing);
+    if (!loadedAt(region, n)) return false;
+    auto const& other = region.getBlock(n);
+    auto const& id    = other.getTypeName();
+    if (id != kContact && id != kElevatorContact) return false;
+    return state(other, sFacing, kUp) == opposite(facing);
+}
+
+// ---- diode delay value box ---------------------------------------------------------------------
+
+int diodeDelay(GP const& pos, Kind kind) {
+    auto const* d = dataOf(pos);
+    int         v = d ? d->value("delay", 0) : 0;
+    if (v <= 0) v = cr::defaultDelay(diodeKind(kind));
+    return std::clamp(v, cr::kMinDelay, cr::kMaxDelay);
+}
+
+void setDiodeDelay(GP const& pos, int ticks) {
+    auto& d  = dataFor(pos);
+    ticks    = std::clamp(ticks, cr::kMinDelay, cr::kMaxDelay);
+    d["delay"] = ticks;
+    // The onMaxDelayChanged: the counter stays within the new delay
+    if (d.value("state", 0) > ticks) d["state"] = ticks;
+    if (auto* rt = runtimeAt(pos); rt && rt->counterLoaded && rt->counter > ticks) rt->counter = ticks;
+}
+
+/// BrassDiodeBlock: a click toggles the inverted state.
+void toggleDiode(BlockSource& region, GP const& pos, Block const& block, Kind kind) {
+    bool inverted = state(block, sInverted) != 0;
+    setStates(region, game::blockPos(pos), {{sInverted, inverted ? 0 : 1}});
+    playSound(pos.dim, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, "random.click", 0.3f, inverted ? 0.5f : 0.6f);
+    log().info("{} at {} {}", idOf(kind), posText(pos), inverted ? "no longer inverted" : "inverted");
+}
+
+void registerValueBoxes() {
+    for (auto kind : {Kind::PulseRepeater, Kind::PulseExtender, Kind::PulseTimer}) {
+        common::valuebox::BoxSpec box;
+        box.id            = "delay";
+        box.label         = "bearing.logistics.redstone_interval";
+        box.labelFallback = "Redstone Interval";
+        box.board         = [](Block const&) {
+            core::common::BoardSpec b;
+            b.maxValue          = cr::kDelayBoardMax;
+            b.milestoneInterval = cr::kDelayBoardMilestone;
+            b.rows              = {
+                tr("bearing.generic.unit.ticks", "Ticks"),
+                tr("bearing.generic.unit.seconds", "Seconds"),
+                tr("bearing.generic.unit.minutes", "Minutes"),
+            };
+            return b;
+        };
+        // The BrassDiodeScrollSlot: on top of the diode, centre (8, 2.6, 8)
+        box.centre = [](Block const&, int face) -> std::optional<core::common::Vec> {
+            if (face != kUp) return std::nullopt;
+            return core::common::Vec{0.5, 2.6 / 16.0, 0.5};
+        };
+        box.scale = 0.5;
+        box.get   = [kind](GP const& pos) {
+            auto s = cr::delayToSettings(diodeDelay(pos, kind));
+            return core::common::ValueChoice{s.row, s.value};
+        };
+        box.set = [](GP const& pos, core::common::ValueChoice s, Player&) {
+            int ticks = cr::settingsToDelay({s.row, s.value});
+            setDiodeDelay(pos, ticks);
+            playSound(pos.dim, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, "random.click", 0.25f, 2.0f);
+        };
+        box.format = [](Block const&, core::common::ValueChoice s) { return cr::formatDelaySettings({s.row, s.value}); };
+        // client mod: a short click on the box toggles the diode as a click elsewhere does,
+        // holding opens the board (vanilla players: the click opens the board)
+        box.onShortClick = [kind](GP const& pos, Player& player) {
+            if (!canBuild(player)) return;
+            auto& region = player.getDimensionBlockSource();
+            auto const& block = region.getBlock(game::blockPos(pos));
+            if (block.getTypeName() == idOf(kind)) toggleDiode(region, pos, block, kind);
+        };
+        common::valuebox::registerBox(idOf(kind), std::move(box));
+    }
+}
+
+// ---- wrench (IWrenchable blocks of the unit) ------------------------------------------
+
+namespace {
+
+namespace wrench = goggles::wrench;
+
+/// AbstractDiodeBlock: IWrenchable's default rotation, which only turns the horizontal FACING about
+/// the vertical axis (a click on the top or bottom face; side faces leave it).
+Block const* rotateDiode(Block const& block, int face) {
+    if (face != kUp && face != kDown) return &block;
+    return withStates(block, {{sFacing, clockwise(state(block, sFacing, kNorth))}});
+}
+
+} // namespace
+
+Block const* rotateDirected(Block const& block, int face) {
+    if (face == kUp || face == kDown) return withStates(block, {{sFacing, clockwise(state(block, sFacing, kNorth))}});
+    int target = targetDirection(block);
+    int axis   = face == kNorth || face == kSouth ? 2 : 0;
+    int next   = core::goggles::clockwise(target, axis);
+    if (face == kNorth || face == kWest) next = opposite(next); // AxisDirection.NEGATIVE
+    if (next == kUp || next == kDown) return withStates(block, {{sTarget, next == kUp ? 2 : 1}});
+    return withStates(block, {{sTarget, 0}, {sFacing, next}});
+}
+
+void registerWrench() {
+    // RedstoneLinkBlock: the wrench toggles transmitter / receiver (the block never turns);
+    // sneak + wrench picks it up
+    wrench::registerBlock(
+        kLink,
+        wrench::Handler{
+            .onWrenched =
+                [](wrench::Context& c) {
+                    toggleLinkMode(c.region, c.pos);
+                    return wrench::Result::Success;
+                },
+            .rotate = [](Block const& block, int) -> Block const* { return &block; },
+        }
+    );
+    for (auto kind : {Kind::PulseRepeater, Kind::PulseExtender, Kind::PulseTimer, Kind::PoweredLatch, Kind::ToggleLatch})
+        wrench::registerBlock(idOf(kind), wrench::Handler{.rotate = rotateDiode});
+    for (auto kind : {Kind::SmartObserver, Kind::ThresholdSwitch}) {
+        wrench::registerBlock(
+            idOf(kind),
+            wrench::Handler{
+                .onWrenched =
+                    [](wrench::Context& c) {
+                        auto r = wrench::defaultOnWrenched(c);
+                        touch(c.pos);
+                        return r;
+                    },
+                .rotate = rotateDirected,
+            }
+        );
+    }
+    // RedstoneContactBlock (WrenchableDirectionalBlock): turns FACING, then becomes an elevator
+    // contact when it now faces into an elevator column
+    wrench::registerBlock(
+        kContact,
+        wrench::Handler{
+            .onWrenched =
+                [](wrench::Context& c) {
+                    auto        r   = wrench::defaultOnWrenched(c);
+                    auto        bp  = game::blockPos(c.pos);
+                    auto const& now = c.region.getBlock(bp);
+                    if (now.getTypeName() != kContact) return r;
+                    touch(c.pos);
+                    int facing = state(now, sFacing, kUp);
+                    if (auto const* elevator = elevatorContactFor(c.region, bp, facing, hasValidContact(c.region, bp, facing) ? 1 : 0)) {
+                        game::setBlock(c.region, bp, *elevator);
+                        log().info("redstone contact at {} became an elevator contact", posText(c.pos));
+                    }
+                    return r;
+                },
+        }
+    );
+}
+
+// ---- dispatch ----------------------------------------------------------------------------------
+
+void tickBlock(BlockSource& region, GP const& pos, Block const& block, Runtime& rt) {
+    switch (rt.kind) {
+    case Kind::Link: tickLink(region, pos, block, rt); break;
+    case Kind::Lever: tickLever(region, pos, block, rt); break;
+    case Kind::PulseRepeater:
+    case Kind::PulseExtender:
+    case Kind::PulseTimer: tickBrassDiode(region, pos, block, rt); break;
+    case Kind::PoweredLatch:
+    case Kind::ToggleLatch: tickLatch(region, pos, block, rt); break;
+    case Kind::SmartObserver: tickSmartObserver(region, pos, block, rt); break;
+    case Kind::ThresholdSwitch: tickThresholdSwitch(region, pos, block, rt); break;
+    case Kind::Contact: tickContact(region, pos, block, rt); break;
+    case Kind::DeskBell: tickDeskBell(region, pos, block, rt); break;
+    case Kind::RoseQuartzLamp: tickRoseQuartzLamp(region, pos, block, rt); break;
+    }
+    rt.neighbour = false;
+}
+
+bool use(Click const& c, Block const& block, Kind kind) {
+    auto& region = c.player.getDimensionBlockSource();
+    auto  bp     = game::blockPos(c.pos);
+    bool  empty  = c.held.isNull();
+    bool  wrench = holds(c.held, kWrench);
+    switch (kind) {
+    case Kind::Link: {
+        if (!canBuild(c.player)) return false;
+        // Sneak + empty hand or the wrench switches transmitter / receiver
+        if ((c.sneaking && empty) || (wrench && !c.sneaking)) {
+            toggleLinkMode(region, c.pos);
+            return true;
+        }
+        if (c.sneaking || wrench || holds(c.held, kLinkedController)) return false;
+        // The LinkHandler: every slot the click is on takes a copy of the held item (the
+        // two hit areas overlap slightly in the middle), second slot first
+        int  facing = state(block, sFacing, kUp);
+        bool used   = false;
+        auto name   = empty ? trFor(c.player, "br.common.filter.empty", "(empty)") : common::items::displayName(c.held);
+        for (bool first : {false, true}) {
+            if (!core::common::testBoxHit(c.hit, frequencySlotCentre(facing, first), kFrequencySlotScale)) continue;
+            setFrequency(c.pos, first, c.held);
+            playSound(c.pos.dim, c.pos.x + 0.5, c.pos.y + 0.5, c.pos.z + 0.5, "block.itemframe.add_item", 0.25f, 0.1f);
+            actionBar(
+                c.player,
+                (first ? trFor(c.player, "bearing.logistics.firstFrequency", "Frequency #1")
+                       : trFor(c.player, "bearing.logistics.secondFrequency", "Frequency #2"))
+                    + ": " + name
+            );
+            log().info(
+                "redstone link at {} frequency #{} set to {} by {}",
+                posText(c.pos),
+                first ? 1 : 2,
+                empty ? "(empty)" : c.held.getTypeName(),
+                c.player.getRealName()
+            );
+            used = true;
+        }
+        return used;
+    }
+    case Kind::Lever:
+        // The useWithoutItem: any click but a sneaking one with an item in hand
+        if (c.sneaking && !empty) return false;
+        if (!canBuild(c.player)) return false;
+        leverUse(region, c.pos, block, c.sneaking);
+        return true;
+    case Kind::PulseRepeater:
+    case Kind::PulseExtender:
+    case Kind::PulseTimer: {
+        if (!canBuild(c.player) || c.sneaking || wrench) return false;
+        toggleDiode(region, c.pos, block, kind);
+        return true;
+    }
+    case Kind::PoweredLatch:
+    case Kind::ToggleLatch: {
+        if (!canBuild(c.player) || c.sneaking || wrench) return false;
+        bool powering = state(block, sPowering) != 0;
+        if (kind == Kind::PoweredLatch) {
+            cr::LatchState s{state(block, sPowered) != 0, state(block, sPoweredSide) != 0, powering};
+            if (!cr::poweredLatchActivate(s)) return false;
+        }
+        setStates(region, bp, {{sPowering, powering ? 0 : 1}});
+        playSound(c.pos.dim, c.pos.x + 0.5, c.pos.y + 0.5, c.pos.z + 0.5, "random.click", 0.3f, powering ? 0.5f : 0.6f);
+        log().info("{} at {} switched {}", idOf(kind), posText(c.pos), powering ? "off" : "on");
+        return true;
+    }
+    case Kind::ThresholdSwitch:
+        if (wrench || (c.sneaking && !empty)) return false;
+        openThresholdScreen(c.player, c.pos);
+        return true;
+    case Kind::DeskBell:
+        // DeskBellBlock.useWithoutItem (the wrench rotates it, sneaking with an item uses the item)
+        if (wrench || (c.sneaking && !empty)) return false;
+        ringDeskBell(region, c.pos, &c.player);
+        return true;
+    case Kind::SmartObserver:
+    case Kind::Contact:
+    case Kind::RoseQuartzLamp: return false;
+    }
+    return false;
+}
+
+} // namespace br::feature::redstone
