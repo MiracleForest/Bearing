@@ -7,41 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-
-- The root command is now `/bearing`, with no aliases.
-- Translation keys, recipe ids and tags use the `bearing` namespace only (`bearing.*`,
-  `block.bearing.*`, `bearing:` ids and `#bearing:` tags); recipe files with other namespaces are
-  no longer remapped.
-- The scene viewer is now the Guide: `/bearing guide [id]`, `config/guide.json` (`guideKey`) and
-  `bearing.guide.*` keys.
-
-## [0.2.0] - 2026-11-01
-
-Levitate is now Bearing, published by MiracleForest. This release is **breaking**: the namespace changed
-from `levitate:` to `bearing:`, so worlds saved with 0.1.0 do not carry over (see *Removed*).
-
-### Changed
-
-- Levitate is now **Bearing**. The repository is [MiracleForest/Bearing](https://github.com/MiracleForest/Bearing)
-  (it was LiteLDev/Levitate, then MiracleForest/Levitate; GitHub redirects the old URLs).
-- The lip package is now `github.com/MiracleForest/Bearing` (was `github.com/LiteLDev/Levitate`).
-  Installing by the new path needs lip 0.35.0 or later. With lip 0.36.0 or later, `lip update` moves an existing
-  install of `github.com/LiteLDev/Levitate[#client]` to `github.com/MiracleForest/Bearing[#client]`. With older lip, run
-  `lip uninstall github.com/LiteLDev/Levitate[#client]` and then `lip install github.com/MiracleForest/Bearing[#client]`.
-  Versions up to 0.1.0 stay installable at the old path.
-- The mod folder is now `plugins/Bearing/` (server) and `mods/Bearing/` (client), and the release zips are
-  `bearing-server-windows-x64.zip` and `bearing-client-windows-x64.zip`. To keep your settings, move
-  `config/` from the old `Levitate/` folder into the new one.
-- **Breaking:** the block, item and entity namespace is now `bearing:` (was `levitate:`), the resource and behaviour
-  packs are named Bearing, and the command is `/bearing` (was `/levitate`).
-
-### Removed
-
-- Worlds saved with 0.1.0 do not carry over: their `levitate:` blocks, items and entities are not
-  recognised under the new namespace.
-
-## [0.1.0] - 2026-11-01
+## [0.1.0] - 2026-11-14
 
 The first release: rotational power, machines and moving contraptions on Bedrock 1.26.51 (LeviLamina 26.51.x), for
 dedicated servers and for local worlds on the client. Players without the client mod can join a
@@ -77,10 +43,10 @@ server and play with forms in place of the client mod's screens. `docs/SPEC.md` 
 - Schematics: the schematic table, schematicannon, schematic and quill, and the crafting blueprint.
 - Equipment: the toolbox, backtanks, diving gear, the extendo grip, the potato cannon, the wand of
   symmetry, the worldshaper, the linked controller, sand paper and the tree fertilizer.
-- Guide scenes, advancements, the in-game config screen (`/bearing config`) and the
-  commands (`/bearing clone`, `debuginfo`, `util`, `killtrain`, `glue` and more).
+- The Guide with its scenes (`/bearing guide [id]`), advancements, the in-game config screen
+  (`/bearing config`) and the `/bearing` commands (`clone`, `debuginfo`, `util`, `killtrain`, `glue`
+  and more).
 - English and Simplified Chinese translations.
 
-[Unreleased]: https://github.com/MiracleForest/Bearing/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/MiracleForest/Bearing/compare/v0.1.0...v0.2.0
+[Unreleased]: https://github.com/MiracleForest/Bearing/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/MiracleForest/Bearing/releases/tag/v0.1.0
